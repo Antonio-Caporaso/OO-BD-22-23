@@ -1,0 +1,93 @@
+\documentclass[a4paper, oneside, 12pt]{book}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{subfig}
+\usepackage{enumerate}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.8}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[T1]{fontenc}
+\usepackage{inputenc}
+\usepackage{hyperref}
+\usepackage[italian]{babel}
+\usepackage{longtable}
+\usepackage{mathtools}
+\usepackage{amssymb,amsmath,amsthm}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false, 
+    showlines=false,               
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    morekeywords={*, REFERENCES, ENABLED, DISABLED, IS, BEFORE, AFTER, INCREMENT, START, WITH, SEQUENCE, FOR, EACH, ROW, INSTEAD OF, FOR EACH STATEMENT}
+}
+\lstset{
+style= mystyle
+}
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+
+\includegraphics[scale=0.6]{Immagini/logo_dieti.png}
+\vspace*{1cm}
+
+{\Huge{\textbf{Progettazione e sviluppo di una base di dati relazionale per la gestione di conferenze scientifiche}}}
+
+\vspace{1.5cm}
+
+{\Large Caporaso Antonio} \qquad \Large{Di Fusco Giorgio}\\
+\texttt{matricola} \qquad \texttt{N86004389}
+
+\vfill
+
+Progetto d'esame per il corso di Basi di Dati
+
+\vspace{1cm}
+
+\includegraphics[scale=1]{Immagini/LogoUnina.png}
+
+
+Dipartimento di Ingegneria Elettrica e delle tecnologie dell'Informazione\\
+Università degli Studi di Napoli Federico II
+
+
+{\large{\textsc{A.A 2022/2023}}}
+\end{center}
+\end{titlepage}
+\newpage
+\textit{Questa pagina è stata lasciata intenzionalmente vuota.}
+\newpage
+\tableofcontents
+\listoffigures
+\listoftables
+\include{Capitoli/Progettazione_Concettuale}
+\end{document}
