@@ -7287,12 +7287,12 @@
 										"$ref": "AAAAAAGFVHf/IrvC27w="
 									},
 									"font": "Arial;13;0",
-									"left": 1026,
-									"top": 1084,
+									"left": 1056,
+									"top": 1064,
 									"width": 19.5126953125,
 									"height": 13,
-									"alpha": 0.5235987755982988,
-									"distance": 25,
+									"alpha": -0.38460487773419527,
+									"distance": 45.31004303683677,
 									"hostEdge": {
 										"$ref": "AAAAAAGFVHf/I7vE3FA="
 									},
