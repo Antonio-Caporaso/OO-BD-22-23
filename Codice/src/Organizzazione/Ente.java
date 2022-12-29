@@ -57,4 +57,10 @@ public class Ente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	@Override
+	public String toString() {
+		return "Ente [nomeEnte=" + nomeEnte + ", tipologia=" + tipologia + ", indirizzo=" + indirizzo + ", telefono="
+				+ telefono + ", email=" + email + "]";
+	}
 }
