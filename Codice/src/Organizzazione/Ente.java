@@ -63,4 +63,5 @@ public class Ente {
 		return "Ente = "+ this.getNomeEnte() +", tipologia=" + this.getTipologia() + ", indirizzo=" + this.getIndirizzo() + ", telefono ="
 				+ this.getTelefono() + ", email =" + this.getEmail();
 	}
+
 }
