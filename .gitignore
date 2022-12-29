@@ -19,3 +19,4 @@
 *.fls
 ./Capitoli/Progettazione_Concettuale.aux
 .metedata/
+Codice/.idea/*
