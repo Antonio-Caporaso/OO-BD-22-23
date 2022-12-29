@@ -1,13 +1,13 @@
 package Organizzazione;
 import java.util.Set;
-public class Comitato {
+class Comitato {
 	private Organizzatore responsabile;
 	private Set<Organizzatore> membri;
 
-	public Organizzatore getResponsabile() {
+	public Organizzatore getResponsabile(){
 		return responsabile;
 	}
-	public void setResponsabile(Organizzatore responsabile) {
-		this.responsabile = responsabile;
+	public void setResponsabile(Organizzatore responsabile){
+		this.responsabile=responsabile;
 	}
 }

@@ -1,4 +1,4 @@
 package utenti;
 
-public class KeynoteSpeaker extends Partecipante{
+class KeynoteSpeaker extends Partecipante{
 }

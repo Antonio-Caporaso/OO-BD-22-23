@@ -1,4 +1,4 @@
 package utenti;
 
-public class Chair extends Partecipante{
+class Chair extends Partecipante{
 }
