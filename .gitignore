@@ -20,3 +20,8 @@
 ./Capitoli/Progettazione_Concettuale.aux
 .metedata/
 Codice/.idea/*
+Codice/.classpath
+Codice/.gitignore
+Codice/.project
+Codice/Codice.iml
+Codice/.gitignore
