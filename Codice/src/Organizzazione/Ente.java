@@ -7,6 +7,17 @@ public class Ente {
 	private String telefono;
 	private String email;
 	
+	public Ente() {	}
+	
+	public Ente(String nomeEnte){
+		this.setNomeEnte(nomeEnte);
+	}
+	
+	public Ente(String nomeEnte, String tipologia) {
+		this.setNomeEnte(nomeEnte);
+		this.setTipologia(tipologia);
+	}
+	
 	public String getNomeEnte() {
 		return nomeEnte;
 	}
@@ -46,5 +57,4 @@ public class Ente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 }
