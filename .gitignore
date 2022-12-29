@@ -25,3 +25,5 @@ Codice/.gitignore
 Codice/.project
 Codice/Codice.iml
 Codice/.gitignore
+Codice/bin/*
+Codice/out/*
