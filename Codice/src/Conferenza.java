@@ -1,4 +1,4 @@
-
+package Conferenza;
 public class Conferenza {
 
 	private String nomeConferenza;
