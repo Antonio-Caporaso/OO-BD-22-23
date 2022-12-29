@@ -18,3 +18,4 @@
 *.fdb_latexmk
 *.fls
 ./Capitoli/Progettazione_Concettuale.aux
+*./metadata
