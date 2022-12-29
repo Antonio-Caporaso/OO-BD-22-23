@@ -60,8 +60,10 @@ public class Ente {
 	
 	@Override
 	public String toString() {
-		return "Ente = "+ this.getNomeEnte() +", tipologia=" + this.getTipologia() + ", indirizzo=" + this.getIndirizzo() + ", telefono ="
-				+ this.getTelefono() + ", email =" + this.getEmail();
+		String details = "Ente: "+this.getNomeEnte()+", tipologia: " + this.getTipologia() +", indirizzo: "
+				+ this.getIndirizzo() +", telefono: " + this.getTelefono() +", email: "
+				+ this.getEmail();
+		return details;
 	}
 
 	void nomina(Comitato comitato){
