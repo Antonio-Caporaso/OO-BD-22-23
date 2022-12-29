@@ -19,8 +19,5 @@ public class BusinessLogic {
             System.exit(0);
         }
         System.out.println("Connessione OK");
-        
-        Ente e1 = new Ente("Università degli studi di Napoli");
-        System.out.println(e1.toString());
 	}
 }

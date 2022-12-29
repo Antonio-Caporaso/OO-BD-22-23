@@ -60,7 +60,7 @@ public class Ente {
 	
 	@Override
 	public String toString() {
-		return "Ente [nomeEnte=" + nomeEnte + ", tipologia=" + tipologia + ", indirizzo=" + indirizzo + ", telefono="
-				+ telefono + ", email=" + email + "]";
+		return "Ente = "+ this.getNomeEnte() +", tipologia=" + this.getTipologia() + ", indirizzo=" + this.getIndirizzo() + ", telefono ="
+				+ this.getTelefono() + ", email =" + this.getEmail();
 	}
 }

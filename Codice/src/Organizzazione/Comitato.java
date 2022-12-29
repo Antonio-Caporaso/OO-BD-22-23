@@ -1,5 +1,5 @@
 package Organizzazione;
 
-public interface Comitato {
-	
+public abstract class Comitato {
+	Organizzatore responsabile;
 }
