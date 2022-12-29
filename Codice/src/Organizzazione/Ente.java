@@ -64,4 +64,7 @@ public class Ente {
 				+ this.getTelefono() + ", email =" + this.getEmail();
 	}
 
+	void nomina(Comitato comitato){
+
+	}
 }

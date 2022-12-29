@@ -1,5 +1,5 @@
 package Organizzazione;
 
-class ComitatoLocale implements Comitato {
+class ComitatoLocale extends Comitato {
 
 }
