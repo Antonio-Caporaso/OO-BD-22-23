@@ -1,4 +1,4 @@
-package Organizzazione;
+package organizzazione;
 
 class ComitatoScientifico extends Comitato{
 

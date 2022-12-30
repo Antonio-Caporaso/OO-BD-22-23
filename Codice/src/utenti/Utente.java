@@ -1,8 +1,8 @@
 package utenti;
 
-import Organizzazione.Ente;
-
 import java.util.Date;
+
+import organizzazione.Ente;
 
 public class Utente {
     private String titolo;

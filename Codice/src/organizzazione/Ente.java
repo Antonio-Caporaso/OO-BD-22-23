@@ -1,4 +1,4 @@
-package Organizzazione;
+package organizzazione;
 
 public class Ente {
 	private String nomeEnte;

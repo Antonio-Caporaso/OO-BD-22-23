@@ -1,4 +1,4 @@
-package Organizzazione;
+package organizzazione;
 import java.util.HashSet;
 import java.util.Set;
 class Comitato {
