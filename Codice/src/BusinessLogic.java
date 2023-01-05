@@ -1,6 +1,6 @@
-import conferenza.*;
-import database.*;
-import organizzazione.*;
+import entity.conferenza.*;
+import dbConfig.*;
+import entity.organizzazione.*;
 
 import java.sql.Connection;
 public class BusinessLogic {
