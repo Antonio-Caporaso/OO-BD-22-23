@@ -1,4 +1,4 @@
-package organizzazione;
+package entity.organizzazione;
 
 import utenti.Utente;
 
