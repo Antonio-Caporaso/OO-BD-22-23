@@ -1,7 +1,5 @@
 package entity.utenti;
-
 import java.util.Date;
-
 import entity.organizzazione.Ente;
 
 public class Utente {
