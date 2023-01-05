@@ -1,4 +1,4 @@
-package conferenza;
+package entity.conferenza;
 
 public class ProgrammaConferenza extends Programma {
 	

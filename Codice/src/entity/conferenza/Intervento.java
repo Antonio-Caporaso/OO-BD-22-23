@@ -1,4 +1,4 @@
-package conferenza;
+package entity.conferenza;
 
 import java.sql.Date;
 
