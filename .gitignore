@@ -31,3 +31,5 @@ Codice/out/*
 .project
 .classpath
 .class
+.idea
+.out
