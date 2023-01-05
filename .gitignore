@@ -31,3 +31,7 @@ Codice/out/*
 .project
 .classpath
 .class
+.idea
+.out/*
+out/production/*
+OO-BD-22-23.iml
