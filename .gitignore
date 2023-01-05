@@ -32,4 +32,4 @@ Codice/out/*
 .classpath
 .class
 .idea
-.out
+.out/*
