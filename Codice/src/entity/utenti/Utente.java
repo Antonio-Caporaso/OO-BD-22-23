@@ -1,4 +1,4 @@
-package utenti;
+package entity.utenti;
 
 import java.util.Date;
 

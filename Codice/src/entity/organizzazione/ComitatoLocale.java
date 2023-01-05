@@ -1,4 +1,4 @@
-package organizzazione;
+package entity.organizzazione;
 
 class ComitatoLocale extends Comitato {
 

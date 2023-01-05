@@ -1,4 +1,4 @@
-package utenti;
+package entity.utenti;
 
 class Partecipante extends Utente{
 }
