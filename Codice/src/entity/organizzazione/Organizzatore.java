@@ -1,6 +1,6 @@
 package entity.organizzazione;
 
-import utenti.Utente;
+import entity.utenti.Utente;
 
 class Organizzatore extends Utente {
 

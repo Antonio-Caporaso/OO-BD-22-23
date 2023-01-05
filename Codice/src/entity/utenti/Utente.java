@@ -2,7 +2,7 @@ package entity.utenti;
 
 import java.util.Date;
 
-import organizzazione.Ente;
+import entity.organizzazione.Ente;
 
 public class Utente {
     private String titolo;
