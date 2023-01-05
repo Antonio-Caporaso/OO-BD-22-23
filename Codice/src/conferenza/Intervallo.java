@@ -27,9 +27,8 @@ public class Intervallo {
 	public void setOraFine(Date oraFine) {
 		this.oraFine = oraFine;
 	}
-	//modifica del commento di prova
+//modifica in main
 	
-	//asdasdsadasdassa
 	
 	
 
