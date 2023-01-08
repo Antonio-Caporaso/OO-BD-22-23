@@ -1,13 +1,27 @@
 package entity.conferenza;
 
+import java.util.Set;
+
 public class Sede {
 	
 	private String nomeSede;
 	private String indirizzo;
-	private int capacità;
-	private Boolean disponibilità; //utilizziamo gli accenti per definire gli attributi?
+	private int capacita;
+	private Boolean disponibilita; //utilizziamo gli accenti per definire gli attributi?
 	private double costoAffitto;
-	
+	private Set<Sala> sale;
+
+	//Main constructor
+	public Sede(String nomeSede, String indirizzo, int capacita, Boolean disponibilita, double costoAffitto, Set<Sala> sale) {
+		this.nomeSede = nomeSede;
+		this.indirizzo = indirizzo;
+		this.capacita = this.capacita;
+		this.disponibilita = disponibilita;
+		this.costoAffitto = costoAffitto;
+		this.sale = sale;
+	}
+
+	//Methods getter and setter
 	public String getNomeSede() {
 		return nomeSede;
 	}
@@ -20,17 +34,17 @@ public class Sede {
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
 	}
-	public int getCapacità() {
-		return capacità;
+	public int getCapacita() {
+		return capacita;
 	}
-	public void setCapacità(int capacità) {
-		this.capacità = capacità;
+	public void setCapacita(int capacita) {
+		this.capacita = capacita;
 	}
-	public Boolean getDisponibilità() {
-		return disponibilità;
+	public Boolean getDisponibilita() {
+		return disponibilita;
 	}
-	public void setDisponibilità(Boolean disponibilità) {
-		this.disponibilità = disponibilità;
+	public void setDisponibilita(Boolean disponibilita) {
+		this.disponibilita = disponibilita;
 	}
 	public double getCostoAffitto() {
 		return costoAffitto;
@@ -38,9 +52,12 @@ public class Sede {
 	public void setCostoAffitto(double costoAffitto) {
 		this.costoAffitto = costoAffitto;
 	}
-	
-	
-	
-	
 
+	public Set<Sala> getSale() {
+		return sale;
+	}
+
+	public void setSale(Set<Sala> sale) {
+		this.sale = sale;
+	}
 }
