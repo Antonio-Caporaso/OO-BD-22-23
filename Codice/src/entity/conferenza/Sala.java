@@ -5,6 +5,7 @@ public class Sala {
 	private String nomeSala;
 	private String capacità;
 	private Boolean prenotata;
+	private Sede sede;
 	
 	
 	public String getNomeSala() {
@@ -25,9 +26,12 @@ public class Sala {
 	public void setPrenotata(Boolean prenotata) {
 		this.prenotata = prenotata;
 	}
-	
-	
-	
-	
 
+	public Sede getSede() {
+		return sede;
+	}
+
+	public void setSede(Sede sede) {
+		this.sede = sede;
+	}
 }
