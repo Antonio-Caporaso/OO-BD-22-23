@@ -27,7 +27,7 @@ public class Intervallo {
 	public void setOraFine(Date oraFine) {
 		this.oraFine = oraFine;
 	}
-//modifica in main
+
 	
 	
 	
