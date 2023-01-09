@@ -1,4 +1,4 @@
 package entity.utenti;
 
-class Chair extends Partecipante{
+public class Chair extends Partecipante{
 }
