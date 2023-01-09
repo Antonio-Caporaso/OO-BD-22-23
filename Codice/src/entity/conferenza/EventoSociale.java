@@ -27,8 +27,5 @@ public class EventoSociale {
 	public void setOrario(Date orario) {
 		this.orario = orario;
 	}
-	
-	
-	//
 
 }
