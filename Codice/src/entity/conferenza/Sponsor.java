@@ -7,6 +7,7 @@ public class Sponsor {
 	private String numeroTelefono;
 	private String tipoSponsor;
 	private String email;
+	private Sponsorizzazione dettagliSponsor;
 	
 	public String getNomeSponsor() {
 		return nomeSponsor;
@@ -38,6 +39,12 @@ public class Sponsor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 
+	public Sponsorizzazione getDettagliSponsor() {
+		return dettagliSponsor;
+	}
+
+	public void setDettagliSponsor(Sponsorizzazione dettagliSponsor) {
+		this.dettagliSponsor = dettagliSponsor;
+	}
 }
