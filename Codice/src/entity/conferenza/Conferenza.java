@@ -12,7 +12,7 @@ public class Conferenza {
 	private String descrizione;
 	private Set<Sponsor> sponsors;
 	private Sede sede;
-	private Programma programma;
+	private ProgrammaConferenza programmaConferenza;
 	private Set<Ente> enti;
 	//private Visibilita visibilita; //Potremmo fare una classe esterna per gestire la visibilità della conferenza
 
@@ -26,14 +26,14 @@ public class Conferenza {
 	}
 
 	// Main constructor
-	public Conferenza(String nomeConferenza, Date dataInizio, Date dataFine, String descrizione, Set<Sponsor> sponsors, Sede sede, Programma programma, Set<Ente> enti /*, Visibilita visibilita*/) {
+	public Conferenza(String nomeConferenza, Date dataInizio, Date dataFine, String descrizione, Set<Sponsor> sponsors, Sede sede, ProgrammaConferenza programmaConferenza, Set<Ente> enti /*, Visibilita visibilita*/) {
 		this.nomeConferenza = nomeConferenza;
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
 		this.descrizione = descrizione;
 		this.sponsors = sponsors;
 		this.sede = sede;
-		this.programma = programma;
+		this.programmaConferenza = programmaConferenza;
 		this.enti = enti ;
 		//this.visibilita = visibilita;
 	}
@@ -74,14 +74,6 @@ public class Conferenza {
 		return sponsors;
 	}
 
-	public void setSponsors(Set<Sponsor> sponsors) {
-		this.sponsors = sponsors;
-	}
-
-	public void addSponsor(Sponsor sponsor) {
-		sponsors.add(sponsor);
-	}
-
 	public Sede getSede() {
 		return sede;
 	}
@@ -90,19 +82,21 @@ public class Conferenza {
 		this.sede = sede;
 	}
 
-	public Programma getProgramma() {
-		return programma;
+	public Programma getProgrammaConferenza() {
+		return programmaConferenza;
 	}
 
-	public void setProgramma(Programma programma) {
-		this.programma = programma;
+	public void setProgrammaConferenza(ProgrammaConferenza programmaConferenza) {
+		this.programmaConferenza = programmaConferenza;
 	}
 
 	public Set<Ente> getEnti() {
 		return enti;
 	}
-
-	public void setEnti(Set<Ente> enti) {
-		this.enti = enti;
+	public void addSponsor(Sponsor sponsor) {
+		sponsors.add(sponsor);
+	}
+	public void addEnte(Ente ente) {
+		enti.add(ente);
 	}
 }
