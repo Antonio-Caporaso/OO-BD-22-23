@@ -1,4 +1,4 @@
 package entity.utenti;
 
-class Speaker extends Partecipante{
+public class Speaker extends Partecipante{
 }
