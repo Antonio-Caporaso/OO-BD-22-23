@@ -57,7 +57,7 @@ public class Sede {
 		return sale;
 	}
 
-	public void setSale(Set<Sala> sale) {
-		this.sale = sale;
+	public void addSala(Sala sala) {
+		sale.add(sala);
 	}
 }
