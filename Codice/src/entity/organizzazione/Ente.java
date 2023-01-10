@@ -75,7 +75,7 @@ public class Ente {
 			comitatiNominati.add(comitato);
 	}
 
-	void showEntiNominati(){
+	void showComitatiNominati(){
 		Iterator<Comitato> i = comitatiNominati.iterator();
 		while(i.hasNext()) {
 			Comitato com = (Comitato) i.next();
