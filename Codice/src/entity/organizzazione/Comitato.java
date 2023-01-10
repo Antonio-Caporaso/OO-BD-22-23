@@ -1,15 +1,16 @@
 package entity.organizzazione;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 class Comitato {
 	private Organizzatore responsabile;
-	private Set<Organizzatore> membri;
+	private LinkedList<Organizzatore> membri;
 
 	public Comitato(){
-		membri = new HashSet<>();
+		membri = new LinkedList<Organizzatore>();
 	}
 	public Comitato(Organizzatore responsabile){
-		membri = new HashSet<>();
+		membri = new LinkedList<Organizzatore>();
 		this.responsabile=responsabile;
 	}
 	public Organizzatore getResponsabile(){
