@@ -56,4 +56,14 @@ public class Utente {
     public void setDataRegistrazione(Date dataRegistrazione) {
         this.dataRegistrazione = dataRegistrazione;
     }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "titolo='" + titolo + '\'' +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                ", istituzione=" + istituzione;
+    }
 }

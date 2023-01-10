@@ -3,6 +3,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 class Comitato {
+	private Ente nominatoDa;
 	private Organizzatore responsabile;
 	private LinkedList<Organizzatore> membri;
 
@@ -13,18 +14,25 @@ class Comitato {
 		membri = new LinkedList<Organizzatore>();
 		this.responsabile=responsabile;
 	}
+	public void setResponsabile(Organizzatore responsabile){
+		this.responsabile = responsabile;
+	}
 	public Organizzatore getResponsabile(){
 		return responsabile;
 	}
-	public void setResponsabile(Organizzatore responsabile){
-		this.responsabile=responsabile;
+
+	public void setNominatoDa(Ente nominatoDa) {
+		this.nominatoDa = nominatoDa;
+		nominatoDa.nomina(this);
 	}
 
-	public void addResponsabile(){
-		membri.add(this.responsabile);
+	public Ente getNominatoDa() {
+		return nominatoDa;
 	}
 
-	public void addMembro(Organizzatore org){
-		membri.add(org);
+	public void addMembro(Organizzatore organizzatore){
+		if(!membri.contains(organizzatore))
+			membri.add(organizzatore);
 	}
+
 }

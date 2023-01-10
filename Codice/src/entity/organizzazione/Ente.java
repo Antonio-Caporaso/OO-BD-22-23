@@ -1,11 +1,14 @@
 package entity.organizzazione;
 
+import java.util.ArrayList;
+
 public class Ente {
 	private String nomeEnte;
 	private String tipologia;
 	private String indirizzo;
 	private String telefono;
 	private String email;
+	private ArrayList<Comitato> nomina;
 	
 	public Ente() {	}
 	
@@ -16,6 +19,7 @@ public class Ente {
 	public Ente(String nomeEnte, String tipologia) {
 		this.setNomeEnte(nomeEnte);
 		this.setTipologia(tipologia);
+		this.nomina = new ArrayList<Comitato>();
 	}
 	
 	public String getNomeEnte() {
@@ -67,6 +71,7 @@ public class Ente {
 	}
 
 	void nomina(Comitato comitato){
-
+		if(!nomina.contains(comitato))
+			nomina.add(comitato);
 	}
 }
