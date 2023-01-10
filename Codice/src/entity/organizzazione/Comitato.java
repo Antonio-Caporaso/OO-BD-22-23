@@ -1,5 +1,6 @@
 package entity.organizzazione;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 class Comitato {
@@ -23,7 +24,7 @@ class Comitato {
 
 	public void setNominatoDa(Ente nominatoDa) {
 		this.nominatoDa = nominatoDa;
-		nominatoDa.nomina(this);
+		nominatoDa.addComitatiNominati(this);
 	}
 
 	public Ente getNominatoDa() {
@@ -35,4 +36,11 @@ class Comitato {
 			membri.add(organizzatore);
 	}
 
+	public void showMembri(){
+		Iterator<Organizzatore> i = membri.iterator();
+		while(i.hasNext()){
+			Organizzatore org = (Organizzatore) i.next();
+			System.out.println(org.toString());
+		}
+	}
 }

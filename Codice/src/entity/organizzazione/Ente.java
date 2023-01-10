@@ -1,6 +1,7 @@
 package entity.organizzazione;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Ente {
 	private String nomeEnte;
@@ -8,7 +9,7 @@ public class Ente {
 	private String indirizzo;
 	private String telefono;
 	private String email;
-	private ArrayList<Comitato> nomina;
+	private ArrayList<Comitato> comitatiNominati;
 	
 	public Ente() {	}
 	
@@ -19,7 +20,7 @@ public class Ente {
 	public Ente(String nomeEnte, String tipologia) {
 		this.setNomeEnte(nomeEnte);
 		this.setTipologia(tipologia);
-		this.nomina = new ArrayList<Comitato>();
+		this.comitatiNominati = new ArrayList<Comitato>();
 	}
 	
 	public String getNomeEnte() {
@@ -64,14 +65,21 @@ public class Ente {
 	
 	@Override
 	public String toString() {
-		String details = "Ente: "+this.getNomeEnte()+", tipologia: " + this.getTipologia() +", indirizzo: "
+		return "Ente: "+this.getNomeEnte()+", tipologia: " + this.getTipologia() +", indirizzo: "
 				+ this.getIndirizzo() +", telefono: " + this.getTelefono() +", email: "
 				+ this.getEmail();
-		return details;
 	}
 
-	void nomina(Comitato comitato){
-		if(!nomina.contains(comitato))
-			nomina.add(comitato);
+	void addComitatiNominati(Comitato comitato){
+		if(!comitatiNominati.contains(comitato))
+			comitatiNominati.add(comitato);
+	}
+
+	void showEntiNominati(){
+		Iterator<Comitato> i = comitatiNominati.iterator();
+		while(i.hasNext()) {
+			Comitato com = (Comitato) i.next();
+			System.out.println(com.toString());
+		}
 	}
 }
