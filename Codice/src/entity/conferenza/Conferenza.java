@@ -16,9 +16,6 @@ public class Conferenza {
 	private Set<Ente> enti;
 	//private Visibilita visibilita; //Potremmo fare una classe esterna per gestire la visibilità della conferenza
 
-
-
-
 	// Default constructor
 	public Conferenza() {
 		sponsors = new HashSet<>();

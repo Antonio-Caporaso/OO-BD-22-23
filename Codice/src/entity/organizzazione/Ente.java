@@ -1,9 +1,13 @@
 package entity.organizzazione;
 
+import entity.conferenza.Conferenza;
+
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Ente {
+	private LinkedList<Conferenza> conferenzeOrganizzate;
 	private String nomeEnte;
 	private String tipologia;
 	private String indirizzo;
@@ -22,7 +26,12 @@ public class Ente {
 		this.setTipologia(tipologia);
 		this.comitatiNominati = new ArrayList<Comitato>();
 	}
-	
+	public void addConferenza(Conferenza conferenza){
+		if(!conferenzeOrganizzate.contains(conferenza)) {
+			conferenzeOrganizzate.add(conferenza);
+			conferenza.addEnte(this);
+		}
+	}
 	public String getNomeEnte() {
 		return nomeEnte;
 	}
@@ -82,4 +91,5 @@ public class Ente {
 			System.out.println(com.toString());
 		}
 	}
+
 }
