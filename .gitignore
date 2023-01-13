@@ -12,6 +12,8 @@
 *.dvi
 *.ilg
 *.ind
+*.classpath
+*.project
 *.out
 *.bbl
 *.blg
@@ -19,6 +21,7 @@
 *.fls
 ./Capitoli/Progettazione_Concettuale.aux
 .metedata/
+/Codice/classes/*
 Codice/.idea/*
 Codice/.classpath
 Codice/.gitignore
