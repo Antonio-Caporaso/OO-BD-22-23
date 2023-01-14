@@ -18,8 +18,6 @@ public class Main extends Application {
             loginStage.getIcons().add(icon);
             loginStage.setTitle("Conferentia");
             Scene scene =new Scene(root);
-//            loginStage.setWidth(1280);
-//            loginStage.setHeight(720);
             loginStage.setResizable(false);
             loginStage.setScene(scene);
             loginStage.show();
