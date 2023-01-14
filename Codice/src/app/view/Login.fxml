@@ -21,19 +21,19 @@
             <Font name="Arial" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameTextField" layoutX="142.0" layoutY="161.0" />
-      <PasswordField fx:id="passwordTextField" layoutX="142.0" layoutY="240.0" />
+      <TextField fx:id="usernameTextField" layoutX="142.0" layoutY="163.0" />
+      <PasswordField fx:id="passwordTextField" layoutX="142.0" layoutY="245.0" />
       <Label layoutX="35.0" layoutY="244.0" text="Password">
          <font>
             <Font name="Arial" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="loginButton" layoutX="38.0" layoutY="362.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="37.0" prefWidth="104.0" text="Login">
+      <Button fx:id="loginButton" layoutX="35.0" layoutY="362.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="37.0" prefWidth="104.0" text="Login">
          <font>
             <Font name="Arial" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="registrazioneButton" layoutX="217.0" layoutY="362.0" mnemonicParsing="false" onAction="#registrazioneButtonOnAction" text="Registrati">
+      <Button fx:id="registrazioneButton" layoutX="190.0" layoutY="362.0" mnemonicParsing="false" onAction="#registrazioneButtonOnAction" text="Registrati">
          <font>
             <Font name="Arial" size="20.0" />
          </font>
