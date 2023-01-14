@@ -1,5 +1,5 @@
-import dbConfig.*;
 import java.sql.*;
+import dbConfig.DBConnection;
 public class BusinessLogic {
 
 	public static void main(String[] args) {
