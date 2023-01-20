@@ -1,5 +1,9 @@
 package Model.conferenza;
 
+import Model.utenti.Speaker;
+
+import java.util.Date;
+
 public class Intervento {
     private Date orarioIntervento;
     private String estratto;

@@ -11,7 +11,7 @@ public class Sede {
     private String cap;
     private String telefono;
     private int capacita;
-    private boolean availability ;
+    private boolean availability;
     private double costoAffitto;
     private HashSet<Sala> sale;
     private HashSet<Conferenza> conferenze;
@@ -32,48 +32,64 @@ public class Sede {
     public String getNomeSede() {
         return nomeSede;
     }
+
     public void setNomeSede(String nomeSede) {
         this.nomeSede = nomeSede;
     }
+
     public String getIndirizzo() {
         return indirizzo;
     }
+
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
     }
+
     public int getCapacita() {
         return capacita;
     }
+
     public void setCapacita(int capacita) {
         this.capacita = capacita;
     }
+
     public boolean getAvailability() {
         return availability;
     }
+
     public void setAvailability(boolean availability) {
         this.availability = availability;
     }
+
     public double getCostoAffitto() {
         return costoAffitto;
     }
+
     public void setCostoAffitto(double costoAffitto) {
         this.costoAffitto = costoAffitto;
     }
+
     public String getTelefono() {
         return telefono;
     }
+
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
     public String getCity() {
         return city;
     }
+
     public void setCity(String city) {
         this.city = city;
     }
+
     public String getCap() {
         return cap;
     }
+
     public void setCap(String cap) {
         this.cap = cap;
     }
+}

@@ -1,4 +1,6 @@
 package Model.organizzazione;
+import Exceptions.ExistingMemberException;
+
 import java.util.HashSet;
 
 abstract class Comitato {

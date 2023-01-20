@@ -1,5 +1,7 @@
 package Model.conferenza;
 
+import java.util.Date;
+
 public class EventoSociale {
 
     private String tipologiaEvento;

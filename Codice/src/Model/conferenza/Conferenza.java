@@ -1,4 +1,12 @@
 package Model.conferenza;
+
+import Model.organizzazione.ComitatoLocale;
+import Model.organizzazione.ComitatoScientifico;
+import Model.organizzazione.Ente;
+import Model.organizzazione.Sponsor;
+
+import java.util.Date;
+
 public class Conferenza {
     private Date dataInizio;
     private Date dataFine;
@@ -57,7 +65,6 @@ public class Conferenza {
     }
     public void setSede(Sede sede) {
         this.sede = sede;
-        sede.addConferenza(this);
     }
     public Sessione[] getSessioni() {
         return sessioni;

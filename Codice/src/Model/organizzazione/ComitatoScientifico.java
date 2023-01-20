@@ -1,7 +1,4 @@
 package Model.organizzazione;
+public class ComitatoScientifico extends Comitato {
 
-public class ComitatoScientifico {
-    public class ComitatoScientifico extends Comitato {
-
-    }
 }
