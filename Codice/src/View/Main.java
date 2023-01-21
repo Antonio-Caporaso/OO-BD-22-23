@@ -25,7 +25,7 @@ public class Main extends Application {
             // Passiamo ai controller i riferimento delle classi model
             Scene scene = new Scene(root);
 
-            stage.getIcons().add(new Image("View/Resources/Logo.jpg"));
+            stage.getIcons().add(new Image("View/Resources/speech.png"));
             stage.setTitle("Conference Manager");
             stage.setScene(scene);
             stage.show();
