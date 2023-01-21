@@ -22,6 +22,7 @@ public class Main extends Application {
 
             // Ottengo un riferimento al controller
             LoginController controller = loader.getController();
+            // Passiamo ai controller i riferimento delle classi model
             Scene scene = new Scene(root);
 
             stage.getIcons().add(new Image("View/Resources/Logo.jpg"));
