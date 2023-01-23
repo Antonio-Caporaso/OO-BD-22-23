@@ -9,7 +9,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.LoginController">
+<?import javafx.scene.control.PasswordField?>
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller">
    <children>
       <ImageView fitHeight="412.0" fitWidth="639.0" pickOnBounds="true">
          <image>
@@ -27,7 +28,7 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="usernametxt" layoutX="114.0" layoutY="3.0" prefHeight="24.0" prefWidth="171.0" />
+                        <TextField fx:id="usernameTxt" layoutX="114.0" layoutY="5.0" prefHeight="24.0" prefWidth="171.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -40,11 +41,12 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="usernametxt1" layoutX="114.0" layoutY="2.0" prefHeight="24.0" prefWidth="171.0" />
+                  <PasswordField fx:id="passwordTxt" layoutX="114.0" layoutY="2.0" prefHeight="24.0" prefWidth="171.0" />
                </children>
             </AnchorPane>
-            <Button fx:id="accedibtn" layoutX="15.0" layoutY="282.0" mnemonicParsing="false" onAction="#validate" prefHeight="33.0" prefWidth="285.0" text="Accedi" />
+            <Button fx:id="accediBtn" layoutX="167.0" layoutY="282.0" mnemonicParsing="false" onAction="#validate" prefHeight="33.0" prefWidth="133.0" text="Accedi" />
             <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="17.0" layoutY="138.0" prefHeight="21.0" prefWidth="285.0" textAlignment="RIGHT" textFill="RED" />
+            <Button fx:id="annullaBtn" layoutX="14.0" layoutY="282.0" mnemonicParsing="false" onAction="#doAnnulla" prefHeight="33.0" prefWidth="133.0" text="Annulla" />
          </children>
       </AnchorPane>
    </children>

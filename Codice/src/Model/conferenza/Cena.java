@@ -1,4 +1,6 @@
 package Model.conferenza;
 
-public class Cena {
+import jdk.jfr.Event;
+
+public class Cena extends EventoSociale {
 }

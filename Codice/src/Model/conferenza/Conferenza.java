@@ -18,6 +18,18 @@ public class Conferenza {
     private Sede sede;
     private Sessione[] sessioni;
 
+    public Conferenza(Date dataInizio, Date dataFine, String descrizione, Ente[] organizzataDa, Sponsor[] sponsorizzataDa, ComitatoLocale comitatoLocale, ComitatoScientifico comitatoScientifico, Sede sede, Sessione[] sessioni) {
+        this.dataInizio = dataInizio;
+        this.dataFine = dataFine;
+        this.descrizione = descrizione;
+        this.organizzataDa = organizzataDa;
+        this.sponsorizzataDa = sponsorizzataDa;
+        this.comitatoLocale = comitatoLocale;
+        this.comitatoScientifico = comitatoScientifico;
+        this.sede = sede;
+        this.sessioni = sessioni;
+    }
+
     public Date getDataInizio() {
         return dataInizio;
     }

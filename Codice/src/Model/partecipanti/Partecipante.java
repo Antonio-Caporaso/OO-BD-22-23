@@ -1,35 +1,22 @@
-package Model.organizzazione;
-
-import Exceptions.ExistingMemberException;
+package Model.partecipanti;
 
 import java.util.Objects;
 
-class Organizzatore {
+public class Partecipante {
     private String titolo;
     private String cognome;
     private String nome;
     private String istituzione;
     private String email;
-    private Comitato appartieneA;
 
-    public Organizzatore() {
-    }
+    public Partecipante() {}
 
-    public Organizzatore(String titolo, String cognome, String nome, String istituzione, String email, Comitato appartieneA) {
+    public Partecipante(String titolo, String cognome, String nome, String istituzione, String email) {
         this.titolo = titolo;
         this.cognome = cognome;
         this.nome = nome;
         this.istituzione = istituzione;
         this.email = email;
-        this.appartieneA = appartieneA;
-    }
-
-    public void setAppartieneA(Comitato appartieneA) throws ExistingMemberException {
-        this.appartieneA = appartieneA;
-        appartieneA.add(this);
-    }
-    public Comitato getAppartieneA(){
-        return appartieneA;
     }
 
     public String getTitolo() {
@@ -77,13 +64,12 @@ class Organizzatore {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Organizzatore that = (Organizzatore) o;
+        Partecipante that = (Partecipante) o;
 
         if (!Objects.equals(cognome, that.cognome)) return false;
         if (!Objects.equals(nome, that.nome)) return false;
         if (!Objects.equals(istituzione, that.istituzione)) return false;
-        if (!Objects.equals(email, that.email)) return false;
-        return Objects.equals(appartieneA, that.appartieneA);
+        return Objects.equals(email, that.email);
     }
 
     @Override
@@ -92,7 +78,6 @@ class Organizzatore {
         result = 31 * result + (nome != null ? nome.hashCode() : 0);
         result = 31 * result + (istituzione != null ? istituzione.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (appartieneA != null ? appartieneA.hashCode() : 0);
         return result;
     }
 }

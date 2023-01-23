@@ -3,18 +3,12 @@ package Model.conferenza;
 import java.util.Date;
 
 public class Intervallo {
-
-    private String tipologiaIntervento;
     private Date oraInizio;
     private Date oraFine;
 
-
-    public String getTipologiaIntervento() {
-        return tipologiaIntervento;
-    }
-
-    public void setTipologiaIntervento(String tipologiaIntervento) {
-        this.tipologiaIntervento = tipologiaIntervento;
+    public Intervallo(Date oraInizio, Date oraFine) {
+        this.oraInizio = oraInizio;
+        this.oraFine = oraFine;
     }
 
     public Date getOraInizio() {
