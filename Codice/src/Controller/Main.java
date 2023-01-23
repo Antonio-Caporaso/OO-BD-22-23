@@ -1,4 +1,4 @@
-package View;
+package Controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         //Definiamo oggetti delle classi modello da passare ai vari controller
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Login.fxml"));
             HBox root = (HBox) loader.load();
 
             // Ottengo un riferimento al controller

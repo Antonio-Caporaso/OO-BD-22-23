@@ -1,4 +1,4 @@
-package View;
+package Controller;
 /*
  * Controller Class: contiene la logica dell'intera GUI
  */
@@ -21,6 +21,8 @@ public class Controller {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
+    @FXML
+    private Button annullaBtn;
     @FXML
     private Label errorLabel;
     @FXML // fx:id="accediBtn"
