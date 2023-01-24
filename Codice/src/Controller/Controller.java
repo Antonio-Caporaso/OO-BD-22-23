@@ -2,38 +2,31 @@ package Controller;
 /*
  * Controller Class: contiene la logica dell'intera GUI
  */
-
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import javafx.stage.Stage;
 public class Controller {
-
+    private Stage primaryStage;
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
-
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
-
     @FXML
     private Button annullaBtn;
     @FXML
     private Label errorLabel;
     @FXML // fx:id="accediBtn"
     private Button accediBtn; // Value injected by FXMLLoader
-
     @FXML // fx:id="usernameTxt"
     private TextField usernameTxt; // Value injected by FXMLLoader
-
     @FXML // fx:id="usernametxt1"
     private PasswordField passwordTxt; // Value injected by FXMLLoader
-
     @FXML
     void validate(ActionEvent event) {
         if(usernameTxt.getText().isBlank() || passwordTxt.getText().isBlank())
@@ -42,11 +35,14 @@ public class Controller {
             //validateLogin();
         }
     }
-
     @FXML
     void doAnnulla(ActionEvent event) {
         usernameTxt.setText("");
         passwordTxt.setText("");
+        errorLabel.setText("");
+    }
+    public void setStage(Stage stage) {
+        this.primaryStage = stage;
     }
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -55,5 +51,4 @@ public class Controller {
         assert passwordTxt != null : "fx:id=\"passwordTxt\" was not injected: check your FXML file 'Login.fxml'.";
 
     }
-
 }
