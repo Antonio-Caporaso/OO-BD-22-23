@@ -26,6 +26,7 @@ public class Main extends Application {
             stage.getIcons().add(new Image("View/Resources/speech.png"));
             stage.setTitle("Conference Manager");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         }catch(Exception e){
             e.printStackTrace();
