@@ -43,7 +43,7 @@ public class Controller {
     void doBackToLoginScene(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Login.fxml"));
-            HBox root = loader.load();
+            root = loader.load();
             primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             loginScene = new Scene(root);
             primaryStage.setScene(loginScene);
