@@ -3,6 +3,7 @@ package Model.conferenza;
 import Model.partecipanti.Speaker;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Intervento {
     private Date orarioIntervento;
@@ -37,5 +38,18 @@ public class Intervento {
 
     public void setEstratto(String estratto) {
         this.estratto = estratto;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Intervento that = (Intervento) o;
+        return Objects.equals(orarioIntervento, that.orarioIntervento) && Objects.equals(estratto, that.estratto) && Objects.equals(speaker, that.speaker);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orarioIntervento, estratto, speaker);
     }
 }

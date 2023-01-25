@@ -3,7 +3,15 @@ package Model.conferenza;
 import java.util.Date;
 
 public class CoffeeBreak extends Intervallo{
-    public CoffeeBreak(Date oraInizio, Date oraFine) {
+    private Date durata;
+    public CoffeeBreak(Date oraInizio, Date oraFine, Date durata) {
         super(oraInizio, oraFine);
+        this.durata = durata;
+    }
+    public Date getDurata() {
+        return durata;
+    }
+    public void setDurata(Date durata) {
+        this.durata = durata;
     }
 }

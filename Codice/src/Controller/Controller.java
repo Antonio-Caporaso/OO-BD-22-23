@@ -64,7 +64,7 @@ public class Controller {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Demo2Finestra.fxml"));
             root=loader.load();
             primaryStage=(Stage)((Node) event.getSource()).getScene().getWindow();
-            mainScene= new Scene(root);
+            mainScene = new Scene(root);
             primaryStage.setScene(mainScene);
             primaryStage.show();
         } catch (Exception e){

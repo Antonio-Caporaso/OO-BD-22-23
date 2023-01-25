@@ -1,5 +1,7 @@
 package Model.conferenza;
 
+import Model.partecipanti.Chair;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -7,6 +9,8 @@ public class Sessione {
     private Date dataInizio;
     private Date dataFine;
     private String titolo;
+    private Sala locazione;
+    private Chair coordinatore;
 
     public Sessione(){}
     public Sessione(Date dataInizio, Date dataFine, String titolo) {
@@ -37,6 +41,23 @@ public class Sessione {
 
     public void setTitolo(String titolo) {
         this.titolo = titolo;
+    }
+
+    public Sala getLocazione() {
+        return locazione;
+    }
+
+    public void setLocazione(Sala locazione) {
+        this.locazione = locazione;
+    }
+
+    public Chair getCoordinatore() {
+        return coordinatore;
+    }
+
+    public void setCoordinatore(Chair coordinatore) {
+        this.coordinatore = coordinatore;
+        coordinatore.setGestisce(this);
     }
 
     @Override
