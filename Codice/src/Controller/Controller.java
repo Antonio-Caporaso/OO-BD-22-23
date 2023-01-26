@@ -39,13 +39,13 @@ public class Controller {
     private Button backButton1;
     @FXML
     void doBackToLoginScene(ActionEvent event) {
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Login.fxml"));
-            root = loader.load();
-            primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            loginScene = new Scene(root);
-            primaryStage.setScene(loginScene);
-            primaryStage.show();
+            /*Si chiama l'evento di navigazione passando l'FXML della scena di login.
+            Si recupera la finestra principale corrente utilizzando il metodo getScene().getWindow()
+             e la passa all'istanza della classe di navigazione utilizzando il metodo setStage().*/
+            NavigationController.getInstance().setStage((Stage) backButton1.getScene().getWindow());
+            NavigationController.getInstance().loadScene("/View/FXML/Login.fxml");
         }catch (Exception e){
             e.printStackTrace();
         }
