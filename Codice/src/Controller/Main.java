@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
 public class Main extends Application {
     public static void main(String[]args){
         launch(args);
@@ -18,7 +19,7 @@ public class Main extends Application {
             HBox root = (HBox) loader.load();
 
             // Ottengo un riferimento al controller
-            Controller controller = loader.getController();
+            LoginController controller = loader.getController();
             controller.setPrimaryStage(stage);
 
             // Settaggio della scena
