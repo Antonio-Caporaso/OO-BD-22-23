@@ -10,43 +10,31 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
-      <ImageView fitHeight="800.0" fitWidth="955.0" pickOnBounds="true">
+      <ImageView fitHeight="720.0" fitWidth="931.0" pickOnBounds="true">
          <image>
             <Image url="@../Resources/Background.png" />
          </image>
       </ImageView>
-      <AnchorPane prefHeight="411.0" prefWidth="315.0">
+      <AnchorPane prefHeight="720.0" prefWidth="349.0">
          <children>
-            <HBox layoutX="17.0" layoutY="347.0" prefHeight="33.0" prefWidth="285.0">
-               <children>
-                  <AnchorPane prefHeight="53.0" prefWidth="285.0">
-                     <children>
-                        <Label alignment="BOTTOM_CENTER" layoutY="4.0" text="Username">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="usernameTxt" layoutX="114.0" layoutY="5.0" prefHeight="24.0" prefWidth="171.0" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </HBox>
-            <HBox prefHeight="33.0" prefWidth="285.0" />
-            <AnchorPane layoutX="15.0" layoutY="403.0" prefHeight="53.0" prefWidth="285.0">
-               <children>
-                  <Label alignment="BOTTOM_CENTER" layoutY="4.0" text="Password">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <PasswordField fx:id="passwordTxt" layoutX="114.0" layoutY="2.0" prefHeight="24.0" prefWidth="171.0" />
-               </children>
-            </AnchorPane>
-            <Button fx:id="accediBtn" layoutX="167.0" layoutY="456.0" mnemonicParsing="false" onAction="#validate" prefHeight="33.0" prefWidth="133.0" text="Accedi" />
-            <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="17.0" layoutY="312.0" prefHeight="21.0" prefWidth="285.0" textAlignment="RIGHT" textFill="RED" />
-            <Button fx:id="annullaBtn" layoutX="14.0" layoutY="456.0" mnemonicParsing="false" onAction="#doAnnulla" prefHeight="33.0" prefWidth="133.0" text="Annulla" />
+            <AnchorPane prefHeight="53.0" prefWidth="285.0" />
+            <Button fx:id="loginButton" layoutX="168.0" layoutY="423.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="33.0" prefWidth="133.0" text="Login" />
+            <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="25.0" layoutY="279.0" prefHeight="21.0" prefWidth="285.0" textAlignment="RIGHT" textFill="RED" />
+            <Button fx:id="registratiButton" layoutX="14.0" layoutY="423.0" mnemonicParsing="false" onAction="#registratiButtonOnAction" prefHeight="33.0" prefWidth="133.0" text="Registrati" />
+            <TextField fx:id="usernameTextField" layoutX="131.0" layoutY="310.0" prefHeight="24.0" prefWidth="171.0" />
+            <Label alignment="BOTTOM_CENTER" layoutX="21.0" layoutY="310.0" text="Username">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="BOTTOM_CENTER" layoutX="24.0" layoutY="359.0" text="Password">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwordTextField" layoutX="131.0" layoutY="360.0" prefHeight="24.0" prefWidth="171.0" />
          </children>
       </AnchorPane>
    </children>
