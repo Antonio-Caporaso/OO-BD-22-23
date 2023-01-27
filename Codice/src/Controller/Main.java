@@ -24,8 +24,8 @@ public class Main extends Application {
 
             // Settaggio della scena
             Scene scene = new Scene(root);
-            stage.getIcons().add(new Image("View/Resources/speech.png"));
-            stage.setTitle("Conference Manager");
+            stage.getIcons().add(new Image("View/Resources/IconAtom.png"));
+            stage.setTitle("Symposium");
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
