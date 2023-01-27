@@ -16,6 +16,7 @@ public class Conferenza {
     private ComitatoLocale comitatoLocale;
     private ComitatoScientifico comitatoScientifico;
     private Sede sede;
+    private float budget;
     private Sessione[] sessioni;
 
     public Conferenza(Date dataInizio, Date dataFine, String descrizione, Ente[] organizzataDa, Sponsor[] sponsorizzataDa, ComitatoLocale comitatoLocale, ComitatoScientifico comitatoScientifico, Sede sede, Sessione[] sessioni) {
@@ -72,6 +73,15 @@ public class Conferenza {
     public void setComitatoScientifico(ComitatoScientifico comitatoScientifico) {
         this.comitatoScientifico = comitatoScientifico;
     }
+
+    public float getBudget() {
+        return budget;
+    }
+
+    public void setBudget(float budget) {
+        this.budget = budget;
+    }
+
     public Sede getSede() {
         return sede;
     }

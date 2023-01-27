@@ -10,7 +10,7 @@ public class Sede {
     private String city;
     private String cap;
     private String telefono;
-    private int capacita;
+    private int capacity;
     private boolean availability;
     private double costoAffitto;
     private HashSet<Sala> sale;
@@ -19,7 +19,7 @@ public class Sede {
     public Sede(String nomeSede, String indirizzo, int capacita, boolean availability, double costoAffitto, HashSet<Sala> sale) {
         this.nomeSede = nomeSede;
         this.indirizzo = indirizzo;
-        this.capacita = capacita;
+        this.capacity = capacita;
         this.availability = availability;
         this.costoAffitto = costoAffitto;
         this.sale = sale;
@@ -46,11 +46,11 @@ public class Sede {
     }
 
     public int getCapacita() {
-        return capacita;
+        return capacity;
     }
 
     public void setCapacita(int capacita) {
-        this.capacita = capacita;
+        this.capacity = capacita;
     }
 
     public boolean getAvailability() {
