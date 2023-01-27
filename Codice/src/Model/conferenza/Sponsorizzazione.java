@@ -3,8 +3,7 @@ package Model.conferenza;
 import java.util.Date;
 
 public class Sponsorizzazione {
-
-    //da capire come si collega con Conferenza e con Sponsor
+    
     private Date inizioSponsor;
     private Date fineSponsor;
     private double contributo;
