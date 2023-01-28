@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Intervento {
+    private int idIntervento;
     private Date orarioIntervento;
     private String estratto;
     private Speaker speaker;
@@ -14,6 +15,14 @@ public class Intervento {
         this.orarioIntervento = orarioIntervento;
         this.estratto = estratto;
         this.speaker = speaker;
+    }
+
+    public int getIdIntervento() {
+        return idIntervento;
+    }
+
+    public void setIdIntervento(int idIntervento) {
+        this.idIntervento = idIntervento;
     }
 
     public void setSpeaker(Speaker speaker){

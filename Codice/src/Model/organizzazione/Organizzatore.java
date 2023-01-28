@@ -5,6 +5,7 @@ import Exceptions.ExistingMemberException;
 import java.util.Objects;
 
 public class Organizzatore {
+    private int idOrganizzatore;
     private String titolo;
     private String cognome;
     private String nome;
@@ -22,6 +23,14 @@ public class Organizzatore {
         this.istituzione = istituzione;
         this.email = email;
         this.appartieneA = appartieneA;
+    }
+
+    public int getIdOrganizzatore() {
+        return idOrganizzatore;
+    }
+
+    public void setIdOrganizzatore(int idOrganizzatore) {
+        this.idOrganizzatore = idOrganizzatore;
     }
 
     public void setAppartieneA(Comitato appartieneA) throws ExistingMemberException {

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 
 abstract class Comitato {
+    private int idComitato;
     private Organizzatore responsabile;
     private HashSet<Organizzatore> membri;
 
@@ -13,6 +14,14 @@ abstract class Comitato {
     public Comitato(Organizzatore responsabile, HashSet<Organizzatore> membri) {
         this.responsabile = responsabile;
         this.membri = membri;
+    }
+
+    public int getIdComitato() {
+        return idComitato;
+    }
+
+    public void setIdComitato(int idComitato) {
+        this.idComitato = idComitato;
     }
 
     void setResponsabile(Organizzatore responsabile){

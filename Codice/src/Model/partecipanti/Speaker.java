@@ -3,6 +3,7 @@ package Model.partecipanti;
 import Model.conferenza.Intervento;
 
 public class Speaker extends Partecipante{
+    private int idSpeaker;
     private Intervento effettua;
     private boolean isKeynote;
 

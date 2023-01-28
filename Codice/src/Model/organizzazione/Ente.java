@@ -3,12 +3,21 @@ package Model.organizzazione;
 import java.util.Objects;
 
 public class Ente {
+    private int idEnte;
     private String nome;
 
     public Ente() {}
 
     public Ente(String nome) {
         this.nome = nome;
+    }
+
+    public int getIdEnte() {
+        return idEnte;
+    }
+
+    public void setIdEnte(int idEnte) {
+        this.idEnte = idEnte;
     }
 
     public String getNome() {

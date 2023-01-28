@@ -3,6 +3,7 @@ package Model.partecipanti;
 import java.util.Objects;
 
 public class Partecipante {
+    private int idPartecipante;
     private String titolo;
     private String cognome;
     private String nome;
@@ -17,6 +18,14 @@ public class Partecipante {
         this.nome = nome;
         this.istituzione = istituzione;
         this.email = email;
+    }
+
+    public int getIdPartecipante() {
+        return idPartecipante;
+    }
+
+    public void setIdPartecipante(int idPartecipante) {
+        this.idPartecipante = idPartecipante;
     }
 
     public String getTitolo() {

@@ -1,9 +1,13 @@
 package Model.conferenza;
 
+import Model.organizzazione.Sponsor;
+
 import java.util.Date;
 
 public class Sponsorizzazione {
 
+    private Sponsor sponsor;
+    private Conferenza conferenza;
     private Date inizioSponsor;
     private Date fineSponsor;
     private double contributo;

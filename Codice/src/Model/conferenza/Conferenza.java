@@ -1,5 +1,6 @@
 package Model.conferenza;
 
+import Model.Utente;
 import Model.organizzazione.ComitatoLocale;
 import Model.organizzazione.ComitatoScientifico;
 import Model.organizzazione.Ente;
@@ -8,6 +9,8 @@ import Model.organizzazione.Sponsor;
 import java.util.Date;
 
 public class Conferenza {
+    private int idConferenza;
+    private Utente proprietario; // fk dell'user che crea conferenza
     private Date dataInizio;
     private Date dataFine;
     private String descrizione;
@@ -29,6 +32,22 @@ public class Conferenza {
         this.comitatoScientifico = comitatoScientifico;
         this.sede = sede;
         this.sessioni = sessioni;
+    }
+
+    public int getIdConferenza() {
+        return idConferenza;
+    }
+
+    public void setIdConferenza(int idConferenza) {
+        this.idConferenza = idConferenza;
+    }
+
+    public Utente getProprietario() {
+        return proprietario;
+    }
+
+    public void setProprietario(Utente proprietario) {
+        this.proprietario = proprietario;
     }
 
     public Date getDataInizio() {

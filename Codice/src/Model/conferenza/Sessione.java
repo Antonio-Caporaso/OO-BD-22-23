@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Sessione {
+    private int idSessione;
     private Date dataInizio;
     private Date dataFine;
     private String titolo;
@@ -17,6 +18,14 @@ public class Sessione {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.titolo = titolo;
+    }
+
+    public int getIdSessione() {
+        return idSessione;
+    }
+
+    public void setIdSessione(int idSessione) {
+        this.idSessione = idSessione;
     }
 
     public Date getDataInizio() {

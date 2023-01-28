@@ -4,7 +4,7 @@ package Model.conferenza;
 import java.util.HashSet;
 
 public class Sede {
-
+    private int idSede;
     private String nomeSede;
     private String indirizzo;
     private String city;
@@ -23,6 +23,14 @@ public class Sede {
         this.availability = availability;
         this.costoAffitto = costoAffitto;
         this.sale = sale;
+    }
+
+    public int getIdSede() {
+        return idSede;
+    }
+
+    public void setIdSede(int idSede) {
+        this.idSede = idSede;
     }
 
     public Sede() {
