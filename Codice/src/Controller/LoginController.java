@@ -14,7 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 public class LoginController {
-    private Stage primaryStage;
+    //private Stage primaryStage;
     @FXML
     private Label errorLabel;
     @FXML // fx:id="loginButton"
