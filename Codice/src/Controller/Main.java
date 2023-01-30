@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.UtenteDAO;
 import DbConfig.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,10 @@ public class Main extends Application {
             System.exit(0);
         }else{
         System.out.println("Connessione OK!");
-        launch(args);
+        //launch(args);
+            UtenteDAO d = new UtenteDAO();
+            String username = "supermimmo";
+            System.out.println(d.getPasswordByUsername(username));
         }
     }
     @Override
