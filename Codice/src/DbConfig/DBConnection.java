@@ -28,7 +28,7 @@ public class DBConnection {
                 //Registrazione del Driver
                 Class.forName("org.postgresql.Driver");
                 // Chiama il Driver Manager e chiedi la connessione postgres
-                conn = DriverManager.getConnection("jdbc:postgresql://oo-bd-instance.ct0ckvilfzkl.eu-central-1.rds.amazonaws.com:5432/oo_bd_22_23","MasterUser",pwd);
+                conn = DriverManager.getConnection("jdbc:postgresql://database-oobd.ct0ckvilfzkl.eu-central-1.rds.amazonaws.com","Master_User",pwd);
             }
         }catch (SQLException | ClassNotFoundException throwables){
             throwables.printStackTrace();
