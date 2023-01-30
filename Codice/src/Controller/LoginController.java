@@ -45,9 +45,9 @@ public class LoginController {
     private void validateLogin(ActionEvent event) {
 //
     }
-    public void setPrimaryStage(Stage stage) {
+   /*public void setPrimaryStage(Stage stage) {
         this.primaryStage = stage;
-    }
+    }*/
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert loginButton != null : "fx:id=\"loginButton\" was not injected: check your FXML file 'Login.fxml'.";
