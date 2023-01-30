@@ -1,15 +1,29 @@
 package Controller;
 
+import DbConfig.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import java.sql.*;
 
 public class Main extends Application {
     public static void main(String[]args){
+
+        Connection conn = null;
+        DBConnection dbConnection;
+        dbConnection = DBConnection.getDBconnection();
+        conn = dbConnection.getConnection();
+
+        if (conn == null) {
+            System.out.println("Connessione NON riuscita!");
+            System.exit(0);
+        }else{
+        System.out.println("Connessione OK!");
         launch(args);
+        }
     }
     @Override
     public void start(Stage stage) throws Exception {
