@@ -20,7 +20,7 @@ public class Main extends Application {
 
             // Ottengo un riferimento al controller
             LoginController controller = loader.getController();
-            controller.setPrimaryStage(stage);
+            //controller.setPrimaryStage(stage);
 
             // Settaggio della scena
             Scene scene = new Scene(root);
