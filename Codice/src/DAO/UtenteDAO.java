@@ -17,10 +17,6 @@ public class UtenteDAO {
             ResultSet result = stm.executeQuery();
             while(result.next()) {
                 pwd = result.getString(1);
-                if(result.wasNull())
-                {
-                    System.out.println("Password assente");
-                }
             }
         }catch (SQLException throwables){
             throwables.printStackTrace();

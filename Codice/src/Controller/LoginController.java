@@ -2,12 +2,10 @@ package Controller;
 /*
  * Controller Class Login
  */
-import java.net.URL;
-import java.util.ResourceBundle;
+
+import DAO.UtenteDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -25,6 +23,7 @@ public class LoginController {
     private TextField usernameTextField; // Value injected by FXMLLoader
     @FXML // fx:id="passwordTextField"
     private PasswordField passwordTextField; // Value injected by FXMLLoader
+    private UtenteDAO userdao;
     @FXML
     void loginButtonOnAction(ActionEvent event) {
         if(usernameTextField.getText().isBlank() || passwordTextField.getText().isBlank())
@@ -43,7 +42,14 @@ public class LoginController {
         }
     }
     private void validateLogin(ActionEvent event) {
-//
+        String username = usernameTextField.getText();
+        String pwd = passwordTextField.getText();
+        userdao = new UtenteDAO();
+        if(pwd.equals(userdao.getPasswordByUsername(username))){
+            NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
+            NavigationController.getInstance().loadScene("../View/FXML/Landing.fxml");
+        }else
+            errorLabel.setText("Password errata");
     }
    /*public void setPrimaryStage(Stage stage) {
         this.primaryStage = stage;
