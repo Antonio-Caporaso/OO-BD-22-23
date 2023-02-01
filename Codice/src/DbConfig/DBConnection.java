@@ -9,7 +9,6 @@ public class DBConnection {
 
     public static DBConnection getDBconnection()
     {
-        // se istanza nulla la crea
         if (dbcon == null)
             dbcon = new DBConnection();
         return dbcon;
