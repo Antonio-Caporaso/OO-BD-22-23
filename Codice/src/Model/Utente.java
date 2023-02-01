@@ -7,12 +7,31 @@ import java.util.Objects;
 
 public class Utente {
     private int idUser;
+    private String titolo;
     private String username;
     private String password;
     private String nome;
     private String cognome;
     private String email;
-    private String istituzione;
+    //private String istituzione;
+
+    public Utente(String nome, String cognome, String titolo, String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.titolo = titolo;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        //this.istituzione = istituzione;
+    }
+
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
+    }
 
     public int getIdUser() {
         return idUser;
@@ -62,13 +81,13 @@ public class Utente {
         this.email = email;
     }
 
-    public String getIstituzione() {
+  /*  public String getIstituzione() {
         return istituzione;
     }
 
     public void setIstituzione(String istituzione) {
         this.istituzione = istituzione;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

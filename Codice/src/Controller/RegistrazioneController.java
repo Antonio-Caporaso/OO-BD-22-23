@@ -1,5 +1,8 @@
 package Controller;
 
+import DAO.UtenteDAO;
+import Exceptions.UtentePresenteException;
+import Model.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -72,6 +75,27 @@ public class RegistrazioneController implements Initializable{
             e.printStackTrace();
         }
     }
+    void registraUtente() throws UtentePresenteException {
+
+        String titoloUtente = titoloChoiceBox.getValue();
+        String emailUtente = emailTextField.getText();
+        String nomeUtente = nomeTextField.getText();
+        String usernameUtente = usernameTextField.getText();
+        String cognomeUtente = cognomeTextField.getText();
+        String passwordUtente = passwordTextField.getText();
+        String conferma = confermaPasswordTextField.getText();
+        if(passwordUtente.equals(conferma)){
+            UtenteDAO dao = new UtenteDAO();
+            Utente newUser = new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente);
+            try{
+                dao.saveUtente(newUser);
+            }catch (UtentePresenteException e){
+                throw e;
+            }
+        }else {
+            //Settare label che notifica che notifica il fatto che le password non corrispondono
+        }
+    }
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
 
@@ -79,10 +103,11 @@ public class RegistrazioneController implements Initializable{
             /*Si chiama l'evento di navigazione passando l'FXML della scena di login.
             Si recupera la finestra principale corrente utilizzando il metodo getScene().getWindow()
              e la passa all'istanza della classe di navigazione utilizzando il metodo setStage().*/
+            registraUtente();
             NavigationController.getInstance().setStage((Stage) confirmButton.getScene().getWindow());
             NavigationController.getInstance().loadScene("/View/FXML/Landing.fxml");
-        }catch (Exception e){
-            e.printStackTrace();
+        }catch (UtentePresenteException e){
+            // Settare label che notifica l'errore
         }
     }
     //serve per inizializzare il controller dopo che l'elemento di root è stato inizializzato

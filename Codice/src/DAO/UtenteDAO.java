@@ -1,13 +1,16 @@
 package DAO;
 
 import DbConfig.DBConnection;
+import Exceptions.UtentePresenteException;
+import Model.Utente;
 
 import java.sql.*;
 
 public class UtenteDAO {
+    Connection conn = null;
+    DBConnection dbCon = null;
     public String getPasswordByUsername(String username){
-        Connection conn = null;
-        DBConnection dbCon = DBConnection.getDBconnection();
+        dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();
         PreparedStatement stm = null;
         String pwd = null;
@@ -22,5 +25,33 @@ public class UtenteDAO {
             throwables.printStackTrace();
         }
         return pwd;
+    }
+    public void saveUtente(Utente utente) throws UtentePresenteException{
+        dbCon = DBConnection.getDBconnection();
+        conn = dbCon.getConnection();
+        int result = 0;
+        PreparedStatement stm = null;
+        try{
+            stm = conn.prepareStatement("SELECT count(*) from utente where username=?");
+            stm.setString(1,utente.getUsername());
+            ResultSet rs= stm.executeQuery();
+            while(rs.next()) {
+                result = rs.getInt(1);
+            }
+            if(result == 0){
+                PreparedStatement query = conn.prepareStatement("INSERT INTO utente VALUES (default,?,?,?,?,?,?)");
+                query.setString(1,utente.getPassword());
+                query.setString(2,utente.getNome());
+                query.setString(3,utente.getCognome());
+                query.setString(4,utente.getTitolo());
+                query.setString(5, utente.getEmail());
+                query.setString(6,utente.getUsername());
+                query.executeUpdate();
+            }else{
+                throw new UtentePresenteException();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
