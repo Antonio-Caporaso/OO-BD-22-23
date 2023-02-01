@@ -174,5 +174,6 @@ create table utente(
 	nome varchar(100),
 	cognome varchar(100),
 	titolo varchar(50),
-	email varchar(100)
+	email varchar(100),
+    username varchar(100) unique
 );
