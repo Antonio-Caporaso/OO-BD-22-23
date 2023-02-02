@@ -65,10 +65,7 @@ public class LoginController implements Initializable{
         }else
             errorLabel.setText("Password errata");
     }
-   /*public void setPrimaryStage(Stage stage) {
-        this.primaryStage = stage;
-    }*/
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
     void initialize() {
         assert loginButton != null : "fx:id=\"loginButton\" was not injected: check your FXML file 'Login.fxml'.";
         assert registratiButton != null : "fx:id=\"registratiButton\" was not injected: check your FXML file 'Login.fxml'.";
@@ -76,7 +73,6 @@ public class LoginController implements Initializable{
         assert passwordTextField != null : "fx:id=\"passwordTextField\" was not injected: check your FXML file 'Login.fxml'.";
 
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         file= new File ("src/View/Resources/Scientists.mp4");
