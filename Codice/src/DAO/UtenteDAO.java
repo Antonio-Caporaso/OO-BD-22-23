@@ -56,7 +56,9 @@ public class UtenteDAO {
         try{
             stm = conn.prepareStatement("SELECT count(*) from utente where username=?");
             stm.setString(1,username);
-            result= (stm.executeQuery().getInt(1) != 0);
+            ResultSet rs= (stm.executeQuery());
+            while(rs.next())
+                result = (rs.getInt(1)==0);
         }catch (SQLException e){
             e.printStackTrace();
         }

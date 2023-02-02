@@ -1,8 +1,4 @@
 package Controller;
-/*
- * Controller Class Login
- */
-
 import DAO.UtenteDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +11,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,14 +19,14 @@ public class LoginController implements Initializable{
     //private Stage primaryStage;
     @FXML
     private Label errorLabel;
-    @FXML // fx:id="loginButton"
-    private Button loginButton; // Value injected by FXMLLoader
-    @FXML // fx:id="loginButton"
-    private Button registratiButton; // Value injected by FXMLLoader
-    @FXML // fx:id="usernameTextField"
-    private TextField usernameTextField; // Value injected by FXMLLoader
-    @FXML // fx:id="passwordTextField"
-    private PasswordField passwordTextField; // Value injected by FXMLLoader
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button registratiButton;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private PasswordField passwordTextField;
     @FXML
     private MediaView mediaView;
     private Media media;
@@ -75,9 +70,9 @@ public class LoginController implements Initializable{
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        file= new File ("src/View/Resources/Scientists.mp4");
-        media= new Media(file.toURI().toString());
-        mediaPlayer=new MediaPlayer(media);
+        file = new File ("src/View/Resources/Scientists.mp4");
+        media = new Media(file.toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();

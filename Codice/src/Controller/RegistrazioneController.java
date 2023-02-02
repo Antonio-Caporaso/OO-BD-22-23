@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.UtenteDAO;
+import Exceptions.BlankFieldException;
 import Exceptions.UtentePresenteException;
 import Model.Utente;
 import javafx.event.ActionEvent;
@@ -12,7 +13,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegistrazioneController implements Initializable{
+public class RegistrazioneController implements Initializable, FormChecker{
     @FXML
     private Button backButton;
     @FXML
@@ -58,18 +59,36 @@ public class RegistrazioneController implements Initializable{
             e.printStackTrace();
         }
     }
-    void registraUtente() throws UtentePresenteException {
-
+    private Utente getUserDetails(){
         String titoloUtente = titoloChoiceBox.getValue();
         String emailUtente = emailTextField.getText();
         String nomeUtente = nomeTextField.getText();
         String usernameUtente = usernameTextField.getText();
         String cognomeUtente = cognomeTextField.getText();
         String passwordUtente = passwordTextField.getText();
+        return new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente);
+    }
+
+    @Override
+    public boolean textFieldsAreBlank() {
+        return titoloChoiceBox.getItems().isEmpty()
+                || emailTextField.getText().isBlank()
+                || nomeTextField.getText().isBlank()
+                || usernameTextField.getText().isBlank()
+                || cognomeTextField.getText().isBlank()
+                || passwordTextField.getText().isBlank();
+    }
+
+    private boolean passwordMatcher(){
+        Utente user = this.getUserDetails();
         String conferma = confermaPasswordTextField.getText();
-        if(passwordUtente.equals(conferma)){
+        return conferma.equals(user.getPassword());
+    }
+
+    void registraUtente() throws UtentePresenteException {
+        if(passwordMatcher()){
             UtenteDAO dao = new UtenteDAO();
-            Utente newUser = new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente);
+            Utente newUser = getUserDetails();
             try{
                 dao.saveUtente(newUser);
             }catch (UtentePresenteException e){
@@ -81,19 +100,16 @@ public class RegistrazioneController implements Initializable{
     }
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
-
-        try {
-            /*Si chiama l'evento di navigazione passando l'FXML della scena di login.
-            Si recupera la finestra principale corrente utilizzando il metodo getScene().getWindow()
-             e la passa all'istanza della classe di navigazione utilizzando il metodo setStage().*/
-            registraUtente();
-            NavigationController.getInstance().setStage((Stage) confirmButton.getScene().getWindow());
-            NavigationController.getInstance().loadScene("/View/FXML/Landing.fxml");
-        }catch (UtentePresenteException e){
-            // Settare label che notifica l'errore
+        if(!textFieldsAreBlank()) {
+            try {
+                registraUtente();
+                NavigationController.getInstance().setStage((Stage) confirmButton.getScene().getWindow());
+                NavigationController.getInstance().loadScene("/View/FXML/Landing.fxml");
+            } catch (UtentePresenteException e) {
+                // Settare label che notifica l'errore
+            }
         }
     }
-    //serve per inizializzare il controller dopo che l'elemento di root è stato inizializzato
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titoloChoiceBox.getItems().addAll(titoli);
