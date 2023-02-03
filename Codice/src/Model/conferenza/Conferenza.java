@@ -7,6 +7,7 @@ import Model.organizzazione.Ente;
 import Model.organizzazione.Sponsor;
 
 import java.util.Date;
+import java.util.LinkedList;
 
 public class Conferenza {
     private int idConferenza;
@@ -14,15 +15,15 @@ public class Conferenza {
     private Date dataInizio;
     private Date dataFine;
     private String descrizione;
-    private Ente[] organizzataDa;
-    private Sponsor[] sponsorizzataDa;
+    private LinkedList<Ente> organizzataDa;
+    private LinkedList<Sponsor> sponsorizzataDa;
     private ComitatoLocale comitatoLocale;
     private ComitatoScientifico comitatoScientifico;
     private Sede sede;
     private float budget;
     private Sessione[] sessioni;
 
-    public Conferenza(Date dataInizio, Date dataFine, String descrizione, Ente[] organizzataDa, Sponsor[] sponsorizzataDa, ComitatoLocale comitatoLocale, ComitatoScientifico comitatoScientifico, Sede sede, Sessione[] sessioni) {
+    public Conferenza(Date dataInizio, Date dataFine, String descrizione, LinkedList<Ente> organizzataDa, LinkedList<Sponsor> sponsorizzataDa, ComitatoLocale comitatoLocale, ComitatoScientifico comitatoScientifico, Sede sede, Sessione[] sessioni) {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.descrizione = descrizione;
@@ -68,16 +69,16 @@ public class Conferenza {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
-    public Ente[] getOrganizzataDa() {
+    public LinkedList<Ente> getOrganizzataDa() {
         return organizzataDa;
     }
-    public void setOrganizzataDa(Ente[] organizzataDa) {
+    public void setOrganizzataDa(LinkedList<Ente> organizzataDa) {
         this.organizzataDa = organizzataDa;
     }
-    public Sponsor[] getSponsorizzataDa() {
+    public LinkedList<Sponsor> getSponsorizzataDa() {
         return sponsorizzataDa;
     }
-    public void setSponsorizzataDa(Sponsor[] sponsorizzataDa) {
+    public void setSponsorizzataDa(LinkedList<Sponsor> sponsorizzataDa) {
         this.sponsorizzataDa = sponsorizzataDa;
     }
     public ComitatoLocale getComitatoLocale() {
@@ -92,15 +93,17 @@ public class Conferenza {
     public void setComitatoScientifico(ComitatoScientifico comitatoScientifico) {
         this.comitatoScientifico = comitatoScientifico;
     }
+    public void addEnte(Ente ente){
+        if(!organizzataDa.contains(ente))
+            organizzataDa.add(ente);
+    }
 
     public float getBudget() {
         return budget;
     }
-
     public void setBudget(float budget) {
         this.budget = budget;
     }
-
     public Sede getSede() {
         return sede;
     }
@@ -113,4 +116,5 @@ public class Conferenza {
     public void setSessioni(Sessione[] sessioni) {
         this.sessioni = sessioni;
     }
+
 }
