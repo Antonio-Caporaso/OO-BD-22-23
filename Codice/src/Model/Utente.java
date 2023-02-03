@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Utente {
-    private int idUser;
     private String titolo;
     private String username;
     private String password;
@@ -31,14 +30,6 @@ public class Utente {
 
     public void setTitolo(String titolo) {
         this.titolo = titolo;
-    }
-
-    public int getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
     }
 
     public String getUsername() {
@@ -81,14 +72,6 @@ public class Utente {
         this.email = email;
     }
 
-  /*  public String getIstituzione() {
-        return istituzione;
-    }
-
-    public void setIstituzione(String istituzione) {
-        this.istituzione = istituzione;
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,15 +79,13 @@ public class Utente {
 
         Utente utente = (Utente) o;
 
-        if (idUser != utente.idUser) return false;
         if (!Objects.equals(username, utente.username)) return false;
         return Objects.equals(email, utente.email);
     }
 
     @Override
     public int hashCode() {
-        int result = idUser;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
+        int result = username != null ? username.hashCode() : 0;
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
     }

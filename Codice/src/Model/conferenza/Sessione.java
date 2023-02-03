@@ -6,12 +6,12 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Sessione {
-    private int idSessione;
     private Date dataInizio;
     private Date dataFine;
     private String titolo;
     private Sala locazione;
     private Chair coordinatore;
+    private Conferenza conferenza;
 
     public Sessione(){}
     public Sessione(Date dataInizio, Date dataFine, String titolo) {
@@ -19,15 +19,6 @@ public class Sessione {
         this.dataFine = dataFine;
         this.titolo = titolo;
     }
-
-    public int getIdSessione() {
-        return idSessione;
-    }
-
-    public void setIdSessione(int idSessione) {
-        this.idSessione = idSessione;
-    }
-
     public Date getDataInizio() {
         return dataInizio;
     }
@@ -66,7 +57,14 @@ public class Sessione {
 
     public void setCoordinatore(Chair coordinatore) {
         this.coordinatore = coordinatore;
-        coordinatore.setGestisce(this);
+        coordinatore.addSessioneGestita(this);
+    }
+    public Conferenza getConferenza() {
+        return conferenza;
+    }
+
+    public void setConferenza(Conferenza conferenza) {
+        this.conferenza = conferenza;
     }
 
     @Override

@@ -1,22 +1,20 @@
 package Model.organizzazione;
 
+import Model.conferenza.Sponsorizzazione;
+
+import java.util.LinkedList;
+
 public class Sponsor {
-    private int idSponsor;
     private String nome;
+    private LinkedList<Sponsorizzazione> sponsorizzazioni;
 
-    public Sponsor() {
+    public Sponsor() {}
+    public Sponsor(String nome, LinkedList<Sponsorizzazione> sponsorizzazioni) {
+        this.nome = nome;
+        this.sponsorizzazioni = sponsorizzazioni;
     }
-
     public Sponsor(String nome) {
         this.nome = nome;
-    }
-
-    public int getIdSponsor() {
-        return idSponsor;
-    }
-
-    public void setIdSponsor(int idSponsor) {
-        this.idSponsor = idSponsor;
     }
 
     public String getNome() {
@@ -25,5 +23,11 @@ public class Sponsor {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione){
+        if(!sponsorizzazioni.contains(sponsorizzazione)){
+            sponsorizzazioni.add(sponsorizzazione);
+            sponsorizzazione.setSponsor(this);
+        }
     }
 }

@@ -1,7 +1,6 @@
 package Model.conferenza;
 
 public class Sala {
-    private int idSala;
     private String nomeSala;
     private int capacity;
     private boolean prenotata;
@@ -12,14 +11,6 @@ public class Sala {
         this.capacity = capacity;
         this.prenotata = prenotata;
         this.sede = sede;
-    }
-
-    public int getIdSala() {
-        return idSala;
-    }
-
-    public void setIdSala(int idSala) {
-        this.idSala = idSala;
     }
 
     public String getNomeSala() {

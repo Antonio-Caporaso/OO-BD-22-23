@@ -10,20 +10,19 @@ import java.util.Date;
 import java.util.LinkedList;
 
 public class Conferenza {
-    private int idConferenza;
-    private Utente proprietario; // fk dell'user che crea conferenza
+    private Utente proprietario;
     private Date dataInizio;
     private Date dataFine;
     private String descrizione;
     private LinkedList<Ente> organizzataDa;
-    private LinkedList<Sponsor> sponsorizzataDa;
+    private LinkedList<Sponsorizzazione> sponsorizzataDa;
     private ComitatoLocale comitatoLocale;
     private ComitatoScientifico comitatoScientifico;
     private Sede sede;
     private float budget;
-    private Sessione[] sessioni;
+    private LinkedList<Sessione> sessioni;
 
-    public Conferenza(Date dataInizio, Date dataFine, String descrizione, LinkedList<Ente> organizzataDa, LinkedList<Sponsor> sponsorizzataDa, ComitatoLocale comitatoLocale, ComitatoScientifico comitatoScientifico, Sede sede, Sessione[] sessioni) {
+    public Conferenza(Date dataInizio, Date dataFine, String descrizione, LinkedList<Ente> organizzataDa, LinkedList<Sponsorizzazione> sponsorizzataDa, ComitatoLocale comitatoLocale, ComitatoScientifico comitatoScientifico, Sede sede, LinkedList<Sessione> sessioni) {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.descrizione = descrizione;
@@ -35,22 +34,12 @@ public class Conferenza {
         this.sessioni = sessioni;
     }
 
-    public int getIdConferenza() {
-        return idConferenza;
-    }
-
-    public void setIdConferenza(int idConferenza) {
-        this.idConferenza = idConferenza;
-    }
-
     public Utente getProprietario() {
         return proprietario;
     }
-
     public void setProprietario(Utente proprietario) {
         this.proprietario = proprietario;
     }
-
     public Date getDataInizio() {
         return dataInizio;
     }
@@ -75,10 +64,10 @@ public class Conferenza {
     public void setOrganizzataDa(LinkedList<Ente> organizzataDa) {
         this.organizzataDa = organizzataDa;
     }
-    public LinkedList<Sponsor> getSponsorizzataDa() {
+    public LinkedList<Sponsorizzazione> getSponsorizzataDa() {
         return sponsorizzataDa;
     }
-    public void setSponsorizzataDa(LinkedList<Sponsor> sponsorizzataDa) {
+    public void setSponsorizzataDa(LinkedList<Sponsorizzazione> sponsorizzataDa) {
         this.sponsorizzataDa = sponsorizzataDa;
     }
     public ComitatoLocale getComitatoLocale() {
@@ -94,10 +83,17 @@ public class Conferenza {
         this.comitatoScientifico = comitatoScientifico;
     }
     public void addEnte(Ente ente){
-        if(!organizzataDa.contains(ente))
+        if(!organizzataDa.contains(ente)){
             organizzataDa.add(ente);
+            ente.addConferenza(this);
+        }
     }
-
+    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione){
+        if(!sponsorizzataDa.contains(sponsorizzazione)) {
+            sponsorizzataDa.add(sponsorizzazione);
+            sponsorizzazione.setConferenza(this);
+        }
+    }
     public float getBudget() {
         return budget;
     }
@@ -110,11 +106,16 @@ public class Conferenza {
     public void setSede(Sede sede) {
         this.sede = sede;
     }
-    public Sessione[] getSessioni() {
+    public LinkedList<Sessione> getSessioni() {
         return sessioni;
     }
-    public void setSessioni(Sessione[] sessioni) {
+    public void setSessioni(LinkedList<Sessione> sessioni) {
         this.sessioni = sessioni;
     }
-
+    public void addSessione(Sessione sessione){
+        if(!sessioni.contains(sessione)){
+            sessioni.add(sessione);
+            sessione.setConferenza(this);
+        }
+    }
 }

@@ -1,22 +1,18 @@
 package Model.conferenza;
 
 
-import java.util.HashSet;
+import java.util.LinkedList;
 
 public class Sede {
-    private int idSede;
+    private Indirizzo indirizzo;
     private String nomeSede;
-    private String indirizzo;
-    private String city;
-    private String cap;
-    private String telefono;
     private int capacity;
     private boolean availability;
     private double costoAffitto;
-    private HashSet<Sala> sale;
-    private HashSet<Conferenza> conferenze;
+    private LinkedList<Sala> sale;
+    private LinkedList<Conferenza> conferenze;
 
-    public Sede(String nomeSede, String indirizzo, int capacita, boolean availability, double costoAffitto, HashSet<Sala> sale) {
+    public Sede(String nomeSede, Indirizzo indirizzo, int capacita, boolean availability, double costoAffitto, LinkedList<Sala> sale) {
         this.nomeSede = nomeSede;
         this.indirizzo = indirizzo;
         this.capacity = capacita;
@@ -25,16 +21,8 @@ public class Sede {
         this.sale = sale;
     }
 
-    public int getIdSede() {
-        return idSede;
-    }
-
-    public void setIdSede(int idSede) {
-        this.idSede = idSede;
-    }
-
     public Sede() {
-        sale = new HashSet<Sala>();
+        sale = new LinkedList<Sala>();
     }
 
     public String getNomeSede() {
@@ -45,12 +33,12 @@ public class Sede {
         this.nomeSede = nomeSede;
     }
 
-    public String getIndirizzo() {
+    public Indirizzo getIndirizzo() {
         return indirizzo;
     }
 
-    public void setIndirizzo(String indirizzo) {
-        this.indirizzo = indirizzo;
+    public void setIndirizzo(Indirizzo indirizzo) {
+        this.indirizzo=indirizzo;
     }
 
     public int getCapacita() {
@@ -78,26 +66,26 @@ public class Sede {
     }
 
     public String getTelefono() {
-        return telefono;
+        return indirizzo.getTelefono();
     }
 
     public void setTelefono(String telefono) {
-        this.telefono = telefono;
+        indirizzo.setTelefono(telefono);
     }
 
     public String getCity() {
-        return city;
+        return indirizzo.getCity();
     }
 
     public void setCity(String city) {
-        this.city = city;
+        indirizzo.setCity(city);
     }
 
     public String getCap() {
-        return cap;
+        return indirizzo.getCap();
     }
 
     public void setCap(String cap) {
-        this.cap = cap;
+        indirizzo.setCap(cap);
     }
 }

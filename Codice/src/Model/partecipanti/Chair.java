@@ -1,24 +1,20 @@
 package Model.partecipanti;
 
 import Model.conferenza.Sessione;
+import java.util.LinkedList;
 
 public class Chair extends Partecipante{
-    private int idChair;
-    private Sessione gestisce;
+    private LinkedList<Sessione> sessioniGestite;
 
-    public int getIdChair() {
-        return idChair;
+    public LinkedList<Sessione> getSessioniGestite() {
+        return sessioniGestite;
     }
-
-    public void setIdChair(int idChair) {
-        this.idChair = idChair;
+    public void setGestisce(LinkedList<Sessione> sessioniGestite) {
+        this.sessioniGestite = sessioniGestite;
     }
-
-    public Sessione getGestisce() {
-        return gestisce;
-    }
-
-    public void setGestisce(Sessione gestisce) {
-        this.gestisce = gestisce;
+    public void addSessioneGestita(Sessione sessione){
+        if(!sessioniGestite.contains(sessione)){
+            sessioniGestite.add(sessione);
+        }
     }
 }

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 public class Programma {
-    private int idProgramma;
     private Sessione sessione;
     private HashSet<EventoSociale> eventi;
     private HashSet<Intervallo> intervalli;
@@ -27,11 +26,4 @@ public class Programma {
         }
     }
 
-    public int getIdProgramma() {
-        return idProgramma;
-    }
-
-    public void setIdProgramma(int idProgramma) {
-        this.idProgramma = idProgramma;
-    }
 }

@@ -8,24 +8,24 @@ public class Sponsorizzazione {
 
     private Sponsor sponsor;
     private Conferenza conferenza;
-    private Date inizioSponsor;
-    private Date fineSponsor;
+    private Date inizioSponsorizzazione;
+    private Date fineSponsorizzazione;
     private double contributo;
 
-    public Date getInizioSponsor() {
-        return inizioSponsor;
+    public Date getInizioSponsorizzazione() {
+        return inizioSponsorizzazione;
     }
 
-    public void setInizioSponsor(Date inizioSponsor) {
-        this.inizioSponsor = inizioSponsor;
+    public void setInizioSponsorizzazione(Date inizioSponsorizzazione) {
+        this.inizioSponsorizzazione = inizioSponsorizzazione;
     }
 
-    public Date getFineSponsor() {
-        return fineSponsor;
+    public Date getFineSponsorizzazione() {
+        return fineSponsorizzazione;
     }
 
-    public void setFineSponsor(Date fineSponsor) {
-        this.fineSponsor = fineSponsor;
+    public void setFineSponsorizzazione(Date fineSponsorizzazione) {
+        this.fineSponsorizzazione = fineSponsorizzazione;
     }
 
     public double getContributo() {
@@ -34,5 +34,21 @@ public class Sponsorizzazione {
 
     public void setContributo(double contributo) {
         this.contributo = contributo;
+    }
+
+    public Sponsor getSponsor() {
+        return sponsor;
+    }
+
+    public void setSponsor(Sponsor sponsor) {
+        this.sponsor = sponsor;
+    }
+
+    public Conferenza getConferenza() {
+        return conferenza;
+    }
+
+    public void setConferenza(Conferenza conferenza) {
+        this.conferenza = conferenza;
     }
 }

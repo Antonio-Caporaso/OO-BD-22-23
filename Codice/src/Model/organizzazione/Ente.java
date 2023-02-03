@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Ente {
-    private int idEnte;
     private String nome;
     private LinkedList<Conferenza> organizza;
 
@@ -15,14 +14,6 @@ public class Ente {
     public Ente(String nome, LinkedList<Conferenza> organizza) {
         this.nome = nome;
         this.organizza=organizza;
-    }
-
-    public int getIdEnte() {
-        return idEnte;
-    }
-
-    public void setIdEnte(int idEnte) {
-        this.idEnte = idEnte;
     }
 
     public String getNome() {

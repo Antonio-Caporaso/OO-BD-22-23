@@ -2,19 +2,25 @@ package Model.partecipanti;
 
 import Model.conferenza.Intervento;
 
+import java.util.LinkedList;
+
 public class Speaker extends Partecipante{
     private int idSpeaker;
-    private Intervento effettua;
+    private LinkedList<Intervento> interventi;
     private boolean isKeynote;
 
-    public Intervento getEffettua() {
-        return effettua;
+    public LinkedList<Intervento> getInterventi() {
+        return interventi;
     }
-    public void setEffettua(Intervento effettua) {
-        this.effettua = effettua;
-        effettua.setSpeaker(this);
+    public void setInterventi(LinkedList<Intervento> interventi) {
+        this.interventi = interventi;
     }
-
+    public void addIntervento(Intervento intervento){
+        if(!interventi.contains(intervento)){
+            interventi.add(intervento);
+            intervento.setSpeaker(this);
+        }
+    }
     public boolean isKeynote() {
         return isKeynote;
     }
