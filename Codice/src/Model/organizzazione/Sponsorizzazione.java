@@ -1,5 +1,6 @@
-package Model.conferenza;
+package Model.organizzazione;
 
+import Model.conferenza.Conferenza;
 import Model.organizzazione.Sponsor;
 
 import java.util.Date;

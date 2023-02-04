@@ -1,7 +1,5 @@
 package Model.organizzazione;
 
-import Model.conferenza.Sponsorizzazione;
-
 import java.util.LinkedList;
 
 public class Sponsor {

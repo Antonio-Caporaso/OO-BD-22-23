@@ -3026,7 +3026,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 967,
-									"top": 555,
+									"top": 563,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -3047,7 +3047,7 @@
 									"visible": null,
 									"font": "Arial;13;0",
 									"left": 967,
-									"top": 540,
+									"top": 548,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -3068,7 +3068,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 967,
-									"top": 585,
+									"top": 593,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -3088,7 +3088,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 840,
-									"top": 560,
+									"top": 568,
 									"width": 66.8408203125,
 									"height": 13,
 									"alpha": 0.27829958353343315,
@@ -3111,7 +3111,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 866,
-									"top": 541,
+									"top": 549,
 									"height": 13,
 									"alpha": 0.7853981633974483,
 									"distance": 40,
@@ -3131,7 +3131,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 841,
-									"top": 581,
+									"top": 589,
 									"width": 19.5126953125,
 									"height": 13,
 									"alpha": -0.7853977467309553,
@@ -3153,7 +3153,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 984,
-									"top": 558,
+									"top": 566,
 									"width": 95.75439453125,
 									"height": 13,
 									"alpha": -0.16764246314185005,
@@ -3175,7 +3175,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 1067,
-									"top": 541,
+									"top": 549,
 									"height": 13,
 									"alpha": -0.7853981633974483,
 									"distance": 40,
@@ -3194,7 +3194,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 1072,
-									"top": 582,
+									"top": 590,
 									"width": 19.5126953125,
 									"height": 13,
 									"alpha": 0.6747412674269371,
@@ -3241,7 +3241,7 @@
 								"$ref": "AAAAAAGFwNxyrq8jjtY="
 							},
 							"lineStyle": 2,
-							"points": "838:576;1096:576",
+							"points": "838:584;1096:584",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGFwO4X2NSnuIM="
@@ -10482,6 +10482,35 @@
 								},
 								"multiplicity": "1..*"
 							}
+						},
+						{
+							"_type": "UMLAssociation",
+							"_id": "AAAAAAGGGALdNJXisKs=",
+							"_parent": {
+								"$ref": "AAAAAAGFwNxyra8hndc="
+							},
+							"end1": {
+								"_type": "UMLAssociationEnd",
+								"_id": "AAAAAAGGGALdNJXj1Bs=",
+								"_parent": {
+									"$ref": "AAAAAAGGGALdNJXisKs="
+								},
+								"reference": {
+									"$ref": "AAAAAAGFwNxyra8hndc="
+								},
+								"multiplicity": "*"
+							},
+							"end2": {
+								"_type": "UMLAssociationEnd",
+								"_id": "AAAAAAGGGALdNJXkqTo=",
+								"_parent": {
+									"$ref": "AAAAAAGGGALdNJXisKs="
+								},
+								"reference": {
+									"$ref": "AAAAAAGGF/3crU3JhHY="
+								},
+								"multiplicity": "1"
+							}
 						}
 					],
 					"attributes": [
@@ -10518,7 +10547,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGFwNxyra8hndc="
 							},
-							"name": "NomeConferenza"
+							"name": "NomeConferenza",
+							"type": ""
 						}
 					]
 				},
@@ -11729,6 +11759,90 @@
 							"target": {
 								"$ref": "AAAAAAGFwPheumhFO8s="
 							}
+						}
+					]
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAGGF/3crU3JhHY=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "Utente",
+					"attributes": [
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGGF/4H3V8YWII=",
+							"_parent": {
+								"$ref": "AAAAAAGGF/3crU3JhHY="
+							},
+							"name": "Nome",
+							"type": "String"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGGF/5DAmQaNWI=",
+							"_parent": {
+								"$ref": "AAAAAAGGF/3crU3JhHY="
+							},
+							"name": "Cognome",
+							"type": "String"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGGF/5gmGhQ3zE=",
+							"_parent": {
+								"$ref": "AAAAAAGGF/3crU3JhHY="
+							},
+							"name": "Email",
+							"type": "String"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGGF/6J3GyGcKk=",
+							"_parent": {
+								"$ref": "AAAAAAGGF/3crU3JhHY="
+							},
+							"name": "Password",
+							"type": "String"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGGGAFz93EiSgQ=",
+							"_parent": {
+								"$ref": "AAAAAAGGF/3crU3JhHY="
+							},
+							"name": "Username",
+							"type": "String"
+						}
+					],
+					"operations": [
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGGGAGw2Ha9qmM=",
+							"_parent": {
+								"$ref": "AAAAAAGGF/3crU3JhHY="
+							},
+							"name": "creaConferenza"
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAGGGAIG4Hwl++Q=",
+							"_parent": {
+								"$ref": "AAAAAAGGF/3crU3JhHY="
+							},
+							"name": "eliminaConferenza",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGGGAIoRX72WwY=",
+									"_parent": {
+										"$ref": "AAAAAAGGGAIG4Hwl++Q="
+									},
+									"name": "Conferenza",
+									"type": ""
+								}
+							]
 						}
 					]
 				}
