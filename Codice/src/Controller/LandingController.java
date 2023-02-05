@@ -16,6 +16,8 @@ public class LandingController {
     @FXML
     private Button visualizzaConferenza;
     @FXML
+    private Button visualizzaStatisticheButton;
+    @FXML
     private SubScene subscene;
 //    private NavigationController navigationController = NavigationController.getInstance();
 //
@@ -54,6 +56,7 @@ public class LandingController {
         }
 
     }
+    @FXML
     void visualizzaStatisticheOnAction(ActionEvent event){
         try{
             Parent loader = FXMLLoader.load(getClass().getResource("../View/FXML/VisualizzaStatistiche.fxml"));
