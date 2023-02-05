@@ -1,5 +1,6 @@
 package Controller;
 import DAO.UtenteDAO;
+import Model.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,7 +33,7 @@ public class LoginController implements Initializable{
     private Media media;
     private File file;
     private MediaPlayer mediaPlayer;
-    private UtenteDAO userdao;
+
     @FXML
     void loginButtonOnAction(ActionEvent event) {
         if(usernameTextField.getText().isBlank() || passwordTextField.getText().isBlank())
@@ -53,7 +54,7 @@ public class LoginController implements Initializable{
     private void validateLogin(ActionEvent event) {
         String username = usernameTextField.getText();
         String pwd = passwordTextField.getText();
-        userdao = new UtenteDAO();
+        UtenteDAO userdao = new UtenteDAO();
         if(pwd.equals(userdao.getPasswordByUsername(username))){
             NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
             NavigationController.getInstance().loadScene("../View/FXML/Landing.fxml");

@@ -1,16 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="661.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreaConferenzaController">
    <children>
-      <Label layoutX="443.0" layoutY="309.0" text="crea la tua conferenza" textFill="RED">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="69.0" stroke="WHITE" strokeType="INSIDE" width="1280.0" />
+      <Label layoutX="926.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #1e90ff;" text="Crea una nuova conferenza" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
          <font>
-            <Font size="35.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
       </Label>
+      <AnchorPane layoutY="69.0" prefHeight="593.0" prefWidth="1280.0">
+         <children>
+            <Accordion prefHeight="593.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <panes>
+                <TitledPane animated="false" text="Dettagli">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="14.0" layoutY="14.0" text="Nome">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="14.0" layoutY="44.0" text="Descrizione">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="145.0" layoutY="9.0" prefHeight="26.0" prefWidth="510.0" />
+                              <TextArea layoutX="144.0" layoutY="44.0" prefHeight="200.0" prefWidth="513.0" />
+                              <Label layoutX="144.0" layoutY="273.0" text="Data inizio">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker layoutX="144.0" layoutY="301.0" />
+                              <Label layoutX="475.0" layoutY="274.0" text="Data fine">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker layoutX="475.0" layoutY="302.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </TitledPane>
+                <TitledPane animated="false" text="Sede">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <VBox layoutX="20.0" layoutY="84.0" prefHeight="180.0" prefWidth="565.0">
+                                 <children>
+                                    <AnchorPane prefHeight="160.0" prefWidth="348.0">
+                                       <children>
+                                          <Label text="Nome">
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutY="16.0" text="Via">
+                                             <padding>
+                                                <Insets top="20.0" />
+                                             </padding>
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutY="52.0" text="Città">
+                                             <padding>
+                                                <Insets top="20.0" />
+                                             </padding>
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutY="88.0" text="Cap">
+                                             <padding>
+                                                <Insets top="20.0" />
+                                             </padding>
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutY="124.0" text="Telefono">
+                                             <padding>
+                                                <Insets top="20.0" />
+                                             </padding>
+                                             <font>
+                                                <Font name="System Bold" size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="103.0" layoutY="-4.0" prefHeight="26.0" prefWidth="370.0" />
+                                          <TextField layoutX="103.0" layoutY="34.0" prefHeight="26.0" prefWidth="370.0" />
+                                          <TextField layoutX="103.0" layoutY="67.0" prefHeight="26.0" prefWidth="370.0" />
+                                          <TextField layoutX="103.0" layoutY="106.0" prefHeight="26.0" prefWidth="370.0" />
+                                          <TextField layoutX="103.0" layoutY="133.0" prefHeight="26.0" prefWidth="370.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                                 <padding>
+                                    <Insets left="20.0" top="20.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                </TitledPane>
+                <TitledPane animated="false" text="Promotori">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Accordion layoutY="6.0" prefHeight="514.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <panes>
+                                  <TitledPane animated="false" text="Enti" />
+                                  <TitledPane animated="false" text="Sponsor" />
+                                </panes>
+                              </Accordion>
+                           </children></AnchorPane>
+                  </content>
+                </TitledPane>
+              </panes>
+            </Accordion>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

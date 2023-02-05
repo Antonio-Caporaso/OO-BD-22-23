@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 public class Conferenza {
+    private String nome;
     private Utente proprietario;
     private Date dataInizio;
     private Date dataFine;
@@ -21,16 +22,17 @@ public class Conferenza {
     private float budget;
     private LinkedList<Sessione> sessioni;
 
-    public Conferenza(Date dataInizio, Date dataFine, String descrizione, LinkedList<Ente> organizzataDa, LinkedList<Sponsorizzazione> sponsorizzataDa, ComitatoLocale comitatoLocale, ComitatoScientifico comitatoScientifico, Sede sede, LinkedList<Sessione> sessioni) {
+    public Conferenza(String nome, Date dataInizio, Date dataFine, String descrizione) {
+        this.nome = nome;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.descrizione = descrizione;
-        this.organizzataDa = organizzataDa;
-        this.sponsorizzataDa = sponsorizzataDa;
-        this.comitatoLocale = comitatoLocale;
-        this.comitatoScientifico = comitatoScientifico;
-        this.sede = sede;
-        this.sessioni = sessioni;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Utente getProprietario() {
