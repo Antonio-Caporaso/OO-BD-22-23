@@ -12,15 +12,17 @@ public class UtenteDAO {
     public String getPasswordByUsername(String username){
         dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();
-        PreparedStatement stm = null;
         String pwd = null;
         try{
-            stm = conn.prepareStatement("SELECT pwd FROM utente WHERE username=?");
+            PreparedStatement stm = conn.prepareStatement("SELECT pwd FROM utente WHERE username=?");
             stm.setString(1, username);
             ResultSet result = stm.executeQuery();
             while(result.next()) {
                 pwd = result.getString(1);
             }
+            result.close();
+            stm.close();
+            conn.close();
         }catch (SQLException throwables){
             throwables.printStackTrace();
         }
@@ -29,10 +31,8 @@ public class UtenteDAO {
     public void saveUtente(Utente utente) throws UtentePresenteException{
         dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();
-        int result = 0;
-        PreparedStatement stm = null;
         try{
-            if(checkUserIsPresentByUsername(utente.getUsername())){
+            if(userIsPresentByUsername(utente.getUsername())){
                 PreparedStatement query = conn.prepareStatement("INSERT INTO utente VALUES (default,?,?,?,?,?,?)");
                 query.setString(1,utente.getPassword());
                 query.setString(2,utente.getNome());
@@ -41,6 +41,8 @@ public class UtenteDAO {
                 query.setString(5, utente.getEmail());
                 query.setString(6,utente.getUsername());
                 query.executeUpdate();
+                query.close();
+                conn.close();
             }else{
                 throw new UtentePresenteException();
             }
@@ -48,7 +50,7 @@ public class UtenteDAO {
             e.printStackTrace();
         }
     }
-    private boolean checkUserIsPresentByUsername(String username){
+    private boolean userIsPresentByUsername(String username){
         dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();
         boolean result = false;
@@ -59,6 +61,9 @@ public class UtenteDAO {
             ResultSet rs= (stm.executeQuery());
             while(rs.next())
                 result = (rs.getInt(1)==0);
+            rs.close();
+            stm.close();
+            conn.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
