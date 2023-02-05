@@ -8,8 +8,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -46,6 +50,11 @@ public class RegistrazioneController implements Initializable, FormChecker{
     private Label usernameLabel;
     @FXML
     private TextField usernameTextField;
+    @FXML
+    private MediaView mediaView;
+    private Media media;
+    private File file;
+    private MediaPlayer mediaPlayer;
     private String[]titoli={"Dr.","Dott.","Dott.ssa","Prof.","Prof.ssa","Ing.","Sig","Sig.ra","Altro"};
     @FXML
     void backButtonOnAction(ActionEvent event) {
@@ -113,5 +122,11 @@ public class RegistrazioneController implements Initializable, FormChecker{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titoloChoiceBox.getItems().addAll(titoli);
+        file = new File ("codice/src/View/Resources/Scientists1.mp4");
+        media = new Media(file.toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaView.setMediaPlayer(mediaPlayer);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
     }
 }
