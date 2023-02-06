@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 
 abstract class Comitato {
+    private int comitatoID;
     private Organizzatore responsabile;
     private HashSet<Organizzatore> membri;
 

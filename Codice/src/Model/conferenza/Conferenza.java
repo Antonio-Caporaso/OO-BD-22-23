@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 public class Conferenza {
+    private int conferenzaID;
     private String nome;
     private Utente proprietario;
     private Date dataInizio;

@@ -4,6 +4,7 @@ package Model.conferenza;
 import java.util.LinkedList;
 
 public class Sede {
+    private int sedeID;
     private Indirizzo indirizzo;
     private String nomeSede;
     private int capacity;

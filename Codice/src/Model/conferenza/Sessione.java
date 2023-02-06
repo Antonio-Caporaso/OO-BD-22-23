@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Sessione {
+    private int sessioneID;
     private Date dataInizio;
     private Date dataFine;
     private String titolo;

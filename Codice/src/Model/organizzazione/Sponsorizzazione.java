@@ -6,7 +6,6 @@ import Model.organizzazione.Sponsor;
 import java.util.Date;
 
 public class Sponsorizzazione {
-
     private Sponsor sponsor;
     private Conferenza conferenza;
     private Date inizioSponsorizzazione;

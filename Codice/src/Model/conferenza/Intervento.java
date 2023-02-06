@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Intervento {
+    private int interventoID;
     private Date orarioIntervento;
     private String estratto;
     private Speaker speaker;

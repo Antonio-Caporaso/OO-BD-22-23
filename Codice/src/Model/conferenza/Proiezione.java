@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.Objects;
 
 public class Proiezione extends EventoSociale {
+    private int proiezioneID;
     private String nome;
     private Duration durata;
     private String genere;

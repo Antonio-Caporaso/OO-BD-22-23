@@ -1,6 +1,7 @@
 package Model.conferenza;
 
 public class Sala {
+    private int salaID;
     private String nomeSala;
     private int capacity;
     private boolean prenotata;

@@ -5,6 +5,7 @@ import Exceptions.ExistingMemberException;
 import java.util.Objects;
 
 public class Organizzatore {
+    private int organizzatoreID;
     private String titolo;
     private String cognome;
     private String nome;

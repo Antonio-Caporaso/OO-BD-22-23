@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Ente {
+    private int enteID;
     private String nome;
     private LinkedList<Conferenza> organizza;
 

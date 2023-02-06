@@ -3,6 +3,7 @@ package Model.organizzazione;
 import java.util.LinkedList;
 
 public class Sponsor {
+    private int sponsorID;
     private String nome;
     private LinkedList<Sponsorizzazione> sponsorizzazioni;
 

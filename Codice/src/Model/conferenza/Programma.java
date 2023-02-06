@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 public class Programma {
+    private int programmaID;
     private Sessione sessione;
     private HashSet<EventoSociale> eventi;
     private HashSet<Intervallo> intervalli;
