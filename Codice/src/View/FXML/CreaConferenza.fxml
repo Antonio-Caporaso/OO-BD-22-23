@@ -6,23 +6,25 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="661.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreaConferenzaController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="69.0" stroke="WHITE" strokeType="INSIDE" width="1280.0" />
-      <Label layoutX="926.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #1e90ff;" text="Crea una nuova conferenza" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a62a00" height="69.0" stroke="WHITE" strokeType="INSIDE" width="1280.0" />
+      <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #A62A00;" text="Crea una nuova conferenza" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
       <AnchorPane layoutY="69.0" prefHeight="593.0" prefWidth="1280.0">
          <children>
-            <Accordion prefHeight="593.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Accordion layoutX="14.0" layoutY="8.0" prefHeight="514.0" prefWidth="753.0" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="513.0" AnchorPane.topAnchor="8.0">
               <panes>
-                <TitledPane animated="false" text="Dettagli">
+                <TitledPane fx:id="DettagliTitle" animated="false" onMouseClicked="#DettagliTitleOnAction" prefHeight="447.0" prefWidth="753.0" text="Dettagli">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -49,17 +51,17 @@
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <DatePicker layoutX="481.0" layoutY="289.0" />
+                              <DatePicker layoutX="457.0" layoutY="289.0" />
                            </children>
                         </AnchorPane>
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Sede">
+                <TitledPane fx:id="SedeTitle" animated="false" onMouseClicked="#SedeTitleOnAction" text="Sede">
                      <content>
                         <AnchorPane />
                      </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Promotori">
+                <TitledPane fx:id="PromotoriTitle" animated="false" onDragDetected="#PromotoriTitleOnAction" onMouseClicked="#PromotoriTitleOnAction" prefHeight="475.0" prefWidth="753.0" text="Promotori">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -74,6 +76,11 @@
                 </TitledPane>
               </panes>
             </Accordion>
+            <ImageView fx:id="image" fitHeight="468.0" fitWidth="373.0" layoutX="843.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/conference.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

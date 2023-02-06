@@ -19,12 +19,6 @@ public class LandingController {
     private Button visualizzaStatisticheButton;
     @FXML
     private SubScene subscene;
-//    private NavigationController navigationController = NavigationController.getInstance();
-//
-//    @FXML
-//    void creaConferenzaOnAction(ActionEvent event) {
-//        loadScene("/View/FXML/Registrazione.fxml", creaConferenzaButton);
-//    }
 
     @FXML
     void creaConferenzaOnAction(ActionEvent event) {
@@ -70,5 +64,6 @@ public class LandingController {
         assert creaConferenzaButton != null : "fx:id=\"creaConferenzaButton\" was not injected: check your FXML file 'Landing.fxml'.";
         assert gestisciConferenzaButton != null : "fx:id=\"gestisciConferenzaButton\" was not injected: check your FXML file 'Landing.fxml'.";
         assert visualizzaConferenza != null : "fx:id=\"visualizzaConferenza\" was not injected: check your FXML file 'Landing.fxml'.";
+        assert visualizzaStatisticheButton != null:"fx:id=\"visualizzaStatisticheButton\" was not injected: check your FXML file 'Landing.fxml'.";
     }
 }
