@@ -29,6 +29,8 @@ public class LoginController implements Initializable{
     @FXML
     private PasswordField passwordTextField;
     @FXML
+    private Button skipButton;
+    @FXML
     private MediaView mediaView;
     private Media media;
     private File file;
@@ -71,11 +73,21 @@ public class LoginController implements Initializable{
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        file = new File ("src/View/Resources/Scientists.mp4");
+        file = new File ("Codice/src/View/Resources/Scientists.mp4");
         media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
     }
+    @FXML
+    private void skipButtonOnAction(ActionEvent event){
+        try{
+            NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
+            NavigationController.getInstance().loadScene("../View/FXML/Landing.fxml");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

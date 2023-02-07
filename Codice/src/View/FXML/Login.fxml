@@ -44,6 +44,7 @@
                </font>
             </Label>
             <PasswordField fx:id="passwordTextField" layoutX="148.0" layoutY="337.0" prefHeight="24.0" prefWidth="171.0" />
+            <Button fx:id="skipButton" layoutX="111.0" layoutY="536.0" mnemonicParsing="false" onAction="#skipButtonOnAction" text="SKIP (Solo per prova)" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="720.0" prefWidth="932.0" style="-fx-background-color: #33749D;">
