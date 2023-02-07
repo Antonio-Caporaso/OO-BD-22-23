@@ -5,23 +5,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 
 public class CreaConferenzaController {
     @FXML
     private DatePicker dataFine;
-
     @FXML
     private DatePicker dataInizio;
-
     @FXML
     private TextArea descrizioneConferenza;
-
     @FXML
     private TextField nomeConferenza;
     @FXML
@@ -40,6 +34,20 @@ public class CreaConferenzaController {
     private Button annulla;
     @FXML
     private Button salva;
+    @FXML
+    private TextField numeroEnti;
+    @FXML
+    private Button okButton;
+    @FXML
+    private Button nextButton;
+    @FXML
+    private TextField nomeEnte;
+    @FXML
+    private Button prevButton;
+    @FXML
+    private Label aggiuntaEnteLabel;
+
+
     @FXML
     void inserisciDettagliOnAction(ActionEvent event) {
         Parent loader = null;
@@ -92,5 +100,4 @@ public class CreaConferenzaController {
         }
         subscene.setRoot(loader);
     }
-
 }
