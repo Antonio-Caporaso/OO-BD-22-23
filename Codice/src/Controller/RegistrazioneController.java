@@ -51,6 +51,12 @@ public class RegistrazioneController implements Initializable, FormChecker{
     @FXML
     private TextField usernameTextField;
     @FXML
+    private Label errorLabel;
+    @FXML
+    private Label istituzioneLabel;
+    @FXML
+    private TextField istituzioneTextField;
+    @FXML
     private MediaView mediaView;
     private Media media;
     private File file;
@@ -72,54 +78,66 @@ public class RegistrazioneController implements Initializable, FormChecker{
         String usernameUtente = usernameTextField.getText();
         String cognomeUtente = cognomeTextField.getText();
         String passwordUtente = passwordTextField.getText();
+        //string istituzioneUtente= istituzioneTextField.getText();
         return new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente);
     }
 
     @Override
     public boolean textFieldsAreBlank() {
-        return titoloChoiceBox.getItems().isEmpty()
+        if (titoloChoiceBox.getItems().isEmpty()
                 || emailTextField.getText().isBlank()
                 || nomeTextField.getText().isBlank()
                 || usernameTextField.getText().isBlank()
                 || cognomeTextField.getText().isBlank()
-                || passwordTextField.getText().isBlank();
+                || passwordTextField.getText().isBlank()
+                || istituzioneTextField.getText().isBlank()){
+            errorLabel.setText("Inserisci tutti i valori");
+            return true;
+        }else{
+            errorLabel.setText("");
+            return false;
+        }
     }
 
     private boolean passwordMatcher(){
         Utente user = this.getUserDetails();
         String conferma = confermaPasswordTextField.getText();
-        return conferma.equals(user.getPassword());
+        if(conferma.equals(user.getPassword())){
+            return true;
+        }else {
+            errorLabel.setText("Le password non corrispondono");
+            return false;
+        }
+
+
     }
 
     void registraUtente() throws UtentePresenteException {
-        if(passwordMatcher()){
             UtenteDAO dao = new UtenteDAO();
             Utente newUser = getUserDetails();
             try{
                 dao.saveUtente(newUser);
             }catch (UtentePresenteException e){
+
                 throw e;
             }
-        }else {
-            //Settare label che notifica che notifica il fatto che le password non corrispondono
-        }
     }
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
-        if(!textFieldsAreBlank()) {
+        if(!textFieldsAreBlank()&&passwordMatcher()) {
             try {
                 registraUtente();
                 NavigationController.getInstance().setStage((Stage) confirmButton.getScene().getWindow());
                 NavigationController.getInstance().loadScene("/View/FXML/Landing.fxml");
             } catch (UtentePresenteException e) {
-                // Settare label che notifica l'errore
+                errorLabel.setText("Nome Utente già presente");
             }
         }
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titoloChoiceBox.getItems().addAll(titoli);
-        file = new File ("src/View/Resources/Scientists1.mp4");
+        file = new File ("Codice/src/View/Resources/Scientists1.mp4");
         media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
