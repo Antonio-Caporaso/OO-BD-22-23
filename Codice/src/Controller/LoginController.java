@@ -46,7 +46,7 @@ public class LoginController implements Initializable{
     void registratiButtonOnAction(ActionEvent event){
         try{
             NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
-            NavigationController.getInstance().loadScene("/View/FXML/Registrazione.fxml");
+            NavigationController.getInstance().loadScene("../View/FXML/Registrazione.fxml");
         } catch (Exception e){
             e.printStackTrace();
         }

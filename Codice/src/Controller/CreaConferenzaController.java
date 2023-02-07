@@ -6,11 +6,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
 public class CreaConferenzaController {
+    @FXML
+    private DatePicker dataFine;
+
+    @FXML
+    private DatePicker dataInizio;
+
+    @FXML
+    private TextArea descrizioneConferenza;
+
+    @FXML
+    private TextField nomeConferenza;
     @FXML
     private Button inserisciDettagli;
     @FXML
@@ -20,9 +33,13 @@ public class CreaConferenzaController {
     @FXML
     private Button inserisciSessioni;
     @FXML
-    private Button inserisciSponsor;
+    private Button inserisciSponsorizzazioni;
     @FXML
     private SubScene subscene;
+    @FXML
+    private Button annulla;
+    @FXML
+    private Button salva;
     @FXML
     void inserisciDettagliOnAction(ActionEvent event) {
         Parent loader = null;
@@ -66,7 +83,7 @@ public class CreaConferenzaController {
     }
 
     @FXML
-    void inserisciSponsorOnAction(ActionEvent event) {
+    void inserisciSponsorizzazioniOnAction(ActionEvent event) {
         Parent loader = null;
         try {
             loader = FXMLLoader.load(getClass().getResource("../View/FXML/InserisciSponsor.fxml"));
