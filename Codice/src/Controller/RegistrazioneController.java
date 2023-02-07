@@ -59,9 +59,6 @@ public class RegistrazioneController implements Initializable, FormChecker{
     @FXML
     void backButtonOnAction(ActionEvent event) {
         try {
-            /*Si chiama l'evento di navigazione passando l'FXML della scena di login.
-            Si recupera la finestra principale corrente utilizzando il metodo getScene().getWindow()
-             e la passa all'istanza della classe di navigazione utilizzando il metodo setStage().*/
             NavigationController.getInstance().setStage((Stage) backButton.getScene().getWindow());
             NavigationController.getInstance().loadScene("/View/FXML/Login.fxml");
         }catch (Exception e){

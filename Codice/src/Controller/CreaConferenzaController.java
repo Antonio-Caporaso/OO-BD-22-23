@@ -46,8 +46,6 @@ public class CreaConferenzaController {
     private Button prevButton;
     @FXML
     private Label aggiuntaEnteLabel;
-
-
     @FXML
     void inserisciDettagliOnAction(ActionEvent event) {
         Parent loader = null;
