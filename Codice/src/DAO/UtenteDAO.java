@@ -22,7 +22,6 @@ public class UtenteDAO {
             }
             result.close();
             stm.close();
-            conn.close();
         }catch (SQLException throwables){
             throwables.printStackTrace();
         }
@@ -41,8 +40,6 @@ public class UtenteDAO {
                 query.setString(5, utente.getEmail());
                 query.setString(6,utente.getUsername());
                 query.executeUpdate();
-                query.close();
-                conn.close();
             }else{
                 throw new UtentePresenteException();
             }
@@ -61,9 +58,6 @@ public class UtenteDAO {
             ResultSet rs= (stm.executeQuery());
             while(rs.next())
                 result = (rs.getInt(1)==0);
-            rs.close();
-            stm.close();
-            conn.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
