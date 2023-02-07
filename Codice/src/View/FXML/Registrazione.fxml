@@ -21,12 +21,12 @@
                   <Image url="@../Resources/Logo.png" />
                </image>
             </ImageView>
-            <Label fx:id="titoloLabel" layoutX="153.0" layoutY="161.0" text="Titolo" textFill="WHITE">
+            <Label fx:id="titoloLabel" layoutX="15.0" layoutY="161.0" text="Titolo" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="18.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="titoloChoiceBox" layoutX="145.0" layoutY="190.0" prefHeight="13.0" prefWidth="59.0" />
+            <ChoiceBox fx:id="titoloChoiceBox" layoutX="14.0" layoutY="190.0" prefHeight="25.0" prefWidth="102.0" />
             <Label fx:id="nomeLabel" layoutX="15.0" layoutY="226.0" text="Nome" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="18.0" />
@@ -73,6 +73,17 @@
                   <Font name="Times New Roman" size="18.0" />
                </font>
             </Button>
+            <Label fx:id="errorLabel" layoutX="57.0" layoutY="141.0" prefHeight="20.0" prefWidth="237.0" textFill="RED">
+               <font>
+                  <Font name="Times New Roman" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="istituzioneLabel" layoutX="186.0" layoutY="161.0" text="Istituzione" textFill="WHITE">
+               <font>
+                  <Font name="Times New Roman" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="istituzioneTextField" layoutX="186.0" layoutY="190.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="720.0" prefWidth="932.0" style="-fx-background-color: #33749D;">

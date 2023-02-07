@@ -1,9 +1,8 @@
 package Model;
 
-import Model.conferenza.Conferenza;
-
-import java.util.LinkedList;
 import java.util.Objects;
+import Model.conferenza.Conferenza;
+import java.util.LinkedList;
 
 public class Utente {
     private String titolo;
@@ -14,7 +13,7 @@ public class Utente {
     private String email;
     //private String istituzione;
 
-    public Utente(String nome, String cognome, String titolo, String username, String password, String email) {
+    public Utente(String nome, String cognome, String titolo, String username, String password, String email/*,String istituzione*/) {
         this.username = username;
         this.password = password;
         this.titolo = titolo;
@@ -71,6 +70,14 @@ public class Utente {
     public void setEmail(String email) {
         this.email = email;
     }
+
+//    public String getIstituzione() {
+//        return istituzione;
+//    }
+//
+//    public void setIstituzione(String istituzione) {
+//        this.istituzione = istituzione;
+//    }
 
     @Override
     public boolean equals(Object o) {
