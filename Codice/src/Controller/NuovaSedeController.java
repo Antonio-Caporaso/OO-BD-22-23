@@ -60,7 +60,7 @@ public class NuovaSedeController implements FormChecker{
     @FXML
     void confermaButtonOnAction(ActionEvent event) {
         try {
-            textFieldsAreBlank();
+            checkTextFieldsAreBlank();
             SedeDao sedeDao = new SedeDao();
             Sede sede = new Sede();
             sede.setNomeSede(nomeSedeTF.getText());
@@ -84,7 +84,7 @@ public class NuovaSedeController implements FormChecker{
     }
 
     @Override
-    public void textFieldsAreBlank() throws BlankFieldException {
+    public void checkTextFieldsAreBlank() throws BlankFieldException {
         if (nomeSedeTF.getText().isBlank() || citySedeTF.getText().isBlank()
                 || capSedeTF.getText().isBlank()
                 || indirizzoSedeTF.getText().isBlank()

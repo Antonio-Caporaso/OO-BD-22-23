@@ -1,5 +1,6 @@
 package Controller;
 import DAO.UtenteDAO;
+import Exceptions.BlankFieldException;
 import Model.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable{
+public class LoginController implements Initializable, FormChecker{
     //private Stage primaryStage;
     @FXML
     private Label errorLabel;
@@ -43,10 +44,11 @@ public class LoginController implements Initializable{
 
     @FXML
     void loginButtonOnAction(ActionEvent event) {
-        if(usernameTextField.getText().isBlank() || passwordTextField.getText().isBlank())
-            errorLabel.setText("Inserisci nome utente e password");
-        else{
-            validateLogin(event);
+        try{
+        checkTextFieldsAreBlank();
+        validateLogin();
+        }catch (BlankFieldException e){
+            errorLabel.setText("Inserire nome utente e password");
         }
     }
     @FXML
@@ -58,7 +60,7 @@ public class LoginController implements Initializable{
             e.printStackTrace();
         }
     }
-    private void validateLogin(ActionEvent event) {
+    private void validateLogin() {
         String username = usernameTextField.getText();
         String pwd = passwordTextField.getText();
         UtenteDAO userdao = new UtenteDAO();
@@ -107,4 +109,9 @@ public class LoginController implements Initializable{
         }
     }
 
+    @Override
+    public void checkTextFieldsAreBlank() throws BlankFieldException {
+        if(usernameTextField.getText().isBlank() || passwordTextField.getText().isBlank())
+            throw new BlankFieldException();
+    }
 }

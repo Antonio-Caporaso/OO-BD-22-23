@@ -83,7 +83,7 @@ public class RegistrazioneController implements Initializable, FormChecker{
         return new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente,istituzioneUtente);
     }
     @Override
-    public void textFieldsAreBlank() throws BlankFieldException {
+    public void checkTextFieldsAreBlank() throws BlankFieldException {
         if (titoloChoiceBox.getItems().isEmpty()
                 || emailTextField.getText().isBlank()
                 || nomeTextField.getText().isBlank()
@@ -114,7 +114,7 @@ public class RegistrazioneController implements Initializable, FormChecker{
     @FXML
     void confirmButtonOnAction(ActionEvent event){
         try{
-            textFieldsAreBlank();
+            checkTextFieldsAreBlank();
             passwordMatcher();
             registraUtente();
         } catch (BlankFieldException e) {
