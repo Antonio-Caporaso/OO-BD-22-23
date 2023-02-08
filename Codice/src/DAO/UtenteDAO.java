@@ -38,7 +38,7 @@ public class UtenteDAO {
         dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();
         try{
-            if(userIsPresentByUsername(utente.getUsername())){
+            if(!userIsPresent(utente)){
                 PreparedStatement query = conn.prepareStatement("INSERT INTO utente VALUES (default,?,?,?,?,?,?,?)");
                 query.setString(1,utente.getPassword());
                 query.setString(2,utente.getNome());
@@ -55,17 +55,17 @@ public class UtenteDAO {
             e.printStackTrace();
         }
     }
-    private boolean userIsPresentByUsername(String username){
+    private boolean userIsPresent(Utente user){
         dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();
         boolean result = false;
         PreparedStatement stm = null;
         try{
             stm = conn.prepareStatement("SELECT count(*) from utente where username=?");
-            stm.setString(1,username);
+            stm.setString(1,user.getUsername());
             ResultSet rs= (stm.executeQuery());
             while(rs.next())
-                result = (rs.getInt(1)==0);
+                result = (rs.getInt(1)==1);
         }catch (SQLException e){
             e.printStackTrace();
         }

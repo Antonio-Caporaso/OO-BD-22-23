@@ -119,13 +119,11 @@ public class RegistrazioneController implements Initializable, FormChecker{
     }
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
-        if(!textFieldsAreBlank()&&passwordMatcher()) {
+        if(!textFieldsAreBlank() || passwordMatcher()) {
             try {
                 registraUtente();
-                NavigationController.getInstance().setStage((Stage) confirmButton.getScene().getWindow());
-                NavigationController.getInstance().loadScene("/View/FXML/Landing.fxml");
             } catch (UtentePresenteException e) {
-                errorLabel.setText("Nome Utente già presente");
+                errorLabel.setText("Utente già presente");
             }
         }
     }
