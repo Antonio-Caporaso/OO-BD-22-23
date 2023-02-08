@@ -27,7 +27,10 @@
                <font>
                   <Font name="Times New Roman" size="18.0" />
                </font></Button>
-            <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="32.0" layoutY="196.0" prefHeight="21.0" prefWidth="285.0" textAlignment="RIGHT" textFill="RED" />
+            <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="32.0" layoutY="196.0" prefHeight="21.0" prefWidth="285.0" textAlignment="RIGHT" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
             <Button fx:id="registratiButton" layoutX="31.0" layoutY="400.0" mnemonicParsing="false" onAction="#registratiButtonOnAction" prefHeight="33.0" prefWidth="133.0" style="-fx-background-color: #33749D;" text="Registrati" textFill="WHITE">
                <font>
                   <Font name="Times New Roman" size="18.0" />
