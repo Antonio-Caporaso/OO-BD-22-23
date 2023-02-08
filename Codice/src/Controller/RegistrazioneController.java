@@ -1,6 +1,8 @@
 package Controller;
 
 import DAO.UtenteDAO;
+import Exceptions.BlankFieldException;
+import Exceptions.PasswordMismatchException;
 import Exceptions.UtentePresenteException;
 import Model.Utente;
 import javafx.event.ActionEvent;
@@ -81,30 +83,22 @@ public class RegistrazioneController implements Initializable, FormChecker{
         return new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente,istituzioneUtente);
     }
     @Override
-    public boolean textFieldsAreBlank() {
+    public void textFieldsAreBlank() throws BlankFieldException {
         if (titoloChoiceBox.getItems().isEmpty()
                 || emailTextField.getText().isBlank()
                 || nomeTextField.getText().isBlank()
                 || usernameTextField.getText().isBlank()
                 || cognomeTextField.getText().isBlank()
                 || passwordTextField.getText().isBlank()
-                || istituzioneTextField.getText().isBlank()){
-            errorLabel.setText("Inserisci tutti i valori");
-            return true;
-        }else{
-            errorLabel.setText("");
-            return false;
-        }
+                || istituzioneTextField.getText().isBlank())
+            throw new BlankFieldException();
     }
 
-    private boolean passwordMatcher(){
+    private void passwordMatcher() throws PasswordMismatchException {
         Utente user = this.getUserDetails();
         String conferma = confermaPasswordTextField.getText();
-        if(conferma.equals(user.getPassword())){
-            return true;
-        }else {
-            errorLabel.setText("Le password non corrispondono");
-            return false;
+        if(!conferma.equals(user.getPassword())){
+            throw new PasswordMismatchException();
         }
     }
 
@@ -118,13 +112,17 @@ public class RegistrazioneController implements Initializable, FormChecker{
             }
     }
     @FXML
-    void confirmButtonOnAction(ActionEvent event) {
-        if(!textFieldsAreBlank() || passwordMatcher()) {
-            try {
-                registraUtente();
-            } catch (UtentePresenteException e) {
-                errorLabel.setText("Utente già presente");
-            }
+    void confirmButtonOnAction(ActionEvent event){
+        try{
+            textFieldsAreBlank();
+            passwordMatcher();
+            registraUtente();
+        } catch (BlankFieldException e) {
+                errorLabel.setText(e.getMessage());
+        } catch (PasswordMismatchException e) {
+            errorLabel.setText(e.getMessage());
+        }catch (UtentePresenteException e){
+            errorLabel.setText(e.getMessage());
         }
     }
     @Override

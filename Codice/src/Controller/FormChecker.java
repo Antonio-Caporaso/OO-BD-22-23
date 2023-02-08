@@ -1,5 +1,7 @@
 package Controller;
 
+import Exceptions.BlankFieldException;
+
 public interface FormChecker {
-    public boolean textFieldsAreBlank();
+    public void textFieldsAreBlank() throws BlankFieldException;
 }

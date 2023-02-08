@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import DAO.SedeDao;
+import Exceptions.BlankFieldException;
 import Model.conferenza.Sede;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,21 +59,18 @@ public class NuovaSedeController implements FormChecker{
 
     @FXML
     void confermaButtonOnAction(ActionEvent event) {
-        if(!textFieldsAreBlank()) {
+        try {
+            textFieldsAreBlank();
             SedeDao sedeDao = new SedeDao();
             Sede sede = new Sede();
             sede.setNomeSede(nomeSedeTF.getText());
             sede.setCity(citySedeTF.getText());
             sede.setCap(capSedeTF.getText());
             sede.setCostoAffitto(Double.parseDouble(costoAffittoTF.getText()));
-            try {
-                sedeDao.saveSede(sede);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }else
-            errorLabel.setText("Inserire correttamente i campi");
-
+            sedeDao.saveSede(sede);
+        }catch (BlankFieldException e) {
+            errorLabel.setText(e.getMessage());
+        }
     }
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -86,10 +84,11 @@ public class NuovaSedeController implements FormChecker{
     }
 
     @Override
-    public boolean textFieldsAreBlank() {
-        return nomeSedeTF.getText().isBlank() || citySedeTF.getText().isBlank()
+    public void textFieldsAreBlank() throws BlankFieldException {
+        if (nomeSedeTF.getText().isBlank() || citySedeTF.getText().isBlank()
                 || capSedeTF.getText().isBlank()
                 || indirizzoSedeTF.getText().isBlank()
-                || costoAffittoTF.getText().isBlank();
+                || costoAffittoTF.getText().isBlank())
+            throw new BlankFieldException();
     }
 }
