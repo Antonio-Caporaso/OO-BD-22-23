@@ -1,7 +1,6 @@
 package Controller;
 
 import DAO.UtenteDAO;
-import Exceptions.BlankFieldException;
 import Exceptions.UtentePresenteException;
 import Model.Utente;
 import javafx.event.ActionEvent;

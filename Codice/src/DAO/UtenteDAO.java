@@ -28,7 +28,6 @@ public class UtenteDAO {
                 String usrname = rs.getString("username");
                 String istituzione = rs.getString("istituzione");
                 user = new Utente(id,titolo,usrname,pwd,nome,cognome,email,istituzione);
-                System.out.println(user.toString());
             }
         }catch (SQLException e){
             e.printStackTrace();

@@ -63,7 +63,7 @@ public class LoginController implements Initializable{
         String pwd = passwordTextField.getText();
         UtenteDAO userdao = new UtenteDAO();
         user = userdao.retrieveUtentebyUsername(username);
-        if(pwd.equals(userdao.getPasswordByUsername(username))){
+        if(pwd.equals(user.getPassword())){
             try {
             //NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
             //NavigationController.getInstance().loadScene("../View/FXML/Landing.fxml");
