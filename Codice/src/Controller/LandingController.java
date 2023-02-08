@@ -1,14 +1,17 @@
 package Controller;
 
+import Model.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.scene.control.Label;
 
 public class LandingController {
+
+    public Utente user;
     @FXML
     private Button creaConferenzaButton;
     @FXML
@@ -65,5 +68,8 @@ public class LandingController {
         assert gestisciConferenzaButton != null : "fx:id=\"gestisciConferenzaButton\" was not injected: check your FXML file 'Landing.fxml'.";
         assert visualizzaConferenza != null : "fx:id=\"visualizzaConferenza\" was not injected: check your FXML file 'Landing.fxml'.";
         assert visualizzaStatisticheButton != null:"fx:id=\"visualizzaStatisticheButton\" was not injected: check your FXML file 'Landing.fxml'.";
+    }
+    public void initData(Utente user){
+        this.user = user;
     }
 }

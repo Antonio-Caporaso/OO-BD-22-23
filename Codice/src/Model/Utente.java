@@ -5,22 +5,61 @@ import Model.conferenza.Conferenza;
 import java.util.LinkedList;
 
 public class Utente {
+    private int idUtente;
     private String titolo;
     private String username;
     private String password;
     private String nome;
     private String cognome;
     private String email;
-    //private String istituzione;
+    private String istituzione;
 
-    public Utente(String nome, String cognome, String titolo, String username, String password, String email/*,String istituzione*/) {
+    public Utente(int idUtente, String titolo, String username, String password, String nome, String cognome, String email, String istituzione) {
+        this.idUtente = idUtente;
+        this.titolo = titolo;
         this.username = username;
         this.password = password;
-        this.titolo = titolo;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
-        //this.istituzione = istituzione;
+        this.istituzione = istituzione;
+    }
+    public Utente(String nomeUtente, String cognomeUtente, String titoloUtente, String usernameUtente, String passwordUtente, String emailUtente, String istituzioneUtente) {
+        this.nome = nomeUtente;
+        this.cognome = cognomeUtente;
+        this.titolo = titoloUtente;
+        this.username = usernameUtente;
+        this.password = passwordUtente;
+        this.email = emailUtente;
+        this.istituzione = istituzioneUtente;
+    }
+    public Utente(Utente utente){
+        this.idUtente = utente.getIdUtente();
+        this.nome = utente.getNome();
+        this.cognome = utente.getCognome();
+        this.email = utente.getEmail();
+        this.password = utente.getPassword();
+        this.istituzione = utente.getIstituzione();
+        this.titolo = utente.getTitolo();
+        this.username = utente.getUsername();
+    }
+    public Utente() {
+    }
+
+    public String getIstituzione() {
+        return istituzione;
+    }
+
+    public void setIstituzione(String istituzione) {
+        this.istituzione = istituzione;
+    }
+
+    public int getIdUtente() {
+        return idUtente;
+    }
+
+    public void setIdUtente(int idUtente) {
+        this.idUtente = idUtente;
     }
 
     public String getTitolo() {
@@ -71,14 +110,6 @@ public class Utente {
         this.email = email;
     }
 
-//    public String getIstituzione() {
-//        return istituzione;
-//    }
-//
-//    public void setIstituzione(String istituzione) {
-//        this.istituzione = istituzione;
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,5 +126,19 @@ public class Utente {
         int result = username != null ? username.hashCode() : 0;
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "idUtente=" + idUtente +
+                ", titolo='" + titolo + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                ", istituzione='" + istituzione + '\'' +
+                '}';
     }
 }

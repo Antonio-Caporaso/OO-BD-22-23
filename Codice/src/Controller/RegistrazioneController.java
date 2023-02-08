@@ -78,10 +78,9 @@ public class RegistrazioneController implements Initializable, FormChecker{
         String usernameUtente = usernameTextField.getText();
         String cognomeUtente = cognomeTextField.getText();
         String passwordUtente = passwordTextField.getText();
-        //string istituzioneUtente= istituzioneTextField.getText();
-        return new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente);
+        String istituzioneUtente = istituzioneTextField.getText();
+        return new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente,istituzioneUtente);
     }
-
     @Override
     public boolean textFieldsAreBlank() {
         if (titoloChoiceBox.getItems().isEmpty()
@@ -108,8 +107,6 @@ public class RegistrazioneController implements Initializable, FormChecker{
             errorLabel.setText("Le password non corrispondono");
             return false;
         }
-
-
     }
 
     void registraUtente() throws UtentePresenteException {
@@ -118,7 +115,6 @@ public class RegistrazioneController implements Initializable, FormChecker{
             try{
                 dao.saveUtente(newUser);
             }catch (UtentePresenteException e){
-
                 throw e;
             }
     }
@@ -137,7 +133,8 @@ public class RegistrazioneController implements Initializable, FormChecker{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titoloChoiceBox.getItems().addAll(titoli);
-        file = new File ("Codice/src/View/Resources/Scientists1.mp4");
+        //file = new File ("Codice/src/View/Resources/Scientists1.mp4");
+        file = new File ("src/View/Resources/Scientists1.mp4");
         media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);

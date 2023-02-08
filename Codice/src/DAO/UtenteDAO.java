@@ -9,6 +9,32 @@ import java.sql.*;
 public class UtenteDAO {
     Connection conn = null;
     DBConnection dbCon = null;
+    public Utente retrieveUtentebyUsername(String username){
+        dbCon = DBConnection.getDBconnection();
+        conn = dbCon.getConnection();
+        Utente user = null;
+        try{
+            String query = "SELECT * from utente where username = ?";
+            PreparedStatement stm = conn.prepareStatement(query);
+            stm.setString(1, username);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("iduser");
+                String pwd = rs.getString("pwd");
+                String nome = rs.getString("nome");
+                String cognome = rs.getString("cognome");
+                String titolo = rs.getString("titolo");
+                String email = rs.getString("email");
+                String usrname = rs.getString("username");
+                String istituzione = rs.getString("istituzione");
+                user = new Utente(id,titolo,usrname,pwd,nome,cognome,email,istituzione);
+                System.out.println(user.toString());
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return user;
+    }
     public String getPasswordByUsername(String username){
         dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();
