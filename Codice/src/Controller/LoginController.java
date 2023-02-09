@@ -81,10 +81,8 @@ public class LoginController implements Initializable, FormChecker{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Landing.fxml"));
         Parent root = loader.load();
         Scene landingScene = new Scene(root);
-
         LandingController controller = loader.getController();
         controller.initData(user);
-
         Stage stage = (Stage) loginButton.getScene().getWindow();
         stage.setScene(landingScene);
     }
