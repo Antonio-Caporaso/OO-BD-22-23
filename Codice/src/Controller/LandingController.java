@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LandingController implements Initializable {
+public class LandingController {
 
     public Utente user;
     @FXML
@@ -77,10 +77,5 @@ public class LandingController implements Initializable {
     }
     public void initData(Utente user){
         this.user = user;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        labelWelcome.setText("Welcome "+user.getUsername());
     }
 }
