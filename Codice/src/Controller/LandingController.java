@@ -4,12 +4,16 @@ import Model.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class LandingController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LandingController implements Initializable {
 
     public Utente user;
     @FXML
@@ -22,6 +26,8 @@ public class LandingController {
     private Button visualizzaStatisticheButton;
     @FXML
     private SubScene subscene;
+    @FXML
+    private Label labelWelcome;
 
     @FXML
     void creaConferenzaOnAction(ActionEvent event) {
@@ -71,5 +77,10 @@ public class LandingController {
     }
     public void initData(Utente user){
         this.user = user;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        labelWelcome.setText("Welcome "+user.getUsername());
     }
 }

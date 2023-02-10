@@ -2,6 +2,7 @@
 
 <?import javafx.scene.SubScene?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -56,5 +57,6 @@
           <Region />
         </root>
       </SubScene>
+      <Label fx:id="labelWelcome" layoutX="543.0" layoutY="366.0" prefHeight="16.0" prefWidth="456.0" text="Label" />
    </children>
 </AnchorPane>
