@@ -2,9 +2,9 @@ package Controller;
 
 import Model.Conferenze.Sede.SedeModel;
 import Model.Utente;
-import Model.organizzazione.Ente.Ente;
 import Model.organizzazione.Ente.EnteModel;
-import Model.organizzazione.Sponsor;
+import Model.organizzazione.Sponsor.Sponsor;
+import Model.organizzazione.Sponsor.SponsorModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +19,7 @@ public class CreaConferenzaController implements Initializable{
     private Utente user;
     private SedeModel sedi = new SedeModel();
     private EnteModel enti = new EnteModel();
+    private SponsorModel sponsor = new SponsorModel();
     @FXML
     private Button annullaButton;
     @FXML
@@ -54,12 +55,18 @@ public class CreaConferenzaController implements Initializable{
     public void showEnti(ActionEvent event){
         entiSelection.show();
     }
+    @FXML
+    public void showSponsor(ActionEvent event){
+        sponsorSelection.show();
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sedi.loadNomiFromDB();
         enti.loadNomiFromDB();
+        sponsor.loadSponsorNames();
         sedeSelection.getItems().addAll(sedi.getNomi());
         entiSelection.getItems().addAll(enti.getNomiEnti());
+        sedeSelection.getItems().addAll(sponsor.getSponsor());
     }
 }
 

@@ -101,7 +101,7 @@
                </children>
             </Pane>
             <ComboBox fx:id="entiSelection" onAction="#showEnti" prefHeight="24.0" prefWidth="516.0" GridPane.columnIndex="1" />
-            <ComboBox fx:id="sponsorSelection" prefHeight="24.0" prefWidth="550.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="sponsorSelection" onAction="#showSponsor" prefHeight="24.0" prefWidth="550.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <ChoiceBox fx:id="sedeSelection" onDragDetected="#showSedi" prefHeight="24.0" prefWidth="528.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>

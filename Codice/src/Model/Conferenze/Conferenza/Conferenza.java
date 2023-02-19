@@ -6,7 +6,7 @@ import Model.Utente;
 import Model.organizzazione.ComitatoLocale;
 import Model.organizzazione.ComitatoScientifico;
 import Model.organizzazione.Ente.Ente;
-import Model.organizzazione.Sponsorizzazione;
+import Model.organizzazione.Sponsor.Sponsorizzazione;
 import java.util.Date;
 import java.util.LinkedList;
 

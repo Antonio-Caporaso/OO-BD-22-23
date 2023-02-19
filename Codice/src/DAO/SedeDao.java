@@ -25,9 +25,6 @@ public class SedeDao {
                 s.setCostoAffitto(rs.getDouble(5));
                 sedi.add(s);
             }
-            rs.close();
-            stm.close();
-            conn.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -40,14 +37,9 @@ public class SedeDao {
         try {
             PreparedStatement stm=conn.prepareStatement("SELECT nomesede FROM sede");
             ResultSet rs = stm.executeQuery();
-            ResultSetMetaData metadata = rs.getMetaData();
-            int rows = metadata.getColumnCount();
             while(rs.next()){
                 sedi.add(rs.getString(1));
             }
-            rs.close();
-            stm.close();
-            conn.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -63,8 +55,13 @@ public class SedeDao {
             stm.setInt(1, idSede);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                //Recupero dati e metto in sede
-                sede = new Sede();
+                int id = rs.getInt(1);
+                String nome = rs.getString(2);
+                String indirizzo = rs.getString(3);
+                String cap = rs.getString(4);
+                String city = rs.getString(5);
+                float costo = rs.getFloat(6);
+                sede = new Sede(id,nome,indirizzo,cap,city,costo);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,12 +72,12 @@ public class SedeDao {
         dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();
         try{
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO sede VALUES (default,?,?,?,?,?,true)");
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO sede VALUES (default,?,?,?,?,?,?)");
             stm.setString(1, sede.getNomeSede());
-            stm.setString(2,sede.getIndirizzo().toString());
-            stm.setString(3,sede.getCity());
+            stm.setString(2,sede.getIndirizzo());
             stm.setString(4,sede.getCap());
-            stm.setDouble(5,sede.getCostoAffitto());
+            stm.setString(5,sede.getCity());
+            stm.setDouble(6,sede.getCostoAffitto());
         }catch (Exception e){
             e.printStackTrace();
         }

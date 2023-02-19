@@ -1,4 +1,4 @@
-package Model.organizzazione;
+package Model.organizzazione.Sponsor;
 
 import java.util.LinkedList;
 
