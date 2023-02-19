@@ -1,6 +1,6 @@
-package Model.organizzazione;
+package Model.organizzazione.Ente;
 
-import Model.conferenza.Conferenza;
+import Model.Conferenze.Conferenza.Conferenza;
 
 import java.util.LinkedList;
 import java.util.Objects;

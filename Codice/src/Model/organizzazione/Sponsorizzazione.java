@@ -1,9 +1,6 @@
 package Model.organizzazione;
 
-import Model.conferenza.Conferenza;
-import Model.organizzazione.Sponsor;
-
-import java.util.Date;
+import Model.Conferenze.Conferenza.Conferenza;
 
 public class Sponsorizzazione {
     private Sponsor sponsor;

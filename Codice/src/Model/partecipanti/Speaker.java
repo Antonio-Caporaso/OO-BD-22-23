@@ -1,6 +1,6 @@
 package Model.partecipanti;
 
-import Model.conferenza.Intervento;
+import Model.Conferenze.Intervento;
 
 import java.util.LinkedList;
 

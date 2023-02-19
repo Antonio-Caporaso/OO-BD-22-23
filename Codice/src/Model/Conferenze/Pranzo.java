@@ -1,4 +1,4 @@
-package Model.conferenza;
+package Model.Conferenze;
 
 import java.util.Date;
 

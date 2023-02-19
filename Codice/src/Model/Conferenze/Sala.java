@@ -1,4 +1,6 @@
-package Model.conferenza;
+package Model.Conferenze;
+
+import Model.Conferenze.Sede.Sede;
 
 public class Sala {
     private int salaID;

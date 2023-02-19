@@ -1,5 +1,6 @@
-package Model.conferenza;
+package Model.Conferenze;
 
+import Model.Conferenze.Conferenza.Conferenza;
 import Model.partecipanti.Chair;
 
 import java.util.Date;

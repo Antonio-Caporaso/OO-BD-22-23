@@ -1,4 +1,4 @@
-package Model.conferenza;
+package Model.Conferenze;
 
 public class Indirizzo {
     private String indirizzo;

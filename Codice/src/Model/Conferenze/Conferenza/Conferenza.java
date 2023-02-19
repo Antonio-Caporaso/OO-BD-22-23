@@ -1,9 +1,11 @@
-package Model.conferenza;
+package Model.Conferenze.Conferenza;
 
+import Model.Conferenze.Sede.Sede;
+import Model.Conferenze.Sessione;
 import Model.Utente;
 import Model.organizzazione.ComitatoLocale;
 import Model.organizzazione.ComitatoScientifico;
-import Model.organizzazione.Ente;
+import Model.organizzazione.Ente.Ente;
 import Model.organizzazione.Sponsorizzazione;
 import java.util.Date;
 import java.util.LinkedList;
@@ -22,7 +24,21 @@ public class Conferenza {
     private Sede sede;
     private float budget;
     private LinkedList<Sessione> sessioni;
-
+    public Conferenza(int id, String nome, Date dataInizio,
+                      Date dataFine, String descrizione,
+                      Sede sede, float budget, ComitatoLocale comitato,
+                      ComitatoScientifico c2, Utente proprietario){
+    this.conferenzaID = id;
+    this.nome = nome;
+    this.dataInizio = dataInizio;
+    this.dataFine = dataFine;
+    this.descrizione = descrizione;
+    this.sede = sede;
+    this.budget = budget;
+    this.comitatoLocale = comitato;
+    this.comitatoScientifico = c2;
+    this.proprietario = proprietario;
+    }
     public Conferenza(String nome, Date dataInizio, Date dataFine, String descrizione) {
         this.nome = nome;
         this.dataInizio = dataInizio;

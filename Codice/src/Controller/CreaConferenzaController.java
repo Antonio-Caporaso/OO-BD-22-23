@@ -1,101 +1,65 @@
 package Controller;
 
+import Model.Conferenze.Sede.SedeModel;
+import Model.Utente;
+import Model.organizzazione.Ente.Ente;
+import Model.organizzazione.Ente.EnteModel;
+import Model.organizzazione.Sponsor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.SubScene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
-import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class CreaConferenzaController {
+public class CreaConferenzaController implements Initializable{
+
+    private Utente user;
+    private SedeModel sedi = new SedeModel();
+    private EnteModel enti = new EnteModel();
     @FXML
-    private DatePicker dataFine;
+    private Button annullaButton;
     @FXML
-    private DatePicker dataInizio;
+    private DatePicker dataFineDP;
     @FXML
-    private TextArea descrizioneConferenza;
+    private DatePicker dataInizioDP;
     @FXML
-    private TextField nomeConferenza;
+    private Button creaButton;
     @FXML
-    private Button inserisciDettagli;
+    private ComboBox<String> entiSelection;
     @FXML
-    private Button inserisciEnti;
+    private TextField nomeConferenzaTF;
     @FXML
-    private Button inserisciSede;
+    private ChoiceBox<String> sedeSelection;
     @FXML
-    private Button inserisciSessioni;
-    @FXML
-    private Button inserisciSponsorizzazioni;
-    @FXML
-    private SubScene subscene;
-    @FXML
-    private Button annulla;
-    @FXML
-    private Button salva;
-    @FXML
-    private TextField numeroEnti;
-    @FXML
-    private Button okButton;
-    @FXML
-    private Button nextButton;
-    @FXML
-    private TextField nomeEnte;
-    @FXML
-    private Button prevButton;
-    @FXML
-    private Label aggiuntaEnteLabel;
-    @FXML
-    void inserisciDettagliOnAction(ActionEvent event) {
-        Parent loader = null;
-        try {
-            loader = FXMLLoader.load(getClass().getResource("../View/FXML/InserisciDettagliConferenza.fxml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        subscene.setRoot(loader);
+    private ComboBox<Sponsor> sponsorSelection;
+
+    public Utente getUser() {
+        return user;
     }
-    @FXML
-    void inserisciEntiOnAction(ActionEvent event) {
-        Parent loader = null;
-        try {
-            loader = FXMLLoader.load(getClass().getResource("../View/FXML/InserisciEnti.fxml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        subscene.setRoot(loader);
-    }
-    @FXML
-    void inserisciSedeOnAction(ActionEvent event) {
-        Parent loader = null;
-        try {
-            loader = FXMLLoader.load(getClass().getResource("../View/FXML/InserisciSede.fxml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        subscene.setRoot(loader);
+
+    public void setUser(Utente user) {
+        this.user = user;
     }
 
     @FXML
-    void inserisciSessioniOnAction(ActionEvent event) {
-        Parent loader = null;
-        try {
-            loader = FXMLLoader.load(getClass().getResource("../View/FXML/InserisciSessioni.fxml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        subscene.setRoot(loader);
-    }
-
+    public void creaButtonOnAction(ActionEvent event){}
     @FXML
-    void inserisciSponsorizzazioniOnAction(ActionEvent event) {
-        Parent loader = null;
-        try {
-            loader = FXMLLoader.load(getClass().getResource("../View/FXML/InserisciSponsor.fxml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        subscene.setRoot(loader);
+    public void showSedi(MouseEvent event){
+        sedeSelection.show();
+    }
+    @FXML
+    public void showEnti(ActionEvent event){
+        entiSelection.show();
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        sedi.loadNomiFromDB();
+        enti.loadNomiFromDB();
+        sedeSelection.getItems().addAll(sedi.getNomi());
+        entiSelection.getItems().addAll(enti.getNomiEnti());
     }
 }
+

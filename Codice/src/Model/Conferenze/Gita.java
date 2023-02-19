@@ -1,4 +1,4 @@
-package Model.conferenza;
+package Model.Conferenze;
 
 public class Gita extends EventoSociale{
     private String meta;

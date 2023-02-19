@@ -1,6 +1,6 @@
 package Model.partecipanti;
 
-import Model.conferenza.Sessione;
+import Model.Conferenze.Sessione;
 import java.util.LinkedList;
 
 public class Chair extends Partecipante{
