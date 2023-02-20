@@ -1,7 +1,7 @@
 package DAO;
 
 import DbConfig.DBConnection;
-import Model.Conferenze.Sede.Sede;
+import Model.Conferenze.Sede;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -40,6 +40,8 @@ public class SedeDao {
             while(rs.next()){
                 sedi.add(rs.getString(1));
             }
+            rs.close();
+            stm.close();
         }catch (Exception e){
             e.printStackTrace();
         }

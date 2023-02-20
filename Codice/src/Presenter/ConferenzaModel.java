@@ -1,4 +1,7 @@
-package Model.Conferenze.Conferenza;
+package Presenter;
+
+import Model.Conferenze.Conferenza;
+import Observers.ConferenzeObserver;
 
 import java.util.ArrayList;
 import java.util.Collections;

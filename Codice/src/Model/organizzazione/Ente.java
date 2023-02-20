@@ -1,6 +1,6 @@
-package Model.organizzazione.Ente;
+package Model.organizzazione;
 
-import Model.Conferenze.Conferenza.Conferenza;
+import Model.Conferenze.Conferenza;
 
 import java.util.LinkedList;
 import java.util.Objects;
@@ -15,6 +15,11 @@ public class Ente {
     public Ente(String nome, LinkedList<Conferenza> organizza) {
         this.nome = nome;
         this.organizza=organizza;
+    }
+
+    public Ente(int id, String nome) {
+        this.enteID = id;
+        this.nome = nome;
     }
 
     public String getNome() {
@@ -41,5 +46,10 @@ public class Ente {
     @Override
     public int hashCode() {
         return nome != null ? nome.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }

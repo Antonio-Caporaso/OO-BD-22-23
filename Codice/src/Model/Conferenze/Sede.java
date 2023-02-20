@@ -1,8 +1,5 @@
-package Model.Conferenze.Sede;
+package Model.Conferenze;
 
-
-import Model.Conferenze.Conferenza.Conferenza;
-import Model.Conferenze.Sala;
 
 import java.util.LinkedList;
 
@@ -91,6 +88,11 @@ public class Sede {
 
     public void setConferenze(LinkedList<Conferenza> conferenze) {
         this.conferenze = conferenze;
+    }
+
+    @Override
+    public String toString() {
+        return nomeSede;
     }
 }
 

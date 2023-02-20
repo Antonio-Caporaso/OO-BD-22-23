@@ -1,6 +1,7 @@
-package Model.Conferenze.Sede;
+package Presenter;
 
 import DAO.SedeDao;
+import Model.Conferenze.Sede;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,7 +12,7 @@ public class SedeModel {
         this.sedi = FXCollections.observableArrayList();
         this.nomi = FXCollections.observableArrayList();
     }
-    public void loadSediFromDB(){
+    public void loadSedi(){
         SedeDao dao = new SedeDao();
         sedi.clear();
         sedi.addAll(dao.retrieveAllSedi());

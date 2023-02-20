@@ -1,4 +1,4 @@
-package Model.organizzazione.Sponsor;
+package Model.organizzazione;
 
 import java.util.LinkedList;
 
@@ -16,6 +16,11 @@ public class Sponsor {
         this.nome = nome;
     }
 
+    public Sponsor(int id, String nome) {
+        this.nome = nome;
+        this.sponsorID = id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -28,5 +33,10 @@ public class Sponsor {
             sponsorizzazioni.add(sponsorizzazione);
             sponsorizzazione.setSponsor(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }

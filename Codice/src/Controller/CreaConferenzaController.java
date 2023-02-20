@@ -1,10 +1,12 @@
 package Controller;
 
-import Model.Conferenze.Sede.SedeModel;
+import Presenter.SedeModel;
 import Model.Utente;
-import Model.organizzazione.Ente.EnteModel;
-import Model.organizzazione.Sponsor.Sponsor;
-import Model.organizzazione.Sponsor.SponsorModel;
+import Model.Conferenze.Sede;
+import Model.organizzazione.Ente;
+import Presenter.EnteModel;
+import Model.organizzazione.Sponsor;
+import Presenter.SponsorModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,11 +31,13 @@ public class CreaConferenzaController implements Initializable{
     @FXML
     private Button creaButton;
     @FXML
-    private ComboBox<String> entiSelection;
+    private ComboBox<Ente> entiSelection;
     @FXML
     private TextField nomeConferenzaTF;
     @FXML
-    private ChoiceBox<String> sedeSelection;
+    private TextArea descrizioneTextArea;
+    @FXML
+    private ChoiceBox<Sede> sedeSelection;
     @FXML
     private ComboBox<Sponsor> sponsorSelection;
 
@@ -44,9 +48,26 @@ public class CreaConferenzaController implements Initializable{
     public void setUser(Utente user) {
         this.user = user;
     }
+    @FXML
+    void annullaOnAction(ActionEvent event) {
+        nomeConferenzaTF.setText("");
+        entiSelection.setValue(null);
+        entiSelection.hide();
+        sedeSelection.setValue(null);
+        sedeSelection.hide();
+        descrizioneTextArea.setText("");
+        dataFineDP.setValue(null);
+        dataFineDP.hide();
+        dataInizioDP.setValue(null);
+        dataInizioDP.hide();
+        sponsorSelection.setValue(null);
+        sponsorSelection.hide();
+    }
 
     @FXML
-    public void creaButtonOnAction(ActionEvent event){}
+    public void creaButtonOnAction(ActionEvent event){
+
+    }
     @FXML
     public void showSedi(MouseEvent event){
         sedeSelection.show();
@@ -61,12 +82,12 @@ public class CreaConferenzaController implements Initializable{
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        sedi.loadNomiFromDB();
-        enti.loadNomiFromDB();
-        sponsor.loadSponsorNames();
-        sedeSelection.getItems().addAll(sedi.getNomi());
-        entiSelection.getItems().addAll(enti.getNomiEnti());
-        sedeSelection.getItems().addAll(sponsor.getSponsor());
+        sedi.loadSedi();
+        enti.loadEnti();
+        sponsor.loadSponsor();
+        sedeSelection.getItems().addAll(sedi.getSedi());
+        entiSelection.getItems().addAll(enti.getEnti());
+        sponsorSelection.getItems().addAll(sponsor.getSponsors());
     }
 }
 

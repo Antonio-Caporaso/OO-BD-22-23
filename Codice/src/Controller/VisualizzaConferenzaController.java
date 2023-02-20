@@ -1,8 +1,8 @@
 package Controller;
 
 import DAO.ConferenzaDao;
-import Model.Conferenze.Conferenza.Conferenza;
-import Model.Conferenze.Conferenza.ConferenzaModel;
+import Model.Conferenze.Conferenza;
+import Presenter.ConferenzaModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 

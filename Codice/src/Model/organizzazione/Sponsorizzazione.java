@@ -1,7 +1,6 @@
-package Model.organizzazione.Sponsor;
+package Model.organizzazione;
 
-import Model.Conferenze.Conferenza.Conferenza;
-import Model.organizzazione.Sponsor.Sponsor;
+import Model.Conferenze.Conferenza;
 
 public class Sponsorizzazione {
     private Sponsor sponsor;

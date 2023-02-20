@@ -1,12 +1,12 @@
-package Model.Conferenze.Conferenza;
+package Model.Conferenze;
 
-import Model.Conferenze.Sede.Sede;
+import Model.Conferenze.Sede;
 import Model.Conferenze.Sessione;
 import Model.Utente;
 import Model.organizzazione.ComitatoLocale;
 import Model.organizzazione.ComitatoScientifico;
-import Model.organizzazione.Ente.Ente;
-import Model.organizzazione.Sponsor.Sponsorizzazione;
+import Model.organizzazione.Ente;
+import Model.organizzazione.Sponsorizzazione;
 import java.util.Date;
 import java.util.LinkedList;
 

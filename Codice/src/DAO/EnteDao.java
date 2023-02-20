@@ -1,6 +1,7 @@
 package DAO;
 
 import DbConfig.DBConnection;
+import Model.organizzazione.Ente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +20,25 @@ public class EnteDao {
             ResultSet rs = stm.executeQuery();
             while(rs.next()){
                 enti.add(rs.getString(1));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return enti;
+    }
+
+    public LinkedList<Ente> retrieveEnti() {
+        dbConnection = DBConnection.getDBconnection();
+        connection = dbConnection.getConnection();
+        LinkedList<Ente> enti = new LinkedList<>();
+        try{
+            PreparedStatement stm = connection.prepareStatement("SELECT * from ente");
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt(1);
+                String nome = rs.getString(2);
+                Ente e = new Ente(id,nome);
+                enti.add(e);
             }
         }catch (Exception e){
             e.printStackTrace();

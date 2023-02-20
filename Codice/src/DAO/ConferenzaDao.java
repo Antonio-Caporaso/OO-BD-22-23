@@ -1,7 +1,7 @@
 package DAO;
 
 import DbConfig.DBConnection;
-import Model.Conferenze.Conferenza.Conferenza;
+import Model.Conferenze.Conferenza;
 import Model.Utente;
 
 import java.sql.Connection;
