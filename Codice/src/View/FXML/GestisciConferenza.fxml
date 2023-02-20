@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="661.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestisciConferenzaController">
+<AnchorPane prefHeight="661.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManageConferenceController">
    <children>
       <Label layoutX="387.0" layoutY="307.0" text="Gestisci la tua conferenza" textFill="RED">
          <font>

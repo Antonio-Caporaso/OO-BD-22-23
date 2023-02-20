@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 
-public class VisualizzaStatisticheController {
+public class ViewStatsController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;

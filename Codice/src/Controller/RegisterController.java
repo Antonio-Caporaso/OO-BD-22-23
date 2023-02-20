@@ -18,7 +18,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegistrazioneController implements Initializable, FormChecker{
+public class RegisterController implements Initializable, FormChecker{
     @FXML
     private Button backButton;
     @FXML

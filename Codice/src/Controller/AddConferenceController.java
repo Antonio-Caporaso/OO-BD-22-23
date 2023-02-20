@@ -1,10 +1,12 @@
 package Controller;
 
-import Presenter.SedeModel;
+import DAO.ConferenzaDao;
+import Model.Conferenze.Conferenza;
+import Presenter.PlaceModel;
 import Model.Utente;
 import Model.Conferenze.Sede;
 import Model.organizzazione.Ente;
-import Presenter.EnteModel;
+import Presenter.OrganizationModel;
 import Model.organizzazione.Sponsor;
 import Presenter.SponsorModel;
 import javafx.event.ActionEvent;
@@ -14,13 +16,15 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 
-public class CreaConferenzaController implements Initializable{
+public class AddConferenceController implements Initializable{
 
     private Utente user;
-    private SedeModel sedi = new SedeModel();
-    private EnteModel enti = new EnteModel();
+    private PlaceModel sedi = new PlaceModel();
+    private OrganizationModel enti = new OrganizationModel();
     private SponsorModel sponsor = new SponsorModel();
     @FXML
     private Button annullaButton;
@@ -31,15 +35,11 @@ public class CreaConferenzaController implements Initializable{
     @FXML
     private Button creaButton;
     @FXML
-    private ComboBox<Ente> entiSelection;
-    @FXML
     private TextField nomeConferenzaTF;
     @FXML
+    private TextField budgetTextField;
+    @FXML
     private TextArea descrizioneTextArea;
-    @FXML
-    private ChoiceBox<Sede> sedeSelection;
-    @FXML
-    private ComboBox<Sponsor> sponsorSelection;
 
     public Utente getUser() {
         return user;
@@ -50,44 +50,33 @@ public class CreaConferenzaController implements Initializable{
     }
     @FXML
     void annullaOnAction(ActionEvent event) {
-        nomeConferenzaTF.setText("");
-        entiSelection.setValue(null);
-        entiSelection.hide();
-        sedeSelection.setValue(null);
-        sedeSelection.hide();
-        descrizioneTextArea.setText("");
         dataFineDP.setValue(null);
         dataFineDP.hide();
         dataInizioDP.setValue(null);
         dataInizioDP.hide();
-        sponsorSelection.setValue(null);
-        sponsorSelection.hide();
+        nomeConferenzaTF.setText("");
+        budgetTextField.setText("");
+        descrizioneTextArea.setText("");
     }
 
     @FXML
     public void creaButtonOnAction(ActionEvent event){
-
-    }
-    @FXML
-    public void showSedi(MouseEvent event){
-        sedeSelection.show();
-    }
-    @FXML
-    public void showEnti(ActionEvent event){
-        entiSelection.show();
-    }
-    @FXML
-    public void showSponsor(ActionEvent event){
-        sponsorSelection.show();
+        String nome = nomeConferenzaTF.getText();
+        float budget = Float.parseFloat(budgetTextField.getText());
+        String descrizione = descrizioneTextArea.getText();
+        LocalDate data1 = dataInizioDP.getValue();
+        LocalDate data2 = dataFineDP.getValue();
+        Date dataI = java.sql.Date.valueOf(data1);
+        Date dataF = java.sql.Date.valueOf(data2);
+        Conferenza c = new Conferenza(nome, dataI, dataF,descrizione,budget, this.user);
+        ConferenzaDao dao = new ConferenzaDao();
+        dao.saveConferenza(c);
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sedi.loadSedi();
         enti.loadEnti();
         sponsor.loadSponsor();
-        sedeSelection.getItems().addAll(sedi.getSedi());
-        entiSelection.getItems().addAll(enti.getEnti());
-        sponsorSelection.getItems().addAll(sponsor.getSponsors());
     }
 }
 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ConferenzaModel {
+public class ConferenceModel {
     private List<Conferenza> conferenze = new ArrayList<>();
     private List<ConferenzeObserver> observers = new ArrayList<>();
     public void addConferenza(Conferenza conferenza){
