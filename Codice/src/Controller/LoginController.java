@@ -77,12 +77,11 @@ public class LoginController implements Initializable, FormChecker{
 
     private void changeToLandingWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Landing.fxml"));
+        LandingController controller = new LandingController();
+        loader.setController(controller);
         Parent root = loader.load();
-        Scene landingScene = new Scene(root);
-
-        LandingController controller = loader.getController();
         controller.setUser(user);
-
+        Scene landingScene = new Scene(root);
         Stage stage = (Stage) loginButton.getScene().getWindow();
         stage.setScene(landingScene);
     }

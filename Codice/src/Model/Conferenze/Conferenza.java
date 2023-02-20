@@ -7,7 +7,7 @@ import Model.organizzazione.ComitatoLocale;
 import Model.organizzazione.ComitatoScientifico;
 import Model.organizzazione.Ente;
 import Model.organizzazione.Sponsorizzazione;
-import java.util.Date;
+import java.sql.Date;
 import java.util.LinkedList;
 
 public class Conferenza {

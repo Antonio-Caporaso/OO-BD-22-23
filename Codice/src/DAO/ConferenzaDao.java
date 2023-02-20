@@ -44,19 +44,15 @@ public class ConferenzaDao {
         return conferenze;
     }
 
-    public void saveConferenza(Conferenza c) {
+    public void saveConferenza(Conferenza c) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        try{
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO conferenza(id, nome, descrizione datainizio, datafine, proprietario) VALUES (default,?,?,?,?,?)");
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO conferenza(idconferenza, nome, descrizione, datainizio, datafine, proprietario) VALUES (default,?,?,?,?,?)");
             stm.setString(1,c.getNome());
             stm.setString(2,c.getDescrizione());
-            stm.setString(3,c.getDataInizio());
-            stm.setString(4,c.getDataFine());
-            stm.setString(5,c.getProprietario());
+            stm.setDate(3,c.getDataInizio());
+            stm.setDate(4,c.getDataFine());
+            stm.setInt(5,c.getProprietario().getIdUtente());
             stm.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 }
