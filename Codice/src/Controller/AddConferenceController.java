@@ -73,8 +73,20 @@ public class AddConferenceController implements Initializable{
             e.printStackTrace();
         }
     }
-    public void openDialogWindow() {
-
+    public void openDialogWindow(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Dialog");
+        alert.setHeaderText("Conferenza aggiunta correttamente");
+        alert.getButtonTypes().remove(ButtonType.CANCEL);
+        /*
+        *   Per modificare l'immagine si usa il metodo setGraphic()
+        *   Image image = new Image("path/to/image.png");
+        *   ImageView imageView = new ImageView(image);
+        *   imageView.setFitWidth(64);
+        *   imageView.setFitHeight(64);
+        *   alert.setGraphic(imageView);
+         */
+        alert.showAndWait();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
