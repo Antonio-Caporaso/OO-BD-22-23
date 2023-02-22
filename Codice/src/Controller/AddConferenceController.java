@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddConferenceController implements Initializable{
@@ -78,6 +79,7 @@ public class AddConferenceController implements Initializable{
         alert.setTitle("Dialog");
         alert.setHeaderText("Conferenza aggiunta correttamente");
         alert.getButtonTypes().remove(ButtonType.CANCEL);
+
         /*
         *   Per modificare l'immagine si usa il metodo setGraphic()
         *   Image image = new Image("path/to/image.png");

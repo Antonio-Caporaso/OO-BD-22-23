@@ -5,10 +5,6 @@ import Model.Conferenze.Conferenza;
 import Presenter.ConferenceModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-
-import java.sql.SQLException;
-import java.util.List;
-
 public class ViewConferencesController {
     private ConferenceModel conferenze;
     private ConferenzaDao conferenzaDao;
@@ -16,12 +12,12 @@ public class ViewConferencesController {
     private ListView<Conferenza> listConferenze;
     @FXML
     public void initialize(){
-        try{
+       /* try{
             List<Conferenza> conferenze = conferenzaDao.getAllConferenze();
             listConferenze.getItems().addAll(conferenze);
         }catch (SQLException e){
             e.printStackTrace();
-        }
+        }*/
     }
 
 
