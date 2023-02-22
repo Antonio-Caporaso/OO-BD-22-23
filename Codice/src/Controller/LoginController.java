@@ -40,7 +40,7 @@ public class LoginController implements Initializable, FormChecker{
     private Media media;
     private File file;
     private MediaPlayer mediaPlayer;
-    public Utente user;
+    private Utente user;
 
     @FXML
     void loginButtonOnAction(ActionEvent event) {
@@ -67,8 +67,6 @@ public class LoginController implements Initializable, FormChecker{
         user = userdao.retrieveUtentebyUsername(username);
         if(pwd.equals(user.getPassword())){
             try {
-            //NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
-            //NavigationController.getInstance().loadScene("../View/FXML/Landing.fxml");
             changeToLandingWindow();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -79,10 +77,11 @@ public class LoginController implements Initializable, FormChecker{
 
     private void changeToLandingWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Landing.fxml"));
+        LandingController controller = new LandingController();
+        loader.setController(controller);
         Parent root = loader.load();
+        controller.setUser(user);
         Scene landingScene = new Scene(root);
-        LandingController controller = loader.getController();
-        controller.initData(user);
         Stage stage = (Stage) loginButton.getScene().getWindow();
         stage.setScene(landingScene);
     }
@@ -105,6 +104,14 @@ public class LoginController implements Initializable, FormChecker{
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public Utente getUser() {
+        return user;
+    }
+
+    public void setUser(Utente user) {
+        this.user = user;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package Model.conferenza;
+package Model.Conferenze;
 
 public class Sala {
     private int salaID;

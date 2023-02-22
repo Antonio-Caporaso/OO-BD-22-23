@@ -1,8 +1,6 @@
 package Model;
 
 import java.util.Objects;
-import Model.conferenza.Conferenza;
-import java.util.LinkedList;
 
 public class Utente {
     private int idUtente;

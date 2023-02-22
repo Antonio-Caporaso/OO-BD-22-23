@@ -6,16 +6,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LandingController {
+public class LandingController implements Initializable{
 
     public Utente user;
+    @FXML
+    private Button LogoutButton;
     @FXML
     private Button creaConferenzaButton;
     @FXML
@@ -27,13 +31,26 @@ public class LandingController {
     @FXML
     private SubScene subscene;
     @FXML
-    private Label labelWelcome;
+    private Label welcomeLabel;
+
+    public Utente getUser() {
+        return user;
+    }
+
+    public void setUser(Utente user) {
+        this.user = user;
+        setWelcomeLabel();
+    }
 
     @FXML
     void creaConferenzaOnAction(ActionEvent event) {
         try {
-            Parent loader = FXMLLoader.load(getClass().getResource("../View/FXML/CreaConferenza.fxml"));
-            subscene.setRoot(loader);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/CreaConferenza.fxml"));
+            AddConferenceController controller = new AddConferenceController();
+            controller.setUser(user);
+            loader.setController(controller);
+            Parent root = loader.load();
+            subscene.setRoot(root);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,13 +86,25 @@ public class LandingController {
         }
     }
     @FXML
-    void initialize() {
-        assert creaConferenzaButton != null : "fx:id=\"creaConferenzaButton\" was not injected: check your FXML file 'Landing.fxml'.";
-        assert gestisciConferenzaButton != null : "fx:id=\"gestisciConferenzaButton\" was not injected: check your FXML file 'Landing.fxml'.";
-        assert visualizzaConferenza != null : "fx:id=\"visualizzaConferenza\" was not injected: check your FXML file 'Landing.fxml'.";
-        assert visualizzaStatisticheButton != null:"fx:id=\"visualizzaStatisticheButton\" was not injected: check your FXML file 'Landing.fxml'.";
+    void logoutButtonOnAction(ActionEvent event){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Login.fxml"));
+            Parent root = loader.load();
+            Scene login = new Scene(root);
+            LoginController controller = loader.getController();
+            controller.setUser(null);
+            Stage stage = (Stage) LogoutButton.getScene().getWindow();
+            stage.setScene(login);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
-    public void initData(Utente user){
-        this.user = user;
+    public void setWelcomeLabel() {
+        if(user != null)
+            welcomeLabel.setText("Welcome " + user.getUsername() + "!");
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 }
