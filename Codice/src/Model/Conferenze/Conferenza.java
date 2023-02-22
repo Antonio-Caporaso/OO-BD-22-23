@@ -55,6 +55,17 @@ public class Conferenza {
         this.proprietario = user;
     }
 
+    public Conferenza(int id, String nome, Date datainizio, Date datafine, String descrizione, Sede sede, float budget, Utente proprietario) {
+        this.conferenzaID = id;
+        this.nome = nome;
+        this.dataInizio=datainizio;
+        this.dataFine= datafine;
+        this.descrizione = descrizione;
+        this.sede = sede;
+        this.budget=budget;
+        this.proprietario=proprietario;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -145,5 +156,10 @@ public class Conferenza {
             sessioni.add(sessione);
             sessione.setConferenza(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }
