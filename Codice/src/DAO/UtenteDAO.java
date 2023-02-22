@@ -71,4 +71,29 @@ public class UtenteDAO {
         }
         return result;
     }
+
+    public Utente retrieveUtentebyID(int id) {
+        dbCon = DBConnection.getDBconnection();
+        conn = dbCon.getConnection();
+        Utente user = null;
+        try{
+            String query = "SELECT * from utente where iduser = ?";
+            PreparedStatement stm = conn.prepareStatement(query);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                String pwd = rs.getString("pwd");
+                String nome = rs.getString("nome");
+                String cognome = rs.getString("cognome");
+                String titolo = rs.getString("titolo");
+                String email = rs.getString("email");
+                String usrname = rs.getString("username");
+                String istituzione = rs.getString("istituzione");
+                user = new Utente(id,titolo,usrname,pwd,nome,cognome,email,istituzione);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return user;
+    }
 }
