@@ -84,22 +84,4 @@ public class SedeDao {
             e.printStackTrace();
         }
     }
-    public Sede retrieveSedeByID(int idSede) {
-        dbCon = DBConnection.getDBconnection();
-        conn = dbCon.getConnection();
-        Sede sede = null;
-        try {
-            String query = "SELECT * from sede WHERE idSede=?";
-            PreparedStatement stm = conn.prepareStatement(query);
-            stm.setInt(1, idSede);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                //Recupero dati e metto in sede
-                sede = new Sede();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return sede;
-    }
 }
