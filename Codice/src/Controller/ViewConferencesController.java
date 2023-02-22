@@ -2,11 +2,11 @@ package Controller;
 
 import DAO.ConferenzaDao;
 import Model.Conferenze.Conferenza;
-import Presenter.ConferenceModel;
+import Presenter.ConferenzaPresenter;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 public class ViewConferencesController {
-    private ConferenceModel conferenze;
+    private ConferenzaPresenter conferenze;
     private ConferenzaDao conferenzaDao;
     @FXML
     private ListView<Conferenza> listConferenze;

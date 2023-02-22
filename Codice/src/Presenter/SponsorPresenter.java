@@ -5,10 +5,10 @@ import Model.organizzazione.Sponsor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class SponsorModel {
+public class SponsorPresenter {
     private ObservableList<String> sponsorNames;
     private ObservableList<Sponsor> sponsors;
-    public SponsorModel(){
+    public SponsorPresenter(){
         sponsorNames = FXCollections.observableArrayList();
         sponsors = FXCollections.observableArrayList();
     }

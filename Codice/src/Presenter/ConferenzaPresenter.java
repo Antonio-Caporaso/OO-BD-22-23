@@ -9,14 +9,13 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class ConferenceModel {
+public class ConferenzaPresenter {
     private ObservableList<Conferenza> conferenze;
     private ObservableList<Conferenza> conferenzeUtente;
     private List<ConferenzeObserver> observers = new ArrayList<>();
-    public ConferenceModel(){
+    public ConferenzaPresenter(){
         this.conferenze = FXCollections.observableArrayList();
         this.conferenzeUtente = FXCollections.observableArrayList();
     }

@@ -2,7 +2,7 @@ package Controller;
 
 import Model.Conferenze.Conferenza;
 import Model.Utente;
-import Presenter.ConferenceModel;
+import Presenter.ConferenzaPresenter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -22,7 +22,7 @@ public class ManageConferenceController implements Initializable {
     private Button editSessioneButton;
     @FXML
     private Button modificaButton;
-    private ConferenceModel conferenze = new ConferenceModel();
+    private ConferenzaPresenter conferenze = new ConferenzaPresenter();
     private Utente user;
 
     public ManageConferenceController(Utente user) {

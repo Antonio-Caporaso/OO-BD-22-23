@@ -5,10 +5,10 @@ import Model.organizzazione.Ente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class OrganizationModel {
+public class EntePresenter {
     private ObservableList<String> nomiEnti;
     private ObservableList<Ente> enti;
-    public OrganizationModel(){
+    public EntePresenter(){
         this.nomiEnti = FXCollections.observableArrayList();
         this.enti = FXCollections.observableArrayList();
     }
