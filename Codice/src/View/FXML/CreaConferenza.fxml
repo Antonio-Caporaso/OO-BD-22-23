@@ -17,7 +17,7 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a62a00" height="69.0" stroke="WHITE" strokeType="INSIDE" width="890.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a62a00" height="70.0" stroke="WHITE" strokeType="INSIDE" width="890.0" />
         <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #A62A00;" text="Crea una nuova conferenza" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
             <font>
                 <Font name="System Bold" size="22.0" />
@@ -30,10 +30,10 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="65.0" minHeight="8.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="98.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="171.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="172.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="182.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="291.0" minHeight="10.0" prefHeight="272.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
@@ -48,16 +48,16 @@
             <TextField fx:id="nomeConferenzaTF" prefHeight="24.0" prefWidth="509.0" promptText="Aggiungi un nome completo e chiaro" GridPane.columnIndex="1" />
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label layoutX="14.0" layoutY="46.0" text="Inizio">
+                  <Label layoutX="14.0" layoutY="26.0" text="Inizio">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+            <Pane prefHeight="157.0" prefWidth="279.0" GridPane.rowIndex="2">
                <children>
-                  <Label layoutX="14.0" layoutY="46.0" text="Fine">
+                  <Label layoutX="14.0" layoutY="31.0" text="Fine">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -85,7 +85,7 @@
             </TextArea>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <Label layoutX="14.0" layoutY="40.0" text="Budget">
+                  <Label layoutX="14.0" layoutY="36.0" text="Budget">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -95,7 +95,7 @@
             <TextField fx:id="budgetTextField" promptText="Inserisci il tuo budget" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <ButtonBar layoutX="676.0" layoutY="682.0" prefHeight="24.0" prefWidth="200.0">
+      <ButtonBar layoutX="639.0" layoutY="682.0" prefHeight="24.0" prefWidth="200.0">
         <buttons>
           <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" text="Annulla" />
             <Button fx:id="creaButton" mnemonicParsing="false" onAction="#creaButtonOnAction" text="Crea" />
