@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -37,6 +38,8 @@ public class AddConferenceController implements Initializable{
     private TextField budgetTextField;
     @FXML
     private TextArea descrizioneTextArea;
+    @FXML
+    private SubScene subscene;
 
     public Utente getUser() {
         return user;
@@ -58,19 +61,29 @@ public class AddConferenceController implements Initializable{
 
     @FXML
     public void creaButtonOnAction(ActionEvent event){
-        String nome = nomeConferenzaTF.getText();
-        float budget = Float.parseFloat(budgetTextField.getText());
-        String descrizione = descrizioneTextArea.getText();
-        LocalDate dataIselected = dataInizioDP.getValue();
-        LocalDate dataFselected = dataFineDP.getValue();
-        Date dataI = java.sql.Date.valueOf(dataIselected);
-        Date dataF = java.sql.Date.valueOf(dataFselected);
-        Conferenza c = new Conferenza(nome, dataI, dataF,descrizione,budget,user);
-        ConferenzaDao dao = new ConferenzaDao();
-        try {
-            dao.saveConferenza(c);
-            openDialogWindow();
-        }catch (Exception e){
+//        String nome = nomeConferenzaTF.getText();
+//        float budget = Float.parseFloat(budgetTextField.getText());
+//        String descrizione = descrizioneTextArea.getText();
+//        LocalDate dataIselected = dataInizioDP.getValue();
+//        LocalDate dataFselected = dataFineDP.getValue();
+//        Date dataI = java.sql.Date.valueOf(dataIselected);
+//        Date dataF = java.sql.Date.valueOf(dataFselected);
+//        Conferenza c = new Conferenza(nome, dataI, dataF,descrizione,budget,user);
+//        ConferenzaDao dao = new ConferenzaDao();
+//        try {
+//            dao.saveConferenza(c);
+//            openDialogWindow();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/CreaConferenzaNext.fxml"));
+            AddConferenceNextController controller = new AddConferenceNextController();
+            controller.setSubscene(subscene);
+            loader.setController(controller);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -89,6 +102,9 @@ public class AddConferenceController implements Initializable{
         *   alert.setGraphic(imageView);
          */
         alert.showAndWait();
+    }
+    public void setSubscene(SubScene subscene) {
+        this.subscene = subscene;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
