@@ -17,7 +17,7 @@
          <children>
             <AnchorPane prefHeight="53.0" prefWidth="285.0">
                <children>
-                  <ImageView fitHeight="58.0" fitWidth="203.0" layoutX="73.0" layoutY="23.0">
+                  <ImageView fitHeight="80.0" fitWidth="328.0" layoutX="14.0" layoutY="14.0">
                      <image>
                         <Image url="@../Resources/Logo.png" />
                      </image>
@@ -25,40 +25,44 @@
                </children></AnchorPane>
             <Button fx:id="loginButton" layoutX="185.0" layoutY="400.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="33.0" prefWidth="133.0" style="-fx-background-color: #33749D;" text="Login" textFill="WHITE">
                <font>
-                  <Font name="Times New Roman" size="18.0" />
+                  <Font name="Arial" size="18.0" />
                </font></Button>
-            <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="32.0" layoutY="196.0" prefHeight="21.0" prefWidth="285.0" textAlignment="RIGHT" textFill="RED">
+            <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="32.0" layoutY="241.0" prefHeight="21.0" prefWidth="285.0" textAlignment="RIGHT" textFill="#55a1d0">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font></Label>
             <Button fx:id="registratiButton" layoutX="31.0" layoutY="400.0" mnemonicParsing="false" onAction="#registratiButtonOnAction" prefHeight="33.0" prefWidth="133.0" style="-fx-background-color: #33749D;" text="Registrati" textFill="WHITE">
                <font>
-                  <Font name="Times New Roman" size="18.0" />
+                  <Font name="Arial" size="18.0" />
                </font></Button>
             <TextField fx:id="usernameTextField" layoutX="148.0" layoutY="287.0" prefHeight="24.0" prefWidth="171.0" />
             <PasswordField fx:id="passwordTextField" layoutX="148.0" layoutY="337.0" prefHeight="24.0" prefWidth="171.0" />
-            <Button fx:id="skipButton" layoutX="111.0" layoutY="536.0" mnemonicParsing="false" onAction="#skipButtonOnAction" text="SKIP (Solo per prova)" />
             <Label layoutX="35.0" layoutY="340.0" text="Password" textFill="WHITE">
                <font>
-                  <Font name="Times New Roman" size="18.0" />
+                  <Font name="Arial" size="18.0" />
                </font>
             </Label>
             <Label layoutX="34.0" layoutY="290.0" text="Username" textFill="WHITE">
                <font>
-                  <Font name="Times New Roman" size="18.0" />
+                  <Font name="Arial" size="18.0" />
                </font>
             </Label>
+            <ImageView fitHeight="80.0" fitWidth="97.0" layoutX="126.0" layoutY="584.0">
+               <image>
+                  <Image url="@../Resources/IconAtom.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="720.0" prefWidth="932.0" style="-fx-background-color: #33749D;">
          <children>
             <MediaView fx:id="mediaView" fitHeight="525.0" fitWidth="932.0" />
-            <ImageView fitHeight="99.0" fitWidth="200.0" layoutX="14.0" layoutY="607.0">
+            <ImageView fitHeight="99.0" fitWidth="200.0" layoutX="718.0" layoutY="607.0">
                <image>
                   <Image url="@../Resources/logo_dieti.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="192.0" fitWidth="200.0" layoutX="718.0" layoutY="525.0">
+            <ImageView fitHeight="192.0" fitWidth="200.0" layoutX="14.0" layoutY="525.0">
                <image>
                   <Image url="@../Resources/unina%20nero.png" />
                </image>
