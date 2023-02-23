@@ -29,6 +29,8 @@ public class LandingController implements Initializable{
     @FXML
     private Button visualizzaStatisticheButton;
     @FXML
+    private Button backToLandingButton;
+    @FXML
     private SubScene subscene;
     @FXML
     private Label welcomeLabel;
@@ -48,6 +50,7 @@ public class LandingController implements Initializable{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/CreaConferenza.fxml"));
             AddConferenceController controller = new AddConferenceController();
             controller.setUser(user);
+            controller.setSubscene(subscene);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -102,10 +105,26 @@ public class LandingController implements Initializable{
             e.printStackTrace();
         }
     }
+    @FXML
+    void backToLandingButtonOnAction(ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Landing.fxml"));
+            LandingController controller = new LandingController();
+            loader.setController(controller);
+            Parent root = loader.load();
+            controller.setUser(user);
+            Scene landingScene = new Scene(root);
+            Stage stage = (Stage) backToLandingButton.getScene().getWindow();
+            stage.setScene(landingScene);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public void setWelcomeLabel() {
         if(user != null)
             welcomeLabel.setText("Welcome " + user.getUsername() + "!");
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
