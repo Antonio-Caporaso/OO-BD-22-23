@@ -15,10 +15,10 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" style="-fx-background-color: #33749D;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a62a00" height="70.0" stroke="WHITE" strokeType="INSIDE" width="890.0" />
-        <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #A62A00;" text="Crea una nuova conferenza" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="75.0" layoutY="-5.0" stroke="#00416a" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+        <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #00416A;" text="Crea una nuova conferenza" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
             <font>
                 <Font name="System Bold" size="22.0" />
             </font>
@@ -38,7 +38,7 @@
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="14.0" layoutY="23.0" text="Nome della conferenza">
+                  <Label layoutX="14.0" layoutY="23.0" text="Nome della conferenza" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -48,7 +48,7 @@
             <TextField fx:id="nomeConferenzaTF" prefHeight="24.0" prefWidth="509.0" promptText="Aggiungi un nome completo e chiaro" GridPane.columnIndex="1" />
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label layoutX="14.0" layoutY="26.0" text="Inizio">
+                  <Label layoutX="14.0" layoutY="26.0" text="Inizio" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -57,18 +57,18 @@
             </Pane>
             <Pane prefHeight="157.0" prefWidth="279.0" GridPane.rowIndex="2">
                <children>
-                  <Label layoutX="14.0" layoutY="31.0" text="Fine">
+                  <Label layoutX="14.0" layoutY="31.0" text="Fine" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <DatePicker fx:id="dataInizioDP" promptText="Data di inizio" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DatePicker fx:id="dataFineDP" promptText="Data di fine" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="dataInizioDP" promptText="Data di inizio" stylesheets="@../CSS/datePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DatePicker fx:id="dataFineDP" promptText="Data di fine" stylesheets="@../CSS/datePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                <children>
-                  <Label layoutX="14.0" layoutY="14.0" text="Descrizione">
+                  <Label layoutX="14.0" layoutY="14.0" text="Descrizione" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -85,7 +85,7 @@
             </TextArea>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <Label layoutX="14.0" layoutY="36.0" text="Budget">
+                  <Label layoutX="14.0" layoutY="36.0" text="Budget" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -95,10 +95,19 @@
             <TextField fx:id="budgetTextField" promptText="Inserisci il tuo budget" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <ButtonBar layoutX="639.0" layoutY="682.0" prefHeight="24.0" prefWidth="200.0">
+      <ButtonBar layoutX="718.0" layoutY="675.0" prefHeight="24.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" text="Annulla" />
-            <Button fx:id="creaButton" mnemonicParsing="false" onAction="#creaButtonOnAction" text="Crea" />
+          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" stylesheets="@../CSS/defaultButton.css" text="Annulla" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></Button>
+            <Button fx:id="creaButton" mnemonicParsing="false" onAction="#creaButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Crea" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
         </buttons>
       </ButtonBar>
     </children>
