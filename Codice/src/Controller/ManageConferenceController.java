@@ -1,6 +1,4 @@
 package Controller;
-
-import DAO.ConferenzaDao;
 import Model.Conferenze.Conferenza;
 import Model.Utente;
 import Presenter.ConferenzaPresenter;
@@ -15,7 +13,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;

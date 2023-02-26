@@ -3,6 +3,7 @@ package Controller;
 import DAO.ConferenzaDao;
 import Model.Conferenze.Conferenza;
 import Model.Utente;
+import Presenter.ConferenzaPresenter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ import java.util.ResourceBundle;
 
 public class AddConferenceController implements Initializable{
     private Utente user;
+    private ConferenzaPresenter conference;
     @FXML
     private Button annullaButton;
     @FXML
@@ -69,10 +71,10 @@ public class AddConferenceController implements Initializable{
 //        Date dataI = java.sql.Date.valueOf(dataIselected);
 //        Date dataF = java.sql.Date.valueOf(dataFselected);
 //        Conferenza c = new Conferenza(nome, dataI, dataF,descrizione,budget,user);
-//        ConferenzaDao dao = new ConferenzaDao();
+//
 //        try {
-//            dao.saveConferenza(c);
-//            openAddedConferenceDialogWindow();
+//           conference.addConferenza(c);
+//           openAddedConferenceDialogWindow();
 //        }catch (Exception e){
 //            e.printStackTrace();
 //        }

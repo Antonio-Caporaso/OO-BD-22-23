@@ -29,8 +29,10 @@ public class ConferenzaPresenter {
         conferenzeUtente.clear();
         conferenzeUtente.addAll(dao.getAllConferenzeByUtente(user));
     }
-    public void addConferenza(Conferenza conferenza){
-        conferenze.add(conferenza);
+    public void addConferenza(Conferenza conferenza) throws SQLException {
+        conferenzeUtente.add(conferenza);
+        ConferenzaDao d = new ConferenzaDao();
+        d.saveConferenza(conferenza);
         notifyObserversOnConferenzaAdded(conferenza);
     }
 
