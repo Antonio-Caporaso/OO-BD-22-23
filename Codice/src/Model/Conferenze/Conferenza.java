@@ -66,6 +66,14 @@ public class Conferenza {
         this.proprietario=proprietario;
     }
 
+    public int getConferenzaID() {
+        return conferenzaID;
+    }
+
+    public void setConferenzaID(int conferenzaID) {
+        this.conferenzaID = conferenzaID;
+    }
+
     public String getNome() {
         return nome;
     }

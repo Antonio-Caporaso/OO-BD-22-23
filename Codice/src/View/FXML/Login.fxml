@@ -47,7 +47,7 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="80.0" fitWidth="97.0" layoutX="126.0" layoutY="584.0">
+            <ImageView fitHeight="99.0" fitWidth="97.0" layoutX="123.0" layoutY="565.0">
                <image>
                   <Image url="@../Resources/IconAtom.png" />
                </image>

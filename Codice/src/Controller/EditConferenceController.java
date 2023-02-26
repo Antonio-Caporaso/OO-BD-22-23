@@ -33,6 +33,6 @@ public class EditConferenceController implements Initializable {
     }
     public void setTitleLabel(){
         if(conferenza!=null)
-            titleLabel.setText("Modifica "+ conferenza.getNome());
+            titleLabel.setText("Modifica della conferenza: "+ conferenza.getNome());
     }
 }

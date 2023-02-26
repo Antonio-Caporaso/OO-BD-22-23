@@ -64,4 +64,13 @@ public class ConferenzaDao {
         stm.setInt(5, c.getProprietario().getIdUtente());
         stm.executeUpdate();
     }
+
+    public void deleteConferenza(Conferenza c) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn=dbcon.getConnection();
+        String query = "DELETE FROM conferenza where idconferenza = ?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,c.getConferenzaID());
+        stm.executeUpdate();
+    }
 }

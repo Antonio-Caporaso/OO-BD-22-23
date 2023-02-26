@@ -1,5 +1,6 @@
 package Controller;
 
+import DAO.ConferenzaDao;
 import Model.Conferenze.Conferenza;
 import Model.Utente;
 import Presenter.ConferenzaPresenter;
@@ -9,10 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ManageConferenceController implements Initializable {
@@ -71,6 +75,37 @@ public class ManageConferenceController implements Initializable {
         }
     }
     public void deleteOnAction(ActionEvent event){
+        Conferenza c = conferenzeView.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Eliminare conferenza");
+        alert.setHeaderText("Sicuro di voler eliminare la conferenza "+c.getNome()+"?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            try{
+                eliminaConferenza(c);
+                showInformationAlert();
+            }catch (SQLException e){
+                showErrorAlert(e);
+            }
+        }
+    }
 
+    private static void showInformationAlert() {
+        Alert noErrorOnDelete = new Alert(Alert.AlertType.INFORMATION);
+        noErrorOnDelete.setTitle("Eliminazione conferenza");
+        noErrorOnDelete.setContentText("Eliminazione effettuata correttamente");
+        noErrorOnDelete.showAndWait();
+    }
+
+    private static void showErrorAlert(SQLException e) {
+        Alert errorOnDelete = new Alert(Alert.AlertType.ERROR);
+        errorOnDelete.setTitle("Eliminazione conferenza");
+        errorOnDelete.setContentText(e.getMessage());
+        errorOnDelete.showAndWait();
+    }
+
+    private void eliminaConferenza(Conferenza c) throws SQLException {
+        ConferenzaDao d = new ConferenzaDao();
+        d.deleteConferenza(c);
     }
 }
