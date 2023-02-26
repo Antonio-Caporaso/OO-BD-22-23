@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable, FormChecker{
-    //private Stage primaryStage;
+public class LoginController implements Initializable, FormChecker {
     @FXML
     private Label errorLabel;
     @FXML
