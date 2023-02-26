@@ -4,6 +4,7 @@ import DAO.ConferenzaDao;
 import Model.Conferenze.Conferenza;
 import Model.Utente;
 import Presenter.ConferenzaPresenter;
+import Presenter.SedePresenter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +14,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+import Model.Conferenze.Sede;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -25,7 +27,8 @@ import java.util.ResourceBundle;
 
 public class AddConferenceController implements Initializable{
     private Utente user;
-    private ConferenzaPresenter conference;
+    private SedePresenter sedi = new SedePresenter();
+    private ConferenzaPresenter conference = new ConferenzaPresenter();
     @FXML
     private Button annullaButton;
     @FXML
@@ -36,6 +39,8 @@ public class AddConferenceController implements Initializable{
     private Button creaButton;
     @FXML
     private TextField nomeConferenzaTF;
+    @FXML
+    private ChoiceBox<Sede> sedeChoice;
     @FXML
     private TextField budgetTextField;
     @FXML
@@ -63,31 +68,31 @@ public class AddConferenceController implements Initializable{
 
     @FXML
     public void creaButtonOnAction(ActionEvent event){
-//        String nome = nomeConferenzaTF.getText();
-//        float budget = Float.parseFloat(budgetTextField.getText());
-//        String descrizione = descrizioneTextArea.getText();
-//        LocalDate dataIselected = dataInizioDP.getValue();
-//        LocalDate dataFselected = dataFineDP.getValue();
-//        Date dataI = java.sql.Date.valueOf(dataIselected);
-//        Date dataF = java.sql.Date.valueOf(dataFselected);
-//        Conferenza c = new Conferenza(nome, dataI, dataF,descrizione,budget,user);
-//
-//        try {
-//           conference.addConferenza(c);
-//           openAddedConferenceDialogWindow();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/CreaConferenzaNext.fxml"));
-            AddConferenceNextController controller = new AddConferenceNextController();
-            controller.setSubscene(subscene);
-            loader.setController(controller);
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        } catch (Exception e) {
+        String nome = nomeConferenzaTF.getText();
+        float budget = Float.parseFloat(budgetTextField.getText());
+        String descrizione = descrizioneTextArea.getText();
+        LocalDate dataIselected = dataInizioDP.getValue();
+        LocalDate dataFselected = dataFineDP.getValue();
+        Date dataI = java.sql.Date.valueOf(dataIselected);
+        Date dataF = java.sql.Date.valueOf(dataFselected);
+        Sede sede = sedeChoice.getValue();
+        Conferenza c = new Conferenza(nome, dataI, dataF,descrizione,budget,sede,user);
+        try {
+           conference.addConferenza(c);
+           openAddedConferenceDialogWindow();
+        }catch (Exception e){
             e.printStackTrace();
         }
+//        try{
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/CreaConferenzaNext.fxml"));
+//            AddConferenceNextController controller = new AddConferenceNextController();
+//            controller.setSubscene(subscene);
+//            loader.setController(controller);
+//            Parent root = loader.load();
+//            subscene.setRoot(root);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
     public void openAddedConferenceDialogWindow(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -110,6 +115,13 @@ public class AddConferenceController implements Initializable{
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        sedi.loadSedi();
+        sedeChoice.setItems(sedi.getSedi());
     }
+    @FXML
+    void showSedi(MouseEvent event) {
+        sedeChoice.show();
+    }
+
 }
 

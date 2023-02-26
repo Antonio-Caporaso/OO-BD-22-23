@@ -130,7 +130,7 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <Label fx:id="descrizioneLabel" layoutX="8.0" layoutY="20.0" prefHeight="24.0" prefWidth="514.0" text="Label" />
+                                    <Label fx:id="descrizioneLabel" layoutX="14.0" layoutY="20.0" prefHeight="24.0" prefWidth="488.0" text="Label" />
                                  </children>
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">

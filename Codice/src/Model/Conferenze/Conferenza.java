@@ -46,12 +46,13 @@ public class Conferenza {
         this.descrizione = descrizione;
     }
 
-    public Conferenza(String nome, Date dataI, Date dataF, String descrizione, float budget, Utente user) {
+    public Conferenza(String nome, Date dataI, Date dataF, String descrizione, float budget, Sede sede, Utente user) {
         this.nome=nome;
         this.dataInizio = dataI;
         this.dataFine = dataF;
         this.descrizione= descrizione;
         this.budget= budget;
+        this.sede = sede;
         this.proprietario = user;
     }
 
