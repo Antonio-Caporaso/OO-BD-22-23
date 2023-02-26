@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LandingController implements Initializable{
-
     public Utente user;
     @FXML
     private Button LogoutButton;
@@ -65,6 +64,7 @@ public class LandingController implements Initializable{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/GestisciConferenza.fxml"));
             ManageConferenceController controller = new ManageConferenceController(user);
             loader.setController(controller);
+            controller.setSubscene(subscene);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {

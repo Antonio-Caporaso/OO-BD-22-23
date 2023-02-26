@@ -96,15 +96,6 @@ public class LoginController implements Initializable, FormChecker{
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
     }
-    @FXML
-    private void skipButtonOnAction(ActionEvent event){
-        try{
-            NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
-            NavigationController.getInstance().loadScene("../View/FXML/Landing.fxml");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
     public Utente getUser() {
         return user;
