@@ -40,8 +40,10 @@ public class ConferenzaPresenter {
         }
     }
 
-    public void removeConferenza(Conferenza conferenza){
-        conferenze.remove(conferenza);
+    public void removeConferenza(Conferenza conferenza) throws SQLException {
+        this. conferenzeUtente.remove(conferenza);
+        ConferenzaDao d = new ConferenzaDao();
+        d.deleteConferenza(conferenza);
         notifyObserversOnConferenzaRemoved(conferenza);
     }
 

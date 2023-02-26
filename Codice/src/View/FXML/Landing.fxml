@@ -61,7 +61,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Button fx:id="LogoutButton" layoutX="115.0" layoutY="39.0" mnemonicParsing="false" onAction="#logoutButtonOnAction" prefHeight="39.0" prefWidth="118.0" stylesheets="@../CSS/landing.css" text="Logout" />
-                  <ImageView fitHeight="80.0" fitWidth="97.0" layoutX="126.0" layoutY="102.0">
+                  <ImageView fitHeight="97.0" fitWidth="97.0" layoutX="126.0" layoutY="100.0">
                      <image>
                         <Image url="@../Resources/IconAtom.png" />
                      </image>

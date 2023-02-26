@@ -14,6 +14,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -23,11 +25,7 @@ public class ManageConferenceController implements Initializable {
     @FXML
     private ListView<Conferenza> conferenzeView;
     @FXML
-    private Button addSessioneButton;
-    @FXML
     private Button deleteConferenzaButton;
-    @FXML
-    private Button editSessioneButton;
     @FXML
     private Button modificaButton;
     private SubScene subscene;
@@ -49,7 +47,7 @@ public class ManageConferenceController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             conferenze.loadConferenzeUtente(user);
-            conferenzeView.getItems().addAll(conferenze.getConferenzeUtente());
+            conferenzeView.setItems(conferenze.getConferenzeUtente());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -60,6 +58,7 @@ public class ManageConferenceController implements Initializable {
     public void setSubscene(SubScene subscene) {
         this.subscene=subscene;
     }
+
     @FXML
     public void editOnAction(ActionEvent event) {
         try{
@@ -73,6 +72,11 @@ public class ManageConferenceController implements Initializable {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    @FXML
+    void enableButtons(MouseEvent event) {
+        modificaButton.setDisable(false);
+        deleteConferenzaButton.setDisable(false);
     }
     public void deleteOnAction(ActionEvent event){
         Conferenza c = conferenzeView.getSelectionModel().getSelectedItem();
@@ -105,7 +109,6 @@ public class ManageConferenceController implements Initializable {
     }
 
     private void eliminaConferenza(Conferenza c) throws SQLException {
-        ConferenzaDao d = new ConferenzaDao();
-        d.deleteConferenza(c);
+        conferenze.removeConferenza(c);
     }
 }

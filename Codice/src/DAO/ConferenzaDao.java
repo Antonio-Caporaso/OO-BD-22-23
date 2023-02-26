@@ -32,7 +32,7 @@ public class ConferenzaDao {
             Date datafine = rs.getDate(4);
             String descrizione = rs.getString(5);
             Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
-            float budget = rs.getFloat(6);
+            float budget = rs.getFloat(7);
             Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
             Conferenza c = new Conferenza(id,nome,datainizio,datafine,descrizione,sede,budget,proprietario);
             list.add(c);
