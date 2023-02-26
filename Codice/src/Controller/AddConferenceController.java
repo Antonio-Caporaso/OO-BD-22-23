@@ -72,7 +72,7 @@ public class AddConferenceController implements Initializable{
 //        ConferenzaDao dao = new ConferenzaDao();
 //        try {
 //            dao.saveConferenza(c);
-//            openDialogWindow();
+//            openAddedConferenceDialogWindow();
 //        }catch (Exception e){
 //            e.printStackTrace();
 //        }
@@ -87,7 +87,7 @@ public class AddConferenceController implements Initializable{
             e.printStackTrace();
         }
     }
-    public void openDialogWindow(){
+    public void openAddedConferenceDialogWindow(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Dialog");
         alert.setHeaderText("Conferenza aggiunta correttamente");

@@ -128,8 +128,6 @@ public class LandingController implements Initializable{
         if(user != null)
             welcomeLabel.setText("Welcome " + user.getUsername() + "!");
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Welcome.fxml"));

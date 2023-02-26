@@ -63,15 +63,20 @@ public class LoginController implements Initializable, FormChecker {
         String username = usernameTextField.getText();
         String pwd = passwordTextField.getText();
         UtenteDAO userdao = new UtenteDAO();
-        user = userdao.retrieveUtentebyUsername(username);
-        if(pwd.equals(user.getPassword())){
-            try {
-            changeToLandingWindow();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }else
-            errorLabel.setText("Password errata");
+        try {
+            user = userdao.retrieveUtentebyUsername(username);
+            if(pwd.equals(user.getPassword())){
+                try {
+                    changeToLandingWindow();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }else
+                errorLabel.setText("Password errata");
+        }catch (Exception e){
+            errorLabel.setText("Utente non presente");
+        }
+
     }
 
     private void changeToLandingWindow() throws IOException {
