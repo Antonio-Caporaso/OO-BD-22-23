@@ -45,10 +45,20 @@ public class ConferenzaDao {
         LinkedList<Conferenza> conferenze = new LinkedList<>();
         String query = "SELECT * FROM conferenza";
         PreparedStatement stm = conn.prepareStatement(query);
-
+        SedeDao daosede = new SedeDao();
+        UtenteDAO utentedao = new UtenteDAO();
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
-            // logic
+            Conferenza c = new Conferenza();
+            c.setConferenzaID(rs.getInt(1));
+            c.setNome(rs.getString("nome"));
+            c.setDescrizione(rs.getString("descrizione"));
+            c.setBudget(rs.getFloat("budget"));
+            c.setSede(daosede.retrieveSedeByID(rs.getInt("sede")));
+            c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
+            c.setDataInizio(rs.getDate("datainizio"));
+            c.setDataFine(rs.getDate("datafine"));
+            conferenze.add(c);
         }
         return conferenze;
     }

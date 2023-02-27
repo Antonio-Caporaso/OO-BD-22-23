@@ -67,6 +67,9 @@ public class Conferenza {
         this.proprietario=proprietario;
     }
 
+    public Conferenza() {
+    }
+
     public int getConferenzaID() {
         return conferenzaID;
     }

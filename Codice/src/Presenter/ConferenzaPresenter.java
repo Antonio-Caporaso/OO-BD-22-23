@@ -69,4 +69,8 @@ public class ConferenzaPresenter {
     public void removeObserver(ConferenzeObserver observer){
         observers.remove(observer);
     }
+
+    public ObservableList<Conferenza> getConferenze() {
+        return conferenze;
+    }
 }
