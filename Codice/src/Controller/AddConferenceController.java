@@ -1,6 +1,7 @@
 package Controller;
 
 import DAO.ConferenzaDao;
+import Exceptions.BlankFieldException;
 import Model.Conferenze.Conferenza;
 import Model.Utente;
 import Presenter.ConferenzaPresenter;
@@ -25,7 +26,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddConferenceController implements Initializable{
+public class AddConferenceController implements Initializable,FormChecker{
     private Utente user;
     private SedePresenter sedi = new SedePresenter();
     private ConferenzaPresenter conference = new ConferenzaPresenter();
@@ -68,18 +69,24 @@ public class AddConferenceController implements Initializable{
 
     @FXML
     public void creaButtonOnAction(ActionEvent event){
-        String nome = nomeConferenzaTF.getText();
-        float budget = Float.parseFloat(budgetTextField.getText());
-        String descrizione = descrizioneTextArea.getText();
-        LocalDate dataIselected = dataInizioDP.getValue();
-        LocalDate dataFselected = dataFineDP.getValue();
-        Date dataI = java.sql.Date.valueOf(dataIselected);
-        Date dataF = java.sql.Date.valueOf(dataFselected);
-        Sede sede = sedeChoice.getValue();
-        Conferenza c = new Conferenza(nome, dataI, dataF,descrizione,budget,sede,user);
         try {
-           conference.addConferenza(c);
-           openAddedConferenceDialogWindow();
+            checkTextFieldsAreBlank();
+            String nome = nomeConferenzaTF.getText();
+            float budget = Float.parseFloat(budgetTextField.getText());
+            String descrizione = descrizioneTextArea.getText();
+            LocalDate dataIselected = dataInizioDP.getValue();
+            LocalDate dataFselected = dataFineDP.getValue();
+            Date dataI = java.sql.Date.valueOf(dataIselected);
+            Date dataF = java.sql.Date.valueOf(dataFselected);
+            Sede sede = sedeChoice.getValue();
+            Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user);
+            conference.addConferenza(c);
+            openAddedConferenceDialogWindow();
+        }catch (BlankFieldException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(e.getMessage());
+            alert.showAndWait();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -123,5 +130,12 @@ public class AddConferenceController implements Initializable{
         sedeChoice.show();
     }
 
+    @Override
+    public void checkTextFieldsAreBlank() throws BlankFieldException {
+        if(nomeConferenzaTF.getText().isBlank() || descrizioneTextArea.getText().isBlank() ||
+                budgetTextField.getText().isBlank() || sedeChoice.getValue().equals(null) ||
+                dataInizioDP.getValue().equals(null) || dataFineDP.getValue().equals(null))
+            throw new BlankFieldException();
+    }
 }
 
