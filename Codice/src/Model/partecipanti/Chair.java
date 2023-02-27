@@ -4,8 +4,21 @@ import Model.Conferenze.Sessione;
 import java.util.LinkedList;
 
 public class Chair extends Partecipante{
-    private int idchair;
+    private int idChair;
     private LinkedList<Sessione> sessioniGestite;
+
+    public void setSessioniGestite(LinkedList<Sessione> sessioniGestite) {
+        this.sessioniGestite = sessioniGestite;
+    }
+
+    public int getIdChair() {
+        return idChair;
+    }
+
+    public void setIdChair(int idChair) {
+        this.idChair = idChair;
+    }
+
     public LinkedList<Sessione> getSessioniGestite() {
         return sessioniGestite;
     }

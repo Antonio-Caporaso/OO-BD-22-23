@@ -22,6 +22,22 @@ public class Ente {
         this.nome = nome;
     }
 
+    public int getEnteID() {
+        return enteID;
+    }
+
+    public void setEnteID(int enteID) {
+        this.enteID = enteID;
+    }
+
+    public LinkedList<Conferenza> getOrganizza() {
+        return organizza;
+    }
+
+    public void setOrganizza(LinkedList<Conferenza> organizza) {
+        this.organizza = organizza;
+    }
+
     public String getNome() {
         return nome;
     }

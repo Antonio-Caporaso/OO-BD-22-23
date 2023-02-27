@@ -7,8 +7,6 @@ import java.util.LinkedList;
 public class Speaker extends Partecipante{
     private int idSpeaker;
     private LinkedList<Intervento> interventi;
-    private boolean isKeynote;
-
     public LinkedList<Intervento> getInterventi() {
         return interventi;
     }
@@ -21,11 +19,11 @@ public class Speaker extends Partecipante{
             intervento.setSpeaker(this);
         }
     }
-    public boolean isKeynote() {
-        return isKeynote;
+    public int getIdSpeaker() {
+        return idSpeaker;
     }
 
-    public void setKeynote(boolean flag) {
-        isKeynote = flag;
+    public void setIdSpeaker(int idSpeaker) {
+        this.idSpeaker = idSpeaker;
     }
 }

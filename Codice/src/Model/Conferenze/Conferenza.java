@@ -166,7 +166,6 @@ public class Conferenza {
             sessione.setConferenza(this);
         }
     }
-
     @Override
     public String toString() {
         return nome;

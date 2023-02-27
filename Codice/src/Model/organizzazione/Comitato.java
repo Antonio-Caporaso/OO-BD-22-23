@@ -32,6 +32,22 @@ abstract class Comitato {
             membri.add(organizzatore);
     }
 
+    public int getComitatoID() {
+        return comitatoID;
+    }
+
+    public void setComitatoID(int comitatoID) {
+        this.comitatoID = comitatoID;
+    }
+
+    public HashSet<Organizzatore> getMembri() {
+        return membri;
+    }
+
+    public void setMembri(HashSet<Organizzatore> membri) {
+        this.membri = membri;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

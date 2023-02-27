@@ -14,6 +14,18 @@ public class Sala {
         this.sede = sede;
     }
 
+    public int getSalaID() {
+        return salaID;
+    }
+
+    public void setSalaID(int salaID) {
+        this.salaID = salaID;
+    }
+
+    public Sede getSede() {
+        return sede;
+    }
+
     public String getNomeSala() {
         return nomeSala;
     }

@@ -20,6 +20,15 @@ public class Sessione {
         this.dataFine = dataFine;
         this.titolo = titolo;
     }
+
+    public int getSessioneID() {
+        return sessioneID;
+    }
+
+    public void setSessioneID(int sessioneID) {
+        this.sessioneID = sessioneID;
+    }
+
     public Date getDataInizio() {
         return dataInizio;
     }

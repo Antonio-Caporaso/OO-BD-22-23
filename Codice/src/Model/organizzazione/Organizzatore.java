@@ -25,6 +25,14 @@ public class Organizzatore {
         this.appartieneA = appartieneA;
     }
 
+    public int getOrganizzatoreID() {
+        return organizzatoreID;
+    }
+
+    public void setOrganizzatoreID(int organizzatoreID) {
+        this.organizzatoreID = organizzatoreID;
+    }
+
     public void setAppartieneA(Comitato appartieneA) throws ExistingMemberException {
         this.appartieneA = appartieneA;
         appartieneA.add(this);

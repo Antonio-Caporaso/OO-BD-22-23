@@ -21,6 +21,22 @@ public class Sponsor {
         this.sponsorID = id;
     }
 
+    public int getSponsorID() {
+        return sponsorID;
+    }
+
+    public void setSponsorID(int sponsorID) {
+        this.sponsorID = sponsorID;
+    }
+
+    public LinkedList<Sponsorizzazione> getSponsorizzazioni() {
+        return sponsorizzazioni;
+    }
+
+    public void setSponsorizzazioni(LinkedList<Sponsorizzazione> sponsorizzazioni) {
+        this.sponsorizzazioni = sponsorizzazioni;
+    }
+
     public String getNome() {
         return nome;
     }
