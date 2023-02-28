@@ -29,4 +29,9 @@ public class Sponsorizzazione {
     public void setConferenza(Conferenza conferenza) {
         this.conferenza = conferenza;
     }
+
+    @Override
+    public String toString() {
+        return sponsor +", contributo=" + contributo;
+    }
 }

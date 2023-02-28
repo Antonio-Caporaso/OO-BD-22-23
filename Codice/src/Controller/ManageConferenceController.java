@@ -1,7 +1,8 @@
 package Controller;
 import Model.Conferenze.Conferenza;
 import Model.Utente;
-import Presenter.ConferenzaPresenter;
+import Presenter.Conferenze;
+import Presenter.ConferenzeUtente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ public class ManageConferenceController implements Initializable {
     @FXML
     private Button modificaButton;
     private SubScene subscene;
-    private ConferenzaPresenter conferenze = new ConferenzaPresenter();
+    private ConferenzeUtente conferenze = new ConferenzeUtente();
     private Utente user;
 
     public ManageConferenceController(Utente user) {

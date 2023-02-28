@@ -5,10 +5,10 @@ import Model.Conferenze.Sede;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class SedePresenter {
+public class Sedi {
     private ObservableList<Sede> sedi;
     private ObservableList<String> nomi;
-    public SedePresenter(){
+    public Sedi(){
         this.sedi = FXCollections.observableArrayList();
         this.nomi = FXCollections.observableArrayList();
     }

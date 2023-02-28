@@ -1,7 +1,7 @@
 package Controller;
 import Model.Conferenze.Conferenza;
 import Model.organizzazione.Ente;
-import Presenter.EntePresenter;
+import Presenter.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,7 +27,7 @@ public class EditEntiController implements Initializable {
     @FXML
     private TableView<Ente> entiTable;
     private TableColumn entiOrganizzatori;
-    private EntePresenter enti = new EntePresenter();
+    private Enti enti = new Enti();
     @FXML
     private Button okButton;
 

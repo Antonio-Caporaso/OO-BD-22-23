@@ -6,6 +6,7 @@ import Model.organizzazione.Sponsor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class SponsorDao {
@@ -44,5 +45,21 @@ public class SponsorDao {
             e.printStackTrace();
         }
         return sponsors;
+    }
+    public Sponsor getSponsorByID(int id) throws SQLException {
+        dbConnection = DBConnection.getDBconnection();
+        connection = dbConnection.getConnection();
+        Sponsor s = new Sponsor();
+        String query = "SELECT * FROM SPONSOR WHERE idsponsor=?";
+        PreparedStatement stm = connection.prepareStatement(query);
+        stm.setInt(1,id);
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            s.setSponsorID(rs.getInt(1));
+            s.setNome(rs.getString(2));
+        }
+        rs.close();
+        stm.close();
+        return s;
     }
 }

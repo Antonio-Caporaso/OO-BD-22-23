@@ -1,6 +1,6 @@
 package Controller;
 import Model.Conferenze.Conferenza;
-import Presenter.ConferenzaPresenter;
+import Presenter.Conferenze;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +16,7 @@ public class ViewConferencesController implements Initializable {
     private Button viewConferenceButton;
     @FXML
     private ListView<Conferenza> conferenceVIew;
-    private ConferenzaPresenter conferenze = new ConferenzaPresenter();
+    private Conferenze conferenze = new Conferenze();
 
     @FXML
     void viewOnAction(ActionEvent event) {

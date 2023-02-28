@@ -2,8 +2,8 @@ package Controller;
 import Exceptions.BlankFieldException;
 import Model.Conferenze.Conferenza;
 import Model.Utente;
-import Presenter.ConferenzaPresenter;
-import Presenter.SedePresenter;
+import Presenter.Conferenze;
+import Presenter.Sedi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,8 +18,8 @@ import java.util.ResourceBundle;
 
 public class AddConferenceController implements Initializable,FormChecker{
     private Utente user;
-    private SedePresenter sedi = new SedePresenter();
-    private ConferenzaPresenter conference = new ConferenzaPresenter();
+    private Sedi sedi = new Sedi();
+    private Conferenze conference = new Conferenze();
     @FXML
     private Button annullaButton;
     @FXML

@@ -2,13 +2,12 @@ package Presenter;
 
 import DAO.EnteDao;
 import Model.organizzazione.Ente;
-import Model.organizzazione.Organizzatore;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class EntePresenter {
+public class Enti {
     private ObservableList<Ente> enti;
-    public EntePresenter(){
+    public Enti(){
         this.enti = FXCollections.observableArrayList();
     }
     public void loadEnti(){

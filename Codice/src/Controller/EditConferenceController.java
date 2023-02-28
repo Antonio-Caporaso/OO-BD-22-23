@@ -7,6 +7,7 @@ import Model.Conferenze.Sessione;
 import Model.Utente;
 import Model.organizzazione.Ente;
 import Model.organizzazione.Sponsor;
+import Model.organizzazione.Sponsorizzazione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableListBase;
@@ -64,6 +65,8 @@ public class EditConferenceController implements Initializable {
     private Label titleLabel;
     @FXML
     private ListView<Sessione> sessioniView;
+    @FXML
+    private TextArea sponsorizzazioniView;
     @FXML
     void annullaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ManageConferences.fxml"));
@@ -135,11 +138,17 @@ public class EditConferenceController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setDetails();
         setOrganizzatori();
+        setSponsorizzazioni();
     }
 
     private void setOrganizzatori() {
         for(Ente e: conferenza.getOrganizzataDa()){
             entiView.appendText(e.toString()+"\n");
+        }
+    }
+    private void setSponsorizzazioni(){
+        for(Sponsorizzazione s : conferenza.getSponsorizzataDa()){
+            sponsorizzazioniView.appendText(s.toString()+"\n");
         }
     }
 
