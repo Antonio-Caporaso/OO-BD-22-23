@@ -1,11 +1,7 @@
 package Controller;
-
 import Model.Conferenze.Conferenza;
 import Model.organizzazione.Ente;
 import Presenter.EntePresenter;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,10 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
