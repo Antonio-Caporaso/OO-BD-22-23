@@ -45,7 +45,7 @@
       </VBox>
       <ButtonBar layoutX="683.0" layoutY="666.0" prefHeight="40.0" prefWidth="233.0">
         <buttons>
-          <Button fx:id="annullaButton" disable="true" mnemonicParsing="false" onAction="#annullaButtonOnAction" prefHeight="24.0" prefWidth="123.0" text="Annulla" />
+          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaButtonOnAction" prefHeight="24.0" prefWidth="123.0" text="Annulla" />
             <Button fx:id="confermaButton" mnemonicParsing="false" onAction="#confermaButtonOnAction" text="Conferma" />
         </buttons>
       </ButtonBar>

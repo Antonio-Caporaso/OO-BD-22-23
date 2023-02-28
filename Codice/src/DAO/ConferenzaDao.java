@@ -86,4 +86,18 @@ public class ConferenzaDao {
         stm.setInt(1,c.getConferenzaID());
         stm.executeUpdate();
     }
+
+    public void updateDettagliConferenza(Conferenza conferenza) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String update = "UPDATE conferenza SET nome=?,descrizione=?,datainizio=?,datafine=?,budget=? WHERE idconferenza=?";
+        PreparedStatement stm = conn.prepareStatement(update);
+        stm.setString(1,conferenza.getNome());
+        stm.setString(2,conferenza.getDescrizione());
+        stm.setDate(3,conferenza.getDataInizio());
+        stm.setDate(4,conferenza.getDataFine());
+        stm.setFloat(5,conferenza.getBudget());
+        stm.setInt(6,conferenza.getConferenzaID());
+        stm.executeUpdate();
+    }
 }

@@ -7,6 +7,8 @@ import Model.organizzazione.ComitatoLocale;
 import Model.organizzazione.ComitatoScientifico;
 import Model.organizzazione.Ente;
 import Model.organizzazione.Sponsorizzazione;
+import javafx.beans.property.StringProperty;
+
 import java.sql.Date;
 import java.util.LinkedList;
 
