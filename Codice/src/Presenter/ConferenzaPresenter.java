@@ -1,6 +1,7 @@
 package Presenter;
 
 import DAO.ConferenzaDao;
+import DAO.EnteDao;
 import Model.Conferenze.Conferenza;
 import Model.Utente;
 import Observers.ConferenzeObserver;
@@ -24,10 +25,17 @@ public class ConferenzaPresenter {
         conferenze.clear();
         conferenze.addAll(dao.getAllConferenze());
     }
+    private void loadOrganizzatori() throws SQLException {
+        EnteDao dao = new EnteDao();
+        for(Conferenza c: conferenzeUtente){
+            c.setOrganizzataDa(dao.retrieveEntiOrganizzatori(c));
+        }
+    }
     public void loadConferenzeUtente(Utente user) throws SQLException {
         ConferenzaDao dao = new ConferenzaDao();
         conferenzeUtente.clear();
         conferenzeUtente.addAll(dao.getAllConferenzeByUtente(user));
+        loadOrganizzatori();
     }
     public void addConferenza(Conferenza conferenza) throws SQLException {
         conferenzeUtente.add(conferenza);

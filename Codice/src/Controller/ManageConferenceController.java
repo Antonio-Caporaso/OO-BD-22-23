@@ -59,7 +59,7 @@ public class ManageConferenceController implements Initializable {
     @FXML
     public void editOnAction(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/EditConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/EditConference.fxml"));
             EditConferenceController controller = new EditConferenceController();
             loader.setController(controller);
             controller.setConferenza(conferenzeView.getSelectionModel().getSelectedItem());

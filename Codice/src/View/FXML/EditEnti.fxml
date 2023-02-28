@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ChoiceBox fx:id="entiChoice" layoutX="67.0" layoutY="12.0" prefHeight="24.0" prefWidth="479.0" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="12.0" />
+      <TableView fx:id="entiTable" layoutX="14.0" layoutY="50.0" prefHeight="336.0" prefWidth="532.0" scaleShape="false" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="50.0" />
+      <Label layoutX="14.0" layoutY="14.0" text="Ente" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="640.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="addButton" layoutX="556.0" layoutY="12.0" mnemonicParsing="false" onAction="#aggiungiOnAction" prefHeight="24.0" prefWidth="123.0" text="Aggiungi" AnchorPane.rightAnchor="14.0" />
+      <Button fx:id="okButton" layoutX="556.0" layoutY="367.0" maxHeight="24.0" maxWidth="123.0" mnemonicParsing="false" onAction="#okOnAction" prefHeight="24.0" prefWidth="123.0" text="Ok" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <Button fx:id="annullaButton" layoutX="556.0" layoutY="331.0" maxHeight="24.0" maxWidth="123.0" mnemonicParsing="false" onAction="#annullaOnAction" prefHeight="24.0" prefWidth="123.0" text="Annulla" AnchorPane.bottomAnchor="54.0" AnchorPane.rightAnchor="14.0" />
+      <Button fx:id="deleteButton" layoutX="556.0" layoutY="50.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="24.0" prefWidth="123.0" text="Rimuovi" AnchorPane.rightAnchor="14.0" />
+   </children>
+</AnchorPane>

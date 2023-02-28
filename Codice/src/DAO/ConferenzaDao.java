@@ -5,6 +5,7 @@ import DbConfig.DBConnection;
 import Model.Conferenze.Conferenza;
 import Model.Conferenze.Sede;
 import Model.Utente;
+import Model.organizzazione.Ente;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -100,4 +101,5 @@ public class ConferenzaDao {
         stm.setInt(6,conferenza.getConferenzaID());
         stm.executeUpdate();
     }
+
 }

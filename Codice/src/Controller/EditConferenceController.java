@@ -1,8 +1,15 @@
 package Controller;
 
 import DAO.ConferenzaDao;
+import DAO.EnteDao;
 import Model.Conferenze.Conferenza;
+import Model.Conferenze.Sessione;
 import Model.Utente;
+import Model.organizzazione.Ente;
+import Model.organizzazione.Sponsor;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,18 +19,23 @@ import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EditConferenceController implements Initializable {
     private Conferenza conferenza;
     private SubScene subscene;
     private Utente user;
+    @FXML
+    private TextArea entiView;
     @FXML
     private Button annullaButton;
     @FXML
@@ -51,8 +63,10 @@ public class EditConferenceController implements Initializable {
     @FXML
     private Label titleLabel;
     @FXML
+    private ListView<Sessione> sessioniView;
+    @FXML
     void annullaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/GestisciConferenza.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ManageConferences.fxml"));
         ManageConferenceController controller = new ManageConferenceController(user);
         loader.setController(controller);
         controller.setSubscene(subscene);
@@ -68,8 +82,8 @@ public class EditConferenceController implements Initializable {
 
     @FXML
     void editDetailsOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/EditDetails.fxml"));
-        EditDetailController controller = new EditDetailController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/EditConferenceDetails.fxml"));
+        EditConferenceDetailsController controller = new EditConferenceDetailsController();
         loader.setController(controller);
         controller.setECcontroller(this);
         controller.setConferenza(conferenza);
@@ -82,8 +96,18 @@ public class EditConferenceController implements Initializable {
     }
 
     @FXML
-    void editEntiOnAction(ActionEvent event) {
-
+    void editEntiOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/EditEnti.fxml"));
+        EditEntiController controller = new EditEntiController();
+        loader.setController(controller);
+        controller.setConferenza(conferenza);
+        controller.setEditController(this);
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     @FXML
@@ -109,14 +133,22 @@ public class EditConferenceController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setParameters();
+        setDetails();
+        setOrganizzatori();
     }
+
+    private void setOrganizzatori() {
+        for(Ente e: conferenza.getOrganizzataDa()){
+            entiView.appendText(e.toString()+"\n");
+        }
+    }
+
     public void setTitleLabel(){
         if(conferenza!=null)
             titleLabel.setText("Modifica della conferenza: "+ conferenza.getNome());
     }
 
-    public void setParameters() {
+    public void setDetails() {
         this.setTitleLabel();
         nomeLabel.setText(conferenza.getNome());
         descrizioneLabel.setText(conferenza.getDescrizione());
@@ -125,7 +157,6 @@ public class EditConferenceController implements Initializable {
         dataFineLabel.setText(conferenza.getDataFine().toString());
         sedeLabel.setText(conferenza.getSede().toString());
     }
-
     public Utente getUser() {
         return user;
     }

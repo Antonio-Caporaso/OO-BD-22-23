@@ -10,9 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -50,7 +47,7 @@ public class LandingController implements Initializable{
     @FXML
     void creaConferenzaOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/CreaConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddConference.fxml"));
             AddConferenceController controller = new AddConferenceController();
             controller.setUser(user);
             controller.setSubscene(subscene);
@@ -65,7 +62,7 @@ public class LandingController implements Initializable{
     @FXML
     void gestisciConferenzaOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/GestisciConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ManageConferences.fxml"));
             ManageConferenceController controller = new ManageConferenceController(user);
             loader.setController(controller);
             controller.setSubscene(subscene);

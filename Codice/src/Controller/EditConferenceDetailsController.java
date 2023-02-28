@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.Conferenze.Conferenza;
-import Model.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,7 +11,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditDetailController implements Initializable {
+public class EditConferenceDetailsController implements Initializable {
     private Conferenza conferenza;
     private EditConferenceController ECcontroller;
     @FXML
@@ -43,7 +42,7 @@ public class EditDetailController implements Initializable {
         conferenza.setNome(nomeTF.getText());
         conferenza.setDescrizione(descrizioneTF.getText());
         ECcontroller.setConferenza(conferenza);
-        ECcontroller.setParameters();
+        ECcontroller.setDetails();
         Stage stage = (Stage) okButton.getScene().getWindow();
         stage.close();
     }
