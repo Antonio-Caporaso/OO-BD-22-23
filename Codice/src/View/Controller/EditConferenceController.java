@@ -63,7 +63,7 @@ public class EditConferenceController implements Initializable {
     private TextArea sponsorizzazioniView;
     @FXML
     void annullaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ManageConferences.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../ManageConferences.fxml"));
         ManageConferenceController controller = new ManageConferenceController(user);
         loader.setController(controller);
         controller.setSubscene(subscene);
@@ -108,12 +108,19 @@ public class EditConferenceController implements Initializable {
     }
 
     @FXML
-    void editSessionsOnAction(ActionEvent event) {
+    void editSessionsOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
         EditSessioneController controller = new EditSessioneController();
         loader.setController(controller);
-        controller.setSubscene(subscene);
-        controller.setSessione(sessioniView.getSelectionModel().getSelectedItem());
+        //controller.setSessione(sessioniView.getSelectionModel().getSelectedItem());
+        controller.setEditController(this);
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     @FXML

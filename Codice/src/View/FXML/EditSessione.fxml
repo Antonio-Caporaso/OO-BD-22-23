@@ -25,32 +25,32 @@
       <VBox layoutX="714.0" layoutY="99.0" prefHeight="553.0" prefWidth="204.0">
          <children>
             <Button fx:id="editDetailsButton" mnemonicParsing="false" onAction="#editDetailsOnAction" prefHeight="50.0" prefWidth="204.0" text="Modifica dettagli" />
-            <Button fx:id="editSponsorshipsButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#editSponsorshipOnAction" prefHeight="50.0" prefWidth="204.0" text="Aggiungi intervento" textAlignment="CENTER">
+            <Button fx:id="addInterventoButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#addInterventoOnAction" prefHeight="50.0" prefWidth="204.0" text="Aggiungi intervento" textAlignment="CENTER">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="editSessionsButton" mnemonicParsing="false" onAction="#editSessionsOnAction" prefHeight="50.0" prefWidth="204.0" text="Elimina intervento">
+            <Button fx:id="deleteInterventoButton" mnemonicParsing="false" onAction="#deleteInterventoButton" prefHeight="50.0" prefWidth="204.0" text="Elimina intervento">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="204.0" text="Aggiungi intervallo">
+            <Button fx:id="addIntervalloButton" mnemonicParsing="false" onAction="#addIntervalloOnAction" prefHeight="50.0" prefWidth="204.0" text="Aggiungi intervallo">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="204.0" text="Rimuovi intervallo">
+            <Button fx:id="deleteIntervalloButton" mnemonicParsing="false" onAction="#deleteIntervalloOnAction" prefHeight="50.0" prefWidth="204.0" text="Rimuovi intervallo">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="204.0" text="Aggiungi evento sociale">
+            <Button fx:id="addEventoButton" mnemonicParsing="false" onAction="#addEventoOnAction" prefHeight="50.0" prefWidth="204.0" text="Aggiungi evento sociale">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="204.0" text="Rimuovi evento sociale">
+            <Button fx:id="deleteEventoButton" mnemonicParsing="false" onAction="#deleteEventoOnAction" prefHeight="50.0" prefWidth="204.0" text="Rimuovi evento sociale">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
