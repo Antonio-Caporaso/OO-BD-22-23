@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Exceptions.SessioneNotSelectedException;
 import Persistence.DAO.ConferenzaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
@@ -14,10 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -114,15 +112,23 @@ public class EditConferenceController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
         EditSessioneController controller = new EditSessioneController();
         loader.setController(controller);
-        //controller.setSessione(sessioniView.getSelectionModel().getSelectedItem());
-        controller.setEditController(this);
-        Parent root = loader.load();
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        try{
+            Sessione s = sessioniView.getSelectionModel().getSelectedItem();
+            if(s ==  null)
+                throw new SessioneNotSelectedException();
+            controller.setSessione(s);
+            controller.setEditController(this);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        }catch(SessioneNotSelectedException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+        }
     }
 
     @FXML
