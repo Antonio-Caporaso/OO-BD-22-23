@@ -76,8 +76,6 @@
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -94,7 +92,7 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="20.0" text="Descrizione:">
+                                    <Label layoutX="14.0" layoutY="24.0" text="Data di inizio:">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
@@ -103,7 +101,7 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Budget:">
+                                    <Label layoutX="14.0" layoutY="24.0" text="Data di fine:">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
@@ -112,25 +110,7 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Data di inizio:">
-                                       <font>
-                                          <Font name="System Bold" size="13.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Data di fine:">
-                                       <font>
-                                          <Font name="System Bold" size="13.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Sede:">
+                                    <Label layoutX="14.0" layoutY="24.0" text="Sala">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
@@ -144,25 +124,15 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <Label fx:id="descrizioneLabel" layoutX="14.0" layoutY="20.0" prefHeight="24.0" prefWidth="488.0" text="Label" />
+                                    <Label fx:id="dataInizioLabel" layoutX="14.0" layoutY="24.0" text="Label" />
                                  </children>
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <Label fx:id="budgetLabel" layoutX="14.0" layoutY="24.0" text="Label" />
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <children>
-                                    <Label fx:id="dataInizioLabel" layoutX="14.0" layoutY="24.0" text="Label" />
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                 <children>
                                     <Label fx:id="dataFineLabel" layoutX="14.0" layoutY="24.0" text="Label" />
                                  </children>
                               </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <children>
                                     <Label fx:id="sedeLabel" layoutX="14.0" layoutY="24.0" text="Label" />
                                  </children>
