@@ -12,10 +12,12 @@ import java.sql.SQLException;
 
 public class Conferenze {
     private ObservableList<Conferenza> conferenze;
-    public Conferenze(){
+
+    public Conferenze() {
         this.conferenze = FXCollections.observableArrayList();
 
     }
+
     public void loadConferenze() throws SQLException {
         ConferenzaDao dao = new ConferenzaDao();
         conferenze.clear();
@@ -23,18 +25,21 @@ public class Conferenze {
         loadOrganizzatori();
         loadSponsorizzazioni();
     }
+
     public void loadOrganizzatori() throws SQLException {
         EnteDao dao = new EnteDao();
-        for(Conferenza c: conferenze){
+        for (Conferenza c : conferenze) {
             c.setOrganizzataDa(dao.retrieveEntiOrganizzatori(c));
         }
     }
-    public void loadSponsorizzazioni() throws SQLException{
+
+    public void loadSponsorizzazioni() throws SQLException {
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-        for(Conferenza c: conferenze){
+        for (Conferenza c : conferenze) {
             c.setSponsorizzataDa(dao.retrieveSponsorizzazioni(c));
         }
     }
+
     public void addConferenza(Conferenza conferenza) throws SQLException {
         conferenze.add(conferenza);
         ConferenzaDao d = new ConferenzaDao();
@@ -42,15 +47,18 @@ public class Conferenze {
     }
 
     public void removeConferenza(Conferenza conferenza) throws SQLException {
-        this. conferenze.remove(conferenza);
+        this.conferenze.remove(conferenza);
         ConferenzaDao d = new ConferenzaDao();
         d.deleteConferenza(conferenza);
     }
-    public void loadBySede(Sede sede) throws SQLException{
+
+    public void loadBySede(Sede sede) throws SQLException {
         ConferenzaDao conferenzaDao = new ConferenzaDao();
         conferenze.clear();
         conferenze.addAll(conferenzaDao.retrieveBySede(sede));
     }
+
     public ObservableList<Conferenza> getConferenze() {
         return conferenze;
     }
+}
