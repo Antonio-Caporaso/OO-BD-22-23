@@ -100,5 +100,32 @@ public class ConferenzaDao {
         stm.setInt(6,conferenza.getConferenzaID());
         stm.executeUpdate();
     }
+    public Conferenza retrieveConferenzaByNome(String nomeConferenza){
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        Conferenza conferenza = null;
+        UtenteDAO userDao = new UtenteDAO();
+        SedeDao sedeDao = new SedeDao();
+        try{
+            String query = "SELECT * from conferenza where nome = ?";
+            PreparedStatement stm = conn.prepareStatement(query);
+            stm.setString(1, nomeConferenza);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt(1);
+                String nome = rs.getString(2);
+                Date datainizio = rs.getDate(3);
+                Date datafine = rs.getDate(4);
+                String descrizione = rs.getString(5);
+                Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
+                float budget = rs.getFloat(7);
+                Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
+                conferenza = new Conferenza(id,nome,datainizio,datafine,descrizione,sede,budget,proprietario);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return conferenza;
+    }
 
 }
