@@ -6,7 +6,6 @@ import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Ente;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
-import Services.Sessioni;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +27,6 @@ import java.util.ResourceBundle;
 
 public class EditConferenceController implements Initializable {
     private Conferenza conferenza;
-    private Sessioni sessioni = new Sessioni(conferenza);
     private SubScene subscene;
     private Utente user;
     @FXML
@@ -147,16 +145,13 @@ public class EditConferenceController implements Initializable {
         setOrganizzatori();
         setSponsorizzazioni();
     }
-    public void setSessioni() throws SQLException {
-        sessioni.loadSessioni();
-        sessioniView.setItems(sessioni.getSessioni());
-    }
-    public void setOrganizzatori() {
+
+    private void setOrganizzatori() {
         for(Ente e: conferenza.getOrganizzataDa()){
             entiView.appendText(e.toString()+"\n");
         }
     }
-    public void setSponsorizzazioni(){
+    private void setSponsorizzazioni(){
         for(Sponsorizzazione s : conferenza.getSponsorizzataDa()){
             sponsorizzazioniView.appendText(s.toString()+"\n");
         }

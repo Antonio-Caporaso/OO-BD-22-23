@@ -37,7 +37,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="editSessionsButton" mnemonicParsing="false" onAction="#editSessionsOnAction" prefHeight="70.0" prefWidth="240.0" text="Modifica sessione">
+            <Button fx:id="editSessionsButton" mnemonicParsing="false" onAction="#editSessionsOnAction" prefHeight="70.0" prefWidth="240.0" text="Modifica sessioni">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

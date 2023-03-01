@@ -13,7 +13,6 @@ public class Sessione {
     private Sala locazione;
     private Chair coordinatore;
     private Conferenza conferenza;
-    private Programma programma;
 
     public Sessione(){}
     public Sessione(Date dataInizio, Date dataFine, String titolo) {
@@ -88,21 +87,8 @@ public class Sessione {
         return Objects.equals(titolo, sessione.titolo);
     }
 
-    public Programma getProgramma() {
-        return programma;
-    }
-
-    public void setProgramma(Programma programma) {
-        this.programma = programma;
-    }
-
     @Override
     public int hashCode() {
         return titolo != null ? titolo.hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return titolo;
     }
 }
