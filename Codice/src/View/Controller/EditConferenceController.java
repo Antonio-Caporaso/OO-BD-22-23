@@ -1,11 +1,11 @@
 package View.Controller;
 
 import Persistence.DAO.ConferenzaDao;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sessione;
-import Persistence.Entities.Utente;
-import Persistence.Entities.organizzazione.Ente;
-import Persistence.Entities.organizzazione.Sponsorizzazione;
+import Persistence.DTO.Conferenze.Conferenza;
+import Persistence.DTO.Conferenze.Sessione;
+import Persistence.DTO.organizzazione.Utente;
+import Persistence.DTO.organizzazione.Ente;
+import Persistence.DTO.organizzazione.Sponsorizzazione;
 import Services.Sessioni;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

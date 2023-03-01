@@ -1,6 +1,6 @@
 package View.Controller;
 
-import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.DTO.Conferenze.Conferenza;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

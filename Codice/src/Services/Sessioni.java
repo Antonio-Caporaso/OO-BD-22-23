@@ -1,11 +1,10 @@
 package Services;
 
 import Persistence.DAO.SessioneDao;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sessione;
+import Persistence.DTO.Conferenze.Conferenza;
+import Persistence.DTO.Conferenze.Sessione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.SQLException;
 
 public class Sessioni {

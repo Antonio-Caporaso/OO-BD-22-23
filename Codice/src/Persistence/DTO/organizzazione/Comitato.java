@@ -1,4 +1,4 @@
-package Persistence.Entities.organizzazione;
+package Persistence.DTO.organizzazione;
 import Exceptions.ExistingMemberException;
 
 import java.util.HashSet;

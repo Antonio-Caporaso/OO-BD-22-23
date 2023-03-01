@@ -1,10 +1,11 @@
-package Persistence.Entities.partecipanti;
+package Persistence.DTO.Conferenze;
 
-import Persistence.Entities.Conferenze.Intervento;
+import Persistence.DTO.Conferenze.Intervento;
+import Persistence.DTO.Conferenze.Partecipante;
 
 import java.util.LinkedList;
 
-public class Speaker extends Partecipante{
+public class Speaker extends Partecipante {
     private int idSpeaker;
     private LinkedList<Intervento> interventi;
     public LinkedList<Intervento> getInterventi() {

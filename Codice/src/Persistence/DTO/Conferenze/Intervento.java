@@ -1,20 +1,26 @@
-package Persistence.Entities.Conferenze;
+package Persistence.DTO.Conferenze;
 
-import Persistence.Entities.partecipanti.Speaker;
-
-import java.util.Date;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class Intervento {
     private int interventoID;
-    private Date orarioIntervento;
+    private LocalTime orarioIntervento;
     private String estratto;
     private Speaker speaker;
 
-    public Intervento(Date orarioIntervento, String estratto, Speaker speaker) {
-        this.orarioIntervento = orarioIntervento;
+    public Intervento(LocalTime orario, String estratto, Speaker speaker) {
+        this.orarioIntervento = orario;
         this.estratto = estratto;
         this.speaker = speaker;
+    }
+
+    public int getInterventoID() {
+        return interventoID;
+    }
+
+    public void setInterventoID(int interventoID) {
+        this.interventoID = interventoID;
     }
 
     public void setSpeaker(Speaker speaker){
@@ -25,11 +31,11 @@ public class Intervento {
         return speaker;
     }
 
-    public Date getOrarioIntervento() {
+    public LocalTime getOrarioIntervento() {
         return orarioIntervento;
     }
 
-    public void setOrarioIntervento(Date orarioIntervento) {
+    public void setOrarioIntervento(LocalTime orarioIntervento) {
         this.orarioIntervento = orarioIntervento;
     }
 

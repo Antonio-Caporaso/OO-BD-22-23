@@ -1,7 +1,7 @@
 package View.Controller;
 import Exceptions.BlankFieldException;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Utente;
+import Persistence.DTO.Conferenze.Conferenza;
+import Persistence.DTO.organizzazione.Utente;
 import Services.Conferenze;
 import Services.Sedi;
 import javafx.event.ActionEvent;
@@ -10,7 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import Persistence.Entities.Conferenze.Sede;
+import Persistence.DTO.Conferenze.Sede;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;

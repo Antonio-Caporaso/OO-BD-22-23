@@ -1,7 +1,7 @@
 package Services;
 
 import Persistence.DAO.SponsorDao;
-import Persistence.Entities.organizzazione.Sponsor;
+import Persistence.DTO.organizzazione.Sponsor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

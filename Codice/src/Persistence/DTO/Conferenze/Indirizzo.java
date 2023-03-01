@@ -1,4 +1,4 @@
-package Persistence.Entities.Conferenze;
+package Persistence.DTO.Conferenze;
 
 public class Indirizzo {
     private String indirizzo;

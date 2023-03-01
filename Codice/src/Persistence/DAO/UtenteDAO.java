@@ -2,7 +2,7 @@ package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
 import Exceptions.UtentePresenteException;
-import Persistence.Entities.Utente;
+import Persistence.DTO.organizzazione.Utente;
 
 import java.sql.*;
 

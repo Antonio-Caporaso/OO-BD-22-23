@@ -3,7 +3,7 @@ package Services;
 import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.EnteDao;
 import Persistence.DAO.SponsorizzazioneDAO;
-import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.DTO.Conferenze.Conferenza;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.SQLException;

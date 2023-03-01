@@ -1,11 +1,9 @@
 package View.Controller;
 
-import Persistence.Entities.Conferenze.Sessione;
+import Persistence.DTO.Conferenze.Sessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;

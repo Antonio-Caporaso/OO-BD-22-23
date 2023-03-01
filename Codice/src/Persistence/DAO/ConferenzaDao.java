@@ -2,9 +2,9 @@ package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
 
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sede;
-import Persistence.Entities.Utente;
+import Persistence.DTO.Conferenze.Conferenza;
+import Persistence.DTO.Conferenze.Sede;
+import Persistence.DTO.organizzazione.Utente;
 
 import java.sql.*;
 import java.util.ArrayList;

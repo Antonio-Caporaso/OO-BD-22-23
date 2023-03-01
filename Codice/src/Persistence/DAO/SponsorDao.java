@@ -1,7 +1,7 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
-import Persistence.Entities.organizzazione.Sponsor;
+import Persistence.DTO.organizzazione.Sponsor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package Persistence.Entities.organizzazione;
+package Persistence.DTO.organizzazione;
 
 import java.util.LinkedList;
 

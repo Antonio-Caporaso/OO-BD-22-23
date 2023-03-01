@@ -1,6 +1,6 @@
 package View.Controller;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Utente;
+import Persistence.DTO.Conferenze.Conferenza;
+import Persistence.DTO.organizzazione.Utente;
 import Services.ConferenzeUtente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

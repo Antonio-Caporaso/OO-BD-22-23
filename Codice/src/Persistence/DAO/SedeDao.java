@@ -1,7 +1,7 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
-import Persistence.Entities.Conferenze.Sede;
+import Persistence.DTO.Conferenze.Sede;
 
 import java.sql.*;
 import java.util.LinkedList;

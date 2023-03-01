@@ -1,10 +1,10 @@
-package Persistence.Entities.Conferenze;
+package Persistence.DTO.Conferenze;
 
-import Persistence.Entities.Utente;
-import Persistence.Entities.organizzazione.ComitatoLocale;
-import Persistence.Entities.organizzazione.ComitatoScientifico;
-import Persistence.Entities.organizzazione.Ente;
-import Persistence.Entities.organizzazione.Sponsorizzazione;
+import Persistence.DTO.organizzazione.Utente;
+import Persistence.DTO.organizzazione.ComitatoLocale;
+import Persistence.DTO.organizzazione.ComitatoScientifico;
+import Persistence.DTO.organizzazione.Ente;
+import Persistence.DTO.organizzazione.Sponsorizzazione;
 
 import java.sql.Date;
 import java.util.LinkedList;

@@ -1,7 +1,7 @@
 package Services;
 
 import Persistence.DAO.SedeDao;
-import Persistence.Entities.Conferenze.Sede;
+import Persistence.DTO.Conferenze.Sede;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

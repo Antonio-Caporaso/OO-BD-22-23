@@ -1,4 +1,4 @@
-package Persistence.Entities.Conferenze;
+package Persistence.DTO.Conferenze;
 
 public class Gita extends EventoSociale{
     private String meta;

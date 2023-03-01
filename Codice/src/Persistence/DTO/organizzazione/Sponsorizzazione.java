@@ -1,6 +1,6 @@
-package Persistence.Entities.organizzazione;
+package Persistence.DTO.organizzazione;
 
-import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.DTO.Conferenze.Conferenza;
 
 public class Sponsorizzazione {
     private Sponsor sponsor;

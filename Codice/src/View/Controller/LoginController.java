@@ -1,7 +1,7 @@
 package View.Controller;
 import Persistence.DAO.UtenteDAO;
 import Exceptions.BlankFieldException;
-import Persistence.Entities.Utente;
+import Persistence.DTO.organizzazione.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

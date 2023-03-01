@@ -1,4 +1,4 @@
-package Persistence.Entities;
+package Persistence.DTO.organizzazione;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
-import Persistence.Entities.Conferenze.Sala;
+import Persistence.DTO.Conferenze.Sala;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

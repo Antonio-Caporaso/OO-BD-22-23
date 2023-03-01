@@ -1,4 +1,4 @@
-package Persistence.Entities.Conferenze;
+package Persistence.DTO.Conferenze;
 
 import java.time.Duration;
 import java.util.Objects;

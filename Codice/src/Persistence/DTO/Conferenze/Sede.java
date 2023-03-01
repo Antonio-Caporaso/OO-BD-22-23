@@ -1,4 +1,4 @@
-package Persistence.Entities.Conferenze;
+package Persistence.DTO.Conferenze;
 
 
 import java.util.LinkedList;

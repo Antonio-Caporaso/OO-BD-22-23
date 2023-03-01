@@ -1,6 +1,6 @@
 package View.Controller;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sede;
+import Persistence.DTO.Conferenze.Conferenza;
+import Persistence.DTO.Conferenze.Sede;
 import Services.Conferenze;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +11,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ViewConferencesController implements Initializable {

@@ -1,7 +1,7 @@
 package Services;
 
 import Persistence.DAO.EnteDao;
-import Persistence.Entities.organizzazione.Ente;
+import Persistence.DTO.organizzazione.Ente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
