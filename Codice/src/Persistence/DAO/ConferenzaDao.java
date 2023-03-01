@@ -62,7 +62,29 @@ public class ConferenzaDao {
         }
         return conferenze;
     }
-
+    public LinkedList<Conferenza> retrieveBySede(Sede sede) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "SELECT * FROM conferenza WHERE idsede = ?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,sede.getSedeID());
+        LinkedList<Conferenza> conferenze = new LinkedList<>();
+        UtenteDAO utentedao = new UtenteDAO();
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            Conferenza c = new Conferenza();
+            c.setConferenzaID(rs.getInt(1));
+            c.setNome(rs.getString("nome"));
+            c.setDescrizione(rs.getString("descrizione"));
+            c.setBudget(rs.getFloat("budget"));
+            c.setSede(sede);
+            c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
+            c.setDataInizio(rs.getDate("datainizio"));
+            c.setDataFine(rs.getDate("datafine"));
+            conferenze.add(c);
+        }
+        return conferenze;
+    }
     public void saveConferenza(Conferenza c) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();

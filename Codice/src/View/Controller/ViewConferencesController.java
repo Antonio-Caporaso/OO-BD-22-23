@@ -1,7 +1,9 @@
 package View.Controller;
+
 import Persistence.DTO.Conferenze.Conferenza;
 import Persistence.DTO.Conferenze.Sede;
 import Services.Conferenze;
+import Services.Sedi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,9 +13,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ViewConferencesController implements Initializable {
+    private Sedi sedi = new Sedi();
     private Conferenze conferenze = new Conferenze();
     @FXML
     private Button cercaPerDataButton;
@@ -51,8 +55,10 @@ public class ViewConferencesController implements Initializable {
     }
 
     @FXML
-    void cercaPerSedeOnAction(ActionEvent event) {
-
+    void cercaPerSedeOnAction(ActionEvent event) throws SQLException {
+        Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
+        conferenze.loadBySede(sede);
+        conferenceView.setItems(conferenze.getConferenze());
     }
 
     @FXML
@@ -76,6 +82,7 @@ public class ViewConferencesController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        sedi.loadSedi();
+        sedeChoice.setItems(sedi.getSedi());
     }
 }

@@ -1,7 +1,5 @@
 package Persistence.DTO.Conferenze;
-
 import Persistence.DTO.organizzazione.Organizzatore;
-
 import java.util.HashSet;
 import java.util.LinkedList;
 
