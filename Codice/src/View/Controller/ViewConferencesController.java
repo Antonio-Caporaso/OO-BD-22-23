@@ -13,6 +13,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -51,7 +52,10 @@ public class ViewConferencesController implements Initializable {
 
     @FXML
     void cercaPerDataOnAction(ActionEvent event) throws SQLException {
-
+        Date dataInizio = Date.valueOf(dataInizioDP.getValue());
+        Date dataFine = Date.valueOf(dataFineDP.getValue());
+        conferenze.loadByDateInterval(dataInizio,dataFine);
+        conferenceView.setItems(conferenze.getConferenze());
     }
 
     @FXML

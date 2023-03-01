@@ -151,4 +151,29 @@ public class ConferenzaDao {
         return conferenze;
     }
 
+    public LinkedList<Conferenza> retrieveByDateInterval(Date inizio, Date fine) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select * from retrieve_conferenze_by_interval(?,?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setDate(1,inizio);
+        stm.setDate(2,fine);
+        SedeDao sededao = new SedeDao();
+        UtenteDAO utentedao = new UtenteDAO();
+        LinkedList<Conferenza> conferenze = new LinkedList<>();
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            Conferenza c = new Conferenza();
+            c.setConferenzaID(rs.getInt(1));
+            c.setNome(rs.getString(2));
+            c.setDescrizione(rs.getString(5));
+            c.setBudget(rs.getFloat(7));
+            c.setSede(sededao.retrieveSedeByID(rs.getInt(6)));
+            c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
+            c.setDataInizio(rs.getDate("datainizio"));
+            c.setDataFine(rs.getDate("datafine"));
+            conferenze.add(c);
+        }
+        return conferenze;
+    }
 }

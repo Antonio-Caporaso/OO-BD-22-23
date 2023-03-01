@@ -8,6 +8,7 @@ import Persistence.Entities.Conferenze.Sede;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 public class Conferenze {
@@ -57,7 +58,11 @@ public class Conferenze {
         conferenze.clear();
         conferenze.addAll(conferenzaDao.retrieveBySede(sede));
     }
-
+    public void loadByDateInterval(Date inizio, Date fine) throws SQLException {
+        ConferenzaDao conferenzaDao = new ConferenzaDao();
+        conferenze.clear();
+        conferenze.addAll(conferenzaDao.retrieveByDateInterval(inizio,fine));
+    }
     public ObservableList<Conferenza> getConferenze() {
         return conferenze;
     }
