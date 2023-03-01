@@ -114,17 +114,13 @@ public class EditConferenceController implements Initializable {
             EditSessioneController controller = new EditSessioneController();
             loader.setController(controller);
             Sessione s = sessioniView.getSelectionModel().getSelectedItem();
-            if(s ==  null)
+            if(s == null)
                 throw new SessioneNotSelectedException();
             controller.setSessione(s);
             controller.setEditController(this);
+            controller.setSubScene(subscene);
             Parent root = loader.load();
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
+            subscene.setRoot(root);
         }catch(SessioneNotSelectedException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());

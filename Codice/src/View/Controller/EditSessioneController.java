@@ -5,16 +5,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EditSessioneController implements Initializable {
     private Sessione sessione;
     private EditConferenceController editConferenceController;
+    private SubScene subScene;
     @FXML
     private Button addEventoButton;
 
@@ -60,6 +64,14 @@ public class EditSessioneController implements Initializable {
     @FXML
     private Label titleLabel;
 
+    public SubScene getSubScene() {
+        return subScene;
+    }
+
+    public void setSubScene(SubScene subScene) {
+        this.subScene = subScene;
+    }
+
     @FXML
     void addEventoOnAction(ActionEvent event) {
 
@@ -91,9 +103,11 @@ public class EditSessioneController implements Initializable {
     }
 
     @FXML
-    void annullaButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage) annullaButton.getScene().getWindow();
-        stage.close();
+    void annullaButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
+        loader.setController(editConferenceController);
+        Parent root = loader.load();
+        subScene.setRoot(root);
     }
 
     @FXML
@@ -116,7 +130,7 @@ public class EditSessioneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        titleLabel.setText(sessione.getTitolo());
     }
 
     public void setEditController(EditConferenceController editConferenceController) {
