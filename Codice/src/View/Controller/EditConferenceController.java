@@ -109,10 +109,10 @@ public class EditConferenceController implements Initializable {
 
     @FXML
     void editSessionsOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
-        EditSessioneController controller = new EditSessioneController();
-        loader.setController(controller);
         try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
+            EditSessioneController controller = new EditSessioneController();
+            loader.setController(controller);
             Sessione s = sessioniView.getSelectionModel().getSelectedItem();
             if(s ==  null)
                 throw new SessioneNotSelectedException();
@@ -128,6 +128,7 @@ public class EditConferenceController implements Initializable {
         }catch(SessioneNotSelectedException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
