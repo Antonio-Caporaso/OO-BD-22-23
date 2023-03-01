@@ -47,8 +47,10 @@ public class ViewConferencesController implements Initializable {
     private Button viewSponsorsButton;
 
     @FXML
-    void cercaPerDataOnAction(ActionEvent event) {
-
+    void cercaPerDataOnAction(ActionEvent event) throws SQLException {
+        Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
+        conferenze.loadBySede(sede);
+        conferenceView.setItems(conferenze.getConferenze());
     }
 
     @FXML

@@ -16,7 +16,6 @@ public class SessioneDao {
     public LinkedList<Sessione> retrieveSessioni(Conferenza conferenza) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        ChairDao daochair = new ChairDao();
         SalaDao daosala = new SalaDao();
         ProgrammaDao programmaDao = new ProgrammaDao();
         String query = "SELECT * fron sessione WHERE idconferenza = ?";
@@ -28,7 +27,6 @@ public class SessioneDao {
             Sessione s = new Sessione();
             s.setSessioneID(rs.getInt(1));
             s.setTitolo(rs.getString(2));
-            s.setCoordinatore(daochair.retrieveChairByID(rs.getInt(3)));
             s.setDataInizio(rs.getDate(4));
             s.setDataFine(rs.getDate(5));
             s.setLocazione(daosala.retrieveSalaByID(rs.getInt(6)));

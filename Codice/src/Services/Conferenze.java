@@ -4,8 +4,10 @@ import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.EnteDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Conferenze.Sede;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.sql.SQLException;
 
 public class Conferenze {
@@ -44,7 +46,11 @@ public class Conferenze {
         ConferenzaDao d = new ConferenzaDao();
         d.deleteConferenza(conferenza);
     }
+    public void loadBySede(Sede sede) throws SQLException{
+        ConferenzaDao conferenzaDao = new ConferenzaDao();
+        conferenze.clear();
+        conferenze.addAll(conferenzaDao.retrieveBySede(sede));
+    }
     public ObservableList<Conferenza> getConferenze() {
         return conferenze;
     }
-}
