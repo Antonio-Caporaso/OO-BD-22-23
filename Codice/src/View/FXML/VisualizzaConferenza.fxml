@@ -32,16 +32,16 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <ChoiceBox prefHeight="24.0" prefWidth="719.0">
+                  <ChoiceBox fx:id="sedeChoice" prefHeight="24.0" prefWidth="719.0">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </ChoiceBox>
                </children>
             </VBox>
-            <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="194.0" text="Cerca">
+            <Button fx:id="cercaPerSedeButton" mnemonicParsing="false" onAction="#cercaPerSedeOnAction" prefHeight="24.0" prefWidth="194.0" text="Cerca">
                <HBox.margin>
-                  <Insets left="50.0" top="50.0" />
+                  <Insets left="50.0" right="20.0" top="50.0" />
                </HBox.margin>
             </Button>
          </children>
@@ -60,12 +60,12 @@
                   </Label>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <DatePicker promptText="Da">
+                        <DatePicker fx:id="dataInizioDP" promptText="Da">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
                         </DatePicker>
-                        <DatePicker promptText="A">
+                        <DatePicker fx:id="dataFineDP" promptText="A">
                            <HBox.margin>
                               <Insets left="30.0" top="10.0" />
                            </HBox.margin>
@@ -74,30 +74,33 @@
                   </HBox>
                </children>
             </VBox>
-            <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="194.0" text="Cerca">
+            <Button fx:id="cercaPerDataButton" mnemonicParsing="false" onAction="#cercaPerDataOnAction" prefHeight="24.0" prefWidth="194.0" text="Cerca">
                <HBox.margin>
-                  <Insets left="50.0" top="50.0" />
+                  <Insets left="50.0" right="20.0" top="50.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <ListView layoutX="14.0" layoutY="252.0" prefHeight="436.0" prefWidth="678.0" />
+      <ListView fx:id="conferenceView" layoutX="14.0" layoutY="252.0" prefHeight="436.0" prefWidth="678.0" />
       <VBox layoutX="699.0" layoutY="252.0" prefHeight="436.0" prefWidth="227.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="227.0" text="Visualizza dettagli " />
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="243.0" text="Visualizza Organizzatori">
+            <Button fx:id="viewDetailsButton" mnemonicParsing="false" onAction="#viewDetailsOnAction" prefHeight="55.0" prefWidth="227.0" text="Visualizza dettagli ">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets left="10.0" right="20.0" />
+               </VBox.margin></Button>
+            <Button fx:id="viewEntiButton" mnemonicParsing="false" onAction="#viewEntiOnAction" prefHeight="55.0" prefWidth="243.0" text="Visualizza Organizzatori">
+               <VBox.margin>
+                  <Insets left="10.0" right="20.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="240.0" text="Visualizza Sponsor">
+            <Button fx:id="viewSponsorsButton" mnemonicParsing="false" onAction="#viewSponsorsOnAction" prefHeight="55.0" prefWidth="240.0" text="Visualizza Sponsor">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets left="10.0" right="20.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="240.0" text="Visualizza Sessioni">
+            <Button fx:id="viewSessionButton" mnemonicParsing="false" onAction="#viewSessioniOnAction" prefHeight="55.0" prefWidth="240.0" text="Visualizza Sessioni">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets left="10.0" right="20.0" top="10.0" />
                </VBox.margin>
             </Button>
          </children>

@@ -11,7 +11,6 @@ import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -72,7 +71,6 @@ public class LandingController implements Initializable{
             e.printStackTrace();
         }
     }
-
     @FXML
     void visualizzaConferenzaOnAction(ActionEvent event) {
         try {
