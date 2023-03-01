@@ -2,17 +2,17 @@ package Persistence.Entities.Conferenze;
 
 import Persistence.Entities.partecipanti.Speaker;
 
-import java.util.Date;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class Intervento {
     private int interventoID;
-    private Date orarioIntervento;
+    private LocalTime orario;
     private String estratto;
     private Speaker speaker;
 
-    public Intervento(Date orarioIntervento, String estratto, Speaker speaker) {
-        this.orarioIntervento = orarioIntervento;
+    public Intervento(LocalTime orario, String estratto, Speaker speaker) {
+        this.orario = orario;
         this.estratto = estratto;
         this.speaker = speaker;
     }
@@ -25,12 +25,12 @@ public class Intervento {
         return speaker;
     }
 
-    public Date getOrarioIntervento() {
-        return orarioIntervento;
+    public LocalTime getOrario() {
+        return orario;
     }
 
-    public void setOrarioIntervento(Date orarioIntervento) {
-        this.orarioIntervento = orarioIntervento;
+    public void setOrario(LocalTime orario) {
+        this.orario = orario;
     }
 
     public String getEstratto() {
@@ -41,16 +41,29 @@ public class Intervento {
         this.estratto = estratto;
     }
 
+    public int getInterventoID() {
+        return interventoID;
+    }
+
+    public void setInterventoID(int interventoID) {
+        this.interventoID = interventoID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Intervento that = (Intervento) o;
-        return Objects.equals(orarioIntervento, that.orarioIntervento) && Objects.equals(estratto, that.estratto) && Objects.equals(speaker, that.speaker);
+
+        if (!Objects.equals(orario, that.orario)) return false;
+        return Objects.equals(speaker, that.speaker);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orarioIntervento, estratto, speaker);
+        int result = orario != null ? orario.hashCode() : 0;
+        result = 31 * result + (speaker != null ? speaker.hashCode() : 0);
+        return result;
     }
 }
