@@ -109,7 +109,11 @@ public class EditConferenceController implements Initializable {
 
     @FXML
     void editSessionsOnAction(ActionEvent event) {
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
+        EditSessioneController controller = new EditSessioneController();
+        loader.setController(controller);
+        controller.setSubscene(subscene);
+        controller.setSessione(sessioniView.getSelectionModel().getSelectedItem());
     }
 
     @FXML
