@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -110,6 +111,18 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Spinner fx:id="orarioInizioOreSpinner" layoutY="8.0" stylesheets="@../CSS/spinnerDefault.css" />
+                  <Spinner fx:id="orarioInizioMinutiSpinner" layoutX="174.0" layoutY="8.0" stylesheets="@../CSS/spinnerDefault.css" />
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <Spinner fx:id="orarioFineOreSpinner" layoutY="8.0" stylesheets="@../CSS/spinnerDefault.css" />
+                  <Spinner fx:id="orarioFineMinutiSpinner" layoutX="174.0" layoutY="8.0" stylesheets="@../CSS/spinnerDefault.css" />
                </children>
             </Pane>
          </children>
