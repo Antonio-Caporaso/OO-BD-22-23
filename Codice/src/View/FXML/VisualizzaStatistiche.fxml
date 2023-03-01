@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="661.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewStatsController">
+<AnchorPane prefHeight="661.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.ViewStatsController">
    <children>
       <Label layoutX="401.0" layoutY="306.0" text="Visualizza le statistiche" textFill="RED">
          <font>
