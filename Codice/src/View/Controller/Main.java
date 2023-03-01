@@ -3,9 +3,9 @@ package View.Controller;
 import Persistence.DbConfig.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import java.sql.*;
 
@@ -29,14 +29,8 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         //Definiamo oggetti delle classi modello da passare ai vari controller
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Login.fxml"));
-            HBox root = (HBox) loader.load();
-
-            // Ottengo un riferimento al controller
-            LoginController controller = loader.getController();
-            //controller.setPrimaryStage(stage);
-
-            // Settaggio della scena
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Login.fxml"));
+            Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.getIcons().add(new Image("./View/Resources/IconAtom.png"));
             stage.setTitle("Symposium");

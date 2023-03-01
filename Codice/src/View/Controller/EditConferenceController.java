@@ -94,7 +94,7 @@ public class EditConferenceController implements Initializable {
 
     @FXML
     void editEntiOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/EditEnti.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEnti.fxml"));
         EditEntiController controller = new EditEntiController();
         loader.setController(controller);
         controller.setConferenza(conferenza);

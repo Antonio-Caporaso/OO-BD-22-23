@@ -54,7 +54,7 @@ public class LoginController implements Initializable, FormChecker {
     void registratiButtonOnAction(ActionEvent event){
         try{
             NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
-            NavigationController.getInstance().loadScene("../View/FXML/Registrazione.fxml");
+            NavigationController.getInstance().loadScene("../FXML/Registrazione.fxml");
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -80,7 +80,7 @@ public class LoginController implements Initializable, FormChecker {
     }
 
     private void changeToLandingWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Landing.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Landing.fxml"));
         LandingController controller = new LandingController();
         loader.setController(controller);
         Parent root = loader.load();

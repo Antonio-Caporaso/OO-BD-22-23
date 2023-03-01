@@ -67,7 +67,7 @@ public class RegisterController implements Initializable, FormChecker{
     void backButtonOnAction(ActionEvent event) {
         try {
             NavigationController.getInstance().setStage((Stage) backButton.getScene().getWindow());
-            NavigationController.getInstance().loadScene("/View/FXML/Login.fxml");
+            NavigationController.getInstance().loadScene("../FXML/Login.fxml");
         }catch (Exception e){
             e.printStackTrace();
         }

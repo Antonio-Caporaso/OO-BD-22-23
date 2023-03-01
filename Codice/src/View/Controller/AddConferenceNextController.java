@@ -17,7 +17,7 @@ public class AddConferenceNextController {
     @FXML
     void backButtonOnAction(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddConference.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddConference.fxml"));
             AddConferenceController controller = new AddConferenceController();
             controller.setSubscene(subscene);
             loader.setController(controller);
