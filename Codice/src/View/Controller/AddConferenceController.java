@@ -1,12 +1,15 @@
 package View.Controller;
 import Exceptions.BlankFieldException;
+import Persistence.DAO.ConferenzaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
 import Services.Conferenze;
 import Services.Sedi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +22,9 @@ import java.util.ResourceBundle;
 public class AddConferenceController implements Initializable,FormChecker{
     private Utente user;
     private Sedi sedi = new Sedi();
+    private String nome;
+    private int idConferenza;
+    private Conferenza conferenza;
     private Conferenze conference = new Conferenze();
     @FXML
     private Button annullaButton;
@@ -70,8 +76,9 @@ public class AddConferenceController implements Initializable,FormChecker{
             Date dataF = java.sql.Date.valueOf(dataFselected);
             Sede sede = sedeChoice.getValue();
             Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user);
-            conference.addConferenza(c);
+            //conference.addConferenza(c);
             openAddedConferenceDialogWindow();
+            loadInserisciSessione(c);
         }catch (BlankFieldException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -80,16 +87,6 @@ public class AddConferenceController implements Initializable,FormChecker{
         }catch (Exception e){
             e.printStackTrace();
         }
-//        try{
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/CreaConferenzaNext.fxml"));
-//            AddConferenceNextController controller = new AddConferenceNextController();
-//            controller.setSubscene(subscene);
-//            loader.setController(controller);
-//            Parent root = loader.load();
-//            subscene.setRoot(root);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
     public void openAddedConferenceDialogWindow(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -106,6 +103,23 @@ public class AddConferenceController implements Initializable,FormChecker{
         *   alert.setGraphic(imageView);
          */
         alert.showAndWait();
+    }
+
+    public void loadInserisciSessione(Conferenza c){
+        ConferenzaDao conferenzaDao= new ConferenzaDao();
+        conferenza= conferenzaDao.retrieveConferenzaByNome(c.getNome());
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
+            InserisciSessioneController controller = new InserisciSessioneController();
+            controller.setSubscene(subscene);
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            Parent root = loader.load();
+            controller.setConferenza(conferenza);
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;
