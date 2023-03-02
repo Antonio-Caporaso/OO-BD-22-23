@@ -68,8 +68,15 @@ public class EditConferenceController implements Initializable {
         subscene.setRoot(root);
     }
     @FXML
-    public void addSessioneOnAction(ActionEvent event) {
-
+    public void addSessioneOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSessione.fxml"));
+        AddSessioneController controller = new AddSessioneController();
+        loader.setController(controller);
+        controller.setConferenza(conferenza);
+        controller.setEditConferenceController(this);
+        controller.setSubscene(subscene);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
     @FXML
     public void confermaButtonOnAction(ActionEvent event) throws SQLException {
