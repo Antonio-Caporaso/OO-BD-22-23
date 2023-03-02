@@ -6,19 +6,33 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="693.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ChoiceBox fx:id="entiChoice" layoutX="67.0" layoutY="12.0" prefHeight="24.0" prefWidth="479.0" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="147.0" AnchorPane.topAnchor="12.0" />
-      <Label layoutX="14.0" layoutY="14.0" text="Ente" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="640.0" AnchorPane.topAnchor="14.0">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Button fx:id="addButton" layoutX="556.0" layoutY="12.0" mnemonicParsing="false" onAction="#aggiungiOnAction" prefHeight="24.0" prefWidth="123.0" text="Aggiungi" AnchorPane.rightAnchor="14.0" />
-      <VBox layoutX="556.0" layoutY="294.0">
+      <HBox layoutX="14.0" layoutY="137.0" prefHeight="24.0" prefWidth="774.0">
+         <children>
+            <Label prefHeight="19.0" prefWidth="226.0" text="Seleziona ente">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="entiChoice" prefHeight="24.0" prefWidth="488.0">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </ChoiceBox>
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#aggiungiOnAction" prefHeight="24.0" prefWidth="106.0" text="Aggiungi">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <VBox layoutX="795.0" layoutY="614.0">
          <children>
             <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="24.0" prefWidth="123.0" text="Rimuovi" />
             <Button fx:id="annullaButton" maxHeight="24.0" maxWidth="123.0" mnemonicParsing="false" onAction="#annullaOnAction" prefHeight="24.0" prefWidth="123.0" text="Annulla">
@@ -33,6 +47,12 @@
             </Button>
          </children>
       </VBox>
-      <ListView fx:id="entiView" layoutX="14.0" layoutY="46.0" prefHeight="341.0" prefWidth="532.0" />
+      <ListView fx:id="entiView" layoutX="14.0" layoutY="171.0" prefHeight="535.0" prefWidth="774.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Label layoutX="14.0" layoutY="27.0" text="Modifica enti organizzatori" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

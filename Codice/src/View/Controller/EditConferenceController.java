@@ -13,11 +13,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -75,21 +72,21 @@ public class EditConferenceController implements Initializable {
     void confermaButtonOnAction(ActionEvent event) throws SQLException {
         ConferenzaDao dao = new ConferenzaDao();
         dao.updateDettagliConferenza(conferenza);
+        // Salvare enti
+        // Salvare sessioni
+        // Salvare sponsorizzazioni
     }
 
     @FXML
     void editDetailsOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/EditConferenceDetails.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConferenceDetails.fxml"));
         EditConferenceDetailsController controller = new EditConferenceDetailsController();
         loader.setController(controller);
         controller.setEditConferenceController(this);
         controller.setConferenza(conferenza);
+        controller.setSubScene(subscene);
         Parent root = loader.load();
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        subscene.setRoot(root);
     }
 
     @FXML
