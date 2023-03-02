@@ -1,21 +1,28 @@
 package View.Controller;
+
 import Exceptions.EntePresenteException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Ente;
 import Services.Enti;
 import Services.EntiConferenza;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EditEntiController implements Initializable {
     private EditConferenceController editController;
+    private SubScene subScene;
     private Conferenza conferenza;
     private EntiConferenza organizzatori;
     @FXML
@@ -69,9 +76,11 @@ public class EditEntiController implements Initializable {
     }
 
     @FXML
-    void annullaOnAction(ActionEvent event) {
-        Stage stage = (Stage) annullaButton.getScene().getWindow();
-        stage.close();
+    void annullaOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
+        loader.setController(editController);
+        Parent root = loader.load();
+        subScene.setRoot(root);
     }
 
     @FXML
@@ -81,10 +90,20 @@ public class EditEntiController implements Initializable {
     }
 
     @FXML
-    void okOnAction(ActionEvent event) {
+    void okOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
+        loader.setController(editController);
         editController.setConferenza(conferenza);
         editController.setOrganizzatori();
-        Stage stage = (Stage) annullaButton.getScene().getWindow();
-        stage.close();
+        Parent root = loader.load();
+        subScene.setRoot(root);
+    }
+
+    public SubScene getSubScene() {
+        return subScene;
+    }
+
+    public void setSubScene(SubScene subScene) {
+        this.subScene = subScene;
     }
 }

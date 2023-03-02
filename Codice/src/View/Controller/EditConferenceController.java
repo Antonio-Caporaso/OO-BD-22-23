@@ -98,13 +98,10 @@ public class EditConferenceController implements Initializable {
         EditEntiController controller = new EditEntiController();
         loader.setController(controller);
         controller.setConferenza(conferenza);
+        controller.setSubScene(subscene);
         controller.setEditController(this);
         Parent root = loader.load();
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        subscene.setRoot(root);
     }
 
     @FXML
@@ -129,8 +126,15 @@ public class EditConferenceController implements Initializable {
     }
 
     @FXML
-    void editSponsorshipOnAction(ActionEvent event) {
-
+    void editSponsorshipOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSponsor.fxml"));
+        EditSponsorController controller = new EditSponsorController();
+        loader.setController(controller);
+        controller.setConferenza(conferenza);
+        controller.setsubscene(subscene);
+        controller.setEditConferenceController(this);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
 
     public SubScene getsubscene() {
