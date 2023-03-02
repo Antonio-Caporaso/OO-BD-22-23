@@ -42,12 +42,17 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
+            <Button fx:id="addSessioneButton" mnemonicParsing="false" onAction="#addSessioneOnAction" prefHeight="70.0" prefWidth="224.0" text="Aggiungi sessione">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
-      <ButtonBar layoutX="683.0" layoutY="666.0" prefHeight="40.0" prefWidth="233.0">
+      <ButtonBar layoutX="695.0" layoutY="666.0" prefHeight="40.0" prefWidth="223.0">
         <buttons>
-          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaButtonOnAction" prefHeight="24.0" prefWidth="123.0" text="Annulla" />
-            <Button fx:id="confermaButton" mnemonicParsing="false" onAction="#confermaButtonOnAction" text="Conferma" />
+          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaButtonOnAction" prefHeight="24.0" prefWidth="128.0" text="Annulla" />
+            <Button fx:id="confermaButton" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="132.0" text="Conferma" />
         </buttons>
       </ButtonBar>
       <Accordion layoutX="14.0" layoutY="99.0" prefHeight="599.0" prefWidth="683.0">

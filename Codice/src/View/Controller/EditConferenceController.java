@@ -15,19 +15,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
 public class EditConferenceController implements Initializable {
     private Conferenza conferenza;
     private Sessioni sessioni = new Sessioni(conferenza);
     private SubScene subscene;
     private Utente user;
-    @FXML
-    private TextArea entiView;
     @FXML
     private Button annullaButton;
     @FXML
@@ -45,6 +41,10 @@ public class EditConferenceController implements Initializable {
     @FXML
     private Button editEntiButton;
     @FXML
+    private TextArea entiView;
+    @FXML
+    private Button addSessioneButton;
+    @FXML
     private Button editSessionsButton;
     @FXML
     private Button editSponsorshipsButton;
@@ -59,7 +59,7 @@ public class EditConferenceController implements Initializable {
     @FXML
     private TextArea sponsorizzazioniView;
     @FXML
-    void annullaButtonOnAction(ActionEvent event) throws IOException {
+    public void annullaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ManageConferences.fxml"));
         ManageConferenceController controller = new ManageConferenceController(user);
         loader.setController(controller);
@@ -67,18 +67,20 @@ public class EditConferenceController implements Initializable {
         Parent root = loader.load();
         subscene.setRoot(root);
     }
-
     @FXML
-    void confermaButtonOnAction(ActionEvent event) throws SQLException {
+    public void addSessioneOnAction(ActionEvent event) {
+
+    }
+    @FXML
+    public void confermaButtonOnAction(ActionEvent event) throws SQLException {
         ConferenzaDao dao = new ConferenzaDao();
         dao.updateDettagliConferenza(conferenza);
         // Salvare enti
         // Salvare sessioni
         // Salvare sponsorizzazioni
     }
-
     @FXML
-    void editDetailsOnAction(ActionEvent event) throws IOException {
+    public void editDetailsOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConferenceDetails.fxml"));
         EditConferenceDetailsController controller = new EditConferenceDetailsController();
         loader.setController(controller);
@@ -88,9 +90,8 @@ public class EditConferenceController implements Initializable {
         Parent root = loader.load();
         subscene.setRoot(root);
     }
-
     @FXML
-    void editEntiOnAction(ActionEvent event) throws IOException {
+    public void editEntiOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEnti.fxml"));
         EditEntiController controller = new EditEntiController();
         loader.setController(controller);
@@ -100,9 +101,8 @@ public class EditConferenceController implements Initializable {
         Parent root = loader.load();
         subscene.setRoot(root);
     }
-
     @FXML
-    void editSessionsOnAction(ActionEvent event) throws IOException {
+    public void editSessionsOnAction(ActionEvent event) throws IOException {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
             EditSessioneController controller = new EditSessioneController();
@@ -122,9 +122,8 @@ public class EditConferenceController implements Initializable {
             alert.showAndWait();
         }
     }
-
     @FXML
-    void editSponsorshipOnAction(ActionEvent event) throws IOException {
+    public void editSponsorshipOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSponsor.fxml"));
         EditSponsorController controller = new EditSponsorController();
         loader.setController(controller);
@@ -134,17 +133,8 @@ public class EditConferenceController implements Initializable {
         Parent root = loader.load();
         subscene.setRoot(root);
     }
-
     public SubScene getsubscene() {
         return subscene;
-    }
-
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-
-    public void setConferenza(Conferenza c){
-        this.conferenza=c;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -152,9 +142,21 @@ public class EditConferenceController implements Initializable {
         setOrganizzatori();
         setSponsorizzazioni();
     }
+    public void setConferenza(Conferenza c){
+        this.conferenza=c;
+    }
     public void setSessioni() throws SQLException {
         sessioni.loadSessioni();
         sessioniView.setItems(sessioni.getSessioni());
+    }
+    public void setDetails() {
+        this.setTitleLabel();
+        nomeLabel.setText(conferenza.getNome());
+        descrizioneLabel.setText(conferenza.getDescrizione());
+        budgetLabel.setText(Float.toString(conferenza.getBudget()));
+        dataInizioLabel.setText(conferenza.getDataInizio().toString());
+        dataFineLabel.setText(conferenza.getDataFine().toString());
+        sedeLabel.setText(conferenza.getSede().toString());
     }
     public void setOrganizzatori() {
         entiView.setText("");
@@ -167,25 +169,13 @@ public class EditConferenceController implements Initializable {
             sponsorizzazioniView.appendText(s.toString()+"\n");
         }
     }
-
+    public void setSubscene(SubScene subscene) {
+        this.subscene = subscene;
+    }
     public void setTitleLabel(){
         if(conferenza!=null)
             titleLabel.setText("Modifica della conferenza: "+ conferenza.getNome());
     }
-
-    public void setDetails() {
-        this.setTitleLabel();
-        nomeLabel.setText(conferenza.getNome());
-        descrizioneLabel.setText(conferenza.getDescrizione());
-        budgetLabel.setText(Float.toString(conferenza.getBudget()));
-        dataInizioLabel.setText(conferenza.getDataInizio().toString());
-        dataFineLabel.setText(conferenza.getDataFine().toString());
-        sedeLabel.setText(conferenza.getSede().toString());
-    }
-    public Utente getUser() {
-        return user;
-    }
-
     public void setUser(Utente user) {
         this.user = user;
     }
