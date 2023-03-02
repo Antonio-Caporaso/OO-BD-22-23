@@ -2,6 +2,7 @@ package Services;
 
 import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 public class Sessioni {
     private ObservableList<Sessione> sessioni;
     private Conferenza conferenza;
+    private Programma programma;
     public Sessioni(Conferenza conferenza){
         this.conferenza = conferenza;
         sessioni = FXCollections.observableArrayList();
@@ -35,4 +37,5 @@ public class Sessioni {
         sessioni.clear();
         sessioni.addAll(dao.retrieveSessioni(conferenza));
     }
+
 }

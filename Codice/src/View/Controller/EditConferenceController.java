@@ -82,7 +82,7 @@ public class EditConferenceController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/EditConferenceDetails.fxml"));
         EditConferenceDetailsController controller = new EditConferenceDetailsController();
         loader.setController(controller);
-        controller.setECcontroller(this);
+        controller.setEditConferenceController(this);
         controller.setConferenza(conferenza);
         Parent root = loader.load();
         Stage stage = new Stage();
@@ -114,6 +114,7 @@ public class EditConferenceController implements Initializable {
             if(s == null)
                 throw new SessioneNotSelectedException();
             controller.setSessione(s);
+            controller.setConferenza(conferenza);
             controller.setEditController(this);
             controller.setSubScene(subscene);
             Parent root = loader.load();

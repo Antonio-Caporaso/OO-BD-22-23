@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 
 public class EditConferenceDetailsController implements Initializable {
     private Conferenza conferenza;
-    private EditConferenceController ECcontroller;
+    private EditConferenceController editConferenceController;
     @FXML
     private Button annullaButton;
     @FXML
@@ -23,12 +23,12 @@ public class EditConferenceDetailsController implements Initializable {
     @FXML
     private Button okButton;
 
-    public EditConferenceController getECcontroller() {
-        return ECcontroller;
+    public EditConferenceController getEditConferenceController() {
+        return editConferenceController;
     }
 
-    public void setECcontroller(EditConferenceController ECcontroller) {
-        this.ECcontroller = ECcontroller;
+    public void setEditConferenceController(EditConferenceController editConferenceController) {
+        this.editConferenceController = editConferenceController;
     }
 
     @FXML
@@ -41,8 +41,8 @@ public class EditConferenceDetailsController implements Initializable {
     void okOnAction(ActionEvent event) {
         conferenza.setNome(nomeTF.getText());
         conferenza.setDescrizione(descrizioneTF.getText());
-        ECcontroller.setConferenza(conferenza);
-        ECcontroller.setDetails();
+        editConferenceController.setConferenza(conferenza);
+        editConferenceController.setDetails();
         Stage stage = (Stage) okButton.getScene().getWindow();
         stage.close();
     }

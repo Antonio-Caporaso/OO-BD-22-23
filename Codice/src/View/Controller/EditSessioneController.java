@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,17 +17,9 @@ import java.util.ResourceBundle;
 
 public class EditSessioneController implements Initializable {
     private Sessione sessione;
+    private Conferenza conferenza;
     private EditConferenceController editConferenceController;
     private SubScene subScene;
-    @FXML
-    private Button addEventoButton;
-
-    @FXML
-    private Button addIntervalloButton;
-
-    @FXML
-    private Button addInterventoButton;
-
     @FXML
     private Button annullaButton;
 
@@ -41,28 +33,24 @@ public class EditSessioneController implements Initializable {
     private Label dataInizioLabel;
 
     @FXML
-    private Button deleteEventoButton;
-
-    @FXML
-    private Button deleteIntervalloButton;
-
-    @FXML
-    private Button deleteInterventoButton;
-
-    @FXML
-    private Label descrizioneLabel;
-
-    @FXML
     private Button editDetailsButton;
+
+    @FXML
+    private Button editProgrammaButton;
 
     @FXML
     private Label nomeLabel;
 
     @FXML
-    private Label sedeLabel;
+    private Label salaLabel;
 
     @FXML
     private Label titleLabel;
+
+    @FXML
+    void editProgrammaOnAction(ActionEvent event) {
+
+    }
 
     public SubScene getSubScene() {
         return subScene;
@@ -70,36 +58,6 @@ public class EditSessioneController implements Initializable {
 
     public void setSubScene(SubScene subScene) {
         this.subScene = subScene;
-    }
-
-    @FXML
-    void addEventoOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addIntervalloOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addInterventoOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteEventoOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteIntervalloOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteInterventoButton(ActionEvent event) {
-
     }
 
     @FXML
@@ -118,6 +76,14 @@ public class EditSessioneController implements Initializable {
     @FXML
     void editDetailsOnAction(ActionEvent event) {
 
+    }
+
+    public Conferenza getConferenza() {
+        return conferenza;
+    }
+
+    public void setConferenza(Conferenza conferenza) {
+        this.conferenza = conferenza;
     }
 
     public Sessione getSessione() {
