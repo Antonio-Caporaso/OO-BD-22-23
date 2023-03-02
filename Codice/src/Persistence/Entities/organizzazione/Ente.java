@@ -8,13 +8,11 @@ import java.util.Objects;
 public class Ente {
     private int enteID;
     private String nome;
-    private LinkedList<Conferenza> organizza;
 
     public Ente() {}
 
-    public Ente(String nome, LinkedList<Conferenza> organizza) {
+    public Ente(String nome) {
         this.nome = nome;
-        this.organizza=organizza;
     }
 
     public Ente(int id, String nome) {
@@ -30,25 +28,13 @@ public class Ente {
         this.enteID = enteID;
     }
 
-    public LinkedList<Conferenza> getOrganizza() {
-        return organizza;
-    }
-
-    public void setOrganizza(LinkedList<Conferenza> organizza) {
-        this.organizza = organizza;
-    }
-
     public String getNome() {
         return nome;
     }
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public void addConferenza(Conferenza conferenza){
-        if(!organizza.contains(conferenza)){
-            organizza.add(conferenza);
-        }
-    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,5 +1,6 @@
 package Persistence.Entities.Conferenze;
 
+import Exceptions.EntePresenteException;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.ComitatoLocale;
 import Persistence.Entities.organizzazione.ComitatoScientifico;
@@ -132,11 +133,11 @@ public class Conferenza {
     public void setComitatoScientifico(ComitatoScientifico comitatoScientifico) {
         this.comitatoScientifico = comitatoScientifico;
     }
-    public void addEnte(Ente ente){
+    public void addEnte(Ente ente) throws EntePresenteException {
         if(!organizzataDa.contains(ente)){
             organizzataDa.add(ente);
-            ente.addConferenza(this);
-        }
+        }else
+            throw new EntePresenteException();
     }
     public void addSponsorizzazione(Sponsorizzazione sponsorizzazione){
         if(!sponsorizzataDa.contains(sponsorizzazione)) {

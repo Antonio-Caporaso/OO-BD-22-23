@@ -63,7 +63,7 @@ public class EditConferenceController implements Initializable {
     private TextArea sponsorizzazioniView;
     @FXML
     void annullaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../ManageConferences.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ManageConferences.fxml"));
         ManageConferenceController controller = new ManageConferenceController(user);
         loader.setController(controller);
         controller.setSubscene(subscene);
@@ -155,6 +155,7 @@ public class EditConferenceController implements Initializable {
         sessioniView.setItems(sessioni.getSessioni());
     }
     public void setOrganizzatori() {
+        entiView.setText("");
         for(Ente e: conferenza.getOrganizzataDa()){
             entiView.appendText(e.toString()+"\n");
         }
