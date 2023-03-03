@@ -139,9 +139,9 @@ public class ConferenzaDao {
         while(rs.next()){
             Conferenza c = new Conferenza();
             c.setConferenzaID(rs.getInt(1));
-            c.setNome(rs.getString("nome"));
-            c.setDescrizione(rs.getString("descrizione"));
-            c.setBudget(rs.getFloat("budget"));
+            c.setNome(rs.getString(2));
+            c.setDescrizione(rs.getString(5));
+            c.setBudget(rs.getFloat(7));
             c.setSede(sede);
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
             c.setDataInizio(rs.getDate("datainizio"));
