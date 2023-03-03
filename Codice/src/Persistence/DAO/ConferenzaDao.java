@@ -73,8 +73,8 @@ public class ConferenzaDao {
         stm.setDate(3, c.getDataInizio());
         stm.setDate(4, c.getDataFine());
         stm.setFloat(5,c.getBudget());
-        stm.setInt(6, c.getProprietario().getIdUtente());
-        stm.setInt(7,c.getSede().getSedeID());
+        stm.setInt(6,c.getSede().getSedeID());
+        stm.setInt(7, c.getProprietario().getIdUtente());
         stm.execute();
     }
 

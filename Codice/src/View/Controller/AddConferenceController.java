@@ -76,9 +76,9 @@ public class AddConferenceController implements Initializable,FormChecker{
             Date dataF = java.sql.Date.valueOf(dataFselected);
             Sede sede = sedeChoice.getValue();
             Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user);
-            //conference.addConferenza(c);
+            conference.addConferenza(c);
             openAddedConferenceDialogWindow();
-            loadInserisciSessione(c);
+            //loadInserisciSessione(c);
         }catch (BlankFieldException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
