@@ -107,7 +107,7 @@ public class ConferenzaDao {
         UtenteDAO userDao = new UtenteDAO();
         SedeDao sedeDao = new SedeDao();
         try{
-            String query = "SELECT * from retrieve_conference_by_sede(?)";
+            String query = "SELECT * from conferenza where nome = ?";
             PreparedStatement stm = conn.prepareStatement(query);
             stm.setString(1, nomeConferenza);
             ResultSet rs = stm.executeQuery();
@@ -130,7 +130,7 @@ public class ConferenzaDao {
     public LinkedList<Conferenza> retrieveBySede(Sede sede) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT * FROM conferenza WHERE idsede = ?";
+        String query = "SELECT * FROM retrieve_conferenze_by_sede(?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,sede.getSedeID());
         LinkedList<Conferenza> conferenze = new LinkedList<>();
