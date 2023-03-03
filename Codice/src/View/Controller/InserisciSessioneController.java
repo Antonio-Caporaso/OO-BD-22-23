@@ -24,35 +24,26 @@ import java.util.ResourceBundle;
 public class InserisciSessioneController implements Initializable,FormChecker {
     @FXML
     private Button backButton;
-
     @FXML
     private DatePicker dataFineDatePicker;
-
     @FXML
     private DatePicker dataInizioDatePicker;
-
     @FXML
     private TextArea descrizioneTextArea;
-
     @FXML
     private Button inserisciButton;
     @FXML
     private ChoiceBox<String> salaChoiceBox;
-
     @FXML
     private TextField titoloSessioneTextField;
     @FXML
     private Spinner<Integer> orarioFineMinutiSpinner;
-
     @FXML
     private Spinner<Integer> orarioFineOreSpinner;
-
     @FXML
     private Spinner<Integer> orarioInizioMinutiSpinner;
-
     @FXML
     private Spinner<Integer> orarioInizioOreSpinner;
-
     private Conferenza conferenza;
     private Sessione sessione;
     private SubScene subscene;
@@ -72,7 +63,6 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     }
 
     public void setSpinnersAtLaunch(){
-
     SpinnerValueFactory<Integer> ValueFactoryInizioOre = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
     SpinnerValueFactory<Integer> ValueFactoryInizioMinuti = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
     SpinnerValueFactory<Integer> ValueFactoryFineOre = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);

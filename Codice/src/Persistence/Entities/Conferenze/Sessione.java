@@ -1,7 +1,5 @@
 package Persistence.Entities.Conferenze;
-
 import Persistence.Entities.partecipanti.Chair;
-
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Objects;

@@ -1,31 +1,42 @@
 package Persistence.Entities.Conferenze;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
 
 public class EventoSociale {
+    private int id;
+    private Date data;
+    private Time orario;
+    private float costo;
+    public int getId() {
+        return id;
+    }
 
-    private String tipologiaEvento;
-    private double costo;
-    private Date orario;
+    public void setId(int id) {
+        this.id = id;
+    }
+    public Date getData() {
+        return data;
+    }
 
+    public void setData(Date data) {
+        this.data = data;
+    }
 
-    public String getTipologiaEvento() {
-        return tipologiaEvento;
-    }
-    public void setTipologiaEvento(String tipologiaEvento) {
-        this.tipologiaEvento = tipologiaEvento;
-    }
-    public double getCosto() {
-        return costo;
-    }
-    public void setCosto(double costo) {
-        this.costo = costo;
-    }
-    public Date getOrario() {
+    public Time getOrario() {
         return orario;
     }
-    public void setOrario(Date orario) {
+
+    public void setOrario(Time orario) {
         this.orario = orario;
+    }
+
+    public float getCosto() {
+        return costo;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
     }
 
 }

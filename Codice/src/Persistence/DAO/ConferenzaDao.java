@@ -1,11 +1,8 @@
 package Persistence.DAO;
-
 import Persistence.DbConfig.DBConnection;
-
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.Utente;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -54,7 +51,7 @@ public class ConferenzaDao {
             c.setNome(rs.getString("nome"));
             c.setDescrizione(rs.getString("descrizione"));
             c.setBudget(rs.getFloat("budget"));
-            c.setSede(daosede.retrieveSedeByID(rs.getInt("sede")));
+            c.setSede(daosede.retrieveSedeByID(rs.getInt("idsede")));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
             c.setDataInizio(rs.getDate("datainizio"));
             c.setDataFine(rs.getDate("datafine"));

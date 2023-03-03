@@ -41,4 +41,15 @@ public class ConferenzeUtente extends Conferenze {
     public void setConferenzeUtente(ObservableList<Conferenza> conferenzeUtente) {
         this.conferenzeUtente = conferenzeUtente;
     }
+    public void addConferenza(Conferenza conferenza) throws SQLException {
+        ConferenzaDao d = new ConferenzaDao();
+        d.saveConferenza(conferenza);
+        conferenzeUtente.add(conferenza);
+    }
+
+    public void removeConferenza(Conferenza conferenza) throws SQLException {
+        ConferenzaDao d = new ConferenzaDao();
+        d.deleteConferenza(conferenza);
+        conferenzeUtente.remove(conferenza);
+    }
 }

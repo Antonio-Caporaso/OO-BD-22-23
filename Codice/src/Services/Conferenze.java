@@ -7,7 +7,6 @@ import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -42,15 +41,15 @@ public class Conferenze {
     }
 
     public void addConferenza(Conferenza conferenza) throws SQLException {
-        conferenze.add(conferenza);
         ConferenzaDao d = new ConferenzaDao();
         d.saveConferenza(conferenza);
+        conferenze.add(conferenza);
     }
 
     public void removeConferenza(Conferenza conferenza) throws SQLException {
-        this.conferenze.remove(conferenza);
         ConferenzaDao d = new ConferenzaDao();
         d.deleteConferenza(conferenza);
+        conferenze.remove(conferenza);
     }
 
     public void loadBySede(Sede sede) throws SQLException {
