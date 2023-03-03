@@ -1,5 +1,4 @@
 package View.Controller;
-
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import javafx.event.ActionEvent;
@@ -10,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -69,8 +67,14 @@ public class EditSessioneController implements Initializable {
     }
 
     @FXML
-    void editDetailsOnAction(ActionEvent event) {
-
+    void editDetailsOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditDettagliSessione.fxml"));
+        EditDettagliSessioneController controllerS = new EditDettagliSessioneController();
+        loader.setController(controllerS);
+        controllerS.setSessione(sessione);
+        controllerS.setSubscene(subScene);
+        Parent root = loader.load();
+        subScene.setRoot(root);
     }
 
     public Conferenza getConferenza() {

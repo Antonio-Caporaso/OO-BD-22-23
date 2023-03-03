@@ -120,9 +120,9 @@
             <ChoiceBox fx:id="salaChoiceBox" prefHeight="25.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <ButtonBar layoutX="718.0" layoutY="675.0" prefHeight="24.0" prefWidth="200.0">
+      <ButtonBar layoutX="670.0" layoutY="675.0" prefHeight="29.0" prefWidth="248.0">
          <buttons>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Back" textFill="WHITE">
+            <Button fx:id="backButton" minWidth="54.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="29.0" stylesheets="@../CSS/defaultButton.css" text="Back" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
