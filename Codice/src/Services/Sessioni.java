@@ -1,5 +1,6 @@
 package Services;
 
+import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Programma;
@@ -36,6 +37,14 @@ public class Sessioni {
         SessioneDao dao = new SessioneDao();
         sessioni.clear();
         sessioni.addAll(dao.retrieveSessioni(conferenza));
+    }
+    public void saveSessione(Sessione sessione)throws SQLException{
+        SessioneDao sessioneDao = new SessioneDao();
+        try{
+            sessioneDao.saveSessione(sessione);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
 }
