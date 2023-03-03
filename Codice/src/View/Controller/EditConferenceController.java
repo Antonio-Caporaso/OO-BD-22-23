@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 public class EditConferenceController implements Initializable {
     private Conferenza conferenza;
-    private Sessioni sessioni = new Sessioni(conferenza);
+    private Sessioni sessioni ;
     private SubScene subscene;
     private Utente user;
     @FXML
@@ -148,11 +148,13 @@ public class EditConferenceController implements Initializable {
         setDetails();
         setOrganizzatori();
         setSponsorizzazioni();
+        setSessioni();
     }
     public void setConferenza(Conferenza c){
         this.conferenza=c;
     }
-    public void setSessioni() throws SQLException {
+    public void setSessioni() {
+        sessioni = new Sessioni(conferenza);
         sessioni.loadSessioni();
         sessioniView.setItems(sessioni.getSessioni());
     }

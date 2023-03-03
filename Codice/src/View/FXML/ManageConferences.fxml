@@ -19,14 +19,14 @@
       </Label>
       <VBox layoutX="712.0" layoutY="99.0" prefHeight="598.0" prefWidth="206.0">
          <children>
-            <Button fx:id="modificaButton" disable="true" mnemonicParsing="false" onAction="#editOnAction" prefHeight="60.0" prefWidth="206.0" text="Modifica conferenza" />
-            <Button fx:id="deleteConferenzaButton" disable="true" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="60.0" prefWidth="206.0" text="Elimina conferenza">
+            <Button fx:id="modificaButton" mnemonicParsing="false" onAction="#editOnAction" prefHeight="60.0" prefWidth="206.0" text="Modifica conferenza" />
+            <Button fx:id="deleteConferenzaButton" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="60.0" prefWidth="206.0" text="Elimina conferenza">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
          </children>
       </VBox>
-      <ListView fx:id="conferenzeView" layoutX="14.0" layoutY="99.0" onMouseClicked="#enableButtons" prefHeight="598.0" prefWidth="689.0" />
+      <ListView fx:id="conferenzeView" layoutX="14.0" layoutY="99.0" prefHeight="598.0" prefWidth="689.0" />
    </children>
 </AnchorPane>

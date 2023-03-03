@@ -13,7 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -73,11 +72,6 @@ public class ManageConferenceController implements Initializable {
             e.printStackTrace();
         }
     }
-    @FXML
-    void enableButtons(MouseEvent event) {
-        modificaButton.setDisable(false);
-        deleteConferenzaButton.setDisable(false);
-    }
     public void deleteOnAction(ActionEvent event){
         Conferenza c = conferenzeView.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -94,21 +88,20 @@ public class ManageConferenceController implements Initializable {
         }
     }
 
-    private static void showInformationAlert() {
+    private void showInformationAlert() {
         Alert noErrorOnDelete = new Alert(Alert.AlertType.INFORMATION);
         noErrorOnDelete.setTitle("Eliminazione conferenza");
         noErrorOnDelete.setContentText("Eliminazione effettuata correttamente");
         noErrorOnDelete.showAndWait();
     }
 
-    private static void showErrorAlert(SQLException e) {
+    public void showErrorAlert(SQLException e) {
         Alert errorOnDelete = new Alert(Alert.AlertType.ERROR);
         errorOnDelete.setTitle("Eliminazione conferenza");
         errorOnDelete.setContentText(e.getMessage());
         errorOnDelete.showAndWait();
     }
-
-    private void eliminaConferenza(Conferenza c) throws SQLException {
+    public void eliminaConferenza(Conferenza c) throws SQLException {
         conferenze.removeConferenza(c);
     }
 }

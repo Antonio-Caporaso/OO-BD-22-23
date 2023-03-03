@@ -22,31 +22,26 @@ public class EditSessioneController implements Initializable {
     private SubScene subScene;
     @FXML
     private Button annullaButton;
-
     @FXML
     private Button confermaButton;
-
+    @FXML
+    private Label oraFineLabel;
+    @FXML
+    private Label oraInizioLabel;
     @FXML
     private Label dataFineLabel;
-
     @FXML
     private Label dataInizioLabel;
-
     @FXML
     private Button editDetailsButton;
-
     @FXML
     private Button editProgrammaButton;
-
     @FXML
     private Label nomeLabel;
-
     @FXML
     private Label salaLabel;
-
     @FXML
     private Label titleLabel;
-
     @FXML
     void editProgrammaOnAction(ActionEvent event) {
 
@@ -97,6 +92,12 @@ public class EditSessioneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titleLabel.setText(sessione.getTitolo());
+        nomeLabel.setText(sessione.getTitolo());
+        dataInizioLabel.setText(String.valueOf(sessione.getDataInizio()));
+        dataFineLabel.setText(String.valueOf(sessione.getDataFine()));
+        oraInizioLabel.setText(String.valueOf(sessione.getOrarioInizio()));
+        oraFineLabel.setText(String.valueOf(sessione.getOrarioFine()));
+        salaLabel.setText(sessione.getLocazione().getNomeSala());
     }
 
     public void setEditController(EditConferenceController editConferenceController) {

@@ -1,6 +1,5 @@
 package Services;
 
-import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Programma;
@@ -33,18 +32,17 @@ public class Sessioni {
         this.conferenza = conferenza;
     }
 
-    public void loadSessioni() throws SQLException {
-        SessioneDao dao = new SessioneDao();
-        sessioni.clear();
-        sessioni.addAll(dao.retrieveSessioni(conferenza));
+    public void loadSessioni() {
+        sessioni.addAll(conferenza.getSessioni());
     }
-    public void saveSessione(Sessione sessione)throws SQLException{
+    public void addSessione(Sessione sessione) throws SQLException{
         SessioneDao sessioneDao = new SessioneDao();
-        try{
-            sessioneDao.saveSessione(sessione);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+        sessioneDao.saveSessione(sessione);
+        sessioni.add(sessione);
     }
-
+    public void removeSessione(Sessione sessione) throws SQLException {
+        SessioneDao dao = new SessioneDao();
+        dao.removeSessione(sessione);
+        sessioni.remove(sessione);
+    }
 }

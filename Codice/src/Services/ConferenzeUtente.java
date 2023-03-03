@@ -2,6 +2,7 @@ package Services;
 
 import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.EnteDao;
+import Persistence.DAO.SessioneDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
@@ -21,6 +22,7 @@ public class ConferenzeUtente extends Conferenze {
         conferenzeUtente.addAll(dao.getAllConferenzeByUtente(user));
         loadOrganizzatori();
         loadSponsorizzazioni();
+        loadSessioni();
     }
     @Override
     public void loadOrganizzatori() throws SQLException {
@@ -33,6 +35,12 @@ public class ConferenzeUtente extends Conferenze {
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
         for(Conferenza c: conferenzeUtente){
             c.setSponsorizzataDa(dao.retrieveSponsorizzazioni(c));
+        }
+    }
+    public void loadSessioni() throws SQLException {
+        SessioneDao sessionedao = new SessioneDao();
+        for(Conferenza c: conferenzeUtente){
+            c.setSessioni(sessionedao.retrieveSessioni(c));
         }
     }
     public ObservableList<Conferenza> getConferenzeUtente() {
