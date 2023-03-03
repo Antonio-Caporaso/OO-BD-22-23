@@ -2,7 +2,8 @@ package Persistence.Entities.Conferenze;
 
 import Persistence.Entities.partecipanti.Chair;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.Objects;
 
 public class Sessione {
@@ -14,12 +15,19 @@ public class Sessione {
     private Chair coordinatore;
     private Conferenza conferenza;
     private Programma programma;
+    private Time orarioInizio;
+    private Time orarioFine;
+
 
     public Sessione(){}
-    public Sessione(Date dataInizio, Date dataFine, String titolo) {
+    public Sessione(String titolo, Date dataInizio, Date dataFine, Sala sala, Conferenza conferenza, Time orarioInizio, Time orarioFine) {
+        this.titolo = titolo;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
-        this.titolo = titolo;
+        this.locazione=sala;
+        this.conferenza=conferenza;
+        this.orarioInizio=orarioInizio;
+        this.orarioFine=orarioFine;
     }
 
     public int getSessioneID() {
@@ -94,6 +102,21 @@ public class Sessione {
 
     public void setProgramma(Programma programma) {
         this.programma = programma;
+    }
+    public Time getOrarioInizio() {
+        return orarioInizio;
+    }
+
+    public void setOrarioInizio(Time orarioInizio) {
+        this.orarioInizio = orarioInizio;
+    }
+
+    public Time getOrarioFine() {
+        return orarioFine;
+    }
+
+    public void setOrarioFine(Time orarioFine) {
+        this.orarioFine = orarioFine;
     }
 
     @Override
