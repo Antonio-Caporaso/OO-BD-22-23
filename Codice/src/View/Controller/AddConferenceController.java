@@ -78,7 +78,7 @@ public class AddConferenceController implements Initializable,FormChecker{
             Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user);
             conference.addConferenza(c);
             openAddedConferenceDialogWindow();
-            //loadInserisciSessione(c);
+            loadInserisciSessione(c);
         }catch (BlankFieldException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -112,10 +112,9 @@ public class AddConferenceController implements Initializable,FormChecker{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
             InserisciSessioneController controller = new InserisciSessioneController();
             controller.setSubscene(subscene);
-            loader.setController(controller);
-            controller.setSubscene(subscene);
-            Parent root = loader.load();
             controller.setConferenza(conferenza);
+            loader.setController(controller);
+            Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
             e.printStackTrace();
