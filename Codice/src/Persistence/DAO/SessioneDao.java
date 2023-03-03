@@ -18,9 +18,10 @@ public class SessioneDao {
         conn = dbcon.getConnection();
         SalaDao daosala = new SalaDao();
         ProgrammaDao programmaDao = new ProgrammaDao();
-        String query = "SELECT * fron sessione WHERE idconferenza = ?";
+        String query = "SELECT * from sessione WHERE idconferenza = ?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,conferenza.getConferenzaID());
+//        stm.setInt(1,conferenza.getConferenzaID());
+        stm.setInt(1,53);
         LinkedList<Sessione> sessioni = new LinkedList<>();
         ResultSet rs  = stm.executeQuery();
         while(rs.next()){
@@ -35,5 +36,18 @@ public class SessioneDao {
             sessioni.add(s);
         }
         return sessioni;
+    }
+    public void saveSessione(Sessione sessione)throws SQLException{
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        PreparedStatement stm = conn.prepareStatement("INSERT INTO sessione(idsessione, titolo, datainizio, datafine,idsala,idconferenza,ora_inizio,ora_fine) VALUES (default,?,?,?,?,?,?,?)");
+        stm.setString(1, sessione.getTitolo());
+        stm.setDate(2,sessione.getDataInizio());
+        stm.setDate(3, sessione.getDataFine());
+        stm.setInt(4, sessione.getLocazione().getSalaID());
+        stm.setInt(5, sessione.getConferenza().getConferenzaID());
+        stm.setTime(6, sessione.getOrarioInizio());
+        stm.setTime(7,sessione.getOrarioFine());
+        stm.execute();
     }
 }
