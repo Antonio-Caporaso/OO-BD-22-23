@@ -3,10 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -19,29 +19,28 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/defaultScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="75.0" layoutY="-5.0" stroke="#00416a" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
-      <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="417.0" style="-fx-background-color: #00416A;" text="Inserisci Sessione" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+      <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="417.0" style="-fx-background-color: #00416A;" text="Inserisci una Sessione" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <GridPane layoutX="61.0" layoutY="102.0" prefHeight="561.0" prefWidth="788.0" style="-fx-background-color: #bac3d1ù;">
+      <GridPane layoutX="61.0" layoutY="102.0" prefHeight="517.0" prefWidth="808.0" style="-fx-background-color: #bac3d1ù;">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="388.0" minWidth="10.0" prefWidth="279.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="525.0" minWidth="10.0" prefWidth="509.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="110.0" minHeight="8.0" prefHeight="54.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="172.0" minHeight="0.0" prefHeight="22.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="225.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="291.0" minHeight="10.0" prefHeight="78.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="393.0" minHeight="10.0" prefHeight="273.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="115.0" minHeight="8.0" prefHeight="95.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="172.0" minHeight="0.0" prefHeight="75.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="229.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="270.0" minHeight="0.0" prefHeight="72.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="312.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0">
+            <Pane prefHeight="103.0" prefWidth="290.0">
                <children>
-                  <Label layoutX="14.0" layoutY="20.0" text="Titolo" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="47.0" text="Titolo" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -51,7 +50,7 @@
             <TextField fx:id="titoloSessioneTextField" prefHeight="24.0" prefWidth="509.0" promptText="Aggiungi il titolo della sessione" GridPane.columnIndex="1" />
             <Pane prefHeight="42.0" prefWidth="279.0" GridPane.rowIndex="1">
                <children>
-                  <Label layoutX="14.0" layoutY="5.0" text="Inizio" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="23.0" text="Inizio" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -60,7 +59,7 @@
             </Pane>
             <Pane prefHeight="41.0" prefWidth="283.0" GridPane.rowIndex="2">
                <children>
-                  <Label layoutX="14.0" layoutY="15.0" text="Fine" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="38.0" text="Fine" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -69,23 +68,6 @@
             </Pane>
             <DatePicker fx:id="dataInizioDatePicker" promptText="Data di inizio" stylesheets="@../CSS/datePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <DatePicker fx:id="dataFineDatePicker" promptText="Data di fine" stylesheets="@../CSS/datePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Pane prefHeight="271.0" prefWidth="265.0" GridPane.rowIndex="6">
-               <children>
-                  <Label layoutX="14.0" layoutY="14.0" text="Descrizione" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </Pane>
-            <TextArea fx:id="descrizioneTextArea" prefHeight="237.0" prefWidth="509.0" promptText="Aggiungi una descrizione degli argomenti principali che verranno trattati nella sessione" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <GridPane.margin>
-                  <Insets top="20.0" />
-               </GridPane.margin>
-            </TextArea>
             <Pane prefHeight="59.0" prefWidth="279.0" GridPane.rowIndex="4">
                <children>
                   <Label layoutX="14.0" layoutY="16.0" text="Orario Fine" textFill="WHITE">
@@ -97,7 +79,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                <children>
-                  <Label layoutX="14.0" layoutY="31.0" text="Sala" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="29.0" text="Sala" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -117,19 +99,30 @@
                <children>
                   <Spinner fx:id="orarioInizioOreSpinner" layoutY="8.0" stylesheets="@../CSS/spinnerDefault.css" />
                   <Spinner fx:id="orarioInizioMinutiSpinner" layoutX="174.0" layoutY="8.0" stylesheets="@../CSS/spinnerDefault.css" />
+                  <Label layoutX="373.0" layoutY="12.0" prefHeight="21.0" prefWidth="75.0" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <Spinner fx:id="orarioFineOreSpinner" layoutY="8.0" stylesheets="@../CSS/spinnerDefault.css" />
                   <Spinner fx:id="orarioFineMinutiSpinner" layoutX="174.0" layoutY="8.0" stylesheets="@../CSS/spinnerDefault.css" />
+                  <Label layoutX="372.0" layoutY="10.0" prefHeight="21.0" prefWidth="75.0" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
+            <ChoiceBox fx:id="salaChoiceBox" prefHeight="25.0" prefWidth="326.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <ButtonBar layoutX="718.0" layoutY="675.0" prefHeight="24.0" prefWidth="200.0">
          <buttons>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Annulla" textFill="WHITE">
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Back" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -137,7 +130,7 @@
                   <Insets />
                </opaqueInsets>
             </Button>
-            <Button fx:id="creaButton" mnemonicParsing="false" onAction="#creaButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Crea" textFill="WHITE">
+            <Button fx:id="inserisciButton" mnemonicParsing="false" onAction="#inserisciButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Inserisci" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
