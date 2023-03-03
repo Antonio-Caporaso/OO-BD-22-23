@@ -107,7 +107,7 @@ public class ConferenzaDao {
         UtenteDAO userDao = new UtenteDAO();
         SedeDao sedeDao = new SedeDao();
         try{
-            String query = "SELECT * from conferenza where nome = ?";
+            String query = "SELECT * from retrieve_conference_by_sede(?)";
             PreparedStatement stm = conn.prepareStatement(query);
             stm.setString(1, nomeConferenza);
             ResultSet rs = stm.executeQuery();
