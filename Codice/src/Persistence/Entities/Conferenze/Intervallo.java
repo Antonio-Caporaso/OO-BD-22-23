@@ -1,30 +1,42 @@
 package Persistence.Entities.Conferenze;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Intervallo {
-    private Date oraInizio;
-    private Date oraFine;
+    private int id;
+    private String tipologia;
+    private Programma programma;
+    private Timestamp orario;
 
-    public Intervallo(Date oraInizio, Date oraFine) {
-        this.oraInizio = oraInizio;
-        this.oraFine = oraFine;
+    public int getId() {
+        return id;
     }
 
-    public Date getOraInizio() {
-        return oraInizio;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setOraInizio(Date oraInizio) {
-        this.oraInizio = oraInizio;
+    public String getTipologia() {
+        return tipologia;
     }
 
-    public Date getOraFine() {
-        return oraFine;
+    public void setTipologia(String tipologia) {
+        this.tipologia = tipologia;
     }
 
-    public void setOraFine(Date oraFine) {
-        this.oraFine = oraFine;
+    public Programma getProgramma() {
+        return programma;
     }
 
+    public void setProgramma(Programma programma) {
+        this.programma = programma;
+    }
+
+    public Timestamp getOrario() {
+        return orario;
+    }
+
+    public void setOrario(Timestamp orario) {
+        this.orario = orario;
+    }
 }

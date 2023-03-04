@@ -26,8 +26,22 @@ public class EventoSocialeDao {
             EventoSociale e = new EventoSociale();
             e.setId(rs.getInt(1));
             e.setProgramma(dao.retrieveProgrammaByID(rs.getInt(2)));
+            e.setTipologia(rs.getString(3));
+            e.setOrario(rs.getTimestamp(4));
             eventi.add(e);
         }
         return  eventi;
+    }
+
+    public void saveEvento(EventoSociale e) throws SQLException {
+        dbcon=DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query="insert into eventosociale values (?,?,?,?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,e.getId());
+        stm.setInt(2,e.getProgramma().getProgrammaID());
+        stm.setString(3,e.getTipologia());
+        stm.setTimestamp(4,e.getOrario());
+        stm.executeUpdate();
     }
 }
