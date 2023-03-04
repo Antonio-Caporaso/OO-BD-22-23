@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -17,12 +16,6 @@
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <ButtonBar layoutX="674.0" layoutY="672.0" prefHeight="40.0" prefWidth="244.0">
-        <buttons>
-          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaButtonOnAction" prefHeight="24.0" prefWidth="143.0" text="Annulla" />
-            <Button fx:id="confermaButton" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="149.0" text="Conferma" />
-        </buttons>
-      </ButtonBar>
       <Label layoutX="14.0" layoutY="121.0" text="Seleziona sponsor">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -33,11 +26,12 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="sponsorChoice" layoutX="232.0" layoutY="119.0" prefHeight="24.0" prefWidth="435.0" />
+      <ChoiceBox fx:id="sponsorChoice" layoutX="232.0" layoutY="119.0" prefHeight="24.0" prefWidth="475.0" />
       <TextField fx:id="contributoTextField" layoutX="232.0" layoutY="156.0" prefHeight="24.0" prefWidth="118.0" />
-      <Button fx:id="inserisciButton" layoutX="692.0" layoutY="119.0" mnemonicParsing="false" onAction="#inserisciSponsorOnAction" prefHeight="61.0" prefWidth="226.0" text="Inserisci" />
-      <ListView fx:id="SponsorView" layoutX="14.0" layoutY="191.0" prefHeight="481.0" prefWidth="662.0" />
+      <Button fx:id="inserisciButton" layoutX="722.0" layoutY="119.0" mnemonicParsing="false" onAction="#inserisciSponsorOnAction" prefHeight="63.0" prefWidth="196.0" text="Inserisci" />
+      <ListView fx:id="SponsorView" layoutX="14.0" layoutY="191.0" prefHeight="504.0" prefWidth="696.0" />
       <ChoiceBox fx:id="valutaChoice" layoutX="359.0" layoutY="156.0" prefHeight="24.0" prefWidth="45.0" />
-      <Button fx:id="deleteButton" layoutX="692.0" layoutY="191.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="61.0" prefWidth="226.0" text="Rimuovi" />
+      <Button fx:id="deleteButton" layoutX="722.0" layoutY="191.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="24.0" prefWidth="196.0" text="Rimuovi" />
+      <Button fx:id="confermaButton" layoutX="722.0" layoutY="672.0" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="196.0" text="Fine" />
    </children>
 </AnchorPane>

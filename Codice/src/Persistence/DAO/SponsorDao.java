@@ -12,6 +12,22 @@ import java.util.LinkedList;
 public class SponsorDao {
     DBConnection dbConnection;
     Connection connection;
+
+    public int getSponsorID(Sponsor sponsor) throws SQLException {
+        int id = 0;
+        dbConnection = DBConnection.getDBconnection();
+        connection = dbConnection.getConnection();
+        LinkedList<String> nomi = new LinkedList<>();
+        String query = "SELECT idsponsor from sponsor where nome = ?";
+        PreparedStatement stm = connection.prepareStatement(query);
+        stm.setString(1,sponsor.getNome());
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            id = rs.getInt(1);
+        }
+        return id;
+    }
+
     public LinkedList<String> retrieveNomiSponsor() {
         dbConnection = DBConnection.getDBconnection();
         connection = dbConnection.getConnection();

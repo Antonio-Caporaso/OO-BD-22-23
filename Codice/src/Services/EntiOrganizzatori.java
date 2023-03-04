@@ -8,10 +8,10 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 
-public class Organizzatori {
+public class EntiOrganizzatori {
     private ObservableList<Ente> enti;
     private Conferenza conferenza;
-    public Organizzatori(Conferenza conferenza){
+    public EntiOrganizzatori(Conferenza conferenza){
         enti = FXCollections.observableArrayList();
         this.conferenza = conferenza;
         enti.addAll(conferenza.getOrganizzataDa());
@@ -23,7 +23,11 @@ public class Organizzatori {
     public void setEnti(ObservableList<Ente> enti) {
         this.enti = enti;
     }
-
+    public void loadOrganizzatori() throws SQLException {
+        EnteDao dao = new EnteDao();
+        enti.clear();
+        enti.addAll(dao.retrieveEntiOrganizzatori(conferenza));
+    }
     public void addEnte(Ente e) throws SQLException {
         EnteDao dao = new EnteDao();
         dao.saveEnteOrganizzatore(e,conferenza);
@@ -34,4 +38,5 @@ public class Organizzatori {
         dao.removeEnteOrganizzatore(e,conferenza);
         enti.remove(e);
     }
+
 }

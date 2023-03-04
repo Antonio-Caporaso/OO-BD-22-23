@@ -1,12 +1,15 @@
 package View.Controller;
 
 import Exceptions.SessioneNotSelectedException;
+import Persistence.DAO.ConferenzaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Ente;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
+import Services.EntiOrganizzatori;
 import Services.Sessioni;
+import Services.SponsorizzazioniConferenza;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +20,13 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 public class EditConferenceController implements Initializable {
     private Conferenza conferenza;
     private Sessioni sessioni ;
+    private EntiOrganizzatori organizzatori;
+    private SponsorizzazioniConferenza sponsorizzazioniConferenza;
     private SubScene subscene;
     private Utente user;
     @FXML
@@ -69,7 +75,9 @@ public class EditConferenceController implements Initializable {
         subscene.setRoot(root);
     }
     @FXML
-    public void confermaButtonOnAction(ActionEvent event) throws IOException {
+    public void confermaButtonOnAction(ActionEvent event) throws IOException, SQLException {
+        ConferenzaDao dao = new ConferenzaDao();
+        dao.updateDettagliConferenza(conferenza);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ManageConferences.fxml"));
         ManageConferenceController controller = new ManageConferenceController(user);
         loader.setController(controller);
@@ -159,14 +167,27 @@ public class EditConferenceController implements Initializable {
         sedeLabel.setText(conferenza.getSede().toString());
     }
     public void setOrganizzatori() {
-        entiView.setText("");
-        for(Ente e: conferenza.getOrganizzataDa()){
-            entiView.appendText(e.toString()+"\n");
+        organizzatori = new EntiOrganizzatori(conferenza);
+        try{
+            organizzatori.loadOrganizzatori();
+            entiView.setText("");
+            for(Ente e: organizzatori.getEnti()){
+                entiView.appendText(e.toString()+"\n");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
         }
     }
     public void setSponsorizzazioni(){
-        for(Sponsorizzazione s : conferenza.getSponsorizzataDa()){
-            sponsorizzazioniView.appendText(s.toString()+"\n");
+        sponsorizzazioniConferenza = new SponsorizzazioniConferenza(conferenza);
+        try{
+            sponsorizzazioniConferenza.loadSponsorizzazioni();
+            sponsorizzazioniView.setText("");
+            for(Sponsorizzazione s : sponsorizzazioniConferenza.getSponsorizzazioni()){
+                sponsorizzazioniView.appendText(s.toString()+"\n");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
     public void setSubscene(SubScene subscene) {

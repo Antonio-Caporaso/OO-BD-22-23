@@ -54,16 +54,11 @@ public class EditSessioneController implements Initializable {
     }
 
     @FXML
-    void annullaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
+    void confermaButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
         loader.setController(editConferenceController);
         Parent root = loader.load();
         subScene.setRoot(root);
-    }
-
-    @FXML
-    void confermaButtonOnAction(ActionEvent event) {
-
     }
 
     @FXML
@@ -73,6 +68,7 @@ public class EditSessioneController implements Initializable {
         loader.setController(controllerS);
         controllerS.setSessione(sessione);
         controllerS.setSubscene(subScene);
+        controllerS.setController(this);
         Parent root = loader.load();
         subScene.setRoot(root);
     }
@@ -95,6 +91,10 @@ public class EditSessioneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setDetails();
+    }
+
+    public void setDetails() {
         titleLabel.setText(sessione.getTitolo());
         nomeLabel.setText(sessione.getTitolo());
         dataInizioLabel.setText(String.valueOf(sessione.getDataInizio()));

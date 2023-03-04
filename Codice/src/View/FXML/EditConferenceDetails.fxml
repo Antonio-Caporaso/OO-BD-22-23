@@ -108,8 +108,8 @@
       </GridPane>
       <ButtonBar layoutX="603.0" layoutY="666.0" prefHeight="40.0" prefWidth="287.0">
         <buttons>
-          <Button fx:id="okButton" mnemonicParsing="false" onAction="#okOnAction" prefHeight="24.0" prefWidth="206.0" text="Ok" />
             <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" text="Annulla" />
+          <Button fx:id="okButton" mnemonicParsing="false" onAction="#okOnAction" prefHeight="24.0" prefWidth="206.0" text="Salva" />
         </buttons>
       </ButtonBar>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" width="932.0" />

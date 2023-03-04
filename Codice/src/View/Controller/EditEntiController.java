@@ -1,17 +1,15 @@
 package View.Controller;
 
-import Exceptions.EntePresenteException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Ente;
 import Services.Enti;
-import Services.Organizzatori;
+import Services.EntiOrganizzatori;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
@@ -25,7 +23,7 @@ public class EditEntiController implements Initializable {
     private EditConferenceController editController;
     private SubScene subScene;
     private Conferenza conferenza;
-    private Organizzatori organizzatori;
+    private EntiOrganizzatori entiOrganizzatori;
     @FXML
     private Button addButton;
     @FXML
@@ -60,36 +58,18 @@ public class EditEntiController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         enti.loadEnti();
         entiChoice.setItems(enti.getEnti());
-        organizzatori = new Organizzatori(conferenza);
-        entiView.setItems(organizzatori.getEnti());
+        entiOrganizzatori = new EntiOrganizzatori(conferenza);
+        entiView.setItems(entiOrganizzatori.getEnti());
     }
     @FXML
-    void aggiungiOnAction(ActionEvent event) {
+    void aggiungiOnAction(ActionEvent event) throws SQLException {
         Ente e = entiChoice.getSelectionModel().getSelectedItem();
-        try{
-            conferenza.addEnte(e);
-            organizzatori.addEnte(e);
-        }catch (EntePresenteException exception){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(exception.getMessage());
-            alert.showAndWait();
-        }catch (SQLException e2){
-            e2.printStackTrace();
-        }
+        entiOrganizzatori.addEnte(e);
     }
-
-    @FXML
-    void annullaOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-        loader.setController(editController);
-        Parent root = loader.load();
-        subScene.setRoot(root);
-    }
-
     @FXML
     void deleteOnAction(ActionEvent event) throws SQLException {
         Ente e = (Ente) entiView.getSelectionModel().getSelectedItem();
-        organizzatori.removeEnte(e);
+        entiOrganizzatori.removeEnte(e);
     }
 
     @FXML
@@ -108,5 +88,13 @@ public class EditEntiController implements Initializable {
 
     public void setSubScene(SubScene subScene) {
         this.subScene = subScene;
+    }
+
+    public EntiOrganizzatori getEntiOrganizzatori() {
+        return entiOrganizzatori;
+    }
+
+    public void setEntiOrganizzatori(EntiOrganizzatori entiOrganizzatori) {
+        this.entiOrganizzatori = entiOrganizzatori;
     }
 }

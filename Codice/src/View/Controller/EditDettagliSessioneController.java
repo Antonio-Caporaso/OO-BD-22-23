@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
 import Services.Sale;
@@ -13,7 +14,9 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditDettagliSessioneController implements Initializable {
@@ -64,8 +67,26 @@ public class EditDettagliSessioneController implements Initializable {
     }
 
     @FXML
-    void confermaOnAction(ActionEvent event) {
-
+    void confermaOnAction(ActionEvent event) throws SQLException, IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler modificare i dettagli della sessione "+sessione.getSessioneID());
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK) {
+            SessioneDao dao = new SessioneDao();
+            sessione.setTitolo(nomeTF.getText());
+            sessione.setLocazione(saleChoice.getValue());
+            sessione.setDataInizio(Date.valueOf(dataInizioDP.getValue()));
+            sessione.setDataFine(Date.valueOf(dataFineDP.getValue()));
+            // Per orario di inizio
+            // Per orario di fine
+            dao.updateSessione(sessione);
+        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
+        loader.setController(controller);
+        controller.setSessione(sessione);
+        controller.setDetails();
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

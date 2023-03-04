@@ -16,6 +16,8 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditSponsorController implements Initializable {
@@ -46,8 +48,30 @@ public class EditSponsorController implements Initializable {
     private ChoiceBox<String> valutaChoice;
     @FXML
     void deleteOnAction(ActionEvent event) {
-        Sponsorizzazione sp = SponsorView.getSelectionModel().getSelectedItem();
-        sponsorizzazioni.removeSponsorizzazione(sp);
+        try{
+            Sponsorizzazione sp = SponsorView.getSelectionModel().getSelectedItem();
+            if (sp == null)
+                throw new NullPointerException();
+            Optional<ButtonType> result = showDeleteDialog();
+            if(result.get() == ButtonType.OK) {
+                try{
+                    sponsorizzazioni.removeSponsorizzazione(sp);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nessuna sponsorizzazione selezionata");
+            alert.showAndWait();
+        }
+    }
+
+    private Optional<ButtonType> showDeleteDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler eliminare la seguente sponsorizzazione?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
     }
 
     @FXML
@@ -65,16 +89,12 @@ public class EditSponsorController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Inserire un numero");
             alert.showAndWait();
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
-    @FXML
-    void annullaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-        loader.setController(controller);
-        Parent root = loader.load();
-        subscene.setRoot(root);
-    }
-
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));

@@ -10,15 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditConferenceDetailsController implements Initializable {
@@ -59,20 +57,25 @@ public class EditConferenceDetailsController implements Initializable {
 
     @FXML
     void okOnAction(ActionEvent event) throws IOException, SQLException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-        loader.setController(editConferenceController);
-        conferenza.setNome(nomeTF.getText());
-        conferenza.setDescrizione(descrizioneTF.getText());
-        conferenza.setBudget(Float.parseFloat(budgetTextField.getText()));
-        conferenza.setDataInizio(Date.valueOf(dataInizioDP.getValue()));
-        conferenza.setDataFine(Date.valueOf(dataFineDP.getValue()));
-        conferenza.setSede(sedeChoice.getValue());
-        ConferenzaDao dao = new ConferenzaDao();
-        dao.updateDettagliConferenza(conferenza);
-        editConferenceController.setConferenza(conferenza);
-        editConferenceController.setDetails();
-        Parent root = loader.load();
-        subScene.setRoot(root);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler modificare i dettagli della conferenza?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
+            loader.setController(editConferenceController);
+            conferenza.setNome(nomeTF.getText());
+            conferenza.setDescrizione(descrizioneTF.getText());
+            conferenza.setBudget(Float.parseFloat(budgetTextField.getText()));
+            conferenza.setDataInizio(Date.valueOf(dataInizioDP.getValue()));
+            conferenza.setDataFine(Date.valueOf(dataFineDP.getValue()));
+            conferenza.setSede(sedeChoice.getValue());
+            ConferenzaDao dao = new ConferenzaDao();
+            dao.updateDettagliConferenza(conferenza);
+            editConferenceController.setConferenza(conferenza);
+            editConferenceController.setDetails();
+            Parent root = loader.load();
+            subScene.setRoot(root);
+        }
     }
 
     public Conferenza getConferenza() {
