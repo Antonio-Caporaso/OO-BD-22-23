@@ -2,6 +2,7 @@ package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Programma;
+import Persistence.Entities.Conferenze.Sessione;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,5 +26,23 @@ public class ProgrammaDao {
             p.setKeynote(speakerDao.retrieveSpeakerByID(rs.getInt(2)));
         }
         return p;
+    }
+    public Programma retrieveProgrammaBySessione(Sessione sessione) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "SELECT * from programma where idsessione=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,sessione.getSessioneID());
+        Programma programma = new Programma();
+        SpeakerDao dao = new SpeakerDao();
+        OrganizzatoreDao dao1 = new OrganizzatoreDao();
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            programma.setProgrammaID(rs.getInt(1));
+            programma.setSessione(sessione);
+            programma.setKeynote(dao.retrieveSpeakerByID(rs.getInt(3)));
+            programma.setChair(dao1.retrieveOrganizzatoreByID(rs.getInt(4)));
+        }
+        return programma;
     }
 }

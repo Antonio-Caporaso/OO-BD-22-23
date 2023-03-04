@@ -1,13 +1,10 @@
 package Persistence.Entities.Conferenze;
 
-import java.sql.Date;
-import java.sql.Time;
-
 public class EventoSociale {
     private int id;
-    private Date data;
-    private Time orario;
-    private float costo;
+    private Programma programma;
+    private String tipologia;
+
     public int getId() {
         return id;
     }
@@ -15,28 +12,20 @@ public class EventoSociale {
     public void setId(int id) {
         this.id = id;
     }
-    public Date getData() {
-        return data;
+
+    public Programma getProgramma() {
+        return programma;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setProgramma(Programma programma) {
+        this.programma = programma;
     }
 
-    public Time getOrario() {
-        return orario;
+    public String getTipologia() {
+        return tipologia;
     }
 
-    public void setOrario(Time orario) {
-        this.orario = orario;
+    public void setTipologia(String tipologia) {
+        this.tipologia = tipologia;
     }
-
-    public float getCosto() {
-        return costo;
-    }
-
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
-
 }

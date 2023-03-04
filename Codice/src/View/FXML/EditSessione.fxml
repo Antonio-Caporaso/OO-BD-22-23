@@ -146,37 +146,7 @@
           </TitledPane>
             <TitledPane animated="false" text="Programma">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Accordion prefHeight="553.0" prefWidth="683.0">
-                          <panes>
-                            <TitledPane animated="false" prefHeight="158.0" prefWidth="683.0" text="Interventi">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="681.0" />
-                              </content>
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                            </TitledPane>
-                            <TitledPane animated="false" text="Intervalli">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                              </content>
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                            </TitledPane>
-                              <TitledPane animated="false" text="Eventi sociali">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                </content>
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </TitledPane>
-                          </panes>
-                        </Accordion>
-                     </children></AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
                <font>
                   <Font name="System Bold" size="13.0" />
