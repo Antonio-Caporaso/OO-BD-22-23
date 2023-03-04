@@ -22,9 +22,11 @@ public class SponsorizzazioniConferenza {
         this.sponsorizzazioni = sponsorizzazioni;
     }
     public void addSponsorizzazione(Sponsorizzazione s){
+        //Metodo dao per il salvataggio
         sponsorizzazioni.add(s);
     }
     public void removeSponsorizzazione(Sponsorizzazione s){
+        // Metodo dao per la rimozione
         sponsorizzazioni.remove(s);
     }
 }

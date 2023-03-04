@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Persistence.DAO.ConferenzaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Services.Sedi;
@@ -17,6 +18,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EditConferenceDetailsController implements Initializable {
@@ -56,7 +58,7 @@ public class EditConferenceDetailsController implements Initializable {
     }
 
     @FXML
-    void okOnAction(ActionEvent event) throws IOException {
+    void okOnAction(ActionEvent event) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
         loader.setController(editConferenceController);
         conferenza.setNome(nomeTF.getText());
@@ -65,6 +67,8 @@ public class EditConferenceDetailsController implements Initializable {
         conferenza.setDataInizio(Date.valueOf(dataInizioDP.getValue()));
         conferenza.setDataFine(Date.valueOf(dataFineDP.getValue()));
         conferenza.setSede(sedeChoice.getValue());
+        ConferenzaDao dao = new ConferenzaDao();
+        dao.updateDettagliConferenza(conferenza);
         editConferenceController.setConferenza(conferenza);
         editConferenceController.setDetails();
         Parent root = loader.load();

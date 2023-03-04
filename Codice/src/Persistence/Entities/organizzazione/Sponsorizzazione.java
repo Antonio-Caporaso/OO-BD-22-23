@@ -6,6 +6,17 @@ public class Sponsorizzazione {
     private Sponsor sponsor;
     private Conferenza conferenza;
     private double contributo;
+
+    public Sponsorizzazione(Sponsor s, Conferenza conferenza, double contributo) {
+        this.sponsor = s;
+        this.conferenza = conferenza;
+        this.contributo = contributo;
+    }
+
+    public Sponsorizzazione() {
+
+    }
+
     public double getContributo() {
         return contributo;
     }

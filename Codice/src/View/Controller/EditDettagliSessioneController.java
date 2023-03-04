@@ -5,10 +5,13 @@ import Persistence.Entities.Conferenze.Sessione;
 import Services.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -47,10 +50,17 @@ public class EditDettagliSessioneController implements Initializable {
 
     @FXML
     private ChoiceBox<Sala> saleChoice;
+//    @FXML
+//    private JFXTimePicker oraInizioTP;
+//    @FXML
+//    private JFXTimePicker oraFineTP;
 
     @FXML
-    void annullaOnAction(ActionEvent event) {
-
+    void annullaOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessioneController.fxml"));
+        loader.setController(controller);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
 
     @FXML
@@ -59,17 +69,19 @@ public class EditDettagliSessioneController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        sale = new Sale(sessione.getConferenza().getSede());
-        nomeTF.setText(sessione.getTitolo());
-        try{
+        try {
+            sale = new Sale(sessione.getConferenza().getSede());
+            nomeTF.setText(sessione.getTitolo());
             sale.loadSale();
             saleChoice.setItems(sale.getSale());
             saleChoice.setValue(sessione.getLocazione());
-        }catch (SQLException e){
-            e.printStackTrace();
+            dataInizioDP.setValue(sessione.getDataInizio().toLocalDate());
+            dataFineDP.setValue(sessione.getDataFine().toLocalDate());
+//        oraInizioTP.setValue(sessione.getOrarioInizio().toLocalTime());
+//        oraFineTP.setValue(sessione.getOrarioFine().toLocalTime());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        dataInizioDP.setValue(sessione.getDataInizio().toLocalDate());
-        dataFineDP.setValue(sessione.getDataFine().toLocalDate());
     }
 
     public Sessione getSessione() {

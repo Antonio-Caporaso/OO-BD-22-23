@@ -36,9 +36,8 @@
       <ChoiceBox fx:id="sponsorChoice" layoutX="232.0" layoutY="119.0" prefHeight="24.0" prefWidth="435.0" />
       <TextField fx:id="contributoTextField" layoutX="232.0" layoutY="156.0" prefHeight="24.0" prefWidth="118.0" />
       <Button fx:id="inserisciButton" layoutX="692.0" layoutY="119.0" mnemonicParsing="false" onAction="#inserisciSponsorOnAction" prefHeight="61.0" prefWidth="226.0" text="Inserisci" />
-      <ListView fx:id="SponsorView" layoutX="14.0" layoutY="242.0" prefHeight="430.0" prefWidth="662.0" />
+      <ListView fx:id="SponsorView" layoutX="14.0" layoutY="191.0" prefHeight="481.0" prefWidth="662.0" />
       <ChoiceBox fx:id="valutaChoice" layoutX="359.0" layoutY="156.0" prefHeight="24.0" prefWidth="45.0" />
-      <Button fx:id="deleteButton" layoutX="692.0" layoutY="242.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="61.0" prefWidth="226.0" text="Rimuovi" />
-      <Button fx:id="editContributoButton" layoutX="692.0" layoutY="318.0" mnemonicParsing="false" onAction="#editContrinutoOnAction" prefHeight="61.0" prefWidth="226.0" text="Modifica contributo" />
+      <Button fx:id="deleteButton" layoutX="692.0" layoutY="191.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="61.0" prefWidth="226.0" text="Rimuovi" />
    </children>
 </AnchorPane>

@@ -4,7 +4,7 @@ import Exceptions.EntePresenteException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Ente;
 import Services.Enti;
-import Services.EntiConferenza;
+import Services.Organizzatori;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,13 +18,14 @@ import javafx.scene.control.ListView;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EditEntiController implements Initializable {
     private EditConferenceController editController;
     private SubScene subScene;
     private Conferenza conferenza;
-    private EntiConferenza organizzatori;
+    private Organizzatori organizzatori;
     @FXML
     private Button addButton;
     @FXML
@@ -59,7 +60,7 @@ public class EditEntiController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         enti.loadEnti();
         entiChoice.setItems(enti.getEnti());
-        organizzatori = new EntiConferenza(conferenza);
+        organizzatori = new Organizzatori(conferenza);
         entiView.setItems(organizzatori.getEnti());
     }
     @FXML
@@ -72,6 +73,8 @@ public class EditEntiController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText(exception.getMessage());
             alert.showAndWait();
+        }catch (SQLException e2){
+            e2.printStackTrace();
         }
     }
 
@@ -84,7 +87,7 @@ public class EditEntiController implements Initializable {
     }
 
     @FXML
-    void deleteOnAction(ActionEvent event) {
+    void deleteOnAction(ActionEvent event) throws SQLException {
         Ente e = (Ente) entiView.getSelectionModel().getSelectedItem();
         organizzatori.removeEnte(e);
     }

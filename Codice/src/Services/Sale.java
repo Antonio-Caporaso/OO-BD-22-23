@@ -17,6 +17,7 @@ public class Sale {
     }
     public void loadSale() throws SQLException {
         SalaDao dao = new SalaDao();
+        sale.clear();
         sale.addAll(dao.retrieveSaleBySede(sede));
     }
 

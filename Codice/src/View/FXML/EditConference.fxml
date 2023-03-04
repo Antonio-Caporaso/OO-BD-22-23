@@ -51,8 +51,7 @@
       </VBox>
       <ButtonBar layoutX="695.0" layoutY="666.0" prefHeight="40.0" prefWidth="223.0">
         <buttons>
-          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaButtonOnAction" prefHeight="24.0" prefWidth="128.0" text="Annulla" />
-            <Button fx:id="confermaButton" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="132.0" text="Conferma" />
+            <Button fx:id="confermaButton" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="132.0" text="Ok" />
         </buttons>
       </ButtonBar>
       <Accordion layoutX="14.0" layoutY="99.0" prefHeight="599.0" prefWidth="683.0">

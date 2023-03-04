@@ -58,7 +58,13 @@ public class Sala {
         }
         return sale;
     }
-    public Sala retriveSalaByIdSedeAndNomeSala(int sedeID,String nomeSala){
+
+    @Override
+    public String toString() {
+        return nomeSala;
+    }
+
+    public Sala retriveSalaByIdSedeAndNomeSala(int sedeID, String nomeSala){
         salaDao=new SalaDao();
         Sala sala= new Sala();
         try{

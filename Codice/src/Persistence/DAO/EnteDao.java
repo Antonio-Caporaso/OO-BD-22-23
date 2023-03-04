@@ -13,6 +13,24 @@ import java.util.LinkedList;
 public class EnteDao {
     private DBConnection dbConnection;
     private Connection connection;
+    public void saveEnteOrganizzatore(Ente ente, Conferenza conferenza) throws SQLException {
+        dbConnection = DBConnection.getDBconnection();
+        connection = dbConnection.getConnection();
+        String query = "insert into organizza values (?,?)";
+        PreparedStatement stm = connection.prepareStatement(query);
+        stm.setInt(1,conferenza.getConferenzaID());
+        stm.setInt(2,ente.getEnteID());
+        stm.executeUpdate();
+    }
+    public void removeEnteOrganizzatore(Ente ente, Conferenza conferenza) throws SQLException {
+        dbConnection = DBConnection.getDBconnection();
+        connection = dbConnection.getConnection();
+        String query = "delete from organizza where idconferenza=? and idente=?";
+        PreparedStatement stm = connection.prepareStatement(query);
+        stm.setInt(1,conferenza.getConferenzaID());
+        stm.setInt(2,ente.getEnteID());
+        stm.executeUpdate();
+    }
     public LinkedList<String> retrieveAllNomiEnti() {
         dbConnection = DBConnection.getDBconnection();
         connection = dbConnection.getConnection();

@@ -1,7 +1,6 @@
 package View.Controller;
 
 import Exceptions.SessioneNotSelectedException;
-import Persistence.DAO.ConferenzaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
@@ -15,9 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 public class EditConferenceController implements Initializable {
     private Conferenza conferenza;
@@ -59,15 +58,6 @@ public class EditConferenceController implements Initializable {
     @FXML
     private TextArea sponsorizzazioniView;
     @FXML
-    public void annullaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ManageConferences.fxml"));
-        ManageConferenceController controller = new ManageConferenceController(user);
-        loader.setController(controller);
-        controller.setSubscene(subscene);
-        Parent root = loader.load();
-        subscene.setRoot(root);
-    }
-    @FXML
     public void addSessioneOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSessione.fxml"));
         AddSessioneController controller = new AddSessioneController();
@@ -79,12 +69,13 @@ public class EditConferenceController implements Initializable {
         subscene.setRoot(root);
     }
     @FXML
-    public void confermaButtonOnAction(ActionEvent event) throws SQLException {
-        ConferenzaDao dao = new ConferenzaDao();
-        dao.updateDettagliConferenza(conferenza);
-        // Salvare enti
-        // Salvare sessioni
-        // Salvare sponsorizzazioni
+    public void confermaButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ManageConferences.fxml"));
+        ManageConferenceController controller = new ManageConferenceController(user);
+        loader.setController(controller);
+        controller.setSubscene(subscene);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
     @FXML
     public void editDetailsOnAction(ActionEvent event) throws IOException {

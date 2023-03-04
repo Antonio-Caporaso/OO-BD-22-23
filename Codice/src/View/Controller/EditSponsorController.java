@@ -2,6 +2,7 @@ package View.Controller;
 
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Sponsor;
+import Persistence.Entities.organizzazione.Sponsorizzazione;
 import Services.SponsorizzazioniConferenza;
 import Services.Sponsors;
 import javafx.collections.FXCollections;
@@ -13,7 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,7 +25,7 @@ public class EditSponsorController implements Initializable {
     private EditConferenceController controller;
     private SubScene subscene;
     @FXML
-    private ListView SponsorView;
+    private ListView<Sponsorizzazione> SponsorView;
     @FXML
     private Button annullaButton;
     @FXML
@@ -40,24 +40,32 @@ public class EditSponsorController implements Initializable {
     private Button inserisciButton;
     @FXML
     private ChoiceBox<Sponsor> sponsorChoice;
-
     @FXML
     private Label titleLabel;
-
     @FXML
     private ChoiceBox<String> valutaChoice;
     @FXML
     void deleteOnAction(ActionEvent event) {
-
-    }
-    @FXML
-    void editContrinutoOnAction(ActionEvent event) {
-
+        Sponsorizzazione sp = SponsorView.getSelectionModel().getSelectedItem();
+        sponsorizzazioni.removeSponsorizzazione(sp);
     }
 
     @FXML
     void inserisciSponsorOnAction(ActionEvent event) {
-
+        Sponsor s = sponsorChoice.getSelectionModel().getSelectedItem();
+        try{
+            float contributo = Float.parseFloat(contributoTextField.getText());
+            Sponsorizzazione sp = new Sponsorizzazione(s,conferenza,contributo);
+            sponsorizzazioni.addSponsorizzazione(sp);
+        }catch (NumberFormatException e){
+            Alert alert = new Alert( Alert.AlertType.ERROR);
+            alert.setContentText("Inserire un numero");
+            alert.showAndWait();
+        }catch (NullPointerException e2){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Inserire un numero");
+            alert.showAndWait();
+        }
     }
     @FXML
     void annullaButtonOnAction(ActionEvent event) throws IOException {

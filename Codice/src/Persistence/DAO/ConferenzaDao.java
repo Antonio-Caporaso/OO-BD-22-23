@@ -23,8 +23,8 @@ public class ConferenzaDao {
         stm.setInt(1,user.getIdUtente());
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
-            int id = rs.getInt(1);
-            String nome = rs.getString(2);
+            int id = rs.getInt("idconferenza");
+            String nome = rs.getString("nome");
             Date datainizio = rs.getDate(3);
             Date datafine = rs.getDate(4);
             String descrizione = rs.getString(5);
@@ -47,7 +47,7 @@ public class ConferenzaDao {
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
             Conferenza c = new Conferenza();
-            c.setConferenzaID(rs.getInt(1));
+            c.setConferenzaID(rs.getInt("idconferenza"));
             c.setNome(rs.getString("nome"));
             c.setDescrizione(rs.getString("descrizione"));
             c.setBudget(rs.getFloat("budget"));
@@ -87,14 +87,15 @@ public class ConferenzaDao {
     public void updateDettagliConferenza(Conferenza conferenza) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String update = "UPDATE conferenza SET nome=?,descrizione=?,datainizio=?,datafine=?,budget=? WHERE idconferenza=?";
+        String update = "UPDATE conferenza SET nome=?,descrizione=?,datainizio=?,datafine=?,budget=?,idsede=? WHERE idconferenza=?";
         PreparedStatement stm = conn.prepareStatement(update);
         stm.setString(1,conferenza.getNome());
         stm.setString(2,conferenza.getDescrizione());
         stm.setDate(3,conferenza.getDataInizio());
         stm.setDate(4,conferenza.getDataFine());
         stm.setFloat(5,conferenza.getBudget());
-        stm.setInt(6,conferenza.getConferenzaID());
+        stm.setInt(7,conferenza.getConferenzaID());
+        stm.setInt(6,conferenza.getSede().getSedeID());
         stm.executeUpdate();
     }
     public Conferenza retrieveConferenzaByNome(String nomeConferenza){

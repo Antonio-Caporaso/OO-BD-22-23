@@ -73,9 +73,14 @@ public class SalaDao {
         stm.setInt(1,sede.getSedeID());
         LinkedList<Sala> sale = new LinkedList<>();
         ResultSet rs = stm.executeQuery();
+        SedeDao dao = new SedeDao();
         while(rs.next()){
             Sala s = new Sala();
-
+            s.setSalaID(rs.getInt(1));
+            s.setSede(dao.retrieveSedeByID(rs.getInt(2)));
+            s.setCapacity(rs.getInt(3));
+            s.setNomeSala(rs.getString(4));
+            sale.add(s);
         }
         return sale;
     }
