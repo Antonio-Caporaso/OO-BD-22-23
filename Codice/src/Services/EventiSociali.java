@@ -28,7 +28,7 @@ public class EventiSociali {
     public void setEventi(ObservableList<EventoSociale> eventi) {
         this.eventi = eventi;
     }
-    public void addEvento(EventoSociale e){
+    public void addEvento(EventoSociale e) throws SQLException {
         EventoSocialeDao dao = new EventoSocialeDao();
         dao.saveEvento(e);
         eventi.add(e);

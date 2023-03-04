@@ -20,12 +20,12 @@ public class IntervalliSessione {
         intervalli.clear();
         intervalli.addAll(dao.retrieveIntervalliByProgramma(programma));
     }
-    public void addIntervallo(Intervallo intervallo){
+    public void addIntervallo(Intervallo intervallo) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
         dao.saveIntervallo(intervallo);
         intervalli.add(intervallo);
     }
-    public void removeIntervallo(Intervallo intervallo){
+    public void removeIntervallo(Intervallo intervallo) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
         dao.removeIntervallo(intervallo);
         intervalli.remove(intervallo);
