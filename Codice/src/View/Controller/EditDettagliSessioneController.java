@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import jfxtras.scene.control.CalendarTimePicker;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +36,11 @@ public class EditDettagliSessioneController implements Initializable {
 
     @FXML
     private DatePicker dataInizioDP;
+    @FXML
+    private CalendarTimePicker oraFIne;
+
+    @FXML
+    private CalendarTimePicker oraInizio;
 
     @FXML
     private Spinner<String> minutiOraInizioSpinner;
