@@ -14,7 +14,6 @@ import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -23,7 +22,7 @@ public class EditDettagliSessioneController implements Initializable {
     private Sessione sessione;
     private SubScene subscene;
     private Sale sale;
-    private EditSessioneController controller;
+    private EditSessioneController editSessioneController;
     @FXML
     private Button annullaButton;
     @FXML
@@ -39,8 +38,8 @@ public class EditDettagliSessioneController implements Initializable {
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessioneController.fxml"));
-        loader.setController(controller);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
+        loader.setController(editSessioneController);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -57,9 +56,9 @@ public class EditDettagliSessioneController implements Initializable {
             dao.updateSessione(sessione);
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
-        loader.setController(controller);
-        controller.setSessione(sessione);
-        controller.setDetails();
+        loader.setController(editSessioneController);
+        editSessioneController.setSessione(sessione);
+        editSessioneController.setDetails();
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -94,11 +93,11 @@ public class EditDettagliSessioneController implements Initializable {
         this.subscene = subscene;
     }
 
-    public EditSessioneController getController() {
-        return controller;
+    public EditSessioneController getEditSessioneController() {
+        return editSessioneController;
     }
 
-    public void setController(EditSessioneController controller) {
-        this.controller = controller;
+    public void setEditSessioneController(EditSessioneController editSessioneController) {
+        this.editSessioneController = editSessioneController;
     }
 }
