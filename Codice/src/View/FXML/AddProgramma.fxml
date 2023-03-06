@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Label layoutX="14.0" layoutY="27.0" text="Inserisci il programma della sessione" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font></Label>
+      <VBox layoutX="714.0" layoutY="99.0" prefHeight="208.0" prefWidth="204.0">
+         <children>
+            <Button fx:id="editInterventiButton" mnemonicParsing="false" onAction="#editInterventiOnAction" prefHeight="50.0" prefWidth="204.0" text="Modifica interventi" />
+            <Button fx:id="editIntervalliButton" mnemonicParsing="false" onAction="#editIntervalliOnAction" prefHeight="50.0" prefWidth="204.0" text="Modifica intervalli">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="editEventiButton" mnemonicParsing="false" onAction="#editEventiOnAction" prefHeight="50.0" prefWidth="204.0" text="Modifica eventi sociali">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <Button fx:id="fineButton" layoutX="719.0" layoutY="674.0" mnemonicParsing="false" onAction="#fineButtonOnAction" prefHeight="24.0" prefWidth="194.0" text="Fine" />
+      <Accordion layoutX="14.0" layoutY="99.0" prefHeight="597.0" prefWidth="683.0">
+         <panes>
+            <TitledPane animated="false" prefHeight="435.0" prefWidth="592.0" text="Eventi">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="eventiTextArea" prefHeight="525.0" prefWidth="683.0" wrapText="true" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" text="Interventi">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="interventiTextArea" prefHeight="525.0" prefWidth="683.0" wrapText="true" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" prefHeight="466.0" prefWidth="683.0" text="Intervalli">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="intervalliTextArea" prefHeight="523.0" prefWidth="683.0" wrapText="true" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+         </panes>
+      </Accordion>
+      <Label fx:id="keynoteLabel" layoutX="729.0" layoutY="481.0" text="Label" />
+      <Label fx:id="keynote" layoutX="729.0" layoutY="452.0" text="Keynote speaker:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="coordinatoreLabel" layoutX="729.0" layoutY="410.0" text="Label" />
+      <Label layoutX="729.0" layoutY="383.0" text="Coordina:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="annullaButton" layoutX="719.0" layoutY="641.0" mnemonicParsing="false" onAction="#annullaOnAction" prefHeight="24.0" prefWidth="194.0" text="Annulla" />
+   </children>
+</AnchorPane>
