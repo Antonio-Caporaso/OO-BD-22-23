@@ -11,6 +11,7 @@ import java.sql.SQLException;
 public class IntervalliSessione {
     private ObservableList<Intervallo> intervalli;
     private Programma programma;
+
     public IntervalliSessione(Programma programma){
         this.programma = programma;
         intervalli = FXCollections.observableArrayList();
@@ -20,6 +21,15 @@ public class IntervalliSessione {
         intervalli.clear();
         intervalli.addAll(dao.retrieveIntervalliByProgramma(programma));
     }
+
+    public ObservableList<Intervallo> getIntervalli() {
+        return intervalli;
+    }
+
+    public void setIntervalli(ObservableList<Intervallo> intervalli) {
+        this.intervalli = intervalli;
+    }
+
     public void addIntervallo(Intervallo intervallo) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
         dao.saveIntervallo(intervallo);

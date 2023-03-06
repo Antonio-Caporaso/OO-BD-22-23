@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -21,7 +22,7 @@
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <VBox layoutX="714.0" layoutY="99.0" prefHeight="553.0" prefWidth="204.0">
+      <VBox layoutX="714.0" layoutY="99.0" prefHeight="121.0" prefWidth="204.0">
          <children>
             <Button fx:id="editDetailsButton" mnemonicParsing="false" onAction="#editDetailsOnAction" prefHeight="50.0" prefWidth="204.0" text="Modifica dettagli" />
             <Button fx:id="editProgrammaButton" mnemonicParsing="false" onAction="#editProgrammaOnAction" prefHeight="50.0" prefWidth="204.0" text="Modifica programma">
@@ -31,9 +32,9 @@
             </Button>
          </children>
       </VBox>
-      <Accordion layoutX="14.0" layoutY="99.0" prefHeight="599.0" prefWidth="683.0">
+      <Accordion layoutX="14.0" layoutY="99.0" prefHeight="598.0" prefWidth="683.0">
         <panes>
-          <TitledPane animated="false" text="Dettagli">
+          <TitledPane animated="false" prefHeight="461.0" prefWidth="683.0" text="Dettagli">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="502.0" prefWidth="674.0">
                      <children>
@@ -144,9 +145,54 @@
                   <Font name="System Bold" size="13.0" />
                </font>
           </TitledPane>
-            <TitledPane animated="false" text="Programma">
+            <TitledPane fx:id="ProgrammaTitledPane" animated="false" prefHeight="461.0" prefWidth="683.0" text="Programma">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" prefHeight="36.0" prefWidth="92.0" text="Coordina:">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="chairLabel" layoutX="106.0" layoutY="24.0" text="Label" />
+                        <Label fx:id="keynoteLabel" layoutX="345.0" layoutY="23.0" text="Keynote Speaker:">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="keynote" layoutX="500.0" layoutY="24.0" text="Label" />
+                        <Accordion layoutX="-1.0" layoutY="66.0" prefHeight="483.0" prefWidth="683.0">
+                          <panes>
+                            <TitledPane animated="false" text="Interventi">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TextArea fx:id="interventiTextArea" prefHeight="435.0" prefWidth="683.0" />
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </TitledPane>
+                            <TitledPane animated="false" prefHeight="435.0" prefWidth="592.0" text="Eventi">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TextArea fx:id="eventiTextArea" prefHeight="437.0" prefWidth="683.0" />
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </TitledPane>
+                              <TitledPane animated="false" text="Intervalli">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <TextArea fx:id="intervalliTextArea" prefHeight="411.0" prefWidth="683.0" />
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </TitledPane>
+                          </panes>
+                        </Accordion>
+                     </children></AnchorPane>
               </content>
                <font>
                   <Font name="System Bold" size="13.0" />

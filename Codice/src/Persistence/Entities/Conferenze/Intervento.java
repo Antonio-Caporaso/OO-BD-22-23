@@ -2,19 +2,32 @@ package Persistence.Entities.Conferenze;
 
 import Persistence.Entities.partecipanti.Speaker;
 
-import java.time.LocalTime;
+import java.sql.Time;
 import java.util.Objects;
 
 public class Intervento {
     private int interventoID;
-    private LocalTime orario;
+    private String titolo;
+    private Time orario;
     private String estratto;
     private Speaker speaker;
 
-    public Intervento(LocalTime orario, String estratto, Speaker speaker) {
+    public Intervento(Time orario, String estratto, Speaker speaker) {
         this.orario = orario;
         this.estratto = estratto;
         this.speaker = speaker;
+    }
+
+    public Intervento() {
+
+    }
+
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
     }
 
     public void setSpeaker(Speaker speaker){
@@ -25,11 +38,11 @@ public class Intervento {
         return speaker;
     }
 
-    public LocalTime getOrario() {
+    public Time getOrario() {
         return orario;
     }
 
-    public void setOrario(LocalTime orario) {
+    public void setOrario(Time orario) {
         this.orario = orario;
     }
 
@@ -65,5 +78,12 @@ public class Intervento {
         int result = orario != null ? orario.hashCode() : 0;
         result = 31 * result + (speaker != null ? speaker.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return  titolo +", orario=" + orario +
+                ", estratto='" + estratto +", speaker=" + speaker +
+                '.';
     }
 }

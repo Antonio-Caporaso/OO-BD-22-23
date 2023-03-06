@@ -78,7 +78,7 @@ public class EditConferenceController implements Initializable {
     public void confermaButtonOnAction(ActionEvent event) throws IOException, SQLException {
         ConferenzaDao dao = new ConferenzaDao();
         dao.updateDettagliConferenza(conferenza);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ManageConferences.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/GestioneConferenze.fxml"));
         ManageConferenceController controller = new ManageConferenceController(user);
         loader.setController(controller);
         controller.setSubscene(subscene);

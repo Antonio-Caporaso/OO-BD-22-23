@@ -14,7 +14,7 @@ public class SpeakerDao {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         Speaker sp = new Speaker();
-        String query = "SELECT * FROM Speaker where idspeker = ?";
+        String query = "SELECT * FROM Speaker where idspeaker = ?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,id);
         ResultSet rs = stm.executeQuery();

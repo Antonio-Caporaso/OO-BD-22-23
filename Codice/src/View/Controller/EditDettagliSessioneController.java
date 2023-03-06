@@ -1,4 +1,5 @@
 package View.Controller;
+
 import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
@@ -53,12 +54,13 @@ public class EditDettagliSessioneController implements Initializable {
             SessioneDao dao = new SessioneDao();
             sessione.setTitolo(nomeTF.getText());
             sessione.setLocazione(saleChoice.getValue());
-            dao.updateSessione(sessione);
+            /* Prelevare dati e salvare
+            dao.updateSessione(sessione); */
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
         loader.setController(editSessioneController);
         editSessioneController.setSessione(sessione);
-        editSessioneController.setDetails();
+        editSessioneController.setDettagliSessione();
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -70,6 +72,7 @@ public class EditDettagliSessioneController implements Initializable {
             sale.loadSale();
             saleChoice.setItems(sale.getSale());
             saleChoice.setValue(sessione.getLocazione());
+            // Settaggio dei DateTimePicker, meglio se si usa un DateTime
             inizioDateTimePicker.setDateTimeValue(sessione.getDataInizio().toLocalDate().atTime(sessione.getOrarioInizio().toLocalTime()));
             fineDateTimePicker.setDateTimeValue(sessione.getDataFine().toLocalDate().atTime(sessione.getOrarioFine().toLocalTime()));
         } catch (SQLException e) {

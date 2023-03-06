@@ -1,6 +1,10 @@
 package View.Controller;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sessione;
+
+import Persistence.DAO.ProgrammaDao;
+import Persistence.Entities.Conferenze.*;
+import Services.EventiSocialiSessione;
+import Services.IntervalliSessione;
+import Services.InterventiSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,15 +13,22 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EditSessioneController implements Initializable {
     private Sessione sessione;
     private Conferenza conferenza;
     private EditConferenceController editConferenceController;
+    private IntervalliSessione intervalli;
+    private InterventiSessione interventi;
+    private EventiSocialiSessione eventi;
     private SubScene subScene;
+    private Programma programma;
     @FXML
     private Button annullaButton;
     @FXML
@@ -35,14 +46,33 @@ public class EditSessioneController implements Initializable {
     @FXML
     private Button editProgrammaButton;
     @FXML
+    private TextArea eventiTextArea;
+    @FXML
+    private TextArea intervalliTextArea;
+    @FXML
+    private TextArea interventiTextArea;
+    @FXML
     private Label nomeLabel;
+    @FXML
+    private Label keynote;
+    @FXML
+    private Label chairLabel;
+    @FXML
+    private Label keynoteLabel;
     @FXML
     private Label salaLabel;
     @FXML
     private Label titleLabel;
     @FXML
-    void editProgrammaOnAction(ActionEvent event) {
-
+    void editProgrammaOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
+        EditProgrammaController controller = new EditProgrammaController();
+        loader.setController(controller);
+        controller.setSubscene(subScene);
+        controller.setSessione(sessione);
+        controller.setProgramma(programma);
+        Parent root = loader.load();
+        subScene.setRoot(root);
     }
 
     public SubScene getSubScene() {
@@ -91,10 +121,12 @@ public class EditSessioneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setDetails();
+        keynote.setText("");
+        setDettagliSessione();
+        inizializzaDettagliProgramma();
     }
 
-    public void setDetails() {
+    public void setDettagliSessione() {
         titleLabel.setText(sessione.getTitolo());
         nomeLabel.setText(sessione.getTitolo());
         dataInizioLabel.setText(String.valueOf(sessione.getDataInizio()));
@@ -102,6 +134,36 @@ public class EditSessioneController implements Initializable {
         oraInizioLabel.setText(String.valueOf(sessione.getOrarioInizio()));
         oraFineLabel.setText(String.valueOf(sessione.getOrarioFine()));
         salaLabel.setText(sessione.getLocazione().getNomeSala());
+    }
+    private void inizializzaDettagliProgramma(){
+        ProgrammaDao dao = new ProgrammaDao();
+        try{
+            programma = dao.retrieveProgrammaBySessione(sessione);
+            intervalli = new IntervalliSessione(programma);
+            interventi = new InterventiSessione(programma);
+            eventi = new EventiSocialiSessione(programma);
+            intervalli.loadIntervalli();
+            for(Intervallo i: intervalli.getIntervalli()){
+                intervalliTextArea.appendText(i.toString()+"\n");
+            }
+            interventi.loadInterventi();
+            for(Intervento i: interventi.getInterventi()){
+                interventiTextArea.appendText(i.toString()+"\n");
+            }
+            eventi.loadEventiSociali();
+            for(EventoSociale e: eventi.getEventi()){
+                eventiTextArea.appendText(e.toString()+"\n");
+            }
+            chairLabel.setText(programma.getChair().getNome()+" "+programma.getChair().getCognome());
+            if(programma.getKeynote().equals(null)){
+                keynoteLabel.setText("");
+                keynote.setText("");
+            }else {
+                keynote.setText(programma.getKeynote().getNome()+" "+programma.getKeynote().getCognome());
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public void setEditController(EditConferenceController editConferenceController) {

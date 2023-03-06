@@ -26,4 +26,8 @@ public class Speaker extends Partecipante{
     public void setIdSpeaker(int idSpeaker) {
         this.idSpeaker = idSpeaker;
     }
+@Override
+    public String toString(){
+        return nome + cognome;
+}
 }

@@ -1,5 +1,7 @@
 package Persistence.Entities.Conferenze;
-import Persistence.Entities.partecipanti.Chair;
+
+import Persistence.Entities.organizzazione.Organizzatore;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Objects;
@@ -10,7 +12,7 @@ public class Sessione {
     private Date dataFine;
     private String titolo;
     private Sala locazione;
-    private Chair coordinatore;
+    private Organizzatore coordinatore;
     private Conferenza conferenza;
     private Programma programma;
     private Time orarioInizio;
@@ -68,14 +70,14 @@ public class Sessione {
         this.locazione = locazione;
     }
 
-    public Chair getCoordinatore() {
+    public Organizzatore getCoordinatore() {
         return coordinatore;
     }
 
-    public void setCoordinatore(Chair coordinatore) {
+    public void setCoordinatore(Organizzatore coordinatore) {
         this.coordinatore = coordinatore;
-        coordinatore.addSessioneGestita(this);
     }
+
     public Conferenza getConferenza() {
         return conferenza;
     }

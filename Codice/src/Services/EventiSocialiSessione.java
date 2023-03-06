@@ -8,10 +8,10 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 
-public class EventiSociali {
+public class EventiSocialiSessione {
     private ObservableList<EventoSociale> eventi;
     private Programma programma;
-    public EventiSociali(Programma programma){
+    public EventiSocialiSessione(Programma programma){
         eventi = FXCollections.observableArrayList();
         this.programma = programma;
     }

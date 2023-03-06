@@ -5,8 +5,8 @@ import java.util.Objects;
 public class Partecipante {
     private int idPartecipante;
     private String titolo;
-    private String cognome;
-    private String nome;
+    protected String cognome;
+    protected String nome;
     private String istituzione;
     private String email;
 

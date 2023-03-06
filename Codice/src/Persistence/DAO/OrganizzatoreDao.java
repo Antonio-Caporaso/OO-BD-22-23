@@ -16,6 +16,7 @@ public class OrganizzatoreDao {
         conn = dbcon.getConnection();
         String query = "SELECT * FROM organizzatore WHERE idorganizzatore=?";
         PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,id);
         Organizzatore org = new Organizzatore();
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
