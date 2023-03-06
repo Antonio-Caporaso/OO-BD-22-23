@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,13 +30,13 @@ public class EditDettagliSessioneController implements Initializable {
     @FXML
     private Button confermaButton;
     @FXML
-    private DatePicker dataFineDP;
-    @FXML
-    private DatePicker dataInizioDP;
-    @FXML
     private TextField nomeTF;
     @FXML
     private ChoiceBox<Sala> saleChoice;
+    @FXML
+    private DateTimePicker fineDateTimePicker;
+    @FXML
+    private DateTimePicker inizioDateTimePicker;
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
@@ -54,10 +55,6 @@ public class EditDettagliSessioneController implements Initializable {
             SessioneDao dao = new SessioneDao();
             sessione.setTitolo(nomeTF.getText());
             sessione.setLocazione(saleChoice.getValue());
-            sessione.setDataInizio(Date.valueOf(dataInizioDP.getValue()));
-            sessione.setDataFine(Date.valueOf(dataFineDP.getValue()));
-            // Per orario di inizio
-            // Per orario di fine
             dao.updateSessione(sessione);
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
@@ -75,8 +72,8 @@ public class EditDettagliSessioneController implements Initializable {
             sale.loadSale();
             saleChoice.setItems(sale.getSale());
             saleChoice.setValue(sessione.getLocazione());
-            dataInizioDP.setValue(sessione.getDataInizio().toLocalDate());
-            dataFineDP.setValue(sessione.getDataFine().toLocalDate());
+            inizioDateTimePicker.setDateTimeValue(sessione.getDataInizio().toLocalDate().atTime(sessione.getOrarioInizio().toLocalTime()));
+            fineDateTimePicker.setDateTimeValue(sessione.getDataFine().toLocalDate().atTime(sessione.getOrarioFine().toLocalTime()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
