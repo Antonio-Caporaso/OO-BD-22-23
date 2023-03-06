@@ -71,6 +71,7 @@ public class EditConferenceController implements Initializable {
         controller.setConferenza(conferenza);
         controller.setEditConferenceController(this);
         controller.setSubscene(subscene);
+        controller.setSessioni(sessioni);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
