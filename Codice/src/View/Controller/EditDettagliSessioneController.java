@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
-import jfxtras.scene.control.CalendarTimePicker;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,42 +26,16 @@ public class EditDettagliSessioneController implements Initializable {
     private EditSessioneController controller;
     @FXML
     private Button annullaButton;
-
     @FXML
     private Button confermaButton;
-
     @FXML
     private DatePicker dataFineDP;
-
     @FXML
     private DatePicker dataInizioDP;
     @FXML
-    private CalendarTimePicker oraFIne;
-
-    @FXML
-    private CalendarTimePicker oraInizio;
-
-    @FXML
-    private Spinner<String> minutiOraInizioSpinner;
-
-    @FXML
-    private Spinner<String> minutiOraSpinner;
-
-    @FXML
     private TextField nomeTF;
-
-    @FXML
-    private Spinner<String> oraFineSpinner;
-
-    @FXML
-    private Spinner<String> oraInizioSpinner;
-
     @FXML
     private ChoiceBox<Sala> saleChoice;
-//    @FXML
-//    private JFXTimePicker oraInizioTP;
-//    @FXML
-//    private JFXTimePicker oraFineTP;
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
@@ -104,8 +77,6 @@ public class EditDettagliSessioneController implements Initializable {
             saleChoice.setValue(sessione.getLocazione());
             dataInizioDP.setValue(sessione.getDataInizio().toLocalDate());
             dataFineDP.setValue(sessione.getDataFine().toLocalDate());
-//        oraInizioTP.setValue(sessione.getOrarioInizio().toLocalTime());
-//        oraFineTP.setValue(sessione.getOrarioFine().toLocalTime());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

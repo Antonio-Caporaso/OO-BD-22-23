@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import jfxtras.scene.control.CalendarTimePicker?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -93,8 +92,6 @@
             </Pane>
             <TextField fx:id="nomeTF" prefHeight="24.0" prefWidth="540.0" GridPane.columnIndex="1" />
             <ChoiceBox fx:id="saleChoice" prefHeight="24.0" prefWidth="387.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <CalendarTimePicker fx:id="oraInizio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <CalendarTimePicker fx:id="oraFIne" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <DatePicker fx:id="dataInizioDP" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <DatePicker fx:id="dataFineDP" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
