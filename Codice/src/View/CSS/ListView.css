@@ -1,0 +1,7 @@
+.list-view{
+    -fx-background-color: #33749D;
+}
+.list-view.list-cell:filled:hover{
+    -fx-background-color: #00416a;
+    -fx-text-fill: white;
+}
