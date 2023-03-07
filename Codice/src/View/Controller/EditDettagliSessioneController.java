@@ -15,7 +15,9 @@ import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -54,8 +56,11 @@ public class EditDettagliSessioneController implements Initializable {
             SessioneDao dao = new SessioneDao();
             sessione.setTitolo(nomeTF.getText());
             sessione.setLocazione(saleChoice.getValue());
-            /* Prelevare dati e salvare
-            dao.updateSessione(sessione); */
+            sessione.setDataInizio(Date.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalDate()));
+            sessione.setDataFine(Date.valueOf(fineDateTimePicker.getDateTimeValue().toLocalDate()));
+            sessione.setOrarioFine(Time.valueOf(fineDateTimePicker.getDateTimeValue().toLocalTime()));
+            sessione.setOrarioInizio(Time.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalTime()));
+            dao.updateSessione(sessione);
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
         loader.setController(editSessioneController);

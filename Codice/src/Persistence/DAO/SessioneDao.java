@@ -8,8 +8,6 @@ import java.sql.*;
 import java.util.LinkedList;
 
 public class SessioneDao {
-
-
     private DBConnection dbcon;
     private Connection conn;
 
@@ -24,13 +22,15 @@ public class SessioneDao {
     public void updateSessione(Sessione sessione) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "UPDATE sessione set titolo = ?, datainizio=?, datafine=?,idsala=? where idsessione=?";
+        String query = "UPDATE sessione set titolo = ?, datainizio=?, datafine=?,idsala=?,ora_inizio=?,ora_fine=? where idsessione=?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setString(1,sessione.getTitolo());
         stm.setDate(2,sessione.getDataInizio());
         stm.setDate(3,sessione.getDataFine());
         stm.setInt(4,sessione.getLocazione().getSalaID());
-        stm.setInt(5,sessione.getSessioneID());
+        stm.setTime(5,sessione.getOrarioInizio());
+        stm.setTime(6,sessione.getOrarioFine());
+        stm.setInt(7,sessione.getSessioneID());
         stm.executeUpdate();
     }
     public LinkedList<Sessione> retrieveSessioni(Conferenza conferenza) throws SQLException {

@@ -1,7 +1,5 @@
 package Persistence.Entities.Conferenze;
-
 import Persistence.Entities.organizzazione.Organizzatore;
-
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Objects;

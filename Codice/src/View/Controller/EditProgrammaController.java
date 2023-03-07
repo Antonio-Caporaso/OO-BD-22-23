@@ -90,7 +90,7 @@ public class EditProgrammaController implements Initializable {
                 eventiTextArea.appendText(e.toString()+"\n");
             }
             coordinatoreLabel.setText(programma.getChair().getNome()+" "+programma.getChair().getCognome());
-            if(programma.getKeynote() == null){
+            if(programma.getKeynote().getNome() == null){
                 keynoteLabel.setVisible(false);
                 keynote.setVisible(false);
             }else {
