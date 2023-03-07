@@ -48,6 +48,31 @@ public class EditProgrammaController implements Initializable {
     private Label keynote;
     @FXML
     private Label keynoteLabel;
+
+    public InterventiSessione getInterventi() {
+        return interventi;
+    }
+
+    public void setInterventi(InterventiSessione interventi) {
+        this.interventi = interventi;
+    }
+
+    public IntervalliSessione getIntervalli() {
+        return intervalli;
+    }
+
+    public void setIntervalli(IntervalliSessione intervalli) {
+        this.intervalli = intervalli;
+    }
+
+    public EventiSocialiSessione getEventi() {
+        return eventi;
+    }
+
+    public void setEventi(EventiSocialiSessione eventi) {
+        this.eventi = eventi;
+    }
+
     public Sessione getSessione() {
         return sessione;
     }
@@ -109,8 +134,15 @@ public class EditProgrammaController implements Initializable {
     }
 
     @FXML
-    void editEventiOnAction(ActionEvent event) {
-
+    void editEventiOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEventi.fxml"));
+        EditEventiController controller = new EditEventiController();
+        controller.setEditProgrammaController(this);
+        controller.setSubScene(subscene);
+        controller.setEventi(eventi);
+        loader.setController(controller);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
 
     @FXML

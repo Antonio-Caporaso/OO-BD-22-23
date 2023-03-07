@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 public class EditConferenceController implements Initializable {
     private Conferenza conferenza;
@@ -45,6 +46,8 @@ public class EditConferenceController implements Initializable {
     private Button editDetailsButton;
     @FXML
     private Button editEntiButton;
+    @FXML
+    private Button rimuoviSessioneButton;
     @FXML
     private TextArea entiView;
     @FXML
@@ -127,6 +130,20 @@ public class EditConferenceController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
+        }
+    }
+    @FXML
+    void rimuoviSessioneOnAction(ActionEvent event) {
+        Sessione s = sessioniView.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler rimuovere la sessione '"+s.getTitolo()+"'?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK){
+            try{
+                sessioni.removeSessione(s);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
         }
     }
     @FXML

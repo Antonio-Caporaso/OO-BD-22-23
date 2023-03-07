@@ -46,6 +46,11 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
+            <Button fx:id="rimuoviSessioneButton" mnemonicParsing="false" onAction="#rimuoviSessioneOnAction" prefHeight="70.0" prefWidth="216.0" text="Rimuovi sessione">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
       <Accordion layoutX="14.0" layoutY="99.0" prefHeight="599.0" prefWidth="683.0">

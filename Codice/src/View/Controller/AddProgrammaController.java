@@ -1,14 +1,17 @@
 package View.Controller;
 
 import Persistence.Entities.Conferenze.*;
+import Services.EventiSocialiSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +37,8 @@ public class AddProgrammaController implements Initializable {
     private ListView<Intervallo> intervalliList;
     @FXML
     private ListView<Intervento> interventiList;
+    private Programma programma;
+    private EventiSocialiSessione eventi;
     @FXML
     private Button fineButton;
 
@@ -57,7 +62,8 @@ public class AddProgrammaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        programma = new Programma();
+        eventi = new EventiSocialiSessione(programma);
     }
 
     public void setEditConferenceController(EditConferenceController editConferenceController) {
@@ -65,8 +71,14 @@ public class AddProgrammaController implements Initializable {
     }
 
     @FXML
-    void editEventiOnAction(ActionEvent event) {
-
+    void editEventiOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEventi.fxml"));
+        EditEventiController controller = new EditEventiController();
+        controller.setEventi(eventi);
+        controller.setSubScene(subScene);
+        loader.setController(controller);
+        Parent root = loader.load();
+        subScene.setRoot(root);
     }
 
     @FXML
