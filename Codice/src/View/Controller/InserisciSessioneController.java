@@ -68,25 +68,10 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     SpinnerValueFactory<Integer> ValueFactoryFineOre = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
     SpinnerValueFactory<Integer> ValueFactoryFineMinuti = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
 
-    TextFormatter<Integer> formatterInizioOre = new TextFormatter<>(ValueFactoryInizioOre.getConverter(), ValueFactoryInizioOre.getValue());
-    TextFormatter<Integer> formatterInizioMinuti = new TextFormatter<>(ValueFactoryInizioMinuti.getConverter(), ValueFactoryInizioMinuti.getValue());
-    TextFormatter<Integer> formatterFineOre = new TextFormatter<>(ValueFactoryFineOre.getConverter(), ValueFactoryFineOre.getValue());
-    TextFormatter<Integer> formatterFineMinuti = new TextFormatter<>(ValueFactoryFineMinuti.getConverter(), ValueFactoryFineMinuti.getValue());
-
-    orarioInizioOreSpinner.getEditor().setTextFormatter(formatterInizioOre);
-    orarioInizioMinutiSpinner.getEditor().setTextFormatter(formatterInizioMinuti);
-    orarioFineOreSpinner.getEditor().setTextFormatter(formatterFineOre);
-    orarioFineMinutiSpinner.getEditor().setTextFormatter(formatterFineMinuti);
-
     orarioInizioMinutiSpinner.setValueFactory(ValueFactoryInizioMinuti);
     orarioInizioOreSpinner.setValueFactory(ValueFactoryInizioOre);
     orarioFineMinutiSpinner.setValueFactory(ValueFactoryFineMinuti);
     orarioFineOreSpinner.setValueFactory(ValueFactoryFineOre);
-
-    addSpinnerEditorListener(orarioFineOreSpinner);
-    addSpinnerEditorListener(orarioFineMinutiSpinner);
-    addSpinnerEditorListener(orarioInizioMinutiSpinner);
-    addSpinnerEditorListener(orarioInizioOreSpinner);
 
     orarioFineOreSpinner.setEditable(true);
     orarioFineMinutiSpinner.setEditable(true);
@@ -97,21 +82,6 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     orarioFineMinutiSpinner.getValue();
     orarioInizioMinutiSpinner.getValue();
     orarioInizioOreSpinner.getValue();
-    }
-    private void addSpinnerEditorListener(Spinner<Integer> spinner) {
-        spinner.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            try {
-                Integer.parseInt(newValue);
-            }catch (NumberFormatException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Errore!");
-                alert.setHeaderText("Errore! Puoi inserire solo interi!");
-                alert.showAndWait();
-                spinner.getEditor().setText(oldValue);
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        });
     }
 
     public void loadChoiceBox(){
@@ -161,14 +131,12 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     }
 
     public void loadViewSessioni(Conferenza c){
-        ConferenzaDao conferenzaDao= new ConferenzaDao();
-        conferenza= conferenzaDao.retrieveConferenzaByNome(c.getNome());
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessione.fxml"));
             VisualizzaSessioneController controller = new VisualizzaSessioneController();
             controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
             loader.setController(controller);
+            controller.setConferenza(c);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
