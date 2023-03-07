@@ -1,9 +1,11 @@
 package View.Controller;
 
 import Persistence.DAO.ConferenzaDao;
+import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import Services.Sessioni;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +17,8 @@ import javafx.scene.control.Button;
 
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class VisualizzaSessioneController implements Initializable {
@@ -58,16 +62,13 @@ public class VisualizzaSessioneController implements Initializable {
     private ListView<Sessione> sessioniListView;
 
     public void loadInserisciSessione(Conferenza c){
-        ConferenzaDao conferenzaDao= new ConferenzaDao();
-        conferenza= conferenzaDao.retrieveConferenzaByNome(c.getNome());
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
             InserisciSessioneController controller = new InserisciSessioneController();
-            controller.setSubscene(subscene);
             loader.setController(controller);
             controller.setSubscene(subscene);
+            controller.setConferenza(c);
             Parent root = loader.load();
-            controller.setConferenza(conferenza);
             subscene.setRoot(root);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,18 +80,19 @@ public class VisualizzaSessioneController implements Initializable {
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;
     }
-//    public void setSessioni()  {
-//        try {
-//            sessioni.loadSessioni2(conferenza);
-//            sessioniListView.setItems(sessioni.getSessioni());
-//        }catch (SQLException e){
-//            e.printStackTrace();
-//        }
-//    }
+    public void setSessioni() {
 
+    SessioneDao sessioneDao= new SessioneDao();
+    try {
+        LinkedList<Sessione> sessioni = sessioneDao.retrieveSessioni(conferenza);
+        sessioniListView.setItems(FXCollections.observableArrayList(sessioni));
+    }catch(SQLException e){
+        e.printStackTrace();
+    }
 
+}
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        setSessioni();
+        setSessioni();
     }
 }
