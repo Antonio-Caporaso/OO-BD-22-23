@@ -66,7 +66,7 @@ public class AddConferenceController implements Initializable,FormChecker{
     @FXML
     public void creaButtonOnAction(ActionEvent event){
         try {
-            checkTextFieldsAreBlank();
+            checkFieldsAreBlank();
             String nome = nomeConferenzaTF.getText();
             float budget = Float.parseFloat(budgetTextField.getText());
             String descrizione = descrizioneTextArea.getText();
@@ -134,7 +134,7 @@ public class AddConferenceController implements Initializable,FormChecker{
     }
 
     @Override
-    public void checkTextFieldsAreBlank() throws BlankFieldException {
+    public void checkFieldsAreBlank() throws BlankFieldException {
         if(nomeConferenzaTF.getText().isBlank() || descrizioneTextArea.getText().isBlank() ||
                 budgetTextField.getText().isBlank() || sedeChoice.getValue().equals(null) ||
                 dataInizioDP.getValue().equals(null) || dataFineDP.getValue().equals(null))

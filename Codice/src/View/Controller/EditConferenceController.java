@@ -134,17 +134,26 @@ public class EditConferenceController implements Initializable {
     }
     @FXML
     void rimuoviSessioneOnAction(ActionEvent event) {
-        Sessione s = sessioniView.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler rimuovere la sessione '"+s.getTitolo()+"'?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.get() == ButtonType.OK){
-            try{
-                sessioni.removeSessione(s);
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }
+       try {
+           Sessione s = sessioniView.getSelectionModel().getSelectedItem();
+           if (s == null) {
+               throw new SessioneNotSelectedException();
+           }
+           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+           alert.setContentText("Sicuro di voler rimuovere la sessione '" + s.getTitolo() + "'?");
+           Optional<ButtonType> result = alert.showAndWait();
+           if (result.get() == ButtonType.OK) {
+               try {
+                   sessioni.removeSessione(s);
+               } catch (SQLException e) {
+                   e.printStackTrace();
+               }
+           }
+       }catch (SessioneNotSelectedException e){
+           Alert alert = new Alert(Alert.AlertType.ERROR);
+           alert.setContentText(e.getMessage());
+           alert.showAndWait();
+       }
     }
     @FXML
     public void editSponsorshipOnAction(ActionEvent event) throws IOException {
@@ -172,8 +181,12 @@ public class EditConferenceController implements Initializable {
     }
     public void setSessioni() {
         sessioni = new Sessioni(conferenza);
-        sessioni.loadSessioni();
-        sessioniView.setItems(sessioni.getSessioni());
+        try{
+            sessioni.loadSessioni();
+            sessioniView.setItems(sessioni.getSessioni());
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
     public void setDetails() {
         this.setTitleLabel();

@@ -80,6 +80,8 @@ public class EditEventiController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEvento.fxml"));
         AddEventoController controller = new AddEventoController();
         controller.setEditEventiController(this);
+        controller.setEventi(eventi);
+        controller.setProgramma(programma);
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);

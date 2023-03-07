@@ -45,4 +45,11 @@ public class ProgrammaDao {
         }
         return programma;
     }
+
+    public void updateProgramma(Programma programma) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "UPDATE programma set id_chair = ?,";
+        PreparedStatement stm = conn.prepareStatement(query);
+    }
 }

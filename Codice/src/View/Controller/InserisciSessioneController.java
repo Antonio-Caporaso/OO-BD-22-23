@@ -1,7 +1,6 @@
 package View.Controller;
 
 import Exceptions.BlankFieldException;
-import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sala;
@@ -13,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
@@ -151,7 +151,7 @@ public class InserisciSessioneController implements Initializable,FormChecker {
         return sala;
     }
     @Override
-    public void checkTextFieldsAreBlank() throws BlankFieldException {
+    public void checkFieldsAreBlank() throws BlankFieldException {
 //        if(nomeConferenzaTF.getText().isBlank() || descrizioneTextArea.getText().isBlank() ||
 //                budgetTextField.getText().isBlank() || sedeChoice.getValue().equals(null) ||
 //                dataInizioDP.getValue().equals(null) || dataFineDP.getValue().equals(null))

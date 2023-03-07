@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Exceptions.BlankFieldException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
@@ -11,17 +12,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import tornadofx.control.DateTimePicker;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ResourceBundle;
 
-public class AddSessioneController implements Initializable {
+public class AddSessioneController implements Initializable,FormChecker {
     private Conferenza conferenza;
     private Sessioni sessioni;
     private Sale sale;
@@ -29,25 +33,48 @@ public class AddSessioneController implements Initializable {
     private SubScene subscene;
     @FXML
     private Button annullaButton;
-
     @FXML
     private DateTimePicker fineDateTimePicker;
-
     @FXML
     private DateTimePicker inizioDateTimePicker;
-
     @FXML
     private Button nextButton;
-
     @FXML
     private TextField nomeTF;
-
     @FXML
     private ChoiceBox<Sala> saleChoice;
 
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if(nomeTF.getText().isBlank() || saleChoice.getValue().equals(null)
+                || inizioDateTimePicker.getDateTimeValue().equals(null)
+                || fineDateTimePicker.getDateTimeValue().equals(null))
+            throw new BlankFieldException();
+    }
+
     @FXML
     void nextOnAction(ActionEvent event) throws IOException {
-        Sessione s = setSessione();
+        try{
+            checkFieldsAreBlank();
+            Sessione s = setSessione();
+            sessioni.addSessione(s);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
+            loader.setController(editConferenceController);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+            //addProgrammaSessione(s);
+        }catch (BlankFieldException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Compilare prima tutti i campi");
+            alert.showAndWait();
+        }catch (SQLException exception){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(exception.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void addProgrammaSessione(Sessione s) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddProgramma.fxml"));
         AddProgrammaController controller = new AddProgrammaController();
         loader.setController(controller);
@@ -61,6 +88,7 @@ public class AddSessioneController implements Initializable {
 
     private Sessione setSessione() {
         Sessione s = new Sessione();
+        s.setConferenza(conferenza);
         s.setTitolo(nomeTF.getText());
         s.setLocazione(saleChoice.getValue());
         s.setDataInizio(Date.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalDate()));

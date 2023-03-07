@@ -44,7 +44,7 @@ public class LoginController implements Initializable, FormChecker {
     @FXML
     void loginButtonOnAction(ActionEvent event) {
         try{
-        checkTextFieldsAreBlank();
+        checkFieldsAreBlank();
         validateLogin();
         }catch (BlankFieldException e){
             errorLabel.setText("Inserire nome utente e password");
@@ -110,7 +110,7 @@ public class LoginController implements Initializable, FormChecker {
     }
 
     @Override
-    public void checkTextFieldsAreBlank() throws BlankFieldException {
+    public void checkFieldsAreBlank() throws BlankFieldException {
         if(usernameTextField.getText().isBlank() || passwordTextField.getText().isBlank())
             throw new BlankFieldException();
     }

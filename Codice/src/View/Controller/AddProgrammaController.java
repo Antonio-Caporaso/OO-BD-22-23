@@ -1,20 +1,22 @@
 package View.Controller;
 
+import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.Conferenze.*;
 import Services.EventiSocialiSessione;
+import Services.IntervalliSessione;
+import Services.InterventiSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddProgrammaController implements Initializable {
@@ -22,6 +24,8 @@ public class AddProgrammaController implements Initializable {
     private Conferenza conferenza;
     private Sessione sessione;
     private SubScene subScene;
+    private InterventiSessione interventi;
+    private IntervalliSessione intervalli;
     private AddSessioneController addSessioneController;
     @FXML
     private Button annullaButton;
@@ -62,8 +66,21 @@ public class AddProgrammaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        programma = new Programma();
-        eventi = new EventiSocialiSessione(programma);
+        ProgrammaDao dao = new ProgrammaDao();
+        try {
+            programma = dao.retrieveProgrammaBySessione(sessione);
+            eventi = new EventiSocialiSessione(programma);
+            eventi.loadEventiSociali();
+            eventiList.setItems(eventi.getEventi());
+            intervalli=new IntervalliSessione(programma);
+            intervalli.loadIntervalli();
+            intervalliList.setItems(intervalli.getIntervalli());
+            interventi = new InterventiSessione(programma);
+            intervalli.loadIntervalli();
+            intervalliList.setItems(intervalli.getIntervalli());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setEditConferenceController(EditConferenceController editConferenceController) {
@@ -75,6 +92,7 @@ public class AddProgrammaController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEventi.fxml"));
         EditEventiController controller = new EditEventiController();
         controller.setEventi(eventi);
+        controller.setProgramma(programma);
         controller.setSubScene(subScene);
         loader.setController(controller);
         Parent root = loader.load();
@@ -92,8 +110,15 @@ public class AddProgrammaController implements Initializable {
     }
 
     @FXML
-    void fineButtonOnAction(ActionEvent event) {
-
+    void fineButtonOnAction(ActionEvent event) throws IOException, SQLException {
+        ProgrammaDao dao = new ProgrammaDao();
+        dao.updateProgramma(programma);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
+        EditConferenceController controller = new EditConferenceController();
+        controller.setConferenza(conferenza);
+        loader.setController(controller);
+        Parent root = loader.load();
+        subScene.setRoot(root);
     }
 
     public Sessione getSessione() {
