@@ -62,7 +62,6 @@ public class AddSessioneController implements Initializable,FormChecker {
             loader.setController(editConferenceController);
             Parent root = loader.load();
             subscene.setRoot(root);
-            //addProgrammaSessione(s);
         }catch (BlankFieldException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Compilare prima tutti i campi");
@@ -73,19 +72,6 @@ public class AddSessioneController implements Initializable,FormChecker {
             alert.showAndWait();
         }
     }
-
-    private void addProgrammaSessione(Sessione s) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddProgramma.fxml"));
-        AddProgrammaController controller = new AddProgrammaController();
-        loader.setController(controller);
-        controller.setSessione(s);
-        controller.setSubScene(subscene);
-        controller.setConferenza(conferenza);
-        controller.setEditConferenceController(editConferenceController);
-        Parent root = loader.load();
-        subscene.setRoot(root);
-    }
-
     private Sessione setSessione() {
         Sessione s = new Sessione();
         s.setConferenza(conferenza);
