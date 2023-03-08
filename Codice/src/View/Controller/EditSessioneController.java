@@ -51,6 +51,7 @@ public class EditSessioneController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
         EditProgrammaController controller = new EditProgrammaController();
         controller.setSubscene(subScene);
+        controller.setEditConferenceController(editConferenceController);
         controller.setSessione(sessione);
         loader.setController(controller);
         Parent root = loader.load();

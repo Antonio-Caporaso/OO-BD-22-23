@@ -76,10 +76,10 @@
             <DateTimePicker fx:id="fineDateTimePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <ButtonBar layoutX="642.0" layoutY="666.0" prefHeight="40.0" prefWidth="268.0">
+      <ButtonBar layoutX="571.0" layoutY="666.0" prefHeight="40.0" prefWidth="268.0">
         <buttons>
           <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" text="Annulla" />
-            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextOnAction" text="Avanti" />
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextOnAction" text="Aggiungi" />
         </buttons>
       </ButtonBar>
    </children>
