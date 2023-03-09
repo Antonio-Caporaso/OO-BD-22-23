@@ -107,12 +107,13 @@ public class AddConferenceController implements Initializable,FormChecker{
 
     public void loadInserisciSessione(Conferenza c){
         ConferenzaDao conferenzaDao= new ConferenzaDao();
-        conferenza= conferenzaDao.retrieveConferenzaByNome(c.getNome());
+        conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente());
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
             InserisciSessioneController controller = new InserisciSessioneController();
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
+            controller.setUtente(user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
