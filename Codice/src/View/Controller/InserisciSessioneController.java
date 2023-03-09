@@ -6,6 +6,7 @@ import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,8 +32,6 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     @FXML
     private DatePicker dataInizioDatePicker;
     @FXML
-    private TextArea descrizioneTextArea;
-    @FXML
     private Button inserisciButton;
     @FXML
     private ChoiceBox<String> salaChoiceBox;
@@ -49,11 +48,12 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     private Conferenza conferenza;
     private Sessione sessione;
     private SubScene subscene;
-    private String[] sale;
+    private Utente user;
 
 
     @FXML
     void backButtonOnAction(ActionEvent event) {
+        loadViewSessioni(conferenza);
 
     }
 
@@ -62,6 +62,9 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     }
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;
+    }
+    public void setUtente(Utente utente){
+        this.user=utente;
     }
 
     public void setSpinnersAtLaunch(){
@@ -99,7 +102,7 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
         try {
-//            checkTextFieldsAreBlank();
+            checkFieldsAreBlank();
             String titolo = titoloSessioneTextField.getText();
             LocalDate dataInizioSelected = dataInizioDatePicker.getValue();
             LocalDate dataFineSelected = dataFineDatePicker.getValue();
@@ -126,11 +129,11 @@ public class InserisciSessioneController implements Initializable,FormChecker {
             sessioneDao.saveSessione(sessione);
             openAddSessioneDialogWindow();
             loadViewSessioni(conferenza);
-//        }catch (BlankFieldException e){
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error");
-//            alert.setHeaderText(e.getMessage());
-//            alert.showAndWait();
+        }catch (BlankFieldException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(e.getMessage());
+            alert.showAndWait();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -143,6 +146,7 @@ public class InserisciSessioneController implements Initializable,FormChecker {
             controller.setSubscene(subscene);
             loader.setController(controller);
             controller.setConferenza(c);
+            controller.setUser(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -163,9 +167,8 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     }
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
-//        if(nomeConferenzaTF.getText().isBlank() || descrizioneTextArea.getText().isBlank() ||
-//                budgetTextField.getText().isBlank() || sedeChoice.getValue().equals(null) ||
-//                dataInizioDP.getValue().equals(null) || dataFineDP.getValue().equals(null))
+        if(titoloSessioneTextField.getText().isBlank() || dataInizioDatePicker.getValue().equals(null) ||
+                dataFineDatePicker.getValue().equals(null) || salaChoiceBox.getValue().equals(null))
             throw new BlankFieldException();
     }
     public void openAddSessioneDialogWindow(){
