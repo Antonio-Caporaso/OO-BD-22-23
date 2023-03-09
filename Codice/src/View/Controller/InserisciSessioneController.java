@@ -1,6 +1,7 @@
 package View.Controller;
 
 import Exceptions.BlankFieldException;
+import Persistence.DAO.SalaDao;
 import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sala;
@@ -15,6 +16,7 @@ import javafx.scene.control.*;
 
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -85,9 +87,13 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     }
 
     public void loadChoiceBox(){
-        Sala sala= new Sala();
-        int sedeID= conferenza.getSede().getSedeID();
-        salaChoiceBox.getItems().setAll(sala.retreiveNomeSalaByIdSede(sedeID));
+        SalaDao sala= new SalaDao();
+        try {
+            int sedeID = conferenza.getSede().getSedeID();
+            salaChoiceBox.getItems().setAll(sala.retrieveNomeSalaBySedeID(sedeID));
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
 
     }
     @FXML
@@ -144,10 +150,15 @@ public class InserisciSessioneController implements Initializable,FormChecker {
         }
     }
     public Sala selezionaSala(){
-        String nomeSala= salaChoiceBox.getValue();
-        int idSede= conferenza.getSede().getSedeID();
-        Sala sala =new Sala();
-        sala=sala.retriveSalaByIdSedeAndNomeSala(idSede,nomeSala);
+        SalaDao salaDao = new SalaDao();
+        Sala sala = new Sala();
+        try {
+            String nomeSala = salaChoiceBox.getValue();
+            int idSede = conferenza.getSede().getSedeID();
+            sala = salaDao.retreiveSalaBySedeIdAndNomeSala(idSede, nomeSala);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
         return sala;
     }
     @Override
