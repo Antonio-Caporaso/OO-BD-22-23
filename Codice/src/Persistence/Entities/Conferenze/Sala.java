@@ -48,31 +48,8 @@ public class Sala {
     public void setSede(Sede sede) {
         this.sede = sede;
     }
-    public List<String> retreiveNomeSalaByIdSede(int sede){
-        salaDao= new SalaDao();
-        List<String> sale = new ArrayList<>();
-        try {
-            sale=salaDao.retrieveNomeSalaBySedeID(sede);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return sale;
-    }
-
     @Override
     public String toString() {
         return nomeSala;
     }
-
-    public Sala retriveSalaByIdSedeAndNomeSala(int sedeID, String nomeSala){
-        salaDao=new SalaDao();
-        Sala sala= new Sala();
-        try{
-            sala=salaDao.retreiveSalaBySedeIdAndNomeSala(sedeID,nomeSala);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }return sala;
-    }
-
-
 }
