@@ -5,6 +5,7 @@ import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SessioneDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.Utente;
 import Services.Sessioni;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -41,11 +42,7 @@ public class VisualizzaSessioneController implements Initializable {
     private SubScene subscene;
     private Conferenza conferenza;
     private Sessioni sessioni = new Sessioni(conferenza);
-
-    @FXML
-    void backButtonOnAction(ActionEvent event) {
-
-    }
+    private Utente user;
 
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
@@ -93,6 +90,7 @@ public class VisualizzaSessioneController implements Initializable {
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(c);
+            controller.setUtente(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -104,6 +102,9 @@ public class VisualizzaSessioneController implements Initializable {
     }
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;
+    }
+    public void setUser(Utente utente){
+        this.user=utente;
     }
     public void setSessioni() {
     SessioneDao sessioneDao= new SessioneDao();
