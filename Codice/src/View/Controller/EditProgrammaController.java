@@ -1,7 +1,8 @@
 package View.Controller;
 
 import Persistence.DAO.ProgrammaDao;
-import Persistence.Entities.Conferenze.*;
+import Persistence.Entities.Conferenze.Programma;
+import Persistence.Entities.Conferenze.Sessione;
 import Services.EventiSocialiSessione;
 import Services.IntervalliSessione;
 import Services.InterventiSessione;
@@ -13,7 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import jfxtras.scene.control.agenda.icalendar.ICalendarAgenda;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,23 +30,13 @@ public class EditProgrammaController implements Initializable {
     private Sessione sessione;
     private EventiSocialiSessione eventi;
     @FXML
+    private ICalendarAgenda agenda;
+    @FXML
+    private Button editChairButton;
+    @FXML
     private Label coordinatoreLabel;
     @FXML
-    private Button editEventiButton;
-    @FXML
-    private Button editIntervalliButton;
-    @FXML
-    private Button editInterventiButton;
-    @FXML
-    private TextArea eventiTextArea;
-    @FXML
     private Button fineButton;
-    @FXML
-    private TextArea intervalliTextArea;
-    @FXML
-    private TextArea interventiTextArea;
-    @FXML
-    private Label keynote;
     @FXML
     private Label keynoteLabel;
 
@@ -92,41 +83,40 @@ public class EditProgrammaController implements Initializable {
     public void setEditConferenceController(EditConferenceController editConferenceController) {
         this.editConferenceController = editConferenceController;
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inizializzaDettagliProgramma();
+        agenda.setDisplayedLocalDateTime(sessione.getDataInizio().toLocalDate().atStartOfDay());
     }
     private void inizializzaDettagliProgramma(){
+        setProgramma();
+    }
+
+    private void setProgramma() {
         ProgrammaDao dao = new ProgrammaDao();
-        try{
+        try {
             programma = dao.retrieveProgrammaBySessione(sessione);
-            intervalli = new IntervalliSessione(programma);
-            interventi = new InterventiSessione(programma);
-            eventi = new EventiSocialiSessione(programma);
-            intervalli.loadIntervalli();
-            for(Intervallo i: intervalli.getIntervalli()){
-                intervalliTextArea.appendText(i.toString()+"\n");
-            }
-            interventi.loadInterventi();
-            for(Intervento i: interventi.getInterventi()){
-                interventiTextArea.appendText(i.toString()+"\n");
-            }
-            eventi.loadEventiSociali();
-            for(EventoSociale e: eventi.getEventi()){
-                eventiTextArea.appendText(e.toString()+"\n");
-            }
-            coordinatoreLabel.setText(programma.getChair().getNome()+" "+programma.getChair().getCognome());
-            if(programma.getKeynote().getNome() == null){
-                keynoteLabel.setVisible(false);
-                keynote.setVisible(false);
-            }else {
-                keynote.setText(programma.getKeynote().getNome()+" "+programma.getKeynote().getCognome());
-            }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+        intervalli = new IntervalliSessione(programma);
+        interventi = new InterventiSessione(programma);
+        eventi = new EventiSocialiSessione(programma);
     }
+
+    private void setKeynoteLabel() {
+        String keynote =programma.getKeynote().getNome()+" "+programma.getKeynote().getCognome();
+        if(keynote.isBlank()){
+            keynoteLabel.setText("Keynote speaker non previsto");
+        }else{
+            keynoteLabel.setText(keynote);
+        }
+    }
+
+    private void setChairLabel() {
+        coordinatoreLabel.setText(programma.getChair().getNome()+" "+programma.getChair().getCognome());
+    }
+
     @FXML
     private void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
@@ -135,25 +125,4 @@ public class EditProgrammaController implements Initializable {
         subscene.setRoot(root);
     }
 
-    @FXML
-    void editEventiOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEventi.fxml"));
-        EditEventiController controller = new EditEventiController();
-        controller.setEditProgrammaController(this);
-        controller.setSubScene(subscene);
-        controller.setEventi(eventi);
-        loader.setController(controller);
-        Parent root = loader.load();
-        subscene.setRoot(root);
-    }
-
-    @FXML
-    void editIntervalliOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void editInterventiOnAction(ActionEvent event) {
-
-    }
 }

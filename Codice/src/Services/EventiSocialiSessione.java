@@ -33,4 +33,9 @@ public class EventiSocialiSessione {
         dao.saveEvento(e);
         eventi.add(e);
     }
+    public void removeEvento(EventoSociale e) throws SQLException {
+        EventoSocialeDao dao = new EventoSocialeDao();
+        dao.deleteEvento(e);
+        eventi.remove(e);
+    }
 }

@@ -49,19 +49,21 @@ public class EditDettagliSessioneController implements Initializable {
 
     @FXML
     void confermaOnAction(ActionEvent event) throws SQLException, IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler modificare i dettagli della sessione "+sessione.getSessioneID());
-        Optional<ButtonType> result = alert.showAndWait();
+        Optional<ButtonType> result = confirmationAlert();
         if(result.get() == ButtonType.OK) {
-            SessioneDao dao = new SessioneDao();
-            sessione.setTitolo(nomeTF.getText());
-            sessione.setLocazione(saleChoice.getValue());
-            sessione.setDataInizio(Date.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalDate()));
-            sessione.setDataFine(Date.valueOf(fineDateTimePicker.getDateTimeValue().toLocalDate()));
-            sessione.setOrarioFine(Time.valueOf(fineDateTimePicker.getDateTimeValue().toLocalTime()));
-            sessione.setOrarioInizio(Time.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalTime()));
-            dao.updateSessione(sessione);
+            updateSessione();
         }
+        goToEditWindow();
+    }
+
+    private Optional<ButtonType> confirmationAlert() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler modificare i dettagli della sessione "+sessione.getSessioneID()+"?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
+    }
+
+    private void goToEditWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
         loader.setController(editSessioneController);
         editSessioneController.setSessione(sessione);
@@ -69,6 +71,18 @@ public class EditDettagliSessioneController implements Initializable {
         Parent root = loader.load();
         subscene.setRoot(root);
     }
+
+    private void updateSessione() throws SQLException {
+        SessioneDao dao = new SessioneDao();
+        sessione.setTitolo(nomeTF.getText());
+        sessione.setLocazione(saleChoice.getValue());
+        sessione.setDataInizio(Date.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalDate()));
+        sessione.setDataFine(Date.valueOf(fineDateTimePicker.getDateTimeValue().toLocalDate()));
+        sessione.setOrarioFine(Time.valueOf(fineDateTimePicker.getDateTimeValue().toLocalTime()));
+        sessione.setOrarioInizio(Time.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalTime()));
+        dao.updateSessione(sessione);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -77,7 +91,6 @@ public class EditDettagliSessioneController implements Initializable {
             sale.loadSale();
             saleChoice.setItems(sale.getSale());
             saleChoice.setValue(sessione.getLocazione());
-            // Settaggio dei DateTimePicker, meglio se si usa un DateTime
             inizioDateTimePicker.setDateTimeValue(sessione.getDataInizio().toLocalDate().atTime(sessione.getOrarioInizio().toLocalTime()));
             fineDateTimePicker.setDateTimeValue(sessione.getDataFine().toLocalDate().atTime(sessione.getOrarioFine().toLocalTime()));
         } catch (SQLException e) {

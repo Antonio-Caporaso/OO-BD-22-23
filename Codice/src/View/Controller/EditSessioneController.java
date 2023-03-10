@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,10 +35,8 @@ public class EditSessioneController implements Initializable {
     private Button editDetailsButton;
     @FXML
     private Button editProgrammaButton;
-
     @FXML
     private Label nomeLabel;
-
     @FXML
     private Label keynoteLabel;
     @FXML
@@ -48,6 +45,9 @@ public class EditSessioneController implements Initializable {
     private Label titleLabel;
     @FXML
     void editProgrammaOnAction(ActionEvent event) throws IOException {
+        goToEditProgrammaWindow();
+    }
+    private void goToEditProgrammaWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
         EditProgrammaController controller = new EditProgrammaController();
         controller.setSubscene(subScene);
@@ -57,25 +57,27 @@ public class EditSessioneController implements Initializable {
         Parent root = loader.load();
         subScene.setRoot(root);
     }
-
     public SubScene getSubScene() {
         return subScene;
     }
-
     public void setSubScene(SubScene subScene) {
         this.subScene = subScene;
     }
-
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
+        goToEditConferenceWindow();
+    }
+    private void goToEditConferenceWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
         loader.setController(editConferenceController);
         Parent root = loader.load();
         subScene.setRoot(root);
     }
-
     @FXML
     void editDetailsOnAction(ActionEvent event) throws IOException {
+        goToEditDettagliSessione();
+    }
+    private void goToEditDettagliSessione() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditDettagliSessione.fxml"));
         EditDettagliSessioneController controllerS = new EditDettagliSessioneController();
         loader.setController(controllerS);
@@ -85,29 +87,23 @@ public class EditSessioneController implements Initializable {
         Parent root = loader.load();
         subScene.setRoot(root);
     }
-
     public Conferenza getConferenza() {
         return conferenza;
     }
-
     public void setConferenza(Conferenza conferenza) {
         this.conferenza = conferenza;
     }
-
     public Sessione getSessione() {
         return sessione;
     }
-
     public void setSessione(Sessione sessione) {
         this.sessione = sessione;
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setDettagliSessione();
 
     }
-
     public void setDettagliSessione() {
         titleLabel.setText(sessione.getTitolo());
         nomeLabel.setText(sessione.getTitolo());
@@ -117,8 +113,6 @@ public class EditSessioneController implements Initializable {
         oraFineLabel.setText(String.valueOf(sessione.getOrarioFine()));
         salaLabel.setText(sessione.getLocazione().getNomeSala());
     }
-
-
     public void setEditController(EditConferenceController editConferenceController) {
         this.editConferenceController = editConferenceController;
     }

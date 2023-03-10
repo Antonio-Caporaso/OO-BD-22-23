@@ -13,6 +13,16 @@ import java.util.LinkedList;
 public class EventoSocialeDao {
     private DBConnection dbcon;
     private Connection conn;
+
+    public void deleteEvento(EventoSociale e) throws SQLException {
+        dbcon=DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "DELETE FROM eventosociale where idevento=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,e.getId());
+        stm.executeUpdate();
+    }
+
     public LinkedList<EventoSociale> retrieveEventiByProgramma(Programma programma) throws SQLException {
         dbcon=DBConnection.getDBconnection();
         conn = dbcon.getConnection();

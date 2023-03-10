@@ -10,12 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EditEventiController implements Initializable {
@@ -25,16 +27,10 @@ public class EditEventiController implements Initializable {
     private EventiSocialiSessione eventi;
     @FXML
     private Button addEventoButton;
-
     @FXML
-    private Button deleteEvento;
-
-    @FXML
-    private Button editEventoOnAction;
-
+    private Button deleteEventoButton;
     @FXML
     private ListView<EventoSociale> eventiList;
-
     @FXML
     private Button fineButton;
 
@@ -77,6 +73,10 @@ public class EditEventiController implements Initializable {
 
     @FXML
     void addEventoOnAction(ActionEvent event) throws IOException {
+        openAddingModalWindow();
+    }
+
+    private void openAddingModalWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEvento.fxml"));
         AddEventoController controller = new AddEventoController();
         controller.setEditEventiController(this);
@@ -94,12 +94,14 @@ public class EditEventiController implements Initializable {
 
     @FXML
     void deleteEventoOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void editEventoOnAction(ActionEvent event) {
-
+        EventoSociale e = eventiList.getSelectionModel().getSelectedItem();
+        try {
+            eventi.removeEvento(e);
+        } catch (SQLException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
+        }
     }
 
     @FXML
