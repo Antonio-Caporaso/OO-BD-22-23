@@ -6,6 +6,7 @@ import Persistence.Entities.Conferenze.Sessione;
 import Services.EventiSocialiSessione;
 import Services.IntervalliSessione;
 import Services.InterventiSessione;
+import com.calendarfx.view.page.DayPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +31,7 @@ public class EditProgrammaController implements Initializable {
     private Sessione sessione;
     private EventiSocialiSessione eventi;
     @FXML
-    private ICalendarAgenda agenda;
+    private DayPage dayView;
     @FXML
     private Button editChairButton;
     @FXML
@@ -86,7 +87,6 @@ public class EditProgrammaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inizializzaDettagliProgramma();
-        agenda.setDisplayedLocalDateTime(sessione.getDataInizio().toLocalDate().atStartOfDay());
     }
     private void inizializzaDettagliProgramma(){
         setProgramma();

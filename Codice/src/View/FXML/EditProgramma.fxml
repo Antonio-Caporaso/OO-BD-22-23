@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.calendarfx.view.page.DayPage?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import jfxtras.scene.control.agenda.icalendar.ICalendarAgenda?>
 
 <AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -15,6 +16,7 @@
             <Font name="System Bold" size="30.0" />
          </font></Label>
       <Button fx:id="fineButton" layoutX="736.0" layoutY="662.0" mnemonicParsing="false" onAction="#fineButtonOnAction" prefHeight="36.0" prefWidth="182.0" text="Fine" />
-      <ICalendarAgenda fx:id="agenda" layoutX="7.0" layoutY="90.0" prefHeight="613.0" prefWidth="714.0" />
+      <VBox layoutX="736.0" layoutY="99.0" prefHeight="555.0" prefWidth="182.0" />
+      <DayPage fx:id="dayView" layoutX="14.0" layoutY="99.0" prefHeight="610.0" prefWidth="699.0" showDate="false" showDayPageLayoutControls="false" showDetailsUponEntryCreation="false" showLayoutButton="false" showNavigation="false" showNoonMarker="false" showToday="false" />
    </children>
 </AnchorPane>
