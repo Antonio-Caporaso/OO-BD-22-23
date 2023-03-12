@@ -93,15 +93,6 @@ public class AddConferenceController implements Initializable,FormChecker{
         alert.setTitle("Dialog");
         alert.setHeaderText("Conferenza aggiunta correttamente");
         alert.getButtonTypes().remove(ButtonType.CANCEL);
-
-        /*
-        *   Per modificare l'immagine si usa il metodo setGraphic()
-        *   Image image = new Image("path/to/image.png");
-        *   ImageView imageView = new ImageView(image);
-        *   imageView.setFitWidth(64);
-        *   imageView.setFitHeight(64);
-        *   alert.setGraphic(imageView);
-         */
         alert.showAndWait();
     }
 
