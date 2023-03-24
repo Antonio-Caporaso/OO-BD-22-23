@@ -18,7 +18,7 @@
 \usepackage{longtable} 
 \usepackage{mathtools}
 \usepackage{amssymb,amsmath,amsthm}
-
+\usepackage{uninafrontespizio}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
@@ -52,21 +52,29 @@ style= mystyle
 \def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
 \def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
 \def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
-\begin{document}
 
+\begin{document}
 \begin{titlepage}
 \begin{center}
+\setstretch{1.2}
+\setlength{\parskip}{2ex}
+{\LARGE\textsc{\textbf{Università degli Studi di Napoli Federico II}}}\\
 
-\includegraphics[scale=0.6]{Immagini/logo_dieti.png}
-\vspace*{1cm}
+{\Large\textsc{\textbf{Scuola Politecnica e delle Scienze di Base}}}\\{\large\textsc{Dipartimento di Ingegneria Elettrica e Tecnologie dell'Informazione}}\\
+\vspace{1cm}
+
+{\includegraphics[width=3.5cm]{Immagini/LogoUnina.png}}{}
+
+\vspace{1cm}
+
+{\large\textsc{Corso di Laurea Triennale in Informatica}}\\
+{\large\textsc{Insegnamento di Basi di Dati}}\\
+{\large\textsc{Anno Accademico 2022/2023}}\\
+\vspace{4cm}
 
 {\Huge{\textbf{Progettazione e sviluppo di una base di dati relazionale per la gestione di conferenze scientifiche}}}
 
 \vspace{1cm}
-
-{\Large Progetto d'esame per il corso di Basi di Dati}
-
-
 \vfill
 
 {\Large Caporaso Antonio} \qquad \Large{Di Fusco Giorgio}\\
@@ -77,15 +85,7 @@ style= mystyle
 Docente: Sangiovanni Mara\\
 
 \vspace{1cm}
-
-\includegraphics[scale=0.6]{Immagini/LogoUnina.png}
-
-
-\begin{small}
-Corso di Laurea Triennale in Informatica \textsc{A.A 2022/2023}\\
-Dipartimento di Ingegneria Elettrica e delle tecnologie dell'Informazione\\
-Università degli Studi di Napoli Federico II
-\end{small}
+\includegraphics[scale=0.6]{Immagini/logo_dieti.png}
 \end{center}
 \end{titlepage}
 \newpage
@@ -96,9 +96,9 @@ Università degli Studi di Napoli Federico II
 \listoftables
 \include{Capitoli/Traccia}
 \include{Capitoli/Progettazione_Concettuale}
-\include{Capitoli/Ristrutturazione}
 \include{Capitoli/Schema_logico}
 \include{Capitoli/Schema_fisico}
+\appendix
 \include{Capitoli/Data_dictionary}
 \include{Capitoli/Relationship_dictionary}
 \include{Capitoli/Constraints_dictionary}
