@@ -100,8 +100,8 @@ public class AddConferenceController implements Initializable,FormChecker{
         ConferenzaDao conferenzaDao= new ConferenzaDao();
         conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente());
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
-            InserisciSessioneController controller = new InserisciSessioneController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
+            AggiungiSponsorController controller = new AggiungiSponsorController();
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
             controller.setUtente(user);
