@@ -35,7 +35,6 @@ public class VisualizzaSessioneController implements Initializable {
 
     @FXML
     private Button nextButton;
-
     @FXML
     private Button rimuoviButton;
     @FXML
@@ -43,15 +42,18 @@ public class VisualizzaSessioneController implements Initializable {
     private Conferenza conferenza;
     private Sessioni sessioni = new Sessioni(conferenza);
     private Utente user;
-
+    @FXML
+    private ListView<Sessione> sessioniListView;
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
-    loadInserisciSessione(conferenza);
+        loadInserisciSessione();
     }
-
     @FXML
     void nextButtonOnAction(ActionEvent event) {
-
+    }
+    @FXML
+    void backButtonOnAction(ActionEvent event){
+        loadAggiungiSponsor();
     }
 
     @FXML
@@ -79,17 +81,27 @@ public class VisualizzaSessioneController implements Initializable {
         }
     }
 
-
-    @FXML
-    private ListView<Sessione> sessioniListView;
-
-    public void loadInserisciSessione(Conferenza c){
+    public void loadInserisciSessione(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
             InserisciSessioneController controller = new InserisciSessioneController();
             loader.setController(controller);
             controller.setSubscene(subscene);
-            controller.setConferenza(c);
+            controller.setConferenza(conferenza);
+            controller.setUtente(user);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void loadAggiungiSponsor(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
+            AggiungiSponsorController controller = new AggiungiSponsorController();
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(conferenza);
             controller.setUtente(user);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -114,7 +126,6 @@ public class VisualizzaSessioneController implements Initializable {
     }catch(SQLException e){
         e.printStackTrace();
     }
-
 }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
