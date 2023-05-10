@@ -1,31 +1,26 @@
 package View.Controller;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import Persistence.DAO.SessioneDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Sponsor;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
-import Services.Sessioni;
-import Persistence.DAO.SponsorDao;
 import Services.SponsorizzazioniConferenza;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import Services.Sponsors;
+import javafx.fxml.FXMLLoader;
 
 public class AggiungiSponsorController implements Initializable {
 
@@ -72,49 +67,37 @@ public class AggiungiSponsorController implements Initializable {
 
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
-        Sponsor s = selezionaSponsorChoiceBox.getSelectionModel().getSelectedItem();
-        SponsorizzazioniConferenza sponsorizzazioniConferenza= new SponsorizzazioniConferenza(conferenza);
+        Sponsor sponsorSelezionato = selezionaSponsorChoiceBox.getSelectionModel().getSelectedItem();
+        double contributo = Double.parseDouble(importoTextField.getText());
+        SponsorizzazioneDAO sponsorizzazioneDao= new SponsorizzazioneDAO();
+        Sponsorizzazione sponsorizzazione=new Sponsorizzazione(sponsorSelezionato,conferenza,contributo);
         try{
-            float contributo = Float.parseFloat(importoTextField.getText());
-            Sponsorizzazione sp = new Sponsorizzazione(s,conferenza,contributo);
-//            sponsorizzazioniConferenza.addSponsorizzazione(sp);
-            SponsorizzazioneDAO SponsorizzazioneDao=new SponsorizzazioneDAO();
-            try{
-                SponsorizzazioneDao.saveSponsorizzazione(sp);
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-        }catch (NumberFormatException e){
-            Alert alert = new Alert( Alert.AlertType.ERROR);
-            alert.setContentText("Inserire un numero");
-            alert.showAndWait();
-        }catch (NullPointerException e2){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Inserire un numero");
-            alert.showAndWait();
+            sponsorizzazioneDao.saveSponsorizzazione(sponsorizzazione);
+            setSponsorizzazioniListView();
+        }catch (SQLException e){
+            e.printStackTrace();
         }
-//        catch (SQLException e){
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setContentText(e.getMessage());
-//            alert.showAndWait();
-//        }
+
     }
 
     @FXML
     void nextOnAction(ActionEvent event) {
-//        loadInserisciSessione(conferenza);
+        loadInserisciSessione(conferenza);
     }
 
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
         try{
             Sponsorizzazione sp = sponsorListView.getSelectionModel().getSelectedItem();
-            if (sp == null)
+            SponsorizzazioneDAO sponsorizzazioneDao= new SponsorizzazioneDAO();
+            if (sp == null){
                 throw new NullPointerException();
+            }
             Optional<ButtonType> result = showDeleteDialog();
             if(result.get() == ButtonType.OK) {
                 try{
-                    sponsorizzazioniConferenza.removeSponsorizzazione(sp);
+                    sponsorizzazioneDao.removeSponsorizzazione(sp);
+                    setSponsorizzazioniListView();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -141,26 +124,26 @@ public class AggiungiSponsorController implements Initializable {
         this.user=utente;
     }
 
-//    void loadInserisciSessione(Conferenza c){
-//        try{
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
-//            InserisciSessioneController controller = new InserisciSessioneController();
-//            loader.setController(controller);
-//            controller.setSubscene(subscene);
-//            controller.setConferenza(c);
-//            controller.setUtente(user);
-//            Parent root = loader.load();
-//            subscene.setRoot(root);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    public void setSponsorListView() {
-        SponsorDao sponsorDao=new SponsorDao();
+    void loadInserisciSessione(Conferenza c){
         try{
-            LinkedList<Sponsor>sponsors  = sponsorDao.retrieveSponsors();
-            sponsorListView.setItems(FXCollections.observableArrayList());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
+            InserisciSessioneController controller = new InserisciSessioneController();
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(c);
+            controller.setUtente(user);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setSponsorizzazioniListView() {
+        SponsorizzazioneDAO sponsorizzazioneDAO=new SponsorizzazioneDAO();
+        try{
+            LinkedList<Sponsorizzazione> sponsorizzazioni  = sponsorizzazioneDAO.retrieveSponsorizzazioni(conferenza);
+            sponsorListView.setItems(FXCollections.observableArrayList(sponsorizzazioni));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -183,16 +166,9 @@ public class AggiungiSponsorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sponsors.loadSponsor();
         selezionaSponsorChoiceBox.setItems(sponsors.getSponsors());
-//        sponsorizzazioniConferenza = new SponsorizzazioniConferenza(conferenza);
-//        try{
-//            sponsorizzazioniConferenza.loadSponsorizzazioni();
-//        }catch (SQLException e){
-//        }
-//        e.printStackTrace();
-//        sponsorListView.setItems(sponsorizzazioniConferenza.getSponsorizzazioni());
-
+        setSponsorizzazioniListView();
         ObservableList<String> valute = FXCollections.observableArrayList();
-        valute.addAll("$","£","euro");
+        valute.addAll("$","£","€");
         valutaChoiceBox.setItems(valute);
     }
 }
