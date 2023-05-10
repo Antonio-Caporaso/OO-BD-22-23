@@ -19,6 +19,11 @@
       <ListView fx:id="sessioniListView" layoutX="14.0" layoutY="124.0" prefHeight="560.0" prefWidth="725.0" stylesheets="@../CSS/ListView.css" />
       <ButtonBar layoutX="703.0" layoutY="655.0" prefHeight="31.0" prefWidth="215.0">
          <buttons>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="31.0" prefWidth="92.0" stylesheets="@../CSS/defaultButton.css" text="Back" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
             <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextButtonOnAction" prefHeight="31.0" prefWidth="92.0" stylesheets="@../CSS/defaultButton.css" text="Next" textFill="WHITE">
                <font>
                   <Font size="15.0" />
