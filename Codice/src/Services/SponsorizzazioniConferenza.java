@@ -14,7 +14,9 @@ public class SponsorizzazioniConferenza {
     public SponsorizzazioniConferenza(Conferenza conferenza){
         sponsorizzazioni = FXCollections.observableArrayList();
         this.conferenza = conferenza;
-        sponsorizzazioni.addAll(conferenza.getSponsorizzataDa());
+        if(conferenza.getSponsorizzataDa()!= null){
+            sponsorizzazioni.addAll(conferenza.getSponsorizzataDa());
+        }
     }
 
     public ObservableList<Sponsorizzazione> getSponsorizzazioni() {
