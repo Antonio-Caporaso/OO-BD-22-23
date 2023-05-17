@@ -7,10 +7,13 @@ public class Sponsorizzazione {
     private Conferenza conferenza;
     private double contributo;
 
+    //private Currency valuta; Da inserire sul database per tenere traccia della valuta?
+
     public Sponsorizzazione(Sponsor s, Conferenza conferenza, double contributo) {
         this.sponsor = s;
         this.conferenza = conferenza;
         this.contributo = contributo;
+        //this.valuta = valuta; Questa modifica al costruttore ha degli effetti collaterali
     }
 
     public Sponsorizzazione() {
@@ -41,8 +44,12 @@ public class Sponsorizzazione {
         this.conferenza = conferenza;
     }
 
+
     @Override
     public String toString() {
-        return sponsor +", contributo=" + contributo;
+        return "Sponsorizzazione{" +
+                "sponsor=" + sponsor +
+                ", conferenza=" + conferenza +
+                ", contributo=" + contributo;
     }
 }

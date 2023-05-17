@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -79,6 +80,7 @@ public class EditSponsorController implements Initializable {
         Sponsor s = sponsorChoice.getSelectionModel().getSelectedItem();
         try{
             float contributo = Float.parseFloat(contributoTextField.getText());
+            String valuta = valutaChoice.getValue();
             Sponsorizzazione sp = new Sponsorizzazione(s,conferenza,contributo);
             sponsorizzazioni.addSponsorizzazione(sp);
         }catch (NumberFormatException e){
