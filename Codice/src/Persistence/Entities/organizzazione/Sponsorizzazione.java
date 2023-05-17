@@ -47,9 +47,6 @@ public class Sponsorizzazione {
 
     @Override
     public String toString() {
-        return "Sponsorizzazione{" +
-                "sponsor=" + sponsor +
-                ", conferenza=" + conferenza +
-                ", contributo=" + contributo;
+        return sponsor +", contributo=" + contributo;
     }
 }
