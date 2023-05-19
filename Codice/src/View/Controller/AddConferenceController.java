@@ -16,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import Persistence.Entities.Conferenze.Sede;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -79,7 +78,7 @@ public class AddConferenceController implements Initializable,FormChecker{
             Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user);
             conference.addConferenza(c);
             openAddedConferenceDialogWindow();
-            loadAddSponsor(c);
+            loadAddOrganizzatori(c);
         }catch (BlankFieldException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -97,12 +96,12 @@ public class AddConferenceController implements Initializable,FormChecker{
         alert.showAndWait();
     }
 
-    public void loadAddSponsor(Conferenza c){
+    private void loadAddOrganizzatori(Conferenza c){
         ConferenzaDao conferenzaDao= new ConferenzaDao();
         conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
-            AggiungiSponsorController controller = new AggiungiSponsorController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddOrganizzatori.fxml"));
+            AddOrganizzatoriController controller = new AddOrganizzatoriController();
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
             controller.setUtente(user);
