@@ -1,12 +1,11 @@
 package View.Controller;
 
-import Exceptions.BlankFieldException;
-import Persistence.DAO.SalaDao;
-import Persistence.DAO.SessioneDao;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sala;
-import Persistence.Entities.Conferenze.Sessione;
-import Persistence.Entities.Utente;
+import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,49 +13,36 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import tornadofx.control.DateTimePicker;
 
-import java.net.URL;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.ResourceBundle;
+import Exceptions.BlankFieldException;
+import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Conferenze.Sala;
+import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.Utente;
+import Services.Sale;
+import Services.Sessioni;
 
 public class InserisciSessioneController implements Initializable,FormChecker {
     @FXML
     private Button backButton;
     @FXML
-    private DatePicker dataFineDatePicker;
-    @FXML
-    private DatePicker dataInizioDatePicker;
-    @FXML
     private Button inserisciButton;
     @FXML
-    private ChoiceBox<String> salaChoiceBox;
+    private ChoiceBox<Sala> saleChoiceBox;
     @FXML
     private TextField titoloSessioneTextField;
     @FXML
-    private Spinner<Integer> orarioFineMinutiSpinner;
+    private DateTimePicker inizioDateTimePicker;
     @FXML
-    private Spinner<Integer> orarioFineOreSpinner;
-    @FXML
-    private Spinner<Integer> orarioInizioMinutiSpinner;
-    @FXML
-    private Spinner<Integer> orarioInizioOreSpinner;
+    private DateTimePicker fineDateTimePicker;
     private Conferenza conferenza;
-    private Sessione sessione;
     private SubScene subscene;
     private Utente user;
+    private Sale sale;
+    private Sessioni sessioni;
 
-
-    @FXML
-    void backButtonOnAction(ActionEvent event) {
-        loadViewSessioni(conferenza);
-
-    }
-
+    //Public Setters
     public void setConferenza(Conferenza conferenza){
         this.conferenza=conferenza;
     }
@@ -66,67 +52,18 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     public void setUtente(Utente utente){
         this.user=utente;
     }
-
-    public void setSpinnersAtLaunch(){
-    SpinnerValueFactory<Integer> ValueFactoryInizioOre = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
-    SpinnerValueFactory<Integer> ValueFactoryInizioMinuti = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
-    SpinnerValueFactory<Integer> ValueFactoryFineOre = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
-    SpinnerValueFactory<Integer> ValueFactoryFineMinuti = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
-
-    orarioInizioMinutiSpinner.setValueFactory(ValueFactoryInizioMinuti);
-    orarioInizioOreSpinner.setValueFactory(ValueFactoryInizioOre);
-    orarioFineMinutiSpinner.setValueFactory(ValueFactoryFineMinuti);
-    orarioFineOreSpinner.setValueFactory(ValueFactoryFineOre);
-
-    orarioFineOreSpinner.setEditable(true);
-    orarioFineMinutiSpinner.setEditable(true);
-    orarioInizioMinutiSpinner.setEditable(true);
-    orarioInizioOreSpinner.setEditable(true);
-
-    orarioFineOreSpinner.getValue();
-    orarioFineMinutiSpinner.getValue();
-    orarioInizioMinutiSpinner.getValue();
-    orarioInizioOreSpinner.getValue();
-    }
-
-    public void loadChoiceBox(){
-        SalaDao sala= new SalaDao();
-        try {
-            int sedeID = conferenza.getSede().getSedeID();
-            salaChoiceBox.getItems().setAll(sala.retrieveNomeSalaBySedeID(sedeID));
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-
+    //Button methods
+    @FXML
+    void backButtonOnAction(ActionEvent event) {
+        loadViewSessioni(conferenza);
     }
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
         try {
             checkFieldsAreBlank();
-            String titolo = titoloSessioneTextField.getText();
-            LocalDate dataInizioSelected = dataInizioDatePicker.getValue();
-            LocalDate dataFineSelected = dataFineDatePicker.getValue();
-            Date dataInizio = Date.valueOf(dataInizioSelected);
-            Date dataFine = Date.valueOf(dataFineSelected);
-            int oraInizio = orarioInizioOreSpinner.getValue();
-            int minutiInizio= orarioInizioMinutiSpinner.getValue();
-            int oraFine= orarioFineOreSpinner.getValue();
-            int minutiFine= orarioFineMinutiSpinner.getValue();
-            Calendar calInizio = Calendar.getInstance();
-            Calendar calFine = Calendar.getInstance();
-            calInizio.set(Calendar.HOUR_OF_DAY, oraInizio);
-            calInizio.set(Calendar.MINUTE, minutiInizio);
-            calFine.set(Calendar.HOUR_OF_DAY, oraFine);
-            calFine.set(Calendar.MINUTE, minutiFine);
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            String orarioInizioStr = sdf.format(calInizio.getTime());
-            String orarioFineStr = sdf.format(calFine.getTime());
-            Time orarioInizio = Time.valueOf(orarioInizioStr + ":00");
-            Time orarioFine = Time.valueOf(orarioFineStr + ":00");
-            Sala sala=selezionaSala();
-            sessione= new Sessione(titolo,dataInizio,dataFine,sala,conferenza,orarioInizio,orarioFine);
-            SessioneDao sessioneDao = new SessioneDao();
-            sessioneDao.saveSessione(sessione);
+            sessioni = new Sessioni(conferenza);
+            Sessione s = setSessione();
+            sessioni.addSessione(s);
             openAddSessioneDialogWindow();
             loadViewSessioni(conferenza);
         }catch (BlankFieldException e){
@@ -134,12 +71,23 @@ public class InserisciSessioneController implements Initializable,FormChecker {
             alert.setTitle("Error");
             alert.setHeaderText(e.getMessage());
             alert.showAndWait();
-        }catch (Exception e){
+        }catch (SQLException e){
             e.printStackTrace();
         }
     }
-
-    public void loadViewSessioni(Conferenza c){
+    //private Methods
+    private Sessione setSessione() {
+        Sessione s = new Sessione();
+        s.setConferenza(conferenza);
+        s.setTitolo(titoloSessioneTextField .getText());
+        s.setLocazione(saleChoiceBox.getValue());
+        s.setDataInizio(Date.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalDate()));
+        s.setDataFine(Date.valueOf(fineDateTimePicker.getDateTimeValue().toLocalDate()));
+        s.setOrarioInizio(Time.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalTime()));
+        s.setOrarioFine(Time.valueOf(fineDateTimePicker.getDateTimeValue().toLocalTime()));
+        return  s;
+    }
+    private void loadViewSessioni(Conferenza c){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessione.fxml"));
             VisualizzaSessioneController controller = new VisualizzaSessioneController();
@@ -153,24 +101,6 @@ public class InserisciSessioneController implements Initializable,FormChecker {
             e.printStackTrace();
         }
     }
-    public Sala selezionaSala(){
-        SalaDao salaDao = new SalaDao();
-        Sala sala = new Sala();
-        try {
-            String nomeSala = salaChoiceBox.getValue();
-            int idSede = conferenza.getSede().getSedeID();
-            sala = salaDao.retreiveSalaBySedeIdAndNomeSala(idSede, nomeSala);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return sala;
-    }
-    @Override
-    public void checkFieldsAreBlank() throws BlankFieldException {
-        if(titoloSessioneTextField.getText().isBlank() || dataInizioDatePicker.getValue().equals(null) ||
-                dataFineDatePicker.getValue().equals(null) || salaChoiceBox.getValue().equals(null))
-            throw new BlankFieldException();
-    }
     public void openAddSessioneDialogWindow(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Successo!");
@@ -178,10 +108,24 @@ public class InserisciSessioneController implements Initializable,FormChecker {
         alert.getButtonTypes().remove(ButtonType.CANCEL);
         alert.showAndWait();
     }
-
+    private void loadSaleChoiceBox(){
+        try{
+            sale = new Sale(conferenza.getSede());
+            sale.loadSale();
+            saleChoiceBox.setItems(sale.getSale());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    //Overrides
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if(titoloSessioneTextField.getText().isBlank() || inizioDateTimePicker.getValue().equals(null) ||
+                fineDateTimePicker.getValue().equals(null) || saleChoiceBox.getValue().equals(null))
+            throw new BlankFieldException();
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            setSpinnersAtLaunch();
-            loadChoiceBox();
+            loadSaleChoiceBox();
     }
 }
