@@ -1,13 +1,10 @@
 package View.Controller;
 
-import Exceptions.SessioneNotSelectedException;
-import Persistence.DAO.ConferenzaDao;
-import Persistence.DAO.SessioneDao;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sessione;
-import Persistence.Entities.Utente;
-import Services.Sessioni;
-import javafx.collections.FXCollections;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,31 +16,38 @@ import javafx.scene.control.ListView;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
-
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
+import Exceptions.SessioneNotSelectedException;
+import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.Utente;
+import Services.Sessioni;
 public class VisualizzaSessioneController implements Initializable {
     @FXML
     private Button backButton;
-
     @FXML
     private Button inserisciButton;
-
     @FXML
     private Button nextButton;
     @FXML
     private Button rimuoviButton;
     @FXML
+    private ListView<Sessione> sessioniListView;
+    @FXML
     private SubScene subscene;
     private Conferenza conferenza;
     private Sessioni sessioni = new Sessioni(conferenza);
     private Utente user;
-    @FXML
-    private ListView<Sessione> sessioniListView;
+    //Public Setters
+    public void setConferenza(Conferenza c){
+        this.conferenza=c;
+    }
+    public void setSubscene(SubScene subscene) {
+        this.subscene = subscene;
+    }
+    public void setUser(Utente utente){
+        this.user=utente;
+    }
+    //Button Methods
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
         loadInserisciSessione();
@@ -55,7 +59,6 @@ public class VisualizzaSessioneController implements Initializable {
     void backButtonOnAction(ActionEvent event){
         loadAggiungiSponsor();
     }
-
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
         try {
@@ -80,8 +83,8 @@ public class VisualizzaSessioneController implements Initializable {
             alert.showAndWait();
         }
     }
-
-    public void loadInserisciSessione(){
+    //Private methods
+    private void loadInserisciSessione(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
             InserisciSessioneController controller = new InserisciSessioneController();
@@ -95,7 +98,7 @@ public class VisualizzaSessioneController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void loadAggiungiSponsor(){
+    private void loadAggiungiSponsor(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
             AggiungiSponsorController controller = new AggiungiSponsorController();
@@ -109,24 +112,16 @@ public class VisualizzaSessioneController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void setConferenza(Conferenza c){
-        this.conferenza=c;
-    }
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-    public void setUser(Utente utente){
-        this.user=utente;
-    }
-    public void setSessioni() {
-    SessioneDao sessioneDao= new SessioneDao();
+    private void setSessioni() {
+    Sessioni sessioni= new Sessioni(conferenza);
     try {
-        LinkedList<Sessione> sessioni = sessioneDao.retrieveSessioni(conferenza);
-        sessioniListView.setItems(FXCollections.observableArrayList(sessioni));
+        sessioni.loadSessioni();
+        sessioniListView.setItems(sessioni.getSessioni());
     }catch(SQLException e){
         e.printStackTrace();
     }
 }
+    //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setSessioni();
