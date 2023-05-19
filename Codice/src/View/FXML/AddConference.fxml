@@ -104,7 +104,7 @@
                   </Label>
                </children>
             </Pane>
-            <ChoiceBox fx:id="sedeChoice" onDragDetected="#showSedi" prefHeight="24.0" prefWidth="642.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ChoiceBox fx:id="sedeChoice" onDragDetected="#showSedi" prefHeight="24.0" prefWidth="642.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <ButtonBar layoutX="718.0" layoutY="675.0" prefHeight="24.0" prefWidth="200.0">
