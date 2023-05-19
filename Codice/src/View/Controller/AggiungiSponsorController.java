@@ -4,11 +4,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Utente;
-import Persistence.Entities.organizzazione.Sponsor;
-import Persistence.Entities.organizzazione.Sponsorizzazione;
-import Services.SponsorizzazioniConferenza;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,9 +12,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
-import Services.Sponsors;
 import javafx.fxml.FXMLLoader;
 
+import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Utente;
+import Persistence.Entities.organizzazione.Sponsor;
+import Persistence.Entities.organizzazione.Sponsorizzazione;
+import Services.SponsorizzazioniConferenza;
+import Services.Sponsors;
 public class AggiungiSponsorController implements Initializable {
     @FXML
     private ResourceBundle resources;
@@ -46,28 +46,44 @@ public class AggiungiSponsorController implements Initializable {
     private Conferenza conferenza;
     private Utente user;
     private Sponsors sponsors= new Sponsors();
+    //Public Setters
+    public void setConferenza(Conferenza c){
+        this.conferenza=c;
+    }
+    public void setSubscene(SubScene subscene) {
+        this.subscene = subscene;
+    }
+    public void setUtente(Utente utente){
+        this.user=utente;
+    }
+    //Button methods
     @FXML
-    void backOnAction(ActionEvent event) {
-        //Da valutare cosa abbiamo intanzione di caricare, forse editConferenza?
+    void backButtonOnAction(ActionEvent event) {
+        loadAddOrganizzatore();
     }
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
-        Sponsor sponsorSelezionato = selezionaSponsorChoiceBox.getSelectionModel().getSelectedItem();
-        double contributo = Double.parseDouble(importoTextField.getText());
-        SponsorizzazioniConferenza sponsorizzazioniConferenza= new SponsorizzazioniConferenza(conferenza);
-        Sponsorizzazione sponsorizzazione=new Sponsorizzazione(sponsorSelezionato,conferenza,contributo);
         try{
+            Sponsor sponsorSelezionato = selezionaSponsorChoiceBox.getSelectionModel().getSelectedItem();
+            if(sponsorSelezionato ==null||importoTextField.getText().isEmpty()){
+                throw new NullPointerException();
+            }
+            double contributo = Double.parseDouble(importoTextField.getText());
+            SponsorizzazioniConferenza sponsorizzazioniConferenza= new SponsorizzazioniConferenza(conferenza);
+            Sponsorizzazione sponsorizzazione=new Sponsorizzazione(sponsorSelezionato,conferenza,contributo);
             sponsorizzazioniConferenza.addSponsorizzazione(sponsorizzazione);
-
             setSponsorizzazioniListView();
         }catch (SQLException e){
             e.printStackTrace();
+        }catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Seleziona tutti i campi prima di procedere");
+            alert.showAndWait();
         }
-
     }
     @FXML
     void nextOnAction(ActionEvent event) {
-        loadInserisciSessione(conferenza);
+        loadInserisciSessione();
     }
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
@@ -80,7 +96,6 @@ public class AggiungiSponsorController implements Initializable {
             Optional<ButtonType> result = showDeleteDialog();
             if(result.get() == ButtonType.OK) {
                 try{
-
                     sponsorizzazioniConferenza.removeSponsorizzazione(sp);
                     setSponsorizzazioniListView();
                 } catch (SQLException e) {
@@ -99,22 +114,14 @@ public class AggiungiSponsorController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
-    public void setConferenza(Conferenza c){
-        this.conferenza=c;
-    }
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-    public void setUtente(Utente utente){
-        this.user=utente;
-    }
-    void loadInserisciSessione(Conferenza c){
+    //Private Methods
+    private void loadInserisciSessione(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
             InserisciSessioneController controller = new InserisciSessioneController();
             loader.setController(controller);
             controller.setSubscene(subscene);
-            controller.setConferenza(c);
+            controller.setConferenza(conferenza);
             controller.setUtente(user);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -122,7 +129,7 @@ public class AggiungiSponsorController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void setSponsorizzazioniListView() {
+    private void setSponsorizzazioniListView() {
         SponsorizzazioniConferenza sponsorizzazioniConferenza=new SponsorizzazioniConferenza(conferenza);
         try{
             sponsorizzazioniConferenza.loadSponsorizzazioni();
@@ -131,18 +138,21 @@ public class AggiungiSponsorController implements Initializable {
             e.printStackTrace();
         }
     }
-    @FXML
-    void initialize() {
-        assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'AddSponsor.fxml'.";
-        assert importoTextField != null : "fx:id=\"importoTextField\" was not injected: check your FXML file 'AddSponsor.fxml'.";
-        assert inserisciButton != null : "fx:id=\"inserisciButton\" was not injected: check your FXML file 'AddSponsor.fxml'.";
-        assert nextButton != null : "fx:id=\"nextButton\" was not injected: check your FXML file 'AddSponsor.fxml'.";
-        assert rimuoviButton != null : "fx:id=\"rimuoviButton\" was not injected: check your FXML file 'AddSponsor.fxml'.";
-        assert selezionaSponsorChoiceBox != null : "fx:id=\"selezionaSponsorChoiceBox\" was not injected: check your FXML file 'AddSponsor.fxml'.";
-        assert sponsorListView != null : "fx:id=\"sponsorListView\" was not injected: check your FXML file 'AddSponsor.fxml'.";
-        assert valutaChoiceBox != null : "fx:id=\"valutaChoiceBox\" was not injected: check your FXML file 'AddSponsor.fxml'.";
-
+    private void loadAddOrganizzatore(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddOrganizzatori.fxml"));
+            AddOrganizzatoriController controller = new AddOrganizzatoriController();
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(conferenza);
+            controller.setUtente(user);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sponsors.loadSponsor();
