@@ -14,7 +14,9 @@ public class EntiOrganizzatori {
     public EntiOrganizzatori(Conferenza conferenza){
         enti = FXCollections.observableArrayList();
         this.conferenza = conferenza;
-        enti.addAll(conferenza.getOrganizzataDa());
+        if (conferenza.getOrganizzataDa() != null) {
+            enti.addAll(conferenza.getOrganizzataDa());
+        }
     }
     public ObservableList<Ente> getEnti() {
         return enti;
