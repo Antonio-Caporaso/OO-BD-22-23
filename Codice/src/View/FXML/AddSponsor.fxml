@@ -21,7 +21,7 @@
         </Label>
       <ButtonBar layoutX="716.0" layoutY="675.0" prefHeight="31.0" prefWidth="202.0">
         <buttons>
-          <Button fx:id="backButton" mnemonicParsing="false" stylesheets="@../CSS/defaultButton.css" text="Back" textFill="WHITE">
+          <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Back" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -48,8 +48,8 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="selezionaSponsorChoiceBox" layoutX="279.0" layoutY="100.0" prefHeight="26.0" prefWidth="458.0" />
-      <ChoiceBox fx:id="valutaChoiceBox" layoutX="439.0" layoutY="169.0" prefHeight="26.0" prefWidth="54.0" />
+      <ChoiceBox fx:id="selezionaSponsorChoiceBox" layoutX="279.0" layoutY="100.0" prefHeight="26.0" prefWidth="458.0" stylesheets="@../CSS/choiceBox.css" />
+      <ChoiceBox fx:id="valutaChoiceBox" layoutX="439.0" layoutY="169.0" prefHeight="26.0" prefWidth="54.0" stylesheets="@../CSS/choiceBox.css" />
       <TextField fx:id="importoTextField" layoutX="279.0" layoutY="170.0" promptText="Inserisci importo" />
       <ListView fx:id="sponsorListView" layoutX="14.0" layoutY="237.0" prefHeight="432.0" prefWidth="724.0" stylesheets="@../CSS/ListView.css" />
       <Button fx:id="inserisciButton" layoutX="769.0" layoutY="205.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="31.0" prefWidth="134.0" stylesheets="@../CSS/defaultButton.css" text="Inserisci" textFill="WHITE">
