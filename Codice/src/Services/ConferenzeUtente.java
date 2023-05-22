@@ -40,7 +40,7 @@ public class ConferenzeUtente extends Conferenze {
     public void loadSessioni() throws SQLException {
         SessioneDao sessionedao = new SessioneDao();
         for(Conferenza c: conferenzeUtente){
-            c.setSessioni(sessionedao.retrieveSessioni(c));
+            c.setSessioni(sessionedao.retrieveSessioniByConferenza(c));
         }
     }
     public ObservableList<Conferenza> getConferenzeUtente() {
