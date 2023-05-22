@@ -6,14 +6,13 @@ public class Sponsorizzazione {
     private Sponsor sponsor;
     private Conferenza conferenza;
     private double contributo;
+    private String valuta;
 
-    //private Currency valuta; Da inserire sul database per tenere traccia della valuta?
-
-    public Sponsorizzazione(Sponsor s, Conferenza conferenza, double contributo) {
+    public Sponsorizzazione(Sponsor s, Conferenza conferenza, double contributo, String valuta) {
         this.sponsor = s;
         this.conferenza = conferenza;
         this.contributo = contributo;
-        //this.valuta = valuta; Questa modifica al costruttore ha degli effetti collaterali
+        this.valuta = valuta; //Questa modifica al costruttore ha degli effetti collaterali
     }
 
     public Sponsorizzazione() {
@@ -44,9 +43,26 @@ public class Sponsorizzazione {
         this.conferenza = conferenza;
     }
 
+    public String getValuta() {
+        return valuta;
+    }
 
+    public String getCodiceValuta(){
+        if(valuta.equals("$"))
+            return "USD";
+        else if(valuta.equals("€"))
+            return "EUR";
+        else if(valuta.equals("£"))
+            return  "GBP";
+        else if(valuta.equals("¥"))
+            return "JPY";
+        else return null;
+    }
+    public void setValuta(String valuta){
+        this.valuta=valuta;
+    }
     @Override
     public String toString() {
-        return sponsor +", contributo=" + contributo;
+        return sponsor +", contributo = " + contributo+" "+valuta;
     }
 }

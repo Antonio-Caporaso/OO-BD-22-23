@@ -1,5 +1,7 @@
 package View.Controller;
 
+import Exceptions.BlankFieldException;
+import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Sponsor;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
@@ -21,11 +23,11 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class EditSponsorController implements Initializable {
+public class EditSponsorController implements Initializable, FormChecker {
     private SponsorizzazioniConferenza sponsorizzazioni;
     private Sponsors sponsors = new Sponsors();
     private Conferenza conferenza;
-    private EditConferenceController controller;
+    private ModificaConferenzaController controller;
     private SubScene subscene;
     @FXML
     private ListView<Sponsorizzazione> SponsorView;
@@ -47,6 +49,15 @@ public class EditSponsorController implements Initializable {
     private Label titleLabel;
     @FXML
     private ChoiceBox<String> valutaChoice;
+
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if (sponsorChoice.equals(null) ||
+                contributoTextField.getText().isEmpty() ||
+                valutaChoice.getValue().isEmpty())
+            throw new BlankFieldException();
+    }
+
     @FXML
     void deleteOnAction(ActionEvent event) {
         try{
@@ -77,18 +88,19 @@ public class EditSponsorController implements Initializable {
 
     @FXML
     void inserisciSponsorOnAction(ActionEvent event) {
-        Sponsor s = sponsorChoice.getSelectionModel().getSelectedItem();
         try{
+            checkFieldsAreBlank();
+            Sponsor s = sponsorChoice.getSelectionModel().getSelectedItem();
             float contributo = Float.parseFloat(contributoTextField.getText());
             String valuta = valutaChoice.getValue();
-            Sponsorizzazione sp = new Sponsorizzazione(s,conferenza,contributo);
+            Sponsorizzazione sp = new Sponsorizzazione(s,conferenza,contributo,valuta);
             sponsorizzazioni.addSponsorizzazione(sp);
+        }catch (BlankFieldException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Riempire tutti i campi");
+            alert.showAndWait();
         }catch (NumberFormatException e){
             Alert alert = new Alert( Alert.AlertType.ERROR);
-            alert.setContentText("Inserire un numero");
-            alert.showAndWait();
-        }catch (NullPointerException e2){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Inserire un numero");
             alert.showAndWait();
         }catch (SQLException e){
@@ -99,7 +111,7 @@ public class EditSponsorController implements Initializable {
     }
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
         loader.setController(controller);
         controller.setConferenza(conferenza);
         controller.setSponsorizzazioni();
@@ -110,7 +122,7 @@ public class EditSponsorController implements Initializable {
     public void setConferenza(Conferenza conferenza) {
         this.conferenza = conferenza;
     }
-    public void setEditConferenceController(EditConferenceController controller) {
+    public void setEditConferenceController(ModificaConferenzaController controller) {
         this.controller = controller;
     }
 
@@ -128,8 +140,17 @@ public class EditSponsorController implements Initializable {
         sponsorChoice.setItems(sponsors.getSponsors());
         sponsorizzazioni = new SponsorizzazioniConferenza(conferenza);
         SponsorView.setItems(sponsorizzazioni.getSponsorizzazioni());
+        setValute();
+    }
+
+    private void setValute() {
+        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
         ObservableList<String> valute = FXCollections.observableArrayList();
-        valute.addAll("$","£","euro");
-        valutaChoice.setItems(valute);
+        try{
+            valute.addAll(dao.retrieveSimboloValute());
+            valutaChoice.setItems(valute);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

@@ -1,25 +1,26 @@
 package View.Controller;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.Optional;
-import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.SubScene;
-import javafx.scene.control.*;
-import javafx.fxml.FXMLLoader;
-
+import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Sponsor;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
 import Services.SponsorizzazioniConferenza;
 import Services.Sponsors;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.SubScene;
+import javafx.scene.control.*;
+
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
+import java.util.ResourceBundle;
 public class AggiungiSponsorController implements Initializable {
     @FXML
     private ResourceBundle resources;
@@ -69,8 +70,9 @@ public class AggiungiSponsorController implements Initializable {
                 throw new NullPointerException();
             }
             double contributo = Double.parseDouble(importoTextField.getText());
+            String valuta = valutaChoiceBox.getValue();
             SponsorizzazioniConferenza sponsorizzazioniConferenza= new SponsorizzazioniConferenza(conferenza);
-            Sponsorizzazione sponsorizzazione=new Sponsorizzazione(sponsorSelezionato,conferenza,contributo);
+            Sponsorizzazione sponsorizzazione=new Sponsorizzazione(sponsorSelezionato,conferenza,contributo,valuta);
             sponsorizzazioniConferenza.addSponsorizzazione(sponsorizzazione);
             setSponsorizzazioniListView();
         }catch (SQLException e){
@@ -158,8 +160,15 @@ public class AggiungiSponsorController implements Initializable {
         sponsors.loadSponsor();
         selezionaSponsorChoiceBox.setItems(sponsors.getSponsors());
         setSponsorizzazioniListView();
+    }
+    private void setValute() {
+        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
         ObservableList<String> valute = FXCollections.observableArrayList();
-        valute.addAll("$","£","€");
-        valutaChoiceBox.setItems(valute);
+        try{
+            valute.addAll(dao.retrieveSimboloValute());
+            valutaChoiceBox.setItems(valute);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
