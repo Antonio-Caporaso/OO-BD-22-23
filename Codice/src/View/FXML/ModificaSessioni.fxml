@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Label fx:id="titleLabel" layoutX="14.0" layoutY="27.0" text="Modifica delle sessioni" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font></Label>
+      <VBox layoutX="714.0" layoutY="99.0" prefHeight="553.0" prefWidth="204.0">
+         <children>
+            <Button fx:id="editSessionsButton" mnemonicParsing="false" onAction="#editSessionsOnAction" prefHeight="70.0" prefWidth="240.0" text="Modifica sessione">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="addSessioneButton" mnemonicParsing="false" onAction="#addSessioneOnAction" prefHeight="70.0" prefWidth="224.0" text="Aggiungi sessione">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="rimuoviSessioneButton" mnemonicParsing="false" onAction="#rimuoviSessioneOnAction" prefHeight="70.0" prefWidth="216.0" text="Rimuovi sessione">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <Accordion layoutX="14.0" layoutY="99.0" prefHeight="599.0" prefWidth="683.0" />
+      <Accordion layoutX="14.0" layoutY="172.0" />
+      <Button fx:id="confermaButton" layoutX="714.0" layoutY="674.0" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="204.0" text="Fine" />
+      <ListView fx:id="sessioniView" layoutX="10.0" layoutY="102.0" prefHeight="599.0" prefWidth="683.0" />
+   </children>
+</AnchorPane>
