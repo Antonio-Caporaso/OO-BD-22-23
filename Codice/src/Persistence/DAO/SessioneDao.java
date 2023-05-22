@@ -33,7 +33,7 @@ public class SessioneDao {
         stm.setInt(7,sessione.getSessioneID());
         stm.executeUpdate();
     }
-    public LinkedList<Sessione> retrieveSessioni(Conferenza conferenza) throws SQLException {
+    public LinkedList<Sessione> retrieveSessioniByConferenza(Conferenza conferenza) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         SalaDao daosala = new SalaDao();
