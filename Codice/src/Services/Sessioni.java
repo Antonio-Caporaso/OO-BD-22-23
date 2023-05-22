@@ -32,7 +32,7 @@ public class Sessioni {
     public void loadSessioni() throws SQLException {
         SessioneDao dao = new SessioneDao();
         sessioni.clear();
-        sessioni.addAll(dao.retrieveSessioni(conferenza));
+        sessioni.addAll(dao.retrieveSessioniByConferenza(conferenza));
     }
     public void addSessione(Sessione sessione) throws SQLException{
         SessioneDao sessioneDao = new SessioneDao();
