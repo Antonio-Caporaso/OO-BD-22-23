@@ -1,23 +1,22 @@
 package View.Controller;
 
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.SubScene;
-import javafx.scene.control.*;
-import javafx.fxml.FXMLLoader;
-
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Ente;
 import Services.Enti;
 import Services.EntiOrganizzatori;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.SubScene;
+import javafx.scene.control.*;
+
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class AddOrganizzatoriController implements Initializable {
     @FXML
@@ -131,8 +130,8 @@ public class AddOrganizzatoriController implements Initializable {
     }
     private void loadEditConferenza(){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-            EditConferenceController controller = new EditConferenceController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
+            ModificaConferenzaController controller = new ModificaConferenzaController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);

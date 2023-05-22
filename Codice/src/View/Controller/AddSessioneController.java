@@ -29,7 +29,7 @@ public class AddSessioneController implements Initializable,FormChecker {
     private Conferenza conferenza;
     private Sessioni sessioni;
     private Sale sale;
-    private EditConferenceController editConferenceController;
+    private ManageSessioniController manageSessioniController;
     private SubScene subscene;
     @FXML
     private Button annullaButton;
@@ -38,7 +38,7 @@ public class AddSessioneController implements Initializable,FormChecker {
     @FXML
     private DateTimePicker inizioDateTimePicker;
     @FXML
-    private Button nextButton;
+    private Button addButton;
     @FXML
     private TextField nomeTF;
     @FXML
@@ -52,14 +52,22 @@ public class AddSessioneController implements Initializable,FormChecker {
             throw new BlankFieldException();
     }
 
+    public ManageSessioniController getManageSessioniController() {
+        return manageSessioniController;
+    }
+
+    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+        this.manageSessioniController = manageSessioniController;
+    }
+
     @FXML
-    void nextOnAction(ActionEvent event) throws IOException {
+    void addOnAction(ActionEvent event) throws IOException {
         try{
             checkFieldsAreBlank();
             Sessione s = setSessione();
             sessioni.addSessione(s);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-            loader.setController(editConferenceController);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
+            loader.setController(manageSessioniController);
             Parent root = loader.load();
             subscene.setRoot(root);
         }catch (BlankFieldException e){
@@ -72,6 +80,15 @@ public class AddSessioneController implements Initializable,FormChecker {
             alert.showAndWait();
         }
     }
+
+    public Sessioni getSessioni() {
+        return sessioni;
+    }
+
+    public void setSessioni(Sessioni sessioni) {
+        this.sessioni = sessioni;
+    }
+
     private Sessione setSessione() {
         Sessione s = new Sessione();
         s.setConferenza(conferenza);
@@ -97,32 +114,17 @@ public class AddSessioneController implements Initializable,FormChecker {
             e.printStackTrace();
         }
     }
-
-    public void setEditConferenceController(EditConferenceController editConferenceController) {
-        this.editConferenceController = editConferenceController;
-    }
-
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-        loader.setController(editConferenceController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
+        loader.setController(manageSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
-
     public void setConferenza(Conferenza conferenza) {
         this.conferenza = conferenza;
     }
-
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;
-    }
-
-    public Sessioni getSessioni() {
-        return sessioni;
-    }
-
-    public void setSessioni(Sessioni sessioni) {
-        this.sessioni = sessioni;
     }
 }

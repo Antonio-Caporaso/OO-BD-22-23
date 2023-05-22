@@ -14,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import jfxtras.scene.control.agenda.icalendar.ICalendarAgenda;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +23,7 @@ import java.util.ResourceBundle;
 public class EditProgrammaController implements Initializable {
     private Programma programma;
     private SubScene subscene;
-    private EditConferenceController editConferenceController;
+    private ManageSessioniController manageSessioniController;
     private InterventiSessione interventi;
     private IntervalliSessione intervalli;
     private Sessione sessione;
@@ -78,9 +77,10 @@ public class EditProgrammaController implements Initializable {
         this.subscene = subscene;
     }
 
-    public void setEditConferenceController(EditConferenceController editConferenceController) {
-        this.editConferenceController = editConferenceController;
+    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+        this.manageSessioniController = manageSessioniController;
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inizializzaDettagliProgramma();
@@ -116,8 +116,8 @@ public class EditProgrammaController implements Initializable {
 
     @FXML
     private void fineButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-        loader.setController(editConferenceController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
+        loader.setController(manageSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
     }

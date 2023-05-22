@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class EditConferenceDetailsController implements Initializable {
     private Conferenza conferenza;
-    private EditConferenceController editConferenceController;
+    private ModificaConferenzaController modificaConferenzaController;
     private SubScene subScene;
     private Sedi sedi = new Sedi();
     @FXML
@@ -43,14 +43,14 @@ public class EditConferenceDetailsController implements Initializable {
     @FXML
     private ChoiceBox<String> valutaChoice;
 
-    public void setEditConferenceController(EditConferenceController editConferenceController) {
-        this.editConferenceController = editConferenceController;
+    public void setEditConferenceController(ModificaConferenzaController modificaConferenzaController) {
+        this.modificaConferenzaController = modificaConferenzaController;
     }
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-        loader.setController(editConferenceController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
+        loader.setController(modificaConferenzaController);
         Parent root = loader.load();
         subScene.setRoot(root);
     }
@@ -61,8 +61,8 @@ public class EditConferenceDetailsController implements Initializable {
         alert.setContentText("Sicuro di voler modificare i dettagli della conferenza?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-            loader.setController(editConferenceController);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
+            loader.setController(modificaConferenzaController);
             conferenza.setNome(nomeTF.getText());
             conferenza.setDescrizione(descrizioneTF.getText());
             conferenza.setBudget(Float.parseFloat(budgetTextField.getText()));
@@ -71,8 +71,8 @@ public class EditConferenceDetailsController implements Initializable {
             conferenza.setSede(sedeChoice.getValue());
             ConferenzaDao dao = new ConferenzaDao();
             dao.updateDettagliConferenza(conferenza);
-            editConferenceController.setConferenza(conferenza);
-            editConferenceController.setDetails();
+            modificaConferenzaController.setConferenza(conferenza);
+            modificaConferenzaController.setDetails();
             Parent root = loader.load();
             subScene.setRoot(root);
         }

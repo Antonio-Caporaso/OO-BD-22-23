@@ -1,6 +1,5 @@
 package View.Controller;
 
-import Exceptions.SessioneNotSelectedException;
 import Persistence.DAO.ConferenzaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
@@ -16,14 +15,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.ResourceBundle;
-public class EditConferenceController implements Initializable {
+public class ModificaConferenzaController implements Initializable {
     private Conferenza conferenza;
     private Sessioni sessioni ;
     private EntiOrganizzatori organizzatori;
@@ -47,13 +48,9 @@ public class EditConferenceController implements Initializable {
     @FXML
     private Button editEntiButton;
     @FXML
-    private Button rimuoviSessioneButton;
-    @FXML
     private TextArea entiView;
     @FXML
-    private Button addSessioneButton;
-    @FXML
-    private Button editSessionsButton;
+    private Button editSessioniButton;
     @FXML
     private Button editSponsorshipsButton;
     @FXML
@@ -66,24 +63,13 @@ public class EditConferenceController implements Initializable {
     private ListView<Sessione> sessioniView;
     @FXML
     private TextArea sponsorizzazioniView;
-    @FXML
-    public void addSessioneOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSessione.fxml"));
-        AddSessioneController controller = new AddSessioneController();
-        loader.setController(controller);
-        controller.setConferenza(conferenza);
-        controller.setEditConferenceController(this);
-        controller.setSubscene(subscene);
-        controller.setSessioni(sessioni);
-        Parent root = loader.load();
-        subscene.setRoot(root);
-    }
+
     @FXML
     public void confermaButtonOnAction(ActionEvent event) throws IOException, SQLException {
         ConferenzaDao dao = new ConferenzaDao();
         dao.updateDettagliConferenza(conferenza);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/GestioneConferenze.fxml"));
-        ManageConferenceController controller = new ManageConferenceController(user);
+        GestioneConferenzeController controller = new GestioneConferenzeController(user);
         loader.setController(controller);
         controller.setSubscene(subscene);
         Parent root = loader.load();
@@ -112,56 +98,24 @@ public class EditConferenceController implements Initializable {
         subscene.setRoot(root);
     }
     @FXML
-    public void editSessionsOnAction(ActionEvent event) throws IOException {
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
-            EditSessioneController controller = new EditSessioneController();
-            loader.setController(controller);
-            Sessione s = sessioniView.getSelectionModel().getSelectedItem();
-            if(s == null)
-                throw new SessioneNotSelectedException();
-            controller.setSessione(s);
-            controller.setConferenza(conferenza);
-            controller.setEditController(this);
-            controller.setSubScene(subscene);
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        }catch(SessioneNotSelectedException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        }
-    }
-    @FXML
-    void rimuoviSessioneOnAction(ActionEvent event) {
-       try {
-           Sessione s = sessioniView.getSelectionModel().getSelectedItem();
-           if (s == null) {
-               throw new SessioneNotSelectedException();
-           }
-           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-           alert.setContentText("Sicuro di voler rimuovere la sessione '" + s.getTitolo() + "'?");
-           Optional<ButtonType> result = alert.showAndWait();
-           if (result.get() == ButtonType.OK) {
-               try {
-                   sessioni.removeSessione(s);
-               } catch (SQLException e) {
-                   e.printStackTrace();
-               }
-           }
-       }catch (SessioneNotSelectedException e){
-           Alert alert = new Alert(Alert.AlertType.ERROR);
-           alert.setContentText(e.getMessage());
-           alert.showAndWait();
-       }
-    }
-    @FXML
     public void editSponsorshipOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSponsor.fxml"));
         EditSponsorController controller = new EditSponsorController();
         loader.setController(controller);
         controller.setConferenza(conferenza);
         controller.setsubscene(subscene);
+        controller.setEditConferenceController(this);
+        Parent root = loader.load();
+        subscene.setRoot(root);
+    }
+    @FXML
+    public void editSessioniButtonOnAction(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
+        ManageSessioniController controller = new ManageSessioniController();
+        loader.setController(controller);
+        controller.setConferenza(conferenza);
+        controller.setSubscene(subscene);
+        controller.setSessioni(sessioni);
         controller.setEditConferenceController(this);
         Parent root = loader.load();
         subscene.setRoot(root);
@@ -179,7 +133,7 @@ public class EditConferenceController implements Initializable {
     public void setConferenza(Conferenza c){
         this.conferenza=c;
     }
-    public void setSessioni() {
+    private void setSessioni() {
         sessioni = new Sessioni(conferenza);
         try{
             sessioni.loadSessioni();

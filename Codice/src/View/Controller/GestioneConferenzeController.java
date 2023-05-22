@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ManageConferenceController implements Initializable {
+public class GestioneConferenzeController implements Initializable {
     @FXML
     private ListView<Conferenza> conferenzeView;
     @FXML
@@ -30,7 +30,7 @@ public class ManageConferenceController implements Initializable {
     private ConferenzeUtente conferenze = new ConferenzeUtente();
     private Utente user;
 
-    public ManageConferenceController(Utente user) {
+    public GestioneConferenzeController(Utente user) {
         this.user = user;
     }
 
@@ -60,8 +60,8 @@ public class ManageConferenceController implements Initializable {
     @FXML
     public void editOnAction(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-            EditConferenceController controller = new EditConferenceController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
+            ModificaConferenzaController controller = new ModificaConferenzaController();
             loader.setController(controller);
             controller.setConferenza(conferenzeView.getSelectionModel().getSelectedItem());
             controller.setSubscene(subscene);

@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 public class EditSessioneController implements Initializable {
     private Sessione sessione;
     private Conferenza conferenza;
-    private EditConferenceController editConferenceController;
+    private ManageSessioniController manageSessioniController;
     private SubScene subScene;
     @FXML
     private Button annullaButton;
@@ -51,7 +51,7 @@ public class EditSessioneController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
         EditProgrammaController controller = new EditProgrammaController();
         controller.setSubscene(subScene);
-        controller.setEditConferenceController(editConferenceController);
+        controller.setManageSessioniController(manageSessioniController);
         controller.setSessione(sessione);
         loader.setController(controller);
         Parent root = loader.load();
@@ -65,11 +65,11 @@ public class EditSessioneController implements Initializable {
     }
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
-        goToEditConferenceWindow();
+        goToEditSessionsWindow();
     }
-    private void goToEditConferenceWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
-        loader.setController(editConferenceController);
+    private void goToEditSessionsWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
+        loader.setController(manageSessioniController);
         Parent root = loader.load();
         subScene.setRoot(root);
     }
@@ -113,7 +113,12 @@ public class EditSessioneController implements Initializable {
         oraFineLabel.setText(String.valueOf(sessione.getOrarioFine()));
         salaLabel.setText(sessione.getLocazione().getNomeSala());
     }
-    public void setEditController(EditConferenceController editConferenceController) {
-        this.editConferenceController = editConferenceController;
+
+    public ManageSessioniController getManageSessioniController() {
+        return manageSessioniController;
+    }
+
+    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+        this.manageSessioniController = manageSessioniController;
     }
 }

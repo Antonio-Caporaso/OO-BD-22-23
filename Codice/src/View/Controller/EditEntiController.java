@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EditEntiController implements Initializable {
-    private EditConferenceController editController;
+    private ModificaConferenzaController editController;
     private SubScene subScene;
     private Conferenza conferenza;
     private EntiOrganizzatori entiOrganizzatori;
@@ -46,11 +46,11 @@ public class EditEntiController implements Initializable {
         this.conferenza = conferenza;
     }
 
-    public EditConferenceController getEditController() {
+    public ModificaConferenzaController getEditController() {
         return editController;
     }
 
-    public void setEditController(EditConferenceController editController) {
+    public void setEditController(ModificaConferenzaController editController) {
         this.editController = editController;
     }
 
@@ -74,7 +74,7 @@ public class EditEntiController implements Initializable {
 
     @FXML
     void okOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConference.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
         loader.setController(editController);
         editController.setConferenza(conferenza);
         editController.setOrganizzatori();
