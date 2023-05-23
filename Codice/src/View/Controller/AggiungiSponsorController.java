@@ -1,12 +1,10 @@
 package View.Controller;
 
-import Persistence.DAO.SponsorizzazioneDAO;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Utente;
-import Persistence.Entities.organizzazione.Sponsor;
-import Persistence.Entities.organizzazione.Sponsorizzazione;
-import Services.SponsorizzazioniConferenza;
-import Services.Sponsors;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
+import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,10 +15,13 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import Persistence.DAO.SponsorizzazioneDAO;
+import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Utente;
+import Persistence.Entities.organizzazione.Sponsor;
+import Persistence.Entities.organizzazione.Sponsorizzazione;
+import Services.SponsorizzazioniConferenza;
+import Services.Sponsors;
 public class AggiungiSponsorController implements Initializable {
     @FXML
     private ResourceBundle resources;
@@ -158,6 +159,7 @@ public class AggiungiSponsorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sponsors.loadSponsor();
+        setValute();
         selezionaSponsorChoiceBox.setItems(sponsors.getSponsors());
         setSponsorizzazioniListView();
     }
