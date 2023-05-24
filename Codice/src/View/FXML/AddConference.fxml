@@ -85,10 +85,9 @@
                   <Insets top="20.0" />
                </GridPane.margin>
             </TextArea>
-            <TextField fx:id="budgetTextField" promptText="Inserisci il tuo budget" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Pane prefHeight="59.0" prefWidth="279.0" GridPane.rowIndex="3">
                <children>
-                  <Label layoutX="14.0" layoutY="36.0" text="Budget" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="30.0" text="Budget" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -105,6 +104,12 @@
                </children>
             </Pane>
             <ChoiceBox fx:id="sedeChoice" onDragDetected="#showSedi" prefHeight="24.0" prefWidth="642.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <TextField fx:id="budgetTextField" layoutY="27.0" promptText="Inserisci budget" />
+                  <ChoiceBox fx:id="valutaChoice" layoutX="171.0" layoutY="27.0" prefHeight="24.0" prefWidth="36.0" />
+               </children>
+            </AnchorPane>
          </children>
       </GridPane>
       <ButtonBar layoutX="718.0" layoutY="675.0" prefHeight="24.0" prefWidth="200.0">

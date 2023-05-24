@@ -1,10 +1,13 @@
 package View.Controller;
 import Exceptions.BlankFieldException;
 import Persistence.DAO.ConferenzaDao;
+import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
 import Services.Conferenze;
 import Services.Sedi;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import Persistence.Entities.Conferenze.Sede;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -26,6 +30,8 @@ public class AddConferenceController implements Initializable,FormChecker{
     private int idConferenza;
     private Conferenza conferenza;
     private Conferenze conference = new Conferenze();
+    @FXML
+    private ChoiceBox<String> valutaChoice;
     @FXML
     private Button annullaButton;
     @FXML
@@ -74,8 +80,9 @@ public class AddConferenceController implements Initializable,FormChecker{
             LocalDate dataFselected = dataFineDP.getValue();
             Date dataI = java.sql.Date.valueOf(dataIselected);
             Date dataF = java.sql.Date.valueOf(dataFselected);
-            Sede sede = sedeChoice.getValue();
-            Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user);
+            Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
+            String valuta = valutaChoice.getValue();
+            Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user, valuta);
             conference.addConferenza(c);
             openAddedConferenceDialogWindow();
             loadAddOrganizzatori(c);
@@ -119,6 +126,7 @@ public class AddConferenceController implements Initializable,FormChecker{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sedi.loadSedi();
         sedeChoice.setItems(sedi.getSedi());
+        setValute();
     }
     @FXML
     void showSedi(MouseEvent event) {
@@ -131,6 +139,17 @@ public class AddConferenceController implements Initializable,FormChecker{
                 budgetTextField.getText().isBlank() || sedeChoice.getValue().equals(null) ||
                 dataInizioDP.getValue().equals(null) || dataFineDP.getValue().equals(null))
             throw new BlankFieldException();
+    }
+
+    private void setValute() {
+        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+        ObservableList<String> valute = FXCollections.observableArrayList();
+        try{
+            valute.addAll(dao.retrieveSimboloValute());
+            valutaChoice.setItems(valute);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
 

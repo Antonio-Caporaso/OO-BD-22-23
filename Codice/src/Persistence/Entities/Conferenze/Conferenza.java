@@ -23,11 +23,12 @@ public class Conferenza {
     private ComitatoScientifico comitatoScientifico;
     private Sede sede;
     private float budget;
+    private String valuta;
     private LinkedList<Sessione> sessioni;
     public Conferenza(int id, String nome, Date dataInizio,
                       Date dataFine, String descrizione,
                       Sede sede, float budget, ComitatoLocale comitato,
-                      ComitatoScientifico c2, Utente proprietario){
+                      ComitatoScientifico c2, Utente proprietario, String valuta){
     this.conferenzaID = id;
     this.nome = nome;
     this.dataInizio = dataInizio;
@@ -38,6 +39,7 @@ public class Conferenza {
     this.comitatoLocale = comitato;
     this.comitatoScientifico = c2;
     this.proprietario = proprietario;
+    this.valuta = valuta;
     }
     public Conferenza(String nome, Date dataInizio, Date dataFine, String descrizione) {
         this.nome = nome;
@@ -46,7 +48,7 @@ public class Conferenza {
         this.descrizione = descrizione;
     }
 
-    public Conferenza(String nome, Date dataI, Date dataF, String descrizione, float budget, Sede sede, Utente user) {
+    public Conferenza(String nome, Date dataI, Date dataF, String descrizione, float budget, Sede sede, Utente user, String valuta) {
         this.nome=nome;
         this.dataInizio = dataI;
         this.dataFine = dataF;
@@ -54,6 +56,7 @@ public class Conferenza {
         this.budget= budget;
         this.sede = sede;
         this.proprietario = user;
+        this.valuta = valuta;
     }
 
     public Conferenza(int id, String nome, Date datainizio, Date datafine, String descrizione, Sede sede, float budget, Utente proprietario) {
@@ -168,6 +171,20 @@ public class Conferenza {
             sessioni.add(sessione);
             sessione.setConferenza(this);
         }
+    }
+    public String getCodiceValuta(){
+        if(valuta.equals("$"))
+            return "USD";
+        else if(valuta.equals("€"))
+            return "EUR";
+        else if(valuta.equals("£"))
+            return  "GBP";
+        else if(valuta.equals("¥"))
+            return "JPY";
+        else return null;
+    }
+    public void setValuta(String valuta){
+        this.valuta=valuta;
     }
     @Override
     public String toString() {

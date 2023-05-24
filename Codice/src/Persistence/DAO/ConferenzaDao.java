@@ -64,14 +64,15 @@ public class ConferenzaDao {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         String procedure = "insert_conferenza";
-        CallableStatement stm = conn.prepareCall ("CALL "+procedure+"(?,?,?,?,?,?,?)");
+        CallableStatement stm = conn.prepareCall ("CALL "+procedure+"(?,?,?,?,?,?,?,?)");
         stm.setString(1, c.getNome());
         stm.setString(2, c.getDescrizione());
         stm.setDate(3, c.getDataInizio());
         stm.setDate(4, c.getDataFine());
         stm.setFloat(5,c.getBudget());
         stm.setInt(6,c.getSede().getSedeID());
-        stm.setInt(7, c.getProprietario().getIdUtente());
+        stm.setInt(8, c.getProprietario().getIdUtente());
+        stm.setString(7, c.getCodiceValuta());
         stm.execute();
     }
 
@@ -87,7 +88,7 @@ public class ConferenzaDao {
     public void updateDettagliConferenza(Conferenza conferenza) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String update = "UPDATE conferenza SET nome=?,descrizione=?,datainizio=?,datafine=?,budget=?,idsede=? WHERE idconferenza=?";
+        String update = "UPDATE conferenza SET nome=?,descrizione=?,datainizio=?,datafine=?,budget=?,idsede=?,valuta=? WHERE idconferenza=?";
         PreparedStatement stm = conn.prepareStatement(update);
         stm.setString(1,conferenza.getNome());
         stm.setString(2,conferenza.getDescrizione());
@@ -96,6 +97,7 @@ public class ConferenzaDao {
         stm.setFloat(5,conferenza.getBudget());
         stm.setInt(7,conferenza.getConferenzaID());
         stm.setInt(6,conferenza.getSede().getSedeID());
+        stm.setString(7,conferenza.getCodiceValuta());
         stm.executeUpdate();
     }
     public Conferenza retrieveConferenzaByNome(String nomeConferenza){

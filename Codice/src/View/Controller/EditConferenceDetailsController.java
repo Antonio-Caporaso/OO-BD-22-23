@@ -1,9 +1,12 @@
 package View.Controller;
 
 import Persistence.DAO.ConferenzaDao;
+import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Services.Sedi;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -69,6 +72,7 @@ public class EditConferenceDetailsController implements Initializable {
             conferenza.setDataInizio(Date.valueOf(dataInizioDP.getValue()));
             conferenza.setDataFine(Date.valueOf(dataFineDP.getValue()));
             conferenza.setSede(sedeChoice.getValue());
+            conferenza.setValuta(valutaChoice.getValue());
             ConferenzaDao dao = new ConferenzaDao();
             dao.updateDettagliConferenza(conferenza);
             modificaConferenzaController.setConferenza(conferenza);
@@ -96,6 +100,7 @@ public class EditConferenceDetailsController implements Initializable {
         sedi.loadSedi();
         sedeChoice.setItems(sedi.getSedi());
         sedeChoice.setValue(conferenza.getSede());
+        setValute();
     }
 
     public SubScene getSubScene() {
@@ -104,5 +109,16 @@ public class EditConferenceDetailsController implements Initializable {
 
     public void setSubScene(SubScene subScene) {
         this.subScene = subScene;
+    }
+
+    private void setValute() {
+        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+        ObservableList<String> valute = FXCollections.observableArrayList();
+        try{
+            valute.addAll(dao.retrieveSimboloValute());
+            valutaChoice.setItems(valute);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
