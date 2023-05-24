@@ -2,10 +2,7 @@ package Persistence.Entities.Conferenze;
 
 import Exceptions.EntePresenteException;
 import Persistence.Entities.Utente;
-import Persistence.Entities.organizzazione.ComitatoLocale;
-import Persistence.Entities.organizzazione.ComitatoScientifico;
-import Persistence.Entities.organizzazione.Ente;
-import Persistence.Entities.organizzazione.Sponsorizzazione;
+import Persistence.Entities.organizzazione.*;
 
 import java.sql.Date;
 import java.util.LinkedList;
@@ -19,8 +16,8 @@ public class Conferenza {
     private String descrizione;
     private LinkedList<Ente> organizzataDa;
     private LinkedList<Sponsorizzazione> sponsorizzataDa;
-    private ComitatoLocale comitatoLocale;
-    private ComitatoScientifico comitatoScientifico;
+    private Comitato comitatoLocale;
+    private Comitato comitatoScientifico;
     private Sede sede;
     private float budget;
     private String valuta;
@@ -59,7 +56,7 @@ public class Conferenza {
         this.valuta = valuta;
     }
 
-    public Conferenza(int id, String nome, Date datainizio, Date datafine, String descrizione, Sede sede, float budget, Utente proprietario) {
+    public Conferenza(int id, String nome, Date datainizio, Date datafine, Comitato comitatoScientifico, Comitato comitatoLocale, String descrizione, Sede sede, float budget, Utente proprietario) {
         this.conferenzaID = id;
         this.nome = nome;
         this.dataInizio=datainizio;
@@ -68,6 +65,8 @@ public class Conferenza {
         this.sede = sede;
         this.budget=budget;
         this.proprietario=proprietario;
+        this.comitatoLocale = comitatoLocale;
+        this.comitatoScientifico = comitatoScientifico;
     }
 
     public Conferenza() {
@@ -124,16 +123,16 @@ public class Conferenza {
     public void setSponsorizzataDa(LinkedList<Sponsorizzazione> sponsorizzataDa) {
         this.sponsorizzataDa = sponsorizzataDa;
     }
-    public ComitatoLocale getComitatoLocale() {
+    public Comitato getComitatoLocale() {
         return comitatoLocale;
     }
-    public void setComitatoLocale(ComitatoLocale comitatoLocale) {
+    public void setComitatoLocale(Comitato comitatoLocale) {
         this.comitatoLocale = comitatoLocale;
     }
-    public ComitatoScientifico getComitatoScientifico() {
+    public Comitato getComitatoScientifico() {
         return comitatoScientifico;
     }
-    public void setComitatoScientifico(ComitatoScientifico comitatoScientifico) {
+    public void setComitatoScientifico(Comitato comitatoScientifico) {
         this.comitatoScientifico = comitatoScientifico;
     }
     public void addEnte(Ente ente) throws EntePresenteException {

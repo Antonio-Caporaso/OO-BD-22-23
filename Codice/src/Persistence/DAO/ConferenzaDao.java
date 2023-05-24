@@ -3,6 +3,8 @@ import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.Utente;
+import Persistence.Entities.organizzazione.Comitato;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,16 +24,19 @@ public class ConferenzaDao {
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,user.getIdUtente());
         ResultSet rs = stm.executeQuery();
+        ComitatoDao comitatodao = new ComitatoDao();
         while(rs.next()){
             int id = rs.getInt("idconferenza");
             String nome = rs.getString("nome");
             Date datainizio = rs.getDate(3);
             Date datafine = rs.getDate(4);
             String descrizione = rs.getString(5);
+            Comitato scientific = (comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
+            Comitato local = (comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
             Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
             float budget = rs.getFloat(7);
             Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
-            Conferenza c = new Conferenza(id,nome,datainizio,datafine,descrizione,sede,budget,proprietario);
+            Conferenza c = new Conferenza(id,nome,datainizio,datafine,scientific, local,descrizione,sede,budget,proprietario);
             list.add(c);
         }
         return list;
@@ -45,12 +50,15 @@ public class ConferenzaDao {
         SedeDao daosede = new SedeDao();
         UtenteDAO utentedao = new UtenteDAO();
         ResultSet rs = stm.executeQuery();
+        ComitatoDao comitatodao = new ComitatoDao();
         while(rs.next()){
             Conferenza c = new Conferenza();
             c.setConferenzaID(rs.getInt("idconferenza"));
             c.setNome(rs.getString("nome"));
             c.setDescrizione(rs.getString("descrizione"));
             c.setBudget(rs.getFloat("budget"));
+            c.setComitatoScientifico(comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
+            c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
             c.setSede(daosede.retrieveSedeByID(rs.getInt("idsede")));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
             c.setDataInizio(rs.getDate("datainizio"));
@@ -111,16 +119,19 @@ public class ConferenzaDao {
             PreparedStatement stm = conn.prepareStatement(query);
             stm.setString(1, nomeConferenza);
             ResultSet rs = stm.executeQuery();
+            ComitatoDao comitatodao = new ComitatoDao();
             while(rs.next()){
                 int id = rs.getInt(1);
                 String nome = rs.getString(2);
                 Date datainizio = rs.getDate(3);
                 Date datafine = rs.getDate(4);
+                Comitato scientific = (comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
+                Comitato local = (comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
                 String descrizione = rs.getString(5);
                 Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
                 float budget = rs.getFloat(7);
                 Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
-                conferenza = new Conferenza(id,nome,datainizio,datafine,descrizione,sede,budget,proprietario);
+                conferenza = new Conferenza(id,nome,datainizio,datafine,scientific,local,descrizione,sede,budget,proprietario);
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -136,16 +147,20 @@ public class ConferenzaDao {
         LinkedList<Conferenza> conferenze = new LinkedList<>();
         UtenteDAO utentedao = new UtenteDAO();
         ResultSet rs = stm.executeQuery();
+        ComitatoDao comitatodao = new ComitatoDao();
         while(rs.next()){
             Conferenza c = new Conferenza();
-            c.setConferenzaID(rs.getInt(1));
-            c.setNome(rs.getString(2));
-            c.setDescrizione(rs.getString(5));
-            c.setBudget(rs.getFloat(7));
+            c.setConferenzaID(rs.getInt("idconferenza"));
+            c.setNome(rs.getString("nome"));
+            c.setDescrizione(rs.getString("descrizione"));
+            c.setBudget(rs.getFloat("budget"));
             c.setSede(sede);
+            c.setComitatoScientifico(comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
+            c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
             c.setDataInizio(rs.getDate("datainizio"));
             c.setDataFine(rs.getDate("datafine"));
+            c.setValuta(rs.getString("valuta"));
             conferenze.add(c);
         }
         return conferenze;
@@ -162,16 +177,20 @@ public class ConferenzaDao {
         UtenteDAO utentedao = new UtenteDAO();
         LinkedList<Conferenza> conferenze = new LinkedList<>();
         ResultSet rs = stm.executeQuery();
+        ComitatoDao comitatodao = new ComitatoDao();
         while(rs.next()){
             Conferenza c = new Conferenza();
-            c.setConferenzaID(rs.getInt(1));
-            c.setNome(rs.getString(2));
-            c.setDescrizione(rs.getString(5));
-            c.setBudget(rs.getFloat(7));
-            c.setSede(sededao.retrieveSedeByID(rs.getInt(6)));
+            c.setConferenzaID(rs.getInt("idconferenza"));
+            c.setNome(rs.getString("nome"));
+            c.setDescrizione(rs.getString("descrizione"));
+            c.setBudget(rs.getFloat("budget"));
+            c.setComitatoScientifico(comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
+            c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
+            c.setSede(sededao.retrieveSedeByID(rs.getInt("idsede")));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
             c.setDataInizio(rs.getDate("datainizio"));
             c.setDataFine(rs.getDate("datafine"));
+            c.setValuta(rs.getString("valuta"));
             conferenze.add(c);
         }
         return conferenze;
@@ -188,16 +207,19 @@ public class ConferenzaDao {
             stm.setString(1, nomeConferenza);
             stm.setInt(2,idUtente);
             ResultSet rs = stm.executeQuery();
+            ComitatoDao comitatodao = new ComitatoDao();
             while(rs.next()){
                 int id = rs.getInt(1);
                 String nome = rs.getString(2);
                 Date datainizio = rs.getDate(3);
                 Date datafine = rs.getDate(4);
                 String descrizione = rs.getString(5);
+                Comitato scientific = (comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
+                Comitato local = (comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
                 Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
                 float budget = rs.getFloat(7);
                 Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
-                conferenza = new Conferenza(id,nome,datainizio,datafine,descrizione,sede,budget,proprietario);
+                conferenza = new Conferenza(id,nome,datainizio,datafine,scientific, local,descrizione,sede,budget,proprietario);
             }
         }catch (SQLException e){
             e.printStackTrace();

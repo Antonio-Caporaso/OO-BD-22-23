@@ -4,10 +4,15 @@ import Exceptions.ExistingMemberException;
 import java.util.HashSet;
 import java.util.Objects;
 
-abstract class Comitato {
+public class Comitato {
     private int comitatoID;
+    private String tipologia;
     private Organizzatore responsabile;
     private HashSet<Organizzatore> membri;
+
+    public void setTipologia(String tipologia) {
+        this.tipologia=tipologia;
+    }
 
     public Comitato() {}
 
@@ -16,9 +21,9 @@ abstract class Comitato {
         this.membri = membri;
     }
 
-    void setResponsabile(Organizzatore responsabile){
+    public void setResponsabile(Organizzatore responsabile){
         this.responsabile = responsabile;
-        membri.add(responsabile);
+        //membri.add(responsabile);
     }
 
     public Organizzatore getResponsabile() {
