@@ -1,8 +1,10 @@
 package View.Controller;
+
 import Exceptions.BlankFieldException;
 import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.Utente;
 import Services.Conferenze;
 import Services.Sedi;
@@ -16,11 +18,12 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import Persistence.Entities.Conferenze.Sede;
+import tornadofx.control.DateTimePicker;
+
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AddConferenceController implements Initializable,FormChecker{
@@ -35,9 +38,9 @@ public class AddConferenceController implements Initializable,FormChecker{
     @FXML
     private Button annullaButton;
     @FXML
-    private DatePicker dataFineDP;
+    private DateTimePicker dataFineDP;
     @FXML
-    private DatePicker dataInizioDP;
+    private DateTimePicker dataInizioDP;
     @FXML
     private Button creaButton;
     @FXML
@@ -76,10 +79,10 @@ public class AddConferenceController implements Initializable,FormChecker{
             String nome = nomeConferenzaTF.getText();
             float budget = Float.parseFloat(budgetTextField.getText());
             String descrizione = descrizioneTextArea.getText();
-            LocalDate dataIselected = dataInizioDP.getValue();
-            LocalDate dataFselected = dataFineDP.getValue();
-            Date dataI = java.sql.Date.valueOf(dataIselected);
-            Date dataF = java.sql.Date.valueOf(dataFselected);
+            LocalDateTime dataIselected = dataInizioDP.getDateTimeValue();
+            LocalDateTime dataFselected = dataFineDP.getDateTimeValue();
+            Timestamp dataI = Timestamp.valueOf(dataIselected);
+            Timestamp dataF = Timestamp.valueOf(dataFselected);
             Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
             String valuta = valutaChoice.getValue();
             Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user, valuta);

@@ -23,7 +23,7 @@
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <VBox layoutX="714.0" layoutY="99.0" prefHeight="553.0" prefWidth="204.0">
+      <VBox layoutX="714.0" layoutY="99.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="315.0" prefWidth="204.0">
          <children>
             <Button fx:id="editDetailsButton" mnemonicParsing="false" onAction="#editDetailsOnAction" prefHeight="70.0" prefWidth="204.0" text="Modifica dettagli" />
             <Button fx:id="editEntiButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#editEntiOnAction" prefHeight="70.0" prefWidth="204.0" text="Modifica organizzatori" textAlignment="CENTER">
@@ -186,7 +186,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
           </TitledPane>
-            <TitledPane animated="false" prefHeight="244.0" prefWidth="683.0" text="Sessioni">
+            <TitledPane animated="false" prefHeight="527.0" prefWidth="163.0" text="Sessioni">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

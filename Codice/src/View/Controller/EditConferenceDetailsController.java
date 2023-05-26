@@ -14,11 +14,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -38,9 +39,9 @@ public class EditConferenceDetailsController implements Initializable {
     @FXML
     private Button okButton;
     @FXML
-    private DatePicker dataFineDP;
+    private DateTimePicker dataFineDP;
     @FXML
-    private DatePicker dataInizioDP;
+    private DateTimePicker dataInizioDP;
     @FXML
     private ChoiceBox<Sede> sedeChoice;
     @FXML
@@ -69,8 +70,8 @@ public class EditConferenceDetailsController implements Initializable {
             conferenza.setNome(nomeTF.getText());
             conferenza.setDescrizione(descrizioneTF.getText());
             conferenza.setBudget(Float.parseFloat(budgetTextField.getText()));
-            conferenza.setDataInizio(Date.valueOf(dataInizioDP.getValue()));
-            conferenza.setDataFine(Date.valueOf(dataFineDP.getValue()));
+            conferenza.setDataInizio(Timestamp.valueOf(dataInizioDP.getDateTimeValue()));
+            conferenza.setDataFine(Timestamp.valueOf(dataFineDP.getDateTimeValue()));
             conferenza.setSede(sedeChoice.getValue());
             conferenza.setValuta(valutaChoice.getValue());
             ConferenzaDao dao = new ConferenzaDao();
@@ -94,8 +95,8 @@ public class EditConferenceDetailsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         nomeTF.setText(conferenza.getNome());
         descrizioneTF.setText(conferenza.getDescrizione());
-        dataInizioDP.setValue(conferenza.getDataInizio().toLocalDate());
-        dataFineDP.setValue(conferenza.getDataFine().toLocalDate());
+        dataInizioDP.setValue(conferenza.getDataInizio().toLocalDateTime().toLocalDate());
+        dataFineDP.setValue(conferenza.getDataFine().toLocalDateTime().toLocalDate());
         budgetTextField.setText(Float.toString(conferenza.getBudget()));
         sedi.loadSedi();
         sedeChoice.setItems(sedi.getSedi());

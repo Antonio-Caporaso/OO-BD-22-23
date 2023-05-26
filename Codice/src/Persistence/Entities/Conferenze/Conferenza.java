@@ -4,15 +4,15 @@ import Exceptions.EntePresenteException;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.*;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 
 public class Conferenza {
     private int conferenzaID;
     private String nome;
     private Utente proprietario;
-    private Date dataInizio;
-    private Date dataFine;
+    private Timestamp dataInizio;
+    private Timestamp dataFine;
     private String descrizione;
     private LinkedList<Ente> organizzataDa;
     private LinkedList<Sponsorizzazione> sponsorizzataDa;
@@ -22,8 +22,8 @@ public class Conferenza {
     private float budget;
     private String valuta;
     private LinkedList<Sessione> sessioni;
-    public Conferenza(int id, String nome, Date dataInizio,
-                      Date dataFine, String descrizione,
+    public Conferenza(int id, String nome, Timestamp dataInizio,
+                      Timestamp dataFine, String descrizione,
                       Sede sede, float budget, ComitatoLocale comitato,
                       ComitatoScientifico c2, Utente proprietario, String valuta){
     this.conferenzaID = id;
@@ -38,14 +38,14 @@ public class Conferenza {
     this.proprietario = proprietario;
     this.valuta = valuta;
     }
-    public Conferenza(String nome, Date dataInizio, Date dataFine, String descrizione) {
+    public Conferenza(String nome, Timestamp dataInizio, Timestamp dataFine, String descrizione) {
         this.nome = nome;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.descrizione = descrizione;
     }
 
-    public Conferenza(String nome, Date dataI, Date dataF, String descrizione, float budget, Sede sede, Utente user, String valuta) {
+    public Conferenza(String nome, Timestamp dataI, Timestamp dataF, String descrizione, float budget, Sede sede, Utente user, String valuta) {
         this.nome=nome;
         this.dataInizio = dataI;
         this.dataFine = dataF;
@@ -56,7 +56,7 @@ public class Conferenza {
         this.valuta = valuta;
     }
 
-    public Conferenza(int id, String nome, Date datainizio, Date datafine, Comitato comitatoScientifico, Comitato comitatoLocale, String descrizione, Sede sede, float budget, Utente proprietario) {
+    public Conferenza(int id, String nome, Timestamp datainizio, Timestamp datafine, Comitato comitatoScientifico, Comitato comitatoLocale, String descrizione, Sede sede, float budget, Utente proprietario) {
         this.conferenzaID = id;
         this.nome = nome;
         this.dataInizio=datainizio;
@@ -93,16 +93,16 @@ public class Conferenza {
     public void setProprietario(Utente proprietario) {
         this.proprietario = proprietario;
     }
-    public Date getDataInizio() {
+    public Timestamp getDataInizio() {
         return dataInizio;
     }
-    public void setDataInizio(Date dataInizio) {
+    public void setDataInizio(Timestamp dataInizio) {
         this.dataInizio = dataInizio;
     }
-    public Date getDataFine() {
+    public Timestamp getDataFine() {
         return dataFine;
     }
-    public void setDataFine(Date dataFine) {
+    public void setDataFine(Timestamp dataFine) {
         this.dataFine = dataFine;
     }
     public String getDescrizione() {

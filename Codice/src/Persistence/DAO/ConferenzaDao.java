@@ -28,8 +28,8 @@ public class ConferenzaDao {
         while(rs.next()){
             int id = rs.getInt("idconferenza");
             String nome = rs.getString("nome");
-            Date datainizio = rs.getDate(3);
-            Date datafine = rs.getDate(4);
+            Timestamp datainizio = rs.getTimestamp(3);
+            Timestamp datafine = rs.getTimestamp(4);
             String descrizione = rs.getString(5);
             Comitato scientific = (comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
             Comitato local = (comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
@@ -61,8 +61,8 @@ public class ConferenzaDao {
             c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
             c.setSede(daosede.retrieveSedeByID(rs.getInt("idsede")));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
-            c.setDataInizio(rs.getDate("datainizio"));
-            c.setDataFine(rs.getDate("datafine"));
+            c.setDataInizio(rs.getTimestamp("datainizio"));
+            c.setDataFine(rs.getTimestamp("datafine"));
             conferenze.add(c);
         }
         return conferenze;
@@ -75,8 +75,8 @@ public class ConferenzaDao {
         CallableStatement stm = conn.prepareCall ("CALL "+procedure+"(?,?,?,?,?,?,?,?)");
         stm.setString(1, c.getNome());
         stm.setString(2, c.getDescrizione());
-        stm.setDate(3, c.getDataInizio());
-        stm.setDate(4, c.getDataFine());
+        stm.setTimestamp(3, c.getDataInizio());
+        stm.setTimestamp(4, c.getDataFine());
         stm.setFloat(5,c.getBudget());
         stm.setInt(6,c.getSede().getSedeID());
         stm.setInt(8, c.getProprietario().getIdUtente());
@@ -100,8 +100,8 @@ public class ConferenzaDao {
         PreparedStatement stm = conn.prepareStatement(update);
         stm.setString(1,conferenza.getNome());
         stm.setString(2,conferenza.getDescrizione());
-        stm.setDate(3,conferenza.getDataInizio());
-        stm.setDate(4,conferenza.getDataFine());
+        stm.setTimestamp(3,conferenza.getDataInizio());
+        stm.setTimestamp(4,conferenza.getDataFine());
         stm.setFloat(5,conferenza.getBudget());
         stm.setInt(7,conferenza.getConferenzaID());
         stm.setInt(6,conferenza.getSede().getSedeID());
@@ -123,8 +123,8 @@ public class ConferenzaDao {
             while(rs.next()){
                 int id = rs.getInt(1);
                 String nome = rs.getString(2);
-                Date datainizio = rs.getDate(3);
-                Date datafine = rs.getDate(4);
+                Timestamp datainizio = rs.getTimestamp(3);
+                Timestamp datafine = rs.getTimestamp(4);
                 Comitato scientific = (comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
                 Comitato local = (comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
                 String descrizione = rs.getString(5);
@@ -158,8 +158,8 @@ public class ConferenzaDao {
             c.setComitatoScientifico(comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
             c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
-            c.setDataInizio(rs.getDate("datainizio"));
-            c.setDataFine(rs.getDate("datafine"));
+            c.setDataInizio(rs.getTimestamp("datainizio"));
+            c.setDataFine(rs.getTimestamp("datafine"));
             c.setValuta(rs.getString("valuta"));
             conferenze.add(c);
         }
@@ -188,8 +188,8 @@ public class ConferenzaDao {
             c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
             c.setSede(sededao.retrieveSedeByID(rs.getInt("idsede")));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("proprietario")));
-            c.setDataInizio(rs.getDate("datainizio"));
-            c.setDataFine(rs.getDate("datafine"));
+            c.setDataInizio(rs.getTimestamp("datainizio"));
+            c.setDataFine(rs.getTimestamp("datafine"));
             c.setValuta(rs.getString("valuta"));
             conferenze.add(c);
         }
@@ -211,8 +211,8 @@ public class ConferenzaDao {
             while(rs.next()){
                 int id = rs.getInt(1);
                 String nome = rs.getString(2);
-                Date datainizio = rs.getDate(3);
-                Date datafine = rs.getDate(4);
+                Timestamp datainizio = rs.getTimestamp(3);
+                Timestamp datafine = rs.getTimestamp(4);
                 String descrizione = rs.getString(5);
                 Comitato scientific = (comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
                 Comitato local = (comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));

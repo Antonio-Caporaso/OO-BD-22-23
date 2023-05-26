@@ -1,6 +1,5 @@
 package View.Controller;
 
-import Persistence.DAO.ConferenzaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
@@ -64,10 +63,9 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     private TextArea sponsorizzazioniView;
 
+
     @FXML
     public void confermaButtonOnAction(ActionEvent event) throws IOException, SQLException {
-        ConferenzaDao dao = new ConferenzaDao();
-        dao.updateDettagliConferenza(conferenza);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/GestioneConferenze.fxml"));
         GestioneConferenzeController controller = new GestioneConferenzeController(user);
         loader.setController(controller);
@@ -130,6 +128,9 @@ public class ModificaConferenzaController implements Initializable {
         setSponsorizzazioni();
         setSessioni();
     }
+
+
+
     public void setConferenza(Conferenza c){
         this.conferenza=c;
     }
