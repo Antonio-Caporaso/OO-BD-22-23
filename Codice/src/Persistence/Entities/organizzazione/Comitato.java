@@ -1,4 +1,5 @@
 package Persistence.Entities.organizzazione;
+
 import Exceptions.ExistingMemberException;
 
 import java.util.HashSet;
@@ -7,7 +8,6 @@ import java.util.Objects;
 public class Comitato {
     private int comitatoID;
     private String tipologia;
-    private Organizzatore responsabile;
     private HashSet<Organizzatore> membri;
 
     public void setTipologia(String tipologia) {
@@ -16,18 +16,8 @@ public class Comitato {
 
     public Comitato() {}
 
-    public Comitato(Organizzatore responsabile, HashSet<Organizzatore> membri) {
-        this.responsabile = responsabile;
+    public Comitato(HashSet<Organizzatore> membri) {
         this.membri = membri;
-    }
-
-    public void setResponsabile(Organizzatore responsabile){
-        this.responsabile = responsabile;
-        //membri.add(responsabile);
-    }
-
-    public Organizzatore getResponsabile() {
-        return responsabile;
     }
 
     public void add(Organizzatore organizzatore) throws ExistingMemberException {
@@ -60,15 +50,14 @@ public class Comitato {
 
         Comitato comitato = (Comitato) o;
 
-        if (!Objects.equals(responsabile, comitato.responsabile))
-            return false;
-        return Objects.equals(membri, comitato.membri);
+        if (comitatoID != comitato.comitatoID) return false;
+        return Objects.equals(tipologia, comitato.tipologia);
     }
 
     @Override
     public int hashCode() {
-        int result = responsabile != null ? responsabile.hashCode() : 0;
-        result = 31 * result + (membri != null ? membri.hashCode() : 0);
+        int result = comitatoID;
+        result = 31 * result + (tipologia != null ? tipologia.hashCode() : 0);
         return result;
     }
 }
