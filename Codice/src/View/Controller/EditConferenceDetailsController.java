@@ -4,6 +4,7 @@ import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
+import Persistence.Entities.Utente;
 import Services.Sedi;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

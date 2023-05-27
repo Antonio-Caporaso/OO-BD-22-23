@@ -65,6 +65,7 @@ public class GestioneConferenzeController implements Initializable {
             loader.setController(controller);
             controller.setConferenza(conferenzeView.getSelectionModel().getSelectedItem());
             controller.setSubscene(subscene);
+            controller.setGestioneConferenzeController(this);
             controller.setUser(user);
             Parent root = loader.load();
             subscene.setRoot(root);

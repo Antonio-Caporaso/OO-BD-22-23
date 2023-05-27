@@ -28,6 +28,18 @@ public class Sessione {
         this.orarioFine=orarioFine;
     }
 
+    public Sessione(Date dataInizio, Date dataFine, String titolo, Sala locazione, Organizzatore coordinatore, Conferenza conferenza, Programma programma, Time orarioInizio, Time orarioFine) {
+        this.dataInizio = dataInizio;
+        this.dataFine = dataFine;
+        this.titolo = titolo;
+        this.locazione = locazione;
+        this.coordinatore = coordinatore;
+        this.conferenza = conferenza;
+        this.programma = programma;
+        this.orarioInizio = orarioInizio;
+        this.orarioFine = orarioFine;
+    }
+
     public int getSessioneID() {
         return sessioneID;
     }

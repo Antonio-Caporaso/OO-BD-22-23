@@ -30,13 +30,14 @@
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="14.0" layoutY="51.0" text="Titolo della sessione:">
+                  <Label layoutX="14.0" layoutY="39.0" text="Titolo della sessione:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -52,28 +53,42 @@
                   </Label>
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-               <children>
-                  <Label layoutX="14.0" layoutY="51.0" text="Inizio:">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <Label layoutX="14.0" layoutY="50.0" text="Fine:">
+                  <Label layoutX="14.0" layoutY="39.0" text="Inizio:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <TextField fx:id="nomeTF" prefHeight="24.0" prefWidth="540.0" GridPane.columnIndex="1" />
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+               <children>
+                  <Label layoutX="14.0" layoutY="38.0" text="Fine:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <TextField fx:id="nomeTF" prefHeight="24.0" prefWidth="540.0" promptText="Inserisci il titolo della sessione" GridPane.columnIndex="1" />
             <ChoiceBox fx:id="saleChoice" prefHeight="24.0" prefWidth="518.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DateTimePicker fx:id="inizioDateTimePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <DateTimePicker fx:id="fineDateTimePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DateTimePicker fx:id="inizioDateTimePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DateTimePicker fx:id="fineDateTimePicker" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <Label layoutX="14.0" layoutY="40.0" text="Coordinatore:">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <ChoiceBox fx:id="coordinatoreChoiceBox" layoutY="36.0" prefHeight="24.0" prefWidth="508.0" />
+               </children>
+            </Pane>
          </children>
       </GridPane>
       <ButtonBar layoutX="650.0" layoutY="666.0" prefHeight="40.0" prefWidth="268.0">

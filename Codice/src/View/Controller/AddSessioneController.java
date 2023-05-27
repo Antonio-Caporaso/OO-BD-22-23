@@ -4,6 +4,8 @@ import Exceptions.BlankFieldException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.organizzazione.Organizzatore;
+import Services.MembriComitato;
 import Services.Sale;
 import Services.Sessioni;
 import javafx.event.ActionEvent;
@@ -30,6 +32,7 @@ public class AddSessioneController implements Initializable,FormChecker {
     private Sessioni sessioni;
     private Sale sale;
     private ManageSessioniController manageSessioniController;
+    private ModificaConferenzaController modificaConferenzaController;
     private SubScene subscene;
     @FXML
     private Button annullaButton;
@@ -43,6 +46,8 @@ public class AddSessioneController implements Initializable,FormChecker {
     private TextField nomeTF;
     @FXML
     private ChoiceBox<Sala> saleChoice;
+    @FXML
+    private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
 
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
@@ -94,6 +99,7 @@ public class AddSessioneController implements Initializable,FormChecker {
         s.setConferenza(conferenza);
         s.setTitolo(nomeTF.getText());
         s.setLocazione(saleChoice.getValue());
+        s.setCoordinatore(coordinatoreChoiceBox.getValue());
         s.setDataInizio(Date.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalDate()));
         s.setDataFine(Date.valueOf(fineDateTimePicker.getDateTimeValue().toLocalDate()));
         s.setOrarioInizio(Time.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalTime()));
@@ -103,6 +109,16 @@ public class AddSessioneController implements Initializable,FormChecker {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setSale();
+        try {
+            setCoordinatoreChoiceBox();
+        } catch (SQLException e) {
+        }
+    }
+
+    private void setCoordinatoreChoiceBox() throws SQLException {
+        MembriComitato membriComitatoScientifico = new MembriComitato(conferenza);
+        membriComitatoScientifico.loadMembriComitatoScientifico();
+        coordinatoreChoiceBox.setItems(membriComitatoScientifico.getMembriComitatoScientifico());
     }
 
     private void setSale() {

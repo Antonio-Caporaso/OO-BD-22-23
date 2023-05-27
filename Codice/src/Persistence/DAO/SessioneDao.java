@@ -22,7 +22,7 @@ public class SessioneDao {
     public void updateSessione(Sessione sessione) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "UPDATE sessione set titolo = ?, datainizio=?, datafine=?,idsala=?,ora_inizio=?,ora_fine=? where idsessione=?";
+        String query = "UPDATE sessione set titolo = ?, datainizio=?, datafine=?,idsala=?,ora_inizio=?,ora_fine=?,id_chair=? where idsessione=?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setString(1,sessione.getTitolo());
         stm.setDate(2,sessione.getDataInizio());
@@ -31,13 +31,14 @@ public class SessioneDao {
         stm.setTime(5,sessione.getOrarioInizio());
         stm.setTime(6,sessione.getOrarioFine());
         stm.setInt(7,sessione.getSessioneID());
+        stm.setInt(8,sessione.getCoordinatore().getOrganizzatoreID());
         stm.executeUpdate();
     }
     public LinkedList<Sessione> retrieveSessioniByConferenza(Conferenza conferenza) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         SalaDao daosala = new SalaDao();
-        ProgrammaDao programmaDao = new ProgrammaDao();
+        OrganizzatoreDao dao = new OrganizzatoreDao();
         String query = "SELECT * from sessione WHERE idconferenza = ?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,conferenza.getConferenzaID());
@@ -53,6 +54,7 @@ public class SessioneDao {
             s.setConferenza(conferenza);
             s.setOrarioInizio(rs.getTime("ora_inizio"));
             s.setOrarioFine(rs.getTime("ora_fine"));
+            s.setCoordinatore(dao.retrieveOrganizzatoreByID(rs.getInt("id_chair")));
             sessioni.add(s);
         }
         return sessioni;
@@ -61,7 +63,7 @@ public class SessioneDao {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         String procedure = "insert_sessione";
-        CallableStatement stm = conn.prepareCall("CALL "+procedure+" (?,?,?,?,?,?,?)");
+        CallableStatement stm = conn.prepareCall("CALL "+procedure+" (?,?,?,?,?,?,?,?)");
         stm.setString(1, sessione.getTitolo());
         stm.setDate(2,sessione.getDataInizio());
         stm.setDate(3, sessione.getDataFine());
@@ -69,6 +71,7 @@ public class SessioneDao {
         stm.setTime(5,sessione.getOrarioFine());
         stm.setInt(6, sessione.getConferenza().getConferenzaID());
         stm.setInt(7, sessione.getLocazione().getSalaID());
+        stm.setInt(8,sessione.getCoordinatore().getOrganizzatoreID());
         stm.execute();
     }
 }

@@ -42,6 +42,7 @@ public class ModificaConferenzaController implements Initializable {
     private Label dataInizioLabel;
     @FXML
     private Label descrizioneLabel;
+    private GestioneConferenzeController gestioneConferenzeController;
     @FXML
     private Button editDetailsButton;
     @FXML
@@ -63,13 +64,15 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     private TextArea sponsorizzazioniView;
 
+    public void setGestioneConferenzeController(GestioneConferenzeController gestioneConferenzeController) {
+        this.gestioneConferenzeController = gestioneConferenzeController;
+    }
 
     @FXML
-    public void confermaButtonOnAction(ActionEvent event) throws IOException, SQLException {
+    public void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/GestioneConferenze.fxml"));
-        GestioneConferenzeController controller = new GestioneConferenzeController(user);
+        GestioneConferenzeController controller = gestioneConferenzeController;
         loader.setController(controller);
-        controller.setSubscene(subscene);
         Parent root = loader.load();
         subscene.setRoot(root);
     }

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 public class OrganizzatoreDao {
     DBConnection dbcon;
@@ -28,5 +29,25 @@ public class OrganizzatoreDao {
             org.setEmail(rs.getString("email"));
         }
         return org;
+    }
+    public LinkedList<Organizzatore> retrieveOrganizzatoriComitato(int idComitato) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select * from organizzatore o where idorganizzatore in (select organizzatore from membrocomitato m where comitato=?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,idComitato);
+        ResultSet rs = stm.executeQuery();
+        LinkedList<Organizzatore> membri = new LinkedList<>();
+        while(rs.next()){
+            Organizzatore o = new Organizzatore();
+            o.setOrganizzatoreID(rs.getInt(1));
+            o.setNome(rs.getString(2));
+            o.setCognome(rs.getString(3));
+            o.setTitolo(rs.getString(4));
+            o.setIstituzione(rs.getString(5));
+            o.setEmail(rs.getString(6));
+            membri.add(o);
+        }
+        return membri;
     }
 }

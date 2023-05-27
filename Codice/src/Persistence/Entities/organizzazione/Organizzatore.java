@@ -96,6 +96,11 @@ public class Organizzatore {
     }
 
     @Override
+    public String toString() {
+        return cognome + " "+ nome+" ("+istituzione+")";
+    }
+
+    @Override
     public int hashCode() {
         int result = cognome != null ? cognome.hashCode() : 0;
         result = 31 * result + (nome != null ? nome.hashCode() : 0);

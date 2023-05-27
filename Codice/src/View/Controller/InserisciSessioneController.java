@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ResourceBundle;
 
+import Persistence.Entities.organizzazione.Organizzatore;
+import Services.MembriComitato;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +36,8 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     private TextField titoloSessioneTextField;
     @FXML
     private DateTimePicker inizioDateTimePicker;
+    @FXML
+    private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
     @FXML
     private DateTimePicker fineDateTimePicker;
     private Conferenza conferenza;
@@ -81,6 +85,7 @@ public class InserisciSessioneController implements Initializable,FormChecker {
         s.setConferenza(conferenza);
         s.setTitolo(titoloSessioneTextField .getText());
         s.setLocazione(saleChoiceBox.getValue());
+        s.setCoordinatore(coordinatoreChoiceBox.getValue());
         s.setDataInizio(Date.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalDate()));
         s.setDataFine(Date.valueOf(fineDateTimePicker.getDateTimeValue().toLocalDate()));
         s.setOrarioInizio(Time.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalTime()));
@@ -127,5 +132,16 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
             loadSaleChoiceBox();
+        try {
+            loadCoordinatoreChoiceBox();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadCoordinatoreChoiceBox() throws SQLException {
+        MembriComitato membriComitatoScientifico = new MembriComitato(conferenza);
+        membriComitatoScientifico.loadMembriComitatoScientifico();
+        coordinatoreChoiceBox.setItems(membriComitatoScientifico.getMembriComitatoScientifico());
     }
 }

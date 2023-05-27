@@ -82,6 +82,7 @@ public class EditSessioneController implements Initializable {
         EditDettagliSessioneController controllerS = new EditDettagliSessioneController();
         loader.setController(controllerS);
         controllerS.setSessione(sessione);
+        controllerS.setConferenza(conferenza);
         controllerS.setSubscene(subScene);
         controllerS.setEditSessioneController(this);
         Parent root = loader.load();

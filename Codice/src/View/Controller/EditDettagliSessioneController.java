@@ -1,8 +1,11 @@
 package View.Controller;
 
 import Persistence.DAO.SessioneDao;
+import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.organizzazione.Organizzatore;
+import Services.MembriComitato;
 import Services.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +25,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditDettagliSessioneController implements Initializable {
+    private Conferenza conferenza;
     private Sessione sessione;
     private SubScene subscene;
     private Sale sale;
@@ -38,6 +42,13 @@ public class EditDettagliSessioneController implements Initializable {
     private DateTimePicker fineDateTimePicker;
     @FXML
     private DateTimePicker inizioDateTimePicker;
+    @FXML
+    private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
+    private MembriComitato membriComitatoScientifico;
+
+    public void setConferenza(Conferenza conferenza) {
+        this.conferenza = conferenza;
+    }
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
@@ -86,16 +97,37 @@ public class EditDettagliSessioneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            sale = new Sale(sessione.getConferenza().getSede());
-            nomeTF.setText(sessione.getTitolo());
-            sale.loadSale();
-            saleChoice.setItems(sale.getSale());
-            saleChoice.setValue(sessione.getLocazione());
-            inizioDateTimePicker.setDateTimeValue(sessione.getDataInizio().toLocalDate().atTime(sessione.getOrarioInizio().toLocalTime()));
-            fineDateTimePicker.setDateTimeValue(sessione.getDataFine().toLocalDate().atTime(sessione.getOrarioFine().toLocalTime()));
+            setTitoloSessione();
+            setSale();
+            setDate();
+            setMembriComitatoScientifico();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void setTitoloSessione() {
+        nomeTF.setText(sessione.getTitolo());
+    }
+
+    private void setMembriComitatoScientifico() throws SQLException {
+        membriComitatoScientifico = new MembriComitato(conferenza);
+        membriComitatoScientifico.loadMembriComitatoScientifico();
+        coordinatoreChoiceBox.setItems(membriComitatoScientifico.getMembriComitatoScientifico());
+        coordinatoreChoiceBox.setValue(sessione.getCoordinatore());
+    }
+
+    private void setDate() throws SQLException {
+
+        inizioDateTimePicker.setDateTimeValue(sessione.getDataInizio().toLocalDate().atTime(sessione.getOrarioInizio().toLocalTime()));
+        fineDateTimePicker.setDateTimeValue(sessione.getDataFine().toLocalDate().atTime(sessione.getOrarioFine().toLocalTime()));
+    }
+
+    private void setSale() throws SQLException {
+        sale = new Sale(sessione.getConferenza().getSede());
+        sale.loadSale();
+        saleChoice.setItems(sale.getSale());
+        saleChoice.setValue(sessione.getLocazione());
     }
 
     public Sessione getSessione() {
