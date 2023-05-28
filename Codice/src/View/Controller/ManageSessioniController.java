@@ -95,10 +95,9 @@ public class ManageSessioniController implements Initializable {
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-        ModificaConferenzaController controller = new ModificaConferenzaController();
-        controller.setSubscene(subscene);
-        controller.setConferenza(conferenza);
-        loader.setController(controller);
+        loader.setController(modificaConferenzaController);
+        modificaConferenzaController.setSubscene(subscene);
+        modificaConferenzaController.setConferenza(conferenza);
         Parent root = loader.load();
         subscene.setRoot(root);
     }

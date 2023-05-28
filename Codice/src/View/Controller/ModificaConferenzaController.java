@@ -71,8 +71,7 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     public void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/GestioneConferenze.fxml"));
-        GestioneConferenzeController controller = gestioneConferenzeController;
-        loader.setController(controller);
+        loader.setController(gestioneConferenzeController);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
