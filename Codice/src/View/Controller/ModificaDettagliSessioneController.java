@@ -24,7 +24,7 @@ import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class EditDettagliSessioneController implements Initializable {
+public class ModificaDettagliSessioneController implements Initializable {
     private Conferenza conferenza;
     private Sessione sessione;
     private SubScene subscene;

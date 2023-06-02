@@ -14,14 +14,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ResourceBundle;
 public class ModificaConferenzaController implements Initializable {
     private Conferenza conferenza;
@@ -60,9 +60,21 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     private Label titleLabel;
     @FXML
-    private ListView<Sessione> sessioniView;
-    @FXML
     private TextArea sponsorizzazioniView;
+    @FXML
+    private TableView<Sessione> table;
+    @FXML
+    private TableColumn<Sessione,String> nomeSessioneColumn;
+    @FXML
+    private TableColumn<Sessione, Date> inizioSessioneColumn;
+    @FXML
+    private TableColumn<Sessione, Date> fineSessioneColumn;
+    @FXML
+    private TableColumn<Sessione, String> salaSessioneColumn;
+    @FXML
+    private TableColumn<Sessione, Time> oraInizioColumn;
+    @FXML
+    private TableColumn<Sessione, Time> orarioFineSessioneColumn;
 
     public void setGestioneConferenzeController(GestioneConferenzeController gestioneConferenzeController) {
         this.gestioneConferenzeController = gestioneConferenzeController;
@@ -78,7 +90,7 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     public void editDetailsOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConferenceDetails.fxml"));
-        EditConferenceDetailsController controller = new EditConferenceDetailsController();
+        ModificaDettagliConferenzaController controller = new ModificaDettagliConferenzaController();
         loader.setController(controller);
         controller.setEditConferenceController(this);
         controller.setConferenza(conferenza);
@@ -128,22 +140,10 @@ public class ModificaConferenzaController implements Initializable {
         setDetails();
         setOrganizzatori();
         setSponsorizzazioni();
-        setSessioni();
+        setTable();
     }
-
-
-
     public void setConferenza(Conferenza c){
         this.conferenza=c;
-    }
-    private void setSessioni() {
-        sessioni = new Sessioni(conferenza);
-        try{
-            sessioni.loadSessioni();
-            sessioniView.setItems(sessioni.getSessioni());
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
     }
     public void setDetails() {
         this.setTitleLabel();
@@ -187,5 +187,23 @@ public class ModificaConferenzaController implements Initializable {
     }
     public void setUser(Utente user) {
         this.user = user;
+    }
+    private void setTable(){
+        table.setEditable(false);
+        sessioni = new Sessioni(conferenza);
+        try{
+            sessioni.loadSessioni();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("titolo"));
+        inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataInizio"));
+        fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataFine"));
+        oraInizioColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioInizio"));
+        orarioFineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioFine"));
+        salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
+        table.getItems().addAll(sessioni.getSessioni());
+        nomeSessioneColumn.isSortable();
+        oraInizioColumn.isSortable();
     }
 }

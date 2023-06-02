@@ -4,7 +4,6 @@ import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
-import Persistence.Entities.Utente;
 import Services.Sedi;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +23,7 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class EditConferenceDetailsController implements Initializable {
+public class ModificaDettagliConferenzaController implements Initializable {
     private Conferenza conferenza;
     private ModificaConferenzaController modificaConferenzaController;
     private SubScene subScene;

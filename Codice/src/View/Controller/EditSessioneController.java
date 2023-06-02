@@ -79,7 +79,7 @@ public class EditSessioneController implements Initializable {
     }
     private void goToEditDettagliSessione() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditDettagliSessione.fxml"));
-        EditDettagliSessioneController controllerS = new EditDettagliSessioneController();
+        ModificaDettagliSessioneController controllerS = new ModificaDettagliSessioneController();
         loader.setController(controllerS);
         controllerS.setSessione(sessione);
         controllerS.setConferenza(conferenza);

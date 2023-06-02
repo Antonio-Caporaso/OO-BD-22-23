@@ -11,14 +11,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -29,7 +29,19 @@ public class ManageSessioniController implements Initializable {
     private Utente user;
     private ModificaConferenzaController modificaConferenzaController;
     @FXML
-    private ListView<Sessione> sessioniView;
+    private TableView<Sessione> table;
+    @FXML
+    private TableColumn<Sessione,String> nomeSessioneColumn;
+    @FXML
+    private TableColumn<Sessione, Date> inizioSessioneColumn;
+    @FXML
+    private TableColumn<Sessione, Date> fineSessioneColumn;
+    @FXML
+    private TableColumn<Sessione, String> salaSessioneColumn;
+    @FXML
+    private TableColumn<Sessione, Time> oraInizioColumn;
+    @FXML
+    private TableColumn<Sessione, Time> orarioFineSessioneColumn;
     @FXML
     private Button addSessioneButton;
 
@@ -41,6 +53,18 @@ public class ManageSessioniController implements Initializable {
 
     @FXML
     private Button rimuoviSessioneButton;
+    private void setTable(){
+        table.setEditable(false);
+        nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("titolo"));
+        inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataInizio"));
+        fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataFine"));
+        oraInizioColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioInizio"));
+        orarioFineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioFine"));
+        salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
+        table.setItems(sessioni.getSessioni());
+        nomeSessioneColumn.isSortable();
+        oraInizioColumn.isSortable();
+    }
 
     @FXML
     public void addSessioneOnAction(ActionEvent event) throws IOException {
@@ -60,7 +84,7 @@ public class ManageSessioniController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
             EditSessioneController controller = new EditSessioneController();
             loader.setController(controller);
-            Sessione s = sessioniView.getSelectionModel().getSelectedItem();
+            Sessione s = table.getSelectionModel().getSelectedItem();
             if(s == null)
                 throw new SessioneNotSelectedException();
             controller.setSessione(s);
@@ -78,7 +102,7 @@ public class ManageSessioniController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        sessioniView.setItems(sessioni.getSessioni());
+        setTable();
     }
 
     public void setEditConferenceController(ModificaConferenzaController modificaConferenzaController) {
@@ -104,7 +128,7 @@ public class ManageSessioniController implements Initializable {
     @FXML
     void rimuoviSessioneOnAction(ActionEvent event) {
         try {
-            Sessione s = sessioniView.getSelectionModel().getSelectedItem();
+            Sessione s = table.getSelectionModel().getSelectedItem();
             if (s == null) {
                 throw new SessioneNotSelectedException();
             }

@@ -14,10 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
@@ -34,6 +32,10 @@ public class AddSessioneController implements Initializable,FormChecker {
     private ManageSessioniController manageSessioniController;
     private ModificaConferenzaController modificaConferenzaController;
     private SubScene subscene;
+    @FXML
+    private Label inizioConferenzaLabel;
+    @FXML
+    private Label fineConferenzaLabel;
     @FXML
     private Button annullaButton;
     @FXML
@@ -108,6 +110,10 @@ public class AddSessioneController implements Initializable,FormChecker {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        inizioConferenzaLabel.setText(conferenza.getDataInizio().toString());
+        inizioConferenzaLabel.setTextFill(Color.WHITE);
+        fineConferenzaLabel.setTextFill(Color.WHITE);
+        fineConferenzaLabel.setText(conferenza.getDataFine().toString());
         setSale();
         try {
             setCoordinatoreChoiceBox();
