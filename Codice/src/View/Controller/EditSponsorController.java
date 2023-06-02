@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,13 +25,20 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditSponsorController implements Initializable, FormChecker {
+    @FXML
+    private TableColumn<Sponsorizzazione, Float> contributoColumn;
+    @FXML
+    private TableColumn<Sponsorizzazione, String> sponsorNameColumn;
+    @FXML
+    private TableView<Sponsorizzazione> sponsorTable;
+    @FXML
+    private TableColumn<Sponsorizzazione, String> valutaColumn;
+
     private SponsorizzazioniConferenza sponsorizzazioni;
     private Sponsors sponsors = new Sponsors();
     private Conferenza conferenza;
     private ModificaConferenzaController controller;
     private SubScene subscene;
-    @FXML
-    private ListView<Sponsorizzazione> SponsorView;
     @FXML
     private Button annullaButton;
     @FXML
@@ -61,7 +69,7 @@ public class EditSponsorController implements Initializable, FormChecker {
     @FXML
     void deleteOnAction(ActionEvent event) {
         try{
-            Sponsorizzazione sp = SponsorView.getSelectionModel().getSelectedItem();
+            Sponsorizzazione sp = sponsorTable.getSelectionModel().getSelectedItem();
             if (sp == null)
                 throw new NullPointerException();
             Optional<ButtonType> result = showDeleteDialog();
@@ -139,8 +147,21 @@ public class EditSponsorController implements Initializable, FormChecker {
         sponsors.loadSponsor();
         sponsorChoice.setItems(sponsors.getSponsors());
         sponsorizzazioni = new SponsorizzazioniConferenza(conferenza);
-        SponsorView.setItems(sponsorizzazioni.getSponsorizzazioni());
+        setTable();
         setValute();
+    }
+
+    private void setTable() {
+        sponsorTable.setEditable(true);
+        try {
+            sponsorizzazioni.loadSponsorizzazioni();
+            sponsorNameColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("sponsor"));
+            contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,Float>("contributo"));
+            valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("valuta"));
+            sponsorTable.setItems(sponsorizzazioni.getSponsorizzazioni());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setValute() {
