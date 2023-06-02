@@ -1,17 +1,10 @@
 package Persistence.Entities.Conferenze;
 
-import Persistence.DAO.SalaDao;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Sala {
     private int salaID;
     private String nomeSala;
     private int capacity;
     private Sede sede;
-    private SalaDao salaDao;
 
     public Sala(String nomeSala, int capacity, boolean prenotata, Sede sede) {
         this.nomeSala = nomeSala;
