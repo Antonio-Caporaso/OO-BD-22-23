@@ -52,6 +52,19 @@ public class Conferenza {
         this.valuta=valuta;
     }
 
+    public Conferenza(int id, String nome, Utente proprietario, Timestamp datainizio, Timestamp datafine, String descrizione, Comitato local, Comitato scientific, Sede sede, float budget) {
+        this.conferenzaID=id;
+        this.nome=nome;
+        this.proprietario=proprietario;
+        this.dataInizio=datainizio;
+        this.dataFine=datafine;
+        this.descrizione=descrizione;
+        this.comitatoLocale=local;
+        this.comitatoScientifico=scientific;
+        this.sede=sede;
+        this.budget=budget;
+    }
+
     public LinkedList<Ente> getOrganizzataDa() {
         return organizzataDa;
     }
@@ -139,7 +152,7 @@ public class Conferenza {
     public void setSede(Sede sede) {
         this.sede = sede;
     }
-    public String getCodiceValuta(){
+    public String setCodiceValuta(String valuta){
         if(valuta.equals("$"))
             return "USD";
         else if(valuta.equals("€"))
@@ -151,7 +164,27 @@ public class Conferenza {
         else return null;
     }
     public void setValuta(String valuta){
-        this.valuta=valuta;
+        if(valuta.equals("USD"))
+            this.valuta= "$";
+        else if(valuta.equals("EUR"))
+            this.valuta="€";
+        else if(valuta.equals("GBP"))
+            this.valuta="£";
+        else if(valuta.equals("JPY"))
+            this.valuta="¥";
+    }
+    public String getCodiceValuta()
+    {
+        if(valuta.equals("$"))
+            return "USD";
+        else if(valuta.equals("€"))
+            return "EUR";
+        else if(valuta.equals("£"))
+            return "GBP";
+        else if(valuta.equals("¥"))
+            return "JPY";
+        else
+            return null;
     }
 
     public String getValuta() {

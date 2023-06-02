@@ -40,8 +40,8 @@ public class ConferenzaDao {
             Sede sede = sedeDao.retrieveSedeByID(rs.getInt("idsede"));
             float budget = rs.getFloat("budget");
             Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
-            String valuta = rs.getString("valuta");
-            Conferenza c = new Conferenza(id,nome,proprietario,datainizio,datafine,descrizione,local,scientific,sede,budget,valuta);
+            Conferenza c = new Conferenza(id,nome,proprietario,datainizio,datafine,descrizione,local,scientific,sede,budget);
+            c.setValuta(rs.getString("valuta"));
             list.add(c);
         }
         rs.close();
