@@ -1,12 +1,10 @@
 package Persistence.Entities.Conferenze;
 
-import java.sql.Timestamp;
 
-public class EventoSociale {
+public class EventoSociale extends Activity {
     private int id;
     private Programma programma;
     private String tipologia;
-    private Timestamp orario;
 
     public int getId() {
         return id;
@@ -30,13 +28,5 @@ public class EventoSociale {
 
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
-    }
-
-    public Timestamp getOrario() {
-        return orario;
-    }
-
-    public void setOrario(Timestamp orario) {
-        this.orario = orario;
     }
 }

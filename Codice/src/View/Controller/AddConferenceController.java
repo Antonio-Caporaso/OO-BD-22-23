@@ -1,6 +1,7 @@
 package View.Controller;
 
 import Exceptions.BlankFieldException;
+import Persistence.DAO.ComitatoDao;
 import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
@@ -107,8 +108,15 @@ public class AddConferenceController implements Initializable,FormChecker{
 
     private void loadAddOrganizzatori(Conferenza c){
         ConferenzaDao conferenzaDao= new ConferenzaDao();
+        ComitatoDao comitatoDao=new ComitatoDao();
         conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
-        try{
+
+        try {
+            if(conferenza.getComitatoLocale().getComitatoID()==0){
+            comitatoDao.insertComitato(1, conferenza.getComitatoScientifico().getComitatoID());
+            }else{
+                comitatoDao.insertComitato(1, conferenza.getComitatoLocale().getComitatoID());
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddOrganizzatori.fxml"));
             AddOrganizzatoriController controller = new AddOrganizzatoriController();
             controller.setSubscene(subscene);

@@ -54,6 +54,7 @@ public class VisualizzaSessioneController implements Initializable {
     }
     @FXML
     void nextButtonOnAction(ActionEvent event) {
+        loadViewProgramma();
     }
     @FXML
     void backButtonOnAction(ActionEvent event){
@@ -112,6 +113,23 @@ public class VisualizzaSessioneController implements Initializable {
             e.printStackTrace();
         }
     }
+    private void loadViewProgramma(){
+        try{
+            Sessione s = sessioniListView.getSelectionModel().getSelectedItem();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ViewProgrammaSessione.fxml"));
+            ViewProgramma controller = new ViewProgramma();
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(conferenza);
+            controller.setUser(user);
+            controller.setSessione(s);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setSessioni() {
     Sessioni sessioni= new Sessioni(conferenza);
     try {

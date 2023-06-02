@@ -2,11 +2,16 @@ package Persistence.Entities.Conferenze;
 
 import java.sql.Timestamp;
 
-public class Intervallo {
+public class Intervallo extends Activity {
     private int id;
     private String tipologia;
     private Programma programma;
-    private Timestamp orario;
+
+    public Intervallo(){
+    }
+    public Intervallo(Timestamp orario) {
+        super(orario);
+    }
 
     public int getId() {
         return id;
@@ -30,13 +35,5 @@ public class Intervallo {
 
     public void setProgramma(Programma programma) {
         this.programma = programma;
-    }
-
-    public Timestamp getOrario() {
-        return orario;
-    }
-
-    public void setOrario(Timestamp orario) {
-        this.orario = orario;
     }
 }

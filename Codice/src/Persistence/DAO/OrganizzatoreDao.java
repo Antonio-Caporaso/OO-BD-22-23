@@ -38,6 +38,7 @@ public class OrganizzatoreDao {
         stm.setInt(1,idComitato);
         ResultSet rs = stm.executeQuery();
         LinkedList<Organizzatore> membri = new LinkedList<>();
+        System.out.println(query);
         while(rs.next()){
             Organizzatore o = new Organizzatore();
             o.setOrganizzatoreID(rs.getInt(1));

@@ -1,12 +1,10 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
+import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Comitato;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ComitatoDao {
     Connection conn = null;
@@ -25,5 +23,14 @@ public class ComitatoDao {
             c.setTipologia(rs.getString("tipologia"));
         }
         return c;
+    }
+    public void insertComitato(int numeroOrganizzatori, int idComitato) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String procedure = "inserisci_organizzatori";
+        CallableStatement stm = conn.prepareCall ("CALL "+procedure+"(?,?)");
+        stm.setInt(1, numeroOrganizzatori);
+        stm.setInt(2, idComitato);
+        stm.execute();
     }
 }
