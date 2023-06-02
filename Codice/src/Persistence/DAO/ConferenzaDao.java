@@ -5,8 +5,6 @@ import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Comitato;
-import Persistence.Entities.organizzazione.ComitatoLocale;
-import Persistence.Entities.organizzazione.ComitatoScientifico;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -116,37 +114,37 @@ public class ConferenzaDao {
         stm.setString(7,conferenza.getCodiceValuta());
         stm.executeUpdate();
     }
-    public Conferenza retrieveConferenzaByNome(String nomeConferenza){
-        dbcon = DBConnection.getDBconnection();
-        conn = dbcon.getConnection();
-        Conferenza conferenza = null;
-        UtenteDAO userDao = new UtenteDAO();
-        SedeDao sedeDao = new SedeDao();
-        try{
-            String query = "SELECT * from conferenza where nome = ?";
-            PreparedStatement stm = conn.prepareStatement(query);
-            stm.setString(1, nomeConferenza);
-            ResultSet rs = stm.executeQuery();
-            ComitatoDao comitatodao = new ComitatoDao();
-            while(rs.next()){
-                int id = rs.getInt(1);
-                String nome = rs.getString(2);
-                Timestamp datainizio = rs.getTimestamp(3);
-                Timestamp datafine = rs.getTimestamp(4);
-                ComitatoScientifico scientific = (ComitatoScientifico) comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico"));
-                ComitatoLocale local = (ComitatoLocale) comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale"));
-                String descrizione = rs.getString(5);
-                Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
-                float budget = rs.getFloat(7);
-                Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
-                String valuta = rs.getString("valuta");
-                conferenza = new Conferenza(id,nome,proprietario,datainizio,datafine,descrizione,local,scientific,sede,budget,valuta);
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return conferenza;
-    }
+//    public Conferenza retrieveConferenzaByNome(String nomeConferenza){
+//        dbcon = DBConnection.getDBconnection();
+//        conn = dbcon.getConnection();
+//        Conferenza conferenza = null;
+//        UtenteDAO userDao = new UtenteDAO();
+//        SedeDao sedeDao = new SedeDao();
+//        try{
+//            String query = "SELECT * from conferenza where nome = ?";
+//            PreparedStatement stm = conn.prepareStatement(query);
+//            stm.setString(1, nomeConferenza);
+//            ResultSet rs = stm.executeQuery();
+//            ComitatoDao comitatodao = new ComitatoDao();
+//            while(rs.next()){
+//                int id = rs.getInt(1);
+//                String nome = rs.getString(2);
+//                Timestamp datainizio = rs.getTimestamp(3);
+//                Timestamp datafine = rs.getTimestamp(4);
+//                ComitatoScientifico scientific = (ComitatoScientifico) comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico"));
+//                ComitatoLocale local = (ComitatoLocale) comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale"));
+//                String descrizione = rs.getString(5);
+//                Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
+//                float budget = rs.getFloat(7);
+//                Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
+//                String valuta = rs.getString("valuta");
+//                conferenza = new Conferenza(id,nome,proprietario,datainizio,datafine,descrizione,local,scientific,sede,budget,valuta);
+//            }
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }
+//        return conferenza;
+//    }
     public LinkedList<Conferenza> retrieveBySede(Sede sede) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();

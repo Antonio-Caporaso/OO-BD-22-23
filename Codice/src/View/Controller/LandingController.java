@@ -74,7 +74,7 @@ public class LandingController implements Initializable{
     @FXML
     void visualizzaConferenzaOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenze.fxml"));
             ViewConferencesController controller = new ViewConferencesController();
             loader.setController(controller);
             Parent root = loader.load();

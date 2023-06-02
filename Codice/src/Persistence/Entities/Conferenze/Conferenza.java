@@ -164,14 +164,7 @@ public class Conferenza {
         else return null;
     }
     public void setValuta(String valuta){
-        if(valuta.equals("USD"))
-            this.valuta= "$";
-        else if(valuta.equals("EUR"))
-            this.valuta="€";
-        else if(valuta.equals("GBP"))
-            this.valuta="£";
-        else if(valuta.equals("JPY"))
-            this.valuta="¥";
+       this.valuta=valuta;
     }
     public String getCodiceValuta()
     {

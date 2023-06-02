@@ -128,15 +128,6 @@ public class Utente {
 
     @Override
     public String toString() {
-        return "Utente{" +
-                "idUtente=" + idUtente +
-                ", titolo='" + titolo + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", nome='" + nome + '\'' +
-                ", cognome='" + cognome + '\'' +
-                ", email='" + email + '\'' +
-                ", istituzione='" + istituzione + '\'' +
-                '}';
+        return cognome+" "+nome;
     }
 }
