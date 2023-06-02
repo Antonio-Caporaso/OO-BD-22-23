@@ -19,7 +19,6 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
