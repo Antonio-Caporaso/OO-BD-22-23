@@ -1,9 +1,12 @@
 package Persistence.DAO;
+
 import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Comitato;
+import Persistence.Entities.organizzazione.ComitatoLocale;
+import Persistence.Entities.organizzazione.ComitatoScientifico;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,20 +28,25 @@ public class ConferenzaDao {
         stm.setInt(1,user.getIdUtente());
         ResultSet rs = stm.executeQuery();
         ComitatoDao comitatodao = new ComitatoDao();
-        while(rs.next()){
+        while(rs.next())
+        {
             int id = rs.getInt("idconferenza");
             String nome = rs.getString("nome");
-            Timestamp datainizio = rs.getTimestamp(3);
-            Timestamp datafine = rs.getTimestamp(4);
-            String descrizione = rs.getString(5);
-            Comitato scientific = (comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
-            Comitato local = (comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
-            Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
-            float budget = rs.getFloat(7);
+            Timestamp datainizio = rs.getTimestamp("datainizio");
+            Timestamp datafine = rs.getTimestamp("datafine");
+            String descrizione = rs.getString("descrizione");
+            Comitato scientific =  comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico"));
+            Comitato local = comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale"));
+            Sede sede = sedeDao.retrieveSedeByID(rs.getInt("idsede"));
+            float budget = rs.getFloat("budget");
             Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
-            Conferenza c = new Conferenza(id,nome,datainizio,datafine,scientific, local,descrizione,sede,budget,proprietario);
+            String valuta = rs.getString("valuta");
+            Conferenza c = new Conferenza(id,nome,proprietario,datainizio,datafine,descrizione,local,scientific,sede,budget,valuta);
             list.add(c);
         }
+        rs.close();
+        stm.close();
+        conn.close();
         return list;
     }
     public LinkedList<Conferenza> getAllConferenze() throws SQLException {
@@ -125,13 +133,14 @@ public class ConferenzaDao {
                 String nome = rs.getString(2);
                 Timestamp datainizio = rs.getTimestamp(3);
                 Timestamp datafine = rs.getTimestamp(4);
-                Comitato scientific = (comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico")));
-                Comitato local = (comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale")));
+                ComitatoScientifico scientific = (ComitatoScientifico) comitatodao.retrieveComitatobyId(rs.getInt("comitatoscientifico"));
+                ComitatoLocale local = (ComitatoLocale) comitatodao.retrieveComitatobyId(rs.getInt("comitatolocale"));
                 String descrizione = rs.getString(5);
                 Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
                 float budget = rs.getFloat(7);
                 Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
-                conferenza = new Conferenza(id,nome,datainizio,datafine,scientific,local,descrizione,sede,budget,proprietario);
+                String valuta = rs.getString("valuta");
+                conferenza = new Conferenza(id,nome,proprietario,datainizio,datafine,descrizione,local,scientific,sede,budget,valuta);
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -219,7 +228,8 @@ public class ConferenzaDao {
                 Sede sede = sedeDao.retrieveSedeByID(rs.getInt(6));
                 float budget = rs.getFloat(7);
                 Utente proprietario = userDao.retrieveUtentebyID(rs.getInt("proprietario"));
-                conferenza = new Conferenza(id,nome,datainizio,datafine,scientific, local,descrizione,sede,budget,proprietario);
+                String valuta = rs.getString("valuta");
+                conferenza = new Conferenza(id,nome,proprietario,datainizio,datafine,descrizione,local,scientific,sede,budget,valuta);
             }
         }catch (SQLException e){
             e.printStackTrace();

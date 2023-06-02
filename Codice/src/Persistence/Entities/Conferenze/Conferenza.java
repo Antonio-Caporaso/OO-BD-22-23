@@ -1,7 +1,9 @@
 package Persistence.Entities.Conferenze;
 
 import Persistence.Entities.Utente;
-import Persistence.Entities.organizzazione.*;
+import Persistence.Entities.organizzazione.Comitato;
+import Persistence.Entities.organizzazione.Ente;
+import Persistence.Entities.organizzazione.Sponsorizzazione;
 
 import java.sql.Timestamp;
 import java.util.LinkedList;
@@ -13,62 +15,65 @@ public class Conferenza {
     private Timestamp dataInizio;
     private Timestamp dataFine;
     private String descrizione;
-    private LinkedList<Ente> organizzataDa;
-    private LinkedList<Sponsorizzazione> sponsorizzataDa;
     private Comitato comitatoLocale;
     private Comitato comitatoScientifico;
     private Sede sede;
     private float budget;
     private String valuta;
+    private LinkedList<Ente> organizzataDa;
     private LinkedList<Sessione> sessioni;
-    public Conferenza(int id, String nome, Timestamp dataInizio,
-                      Timestamp dataFine, String descrizione,
-                      Sede sede, float budget, ComitatoLocale comitato,
-                      ComitatoScientifico c2, Utente proprietario, String valuta){
-    this.conferenzaID = id;
-    this.nome = nome;
-    this.dataInizio = dataInizio;
-    this.dataFine = dataFine;
-    this.descrizione = descrizione;
-    this.sede = sede;
-    this.budget = budget;
-    this.comitatoLocale = comitato;
-    this.comitatoScientifico = c2;
-    this.proprietario = proprietario;
-    this.valuta = valuta;
-    }
-    public Conferenza(String nome, Timestamp dataInizio, Timestamp dataFine, String descrizione) {
+    private LinkedList<Sponsorizzazione> sponsorizzataDa;
+
+    public Conferenza(int conferenzaID, String nome, Utente proprietario, Timestamp dataInizio, Timestamp dataFine, String descrizione, Comitato comitatoLocale, Comitato comitatoScientifico, Sede sede, float budget, String valuta) {
+        this.conferenzaID = conferenzaID;
         this.nome = nome;
+        this.proprietario = proprietario;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
         this.descrizione = descrizione;
-    }
-
-    public Conferenza(String nome, Timestamp dataI, Timestamp dataF, String descrizione, float budget, Sede sede, Utente user, String valuta) {
-        this.nome=nome;
-        this.dataInizio = dataI;
-        this.dataFine = dataF;
-        this.descrizione= descrizione;
-        this.budget= budget;
+        this.comitatoLocale = comitatoLocale;
+        this.comitatoScientifico = comitatoScientifico;
         this.sede = sede;
-        this.proprietario = user;
+        this.budget = budget;
         this.valuta = valuta;
     }
 
-    public Conferenza(int id, String nome, Timestamp datainizio, Timestamp datafine, Comitato comitatoScientifico, Comitato comitatoLocale, String descrizione, Sede sede, float budget, Utente proprietario) {
-        this.conferenzaID = id;
-        this.nome = nome;
-        this.dataInizio=datainizio;
-        this.dataFine= datafine;
-        this.descrizione = descrizione;
-        this.sede = sede;
-        this.budget=budget;
-        this.proprietario=proprietario;
-        this.comitatoLocale = comitatoLocale;
-        this.comitatoScientifico = comitatoScientifico;
+    public Conferenza() {
     }
 
-    public Conferenza() {
+    public Conferenza(String nome, Timestamp dataI, Timestamp dataF, String descrizione, float budget, Sede sede, Utente user, String valuta) {
+        this.nome = nome;
+        this.dataInizio=dataI;
+        this.dataFine=dataF;
+        this.descrizione=descrizione;
+        this.budget=budget;
+        this.sede=sede;
+        this.proprietario=user;
+        this.valuta=valuta;
+    }
+
+    public LinkedList<Ente> getOrganizzataDa() {
+        return organizzataDa;
+    }
+
+    public void setOrganizzataDa(LinkedList<Ente> organizzataDa) {
+        this.organizzataDa = organizzataDa;
+    }
+
+    public LinkedList<Sessione> getSessioni() {
+        return sessioni;
+    }
+
+    public void setSessioni(LinkedList<Sessione> sessioni) {
+        this.sessioni = sessioni;
+    }
+
+    public LinkedList<Sponsorizzazione> getSponsorizzataDa() {
+        return sponsorizzataDa;
+    }
+
+    public void setSponsorizzataDa(LinkedList<Sponsorizzazione> sponsorizzatoDa) {
+        this.sponsorizzataDa = sponsorizzatoDa;
     }
 
     public int getConferenzaID() {
@@ -110,18 +115,6 @@ public class Conferenza {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
-    public LinkedList<Ente> getOrganizzataDa() {
-        return organizzataDa;
-    }
-    public void setOrganizzataDa(LinkedList<Ente> organizzataDa) {
-        this.organizzataDa = organizzataDa;
-    }
-    public LinkedList<Sponsorizzazione> getSponsorizzataDa() {
-        return sponsorizzataDa;
-    }
-    public void setSponsorizzataDa(LinkedList<Sponsorizzazione> sponsorizzataDa) {
-        this.sponsorizzataDa = sponsorizzataDa;
-    }
     public Comitato getComitatoLocale() {
         return comitatoLocale;
     }
@@ -145,12 +138,6 @@ public class Conferenza {
     }
     public void setSede(Sede sede) {
         this.sede = sede;
-    }
-    public LinkedList<Sessione> getSessioni() {
-        return sessioni;
-    }
-    public void setSessioni(LinkedList<Sessione> sessioni) {
-        this.sessioni = sessioni;
     }
     public String getCodiceValuta(){
         if(valuta.equals("$"))
