@@ -1,8 +1,8 @@
 package View.Controller;
 
-import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.partecipanti.Speaker;
 import Services.EventiSocialiSessione;
 import Services.IntervalliSessione;
 import Services.InterventiSessione;
@@ -14,10 +14,11 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EditProgrammaController implements Initializable {
@@ -36,6 +37,35 @@ public class EditProgrammaController implements Initializable {
     private Button fineButton;
     @FXML
     private Label keynoteLabel;
+    @FXML
+    private Button addEventoButton;
+
+    @FXML
+    private Button addIntervalloButton;
+
+    @FXML
+    private Button addInterventoButton;
+
+    @FXML
+    private Button deleteEventoButton;
+
+    @FXML
+    private Button deleteIntervalloButton;
+
+    @FXML
+    private Button deleteInterventoButton;
+    @FXML
+    private Button editKeynoteButton;
+    @FXML
+    private TableColumn<Speaker, String> cognomeKeynote;
+    @FXML
+    private TableColumn<Speaker, String> emailKeynoteColumn;
+    @FXML
+    private TableColumn<Speaker, String> istituzioneKeynoteColumn;
+    @FXML
+    private TableColumn<Speaker, String> nomeKeynoteColumn;
+    @FXML
+    private TableView<Speaker> keynoteSpeakerTable;
 
     public InterventiSessione getInterventi() {
         return interventi;
@@ -83,43 +113,51 @@ public class EditProgrammaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        inizializzaDettagliProgramma();
-    }
-    private void inizializzaDettagliProgramma(){
-        setProgramma();
+
+
     }
 
-    private void setProgramma() {
-        ProgrammaDao dao = new ProgrammaDao();
-        try {
-            programma = dao.retrieveProgrammaBySessione(sessione);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        intervalli = new IntervalliSessione(programma);
-        interventi = new InterventiSessione(programma);
-        eventi = new EventiSocialiSessione(programma);
-    }
 
-    private void setKeynoteLabel() {
-        String keynote =programma.getKeynote().getNome()+" "+programma.getKeynote().getCognome();
-        if(keynote.isBlank()){
-            keynoteLabel.setText("Keynote speaker non previsto");
-        }else{
-            keynoteLabel.setText(keynote);
-        }
-    }
 
-    private void setChairLabel() {
-        coordinatoreLabel.setText(programma.getChair().getNome()+" "+programma.getChair().getCognome());
-    }
+    @FXML
+    void editKeynoteButtonOnAction(ActionEvent event){
 
+    }
     @FXML
     private void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
         loader.setController(manageSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
+    }
+    @FXML
+    void addEventoOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addIntervalloOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addInterventoOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deleteEventoOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deleteIntervalloOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void deleteInterventoOnAction(ActionEvent event) {
+
     }
 
 }

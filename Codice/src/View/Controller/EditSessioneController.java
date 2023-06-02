@@ -1,7 +1,6 @@
 package View.Controller;
 
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.Conferenze.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,11 +9,36 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ResourceBundle;
 
 public class EditSessioneController implements Initializable {
+    @FXML
+    private Label coordinatoreLabel;
+    @FXML
+    private TableColumn<Intervento, String> abstractColumn;
+    @FXML
+    private TableView<EventoSociale> eventiTable;
+    @FXML
+    private TableView<Intervento> interventiTable;
+    @FXML
+    private TableView<Intervallo> intervalliTable;
+    @FXML
+    private TableColumn<EventoSociale, Time> orarioEventoColumn;
+    @FXML
+    private TableColumn<Intervallo, Time> orarioIntervalloColumn;
+    @FXML
+    private TableColumn<Intervento, Time> orarioInterventoColumn;
+    @FXML
+    private TableColumn<Intervento, String> speakerColumn;
+    @FXML
+    private TableColumn<EventoSociale, String> tipologiaEventoColumn;
+    @FXML
+    private TableColumn<Intervallo, String> tipologiaIntervalloColumn;
     private Sessione sessione;
     private Conferenza conferenza;
     private ManageSessioniController manageSessioniController;
@@ -113,6 +137,7 @@ public class EditSessioneController implements Initializable {
         oraInizioLabel.setText(String.valueOf(sessione.getOrarioInizio()));
         oraFineLabel.setText(String.valueOf(sessione.getOrarioFine()));
         salaLabel.setText(sessione.getLocazione().getNomeSala());
+        coordinatoreLabel.setText(sessione.getCoordinatore().toString());
     }
 
     public ManageSessioniController getManageSessioniController() {
