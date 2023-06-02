@@ -102,6 +102,7 @@ public class ModificaDettagliConferenzaController implements Initializable {
         sedeChoice.setItems(sedi.getSedi());
         sedeChoice.setValue(conferenza.getSede());
         setValute();
+        valutaChoice.setValue(conferenza.getValuta());
     }
 
     public SubScene getSubScene() {

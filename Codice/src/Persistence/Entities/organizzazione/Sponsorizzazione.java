@@ -63,6 +63,6 @@ public class Sponsorizzazione {
     }
     @Override
     public String toString() {
-        return sponsor +", contributo = " + contributo+" "+valuta;
+        return sponsor +"(" + contributo+" "+valuta+")";
     }
 }

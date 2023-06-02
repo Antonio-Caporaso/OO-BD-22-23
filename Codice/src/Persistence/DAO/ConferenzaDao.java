@@ -103,7 +103,7 @@ public class ConferenzaDao {
         stm.setTimestamp(3,conferenza.getDataInizio());
         stm.setTimestamp(4,conferenza.getDataFine());
         stm.setFloat(5,conferenza.getBudget());
-        stm.setInt(7,conferenza.getConferenzaID());
+        stm.setInt(8,conferenza.getConferenzaID());
         stm.setInt(6,conferenza.getSede().getSedeID());
         stm.setString(7,conferenza.getCodiceValuta());
         stm.executeUpdate();

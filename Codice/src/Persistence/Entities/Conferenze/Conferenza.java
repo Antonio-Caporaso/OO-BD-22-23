@@ -1,6 +1,5 @@
 package Persistence.Entities.Conferenze;
 
-import Exceptions.EntePresenteException;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.*;
 
@@ -135,18 +134,6 @@ public class Conferenza {
     public void setComitatoScientifico(Comitato comitatoScientifico) {
         this.comitatoScientifico = comitatoScientifico;
     }
-    public void addEnte(Ente ente) throws EntePresenteException {
-        if(!organizzataDa.contains(ente)){
-            organizzataDa.add(ente);
-        }else
-            throw new EntePresenteException();
-    }
-    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione){
-        if(!sponsorizzataDa.contains(sponsorizzazione)) {
-            sponsorizzataDa.add(sponsorizzazione);
-            sponsorizzazione.setConferenza(this);
-        }
-    }
     public float getBudget() {
         return budget;
     }
@@ -165,12 +152,6 @@ public class Conferenza {
     public void setSessioni(LinkedList<Sessione> sessioni) {
         this.sessioni = sessioni;
     }
-    public void addSessione(Sessione sessione){
-        if(!sessioni.contains(sessione)){
-            sessioni.add(sessione);
-            sessione.setConferenza(this);
-        }
-    }
     public String getCodiceValuta(){
         if(valuta.equals("$"))
             return "USD";
@@ -185,6 +166,11 @@ public class Conferenza {
     public void setValuta(String valuta){
         this.valuta=valuta;
     }
+
+    public String getValuta() {
+        return valuta;
+    }
+
     @Override
     public String toString() {
         return nome;

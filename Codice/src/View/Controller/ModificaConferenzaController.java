@@ -149,7 +149,7 @@ public class ModificaConferenzaController implements Initializable {
         this.setTitleLabel();
         nomeLabel.setText(conferenza.getNome());
         descrizioneLabel.setText(conferenza.getDescrizione());
-        budgetLabel.setText(Float.toString(conferenza.getBudget()));
+        budgetLabel.setText(Float.toString(conferenza.getBudget())+""+conferenza.getValuta());
         dataInizioLabel.setText(conferenza.getDataInizio().toString());
         dataFineLabel.setText(conferenza.getDataFine().toString());
         sedeLabel.setText(conferenza.getSede().toString());
