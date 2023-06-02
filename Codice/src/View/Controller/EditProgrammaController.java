@@ -30,30 +30,17 @@ public class EditProgrammaController implements Initializable {
     private Sessione sessione;
     private EventiSocialiSessione eventi;
     @FXML
-    private Button editChairButton;
-    @FXML
-    private Label coordinatoreLabel;
-    @FXML
     private Button fineButton;
     @FXML
     private Label keynoteLabel;
     @FXML
-    private Button addEventoButton;
+    private Button editEventiButton;
 
     @FXML
-    private Button addIntervalloButton;
+    private Button ediIntervalliButton;
 
     @FXML
-    private Button addInterventoButton;
-
-    @FXML
-    private Button deleteEventoButton;
-
-    @FXML
-    private Button deleteIntervalloButton;
-
-    @FXML
-    private Button deleteInterventoButton;
+    private Button editInterventiButton;
     @FXML
     private Button editKeynoteButton;
     @FXML
@@ -117,12 +104,6 @@ public class EditProgrammaController implements Initializable {
 
     }
 
-
-
-    @FXML
-    void editKeynoteButtonOnAction(ActionEvent event){
-
-    }
     @FXML
     private void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
@@ -131,33 +112,23 @@ public class EditProgrammaController implements Initializable {
         subscene.setRoot(root);
     }
     @FXML
-    void addEventoOnAction(ActionEvent event) {
+    void editEventiButtonOnAction(ActionEvent event) {
 
     }
 
     @FXML
-    void addIntervalloOnAction(ActionEvent event) {
+    void editIntervalliButtonOnAction(ActionEvent event) {
 
     }
 
     @FXML
-    void addInterventoOnAction(ActionEvent event) {
+    void editInterventiButtonOnAction(ActionEvent event) {
 
     }
-
     @FXML
-    void deleteEventoOnAction(ActionEvent event) {
+    void editKeynoteButtonOnAction(ActionEvent event){
 
     }
 
-    @FXML
-    void deleteIntervalloOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteInterventoOnAction(ActionEvent event) {
-
-    }
 
 }
