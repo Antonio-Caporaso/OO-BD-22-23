@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -63,29 +64,44 @@ public class GestioneConferenzeController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
             ModificaConferenzaController controller = new ModificaConferenzaController();
             loader.setController(controller);
-            controller.setConferenza(conferenzeView.getSelectionModel().getSelectedItem());
-            controller.setSubscene(subscene);
-            controller.setGestioneConferenzeController(this);
-            controller.setUser(user);
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        }catch (Exception e){
+            try{
+                Conferenza c = conferenzeView.getSelectionModel().getSelectedItem();
+                if(c== null)
+                    throw new NullPointerException();
+                controller.setConferenza(c);
+                controller.setSubscene(subscene);
+                controller.setGestioneConferenzeController(this);
+                controller.setUser(user);
+                Parent root = loader.load();
+                subscene.setRoot(root);
+            }catch (NullPointerException e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Nessuna conferenza selezionata");
+                alert.showAndWait();
+            }
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
     public void deleteOnAction(ActionEvent event){
-        Conferenza c = conferenzeView.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Eliminare conferenza");
-        alert.setHeaderText("Sicuro di voler eliminare la conferenza "+c.getNome()+"?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            try{
-                eliminaConferenza(c);
-                showInformationAlert();
-            }catch (SQLException e){
-                showErrorAlert(e);
+        try{
+            Conferenza c = conferenzeView.getSelectionModel().getSelectedItem();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Eliminare conferenza");
+            alert.setHeaderText("Sicuro di voler eliminare la conferenza "+c.getNome()+"?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                try{
+                    eliminaConferenza(c);
+                    showInformationAlert();
+                }catch (SQLException e){
+                    showErrorAlert(e);
+                }
             }
+        }catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nessuna conferenza selezionata");
+            alert.showAndWait();
         }
     }
 
