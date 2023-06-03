@@ -1,7 +1,6 @@
 package View.Controller;
 
-import Persistence.Entities.Conferenze.Programma;
-import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.partecipanti.Speaker;
 import Services.EventiSocialiSessione;
 import Services.IntervalliSessione;
@@ -13,12 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ResourceBundle;
 
 public class EditProgrammaController implements Initializable {
@@ -30,29 +30,72 @@ public class EditProgrammaController implements Initializable {
     private Sessione sessione;
     private EventiSocialiSessione eventi;
     @FXML
-    private Button fineButton;
+    private TableColumn<Intervento, String> abstractColumn;
+
     @FXML
-    private Label keynoteLabel;
+    private TableColumn<Speaker, String> cognomeKeynoteColumn;
+
     @FXML
     private Button editEventiButton;
 
     @FXML
-    private Button ediIntervalliButton;
+    private Button editIntervalliButton;
 
     @FXML
     private Button editInterventiButton;
+
     @FXML
     private Button editKeynoteButton;
-    @FXML
-    private TableColumn<Speaker, String> cognomeKeynote;
+
     @FXML
     private TableColumn<Speaker, String> emailKeynoteColumn;
+
+    @FXML
+    private TableView<EventoSociale> eventiTable;
+
+    @FXML
+    private Button fineButton;
+
+    @FXML
+    private TableView<Intervento> interventiTable;
+
     @FXML
     private TableColumn<Speaker, String> istituzioneKeynoteColumn;
+
     @FXML
-    private TableColumn<Speaker, String> nomeKeynoteColumn;
+    private TableView<Intervallo> intervalliTable;
+
     @FXML
     private TableView<Speaker> keynoteSpeakerTable;
+
+    @FXML
+    private TableColumn<Speaker, String> nomeKeynoteColumn;
+
+    @FXML
+    private TableColumn<EventoSociale, Time> orarioEventoColumn;
+
+    @FXML
+    private TableColumn<Intervallo, Time> orarioIntervalloColumn;
+
+    @FXML
+    private TableColumn<Intervento, Time> orarioInterventoColumn;
+
+    @FXML
+    private TableColumn<Intervento,String> speakerColumn;
+
+    @FXML
+    private TableColumn<EventoSociale, String> tipologiaEventoColumn;
+
+    @FXML
+    private TableColumn<Intervallo, String> tipologiaIntervalloColumn;
+
+    public Programma getProgramma() {
+        return programma;
+    }
+
+    public void setProgramma(Programma programma) {
+        this.programma = programma;
+    }
 
     public InterventiSessione getInterventi() {
         return interventi;
@@ -100,8 +143,26 @@ public class EditProgrammaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setIntervalliTable();
+        setEventiTable();
+        setInterventiTable();
+        setKeynoteTable();
+    }
 
+    private void setKeynoteTable() {
+        nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        cognomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
+        emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+    }
 
+    private void setInterventiTable() {
+    }
+
+    private void setEventiTable() {
+    }
+
+    private void setIntervalliTable() {
     }
 
     @FXML

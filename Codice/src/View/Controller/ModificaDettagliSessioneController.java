@@ -91,6 +91,7 @@ public class ModificaDettagliSessioneController implements Initializable {
         sessione.setDataFine(Date.valueOf(fineDateTimePicker.getDateTimeValue().toLocalDate()));
         sessione.setOrarioFine(Time.valueOf(fineDateTimePicker.getDateTimeValue().toLocalTime()));
         sessione.setOrarioInizio(Time.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalTime()));
+        sessione.setCoordinatore(coordinatoreChoiceBox.getValue());
         dao.updateSessione(sessione);
     }
 

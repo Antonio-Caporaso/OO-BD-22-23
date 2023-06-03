@@ -41,9 +41,22 @@ public class ProgrammaDao {
             programma.setProgrammaID(rs.getInt(1));
             programma.setSessione(sessione);
             programma.setKeynote(dao.retrieveSpeakerByID(rs.getInt(3)));
-            programma.setChair(dao1.retrieveOrganizzatoreByID(rs.getInt(4)));
         }
         return programma;
+    }
+
+    public int retrieveKeynoteSpeakerID(Sessione s) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "SELECT keynote_speaker from programma where idsessione=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,s.getSessioneID());
+        ResultSet rs = stm.executeQuery();
+        int result = 0;
+        while(rs.next()){
+            result =  rs.getInt(1);
+        }
+        return result;
     }
 
     public void updateProgramma(Programma programma) throws SQLException {

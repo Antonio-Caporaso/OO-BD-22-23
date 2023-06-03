@@ -45,7 +45,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="itervalliTable" editable="true" layoutX="14.0" layoutY="14.0" prefHeight="456.0" prefWidth="659.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="intervalliTable" editable="true" layoutX="14.0" layoutY="14.0" prefHeight="456.0" prefWidth="659.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
                               <TableColumn fx:id="orarioIntervalloColumn" prefWidth="75.0" text="Orario" />
                               <TableColumn fx:id="tipologiaIntervalloColumn" prefWidth="75.0" text="Tipologia" />

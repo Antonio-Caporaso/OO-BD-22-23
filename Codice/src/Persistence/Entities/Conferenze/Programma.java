@@ -1,6 +1,5 @@
 package Persistence.Entities.Conferenze;
 
-import Persistence.Entities.organizzazione.Organizzatore;
 import Persistence.Entities.partecipanti.Speaker;
 
 import java.util.HashSet;
@@ -10,7 +9,6 @@ public class Programma {
     private int programmaID;
     private Sessione sessione;
     private Speaker keynote;
-    private Organizzatore chair;
     private HashSet<EventoSociale> eventi;
     private HashSet<Intervallo> intervalli;
     private LinkedList<Intervento> interventi;
@@ -63,14 +61,6 @@ public class Programma {
 
     public LinkedList<Intervento> getInterventi() {
         return interventi;
-    }
-
-    public Organizzatore getChair() {
-        return chair;
-    }
-
-    public void setChair(Organizzatore chair) {
-        this.chair = chair;
     }
 
     public void setInterventi(LinkedList<Intervento> interventi) {
