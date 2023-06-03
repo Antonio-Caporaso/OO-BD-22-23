@@ -1,5 +1,7 @@
 package View.Controller;
 
+import Persistence.DAO.ProgrammaDao;
+import Persistence.DAO.SpeakerDao;
 import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.partecipanti.Speaker;
 import Services.EventiSocialiSessione;
@@ -18,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ResourceBundle;
 
@@ -150,19 +153,60 @@ public class EditProgrammaController implements Initializable {
     }
 
     private void setKeynoteTable() {
-        nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        cognomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-        istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
-        emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        ProgrammaDao programmaDao = new ProgrammaDao();
+        SpeakerDao dao = new SpeakerDao();
+        Speaker keynote;
+        try {
+            int id = programmaDao.retrieveKeynoteSpeakerID(sessione);
+            if(id != 0) {
+                keynote = dao.retrieveSpeakerByID(id);
+                nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                cognomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+                emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+                istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
+                keynoteSpeakerTable.getItems().add(keynote);
+            }else
+                keynoteSpeakerTable.setDisable(true);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setInterventiTable() {
+        try {
+            interventi = new InterventiSessione(programma);
+            interventi.loadInterventi();
+            orarioInterventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
+            speakerColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
+            abstractColumn.setCellValueFactory(new PropertyValueFactory<>("estratto"));
+            interventiTable.setItems(interventi.getInterventi());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setEventiTable() {
+        eventi = new EventiSocialiSessione(programma);
+        try {
+            eventi.loadEventiSociali();
+            orarioEventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
+            tipologiaEventoColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
+            eventiTable.setItems(eventi.getEventi());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setIntervalliTable() {
+        intervalli = new IntervalliSessione(programma);
+        try{
+            intervalli.loadIntervalli();
+            orarioIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
+            tipologiaIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
+            intervalliTable.setItems(intervalli.getIntervalli());
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
