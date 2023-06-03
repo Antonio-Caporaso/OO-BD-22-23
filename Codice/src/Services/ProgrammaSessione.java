@@ -1,10 +1,6 @@
 package Services;
 
-import Persistence.DAO.ProgrammaDao;
-import Persistence.DAO.SessioneDao;
-import Persistence.DAO.InterventoDao;
-import Persistence.DAO.IntervalloDao;
-import Persistence.DAO.EventoSocialeDao;
+import Persistence.DAO.*;
 import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.organizzazione.ActivityModel;
 import javafx.collections.FXCollections;
@@ -24,12 +20,13 @@ public class ProgrammaSessione {
     public ProgrammaSessione(Sessione sessione){
         this.sessione = sessione;
         activityList = FXCollections.observableArrayList();
-        programma=retreiveProgramma(sessione);
+
     }
     private Programma retreiveProgramma(Sessione sessione){
+        Programma programma = new Programma();
         try{
         ProgrammaDao programmaDao=new ProgrammaDao();
-        Programma programma =programmaDao.retrieveProgrammaBySessione(sessione);
+        programma =programmaDao.retrieveProgrammaBySessione(sessione);
     }catch (SQLException e){
             e.printStackTrace();
         }return programma;
@@ -42,7 +39,7 @@ public class ProgrammaSessione {
         this.activityList = activityList;
     }
 
-//    public void loadProgrammi() throws SQLException {
+    public void loadProgrammi() throws SQLException {
 //        InterventoDao interventoDao = new InterventoDao();
 //        IntervalloDao intervalloDao = new IntervalloDao();
 //        EventoSocialeDao eventoSocialeDao=new EventoSocialeDao();
@@ -81,7 +78,14 @@ public class ProgrammaSessione {
 //        } else {
 //            return "Unknown";
 //        }
-//    }
+        ProgrammaSessioneDao dao= new ProgrammaSessioneDao();
+        programma=retreiveProgramma(sessione);
+//        programma.setProgrammaID(25);
+        activityList.clear();
+        activityList.addAll(dao.retrieveProgrammaBySessione(programma));
+
+
+    }
     public void addProgramma(Programma programma) throws SQLException{
         ProgrammaDao dao = new ProgrammaDao();
         dao.retrieveProgrammaBySessione(sessione);

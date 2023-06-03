@@ -41,7 +41,6 @@ public class ProgrammaDao {
             programma.setProgrammaID(rs.getInt(1));
             programma.setSessione(sessione);
             programma.setKeynote(dao.retrieveSpeakerByID(rs.getInt(3)));
-            programma.setChair(dao1.retrieveOrganizzatoreByID(rs.getInt(4)));
         }
         return programma;
     }

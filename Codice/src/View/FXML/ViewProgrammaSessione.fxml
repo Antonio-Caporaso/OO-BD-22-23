@@ -44,7 +44,7 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <TableView fx:id="sessioneTableView" layoutX="32.0" layoutY="103.0" prefHeight="572.0" prefWidth="703.0">
+      <TableView fx:id="programmaTableView" layoutX="32.0" layoutY="103.0" prefHeight="572.0" prefWidth="703.0">
         <columns>
           <TableColumn fx:id="attivitaTableColumn" prefWidth="264.0" text="Attività" />
           <TableColumn fx:id="orarioInizioTableColumn" prefWidth="211.0" text="Orario inizio" />
