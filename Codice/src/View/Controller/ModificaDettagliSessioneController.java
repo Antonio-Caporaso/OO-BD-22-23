@@ -31,6 +31,10 @@ public class ModificaDettagliSessioneController implements Initializable {
     private Sale sale;
     private EditSessioneController editSessioneController;
     @FXML
+    private Label inizioConferenzaLabel;
+    @FXML
+    private Label fineConferenzaLabel;
+    @FXML
     private Button annullaButton;
     @FXML
     private Button confermaButton;
@@ -110,6 +114,8 @@ public class ModificaDettagliSessioneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        inizioConferenzaLabel.setText(conferenza.getDataInizio().toString());
+        fineConferenzaLabel.setText(conferenza.getDataFine().toString());
         try {
             setTitoloSessione();
             setSale();

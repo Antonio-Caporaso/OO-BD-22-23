@@ -94,7 +94,7 @@
       <ButtonBar layoutX="650.0" layoutY="666.0" prefHeight="40.0" prefWidth="268.0">
         <buttons>
           <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" text="Annulla" />
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#addOnAction" prefHeight="24.0" prefWidth="191.0" text="Aggiungi" />
+            <Button fx:id="avantiButton" mnemonicParsing="false" onAction="#avantiButtonOnAction" prefHeight="24.0" prefWidth="191.0" text="Avanti" />
         </buttons>
       </ButtonBar>
       <Label layoutX="14.0" layoutY="71.0" text="Inizio conferenza:" textFill="WHITE">
@@ -102,12 +102,12 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="322.0" layoutY="71.0" text="Fine conferenza:" textFill="WHITE">
+      <Label layoutX="405.0" layoutY="71.0" text="Fine conferenza:" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
       <Label fx:id="inizioConferenzaLabel" layoutX="150.0" layoutY="71.0" text="Label" />
-      <Label fx:id="fineConferenzaLabel" layoutX="449.0" layoutY="71.0" text="Label" />
+      <Label fx:id="fineConferenzaLabel" layoutX="544.0" layoutY="71.0" text="Label" />
    </children>
 </AnchorPane>

@@ -24,8 +24,10 @@ public class AddEventoController implements Initializable {
     @FXML
     private Button addButton;
     private Programma programma;
-    private EditEventiController editEventiController;
     private EventiSocialiSessione eventi;
+    @FXML
+    private DateTimePicker dateTimePicker;
+
     @FXML
     private Button annullaButton;
 
@@ -33,14 +35,6 @@ public class AddEventoController implements Initializable {
     private DateTimePicker orario;
     @FXML
     private ChoiceBox<String> tipologiaChoice;
-
-    public EditEventiController getEditEventiController() {
-        return editEventiController;
-    }
-
-    public void setEditEventiController(EditEventiController editEventiController) {
-        this.editEventiController = editEventiController;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -56,9 +50,11 @@ public class AddEventoController implements Initializable {
     @FXML
     void addOnAction(ActionEvent event) {
         EventoSociale e = new EventoSociale();
-        e.setOrario(Timestamp.valueOf(orario.getDateTimeValue()));
-        e.setProgramma(programma);
+        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue()));
         e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
+        e.setProgramma(programma);
+        Stage stage = (Stage) addButton.getScene().getWindow();
+        stage.close();
         try{
             eventi.addEvento(e);
         }catch (SQLException exception){

@@ -186,7 +186,7 @@ public class EditProgrammaController implements Initializable {
     }
 
     private void setEventiTable() {
-        eventi = new EventiSocialiSessione(programma);
+        //eventi = new EventiSocialiSessione(programma);
         try {
             eventi.loadEventiSociali();
             orarioEventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
@@ -217,8 +217,17 @@ public class EditProgrammaController implements Initializable {
         subscene.setRoot(root);
     }
     @FXML
-    void editEventiButtonOnAction(ActionEvent event) {
-
+    void editEventiButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEventi.fxml"));
+        EditEventiController controller = new EditEventiController();
+        controller.setManageSessioniController(manageSessioniController);
+        controller.setProgramma(programma);
+        controller.setSessione(sessione);
+        controller.setSubScene(subscene);
+        controller.setEventi(eventi);
+        loader.setController(controller);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
 
     @FXML

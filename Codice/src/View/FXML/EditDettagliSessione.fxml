@@ -143,5 +143,17 @@
             <Button fx:id="confermaButton" mnemonicParsing="false" onAction="#confermaOnAction" text="Conferma" />
         </buttons>
       </ButtonBar>
+      <Label layoutX="14.0" layoutY="63.0" text="Inizio conferenza:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="405.0" layoutY="63.0" text="Fine conferenza:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="inizioConferenzaLabel" layoutX="150.0" layoutY="63.0" text="Label" />
+      <Label fx:id="fineConferenzaLabel" layoutX="544.0" layoutY="63.0" text="Label" />
    </children>
 </AnchorPane>

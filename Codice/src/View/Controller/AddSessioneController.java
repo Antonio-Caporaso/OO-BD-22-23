@@ -1,7 +1,9 @@
 package View.Controller;
 
 import Exceptions.BlankFieldException;
+import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.organizzazione.Organizzatore;
@@ -43,7 +45,7 @@ public class AddSessioneController implements Initializable,FormChecker {
     @FXML
     private DateTimePicker inizioDateTimePicker;
     @FXML
-    private Button addButton;
+    private Button avantiButton;
     @FXML
     private TextField nomeTF;
     @FXML
@@ -68,15 +70,11 @@ public class AddSessioneController implements Initializable,FormChecker {
     }
 
     @FXML
-    void addOnAction(ActionEvent event) throws IOException {
+    void avantiButtonOnAction(ActionEvent event) throws IOException {
         try{
             checkFieldsAreBlank();
             Sessione s = setSessione();
-            sessioni.addSessione(s);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
-            loader.setController(manageSessioniController);
-            Parent root = loader.load();
-            subscene.setRoot(root);
+            goToAddProgrammaWindow(s);
         }catch (BlankFieldException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Compilare prima tutti i campi");
@@ -86,6 +84,24 @@ public class AddSessioneController implements Initializable,FormChecker {
             alert.setContentText(exception.getMessage());
             alert.showAndWait();
         }
+    }
+
+    private void goToAddProgrammaWindow(Sessione s) throws SQLException, IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
+        EditProgrammaController controller = new EditProgrammaController();
+        controller.setManageSessioniController(manageSessioniController);
+        Programma programma = retrieveProgramma(s);
+        controller.setProgramma(programma);
+        controller.setSessione(s);
+        controller.setSubscene(subscene);
+        loader.setController(controller);
+        Parent root = loader.load();
+        subscene.setRoot(root);
+    }
+
+    private Programma retrieveProgramma(Sessione s) throws SQLException {
+        ProgrammaDao dao = new ProgrammaDao();
+        return dao.retrieveProgrammaBySessione(s);
     }
 
     public Sessioni getSessioni() {
