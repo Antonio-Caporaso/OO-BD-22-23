@@ -145,6 +145,7 @@ public class EditSessioneController implements Initializable {
     public void setSubScene(SubScene subScene) {
         this.subScene = subScene;
     }
+
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         goToEditSessionsWindow();
@@ -152,6 +153,7 @@ public class EditSessioneController implements Initializable {
     private void goToEditSessionsWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
         loader.setController(manageSessioniController);
+        manageSessioniController.reloadSessioni();
         Parent root = loader.load();
         subScene.setRoot(root);
     }

@@ -3,16 +3,18 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import tornadofx.control.DateTimePicker?>
+<?import jfxtras.scene.control.LocalTimeTextField?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -24,8 +26,8 @@
       </Label>
       <GridPane layoutX="94.0" layoutY="121.0" prefHeight="479.0" prefWidth="745.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="429.0" minWidth="10.0" prefWidth="267.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="706.0" minWidth="10.0" prefWidth="537.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="429.0" minWidth="10.0" prefWidth="232.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="706.0" minWidth="10.0" prefWidth="513.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -72,10 +74,8 @@
                </children>
             </Pane>
             <TextField fx:id="nomeTF" prefHeight="24.0" prefWidth="540.0" GridPane.columnIndex="1" />
-            <ChoiceBox fx:id="saleChoice" prefHeight="24.0" prefWidth="518.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DateTimePicker fx:id="inizioDateTimePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <DateTimePicker fx:id="fineDateTimePicker" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+            <ChoiceBox fx:id="saleChoice" prefHeight="24.0" prefWidth="547.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Pane prefHeight="96.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
                   <Label layoutX="14.0" layoutY="39.0" text="Coordinatore:">
                      <font>
@@ -86,9 +86,55 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <ChoiceBox fx:id="coordinatoreChoiceBox" layoutY="36.0" prefHeight="24.0" prefWidth="508.0" />
+                  <ChoiceBox fx:id="coordinatoreChoiceBox" layoutY="36.0" prefHeight="24.0" prefWidth="513.0" />
                </children>
             </Pane>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Pane prefHeight="96.0" prefWidth="132.0">
+                     <children>
+                        <DatePicker fx:id="inizioDatePicker" layoutY="36.0" prefHeight="24.0" prefWidth="126.0" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="82.0" layoutY="40.0" text="Ora inizio:">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <LocalTimeTextField fx:id="oraInizioTimePicker" layoutX="14.0" layoutY="36.0" prefHeight="24.0" prefWidth="126.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <Pane prefHeight="96.0" prefWidth="132.0">
+                     <children>
+                        <DatePicker fx:id="fineDatePicker" layoutX="-1.0" layoutY="36.0" prefHeight="24.0" prefWidth="126.0" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="82.0" layoutY="40.0" text="Ora fine:">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <LocalTimeTextField fx:id="oraFineTimePicker" layoutX="14.0" layoutY="36.0" prefHeight="24.0" prefWidth="126.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
          </children>
       </GridPane>
       <ButtonBar layoutX="642.0" layoutY="666.0" prefHeight="40.0" prefWidth="268.0">

@@ -100,7 +100,7 @@
                         <TableView fx:id="keynoteSpeakerTable" layoutX="10.0" layoutY="14.0" prefHeight="65.0" prefWidth="653.0">
                           <columns>
                             <TableColumn fx:id="nomeKeynoteColumn" prefWidth="75.0" text="Nome" />
-                            <TableColumn fx:id="cognomeKeynote" prefWidth="75.0" text="Cognome" />
+                            <TableColumn fx:id="cognomeKeynoteColumn" prefWidth="75.0" text="Cognome" />
                               <TableColumn fx:id="istituzioneKeynoteColumn" prefWidth="112.0" text="Istituzione" />
                               <TableColumn fx:id="emailKeynoteColumn" prefWidth="129.0" text="Email" />
                           </columns>

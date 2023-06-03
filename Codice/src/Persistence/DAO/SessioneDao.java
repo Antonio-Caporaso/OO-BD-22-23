@@ -30,8 +30,8 @@ public class SessioneDao {
         stm.setInt(4,sessione.getLocazione().getSalaID());
         stm.setTime(5,sessione.getOrarioInizio());
         stm.setTime(6,sessione.getOrarioFine());
-        stm.setInt(7,sessione.getSessioneID());
-        stm.setInt(8,sessione.getCoordinatore().getOrganizzatoreID());
+        stm.setInt(7,sessione.getCoordinatore().getOrganizzatoreID());
+        stm.setInt(8,sessione.getSessioneID());
         stm.executeUpdate();
     }
     public LinkedList<Sessione> retrieveSessioniByConferenza(Conferenza conferenza) throws SQLException {

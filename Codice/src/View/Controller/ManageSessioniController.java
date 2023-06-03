@@ -65,7 +65,14 @@ public class ManageSessioniController implements Initializable {
         nomeSessioneColumn.isSortable();
         oraInizioColumn.isSortable();
     }
-
+    public void reloadSessioni(){
+        try {
+            sessioni.loadSessioni();
+            setTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @FXML
     public void addSessioneOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSessione.fxml"));
