@@ -87,7 +87,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <ChoiceBox fx:id="coordinatoreChoiceBox" layoutY="37.0" prefHeight="24.0" prefWidth="326.0" />
+                  <ChoiceBox fx:id="coordinatoreChoiceBox" layoutY="37.0" prefHeight="24.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" />
                </children>
             </Pane>
          </children>

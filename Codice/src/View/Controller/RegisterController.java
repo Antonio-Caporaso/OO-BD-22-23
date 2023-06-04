@@ -128,7 +128,7 @@ public class RegisterController implements Initializable, FormChecker{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titoloChoiceBox.getItems().addAll(titoli);
-        //file = new File ("Codice/src/View/Resources/Scientists1.mp4");
+//         file = new File ("Codice/src/View/Resources/Scientists1.mp4");
         file = new File ("src/View/Resources/Scientists1.mp4");
         media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);

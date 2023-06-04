@@ -35,7 +35,6 @@ public class ProgrammaDao {
         stm.setInt(1,sessione.getSessioneID());
         Programma programma = new Programma();
         SpeakerDao dao = new SpeakerDao();
-        OrganizzatoreDao dao1 = new OrganizzatoreDao();
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
             programma.setProgrammaID(rs.getInt(1));
