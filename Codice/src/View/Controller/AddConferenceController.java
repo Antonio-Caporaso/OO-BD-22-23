@@ -112,6 +112,7 @@ public class AddConferenceController implements Initializable,FormChecker{
         conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
 
         try {
+            //Serve solo per permettere al programma di funzionare dopo le modifiche effettuate lato db, necessita di un implementazione migliore
             if(conferenza.getComitatoLocale().getComitatoID()==0){
             comitatoDao.insertComitato(1, conferenza.getComitatoScientifico().getComitatoID());
             }else{
