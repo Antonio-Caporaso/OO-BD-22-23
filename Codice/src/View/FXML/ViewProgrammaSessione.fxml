@@ -44,10 +44,10 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <TableView fx:id="programmaTableView" layoutX="32.0" layoutY="103.0" prefHeight="572.0" prefWidth="703.0">
+      <TableView fx:id="programmaTableView" layoutX="32.0" layoutY="103.0" prefHeight="572.0" prefWidth="703.0" stylesheets="@../CSS/TableView.css">
         <columns>
-          <TableColumn fx:id="attivitaTableColumn" prefWidth="264.0" text="Attività" />
-          <TableColumn fx:id="orarioInizioTableColumn" prefWidth="211.0" text="Orario inizio" />
+          <TableColumn fx:id="attivitaTableColumn" prefWidth="292.0" text="Attività" />
+          <TableColumn fx:id="orarioInizioTableColumn" prefWidth="183.0" text="Orario inizio" />
             <TableColumn fx:id="orarioFineTableColumn" prefWidth="227.0" text="Orario Fine" />
         </columns>
       </TableView>
