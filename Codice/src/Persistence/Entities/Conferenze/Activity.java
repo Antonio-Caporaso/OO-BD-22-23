@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 public abstract class Activity {
     private Timestamp orario;
     public Activity() {
-
     }
     public Activity(Timestamp orario) {
         this.orario = orario;
