@@ -19,7 +19,6 @@ public abstract class Activity {
         this.orario = orario;
     }
 
-    // Add any common methods or properties that are shared among the subclasses
 }
 
 

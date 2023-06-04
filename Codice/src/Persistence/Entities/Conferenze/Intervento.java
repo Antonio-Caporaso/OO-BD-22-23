@@ -3,9 +3,7 @@ package Persistence.Entities.Conferenze;
 
 import Persistence.Entities.partecipanti.Speaker;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
     public class Intervento extends Activity {

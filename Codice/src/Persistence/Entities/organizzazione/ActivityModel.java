@@ -15,9 +15,7 @@ public class ActivityModel {
     private Timestamp dataFine;
 
     public ActivityModel() {
-
     }
-
     public ActivityModel(String attivita, Timestamp dataInizio, Timestamp dataFine) {
         this.attivita = attivita;
         this.dataInizio = dataInizio;
