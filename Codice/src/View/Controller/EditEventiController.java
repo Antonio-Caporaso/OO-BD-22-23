@@ -23,6 +23,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditEventiController implements Initializable {
+    private EditProgrammaController editProgrammaController;
     private EventiSocialiSessione eventi;
     private Programma programma;
     private SubScene subScene;
@@ -53,6 +54,10 @@ public class EditEventiController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setEventiTable();
+    }
+
+    public void setEditProgrammaController(EditProgrammaController editProgrammaController) {
+        this.editProgrammaController=editProgrammaController;
     }
 
     public EventiSocialiSessione getEventi() {
@@ -137,8 +142,8 @@ public class EditEventiController implements Initializable {
 
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
-        loader.setController(manageSessioniController);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
+        loader.setController(editProgrammaController);
         Parent root = loader.load();
         subScene.setRoot(root);
     }

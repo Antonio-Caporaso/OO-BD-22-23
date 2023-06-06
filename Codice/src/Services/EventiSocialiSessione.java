@@ -30,7 +30,8 @@ public class EventiSocialiSessione {
     }
     public void addEvento(EventoSociale e) throws SQLException {
         EventoSocialeDao dao = new EventoSocialeDao();
-        dao.saveEvento(e);
+        int id = dao.saveEvento(e);
+        e.setId(id);
         eventi.add(e);
     }
     public void removeEvento(EventoSociale e) throws SQLException {

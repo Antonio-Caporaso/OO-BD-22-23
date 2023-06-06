@@ -221,6 +221,7 @@ public class EditProgrammaController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEventi.fxml"));
         EditEventiController controller = new EditEventiController();
         controller.setManageSessioniController(manageSessioniController);
+        controller.setEditProgrammaController(this);
         controller.setProgramma(programma);
         controller.setSessione(sessione);
         controller.setSubScene(subscene);

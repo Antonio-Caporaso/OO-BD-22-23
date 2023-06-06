@@ -17,7 +17,7 @@ public class EventoSocialeDao {
     public void deleteEvento(EventoSociale e) throws SQLException {
         dbcon=DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "DELETE FROM eventosociale where idevento=?";
+        String query = "DELETE FROM eventosociale where id_evento=?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,e.getId());
         stm.executeUpdate();
@@ -43,15 +43,19 @@ public class EventoSocialeDao {
         return  eventi;
     }
 
-    public void saveEvento(EventoSociale e) throws SQLException {
+    public int saveEvento(EventoSociale e) throws SQLException {
         dbcon=DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query="insert into eventosociale values (?,?,?,?)";
+        int result = 0;
+        String query="select * from save_evento(?,?,?) ";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,e.getId());
-        stm.setInt(2,e.getProgramma().getProgrammaID());
-        stm.setString(3,e.getTipologia());
-        stm.setTimestamp(4,e.getOrario());
-        stm.executeUpdate();
+        stm.setInt(1,e.getProgramma().getProgrammaID());
+        stm.setString(2,e.getTipologia());
+        stm.setTimestamp(3,e.getOrario());
+        ResultSet rs = stm.executeQuery();
+        while (rs.next()) {
+            result = rs.getInt(1);
+        }
+        return result;
     }
 }

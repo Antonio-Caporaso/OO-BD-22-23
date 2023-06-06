@@ -17,6 +17,7 @@ import tornadofx.control.DateTimePicker;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
@@ -50,7 +51,7 @@ public class AddEventoController implements Initializable {
     @FXML
     void addOnAction(ActionEvent event) {
         EventoSociale e = new EventoSociale();
-        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue()));
+        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
         e.setProgramma(programma);
         Stage stage = (Stage) addButton.getScene().getWindow();
