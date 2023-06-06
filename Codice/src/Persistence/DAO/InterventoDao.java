@@ -27,7 +27,7 @@ public class InterventoDao {
             i.setInterventoID(rs.getInt("idintervento"));
             i.setTitolo(rs.getString("titolo"));
             i.setSpeaker(dao.retrieveSpeakerByID(rs.getInt("idspeaker")));
-            i.setOrario(rs.getTime("orario"));
+            i.setOrario(rs.getTimestamp("orario"));
             i.setEstratto(rs.getString("abstract"));
             interventi.add(i);
         }
