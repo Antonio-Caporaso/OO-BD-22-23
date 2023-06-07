@@ -29,7 +29,7 @@
                   <Insets />
                </opaqueInsets>
             </Button>
-            <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirmButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Confirm" textFill="WHITE">
+            <Button fx:id="riepilogoButton" mnemonicParsing="false" onAction="#riepilogoButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Riepilogo" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -46,9 +46,9 @@
       </Label>
       <TableView fx:id="programmaTableView" layoutX="32.0" layoutY="103.0" prefHeight="572.0" prefWidth="703.0" stylesheets="@../CSS/TableView.css">
         <columns>
-          <TableColumn fx:id="attivitaTableColumn" prefWidth="292.0" text="Attività" />
-          <TableColumn fx:id="orarioInizioTableColumn" prefWidth="183.0" text="Orario inizio" />
-            <TableColumn fx:id="orarioFineTableColumn" prefWidth="227.0" text="Orario Fine" />
+          <TableColumn fx:id="attivitaTableColumn" editable="false" prefWidth="292.0" text="Attività" />
+          <TableColumn fx:id="orarioInizioTableColumn" editable="false" prefWidth="183.0" text="Inizio" />
+            <TableColumn fx:id="orarioFineTableColumn" editable="false" prefWidth="227.0" text="Fine" />
         </columns>
       </TableView>
    </children>

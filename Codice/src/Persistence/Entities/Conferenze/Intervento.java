@@ -1,8 +1,10 @@
 
 package Persistence.Entities.Conferenze;
 
+import Persistence.DAO.InterventoDao;
 import Persistence.Entities.partecipanti.Speaker;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -11,11 +13,13 @@ import java.util.Objects;
         private String titolo;
         private String estratto;
         private Speaker speaker;
+        private Programma programma;
 
-        public Intervento(Timestamp orario, String estratto, Speaker speaker) {
+        public Intervento(Timestamp orario, String estratto, Speaker speaker, Programma programma) {
             super(orario);
             this.estratto = estratto;
             this.speaker = speaker;
+            this.programma=programma;
         }
 
         public Intervento() {
@@ -52,6 +56,8 @@ import java.util.Objects;
         public void setInterventoID(int interventoID) {
             this.interventoID = interventoID;
         }
+        public Programma getProgramma() {return programma;}
+        public void setProgramma(Programma programma) {this.programma = programma;}
 
         @Override
         public boolean equals(Object o) {

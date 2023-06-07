@@ -2,10 +2,7 @@ package View.Controller;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import Persistence.DAO.*;
@@ -13,8 +10,6 @@ import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.ActivityModel;
 import Services.ProgrammaSessione;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +19,7 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ViewProgramma implements Initializable {
+public class ViewProgrammaController implements Initializable {
     @FXML
     private ResourceBundle resources;
 
@@ -38,7 +33,7 @@ public class ViewProgramma implements Initializable {
     private Button backButton;
 
     @FXML
-    private Button confirmButton;
+    private Button riepilogoButton;
 
     @FXML
     private Label nomeSessione;
@@ -61,6 +56,7 @@ public class ViewProgramma implements Initializable {
     private Sessione sessione;
     private ProgrammaDao programmaDao= new ProgrammaDao();
     private Utente user;
+    private Programma programma= new Programma();
     //Public Setters
     public void setConferenza(Conferenza c){
         this.conferenza=c;
@@ -75,6 +71,7 @@ public class ViewProgramma implements Initializable {
     //Button Methods
     @FXML
     void aggiungiButtonOnAction(ActionEvent event) {
+        loadAggiungiPuntoProgramma();
     }
 
     @FXML
@@ -82,7 +79,8 @@ public class ViewProgramma implements Initializable {
         loadInserisciSessione();
     }
     @FXML
-    void confirmButtonOnAction(ActionEvent event) {
+    void riepilogoButtonOnAction(ActionEvent event) {
+        loadEditConferenza();
     }
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
@@ -102,12 +100,42 @@ public class ViewProgramma implements Initializable {
             e.printStackTrace();
         }
     }
+    private void loadAggiungiPuntoProgramma(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/addActivity.fxml"));
+            AddActivityController controller = new  AddActivityController();
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(conferenza);
+            controller.setUser(user);
+            controller.setSessione(sessione);
+            controller.setProgramma(programma);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadEditConferenza(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
+            ModificaConferenzaController controller = new ModificaConferenzaController();
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(conferenza);
+            controller.setUser(user);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void setProgramma() {
         try {
-            sessione.setSessioneID(98);//Solo per testing, poiché la quantita di attività è limitata
+//            sessione.setSessioneID(98);//Solo per testing, poiché la quantita di attività è limitata
             ProgrammaSessione programmaSessione= new ProgrammaSessione(sessione);
             ProgrammaDao programmaSessioneDao=new ProgrammaDao();
-            Programma programma= new Programma();
+
             try {
                 programma = programmaSessioneDao.retrieveProgrammaBySessione(sessione);
             }catch (SQLException e){
@@ -130,7 +158,7 @@ public class ViewProgramma implements Initializable {
     void initialize() {
         assert aggiungiButton != null : "fx:id=\"aggiungiButton\" was not injected: check your FXML file 'ViewProgrammaSessione.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'ViewProgrammaSessione.fxml'.";
-        assert confirmButton != null : "fx:id=\"confirmButton\" was not injected: check your FXML file 'ViewProgrammaSessione.fxml'.";
+        assert riepilogoButton != null : "fx:id=\"confirmButton\" was not injected: check your FXML file 'ViewProgrammaSessione.fxml'.";
         assert nomeSessione != null : "fx:id=\"nomeSessione\" was not injected: check your FXML file 'ViewProgrammaSessione.fxml'.";
         assert rimuoviButton != null : "fx:id=\"rimuoviButton\" was not injected: check your FXML file 'ViewProgrammaSessione.fxml'.";
     }

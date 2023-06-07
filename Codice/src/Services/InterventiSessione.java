@@ -35,4 +35,12 @@ public class InterventiSessione {
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
+    public void saveIntervento(Intervento intervento)throws SQLException{
+        InterventoDao interventoDao=new InterventoDao();
+        try{
+            interventoDao.saveIntervento(intervento);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
