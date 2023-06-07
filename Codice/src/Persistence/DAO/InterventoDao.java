@@ -1,6 +1,7 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
+import Persistence.Entities.Conferenze.Intervallo;
 import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
 
@@ -32,5 +33,17 @@ public class InterventoDao {
             interventi.add(i);
         }
         return interventi;
+    }
+    public void saveIntervento(Intervento intervento) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "INSERT INTO intervento values (default,?,?,?,?,?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,intervento.getSpeaker().getIdSpeaker());
+        stm.setInt(2,intervento.getProgramma().getProgrammaID());
+        stm.setString(3,intervento.getEstratto());
+        stm.setString(4,intervento.getTitolo());
+        stm.setTimestamp(5,intervento.getOrario());
+        stm.executeUpdate();
     }
 }
