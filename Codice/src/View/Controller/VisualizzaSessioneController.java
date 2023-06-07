@@ -1,37 +1,56 @@
 package View.Controller;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import Persistence.Entities.Conferenze.Sala;
+import Persistence.Entities.organizzazione.Organizzatore;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
 
 import Exceptions.SessioneNotSelectedException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
 import Services.Sessioni;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 public class VisualizzaSessioneController implements Initializable {
     @FXML
     private Button backButton;
     @FXML
     private Button inserisciButton;
     @FXML
-    private Button nextButton;
+    private Button riepilogoButton;
+    @FXML
+    private Button aggiungiProgrammaButton;
     @FXML
     private Button rimuoviButton;
     @FXML
-    private ListView<Sessione> sessioniListView;
+    private TableView<Sessione> sessioniTableView;
+    @FXML
+    private TableColumn<Sessione,String> titoloTableColumn;
+    @FXML
+    private TableColumn<Sessione, Time > inizioTableColumn;
+    @FXML
+    private TableColumn<Sessione, Time> fineTableColumn;
+    @FXML
+    private TableColumn<Sessione, Date> dataInizioTableColumn;
+    @FXML
+    private TableColumn<Sessione, Date> dataFineTableColumn;
+    @FXML
+    private TableColumn<Sessione, Sala> salaTableColumn;
+    @FXML
+    private TableColumn<Sessione, Organizzatore> chairTableColumn;
     @FXML
     private SubScene subscene;
     private Conferenza conferenza;
@@ -53,9 +72,11 @@ public class VisualizzaSessioneController implements Initializable {
         loadInserisciSessione();
     }
     @FXML
-    void nextButtonOnAction(ActionEvent event) {
-        loadViewProgramma();
+    void riepilogoButtonOnAction(ActionEvent event) {
+        loadEditConferenza();
     }
+    @FXML
+    void aggiungiProgrammaButtonOnAction(ActionEvent event){loadViewProgramma();}
     @FXML
     void backButtonOnAction(ActionEvent event){
         loadAggiungiSponsor();
@@ -63,7 +84,7 @@ public class VisualizzaSessioneController implements Initializable {
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
         try {
-            Sessione s = sessioniListView.getSelectionModel().getSelectedItem();
+            Sessione s = sessioniTableView.getSelectionModel().getSelectedItem();
             if (s == null) {
                 throw new SessioneNotSelectedException();
             }
@@ -115,9 +136,9 @@ public class VisualizzaSessioneController implements Initializable {
     }
     private void loadViewProgramma(){
         try{
-            Sessione s = sessioniListView.getSelectionModel().getSelectedItem();
+            Sessione s = sessioniTableView.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ViewProgrammaSessione.fxml"));
-            ViewProgramma controller = new ViewProgramma();
+            ViewProgrammaController controller = new ViewProgrammaController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -129,12 +150,32 @@ public class VisualizzaSessioneController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    private void loadEditConferenza(){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
+            ModificaConferenzaController controller = new ModificaConferenzaController();
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(conferenza);
+            controller.setUser(user);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void setSessioni() {
     Sessioni sessioni= new Sessioni(conferenza);
     try {
         sessioni.loadSessioni();
-        sessioniListView.setItems(sessioni.getSessioni());
+        titoloTableColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+        dataInizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
+        inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("orarioInizio"));
+        dataFineTableColumn.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
+        fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("orarioFine"));
+        salaTableColumn.setCellValueFactory(new PropertyValueFactory<>("locazione"));
+        chairTableColumn.setCellValueFactory(new PropertyValueFactory<>("coordinatore"));
+        sessioniTableView.setItems(sessioni.getSessioni());
     }catch(SQLException e){
         e.printStackTrace();
     }
