@@ -47,7 +47,7 @@
             </Pane>
          </children>
       </GridPane>
-      <Button fx:id="addButton" layoutX="197.0" layoutY="201.0" mnemonicParsing="false" onAction="#addOnAction" prefHeight="38.0" prefWidth="191.0" text="Aggiungi" />
+      <Button fx:id="editButton" layoutX="197.0" layoutY="201.0" mnemonicParsing="false" onAction="#editButtonOnAction" prefHeight="38.0" prefWidth="191.0" text="Modifica" />
       <Button fx:id="annullaButton" layoutX="7.0" layoutY="201.0" mnemonicParsing="false" onAction="#annullaOnAction" prefHeight="38.0" prefWidth="191.0" text="Annulla" />
    </children>
 </AnchorPane>

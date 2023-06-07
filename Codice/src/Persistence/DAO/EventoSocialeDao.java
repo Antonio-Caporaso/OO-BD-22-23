@@ -58,4 +58,15 @@ public class EventoSocialeDao {
         }
         return result;
     }
+
+    public void updateEvento(EventoSociale eventoSociale) throws SQLException {
+        dbcon=DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "update eventosociale set tipologia=?,orario=? where id_evento=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(3,eventoSociale.getId());
+        stm.setString(1,eventoSociale.getTipologia());
+        stm.setTimestamp(2,eventoSociale.getOrario());
+        stm.executeUpdate();
+    }
 }

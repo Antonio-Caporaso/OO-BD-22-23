@@ -29,4 +29,19 @@ public class EventoSociale extends Activity {
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EventoSociale that = (EventoSociale) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }
