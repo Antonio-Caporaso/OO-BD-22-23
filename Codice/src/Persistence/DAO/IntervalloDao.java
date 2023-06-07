@@ -4,10 +4,7 @@ import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Intervallo;
 import Persistence.Entities.Conferenze.Programma;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 
 public class IntervalloDao {
@@ -35,10 +32,10 @@ public class IntervalloDao {
     public void saveIntervallo(Intervallo intervallo) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "INSERT INTO intervallo values (default,?,?,?)";
+        String query = "INSERT INTO intervallo values (default,CAST(? AS intervallost),?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,intervallo.getProgramma().getProgrammaID());
-        stm.setString(2,intervallo.getTipologia());
+        stm.setObject(1, intervallo.getTipologia(), Types.OTHER);
+        stm.setInt(2,intervallo.getProgramma().getProgrammaID());
         stm.setTimestamp(3,intervallo.getOrario());
         stm.executeUpdate();
     }
