@@ -3,6 +3,7 @@ package Persistence.DAO;
 import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
+import Services.Stats;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -83,5 +84,21 @@ public class InterventoDao {
         stm.setTimestamp(3,i.getOrario());
         stm.setInt(5,i.getInterventoID());
         stm.executeUpdate();
+    }
+    public LinkedList<Stats> retrieveInterventiStatsByMonth(Integer month) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select * from calcola_percentuale_interventi_by_mese(?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,month);
+        ResultSet rs = stm.executeQuery();
+        LinkedList<Stats> stats = new LinkedList<>();
+        while(rs.next()){
+            Stats s = new Stats();
+            s.setIstituzione(rs.getString(1));
+            s.setPercentuale(rs.getInt(2));
+            stats.add(s);
+        }
+        return stats;
     }
 }
