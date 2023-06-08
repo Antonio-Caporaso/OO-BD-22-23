@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -110,6 +111,7 @@ public class EditEventiController implements Initializable {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.setScene(scene);
         stage.show();
     }
@@ -148,6 +150,7 @@ public class EditEventiController implements Initializable {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.show();
     }
 

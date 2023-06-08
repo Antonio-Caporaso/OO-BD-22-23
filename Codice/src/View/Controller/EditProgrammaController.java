@@ -247,8 +247,18 @@ public class EditProgrammaController implements Initializable {
     }
 
     @FXML
-    void editInterventiButtonOnAction(ActionEvent event) {
-
+    void editInterventiButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditInterventi.fxml"));
+        EditInterventiController controller = new EditInterventiController();
+        controller.setManageSessioniController(manageSessioniController);
+        controller.setEditProgrammaController(this);
+        controller.setProgramma(programma);
+        controller.setSessione(sessione);
+        controller.setSubScene(subscene);
+        controller.setInterventiSessione(interventi);
+        loader.setController(controller);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
     @FXML
     void editKeynoteButtonOnAction(ActionEvent event){

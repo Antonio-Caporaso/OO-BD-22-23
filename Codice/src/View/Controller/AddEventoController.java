@@ -50,19 +50,24 @@ public class AddEventoController implements Initializable {
 
     @FXML
     void addOnAction(ActionEvent event) {
-        EventoSociale e = new EventoSociale();
-        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
-        e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
-        e.setProgramma(programma);
-        Stage stage = (Stage) addButton.getScene().getWindow();
-        stage.close();
+        EventoSociale e = retrieveDettagliEvento();
         try{
             eventi.addEvento(e);
+            Stage stage = (Stage) addButton.getScene().getWindow();
+            stage.close();
         }catch (SQLException exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(exception.getMessage());
             alert.showAndWait();
         }
+    }
+
+    private EventoSociale retrieveDettagliEvento() {
+        EventoSociale e = new EventoSociale();
+        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+        e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
+        e.setProgramma(programma);
+        return e;
     }
 
     public Programma getProgramma() {

@@ -46,4 +46,30 @@ public class InterventoDao {
         stm.setTimestamp(5,intervento.getOrario());
         stm.executeUpdate();
     }
+
+    public int addIntervento(Intervento intervento) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select * from save_intervento(?,?,?,?,?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,intervento.getProgramma().getProgrammaID());
+        stm.setInt(2,intervento.getSpeaker().getIdSpeaker());
+        stm.setString(3,intervento.getTitolo());
+        stm.setString(4,intervento.getEstratto());
+        stm.setTimestamp(5,intervento.getOrario());
+        ResultSet rs = stm.executeQuery();
+        int result = 0;
+        while(rs.next()){
+            result = rs.getInt(1);
+        }
+        return result;
+    }
+    public void removeIntervento(Intervento intervento) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "delete from intervento where idintervento=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,intervento.getInterventoID());
+        stm.executeUpdate();
+    }
 }

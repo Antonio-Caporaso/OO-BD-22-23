@@ -39,8 +39,20 @@ public class InterventiSessione {
         InterventoDao interventoDao=new InterventoDao();
         try{
             interventoDao.saveIntervento(intervento);
+            interventi.add(intervento);
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+    public void addIntervento(Intervento intervento) throws SQLException {
+        InterventoDao dao = new InterventoDao();
+            int id = dao.addIntervento(intervento);
+            intervento.setInterventoID(id);
+            interventi.add(intervento);
+    }
+    public void removeIntervento(Intervento intervento) throws SQLException {
+        InterventoDao dao = new InterventoDao();
+        dao.removeIntervento(intervento);
+        interventi.remove(intervento);
     }
 }
