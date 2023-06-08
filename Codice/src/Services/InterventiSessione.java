@@ -11,6 +11,9 @@ import java.sql.SQLException;
 public class InterventiSessione {
     private ObservableList<Intervento> interventi;
     private Programma programma;
+
+
+
     public InterventiSessione(Programma programma){
         this.programma = programma;
         interventi = FXCollections.observableArrayList();
@@ -54,5 +57,13 @@ public class InterventiSessione {
         InterventoDao dao = new InterventoDao();
         dao.removeIntervento(intervento);
         interventi.remove(intervento);
+    }
+    public void updateIntervento(Intervento i) throws SQLException {
+        if(interventi.contains(i)){
+            interventi.remove(i);
+            interventi.add(i);
+            InterventoDao dao = new InterventoDao();
+            dao.updateIntervento(i);
+        }
     }
 }

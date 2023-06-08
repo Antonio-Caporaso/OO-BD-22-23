@@ -34,7 +34,8 @@ public class EditProgrammaController implements Initializable {
     private EventiSocialiSessione eventi;
     @FXML
     private TableColumn<Intervento, String> abstractColumn;
-
+    @FXML
+    private TableColumn<Intervento,String> titleColumn;
     @FXML
     private TableColumn<Speaker, String> cognomeKeynoteColumn;
 
@@ -201,6 +202,7 @@ public class EditProgrammaController implements Initializable {
         intervalli = new IntervalliSessione(programma);
         try{
             intervalli.loadIntervalli();
+            titleColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
             orarioIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
             tipologiaIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
             intervalliTable.setItems(intervalli.getIntervalli());

@@ -41,6 +41,11 @@ public class AddSpeakerController implements Initializable,FormChecker {
 
     @FXML
     private ChoiceBox<String> titoloChoice;
+    private EditInterventoController editInterventoController;
+
+    public void setEditInterventoController(EditInterventoController editInterventoController) {
+        this.editInterventoController =editInterventoController;
+    }
 
     public AddInterventoController getAddInterventoController() {
         return addInterventoController;

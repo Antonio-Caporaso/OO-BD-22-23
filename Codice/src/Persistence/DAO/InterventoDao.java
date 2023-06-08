@@ -1,7 +1,6 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
-import Persistence.Entities.Conferenze.Intervallo;
 import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
 
@@ -70,6 +69,19 @@ public class InterventoDao {
         String query = "delete from intervento where idintervento=?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,intervento.getInterventoID());
+        stm.executeUpdate();
+    }
+
+    public void updateIntervento(Intervento i) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "udpdate intervento set titolo=?,idspeaker=?,orario=?,abstract=? where idintervento=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setString(1,i.getTitolo());
+        stm.setString(4,i.getEstratto());
+        stm.setInt(2,i.getSpeaker().getIdSpeaker());
+        stm.setTimestamp(3,i.getOrario());
+        stm.setInt(5,i.getInterventoID());
         stm.executeUpdate();
     }
 }

@@ -1,10 +1,8 @@
 package View.Controller;
 
-import Persistence.Entities.Conferenze.EventoSociale;
 import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
-import Persistence.Entities.partecipanti.Partecipante;
 import Persistence.Entities.partecipanti.Speaker;
 import Services.InterventiSessione;
 import javafx.event.ActionEvent;
@@ -110,13 +108,14 @@ public class EditInterventiController implements Initializable {
     void addInterventoButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento.fxml"));
         AddInterventoController controller = new AddInterventoController();
+        controller.setInterventiSessione(interventiSessione);
         controller.setProgramma(programma);
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
@@ -142,8 +141,18 @@ public class EditInterventiController implements Initializable {
     }
 
     @FXML
-    void editInterventoOnAction(ActionEvent event) {
-
+    void editInterventoOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervento.fxml"));
+        EditInterventoController controller = new EditInterventoController();
+        controller.setInterventiSessione(interventiSessione);
+        controller.setIntervento(interventiTable.getSelectionModel().getSelectedItem());
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     @FXML
