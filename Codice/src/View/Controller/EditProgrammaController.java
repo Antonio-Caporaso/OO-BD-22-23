@@ -232,8 +232,18 @@ public class EditProgrammaController implements Initializable {
     }
 
     @FXML
-    void editIntervalliButtonOnAction(ActionEvent event) {
-
+    void editIntervalliButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervalli.fxml"));
+        EditIntervalliController controller = new EditIntervalliController();
+        controller.setManageSessioniController(manageSessioniController);
+        controller.setEditProgrammaController(this);
+        controller.setProgramma(programma);
+        controller.setSessione(sessione);
+        controller.setSubScene(subscene);
+        controller.setIntervalliSessione(intervalli);
+        loader.setController(controller);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
 
     @FXML

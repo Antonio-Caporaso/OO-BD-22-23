@@ -32,13 +32,21 @@ public class IntervalliSessione {
 
     public void addIntervallo(Intervallo intervallo) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
-        dao.saveIntervallo(intervallo);
+        int id = dao.saveInterval(intervallo);
+        intervallo.setId(id);
         intervalli.add(intervallo);
     }
     public void removeIntervallo(Intervallo intervallo) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
         dao.removeIntervallo(intervallo);
         intervalli.remove(intervallo);
-
+    }
+    public void updateIntervallo(Intervallo intervallo) throws SQLException {
+        if(intervalli.contains(intervallo)){
+            intervalli.remove(intervallo);
+            intervalli.add(intervallo);
+            IntervalloDao dao = new IntervalloDao();
+            dao.updateIntervallo(intervallo);
+        }
     }
 }
