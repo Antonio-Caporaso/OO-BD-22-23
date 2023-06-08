@@ -111,7 +111,7 @@ public class EditEventiController implements Initializable {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
     }
@@ -150,7 +150,7 @@ public class EditEventiController implements Initializable {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 

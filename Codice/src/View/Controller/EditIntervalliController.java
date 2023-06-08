@@ -1,8 +1,8 @@
 package View.Controller;
+
 import Persistence.Entities.Conferenze.Intervallo;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
-import Services.EventiSocialiSessione;
 import Services.IntervalliSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -125,6 +126,7 @@ public class EditIntervalliController implements Initializable {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
@@ -164,6 +166,7 @@ public class EditIntervalliController implements Initializable {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 
