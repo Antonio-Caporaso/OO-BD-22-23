@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Persistence.Entities.Conferenze.EventoSociale;
 import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
@@ -13,9 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditInterventiController implements Initializable {
@@ -122,7 +122,23 @@ public class EditInterventiController implements Initializable {
 
     @FXML
     void deleteInterventoOnAction(ActionEvent event) {
-
+        Intervento i = interventiTable.getSelectionModel().getSelectedItem();
+        if(i==null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Nessun intervento selezionato");
+            alert.showAndWait();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Sicuro di voler rimuovere l'intervento?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    interventiSessione.removeIntervento(i);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @FXML

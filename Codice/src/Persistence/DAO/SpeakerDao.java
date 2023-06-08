@@ -50,4 +50,22 @@ public class SpeakerDao {
         }
         return speakers;
     }
+
+    public int createSpeaker(Speaker s) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select * from save_speaker(?,?,?,?,?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setString(1,s.getNome());
+        stm.setString(2,s.getCognome());
+        stm.setString(3,s.getTitolo());
+        stm.setString(4,s.getIstituzione());
+        stm.setString(5,s.getEmail());
+        ResultSet rs = stm.executeQuery();
+        int result = 0;
+        while(rs.next()){
+            result = rs.getInt(1);
+        }
+        return result;
+    }
 }
