@@ -82,7 +82,7 @@
             </Button>
          </children>
       </HBox>
-      <TableView fx:id="tableConferenza" layoutX="14.0" layoutY="241.0" prefHeight="468.0" prefWidth="893.0">
+      <TableView fx:id="tableConferenza" layoutX="14.0" layoutY="241.0" prefHeight="468.0" prefWidth="668.0">
         <columns>
           <TableColumn fx:id="nomeConferenzaColumn" editable="false" prefWidth="75.0" text="Nome" />
           <TableColumn fx:id="inizioConferenzaColumn" editable="false" prefWidth="75.0" text="Inizio" />
@@ -96,5 +96,6 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <Button fx:id="visualizzaButton" layoutX="733.0" layoutY="241.0" mnemonicParsing="false" onAction="#visualizzaButtonOnAction" prefHeight="51.0" prefWidth="175.0" text="Visualizza dettagli conferenza" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

@@ -139,19 +139,27 @@ public class EditEventiController implements Initializable {
 
     @FXML
     void editEventoOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEvento.fxml"));
+
         EventoSociale e = eventiTable.getSelectionModel().getSelectedItem();
-        EditEventoController controller = new EditEventoController();
-        controller.setEventoSociale(e);
-        controller.setEventi(eventi);
-        controller.setProgramma(programma);
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        if(e.equals(null)){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Selezionare un evento");
+            alert.setContentText("Nessun evento selezionato");
+            alert.showAndWait();
+        }else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEvento.fxml"));
+            EditEventoController controller = new EditEventoController();
+            controller.setEventoSociale(e);
+            controller.setEventi(eventi);
+            controller.setProgramma(programma);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        }
     }
 
     @FXML

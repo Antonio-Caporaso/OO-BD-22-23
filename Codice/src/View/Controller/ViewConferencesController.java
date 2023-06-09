@@ -7,10 +7,13 @@ import Services.Sedi;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -20,6 +23,7 @@ import java.util.ResourceBundle;
 public class ViewConferencesController implements Initializable {
     private Conferenze conferenze = new Conferenze();
     private Sedi sedi = new Sedi();
+    private SubScene subScene;
     @FXML
     private Button cercaPerDataButton;
 
@@ -67,6 +71,16 @@ public class ViewConferencesController implements Initializable {
     private TableColumn<Conferenza, String> nomeConferenzaColumn;
     @FXML
     private TableColumn<Conferenza, Float> budgetColumn;
+    @FXML
+    private Button visualizzaButton;
+
+    public SubScene getSubScene() {
+        return subScene;
+    }
+
+    public void setSubScene(SubScene subScene) {
+        this.subScene = subScene;
+    }
 
     @FXML
     void cercaPerDataOnAction(ActionEvent event) throws SQLException {
@@ -87,6 +101,23 @@ public class ViewConferencesController implements Initializable {
     }
 
     @FXML
+    void visualizzaButtonOnAction(ActionEvent event) throws IOException {
+        Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
+        if(c.equals(null)){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Selezionare una conferenza");
+            alert.showAndWait();
+        }else{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
+            VisualizzaConferenzaController controller = new VisualizzaConferenzaController();
+            controller.setConferenza(c);
+            controller.setViewConferencesController(this);
+            controller.setSubScene(subScene);
+            loader.setController(controller);
+            subScene.setRoot(loader.load());
+        }
+    }
+    @FXML
     void cercaPerSedeOnAction(ActionEvent event) throws SQLException {
         tableConferenza.setItems(null);
         dataInizioDP.setValue(null);
@@ -106,28 +137,8 @@ public class ViewConferencesController implements Initializable {
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
-
     }
 
-    @FXML
-    void viewDetailsOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void viewEntiOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void viewSessioniOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void viewSponsorsOnAction(ActionEvent event) {
-
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sedi.loadSedi();

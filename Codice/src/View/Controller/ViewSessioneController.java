@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,10 +24,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class EditSessioneController implements Initializable {
+public class ViewSessioneController implements Initializable {
     private Sessione sessione;
     private Conferenza conferenza;
-    private ManageSessioniController manageSessioniController;
+    private VisualizzaConferenzaController visualizzaConferenzaController;
     private SubScene subScene;
     private Programma programma;
     private IntervalliSessione intervalli;
@@ -36,100 +35,83 @@ public class EditSessioneController implements Initializable {
     private EventiSocialiSessione eventi;
     @FXML
     private TableColumn<Intervento, String> abstractColumn;
-
     @FXML
     private TableColumn<Speaker, String> cognomeKeynote;
-
     @FXML
     private Button confermaButton;
-
     @FXML
     private Label coordinatoreLabel;
-
     @FXML
     private Label dataFineLabel;
-
     @FXML
     private Label dataInizioLabel;
-
-    @FXML
-    private Button editDetailsButton;
-
-    @FXML
-    private Button editProgrammaButton;
-
     @FXML
     private TableColumn<Speaker, String> emailKeynoteColumn;
-
     @FXML
     private TableView<EventoSociale> eventiTable;
-
     @FXML
     private TableView<Intervento> interventiTable;
-
     @FXML
     private TableColumn<Speaker, String> istituzioneKeynoteColumn;
-
     @FXML
     private TableView<Intervallo> intervalliTable;
-
     @FXML
     private TableView<Speaker> keynoteSpeakerTable;
-
     @FXML
     private TableColumn<Speaker, String> nomeKeynoteColumn;
-
     @FXML
     private Label nomeLabel;
-
     @FXML
     private Label oraFineLabel;
-
     @FXML
     private Label oraInizioLabel;
     @FXML
     private TableColumn<EventoSociale, Timestamp> orarioEventoColumn;
-
     @FXML
     private TableColumn<Intervallo, Timestamp> orarioIntervalloColumn;
-
     @FXML
     private TableColumn<Intervento, Timestamp> orarioInterventoColumn;
-
     @FXML
     private Label salaLabel;
-
     @FXML
     private TableColumn<Intervento, String> speakerColumn;
-
     @FXML
     private TableColumn<EventoSociale, String> tipologiaEventoColumn;
-
     @FXML
     private TableColumn<Intervallo, String> tipologiaIntervalloColumn;
-
     @FXML
     private Label titleLabel;
 
-    public Conferenza getConferenza() {
-        return conferenza;
-    }
-    public void setConferenza(Conferenza conferenza) {
-        this.conferenza = conferenza;
-    }
     public Sessione getSessione() {
         return sessione;
     }
+
     public void setSessione(Sessione sessione) {
         this.sessione = sessione;
     }
 
-    public ManageSessioniController getManageSessioniController() {
-        return manageSessioniController;
+    public Conferenza getConferenza() {
+        return conferenza;
     }
 
-    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
-        this.manageSessioniController = manageSessioniController;
+    public void setConferenza(Conferenza conferenza) {
+        this.conferenza = conferenza;
+    }
+
+    public VisualizzaConferenzaController getVisualizzaConferenzaController() {
+        return visualizzaConferenzaController;
+    }
+
+    public void setVisualizzaConferenzaController(VisualizzaConferenzaController visualizzaConferenzaController) {
+        this.visualizzaConferenzaController = visualizzaConferenzaController;
+    }
+
+    public SubScene getSubScene() {
+        return subScene;
+    }
+
+    public void setSubScene(SubScene subScene) {
+        this.subScene = subScene;
     }
 
     public Programma getProgramma() {
@@ -139,68 +121,41 @@ public class EditSessioneController implements Initializable {
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
-    public SubScene getSubScene() {
-        return subScene;
-    }
-    public void setSubScene(SubScene subScene) {
-        this.subScene = subScene;
+
+    public IntervalliSessione getIntervalli() {
+        return intervalli;
     }
 
-    @FXML
-    void confermaButtonOnAction(ActionEvent event) throws IOException {
-        goToEditSessionsWindow();
+    public void setIntervalli(IntervalliSessione intervalli) {
+        this.intervalli = intervalli;
     }
-    private void goToEditSessionsWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
-        loader.setController(manageSessioniController);
-        manageSessioniController.reloadSessioni();
-        Parent root = loader.load();
-        subScene.setRoot(root);
+
+    public InterventiSessione getInterventi() {
+        return interventi;
     }
-    @FXML
-    void editProgrammaOnAction(ActionEvent event) throws IOException {
-        goToEditProgrammaWindow();
+
+    public void setInterventi(InterventiSessione interventi) {
+        this.interventi = interventi;
     }
-    private void goToEditProgrammaWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
-        EditProgrammaController controller = new EditProgrammaController();
-        controller.setSubscene(subScene);
-        controller.setManageSessioniController(manageSessioniController);
-        controller.setSessione(sessione);
-        controller.setProgramma(programma);
-        controller.setEventi(eventi);
-        controller.setIntervalli(intervalli);
-        controller.setInterventi(interventi);
-        loader.setController(controller);
-        Parent root = loader.load();
-        subScene.setRoot(root);
+
+    public EventiSocialiSessione getEventi() {
+        return eventi;
     }
-    @FXML
-    void editDetailsOnAction(ActionEvent event) throws IOException {
-        goToEditDettagliSessione();
+
+    public void setEventi(EventiSocialiSessione eventi) {
+        this.eventi = eventi;
     }
-    private void goToEditDettagliSessione() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditDettagliSessione.fxml"));
-        ModificaDettagliSessioneController controllerS = new ModificaDettagliSessioneController();
-        loader.setController(controllerS);
-        controllerS.setSessione(sessione);
-        controllerS.setConferenza(conferenza);
-        controllerS.setSubscene(subScene);
-        controllerS.setEditSessioneController(this);
-        Parent root = loader.load();
-        subScene.setRoot(root);
-    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        titleLabel.setText(sessione.getTitolo());
         retrieveProgrammaSessione();
         setDettagliSessione();
         setIntervalliTable();
         setEventiTable();
         setInterventiTable();
         setKeynoteTable();
-
     }
-
     private void retrieveProgrammaSessione() {
         ProgrammaDao programmaDao = new ProgrammaDao();
         try {
@@ -209,7 +164,6 @@ public class EditSessioneController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
     public void setDettagliSessione() {
         titleLabel.setText(sessione.getTitolo());
         nomeLabel.setText(sessione.getTitolo());
@@ -239,7 +193,6 @@ public class EditSessioneController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
     private void setInterventiTable() {
         try {
             interventi = new InterventiSessione(programma);
@@ -252,7 +205,6 @@ public class EditSessioneController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
     private void setEventiTable() {
         eventi = new EventiSocialiSessione(programma);
         try {
@@ -264,7 +216,6 @@ public class EditSessioneController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
     private void setIntervalliTable() {
         intervalli = new IntervalliSessione(programma);
         try{
@@ -276,8 +227,10 @@ public class EditSessioneController implements Initializable {
             e.printStackTrace();
         }
     }
-
-
-
-
+    @FXML
+    void confermaButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
+        loader.setController(visualizzaConferenzaController);
+        subScene.setRoot(loader.load());
+    }
 }
