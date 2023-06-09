@@ -12,6 +12,16 @@ import java.sql.SQLException;
 public class ProgrammaDao {
     private DBConnection dbcon;
     private Connection conn;
+
+    public void removeKeynoteFromProgramma(Programma programma) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "update programma set keynote_speaker=NULL where idprogramma=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,programma.getProgrammaID());
+        stm.executeUpdate();
+    }
+
     public Programma retrieveProgrammaByID(int id) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
@@ -56,6 +66,16 @@ public class ProgrammaDao {
             result =  rs.getInt(1);
         }
         return result;
+    }
+
+    public void saveKeynote(Programma programma) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "update programma set keynote_speaker = ? where idprogramma=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,programma.getKeynote().getIdSpeaker());
+        stm.setInt(2,programma.getProgrammaID());
+        stm.executeUpdate();
     }
 
     public void updateProgramma(Programma programma) throws SQLException {

@@ -1,7 +1,5 @@
 package View.Controller;
 
-import Persistence.DAO.ProgrammaDao;
-import Persistence.DAO.SpeakerDao;
 import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.partecipanti.Speaker;
 import Services.EventiSocialiSessione;
@@ -154,22 +152,15 @@ public class EditProgrammaController implements Initializable {
     }
 
     private void setKeynoteTable() {
-        ProgrammaDao programmaDao = new ProgrammaDao();
-        SpeakerDao dao = new SpeakerDao();
-        Speaker keynote;
-        try {
-            int id = programmaDao.retrieveKeynoteSpeakerID(sessione);
-            if(id != 0) {
-                keynote = dao.retrieveSpeakerByID(id);
-                nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
-                cognomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-                emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-                istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
-                keynoteSpeakerTable.getItems().add(keynote);
-            }else
-                keynoteSpeakerTable.setDisable(true);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        Speaker keynote = programma.getKeynote();
+        if(keynote.equals(null)) {
+            keynoteSpeakerTable.setDisable(true);
+        }else {
+            nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            cognomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+            emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+            istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
+            keynoteSpeakerTable.getItems().add(keynote);
         }
     }
 
@@ -187,7 +178,6 @@ public class EditProgrammaController implements Initializable {
     }
 
     private void setEventiTable() {
-        //eventi = new EventiSocialiSessione(programma);
         try {
             eventi.loadEventiSociali();
             orarioEventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
@@ -237,7 +227,6 @@ public class EditProgrammaController implements Initializable {
     void editIntervalliButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervalli.fxml"));
         EditIntervalliController controller = new EditIntervalliController();
-        controller.setManageSessioniController(manageSessioniController);
         controller.setEditProgrammaController(this);
         controller.setProgramma(programma);
         controller.setSessione(sessione);
@@ -252,7 +241,6 @@ public class EditProgrammaController implements Initializable {
     void editInterventiButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditInterventi.fxml"));
         EditInterventiController controller = new EditInterventiController();
-        controller.setManageSessioniController(manageSessioniController);
         controller.setEditProgrammaController(this);
         controller.setProgramma(programma);
         controller.setSessione(sessione);
@@ -263,8 +251,17 @@ public class EditProgrammaController implements Initializable {
         subscene.setRoot(root);
     }
     @FXML
-    void editKeynoteButtonOnAction(ActionEvent event){
-
+    void editKeynoteButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditKeynote.fxml"));
+        EditKeynoteController controller = new EditKeynoteController();
+        controller.setEditProgrammaController(this);
+        controller.setProgramma(programma);
+        controller.setSubScene(subscene);
+        controller.setKeynote(programma.getKeynote());
+        controller.setInterventiSessione(interventi);
+        loader.setController(controller);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
 
 
