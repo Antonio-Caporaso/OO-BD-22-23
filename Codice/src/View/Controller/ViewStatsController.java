@@ -7,12 +7,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,45 +26,55 @@ public class ViewStatsController implements Initializable {
     @FXML
     private TextField annoTextField;
     @FXML
-    private BarChart<String, Number> chart1;
-
+    private Pane pane;
+    @FXML
+    private Pane pane2;
     @FXML
     private TextField meseTextField;
-    @FXML
-    private CategoryAxis xAxis;
-
-    @FXML
-    private NumberAxis yAxis;
-
     @FXML
     private Button monthlyButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        yAxis.setUpperBound(100);
-        yAxis.setLabel("Percentuale %");
-        xAxis.setLabel("Istituzioni");
     }
     @FXML
     void monthlyButtonOnAction(ActionEvent event) {
         ObservableList<Stats> stats = FXCollections.observableArrayList();
         try {
             stats.addAll(retrieveIstituzioniByMonth(Integer.parseInt(meseTextField.getText())));
-            for(Stats dataPoint :stats){
-                System.out.println(dataPoint);
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            for(Stats s: stats){
+                System.out.println(s);
             }
-            XYChart.Series<String,Number> series = new XYChart.Series<>();
-            for (Stats dataPoint : stats) {
-                XYChart.Data<String, Number> data = new XYChart.Data<>(dataPoint.getIstituzione(),dataPoint.getPercentuale());
-                series.getData().add(data);
+
+            if(stats.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Non risultano interventi nel mese cercato");
+                alert.showAndWait();
+            }else{
+                for (Stats dataPoint : stats) {
+                    PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
+                    pieChartData.add(data);
+                }
+                PieChart pieChart = new PieChart(pieChartData);
+                pane.getChildren().add(pieChart);
+
+                pieChart.setTitle("Statistica mensile");
+                pieChart.setClockwise(true);
+                pieChart.setLabelLineLength(50);
+                pieChart.setLabelsVisible(true);
+                pieChart.setStartAngle(180);
             }
-            chart1.getData().add(series);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
+    private LinkedList<Stats> retrieveIstituzioniByYear(int i) throws SQLException {
+        InterventoDao dao = new InterventoDao();
+        return dao.retrieveInterventiStatsByYear(i);
+    }
     private LinkedList<Stats> retrieveIstituzioniByMonth(int i) throws SQLException {
         InterventoDao dao = new InterventoDao();
         return dao.retrieveInterventiStatsByMonth(i);
@@ -73,12 +82,39 @@ public class ViewStatsController implements Initializable {
     @FXML
     void pulisciButtonOnAction(ActionEvent event) {
         meseTextField.setText("");
-        chart1.getData().removeAll();
     }
 
     @FXML
     void yearlyButtonOnAction(ActionEvent event) {
+        ObservableList<Stats> stats = FXCollections.observableArrayList();
+        try {
+            stats.addAll(retrieveIstituzioniByYear(Integer.parseInt(annoTextField.getText())));
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+            for(Stats s: stats){
+                System.out.println(s);
+            }
 
+            if(stats.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Non risultano interventi nell'anno cercato");
+                alert.showAndWait();
+            }else{
+                for (Stats dataPoint : stats) {
+                    PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
+                    pieChartData.add(data);
+                }
+                PieChart pieChart = new PieChart(pieChartData);
+                pane2.getChildren().add(pieChart);
+
+                pieChart.setTitle("Statistica annuale");
+                pieChart.setClockwise(true);
+                pieChart.setLabelLineLength(50);
+                pieChart.setLabelsVisible(true);
+                pieChart.setStartAngle(180);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
