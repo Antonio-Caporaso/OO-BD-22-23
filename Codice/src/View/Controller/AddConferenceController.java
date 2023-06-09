@@ -1,8 +1,6 @@
 package View.Controller;
 
 import Exceptions.BlankFieldException;
-import Persistence.DAO.ComitatoDao;
-import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
@@ -20,6 +18,8 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -76,28 +76,38 @@ public class AddConferenceController implements Initializable,FormChecker{
     public void creaButtonOnAction(ActionEvent event){
         try {
             checkFieldsAreBlank();
-            String nome = nomeConferenzaTF.getText();
-            float budget = Float.parseFloat(budgetTextField.getText());
-            String descrizione = descrizioneTextArea.getText();
-            LocalDateTime dataIselected = dataInizioDP.getDateTimeValue();
-            LocalDateTime dataFselected = dataFineDP.getDateTimeValue();
-            Timestamp dataI = Timestamp.valueOf(dataIselected);
-            Timestamp dataF = Timestamp.valueOf(dataFselected);
-            Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
-            String valuta = valutaChoice.getValue();
-            Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user, valuta);
+            Conferenza c = retrieveConferenza();
             conference.addConferenza(c);
             openAddedConferenceDialogWindow();
             loadAddOrganizzatori(c);
         }catch (BlankFieldException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(e.getMessage());
-            alert.showAndWait();
-        }catch (Exception e){
-            e.printStackTrace();
+            showAlert(e);
+        }catch (SQLException e){
+            showAlert(e);
         }
     }
+
+    private Conferenza retrieveConferenza() {
+        String nome = nomeConferenzaTF.getText();
+        float budget = Float.parseFloat(budgetTextField.getText());
+        String descrizione = descrizioneTextArea.getText();
+        LocalDateTime dataIselected = dataInizioDP.getDateTimeValue();
+        LocalDateTime dataFselected = dataFineDP.getDateTimeValue();
+        Timestamp dataI = Timestamp.valueOf(dataIselected);
+        Timestamp dataF = Timestamp.valueOf(dataFselected);
+        Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
+        String valuta = valutaChoice.getValue();
+        Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user, valuta);
+        return c;
+    }
+
+    private void showAlert(Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(e.getMessage());
+        alert.showAndWait();
+    }
+
     public void openAddedConferenceDialogWindow(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Dialog");
@@ -107,29 +117,36 @@ public class AddConferenceController implements Initializable,FormChecker{
     }
 
     private void loadAddOrganizzatori(Conferenza c){
-        ConferenzaDao conferenzaDao= new ConferenzaDao();
-        ComitatoDao comitatoDao=new ComitatoDao();
-        conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
+        // ConferenzaDao conferenzaDao= new ConferenzaDao();
+        // ComitatoDao comitatoDao=new ComitatoDao();
+        //conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
 
         try {
             //Serve solo per permettere al programma di funzionare dopo le modifiche effettuate lato db, necessita di un implementazione migliore
-            if(conferenza.getComitatoLocale().getComitatoID()==0){
-            comitatoDao.insertComitato(1, conferenza.getComitatoScientifico().getComitatoID());
-            }else{
-                comitatoDao.insertComitato(1, conferenza.getComitatoLocale().getComitatoID());
-            }
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddOrganizzatori.fxml"));
-            AddOrganizzatoriController controller = new AddOrganizzatoriController();
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUtente(user);
-            loader.setController(controller);
-            Parent root = loader.load();
-            subscene.setRoot(root);
+
+            // Non mi è molto chiara sta porzione... una volta salvata una conferenza si attiva il trigger create_comitati_trigger quindi gli ID non saranno mai uguali a 0
+//            if(conferenza.getComitatoLocale().getComitatoID()==0){
+//            comitatoDao.insertComitato(1, conferenza.getComitatoScientifico().getComitatoID());
+//            }else{
+//                comitatoDao.insertComitato(1, conferenza.getComitatoLocale().getComitatoID());
+//            }
+            goToAddEntiWindow();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void goToAddEntiWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddOrganizzatori.fxml"));
+        AddOrganizzatoriController controller = new AddOrganizzatoriController();
+        controller.setSubscene(subscene);
+        controller.setConferenza(conferenza);
+        controller.setUtente(user);
+        loader.setController(controller);
+        Parent root = loader.load();
+        subscene.setRoot(root);
+    }
+
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;
     }

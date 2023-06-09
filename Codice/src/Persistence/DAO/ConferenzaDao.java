@@ -74,20 +74,25 @@ public class ConferenzaDao {
         return conferenze;
     }
 
-    public void saveConferenza(Conferenza c) throws SQLException {
+    public int saveConferenza(Conferenza c) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String procedure = "insert_conferenza";
-        CallableStatement stm = conn.prepareCall ("CALL "+procedure+"(?,?,?,?,?,?,?,?)");
+        String query = "select * from save_conferenza(?,?,?,?,?,?,?,?)";
+        PreparedStatement stm = conn.prepareStatement(query);
         stm.setString(1, c.getNome());
         stm.setString(2, c.getDescrizione());
         stm.setTimestamp(3, c.getDataInizio());
         stm.setTimestamp(4, c.getDataFine());
         stm.setFloat(5,c.getBudget());
         stm.setInt(6,c.getSede().getSedeID());
-        stm.setInt(8, c.getProprietario().getIdUtente());
         stm.setString(7, c.getCodiceValuta());
-        stm.execute();
+        stm.setInt(8, c.getProprietario().getIdUtente());
+        ResultSet rs = stm.executeQuery();
+        int result = 0;
+        while(rs.next()){
+            result=rs.getInt(1);
+        }
+        return result;
     }
 
     public void deleteConferenza(Conferenza c) throws SQLException {
