@@ -13,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -101,9 +100,7 @@ public class ManageSessioniController implements Initializable {
             Parent root = loader.load();
             subscene.setRoot(root);
         }catch(SessioneNotSelectedException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showSessioneNotSelectedAlert(e);
         }
     }
 
@@ -139,21 +136,31 @@ public class ManageSessioniController implements Initializable {
             if (s == null) {
                 throw new SessioneNotSelectedException();
             }
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Sicuro di voler rimuovere la sessione '" + s.getTitolo() + "'?");
-            Optional<ButtonType> result = alert.showAndWait();
+            Optional<ButtonType> result = showConfirmationAlert(s);
             if (result.get() == ButtonType.OK) {
                 try {
                     sessioni.removeSessione(s);
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText(e.getMessage());
                 }
             }
         }catch (SessioneNotSelectedException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showSessioneNotSelectedAlert(e);
         }
+    }
+
+    private static void showSessioneNotSelectedAlert(SessioneNotSelectedException e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
+    }
+
+    private Optional<ButtonType> showConfirmationAlert(Sessione s) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler rimuovere la sessione '" + s.getTitolo() + "'?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
     }
 
     public void setSessioni(Sessioni sessioni) {
