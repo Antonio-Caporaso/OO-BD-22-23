@@ -33,7 +33,6 @@ public class EditInterventiController implements Initializable {
     private EditProgrammaController editProgrammaController;
     @FXML
     private TableColumn<Intervento, String> abstractColumn;
-
     @FXML
     private Button addInterventoButton;
 
@@ -56,6 +55,7 @@ public class EditInterventiController implements Initializable {
 
     @FXML
     private TableColumn<Intervento, Speaker> speakerColumn;
+
     public EditProgrammaController getEditProgrammaController() {
         return editProgrammaController;
     }

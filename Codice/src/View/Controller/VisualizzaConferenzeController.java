@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class ViewConferencesController implements Initializable {
+public class VisualizzaConferenzeController implements Initializable {
     private Conferenze conferenze = new Conferenze();
     private Sedi sedi = new Sedi();
     private SubScene subScene;
@@ -55,9 +55,6 @@ public class ViewConferencesController implements Initializable {
 
     @FXML
     private TableView<Conferenza> tableConferenza;
-
-    @FXML
-    private TableColumn<Conferenza, String> userColumn;
     @FXML
     private TableColumn<Conferenza, String> descrizioneColumn;
 
@@ -126,6 +123,11 @@ public class ViewConferencesController implements Initializable {
             Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
             conferenze = new Conferenze();
             conferenze.loadBySede(sede);
+            if(conferenze.getConferenze().isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Non risultano conferenze per questa sede");
+                alert.showAndWait();
+            }
             setTable(conferenze.getConferenze());
         }catch (NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -153,7 +155,6 @@ public class ViewConferencesController implements Initializable {
         descrizioneColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
         sedeColumn.setCellValueFactory(new PropertyValueFactory<>("sede"));
         budgetColumn.setCellValueFactory(new PropertyValueFactory<>("budget"));
-        userColumn.setCellValueFactory(new PropertyValueFactory<>("proprietario"));
         tableConferenza.setItems(c);
     }
 }

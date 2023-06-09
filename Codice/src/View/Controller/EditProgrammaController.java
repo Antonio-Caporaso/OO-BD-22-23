@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.partecipanti.Speaker;
 import Services.EventiSocialiSessione;
@@ -145,23 +146,30 @@ public class EditProgrammaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        retrieveProgramma();
         setIntervalliTable();
         setEventiTable();
         setInterventiTable();
         setKeynoteTable();
     }
 
+    private void retrieveProgramma() {
+        ProgrammaDao dao = new ProgrammaDao();
+        try {
+            programma = dao.retrieveProgrammaBySessione(sessione);
+            sessione.setProgramma(programma);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void setKeynoteTable() {
         Speaker keynote = programma.getKeynote();
-        if(keynote.equals(null)) {
-            keynoteSpeakerTable.setDisable(true);
-        }else {
             nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
             cognomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
             emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
             istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
             keynoteSpeakerTable.getItems().add(keynote);
-        }
     }
 
     private void setInterventiTable() {
@@ -179,6 +187,7 @@ public class EditProgrammaController implements Initializable {
 
     private void setEventiTable() {
         try {
+            eventi = new EventiSocialiSessione(programma);
             eventi.loadEventiSociali();
             orarioEventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
             tipologiaEventoColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));

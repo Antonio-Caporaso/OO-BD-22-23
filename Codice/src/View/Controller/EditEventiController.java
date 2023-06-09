@@ -30,7 +30,6 @@ public class EditEventiController implements Initializable {
     private SubScene subScene;
     private Sessione sessione;
     private ManageSessioniController manageSessioniController;
-
     @FXML
     private Button addEventoButton;
 

@@ -50,7 +50,6 @@ public class EditIntervalliController implements Initializable {
 
     @FXML
     private TableColumn<Intervallo, String> tipologiaIntervalloColumn;
-
     public EditProgrammaController getEditProgrammaController() {
         return editProgrammaController;
     }

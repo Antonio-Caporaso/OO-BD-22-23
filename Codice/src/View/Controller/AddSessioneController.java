@@ -90,8 +90,6 @@ public class AddSessioneController implements Initializable,FormChecker {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
         EditProgrammaController controller = new EditProgrammaController();
         controller.setManageSessioniController(manageSessioniController);
-        Programma programma = retrieveProgramma(s);
-        controller.setProgramma(programma);
         controller.setSessione(s);
         controller.setSubscene(subscene);
         loader.setController(controller);

@@ -91,15 +91,11 @@ public class EditKeynoteController implements Initializable {
     }
 
     private void setKeynoteTable() {
-        if(keynote.equals(null)){
-            keynoteSpeakerTable.setDisable(true);
-        }else {
             nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
             cognomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
             emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
             istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
             keynoteSpeakerTable.getItems().add(keynote);
-        }
     }
 
     @FXML
@@ -108,6 +104,7 @@ public class EditKeynoteController implements Initializable {
         ChooseKeynoteController controller = new ChooseKeynoteController();
         controller.setInterventiSessione(interventiSessione);
         controller.setProgramma(programma);
+        loader.setController(controller);
         Parent root = loader.load();
         Scene scene  = new Scene(root);
         Stage stage = new Stage();

@@ -30,7 +30,7 @@ public class VisualizzaConferenzaController implements Initializable {
     private IntervalliSessione intervalliSessione;
     private Sessioni sessioni;
     private SponsorizzazioniConferenza sponsorizzazioniConferenza;
-    private ViewConferencesController viewConferencesController;
+    private VisualizzaConferenzeController visualizzaConferenzeController;
     @FXML
     private Label budgetLabel;
     @FXML
@@ -68,12 +68,12 @@ public class VisualizzaConferenzaController implements Initializable {
     @FXML
     private Label titleLabel;
 
-    public ViewConferencesController getViewConferencesController() {
-        return viewConferencesController;
+    public VisualizzaConferenzeController getViewConferencesController() {
+        return visualizzaConferenzeController;
     }
 
-    public void setViewConferencesController(ViewConferencesController viewConferencesController) {
-        this.viewConferencesController = viewConferencesController;
+    public void setViewConferencesController(VisualizzaConferenzeController visualizzaConferenzeController) {
+        this.visualizzaConferenzeController = visualizzaConferenzeController;
     }
 
     public SubScene getSubScene() {
@@ -115,7 +115,7 @@ public class VisualizzaConferenzaController implements Initializable {
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenze.fxml"));
-        loader.setController(viewConferencesController);
+        loader.setController(visualizzaConferenzeController);
         Parent root = loader.load();
         subScene.setRoot(root);
     }
