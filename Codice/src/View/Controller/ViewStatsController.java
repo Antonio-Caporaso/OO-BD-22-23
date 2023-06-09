@@ -43,10 +43,6 @@ public class ViewStatsController implements Initializable {
         try {
             stats.addAll(retrieveIstituzioniByMonth(Integer.parseInt(meseTextField.getText())));
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            for(Stats s: stats){
-                System.out.println(s);
-            }
-
             if(stats.isEmpty()){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Non risultano interventi nel mese cercato");
@@ -65,6 +61,10 @@ public class ViewStatsController implements Initializable {
                 pieChart.setLabelsVisible(true);
                 pieChart.setStartAngle(180);
             }
+        }catch(NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("La stringa inserita non corrisponde ad un numero, riprovare.");
+            alert.showAndWait();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -93,7 +93,6 @@ public class ViewStatsController implements Initializable {
             for(Stats s: stats){
                 System.out.println(s);
             }
-
             if(stats.isEmpty()){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Non risultano interventi nell'anno cercato");
@@ -112,7 +111,11 @@ public class ViewStatsController implements Initializable {
                 pieChart.setLabelsVisible(true);
                 pieChart.setStartAngle(180);
             }
-        } catch (SQLException e) {
+        }catch(NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("La stringa inserita non corrisponde ad un numero, riprovare.");
+            alert.showAndWait();
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
