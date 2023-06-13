@@ -39,6 +39,7 @@ public class ProgrammaSessione {
     }
     public ObservableList loadProgrammi(){
         activityList = FXCollections.observableArrayList();
+        activityList.clear();
         retreiveProgramma(sessione);
         try {
             InterventoDao interventoDao = new InterventoDao();
