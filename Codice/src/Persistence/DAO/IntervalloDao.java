@@ -29,15 +29,20 @@ public class IntervalloDao {
         return intervalli;
     }
 
-    public void saveIntervallo(Intervallo intervallo) throws SQLException {
+    public int saveIntervallo(Intervallo intervallo) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
+        int result=0;
         String query = "INSERT INTO intervallo values (default,CAST(? AS intervallost),?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setObject(1, intervallo.getTipologia(), Types.OTHER);
         stm.setInt(2,intervallo.getProgramma().getProgrammaID());
         stm.setTimestamp(3,intervallo.getOrario());
-        stm.executeUpdate();
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            result = rs.getInt(1);
+        }
+        return result;
     }
     public int saveInterval(Intervallo intervallo) throws SQLException {
         dbcon = DBConnection.getDBconnection();

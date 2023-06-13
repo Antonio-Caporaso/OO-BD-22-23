@@ -17,6 +17,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
 
 import java.net.URL;
@@ -77,6 +80,55 @@ public class AddActivityController implements Initializable {
         }
 
     }
+//    @FXML
+//    void tipologiaDragDetected(MouseEvent event) {
+//        if(tipologiaChoiceBox.getValue()=="Intervento"){
+//            eventiChoiceBox.visibleProperty();
+//        }
+//    }
+//    @FXML
+//    void tipologiaOnContextMenuRequested(ContextMenuEvent event) {
+//        if(tipologiaChoiceBox.getValue()=="Intervento"){
+//            eventiChoiceBox.visibleProperty();
+//        }
+//    }
+//    @FXML
+//    void tipologiaOnMouseDragExited(MouseDragEvent event) {
+//        System.out.println("OnMouseDragExited");
+//    }
+//
+//    @FXML
+//    void tipologiaOnMouseDragOver(MouseDragEvent event) {
+//        System.out.println("OnMouseDragOver");
+//    }
+
+    @FXML
+    void tipologiaOnMouseClicked(MouseEvent event) {
+        if(tipologiaChoiceBox.getValue()=="Intervento"){
+            showIntervento();
+            System.out.println("Intervento");
+        }else if (tipologiaChoiceBox.getValue()=="Intervallo"){
+            showIntervallo();
+            System.out.println("Intervallo");
+        }else if (tipologiaChoiceBox.getValue()=="Evento Sociale"){
+            showEvento();
+            System.out.println("EventoSociale");
+        }
+    }
+
+//    @FXML
+//    void tipologiaOnMousePressed(MouseEvent event) {
+//        System.out.println("OnMousePressed");
+//    }
+//
+//    @FXML
+//    void tipologiaOnMouseClicked(MouseEvent event) {
+//        System.out.println("OnMouseDragExited");
+//        if(tipologiaChoiceBox.getValue()=="Intervento"){
+//            eventiChoiceBox.visibleProperty();
+//        }
+//    }
+
     //Private Methods
     private void loadViewProgramma(){
         try{
@@ -126,7 +178,7 @@ public class AddActivityController implements Initializable {
             intervallo.setOrario(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
             intervallo.setTipologia(intervalloChoiceBox.getValue());
             intervallo.setProgramma(programma);
-            intervalliSessione.addIntervallo(intervallo);
+            intervalliSessione.addIntervallo2(intervallo);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -153,6 +205,34 @@ public class AddActivityController implements Initializable {
         speakers.loadSpeakers();
         speakerChoiceBox.setItems(speakers.getSpeakers());
     }
+    private void showIntervallo(){
+        abstractTextArea.setDisable(false);
+        titoloTextField.setDisable(false);
+        speakerChoiceBox.setDisable(false);
+        intervalloChoiceBox.setDisable(true);
+        eventiChoiceBox.setDisable(true);
+    }
+    private void showIntervento(){
+        abstractTextArea.setDisable(true);
+        titoloTextField.setDisable(true);
+        speakerChoiceBox.setDisable(true);
+        eventiChoiceBox.setDisable(true);
+        intervalloChoiceBox.setDisable(false);
+    }
+    private void showEvento(){
+        abstractTextArea.setDisable(true);
+        titoloTextField.setDisable(true);
+        speakerChoiceBox.setDisable(true);
+        intervalloChoiceBox.setDisable(true);
+        eventiChoiceBox.setDisable(false);
+    }
+    private void hideAll(){
+        abstractTextArea.setDisable(true);
+        titoloTextField.setDisable(true);
+        speakerChoiceBox.setDisable(true);
+        intervalloChoiceBox.setDisable(true);
+        eventiChoiceBox.setDisable(true);
+    }
 //    Overrides
 //    @Override
 //    public void checkFieldsAreBlank() throws BlankFieldException {
@@ -164,6 +244,7 @@ public class AddActivityController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateChoiceBoxes();
+        hideAll();
     }
 }
 

@@ -49,4 +49,10 @@ public class IntervalliSessione {
             dao.updateIntervallo(intervallo);
         }
     }
+    public void addIntervallo2(Intervallo intervallo) throws SQLException {
+        IntervalloDao dao = new IntervalloDao();
+        int id = dao.saveIntervallo(intervallo);
+        intervallo.setId(id);
+        intervalli.add(intervallo);
+    }
 }
