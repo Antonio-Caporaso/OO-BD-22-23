@@ -46,6 +46,18 @@ public class AddActivityController implements Initializable {
     private ChoiceBox<String> intervalloChoiceBox;
     @FXML
     private TextField titoloTextField;
+    @FXML
+    private Label eventiLabel;
+    @FXML
+    private Label intervalloLabel;
+    @FXML
+    private Label titoloLabel;
+    @FXML
+    private Label speakerLabel;
+    @FXML
+    private Label abstractLabel;
+    @FXML
+    private Label inizioLabel;
     private Conferenza conferenza;
     private SubScene subscene;
     private Utente user;
@@ -80,30 +92,8 @@ public class AddActivityController implements Initializable {
         }
 
     }
-//    @FXML
-//    void tipologiaDragDetected(MouseEvent event) {
-//        if(tipologiaChoiceBox.getValue()=="Intervento"){
-//            eventiChoiceBox.visibleProperty();
-//        }
-//    }
-//    @FXML
-//    void tipologiaOnContextMenuRequested(ContextMenuEvent event) {
-//        if(tipologiaChoiceBox.getValue()=="Intervento"){
-//            eventiChoiceBox.visibleProperty();
-//        }
-//    }
-//    @FXML
-//    void tipologiaOnMouseDragExited(MouseDragEvent event) {
-//        System.out.println("OnMouseDragExited");
-//    }
-//
-//    @FXML
-//    void tipologiaOnMouseDragOver(MouseDragEvent event) {
-//        System.out.println("OnMouseDragOver");
-//    }
-
     @FXML
-    void tipologiaOnMouseClicked(MouseEvent event) {
+    void selectTipologia(ActionEvent event) {
         if(tipologiaChoiceBox.getValue()=="Intervento"){
             showIntervento();
             System.out.println("Intervento");
@@ -115,20 +105,6 @@ public class AddActivityController implements Initializable {
             System.out.println("EventoSociale");
         }
     }
-
-//    @FXML
-//    void tipologiaOnMousePressed(MouseEvent event) {
-//        System.out.println("OnMousePressed");
-//    }
-//
-//    @FXML
-//    void tipologiaOnMouseClicked(MouseEvent event) {
-//        System.out.println("OnMouseDragExited");
-//        if(tipologiaChoiceBox.getValue()=="Intervento"){
-//            eventiChoiceBox.visibleProperty();
-//        }
-//    }
-
     //Private Methods
     private void loadViewProgramma(){
         try{
@@ -206,32 +182,43 @@ public class AddActivityController implements Initializable {
         speakerChoiceBox.setItems(speakers.getSpeakers());
     }
     private void showIntervallo(){
-        abstractTextArea.setDisable(false);
-        titoloTextField.setDisable(false);
-        speakerChoiceBox.setDisable(false);
-        intervalloChoiceBox.setDisable(true);
-        eventiChoiceBox.setDisable(true);
+        hideAll();
+        inizioLabel.setDisable(false);
+        inizioDateTimePicker.setDisable(false);
+        intervalloChoiceBox.setVisible(true);
+        intervalloLabel.setVisible(true);
     }
     private void showIntervento(){
-        abstractTextArea.setDisable(true);
-        titoloTextField.setDisable(true);
-        speakerChoiceBox.setDisable(true);
-        eventiChoiceBox.setDisable(true);
-        intervalloChoiceBox.setDisable(false);
+        hideAll();
+        inizioLabel.setDisable(false);
+        inizioDateTimePicker.setDisable(false);
+        abstractTextArea.setVisible(true);
+        titoloTextField.setVisible(true);
+        speakerChoiceBox.setVisible(true);
+        abstractLabel.setVisible(true);
+        speakerLabel.setVisible(true);
+        titoloLabel.setVisible(true);
     }
     private void showEvento(){
-        abstractTextArea.setDisable(true);
-        titoloTextField.setDisable(true);
-        speakerChoiceBox.setDisable(true);
-        intervalloChoiceBox.setDisable(true);
-        eventiChoiceBox.setDisable(false);
+        hideAll();
+        inizioLabel.setDisable(false);
+        inizioDateTimePicker.setDisable(false);
+        eventiChoiceBox.setVisible(true);
+        eventiLabel.setVisible(true);
     }
     private void hideAll(){
-        abstractTextArea.setDisable(true);
-        titoloTextField.setDisable(true);
-        speakerChoiceBox.setDisable(true);
-        intervalloChoiceBox.setDisable(true);
-        eventiChoiceBox.setDisable(true);
+        inizioLabel.setDisable(true);
+        inizioDateTimePicker.setDisable(true);
+        abstractTextArea.setVisible(false);
+        titoloTextField.setVisible(false);
+        speakerChoiceBox.setVisible(false);
+        intervalloChoiceBox.setVisible(false);
+        eventiChoiceBox.setVisible(false);
+        intervalloLabel.setVisible(false);
+        titoloLabel.setVisible(false);
+        eventiLabel.setVisible(false);
+        speakerLabel.setVisible(false);
+        abstractLabel.setVisible(false);
     }
 //    Overrides
 //    @Override
@@ -245,6 +232,7 @@ public class AddActivityController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateChoiceBoxes();
         hideAll();
+        tipologiaChoiceBox.setOnAction(this::selectTipologia);
     }
 }
 
