@@ -3,12 +3,14 @@ package View.Controller;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import Persistence.DAO.*;
 import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.ActivityModel;
+import Persistence.Entities.organizzazione.Sponsorizzazione;
 import Services.ProgrammaSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,8 +42,6 @@ public class ViewProgrammaController implements Initializable {
     @FXML
     private Button rimuoviButton;
     @FXML
-    private ListView<Programma> programmaListView;
-    @FXML
     private TableView<ActivityModel> programmaTableView;
     @FXML
     private TableColumn<ActivityModel, String> attivitaTableColumn;
@@ -54,7 +54,6 @@ public class ViewProgrammaController implements Initializable {
     private SubScene subscene;
     private Conferenza conferenza;
     private Sessione sessione;
-    private ProgrammaDao programmaDao= new ProgrammaDao();
     private Utente user;
     private Programma programma= new Programma();
     ProgrammaSessione programmaSessione;
@@ -74,7 +73,6 @@ public class ViewProgrammaController implements Initializable {
     void aggiungiButtonOnAction(ActionEvent event) {
         loadAggiungiPuntoProgramma();
     }
-
     @FXML
     void backButtonOnAction(ActionEvent event) {
         loadInserisciSessione();
@@ -85,8 +83,20 @@ public class ViewProgrammaController implements Initializable {
     }
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
-        ActivityModel selected =programmaTableView.getSelectionModel().getSelectedItem();
-        removeActivity(selected);
+        try{
+            ActivityModel selected =programmaTableView.getSelectionModel().getSelectedItem();
+            if (selected == null){
+                throw new NullPointerException();
+            }
+            Optional<ButtonType> result = showDeleteDialog();
+            if(result.get() == ButtonType.OK) {
+                removeActivity(selected);
+            }
+        }catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nessun punto selezionato");
+            alert.showAndWait();
+        }
     }
     //Private methods
     private void loadInserisciSessione(){
@@ -153,6 +163,12 @@ public class ViewProgrammaController implements Initializable {
     private void removeActivity (ActivityModel activityModel){
         programmaSessione.removeActivity(activityModel);
         setProgramma();
+    }
+    private Optional<ButtonType> showDeleteDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler eliminare il seguente punto del programma?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
     }
     //Overrides
     @Override
