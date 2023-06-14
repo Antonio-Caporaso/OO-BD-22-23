@@ -92,17 +92,13 @@ public class AddActivityController implements Initializable {
         }
 
     }
-    @FXML
     void selectTipologia(ActionEvent event) {
         if(tipologiaChoiceBox.getValue()=="Intervento"){
             showIntervento();
-            System.out.println("Intervento");
         }else if (tipologiaChoiceBox.getValue()=="Intervallo"){
             showIntervallo();
-            System.out.println("Intervallo");
         }else if (tipologiaChoiceBox.getValue()=="Evento Sociale"){
             showEvento();
-            System.out.println("EventoSociale");
         }
     }
     //Private Methods
