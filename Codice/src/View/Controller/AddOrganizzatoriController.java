@@ -106,7 +106,7 @@ public class AddOrganizzatoriController implements Initializable {
     }
     private Optional<ButtonType> showDeleteDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler eliminare la seguente sponsorizzazione?");
+        alert.setContentText("Sicuro di voler eliminare il seguente organizzatore?");
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
