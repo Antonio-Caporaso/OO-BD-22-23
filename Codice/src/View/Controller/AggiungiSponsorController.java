@@ -22,6 +22,8 @@ import Persistence.Entities.organizzazione.Sponsor;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
 import Services.SponsorizzazioniConferenza;
 import Services.Sponsors;
+import org.postgresql.util.PSQLException;
+
 public class AggiungiSponsorController implements Initializable {
     @FXML
     private ResourceBundle resources;
@@ -76,7 +78,12 @@ public class AggiungiSponsorController implements Initializable {
             Sponsorizzazione sponsorizzazione=new Sponsorizzazione(sponsorSelezionato,conferenza,contributo,valuta);
             sponsorizzazioniConferenza.addSponsorizzazione(sponsorizzazione);
             setSponsorizzazioniListView();
-        }catch (SQLException e){
+
+        }catch(PSQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Questo sponsor è già presente!");
+            alert.showAndWait();
+        }catch (SQLException e) {
             e.printStackTrace();
         }catch (NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import org.postgresql.util.PSQLException;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -65,6 +66,10 @@ public class AddOrganizzatoriController implements Initializable {
             }
             organizzatori.addEnte(enteSelezionato);
             setOrganizzatoriListView();
+        }catch(PSQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Questo organizzatore è già presente!");
+            alert.showAndWait();
         }catch (SQLException e){
             e.printStackTrace();
         }catch(NullPointerException e){
