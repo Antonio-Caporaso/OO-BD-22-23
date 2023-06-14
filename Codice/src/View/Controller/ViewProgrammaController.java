@@ -57,6 +57,7 @@ public class ViewProgrammaController implements Initializable {
     private ProgrammaDao programmaDao= new ProgrammaDao();
     private Utente user;
     private Programma programma= new Programma();
+    ProgrammaSessione programmaSessione;
     //Public Setters
     public void setConferenza(Conferenza c){
         this.conferenza=c;
@@ -84,6 +85,8 @@ public class ViewProgrammaController implements Initializable {
     }
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
+        ActivityModel selected =programmaTableView.getSelectionModel().getSelectedItem();
+        removeActivity(selected);
     }
     //Private methods
     private void loadInserisciSessione(){
@@ -132,8 +135,6 @@ public class ViewProgrammaController implements Initializable {
     }
     private void setProgramma() {
         try {
-//            sessione.setSessioneID(98);//Solo per testing, poiché la quantita di attività è limitata
-            ProgrammaSessione programmaSessione= new ProgrammaSessione(sessione);
             ProgrammaDao programmaSessioneDao=new ProgrammaDao();
 
             try {
@@ -149,9 +150,14 @@ public class ViewProgrammaController implements Initializable {
             e.printStackTrace();
         }
     }
+    private void removeActivity (ActivityModel activityModel){
+        programmaSessione.removeActivity(activityModel);
+        setProgramma();
+    }
     //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        programmaSessione= new ProgrammaSessione(sessione);
         setProgramma();
     }
     @FXML

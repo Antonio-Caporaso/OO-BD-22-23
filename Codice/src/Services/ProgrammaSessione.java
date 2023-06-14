@@ -27,6 +27,10 @@ public class ProgrammaSessione {
     private ObservableList<ActivityModel> activityList;
     private Programma programma;
     private Sessione sessione;
+    private List<Intervento> interventi;
+    private  List<Intervallo> intervalli;
+    private List<EventoSociale> eventiSociali;
+
     public ProgrammaSessione(Sessione sessione){
         this.sessione = sessione;
         activityList = FXCollections.observableArrayList();
@@ -46,9 +50,9 @@ public class ProgrammaSessione {
             IntervalloDao intervalloDao = new IntervalloDao();
             EventoSocialeDao eventoSocialeDao = new EventoSocialeDao();
 
-            List<Intervento> interventi = interventoDao.retrieveInterventiByProgramma(programma);
-            List<Intervallo> intervalli = intervalloDao.retrieveIntervalliByProgramma(programma);
-            List<EventoSociale> eventiSociali = eventoSocialeDao.retrieveEventiByProgramma(programma);
+            interventi = interventoDao.retrieveInterventiByProgramma(programma);
+            intervalli = intervalloDao.retrieveIntervalliByProgramma(programma);
+            eventiSociali = eventoSocialeDao.retrieveEventiByProgramma(programma);
             //for loop per inserire tutti le attività in activityModel
             for (Intervento intervento : interventi) {
                 String attivita = intervento.getTitolo();
@@ -92,6 +96,32 @@ public class ProgrammaSessione {
             throw new RuntimeException(e);
         }return activityList;
     }
+    public void removeActivity(ActivityModel activityModel) {
+        activityList.remove(activityModel);
+        InterventoDao interventoDao=new InterventoDao();
+        IntervalloDao intervalloDao=new IntervalloDao();
+        EventoSocialeDao eventoSocialeDao=new EventoSocialeDao();
+        try{
+            for (Intervento intervento : interventi) {
+                if (intervento.getTitolo().equals(activityModel.getAttivita()) && intervento.getOrario().equals(activityModel.getDataInizio())) {
+                    interventoDao.removeIntervento(intervento);
+                }
+            }
+            for (Intervallo intervallo: intervalli){
+                if(intervallo.getTipologia().equals(activityModel.getAttivita())&&intervallo.getOrario().equals(activityModel.getDataInizio())){
+                    intervalloDao.removeIntervallo(intervallo);
+                }
+            }
+            for (EventoSociale eventoSociale: eventiSociali){
+                if(eventoSociale.getTipologia().equals(activityModel.getAttivita())&&eventoSociale.getOrario().equals(activityModel.getDataInizio())){
+                    eventoSocialeDao.deleteEvento(eventoSociale);
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     private Programma retreiveProgramma(Sessione sessione){
         ProgrammaDao dao= new ProgrammaDao();
         try {
