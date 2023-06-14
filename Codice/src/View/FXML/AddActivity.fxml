@@ -35,8 +35,6 @@
             <RowConstraints maxHeight="172.0" minHeight="0.0" prefHeight="100.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Pane prefHeight="103.0" prefWidth="290.0">
@@ -50,7 +48,17 @@
             </Pane>
             <Pane prefHeight="42.0" prefWidth="279.0" GridPane.rowIndex="2">
                <children>
-                  <Label layoutX="14.0" layoutY="27.0" text="Inizio" textFill="WHITE">
+                  <Label fx:id="eventiLabel" layoutX="12.0" layoutY="44.0" text="Eventi Disponibili" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="intervalloLabel" layoutX="14.0" layoutY="44.0" text="Seleziona Intervallo" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="titoloLabel" layoutX="12.0" layoutY="44.0" text="Titolo Intervento" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -59,7 +67,7 @@
             </Pane>
             <Pane prefHeight="41.0" prefWidth="283.0" GridPane.rowIndex="3">
                <children>
-                  <Label layoutX="14.0" layoutY="27.0" text="Seleziona Intervallo" textFill="WHITE">
+                  <Label fx:id="speakerLabel" layoutX="14.0" layoutY="44.0" text="Speaker" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -68,19 +76,19 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label layoutX="14.0" layoutY="27.0" text="Eventi Disponibili" textFill="WHITE">
+                  <Label fx:id="inizioLabel" layoutX="14.0" layoutY="44.0" text="Inizio" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <ChoiceBox fx:id="eventiChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DateTimePicker fx:id="inizioDateTimePicker" promptText="Inserisci la data e l'orario di Inizio" stylesheets="@../CSS/datePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="eventiChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DateTimePicker fx:id="inizioDateTimePicker" promptText="Inserisci la data e l'orario di Inizio" stylesheets="@../CSS/datePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ChoiceBox fx:id="tipologiaChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" />
             <Pane prefHeight="103.0" prefWidth="290.0" GridPane.rowIndex="4">
                <children>
-                  <Label layoutX="14.0" layoutY="27.0" text="Titolo Intervento" textFill="WHITE">
+                  <Label fx:id="abstractLabel" layoutX="14.0" layoutY="40.0" text="Abstarct" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -89,38 +97,12 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <TextField fx:id="titoloTextField" layoutY="25.0" prefHeight="25.0" prefWidth="326.0" promptText="Inserisci il titolo dell'Intervento" />
+                  <TextArea fx:id="abstractTextArea" prefHeight="76.0" prefWidth="519.0" promptText="Inserisci l' abstract dell'intervento" />
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
-               <children>
-                  <Pane prefHeight="72.0" prefWidth="242.0">
-                     <children>
-                        <Label layoutX="14.0" layoutY="26.0" text="Speaker" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
-               </children>
-            </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <children>
-                  <ChoiceBox fx:id="speakerChoiceBox" layoutY="25.0" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" />
-               </children>
-            </Pane>
-            <Pane prefHeight="75.0" prefWidth="290.0" GridPane.rowIndex="6">
-               <children>
-                  <Label layoutX="14.0" layoutY="28.0" text="Abstarct" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <TextArea fx:id="abstractTextArea" prefHeight="200.0" prefWidth="200.0" promptText="Inserisci l' abstract dell'intervento" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <ChoiceBox fx:id="intervalloChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ChoiceBox fx:id="intervalloChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="titoloTextField" prefHeight="25.0" prefWidth="326.0" promptText="Inserisci il titolo dell'Intervento" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="speakerChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <ButtonBar layoutX="670.0" layoutY="648.0" prefHeight="29.0" prefWidth="248.0">

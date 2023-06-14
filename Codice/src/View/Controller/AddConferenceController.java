@@ -1,6 +1,8 @@
 package View.Controller;
 
 import Exceptions.BlankFieldException;
+import Persistence.DAO.ComitatoDao;
+import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
@@ -76,10 +78,10 @@ public class AddConferenceController implements Initializable,FormChecker{
     public void creaButtonOnAction(ActionEvent event){
         try {
             checkFieldsAreBlank();
-            Conferenza c = retrieveConferenza();
-            conference.addConferenza(c);
+            conferenza = retrieveConferenza();
+            conference.addConferenza(conferenza);
             openAddedConferenceDialogWindow();
-            loadAddOrganizzatori(c);
+            loadAddOrganizzatori(conferenza);
         }catch (BlankFieldException e){
             showAlert(e);
         }catch (SQLException e){
@@ -117,19 +119,19 @@ public class AddConferenceController implements Initializable,FormChecker{
     }
 
     private void loadAddOrganizzatori(Conferenza c){
-        // ConferenzaDao conferenzaDao= new ConferenzaDao();
-        // ComitatoDao comitatoDao=new ComitatoDao();
-        //conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
+         ConferenzaDao conferenzaDao= new ConferenzaDao();
+         ComitatoDao comitatoDao=new ComitatoDao();
+        conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
 
         try {
-            //Serve solo per permettere al programma di funzionare dopo le modifiche effettuate lato db, necessita di un implementazione migliore
-
             // Non mi è molto chiara sta porzione... una volta salvata una conferenza si attiva il trigger create_comitati_trigger quindi gli ID non saranno mai uguali a 0
-//            if(conferenza.getComitatoLocale().getComitatoID()==0){
-//            comitatoDao.insertComitato(1, conferenza.getComitatoScientifico().getComitatoID());
-//            }else{
-//                comitatoDao.insertComitato(1, conferenza.getComitatoLocale().getComitatoID());
-//            }
+            //Il trigger non funziona,puoi testarlo anche tu andando ad inserire una sessione dopo che hai creato una conferenza senza questo if.
+            //Questa è una selezione ad cazzum, ma mi permette d'inserire le sessioni e non bloccare il tutto
+            if(conferenza.getComitatoLocale().getComitatoID()==0){
+            comitatoDao.insertComitato(1, conferenza.getComitatoScientifico().getComitatoID());
+            }else{
+                comitatoDao.insertComitato(1, conferenza.getComitatoLocale().getComitatoID());
+            }
             goToAddEntiWindow();
         } catch (Exception e) {
             e.printStackTrace();

@@ -17,6 +17,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
 
 import java.net.URL;
@@ -43,6 +46,18 @@ public class AddActivityController implements Initializable {
     private ChoiceBox<String> intervalloChoiceBox;
     @FXML
     private TextField titoloTextField;
+    @FXML
+    private Label eventiLabel;
+    @FXML
+    private Label intervalloLabel;
+    @FXML
+    private Label titoloLabel;
+    @FXML
+    private Label speakerLabel;
+    @FXML
+    private Label abstractLabel;
+    @FXML
+    private Label inizioLabel;
     private Conferenza conferenza;
     private SubScene subscene;
     private Utente user;
@@ -76,6 +91,15 @@ public class AddActivityController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+    void selectTipologia(ActionEvent event) {
+        if(tipologiaChoiceBox.getValue()=="Intervento"){
+            showIntervento();
+        }else if (tipologiaChoiceBox.getValue()=="Intervallo"){
+            showIntervallo();
+        }else if (tipologiaChoiceBox.getValue()=="Evento Sociale"){
+            showEvento();
+        }
     }
     //Private Methods
     private void loadViewProgramma(){
@@ -126,7 +150,7 @@ public class AddActivityController implements Initializable {
             intervallo.setOrario(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
             intervallo.setTipologia(intervalloChoiceBox.getValue());
             intervallo.setProgramma(programma);
-            intervalliSessione.addIntervallo(intervallo);
+            intervalliSessione.addIntervallo2(intervallo);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -153,6 +177,45 @@ public class AddActivityController implements Initializable {
         speakers.loadSpeakers();
         speakerChoiceBox.setItems(speakers.getSpeakers());
     }
+    private void showIntervallo(){
+        hideAll();
+        inizioLabel.setDisable(false);
+        inizioDateTimePicker.setDisable(false);
+        intervalloChoiceBox.setVisible(true);
+        intervalloLabel.setVisible(true);
+    }
+    private void showIntervento(){
+        hideAll();
+        inizioLabel.setDisable(false);
+        inizioDateTimePicker.setDisable(false);
+        abstractTextArea.setVisible(true);
+        titoloTextField.setVisible(true);
+        speakerChoiceBox.setVisible(true);
+        abstractLabel.setVisible(true);
+        speakerLabel.setVisible(true);
+        titoloLabel.setVisible(true);
+    }
+    private void showEvento(){
+        hideAll();
+        inizioLabel.setDisable(false);
+        inizioDateTimePicker.setDisable(false);
+        eventiChoiceBox.setVisible(true);
+        eventiLabel.setVisible(true);
+    }
+    private void hideAll(){
+        inizioLabel.setDisable(true);
+        inizioDateTimePicker.setDisable(true);
+        abstractTextArea.setVisible(false);
+        titoloTextField.setVisible(false);
+        speakerChoiceBox.setVisible(false);
+        intervalloChoiceBox.setVisible(false);
+        eventiChoiceBox.setVisible(false);
+        intervalloLabel.setVisible(false);
+        titoloLabel.setVisible(false);
+        eventiLabel.setVisible(false);
+        speakerLabel.setVisible(false);
+        abstractLabel.setVisible(false);
+    }
 //    Overrides
 //    @Override
 //    public void checkFieldsAreBlank() throws BlankFieldException {
@@ -164,6 +227,8 @@ public class AddActivityController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateChoiceBoxes();
+        hideAll();
+        tipologiaChoiceBox.setOnAction(this::selectTipologia);
     }
 }
 
