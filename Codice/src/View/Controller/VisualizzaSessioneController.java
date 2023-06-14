@@ -168,6 +168,7 @@ public class VisualizzaSessioneController implements Initializable {
     Sessioni sessioni= new Sessioni(conferenza);
     try {
         sessioni.loadSessioni();
+        sessioni.orderSessioni();
         titoloTableColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
         dataInizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
         inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("orarioInizio"));

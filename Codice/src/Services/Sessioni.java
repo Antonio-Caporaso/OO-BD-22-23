@@ -6,6 +6,7 @@ import Persistence.Entities.Conferenze.Sessione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.SQLException;
+import java.util.Comparator;
 
 public class Sessioni {
     private ObservableList<Sessione> sessioni;
@@ -43,5 +44,12 @@ public class Sessioni {
         SessioneDao dao = new SessioneDao();
         dao.removeSessione(sessione);
         sessioni.remove(sessione);
+    }
+    public void orderSessioni(){
+        Comparator<Sessione> comparator = Comparator
+                .comparing(Sessione::getDataInizio)
+                .thenComparing(Sessione::getOrarioInizio);
+
+        FXCollections.sort(sessioni, comparator);
     }
 }
