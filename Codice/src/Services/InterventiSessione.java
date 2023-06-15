@@ -38,15 +38,6 @@ public class InterventiSessione {
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
-    public void saveIntervento(Intervento intervento)throws SQLException{
-        InterventoDao interventoDao=new InterventoDao();
-        try{
-            interventoDao.saveIntervento(intervento);
-            interventi.add(intervento);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
     public void addIntervento(Intervento intervento) throws SQLException {
         InterventoDao dao = new InterventoDao();
             int id = dao.addIntervento(intervento);

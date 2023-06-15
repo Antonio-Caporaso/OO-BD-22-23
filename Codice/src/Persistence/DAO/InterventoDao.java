@@ -34,7 +34,6 @@ public class InterventoDao {
         }
         return interventi;
     }
-
     public LinkedList<Stats> retrieveInterventiStatsByYear(int i) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
@@ -51,20 +50,6 @@ public class InterventoDao {
         }
         return stats;
     }
-
-    public void saveIntervento(Intervento intervento) throws SQLException {
-        dbcon = DBConnection.getDBconnection();
-        conn = dbcon.getConnection();
-        String query = "INSERT INTO intervento values (default,?,?,?,?,?)";
-        PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,intervento.getSpeaker().getIdSpeaker());
-        stm.setInt(2,intervento.getProgramma().getProgrammaID());
-        stm.setString(3,intervento.getEstratto());
-        stm.setString(4,intervento.getTitolo());
-        stm.setTimestamp(5,intervento.getOrario());
-        stm.executeUpdate();
-    }
-
     public int addIntervento(Intervento intervento) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
@@ -90,7 +75,6 @@ public class InterventoDao {
         stm.setInt(1,intervento.getInterventoID());
         stm.executeUpdate();
     }
-
     public void updateIntervento(Intervento i) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
