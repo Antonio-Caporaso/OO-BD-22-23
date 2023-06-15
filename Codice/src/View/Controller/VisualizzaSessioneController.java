@@ -7,8 +7,6 @@ import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import Persistence.Entities.Conferenze.Sala;
-import Persistence.Entities.organizzazione.Organizzatore;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,10 +15,11 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 
-import Exceptions.SessioneNotSelectedException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
+import Persistence.Entities.Conferenze.Sala;
+import Persistence.Entities.organizzazione.Organizzatore;
 import Services.Sessioni;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -76,32 +75,43 @@ public class VisualizzaSessioneController implements Initializable {
         loadEditConferenza();
     }
     @FXML
-    void aggiungiProgrammaButtonOnAction(ActionEvent event){loadViewProgramma();}
+    void aggiungiProgrammaButtonOnAction(ActionEvent event){
+        try{
+            Sessione selected =sessioniTableView.getSelectionModel().getSelectedItem();
+            if (selected == null){
+                throw new NullPointerException();
+            }else{
+                loadViewProgramma();
+            }
+        }catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Seleziona una sessione prima di procedere");
+            alert.showAndWait();
+        }
+    }
     @FXML
     void backButtonOnAction(ActionEvent event){
         loadAggiungiSponsor();
     }
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
-        try {
-            Sessione s = sessioniTableView.getSelectionModel().getSelectedItem();
-            if (s == null) {
-                throw new SessioneNotSelectedException();
+        try{
+            Sessione selected =sessioniTableView.getSelectionModel().getSelectedItem();
+            if (selected == null){
+                throw new NullPointerException();
             }
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Sicuro di voler rimuovere la sessione '" + s.getTitolo() + "'?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
+            Optional<ButtonType> result = showDeleteDialog();
+            if(result.get() == ButtonType.OK) {
                 try {
-                    sessioni.removeSessione(s);
+                    sessioni.removeSessione(selected);
                     setSessioni();
-                } catch (SQLException e) {
+                }catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-        }catch (SessioneNotSelectedException e){
+        }catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
+            alert.setContentText("Nessuna sessione è stata selezionata");
             alert.showAndWait();
         }
     }
@@ -181,6 +191,12 @@ public class VisualizzaSessioneController implements Initializable {
         e.printStackTrace();
     }
 }
+    private Optional<ButtonType> showDeleteDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler eliminare la seguente sessione?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
+    }
     //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
