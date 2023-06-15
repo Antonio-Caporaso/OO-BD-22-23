@@ -138,7 +138,7 @@ public class AddActivityController implements Initializable {
             intervento.setSpeaker(speakerChoiceBox.getValue());
             intervento.setEstratto(abstractTextArea.getText());
             intervento.setProgramma(programma);
-            interventiSessione.saveIntervento(intervento);
+            interventiSessione.addIntervento(intervento);
         }catch (SQLException e){
             e.printStackTrace();
         }
