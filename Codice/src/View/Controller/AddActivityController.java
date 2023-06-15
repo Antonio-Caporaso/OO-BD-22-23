@@ -1,9 +1,5 @@
 package View.Controller;
-import Exceptions.BlankFieldException;
-import Persistence.Entities.Conferenze.*;
-import Persistence.Entities.Utente;
-import Persistence.Entities.partecipanti.Speaker;
-import Services.*;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,22 +8,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import tornadofx.control.DateTimePicker;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-public class AddActivityController implements Initializable {
+import Exceptions.BlankFieldException;
+import Persistence.Entities.Conferenze.*;
+import Persistence.Entities.Utente;
+import Persistence.Entities.partecipanti.Speaker;
+import Services.*;
+
+public class AddActivityController implements Initializable, FormChecker {
     @FXML
     private TextArea abstractTextArea;
     @FXML
@@ -84,13 +80,17 @@ public class AddActivityController implements Initializable {
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
         try{
-//            checkFieldsAreBlank();
+            checkFieldsAreBlank();
             saveActivity();
             loadViewProgramma();
+        }catch (BlankFieldException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(e.getMessage());
+            alert.showAndWait();
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
     void selectTipologia(ActionEvent event) {
         if(tipologiaChoiceBox.getValue()=="Intervento"){
@@ -217,13 +217,24 @@ public class AddActivityController implements Initializable {
         abstractLabel.setVisible(false);
     }
 //    Overrides
-//    @Override
-//    public void checkFieldsAreBlank() throws BlankFieldException {
-//        if(inizioDateTimePicker.getValue().equals(null) || eventiChoiceBox.getValue().equals(null)
-//                ||tipologiaChoiceBox.getValue().equals(null) || speakerChoiceBox.getValue().equals(null)||
-//                titoloTextField.getText().isBlank()|| abstractTextArea.getText().isBlank())
-//            throw new BlankFieldException();
-//    }
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        LocalDateTime dateTimeValue = inizioDateTimePicker.getDateTimeValue();
+        if(tipologiaChoiceBox.getValue()=="Intervento"){
+            if (titoloTextField.getText().isBlank() || abstractTextArea.getText().isBlank() ||
+                    speakerChoiceBox.getValue() == null || inizioDateTimePicker.getValue()==null) {
+                throw new BlankFieldException();
+            }
+        }else if (tipologiaChoiceBox.getValue()=="Intervallo"){
+            if(inizioDateTimePicker.getValue()==null||intervalloChoiceBox.getValue()==null){
+                throw new BlankFieldException();
+            }
+        }else if (tipologiaChoiceBox.getValue()=="Evento Sociale"){
+            if(inizioDateTimePicker.getValue()==null||eventiChoiceBox.getValue()==null){
+                throw new BlankFieldException();
+            }
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateChoiceBoxes();
