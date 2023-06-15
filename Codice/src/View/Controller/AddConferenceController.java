@@ -162,14 +162,16 @@ public class AddConferenceController implements Initializable,FormChecker{
     void showSedi(MouseEvent event) {
         sedeChoice.show();
     }
-
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
-        if(nomeConferenzaTF.getText().isBlank() || descrizioneTextArea.getText().isBlank() ||
-                budgetTextField.getText().isBlank() || sedeChoice.getValue().equals(null) ||
-                dataInizioDP.getValue().equals(null) || dataFineDP.getValue().equals(null))
-            throw new BlankFieldException();
+            if (nomeConferenzaTF.getText().isBlank() || descrizioneTextArea.getText().isBlank() ||
+                    budgetTextField.getText().isBlank() || sedeChoice.getValue() == null ||
+                    valutaChoice.getValue()==null|| dataFineDP.getValue()==null||
+                    dataInizioDP.getValue()==null){
+                throw new BlankFieldException();
+            }
     }
+
 
     private void setValute() {
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
