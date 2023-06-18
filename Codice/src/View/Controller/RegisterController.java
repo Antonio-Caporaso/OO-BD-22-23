@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
@@ -128,12 +129,20 @@ public class RegisterController implements Initializable, FormChecker{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titoloChoiceBox.getItems().addAll(titoli);
-//         file = new File ("Codice/src/View/Resources/Scientists1.mp4");
+        setMediaPlayer();
+    }
+
+    private void setMediaPlayer() {
+        try{
+        //         file = new File ("Codice/src/View/Resources/Scientists1.mp4");
         file = new File ("src/View/Resources/Scientists1.mp4");
         media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
+    }catch (MediaException e){
+        System.out.println(e.getMessage());
+    }
     }
 }
