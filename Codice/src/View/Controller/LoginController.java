@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
@@ -95,10 +96,13 @@ public class LoginController implements Initializable, FormChecker {
          // file = new File("Codice/src/View/Resources/Scientists.mp4");
         file = new File ("src/View/Resources/Scientists.mp4");
         media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
+        try{mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
+        }catch (MediaException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public Utente getUser() {
