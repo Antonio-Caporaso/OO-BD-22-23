@@ -1,4 +1,4 @@
-\documentclass[a4paper, oneside, 10pt]{book}
+\documentclass[a4paper,oneside, 10pt]{article}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{adjustbox}
@@ -15,14 +15,17 @@
 \usepackage{inputenc}
 \usepackage{hyperref}
 \usepackage[italian]{babel}
-\usepackage{longtable} 
+\usepackage{longtable}
+\usepackage{import} 
 \usepackage{mathtools}
 \usepackage{amssymb,amsmath,amsthm}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
+\title{Progettazione e implementazione di una base di dati relazionale per la gestione di conferenze scientifiche}
+\author{\begin{tabular}{cc}Caporaso Antonio & Di Fusco Giorgio \\
+\texttt{N86003458} & \texttt{N86004389} \\ \end{tabular}}
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -51,53 +54,21 @@ style= mystyle
 \def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
 \def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
 \def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
-
+{\renewcommand{\arraystretch}{1.3}%
 \begin{document}
-\begin{titlepage}
-\begin{center}
-{\LARGE\textsc{Università degli Studi di Napoli Federico II}}\\
+\maketitle
 
-{\Large\textsc{Scuola Politecnica e delle Scienze di Base}}\\
-{\large\textsc{Dipartimento di Ingegneria Elettrica e Tecnologie dell'Informazione}}\\
-\vspace{1cm}
-
-{\includegraphics[width=3.5cm]{Immagini/LogoUnina.png}}{}
-
-\vspace{1cm}
-
-{\large\textsc{Corso di Laurea Triennale in Informatica}}\\
-{\large\textsc{Insegnamento di Basi di Dati}}\\
-{\large\textsc{Anno Accademico 2022/2023}}\\
-\vspace{4cm}
-
-{\Huge{\textbf{Progettazione e sviluppo di una base di dati relazionale per la gestione di conferenze scientifiche}}}
-
-\vspace{1cm}
-\vfill
-
-{\Large Caporaso Antonio} \qquad \Large{Di Fusco Giorgio}\\
-\texttt{N86003458} \qquad \texttt{N86004389}\\
-
-\vspace{1cm}
-
-Docente: Sangiovanni Mara\\
-
-\vspace{1cm}
-\includegraphics[scale=0.6]{Immagini/logo_dieti.png}
-\end{center}
-\end{titlepage}
-\newpage
-\textit{Questa pagina è stata lasciata intenzionalmente vuota.}
-\newpage
 \tableofcontents
+
+\import{Capitoli}{Traccia.tex}
+\import{Capitoli}{Progettazione_Concettuale}
+\import{Capitoli}{Schema_ristrutturato.tex}
+\import{Capitoli}{Schema_logico.tex}
+\import{Capitoli}{Schema_fisico}
+\import{Capitoli}{Data_dictionary}
+\import{Capitoli}{Relationship_dictionary}
+\import{Capitoli}{Constraints_dictionary}
+
 \listoffigures
 \listoftables
-\include{Capitoli/Traccia}
-\include{Capitoli/Progettazione_Concettuale}
-\include{Capitoli/Schema_logico}
-\include{Capitoli/Schema_fisico}
-\appendix
-\include{Capitoli/Data_dictionary}
-\include{Capitoli/Relationship_dictionary}
-\include{Capitoli/Constraints_dictionary}
 \end{document}
