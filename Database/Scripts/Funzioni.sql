@@ -228,7 +228,108 @@ begin
 end;
 $$ language plpgsql;
 
+--Funzione per aggiungere un nuovo intervallo nel programma di una sessione
+create or replace procedure add_intervallo(tipologia intervallo_st, sessione int,durata interval)
+as $$
+declare
+    programma int;
+    id_entry int;
+    query text;
+    category text;
+    inizio_prev timestamp;
+    fine_prev timestamp;
+begin
+    select id_programma into programma
+    from programma
+    where id_sessione = sessione;
 
-    
+    select id,appuntamento, max(orario) into id_entry,category,inizio_prev
+    from show_programma(sessione);
 
+    query := 'select fine from ' || category || ' where id_'||category||' = ' || id_entry;
+    execute query into fine_prev;
 
+    insert into intervallo(tipologia,id_programma,inizio,fine)
+    values (tipologia,programa,fine_prev,fine_prev+durata);
+end;
+$$ language plpgsql;
+
+--Funzione per aggiungere un nuovo evento nel programma di una sessione
+create or replace procedure add_evento(tipologia text, sessione int,durata interval)
+as $$
+declare
+    programma int;
+    id_entry int;
+    query text;
+    category text;
+    inizio_prev timestamp;
+    fine_prev timestamp;
+begin
+    select id_programma into programma
+    from programma
+    where id_sessione = sessione;
+
+    select id,appuntamento, max(orario) into id_entry,category,inizio_prev
+    from show_programma(sessione);
+
+    query := 'select fine from ' || category || ' where id_'||category||' = ' || id_entry;
+    execute query into fine_prev;
+
+    insert into evento_sociale(tipologia,id_programma,inizio,fine)
+    values (tipologia,programa,fine_prev,fine_prev+durata);
+end;
+$$ language plpgsql;
+
+--Funzione per aggiungere una nuova conferenza
+create or replace procedure add_conferenza(nome text,inizio timestamp, fine timestamp, sede integer, descrizione text)
+as $$
+begin
+    insert into conferenza(titolo,inizio,fine,id_sede,descrizione)
+    values (nome,inizio,fine,sede,descrizione);
+end;
+$$ language plpgsql;
+
+--Funzione per aggiungere una nuova sessione
+create or replace procedure add_sessione(nome text,inizio timestamp, fine timestamp, sala integer, conferenza integer)
+as $$
+begin
+    insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
+    values (nome,inizio,fine,sala,conferenza);
+end;
+$$ language plpgsql;
+
+-- Funzione per l'aggiunta di un ente organizzatore di una conferenza
+create or replace procedure add_ente(ente integer, conferenza integer)
+as $$
+begin
+    insert into ente_conferenza(id_ente,id_conferenza)
+    values (ente,conferenza);
+end;
+$$ language plpgsql;
+
+-- Funzione per l'aggiunta di una sponsorizzazione di una conferenza
+create or replace procedure add_sponsorizzazione(sponsor integer, contributo numeric(1000,2), valuta char(3), conferenza integer)
+as $$
+begin
+    insert into sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
+    values (sponsor,contributo,valuta,conferenza);
+end;
+$$ language plpgsql;
+
+--Funzione per aggiunta di una sessione di una conferenza
+create or replace procedure add_sessione(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer)
+as $$
+begin
+    insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
+    values (titolo,inizio,fine,sala,conferenza);
+end;
+$$ language plpgsql;
+
+-- Funzione per l'aggiunta di un partecipante di una sessione
+create or replace procedure add_partecipante(partecipante integer, sessione integer)
+as $$
+begin
+    insert into partecipante_sessione(id_partecipante,id_sessione)
+    values (partecipante,sessione);
+end;
+$$ language plpgsql;q

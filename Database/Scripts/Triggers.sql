@@ -8,9 +8,12 @@ declare
 begin
     select inizio,fine into inizio_sessione,fine_sessione
     from sessione
-    where id_sessione = (select id_sessione from programma where id_programma = new.id_programma);
+    where id_sessione = 
+        (select id_sessione 
+        from programma 
+        where id_programma = new.id_programma);
 
-    if (new.inizio <= inizio_sessione OR new.fine >= fine_sessione) then
+    if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
         raise exception 'L''evento non è compreso nella sessione';
     end if;
     return new;
@@ -32,7 +35,7 @@ begin
     from sessione
     where id_sessione = (select id_sessione from programma where id_programma = new.id_programma);
 
-    if (new.inizio <= inizio_sessione OR new.fine >= fine_sessione) then
+    if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
         raise exception 'L''intervallo non è compreso nella sessione';
     end if;
     return new;
@@ -54,7 +57,7 @@ begin
     from sessione
     where id_sessione = (select id_sessione from programma where id_programma = new.id_programma);
 
-    if (new.inizio <= inizio_sessione OR new.fine >= fine_sessione) then
+    if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
         raise exception 'L''intervento non è compreso nella sessione';
     end if;
     return new;
@@ -112,7 +115,7 @@ begin
     from conferenza
     where id_conferenza = new.id_conferenza;
 
-    if (new.inizio <= inizio_conferenza OR new.fine >= fine_conferenza) then
+    if (new.inizio < inizio_conferenza OR new.fine > fine_conferenza) then
         raise exception 'La sessione non è compresa nella conferenza';
     end if;
     return new;
@@ -127,12 +130,12 @@ execute function check_data_sessione();
 -- Trigger per la tabella conferenza: quando si crea una nuova conferenza si deve creare anche un comitato scientifico e un comitato locale e associarli alla conferenza
 create or replace function create_comitati_conferenza() returns trigger as $$
 declare 
-    id_comitato_scientifico integer;
-    id_comitato_locale integer;
+    id_comitatoscientifico integer;
+    id_comitatolocale integer;
 begin
-    insert into comitato(tipologia) values ('scientifico') returning id_comitato into id_comitato_scientifico;
-    insert into comitato(tipologia) values ('locale') returning id_comitato into id_comitato_locale;
-    update conferenza set id_comitato_scientifico = id_comitato_scientifico, id_comitato_locale = id_comitato_locale where id_conferenza = new.id_conferenza;
+    insert into comitato(tipologia) values ('scientifico') returning id_comitato into id_comitatoscientifico;
+    insert into comitato(tipologia) values ('locale') returning id_comitato into id_comitatolocale;
+    update conferenza set id_comitato_scientifico = id_comitatoscientifico, id_comitato_locale = id_comitatolocale where id_conferenza = new.id_conferenza;
     return new;
 end;
 $$ language plpgsql;
@@ -312,3 +315,5 @@ create trigger check_data_conferenza
 before update on conferenza
 for each row
 execute function check_data_conferenza();
+
+
