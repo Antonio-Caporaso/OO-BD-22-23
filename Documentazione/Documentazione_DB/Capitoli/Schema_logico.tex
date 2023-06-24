@@ -3,15 +3,21 @@ Una volta aver ristrutturato lo schema concettuale mostrato in Figura \ref{uml:s
 \subsection{Traduzione delle classi}
 Si ha quindi:
 
+	\begin{tabular}{|l|l|l|l|l|l|l|}
+		\multicolumn{7}{l}{Indirizzo} \\
+		\hline
+		\underline{Id\_Indirizzo} & Via & Civico & CAP & City & Provincia & Nazione \\ \hline
+	\end{tabular}
+	
 	\begin{tabular}{|l|l|l|}
 		\multicolumn{3}{l}{\textsc{Ente}}\\ \hline
 		\underline{id\_ente} & nome & sigla \\ \hline
 	\end{tabular}
 
 
-	\begin{tabular}{|l|l|l|l|l|l|}
-		\multicolumn{6}{l}{\textsc{Sede}} \\ \hline
-		\underline{id\_sede} & nome & via & civico & cap & city \\ \hline
+	\begin{tabular}{|l|l|}
+		\multicolumn{2}{l}{\textsc{Sede}} \\ \hline
+		\underline{id\_sede} & nome \\ \hline
 	\end{tabular}
 
 
@@ -199,13 +205,13 @@ Per ciascuna delle associazioni binarie di tipo uno a molti si identificano le e
 
 \item Una conferenza ha due comitati, uno scientifico ed uno locale:
 
-	\begin{tabular}{|l|l|l|l|l|l|l|l|}
-		\multicolumn{6}{l}{\textsc{Conferenza}} \\ \hline
-		\underline{id\_Conferenza} & Nome & Descrizione & Inizio & Fine & \underline{\underline{id\_sede}} & \underline{\underline{id\_com\_locale}}& \underline{\underline{id\_com\_scientifico}}\\ \hline
-	\end{tabular}
+	
 
 \end{enumerate}
-
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+	\multicolumn{6}{l}{\textsc{Conferenza}} \\ \hline
+	\underline{id\_Conferenza} & Nome & Descrizione & Inizio & Fine & \underline{\underline{id\_sede}} & \underline{\underline{id\_com\_locale}}& \underline{\underline{id\_com\_scientifico}}\\ \hline
+\end{tabular}
 \subsubsection{Traduzione delle associazioni uno a uno}
 Si ha:
 \begin{enumerate}
@@ -221,6 +227,12 @@ Si ha:
 	\begin{tabular}{|l|l|l|}
 		\multicolumn{1}{l}{\textsc{Programma}} \\ \hline
 		\underline{Id\_Programma} & \underline{\underline{id\_Sessione}} & \underline{\underline{id\_keynote}}\\ \hline
+	\end{tabular}
+\item Ogni sede ha un indirizzo:
+
+	\begin{tabular}{|l|l|l|}
+		\multicolumn{3}{l}{\textsc{Sede}} \\ \hline
+		\underline{id\_sede} & nome & indirizzo \\ \hline
 	\end{tabular}
 \end{enumerate}
 \subsection{Schema logico}

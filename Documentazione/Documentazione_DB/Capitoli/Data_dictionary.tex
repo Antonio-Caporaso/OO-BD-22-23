@@ -1,1 +1,98 @@
 \section{Dizionario dei dati}
+\begin{longtable}{|p{0.2\textwidth}|p{0.25\textwidth}|p{0.5\textwidth}|}
+\hline
+\textbf{Classe} & \textbf{Descrizione} & \textbf{Attributi} \\
+\hline
+\endfirsthead
+
+% Intestazione normale
+\multicolumn{3}{l}{\footnotesize\itshape Continua dalla pagina precedente} \\
+\hline
+\textbf{Classe} & \textbf{Descrizione} & \textbf{Attributi} \\
+\hline
+\endhead
+
+% Piede normale
+\hline
+\multicolumn{3}{r}{\footnotesize\itshape Continua nella prossima pagina} \\
+\endfoot
+
+% Piede finale
+\hline
+\endlastfoot
+	\multirow{2}{*}{\textbf{Comitato}} & Tabella che descrive i comitati che si occupano della logistica e della pianificazione delle conferenze scientifiche. & \texttt{id\_comitato} (\textit{serial}) (\textit{totale}): Identificatore univoco per un comitato. \\ 
+	& & \texttt{tipologia}(\textit{comitato\_st})(\textit{totale}): Specifica il tipo di comitato (scientifico o locale). \\
+	\hline
+	\multirow{5}{*}{\textbf{Conferenza}} & Tabella che descrive le conferenze scientifiche. & \texttt{Id\_Conferenza}(\textit{serial})(\textit{totale}): Chiave primaria per una conferenza. \\
+	& & \texttt{Titolo}(\textit{Text}) (\textit{totale}): Specifica il titolo della conferenza scientifica. \\
+	& & \texttt{Descrizione}(\textit{Text})(\textit{parziale}): Fornisce una descrizione della conferenza scientifica. \\
+	& & \texttt{Inizio}(\textit{Timestamp})(\textit{totale}): Indica l'inizio della conferenza. \\
+	& & \texttt{Fine} (\textit{Timestamp})(\textit{totale}) : Indica la fine della conferenza. \\
+	\hline
+	\multirow{3}{*}{\textbf{Ente}} & Tabella delle istituzioni & \texttt{Id\_Ente}(\textit{serial})(\textit{totale}): Identificatore primario di una istituzione. \\
+	& & \texttt{Nome}(\textit{Text})(\textit{totale}): Nome dell'istituzione. \\
+	& & \texttt{Sigla}(\textit{Varchar(7)})(\textit{totale}) : Sigla dell'istituzione. \\
+	\hline
+	\multirow{4}{*}{\textbf{Evento}} & Descrittore degli eventi sociali presenti all'interno di una conferenza scientifica.&  \texttt{Id\_Evento}(\textit{Serial})(\textit{Totale}): Identificatore primario per un evento. \\
+	& & \texttt{Tipologia}(\texttt{text})(totale): Stringa descrittiva della tipologia dell'evento. \\
+	& & \texttt{Inizio}(\textit{Timestamp})(\textit{totale}): Indica l'inizio dell'evento. \\
+	& & \texttt{Fine} (\textit{Timestamp})(\textit{totale}) : Indica la fine dell'evento. \\
+	\hline
+	\multirow{7}{*}{\textbf{Indirizzo}} & Tabella degli indirizzi per ogni sede & \texttt{Id\_Indirizzo}(\textit{serial})(\textit{totale}): Chiave primaria. \\
+	& & \texttt{Via}(\textit{text})(\textit{parziale}): nome della via. \\
+	& & \texttt{Civico}(text)(parziale): civico della sede. \\
+	& & \texttt{Cap}(char(5))(parziale): codice di avviamento postale \\
+	& & \texttt{Città}(text)(parziale): città della sede. \\
+	& & \texttt{Provincia}(varchar(2)): provincia della città. \\
+	& & \texttt{Stato}(text)(parziale): stato della sede. \\ 
+	\hline
+	\multirow{4}{*}{\textbf{Intervallo}} & Descrittore degli intervalli presenti all'interno di una conferenza scientifica.&  \texttt{Id\_Intervallo}(\textit{Serial})(\textit{Totale}): Identificatore primario per un evento. \\
+	& & \texttt{Tipologia}(\textit{Intervallo\_ST})(totale): Specifica il tipo di intervallo (pranzo o coffee break).  \\
+	& & \texttt{Inizio}(\textit{Timestamp})(\textit{totale}): Indica l'inizio dell'intervallo. \\
+	& & \texttt{Fine} (\textit{Timestamp})(\textit{totale}) : Indica la fine dell'intervallo. \\
+	\hline
+	\multirow{5}{*}{\textbf{Intervento}} & Descrittore degli interventi che si tengono all'interno delle sessioni. & \texttt{Id\_Intervento}(\textit{Serial})(\textit{totale}): Identificatore primario di un intervento. \\
+	& & \texttt{Titolo}(\textit{Text}) (\textit{totale}): Specifica il titolo dell'intervento. \\
+	& & \texttt{Abstract}(\textit{Text})(\textit{parziale}): Fornisce una descrizione dell'intervento. \\
+	& & \texttt{Inizio}(\textit{Timestamp})(\textit{totale}): Indica l'inizio dell'intervento. \\
+	& & \texttt{Fine} (\textit{Timestamp})(\textit{totale}) : Indica la fine dell'intervento. \\
+	\hline
+	\multirow{5}{*}{\textbf{Organizzatore}} & Descrittore dei membri dei comitati. & \texttt{Id\_Organizzatore}(\textit{serial})(\textit{Totale}): Identificatore principale di un organizzatore. \\
+	& & \texttt{Nome}(\textit{text})(\textit{totale}): nome dell'organizzatore. \\
+	& & \texttt{Cognome}(\textit{text})(\textit{totale}): cognome dell'organizzatore. \\
+	& & \texttt{Titolo}(\textit{Titolo\_ST})(\textit{parziale}): Titolo accademico dell'organizzatore \\
+	& & \texttt{Email}(\textit{Text})(\textit{Parziale}): Email dell'organizzatore \\
+	\hline
+	\multirow{5}{*}{\textbf{Partecipante}} & Descrittore dei partecipanti delle sessioni. & \texttt{Id\_Partecipante}(\textit{serial})(\textit{Totale}): Identificatore principale di un partecipante. \\
+	& & \texttt{Nome}(\textit{text})(\textit{totale}): nome dell'organizzatore. \\
+	& & \texttt{Cognome}(\textit{text})(\textit{totale}): cognome dell'organizzatore. \\
+	& & \texttt{Titolo}(\textit{Titolo\_ST})(\textit{parziale}): Titolo accademico del partecipante. \\
+	& & \texttt{Email}(\textit{Text})(\textit{Parziale}): Email del partecipante. \\
+	\hline
+	\textbf{Programma} & Tabella dei programmi delle sessioni. & \texttt{Id\_Programma}(\textit{serial})(\textit{totale}): Identificatore principale dei programmi. \\
+	\hline
+	\multirow{3}{*}{\textbf{Sala}} & Tabella delle sale di ciascuna sede. & \texttt{Id\_sala}(\textit{serial})(\textit{totale}): identificatore principale di ciascuna sala. \\
+	& & \texttt{Nome}(\textit{Text})(\textit{totale}): nome della sala. \\
+	& & \texttt{Capienza}(\textit{int})(\textit{totale}): capienza della sala.\\
+	\hline
+	\multirow{2}{*}{\textbf{Sede}} & Descrizione delle sedi che ospitano le conferenze & \texttt{Id\_Sede}(\textit{Serial})(\textit{totale}) : Identificatore principale delle sedi. \\
+	& & \texttt{Nome}(\textit{Text})(\textit{totale}): nome della sede. \\
+	\hline
+	\multirow{4}{*}{\textbf{Sessione}} & Tabella delle sessioni di ciascuna conferenza. & \texttt{Id\_Sessione}(\textit{Serial})(\textit{total}): Identificatore primario di una sessione. \\
+	& & \texttt{Titolo}(\textit{Text}) (\textit{totale}): Specifica il titolo della sessione. \\
+	& & \texttt{Inizio}(\textit{Timestamp})(\textit{totale}): Indica l'inizio della sessione. \\
+	& & \texttt{Fine} (\textit{Timestamp})(\textit{totale}) : Indica la fine della sessione. \\
+	\hline
+	\multirow{5}{*}{\textbf{Speaker}} & Descrittore dei vari speaker delle sessioni. & \texttt{Id\_Speaker}(\textit{serial})(\textit{Totale}): Identificatore principale di uno speaker. \\
+	& & \texttt{Nome}(\textit{text})(\textit{totale}): nome dello speaker. \\
+	& & \texttt{Cognome}(\textit{text})(\textit{totale}): cognome dello speaker. \\
+	& & \texttt{Titolo}(\textit{Titolo\_ST})(\textit{parziale}): Titolo accademico dello speaker. \\
+	& & \texttt{Email}(\textit{Text})(\textit{Parziale}): Email dello speaker. \\
+	\hline
+	\multirow{3}{*}{\textbf{Sponsor}} & Tabella degli sponsor & \texttt{Id\_Sponsor}(\textit{serial})(\textit{totale}): Identificatore primario di uno sponsor. \\
+	& & \texttt{Nome}(\textit{Text})(\textit{totale}): Nome dello sponsor. \\
+	\hline
+	\multirow{3}{*}{\textbf{Valuta}} & Tabella delle valute & \texttt{Iso} (\textit{Char(3)})(\textit{totale}): codice univoco internazionale delle valute. \\
+	& & \texttt{Nome}(\textit{text})(\textit{totale}): nome della valuta. \\
+	& & \texttt{Simbolo}(\textit{char(1)})(\textit{totale}): simbolo della valuta.\\
+\end{longtable}

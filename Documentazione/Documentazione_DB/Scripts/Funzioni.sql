@@ -172,35 +172,61 @@ end;
 $$ language plpgsql;
 
 -- Funzione che mostra tutti gli elementi all'interno di un programma 
-create or replace function show_programma(sessione int)
-returns table(
-id int,
-appuntamento text,
-orario text,
-descrizione text,
-speaker text) as $$
-declare 
+CREATE OR REPLACE FUNCTION show_programma(sessione int)
+RETURNS TABLE (
+    id int,
+    appuntamento text,
+    inizio timestamp,
+    fine timestamp,
+    descrizione text,
+    speaker text
+)
+AS $$
+DECLARE
     programma int;
-begin
-    select id_programma into programma
-    from programma
-    where id_sessione = sessione;
+BEGIN
+    SELECT id_programma INTO programma
+    FROM programma
+    WHERE id_sessione = sessione;
 
-    return query
-    select i.id_intervento as id,'intervento' as appuntamento, TO_CHAR(i.inizio, 'DD-Mon HH:MI') as orario, i.abstract, s.nome || ' ' || s.cognome as speaker
-    from intervento i join speaker s on i.id_speaker = s.id_speaker
-    where i.id_programma = programma
-    union
-    select i2.id_intervallo as id,'intervallo' as appuntamento, TO_CHAR(i2.inizio, 'DD-Mon HH:MI') as orario, unnest(enum_range(NULL::intervallo_st))::text as descrizione, null
-    from intervallo i2
-    where i2.id_programma = programma
-    union
-    select e.id_evento as id,'evento' as appuntamento, TO_CHAR(e.inizio, 'DD-Mon HH:MI') as orario, e.tipologia as descrizione, null
-    from evento e
-    where e.id_programma = programma
-    order by orario;
-end;
-$$ language plpgsql;
+    RETURN QUERY
+    SELECT *
+    FROM (
+        SELECT distinct i.id_intervento AS id,
+               'intervento' AS appuntamento,
+               i.inizio,
+               i.fine,
+               i.abstract,
+               s.nome || ' ' || s.cognome AS speaker
+        FROM intervento i
+        JOIN speaker s ON i.id_speaker = s.id_speaker
+        WHERE i.id_programma = programma
+
+        UNION ALL
+
+        SELECT i2.id_intervallo AS id,
+               'intervallo' AS appuntamento,
+               i2.inizio,
+               i2.fine,
+               tipologia::text as descrizione,
+               NULL
+        FROM intervallo i2
+        WHERE i2.id_programma = programma
+
+        UNION ALL
+
+        SELECT e.id_evento AS id,
+               'evento' AS appuntamento,
+               e.inizio,
+               e.fine,
+               e.tipologia::text AS descrizione,
+               NULL
+        FROM evento e
+        WHERE e.id_programma = programma
+    ) AS subquery
+    ORDER BY inizio;
+END;
+$$ LANGUAGE plpgsql;
 
 --Funzione per aggiungere un nuovo intervento nel programma di una sessione
 create or replace procedure add_intervento(titolo text, abstract text, speaker int, sessione int,durata interval)
@@ -210,93 +236,95 @@ declare
     id_entry int;
     query text;
     category text;
-    inizio_prev timestamp;
     fine_prev timestamp;
 begin
     select id_programma into programma
     from programma
     where id_sessione = sessione;
 
-    select id,appuntamento, max(orario) into id_entry,category,inizio_prev
-    from show_programma(sessione);
+    select id,appuntamento,max(fine) into id_entry,category,fine_prev
+    from show_programma(sessione)
+    GROUP BY id, appuntamento;
 
-    query := 'select fine from ' || category || ' where id_'||category||' = ' || id_entry;
-    execute query into fine_prev;
+    if(fine_prev is null) then
+        fine_prev := (select inizio from sessione where id_sessione = session);
+    end if;
 
     insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
-    values (titolo,abstract,speaker,programa,fine_prev,fine_prev+durata);
+    values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
 end;
 $$ language plpgsql;
 
 --Funzione per aggiungere un nuovo intervallo nel programma di una sessione
-create or replace procedure add_intervallo(tipologia intervallo_st, sessione int,durata interval)
+create or replace procedure add_intervallo(tipologia text , sessioneP int,durata interval)
 as $$
 declare
     programma int;
     id_entry int;
     query text;
     category text;
-    inizio_prev timestamp;
     fine_prev timestamp;
 begin
     select id_programma into programma
     from programma
-    where id_sessione = sessione;
+    where id_sessione = sessioneP;
 
-    select id,appuntamento, max(orario) into id_entry,category,inizio_prev
-    from show_programma(sessione);
+    select id,appuntamento, max(fine) into id_entry,category,fine_prev
+    from show_programma(sessioneP)
+    GROUP BY id, appuntamento;
 
-    query := 'select fine from ' || category || ' where id_'||category||' = ' || id_entry;
-    execute query into fine_prev;
+    if(fine_prev is null) then
+        fine_prev := (select inizio from sessione where id_sessione = sessioneP);
+    end if;
 
     insert into intervallo(tipologia,id_programma,inizio,fine)
-    values (tipologia,programa,fine_prev,fine_prev+durata);
+    values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
 end;
 $$ language plpgsql;
 
 --Funzione per aggiungere un nuovo evento nel programma di una sessione
-create or replace procedure add_evento(tipologia text, sessione int,durata interval)
+create or replace procedure add_evento(tipologia text, session int, durata interval)
 as $$
 declare
     programma int;
     id_entry int;
     query text;
     category text;
-    inizio_prev timestamp;
     fine_prev timestamp;
 begin
     select id_programma into programma
     from programma
-    where id_sessione = sessione;
+    where id_sessione = session;
 
-    select id,appuntamento, max(orario) into id_entry,category,inizio_prev
-    from show_programma(sessione);
+    select id, appuntamento, max(fine) into id_entry,category,fine_prev
+    from show_programma(session)
+    GROUP BY id, appuntamento;
 
-    query := 'select fine from ' || category || ' where id_'||category||' = ' || id_entry;
-    execute query into fine_prev;
+    if(fine_prev is null) then
+        fine_prev := (select inizio from sessione where id_sessione = session);
+    end if;
 
-    insert into evento_sociale(tipologia,id_programma,inizio,fine)
-    values (tipologia,programa,fine_prev,fine_prev+durata);
+    insert into evento(tipologia,id_programma,inizio,fine)
+    values (tipologia,programma,fine_prev,fine_prev+durata);
 end;
 $$ language plpgsql;
 
 --Funzione per aggiungere una nuova conferenza
-create or replace procedure add_conferenza(nome text,inizio timestamp, fine timestamp, sede integer, descrizione text)
-as $$
-begin
-    insert into conferenza(titolo,inizio,fine,id_sede,descrizione)
-    values (nome,inizio,fine,sede,descrizione);
-end;
-$$ language plpgsql;
-
---Funzione per aggiungere una nuova sessione
-create or replace procedure add_sessione(nome text,inizio timestamp, fine timestamp, sala integer, conferenza integer)
-as $$
-begin
-    insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
-    values (nome,inizio,fine,sala,conferenza);
-end;
-$$ language plpgsql;
+CREATE OR REPLACE FUNCTION add_conferenza_details(nome text, inizio timestamp, fine timestamp, sede integer, abstract text)
+RETURNS integer AS $$
+DECLARE
+    id integer;
+BEGIN
+        INSERT INTO conferenza(titolo, inizio, fine, id_sede, descrizione) 
+        VALUES (nome, inizio, fine, sede, abstract)
+        RETURNING id_conferenza INTO id;
+        RETURN id;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'Errore nell''inserimento di una conferenza: %', SQLERRM;
+            RETURN 0; -- or a specific value to indicate an error
+END;
+$$ LANGUAGE plpgsql;
 
 -- Funzione per l'aggiunta di un ente organizzatore di una conferenza
 create or replace procedure add_ente(ente integer, conferenza integer)
@@ -332,4 +360,41 @@ begin
     insert into partecipante_sessione(id_partecipante,id_sessione)
     values (partecipante,sessione);
 end;
-$$ language plpgsql;q
+$$ language plpgsql;
+
+-- Funzione in sql dinamico che presa una conferenza e una stringa di Sigle separate da virgola aggiunge gli enti come organizzatori di quella conferenza
+CREATE OR REPLACE PROCEDURE add_enti(conferenza integer, sigle text)
+AS $$
+DECLARE
+    sigla_ente text;
+    ente_id integer;
+BEGIN
+        FOR sigla_ente IN SELECT unnest(string_to_array(sigle, ',')) LOOP
+            -- Cerca l'id dell'ente corrispondente alla sigla
+            SELECT id_ente INTO ente_id FROM ente WHERE sigla = sigla_ente;
+            
+            -- Inserisci la tupla (id_ente, conferenza) nella tabella ente_conferenza
+            INSERT INTO ente_conferenza(id_ente, id_conferenza) VALUES (ente_id, conferenza);
+        END LOOP;
+        RAISE NOTICE 'Inserimento completato';
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE EXCEPTION 'Errore durante l''inserimento delle tuple nella tabella ente_conferenza: %', SQLERRM;
+END;
+$$ LANGUAGE plpgsql;
+
+
+--Procedura per l'aggiunta di una conferenza con enti organizzatori
+create or replace procedure add_conferenza(nome text, inizio timestamp, fine timestamp, sede integer, descrizione text, sigle text)
+as $$
+declare
+    id_conferenza int;
+begin
+    id_conferenza := add_conferenza_details(nome,inizio,fine,sede,descrizione);
+    call add_enti(id_conferenza,sigle);
+    exception
+        when others then
+            raise notice '%', sqlerrm;
+end;
+$$ language plpgsql;
+

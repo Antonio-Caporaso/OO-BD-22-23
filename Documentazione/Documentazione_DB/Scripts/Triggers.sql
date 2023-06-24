@@ -1,6 +1,7 @@
 --Definizione dei vincoli
 
---Vincoli per la tabella evento: l'inizio e la fine dell'evento devono essere compresi tra l'inizio la fine della sessione
+-- Vincoli per la tabella evento: 
+-- l'inizio e la fine dell'evento devono essere compresi tra l'inizio la fine della sessione
 create or replace function check_data_evento() returns trigger as $$
 declare
     inizio_sessione timestamp;
@@ -257,7 +258,7 @@ declare
 begin
 select id_comitato_scientifico into id_comitato_scientifico_conferenza
 from conferenza c
-where c.id_conferenza = (select id_conferenza from programma where id_programma = new.id_programma);
+where c.id_conferenza = new.id_conferenza;
 
 if (new.id_coordinatore is not null) then
     if (select id_comitato from organizzatore_comitato where id_organizzatore = new.id_coordinatore) <> id_comitato_scientifico_conferenza then
@@ -315,5 +316,3 @@ create trigger check_data_conferenza
 before update on conferenza
 for each row
 execute function check_data_conferenza();
-
-

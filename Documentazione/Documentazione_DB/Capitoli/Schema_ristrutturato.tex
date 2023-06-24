@@ -11,7 +11,7 @@ Nella Figura \ref{uml:schema_concettuale} è presente lo schema concettuale dell
 
 \subsection{Rimozione degli attributi multivalore}All'interno del diagramma delle classi mostrato in Figura \ref{uml:schema_concettuale} sono presenti vari attributi multivalore. Per ciascuno di essi sono state fatte le seguenti valutazioni:
 \begin{enumerate}
-	\item Si partiziona l'attributo \textit{Indirizzo} di \textsc{Sede} suddividendolo in vari campi \textit{Via}, \textit{Civico} e \textit{Cap}.
+	\item Si partiziona l'attributo \textit{Indirizzo} presente in \textsc{Sede} suddividendolo in vari campi \textit{Via}, \textit{Civico}, \textit{Cap}, \textit{City}, \textit{Provincia} e \textit{Nazione} e creando una nuova entità chiamata \textsc{Indirizzo}.
 	\item Si è deciso di partizionare l'attributo \textit{Valuta} presente nella classe di associazione \textsc{Sponsorizzazione} creando una nuova classe chiamata \textsc{Valuta}.
 \end{enumerate}
 \subsection{Rimozione classi di associazione}
