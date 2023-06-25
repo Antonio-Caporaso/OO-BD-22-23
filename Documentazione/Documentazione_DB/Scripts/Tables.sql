@@ -102,14 +102,14 @@ create table sessione(
 create table partecipazione(
     id_partecipante integer references partecipante(id_partecipante) on delete cascade,
     id_sessione integer references sessione(id_sessione) on delete cascade,
-    unique (id_partecipante,id_sessione) -- Vincolo di integrita': un partecipante puo' partecipare ad una sessione una sola volta
+    unique (id_partecipante,id_sessione) -- Vincolo di unicita': un partecipante puo' partecipare ad una sessione una sola volta
 );
 
 -- TABLE: ente_conferenza
 create table ente_conferenza(
     id_ente integer references ente(id_ente) on delete cascade,
     id_conferenza integer references conferenza(id_conferenza) on delete cascade,
-    unique (id_ente,id_conferenza) -- Vincolo di integrita': un ente puo' organizzare una conferenza una sola volta
+    unique (id_ente,id_conferenza) -- Vincolo di unicita': un ente puo' organizzare una conferenza una sola volta
 );
 
 -- TABLE: valuta
@@ -125,7 +125,7 @@ create table sponsor_conferenza(
     contributo numeric(1000,2) not null,
     valuta char(3) references valuta(iso) not null,
     id_conferenza integer references conferenza(id_conferenza) on delete cascade not null,
-    unique (id_sponsor,id_conferenza) -- Vincolo di integrita': uno sponsor puo' sponsorizzare una conferenza una sola volta
+    unique (id_sponsor,id_conferenza) -- Vincolo di unicita': uno sponsor puo' sponsorizzare una conferenza una sola volta
 );
 
 -- TABLE: speaker
@@ -155,7 +155,7 @@ create table intervento(
     fine timestamp not null,
     id_speaker integer references speaker(id_speaker) on delete cascade,
     id_programma integer references programma(id_programma) on delete cascade not null,
-    unique (id_speaker,id_programma), -- Vincolo di integrita': uno speaker puo' intervenire in una sessione una sola volta
+    unique (id_speaker,id_programma), -- Vincolo di unicita': uno speaker puo' intervenire in una sessione una sola volta
     check (inizio <= fine) -- Vincolo di integrita': l'intervento deve iniziare prima di finire
 );
 
