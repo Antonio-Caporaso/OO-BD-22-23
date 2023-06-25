@@ -17,3 +17,10 @@ select s.nome || ' ' || s.cognome as Speaker, count(i.id_intervento)
 from speaker s, intervento i 
 where s.id_speaker = i.id_speaker
 group by s.nome,s.cognome;
+
+-- Vista che mostra il numero di partecipanti per ogni sessione:
+create view partecipanti_sessioni as
+select s.titolo as Sessione, count(p.id_partecipante) as Numero_partecipanti
+from sessione s, partecipazione p 
+where s.id_sessione = p.id_sessione
+group by s.titolo;
