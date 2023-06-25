@@ -439,3 +439,84 @@ begin
 end;
 $$ language plpgsql;
 
+-- Procedura per slittare una conferenza in avanti nel tempo
+create or replace procedure slitta_conferenza(id_conferenza integer, durata interval)
+as $$
+declare
+	id_sessione integer;
+	id_intervento integer;
+	id_evento integer;
+	id_intervallo integer;
+    sessioni cursor for 
+        select id_sessione 
+        from sessione 
+        where id_conferenza = id_conferenza;
+    interventi cursor for
+        select id_intervento 
+        from intervento i join programma p on i.id_programma = p.id_programma 
+        where p.id_sessione in (select id_sessione from sessione where id_conferenza = id_conferenza);
+    intervalli cursor for
+        select id_intervallo 
+        from intervallo i join programma p on i.id_programma = p.id_programma 
+        where p.id_sessione in (select id_sessione from sessione where id_conferenza = id_conferenza);
+    eventi cursor for
+        select id_evento 
+        from evento e join programma p on e.id_programma = p.id_programma 
+        where p.id_sessione in (select id_sessione from sessione where id_conferenza = id_conferenza);
+begin
+    alter table conferenza disable trigger check_data_conferenza;
+    update conferenza
+    set inizio = inizio + durata, fine = fine + durata
+    where id_conferenza = id_conferenza;
+    open sessioni;
+    loop
+        -- Seleziono l'id delle sessioni della conferenza
+        fetch sessioni into id_sessione;
+        exit when not found;
+        alter table sessione disable trigger check_data_sessione;
+        update sessione
+        set inizio = inizio + durata, fine = fine + durata
+        where id_sessione = id_sessione;
+        alter table sessione enable trigger check_data_sessione;
+        open interventi;
+        loop
+            fetch interventi into id_intervento;
+            exit when not found;
+            alter table interventi disable trigger check_data_intervento;
+            update intervento
+            set inizio = inizio + durata, fine = fine + durata
+            where id_intervento = id_intervento;
+            alter table interventi enable trigger check_data_intervento;
+        end loop;
+        close interventi;
+        open intervalli;
+        loop
+            fetch intervalli into id_intervallo;
+            exit when not found;
+            alter table intervallo disable trigger check_data_intervallo;
+            update intervallo
+            set inizio = inizio + durata, fine = fine + durata
+            where id_intervallo = id_intervallo;
+            alter table intervallo enable trigger check_data_intervallo;
+        end loop;
+        close intervalli;
+        open eventi;
+        loop
+            fetch eventi into id_evento;
+            exit when not found;
+            alter table evento disable trigger check_data_evento;
+            update evento
+            set inizio = inizio + durata, fine = fine + durata
+            where id_evento = id_evento;
+            alter table evento enable trigger check_data_evento;
+        end loop;
+        close eventi;
+    end loop;
+    close sessioni;
+    raise notice 'Slittamento completato';
+    alter table conferenza enable trigger check_data_conferenza;
+    exception
+        when others then
+            raise notice '%', sqlerrm;
+end;
+$$ language plpgsql;
