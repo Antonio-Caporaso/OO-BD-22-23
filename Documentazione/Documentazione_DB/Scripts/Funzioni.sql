@@ -25,10 +25,13 @@ create or replace function show_comitato_scientifico(conferenza int)
 returns setof organizzatore as $$
 begin
     return query
+    -- Select dei dettagli dell'organizzatore
     select * from organizzatore
     where id_organizzatore in (
+        -- Select degli id degli organizzatori appartenenti al comitato scientifico
         select id_organizzatore from organizzatore_comitato
         where id_comitato = (
+            -- Select dell'id del comitato scientifico della conferenza
             select id_comitato_scientifico from conferenza
             where id_conferenza = conferenza
         )
@@ -41,10 +44,13 @@ create or replace function show_comitato_locale(conferenza int)
 returns setof organizzatore as $$
 begin
     return query
+    -- Select dei dettagli dell'organizzatore
     select * from organizzatore
     where id_organizzatore in (
+        -- Select degli id degli organizzatori appartenenti al comitato locale
         select id_organizzatore from organizzatore_comitato
         where id_comitato = (
+            -- Select dell'id del comitato locale della conferenza
             select id_comitato_locale from conferenza
             where id_conferenza = conferenza
         )
@@ -57,10 +63,13 @@ create or replace function show_partecipanti(conferenza int)
 returns setof partecipante as $$
 begin
     return query
+    -- Select dei dettagli del partecipante
     select * from partecipante
     where id_partecipante in (
+        -- Select degli id dei partecipanti
         select id_partecipante from partecipazione
         where id_sessione in (
+            -- Select degli id delle sessioni della conferenza
             select id_sessione from sessione
             where id_conferenza = conferenza
         )
@@ -82,9 +91,10 @@ $$ language plpgsql;
 -- Funzione che mostra il programma di una sessione elencando tutti gli interventi in ordine cronologico
 create or replace function show_interventi_sessione(sessione int)
 returns table
-(id_intervento integer,
+(
 titolo text,
 inizio timestamp,
+fine timestamp,
 abstract text,
 speaker text)  as $$
 declare 
@@ -94,7 +104,7 @@ begin
     from programma
     where id_sessione = sessione;
 
-    select id_intervento,titolo,inizio,abstract, s.nome || ' ' || s.cognome as speaker
+    select titolo,inizio,fine,abstract, s.nome || ' ' || s.cognome as speaker
     from intervento i join speaker s on i.id_speaker = s.id_speaker
     where i.id_programma = programma
     order by inizio;
@@ -105,9 +115,11 @@ $$ language plpgsql;
 -- Funzione che mostra il programma di una sessione elencando tutti gli intervalli in ordine cronologico
 create or replace function show_intervalli_sessione(sessione int)
 returns table
-(id_intervallo integer,
+(
 tipologia intervallo_st,
-inizio timestamp)  
+inizio timestamp,
+fine timestamp
+)  
 as $$
 declare 
     programma int;
@@ -116,8 +128,8 @@ begin
     from programma
     where id_sessione = sessione;
 
-    select id_intervallo,tipologia,inizio
-    from intervallo
+    select tipologia,inizio,fine
+    from intervallo i
     where id_programma = programma
     order by inizio;
 end;
@@ -252,6 +264,10 @@ begin
 
     insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
     values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
+    raise notice 'Inserimento completato';
+    exception
+        when others then
+            raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
 
@@ -279,6 +295,10 @@ begin
 
     insert into intervallo(tipologia,id_programma,inizio,fine)
     values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
+    raise notice 'Inserimento completato';
+    exception
+        when others then
+            raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
 
@@ -306,6 +326,10 @@ begin
 
     insert into evento(tipologia,id_programma,inizio,fine)
     values (tipologia,programma,fine_prev,fine_prev+durata);
+    raise notice 'Inserimento completato';
+    exception
+        when others then
+            raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
 
@@ -318,11 +342,12 @@ BEGIN
         INSERT INTO conferenza(titolo, inizio, fine, id_sede, descrizione) 
         VALUES (nome, inizio, fine, sede, abstract)
         RETURNING id_conferenza INTO id;
+        raise notice 'Inserimento completato';
         RETURN id;
     EXCEPTION
         WHEN OTHERS THEN
             RAISE NOTICE 'Errore nell''inserimento di una conferenza: %', SQLERRM;
-            RETURN 0; -- or a specific value to indicate an error
+            RETURN 0; 
 END;
 $$ LANGUAGE plpgsql;
 
@@ -332,6 +357,10 @@ as $$
 begin
     insert into ente_conferenza(id_ente,id_conferenza)
     values (ente,conferenza);
+    raise notice 'Inserimento completato';
+    exception
+        when others then
+            raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
 
@@ -341,6 +370,10 @@ as $$
 begin
     insert into sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
     values (sponsor,contributo,valuta,conferenza);
+    raise notice 'Inserimento completato';
+    exception
+        when others then
+            raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
 
@@ -350,6 +383,10 @@ as $$
 begin
     insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
     values (titolo,inizio,fine,sala,conferenza);
+    raise notice 'Inserimento completato';
+    exception
+        when others then
+            raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
 
@@ -359,6 +396,10 @@ as $$
 begin
     insert into partecipante_sessione(id_partecipante,id_sessione)
     values (partecipante,sessione);
+    raise notice 'Inserimento completato';
+    exception
+        when others then
+            raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
 

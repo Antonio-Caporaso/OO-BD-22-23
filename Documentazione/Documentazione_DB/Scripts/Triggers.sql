@@ -1,7 +1,11 @@
---Definizione dei vincoli
+/* Definizione dei vincoli e dei trigger */
 
--- Vincoli per la tabella evento: 
--- l'inizio e la fine dell'evento devono essere compresi tra l'inizio la fine della sessione
+/*-------------------------------------------------------------------------------------------*
+ |                          Vincoli per la tabella EVENTO                                    |
+ *-------------------------------------------------------------------------------------------*/
+
+ --L'inizio e la fine dell'evento devono essere compresi tra l'inizio la fine della sessione
+
 create or replace function check_data_evento() returns trigger as $$
 declare
     inizio_sessione timestamp;
@@ -25,8 +29,11 @@ create trigger check_data_evento
 before insert or update on evento
 for each row
 execute function check_data_evento();
+/*------------------------------------------------------------------------------------------*
+ |                          Vincoli per la tabella INTERVALLO                               |
+ *------------------------------------------------------------------------------------------*/
 
---Vincoli per la tabella intervallo: l'inizio e la fine di un intervallo devono essere compresi tra l'inizio e la fine della sessione
+--l'inizio e la fine dell'intervallo devono essere compresi tra l'inizio e la fine della sessione
 create or replace function check_data_intervallo() returns trigger as $$
 declare
     inizio_sessione timestamp;
@@ -48,7 +55,11 @@ before insert or update on intervallo
 for each row
 execute function check_data_intervallo();
 
---Vincoli per la tabella intervento: la data e l'orario devono essere compresi tra la data e l'orario di inizio e fine della sessione
+/*------------------------------------------------------------------------------------------*
+ |                          Vincoli per la tabella intervento                               |
+ *------------------------------------------------------------------------------------------*/
+
+--  la data e l'orario devono essere compresi in quelli della sessione 
 create or replace function check_data_intervento() returns trigger as $$
 declare
     inizio_sessione timestamp;
@@ -69,8 +80,26 @@ create trigger check_data_intervento
 before insert or update on intervento
 for each row
 execute function check_data_intervento();
+/*------------------------------------------------------------------------------------------*
+ |                          Vincoli per la tabella SESSIONE                                 |
+ *------------------------------------------------------------------------------------------*/
 
---Vincoli per la tabella sessione: la sala selezionata deve appartenere alla sede della conferenza
+/* Ogni volta che si aggiunge una sessione ad una conferenza
+  si crea un programma vuoto per quella sessione */
+  
+create or replace function create_programma_sessione() returns trigger as $$
+begin
+    insert into programma(id_sessione) values (new.id_sessione);
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger create_programma_sessione
+after insert on sessione
+for each row
+execute function create_programma_sessione();
+
+ -- La sala deve appartenere alla sede della conferenza
 create or replace function check_sala_sessione() returns trigger as $$
 declare
     sede integer;
@@ -106,7 +135,9 @@ before insert or update on sessione
 for each row
 execute function check_sala_sessione();
 
--- La data e l'orario della sessione devono essere compresi tra la data e l'orario di inizio e fine della conferenza
+/*  La data e l'orario della sessione devono essere compresi 
+ *  tra la data e l'orario di inizio e fine della conferenza */
+
 create or replace function check_data_sessione() returns trigger as $$
 declare
     inizio_conferenza timestamp;
@@ -128,7 +159,36 @@ before insert or update on sessione
 for each row
 execute function check_data_sessione();
 
--- Trigger per la tabella conferenza: quando si crea una nuova conferenza si deve creare anche un comitato scientifico e un comitato locale e associarli alla conferenza
+-- Il coordinatore di una sessione specificato nel programma deve appartenere al comitato scientifico della conferenza della sessione
+create or replace function check_coordinatore_sessione() returns trigger as $$
+declare 
+    id_comitato_scientifico_conferenza integer;
+begin
+select id_comitato_scientifico into id_comitato_scientifico_conferenza
+from conferenza c
+where c.id_conferenza = new.id_conferenza;
+
+if (new.id_coordinatore is not null) then
+    if (select id_comitato from organizzatore_comitato where id_organizzatore = new.id_coordinatore) <> id_comitato_scientifico_conferenza then
+        raise exception 'Il coordinatore della sessione deve appartenere al comitato scientifico della conferenza';
+    end if;
+end if;
+return new;
+end;
+$$ language plpgsql;
+
+create trigger check_coordinatore_sessione
+before insert or update on sessione
+for each row
+execute function check_coordinatore_sessione();
+
+/*------------------------------------------------------------------------------------------*
+ |                          Vincoli per la tabella CONFERENZA                               |
+ *------------------------------------------------------------------------------------------*/
+
+/* 1. Quando si crea una nuova conferenza si deve creare anche 
+un comitato scientifico e un comitato locale e associarli alla conferenza*/
+
 create or replace function create_comitati_conferenza() returns trigger as $$
 declare 
     id_comitatoscientifico integer;
@@ -146,7 +206,39 @@ after insert on conferenza
 for each row
 execute function create_comitati_conferenza();
 
--- Vincolo per la tabella conferenza: in fase di aggiornamento l'id del comitato scientifico deve riferirsi ad un comitato scientifico e l'id del comitato locale deve riferirsi ad un comitato locale
+-- Ogni volta che aggiorno la data di inizio o di fine, l'orario di inizio o di fine della conferenza, 
+-- tutti le sessioni devono trovarsi all'interno di questi intervalli
+create or replace function check_data_conferenza() returns trigger as $$
+declare
+    sessioni cursor for select id_sessione from sessione where id_conferenza = new.id_conferenza;
+    sessione integer;
+    inizio_sessione timestamp;
+    fine_sessione timestamp;
+begin
+    open sessioni;
+    loop
+        fetch sessioni into sessione;
+        exit when not found;
+        select inizio,fine into inizio_sessione,fine_sessione
+        from sessione
+        where id_sessione = sessione;
+        if (fine_sessione-inizio_sessione) > (new.fine-new.inizio) then
+            raise exception 'La sessione % deve essere compresa nella conferenza', sessione;
+        end if;
+    end loop;
+    close sessioni;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger check_data_conferenza
+before update on conferenza
+for each row
+execute function check_data_conferenza();
+
+/* 2. In fase di aggiornamento l'id del comitato scientifico deve riferirsi
+   ad un comitato scientifico e l'id del comitato locale deve riferirsi ad un comitato locale*/
+   
 create or replace function check_comitati_conferenza() returns trigger as $$
 declare 
     id_comitato_scientifico integer;
@@ -185,7 +277,11 @@ before update on conferenza
 for each row
 execute function check_comitati_conferenza();
 
---Vincolo sulla tabella sala: una sala non può ospitare più di una sessione alla volta
+/* --------------------------------------------------------------------------------------------*
+ |                          Vincoli per la tabella SALA                                        |
+ *---------------------------------------------------------------------------------------------*/
+
+-- 1. Una sala non può ospitare più di una sessione alla volta
 create or replace function check_sala_sessione_unica() returns trigger as $$
 declare
     inizio_sessione timestamp;
@@ -214,8 +310,11 @@ before insert or update on sessione
 for each row
 execute function check_sala_sessione_unica();
 
+/* --------------------------------------------------------------------------------------------*
+ |                          Vincoli per la tabella ORGANIZZATORE                               |
+ *---------------------------------------------------------------------------------------------*/
 
---Vincolo sulla tabella organizzatori_comitato: gli organizzatori devono appartenere agli enti che hanno organizzato la conferenza
+-- 1. Gli organizzatori devono appartenere agli enti che hanno organizzato la conferenza
 create or replace function check_organizzatore_comitato() returns trigger as $$
 declare 
     conferenza integer;
@@ -251,68 +350,8 @@ for each row
 execute function check_organizzatore_comitato();
 
 
--- Il coordinatore di una sessione specificato nel programma deve appartenere al comitato scientifico della conferenza della sessione
-create or replace function check_coordinatore_sessione() returns trigger as $$
-declare 
-    id_comitato_scientifico_conferenza integer;
-begin
-select id_comitato_scientifico into id_comitato_scientifico_conferenza
-from conferenza c
-where c.id_conferenza = new.id_conferenza;
 
-if (new.id_coordinatore is not null) then
-    if (select id_comitato from organizzatore_comitato where id_organizzatore = new.id_coordinatore) <> id_comitato_scientifico_conferenza then
-        raise exception 'Il coordinatore della sessione deve appartenere al comitato scientifico della conferenza';
-    end if;
-end if;
-return new;
-end;
-$$ language plpgsql;
 
-create trigger check_coordinatore_sessione
-before insert or update on sessione
-for each row
-execute function check_coordinatore_sessione();
 
--- Ogni volta che si aggiunge una sessione ad una conferenza si crea un programma vuoto per quella sessione
-create or replace function create_programma_sessione() returns trigger as $$
-begin
-    insert into programma(id_sessione) values (new.id_sessione);
-    return new;
-end;
-$$ language plpgsql;
 
-create trigger create_programma_sessione
-after insert on sessione
-for each row
-execute function create_programma_sessione();
 
--- Ogni volta che aggiorno la data di inizio o di fine, l'orario di inizio o di fine della conferenza, 
--- tutti le sessioni devono trovarsi all'interno di questi intervalli
-create or replace function check_data_conferenza() returns trigger as $$
-declare
-    sessioni cursor for select id_sessione from sessione where id_conferenza = new.id_conferenza;
-    sessione integer;
-    inizio_sessione timestamp;
-    fine_sessione timestamp;
-begin
-    open sessioni;
-    loop
-        fetch sessioni into sessione;
-        exit when not found;
-        select inizio,fine into inizio_sessione,fine_sessione
-        from sessione
-        where id_sessione = sessione;
-        if (fine_sessione-inizio_sessione) > (new.fine-new.inizio) then
-            raise exception 'La sessione % deve essere compresa nella conferenza', sessione;
-        end if;
-    end loop;
-    close sessioni;
-    return new;
-end;
-$$ language plpgsql;
-
-create trigger check_data_conferenza
-before update on conferenza
-for each row
-execute function check_data_conferenza();
