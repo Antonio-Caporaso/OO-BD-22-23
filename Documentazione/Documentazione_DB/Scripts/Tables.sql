@@ -100,7 +100,6 @@ create table sessione(
 
 -- TABLE: partecipazione
 create table partecipazione(
-    id_partecipazione serial primary key,
     id_partecipante integer references partecipante(id_partecipante) on delete cascade,
     id_sessione integer references sessione(id_sessione) on delete cascade,
     unique (id_partecipante,id_sessione) -- Vincolo di integrita': un partecipante puo' partecipare ad una sessione una sola volta
@@ -108,7 +107,6 @@ create table partecipazione(
 
 -- TABLE: ente_conferenza
 create table ente_conferenza(
-    id_ente_conferenza serial primary key,
     id_ente integer references ente(id_ente) on delete cascade,
     id_conferenza integer references conferenza(id_conferenza) on delete cascade,
     unique (id_ente,id_conferenza) -- Vincolo di integrita': un ente puo' organizzare una conferenza una sola volta
@@ -123,11 +121,10 @@ create table valuta(
 
 -- TABLE: sponsor_conferenza
 create table sponsor_conferenza(
-    id_sponsor_conferenza serial primary key,
-    id_sponsor integer references sponsor(id_sponsor) on delete cascade,
+    id_sponsor integer references sponsor(id_sponsor) on delete cascade not null,
     contributo numeric(1000,2) not null,
     valuta char(3) references valuta(iso) not null,
-    id_conferenza integer references conferenza(id_conferenza) on delete cascade,
+    id_conferenza integer references conferenza(id_conferenza) on delete cascade not null,
     unique (id_sponsor,id_conferenza) -- Vincolo di integrita': uno sponsor puo' sponsorizzare una conferenza una sola volta
 );
 
@@ -144,7 +141,7 @@ create table speaker(
 -- TABLE: programma
 create table programma(
     id_programma serial primary key,
-    id_sessione integer references sessione(id_sessione) on delete cascade,
+    id_sessione integer references sessione(id_sessione) on delete cascade not null,
     id_keynote integer references speaker(id_speaker) on delete set null,
     unique (id_programma, id_sessione)
 );
@@ -157,7 +154,7 @@ create table intervento(
     inizio timestamp not null,
     fine timestamp not null,
     id_speaker integer references speaker(id_speaker) on delete cascade,
-    id_programma integer references programma(id_programma) on delete cascade,
+    id_programma integer references programma(id_programma) on delete cascade not null,
     unique (id_speaker,id_programma), -- Vincolo di integrita': uno speaker puo' intervenire in una sessione una sola volta
     check (inizio <= fine) -- Vincolo di integrita': l'intervento deve iniziare prima di finire
 );
@@ -169,7 +166,7 @@ create table intervallo(
     inizio timestamp not null,
     fine timestamp not null,
     check (inizio <= fine), -- Vincolo di integrita': l'intervallo deve iniziare prima di finire
-    id_programma integer references programma(id_programma) on delete cascade
+    id_programma integer references programma(id_programma) on delete cascade not null
 );
 
 -- TABLE: evento
@@ -179,7 +176,7 @@ create table evento(
     inizio timestamp not null,
     fine timestamp not null,
     check (inizio <= fine), -- Vincolo di integrita': l'evento deve iniziare prima di finire
-    id_programma integer references programma(id_programma) on delete cascade
+    id_programma integer references programma(id_programma) on delete cascade not null
 );
 
 -- TABLE: organizzatore_comitato
