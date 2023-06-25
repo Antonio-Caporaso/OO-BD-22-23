@@ -1,5 +1,4 @@
 -- Vista delle sedi con il loro indirizzo:
-
 create view SediView as 
 select s.nome as Sede, i.via ||', ' || i.civico || ', ' ||  i.cap ||', ' || i.city || ' (' || i.provincia ||'), '|| i.nazione as Indirizzo
 from sede s natural join indirizzo i;
@@ -24,3 +23,11 @@ select s.titolo as Sessione, count(p.id_partecipante) as Numero_partecipanti
 from sessione s, partecipazione p 
 where s.id_sessione = p.id_sessione
 group by s.titolo;
+
+-- Vista che mostra il numero di partecipanti per ogni conferenza:
+create view partecipanti_conferenze as
+select c.titolo as Conferenza, count(p.id_partecipante) as Numero_partecipanti
+from conferenza c, sessione s, partecipazione p
+where c.id_conferenza = s.id_conferenza and s.id_sessione = p.id_sessione
+group by c.titolo;
+
