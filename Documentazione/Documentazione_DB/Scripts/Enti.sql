@@ -1,4 +1,5 @@
 --Popolamento della tabella ente
+SET search_path TO conference;
 insert into ente (nome,sigla) values
 ('Agenzia Spaziale Italiana','ASI'),
 ('Consiglio Nazionale delle RIcerche','CNR'),
