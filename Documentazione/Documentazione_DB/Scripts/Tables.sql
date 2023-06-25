@@ -29,7 +29,7 @@ create table indirizzo(
 create table sede(
     id_sede serial primary key,
     nome text ,
-    indirizzo integer references indirizzo(id_indirizzo) on delete set null
+    id_indirizzo integer references indirizzo(id_indirizzo) on delete set null
 );
 
 -- TABLE: sponsor

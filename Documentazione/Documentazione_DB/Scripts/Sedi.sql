@@ -34,7 +34,7 @@ INSERT INTO indirizzo (via, civico, cap, city, provincia, nazione) values
 
 
 
-INSERT INTO sede (nome,indirizzo) VALUES
+INSERT INTO sede (nome,id_indirizzo) VALUES
 ('Centro Congressi Roma', 1),
 ('Fiera Milano Congressi', 2),
 ('Centro Congressi Firenze', 3),
