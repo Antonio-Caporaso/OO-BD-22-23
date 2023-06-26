@@ -520,3 +520,15 @@ begin
             raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
+
+-- Funzione che mostra tutti i membri degli enti organizzatori di una conferenza
+create or replace function show_members(conferenza integer)
+returns table (id integer, nome text, cognome text, email text,titolo titolo_st, sigla varchar(7))
+as $$
+begin
+    return query
+    select o.id_organizzatore, o.nome, o.cognome, o.email,o.titolo, e.sigla
+    from organizzatore o join ente_conferenza ec natural join ente e  on o.id_ente = ec.id_ente
+    where ec.id_conferenza = conferenza;
+end;
+$$ language plpgsql;

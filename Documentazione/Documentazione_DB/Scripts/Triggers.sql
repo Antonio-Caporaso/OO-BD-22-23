@@ -1,6 +1,79 @@
 /* Definizione dei vincoli e dei trigger */
 
 /*-------------------------------------------------------------------------------------------*
+ |                          Vincoli sul PROGRAMMA della sessione                             |
+ *-------------------------------------------------------------------------------------------*/
+
+ -- Non devono esserci eventi, intervalli o interventi che si sovrappongono
+create or replace function check_programma() returns trigger as $$
+declare
+    inizio_evento timestamp;
+    fine_evento timestamp;
+    inizio_intervallo timestamp;
+    fine_intervallo timestamp;
+    inizio_intervento timestamp;
+    fine_intervento timestamp;
+    intervento_id integer;
+    intervallo_id integer;
+    evento_id integer;
+    interventi_cur cursor for select id_intervento from intervento where id_programma = new.id_programma;
+    intervalli_cur cursor for select id_intervallo from intervallo where id_programma = new.id_programma;
+    eventi_cur cursor for select id_evento from evento where id_programma = new.id_programma;
+begin
+open interventi_cur;
+loop 
+    fetch interventi_cur into intervento_id;
+    exit when not found;
+    select inizio,fine into inizio_intervento,fine_intervento
+    from intervento
+    where id_intervento = intervento_id;
+    if (inizio_intervento <= new.inizio OR fine_intervento >= new.fine) then
+        raise exception 'Impossibile inserire un punto del programma in questo orario';
+    end if;
+end loop;
+close interventi_cur;
+open intervalli_cur;
+loop 
+    fetch intervalli_cur into intervallo_id;
+    exit when not found;
+    select inizio,fine into inizio_intervallo,fine_intervallo
+    from intervallo
+    where id_intervallo = intervallo_id;
+    if (inizio_intervallo <= new.inizio OR fine_intervallo >= new.fine) then
+        raise exception 'Impossibile inserire un punto del programma in questo orario';
+    end if;
+end loop;
+close intervalli_cur;
+open eventi_cur;
+loop 
+    fetch eventi_cur into evento_id;
+    exit when not found;
+    select inizio,fine into inizio_evento,fine_evento
+    from evento
+    where id_evento = evento_id;
+    if (inizio_evento <= new.inizio OR fine_evento >= new.fine) then
+        raise exception 'Impossibile inserire un punto del programma in questo orario';
+    end if;
+end loop;
+close eventi_cur;
+return new;
+end;
+$$ language plpgsql;
+
+create trigger check_programma
+before insert or update on intervento
+for each row
+execute function check_programma();
+create trigger check_programma
+before insert or update on intervallo
+for each row
+execute function check_programma();
+create trigger check_programma
+before insert or update on evento
+for each row
+execute function check_programma();
+
+/*-------------------------------------------------------------------------------------------*
  |                          Vincoli per la tabella EVENTO                                    |
  *-------------------------------------------------------------------------------------------*/
 
@@ -164,7 +237,7 @@ create or replace function check_coordinatore_sessione() returns trigger as $$
 declare 
     id_comitato_scientifico_conferenza integer;
 begin
-select id_comitato_scientifico into id_comitato_scientifico_conferenza
+select comitato_s into id_comitato_scientifico_conferenza
 from conferenza c
 where c.id_conferenza = new.id_conferenza;
 
@@ -196,7 +269,7 @@ declare
 begin
     insert into comitato(tipologia) values ('scientifico') returning id_comitato into id_comitatoscientifico;
     insert into comitato(tipologia) values ('locale') returning id_comitato into id_comitatolocale;
-    update conferenza set id_comitato_scientifico = id_comitatoscientifico, id_comitato_locale = id_comitatolocale where id_conferenza = new.id_conferenza;
+    update conferenza set comitato_s = id_comitatoscientifico, comitato_l = id_comitatolocale where id_conferenza = new.id_conferenza;
     return new;
 end;
 $$ language plpgsql;
@@ -246,11 +319,11 @@ declare
 begin
     select id_comitato into id_comitato_scientifico
     from comitato
-    where id_comitato = new.id_comitato_scientifico;
+    where id_comitato = new.comitato_s;
     
     select id_comitato into id_comitato_locale
     from comitato
-    where id_comitato = new.id_comitato_locale;
+    where id_comitato = new.comitato_l;
     
     IF id_comitato_scientifico IS NULL THEN
         RAISE EXCEPTION 'Il comitato scientifico non esiste';
@@ -287,15 +360,15 @@ declare
     inizio_sessione timestamp;
     fine_sessione timestamp;
     sessioni cursor for select id_sessione from sessione where id_sala = new.id_sala;
-    sessione integer;
+    sessione_id integer;
 begin
     open sessioni;
     loop
-        fetch sessioni into sessione;
+        fetch sessioni into sessione_id;
         exit when not found;
         select inizio,fine into inizio_sessione,fine_sessione
         from sessione
-        where id_sessione = sessione;
+        where id_sessione = sessione_id;
         if (new.inizio >= inizio_sessione AND new.inizio <= fine_sessione) OR (new.fine >= inizio_sessione AND new.fine <= fine_sessione) then
             raise exception 'La sala non può ospitare più di una sessione alla volta';
         end if;
@@ -316,20 +389,19 @@ execute function check_sala_sessione_unica();
 
 -- 1. Gli organizzatori devono appartenere agli enti che hanno organizzato la conferenza
 create or replace function check_organizzatore_comitato() returns trigger as $$
-declare 
-    conferenza integer;
-    ente integer;
+declare
+    ente_id integer;
 begin
 
-    select id_ente into ente
+    select id_ente into ente_id
     from organizzatore o
     where o.id_organizzatore = new.id_organizzatore;
     
-    IF ente IS NULL THEN
+    IF ente_id IS NULL THEN
         RAISE EXCEPTION 'L''organizzatore non esiste';
     END IF;
     
-    IF ente NOT IN (
+    IF ente_id NOT IN (
         SELECT id_ente
         FROM ente_conferenza
         WHERE id_conferenza IN (
@@ -348,10 +420,3 @@ create trigger check_organizzatore_comitato
 before insert or update on organizzatore_comitato
 for each row
 execute function check_organizzatore_comitato();
-
-
-
-
-
-
-

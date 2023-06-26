@@ -70,8 +70,8 @@ create table conferenza(
     inizio timestamp not null,
     fine timestamp not null,
     id_sede integer references sede(id_sede) on delete set null,
-    id_comitato_scientifico integer references comitato(id_comitato) on delete set null,
-    id_comitato_locale integer references comitato(id_comitato) on delete set null,
+    comitato_s integer references comitato(id_comitato) on delete set null,
+    comitato_l integer references comitato(id_comitato) on delete set null,
     check (inizio <= fine), -- Vincolo di integrita': la conferenza deve iniziare prima di finire
     check (inizio >= now()) -- Vincolo di integrita': la conferenza deve iniziare in futuro
 );
