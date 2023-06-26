@@ -7,8 +7,14 @@ create type intervallo_st as enum ('pranzo','coffee break');
 create type titolo_st as enum ('Dottore','Dottoressa','Professore','Professoressa','Assistente','Ricercatore','Ricercatrice','Ingegnere');
 
 --Creazione tabelle
+create sequence ente_id_ente_seq;
+create or replace function nextval_ente() returns text language plpgsql as $$
+begin
+    return 'IST'||to_char(nextval('ente_id_ente_seq'),'FM0000');
+end;
+$$;
 create table ente(
-id_ente serial primary key,
+id_ente text primary key default nextval_ente(),
 nome text not null unique,
 sigla varchar(7) not null,
 unique (nome,sigla)
@@ -51,7 +57,7 @@ create table organizzatore(
     cognome text not null,
     titolo titolo_st,
     email text not null unique,
-    id_ente integer references ente(id_ente) on delete cascade -- Istituzione di appartenenza
+    id_ente text references ente(id_ente) on delete cascade -- Istituzione di appartenenza
 );
 
 -- TABLE: sala
@@ -83,7 +89,7 @@ create table partecipante(
     cognome text not null,
     titolo titolo_st,
     email text not null unique,
-    id_ente integer references ente(id_ente) on delete set null -- Istituzione di appartenenza
+    id_ente text references ente(id_ente) on delete set null -- Istituzione di appartenenza
 );
 
 -- TABLE: sessione
@@ -107,7 +113,7 @@ create table partecipazione(
 
 -- TABLE: ente_conferenza
 create table ente_conferenza(
-    id_ente integer references ente(id_ente) on delete cascade,
+    id_ente text references ente(id_ente) on delete cascade,
     id_conferenza integer references conferenza(id_conferenza) on delete cascade,
     unique (id_ente,id_conferenza) -- Vincolo di unicita': un ente puo' organizzare una conferenza una sola volta
 );
@@ -129,54 +135,87 @@ create table sponsor_conferenza(
 );
 
 -- TABLE: speaker
+create sequence speaker_id_speaker_seq;
+create or replace function nextval_speaker() returns text language plpgsql as $$
+begin
+    return 'SPK'||to_char(nextval('speaker_id_speaker_seq'),'FM0000');
+end;
+$$;
+
 create table speaker(
-    id_speaker serial primary key,
+    id_speaker text primary key default nextval_speaker(),
     nome text not null,
     cognome text not null,
     titolo titolo_st,
     email text not null unique,
-    id_ente integer references ente(id_ente) on delete set null
+    id_ente text references ente(id_ente) on delete set null
 );
 
 -- TABLE: programma
+create sequence programma_id_programma_seq;
+create or replace function nextval_programma() returns text language plpgsql as $$
+begin
+    return 'PRG'||to_char(nextval('programma_id_programma_seq'),'FM0000');
+end;
+$$;
+
 create table programma(
-    id_programma serial primary key,
+    id_programma text primary key default nextval_programma(),
     id_sessione integer references sessione(id_sessione) on delete cascade not null,
-    id_keynote integer references speaker(id_speaker) on delete set null,
+    id_keynote text references speaker(id_speaker) on delete set null,
     unique (id_programma, id_sessione)
 );
 
 -- TABLE: intervento
+create sequence intervento_id_intervento_seq;
+create or replace function nextval_intervento() returns text language plpgsql as $$
+begin
+    return 'INT'||to_char(nextval('intervento_id_intervento_seq'),'FM0000');
+end;
+$$;
+
 create table intervento(
-    id_intervento serial primary key,
+    id_intervento text primary key default nextval_intervento(),
     titolo text not null,
     abstract text not null,
     inizio timestamp not null,
     fine timestamp not null,
-    id_speaker integer references speaker(id_speaker) on delete cascade,
-    id_programma integer references programma(id_programma) on delete cascade not null,
+    id_speaker text references speaker(id_speaker) on delete cascade,
+    id_programma text references programma(id_programma) on delete cascade not null,
     unique (id_speaker,id_programma), -- Vincolo di unicita': uno speaker puo' intervenire in una sessione una sola volta
     check (inizio <= fine) -- Vincolo di integrita': l'intervento deve iniziare prima di finire
 );
 
 -- TABLE: intervallo
+create sequence intervallo_id_intervallo_seq;
+create or replace function nextval_intervallo() returns text language plpgsql as $$
+begin
+    return 'BRK'||to_char(nextval('intervallo_id_intervallo_seq'),'FM0000');
+end;
+$$;
 create table intervallo(
-    id_intervallo serial primary key,
+    id_intervallo text primary key default nextval_intervallo(),
     tipologia intervallo_st not null,
     inizio timestamp not null,
     fine timestamp not null,
     check (inizio <= fine), -- Vincolo di integrita': l'intervallo deve iniziare prima di finire
-    id_programma integer references programma(id_programma) on delete cascade not null
+    id_programma text references programma(id_programma) on delete cascade not null
 );
 
 -- TABLE: evento
+create sequence evento_id_evento_seq;
+create or replace function nextval_evento() returns text language plpgsql as $$
+begin
+    return 'EVT'||to_char(nextval('evento_id_evento_seq'),'FM0000');
+end;
+$$;
 create table evento(
-    id_evento serial primary key,
+    id_evento text primary key default nextval_evento(),
     tipologia text not null,
     inizio timestamp not null,
     fine timestamp not null,
     check (inizio <= fine), -- Vincolo di integrita': l'evento deve iniziare prima di finire
-    id_programma integer references programma(id_programma) on delete cascade not null
+    id_programma text references programma(id_programma) on delete cascade not null
 );
 
 -- TABLE: organizzatore_comitato
