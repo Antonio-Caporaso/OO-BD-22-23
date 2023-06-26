@@ -4,7 +4,7 @@
  |                          Vincoli sul PROGRAMMA della sessione                             |
  *-------------------------------------------------------------------------------------------*/
 
- -- Non devono esserci eventi, intervalli o interventi che si sovrappongono
+ -- In un programma non devono esserci eventi, intervalli o interventi che si sovrappongono
 create or replace function check_programma() returns trigger as $$
 declare
     inizio_evento timestamp;
@@ -129,7 +129,7 @@ for each row
 execute function check_data_intervallo();
 
 /*------------------------------------------------------------------------------------------*
- |                          Vincoli per la tabella intervento                               |
+ |                          Vincoli per la tabella INTERVENTO                               |
  *------------------------------------------------------------------------------------------*/
 
 --  la data e l'orario devono essere compresi in quelli della sessione 
