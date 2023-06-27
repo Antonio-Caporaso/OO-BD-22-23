@@ -1,8 +1,10 @@
-\documentclass[a4paper,oneside, 11pt]{article}
+\documentclass[a4paper,oneside, 11pt]{book}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{adjustbox}
 \usepackage{listings}
+\usepackage{setspace}
+\usepackage[labelfont={bf},textfont=it]{caption}
 \usepackage{fullpage}
 \usepackage{booktabs}
 \usepackage{subfig}
@@ -24,7 +26,6 @@
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-\title{Progettazione e implementazione di una base di dati relazionale per la gestione di conferenze scientifiche}
 \author{\begin{tabular}{cc}Caporaso Antonio & Di Fusco Giorgio \\
 \texttt{N86003458} & \texttt{N86004389} \\ \end{tabular}}
 \lstdefinestyle{mystyle}{
@@ -33,7 +34,7 @@
     keywordstyle=\color{magenta},
     numberstyle=\tiny\color{codegray},
     stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
+    basicstyle=\ttfamily,
     breakatwhitespace=false,         
     breaklines=true,                 
     captionpos=b,                    
@@ -45,10 +46,15 @@
     showstringspaces=false,
     showtabs=false,                  
     tabsize=2,
-    morekeywords={*, REFERENCES, ENABLED, DISABLED, IS, BEFORE, AFTER, INCREMENT, START, WITH, SEQUENCE, FOR, EACH, ROW, INSTEAD OF, FOR EACH STATEMENT}
+    morekeywords={*, REFERENCES, ENABLED, DISABLED, IS, BEFORE, AFTER, INCREMENT, START, WITH, SEQUENCE, FOR, EACH, ROW, INSTEAD OF, FOR EACH STATEMENT, FUNCTION, LANGUAGE, RETURNS, RETURN, DECLARE, BEGIN, REPLACE, text, OPEN, LOOP, IF, CLOSE, FETCH, EXIT, RAISE}
 }
 \lstset{
 style= mystyle
+}
+\makeatother
+\addto\captionsitalian{%
+	\renewcommand{\lstlistingname}{Listato}
+	\renewcommand{\lstlistlistingname}{Elenco dei listati}
 }
 \def\ojoin{\setbox0=\hbox{$\bowtie$}%
   \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
@@ -56,10 +62,57 @@ style= mystyle
 \def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
 \def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
 {\renewcommand{\arraystretch}{1.3}%
-\begin{document}
-\maketitle
+\usepackage{uninafrontespizio}
 
+\begin{document}
+\pagestyle{empty}
+\begin{titlepage}
+	\begin{center}
+		\setstretch{1.2}
+		\setlength{\parskip}{2ex}
+		
+		
+		\Large\textsc{Università degli Studi di Napoli Federico II}
+		
+		\includegraphics[width=3cm]{Immagini/logo-federico-II.pdf}
+		
+		\Large\textsc{Scuola Politecnica e delle Scienze di Base}
+		
+		\large\textsc{Dipartimento di Ingegneria Elettrica e Tecnologie dell'Informazione}
+		
+		\large\textsc{Corso di Laurea Magistrale in Informatica}
+		
+		\large\textsc{Progetto d'esame di Basi di Dati}
+		\vfill
+		\setstretch{2}
+		\huge\textsc{Progettazione ed implementazione di una base di dati relazionale per la gestione di conferenze scientifiche}
+		\vfill
+		\setstretch{1}
+		\begin{minipage}[t]{.49\textwidth}
+			\large
+			
+			\textbf{Relatore}\par
+			Professoressa Mara \textsc{Sangiovanni}
+		\end{minipage}\hfill
+	\begin{minipage}[t]{.45\textwidth}
+		\large
+		\hfill\textbf{Candidati}\par
+		\hfill\begin{tabular}{r}
+			 Antonio \textsc{Caporaso} \\ 
+			 matr: \texttt{N86003458} \\
+			 Giorgio \textsc{Di Fusco} \\
+			  matr: \texttt{N86004389} \\
+		 \end{tabular}
+	\end{minipage}
+\vfill
+		
+		\large Anno Accademico 2022-2023
+	\end{center}
+\end{titlepage}
 \tableofcontents
+\listoffigures
+\listoftables
+\lstlistoflistings
 
 \import{Capitoli}{Traccia.tex}
 \import{Capitoli}{Progettazione_Concettuale}
@@ -67,10 +120,8 @@ style= mystyle
 \import{Capitoli}{Schema_logico.tex}
 \import{Capitoli}{Schema_fisico}
 \appendix
+\chapter{Dizionari}
 \import{Capitoli}{Data_dictionary}
 \import{Capitoli}{Relationship_dictionary}
 \import{Capitoli}{Constraints_dictionary}
-
-\listoffigures
-\listoftables
 \end{document}

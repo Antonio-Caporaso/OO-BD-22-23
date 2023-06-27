@@ -73,67 +73,8 @@ before insert or update on evento
 for each row
 execute function check_programma();
 
-/*-------------------------------------------------------------------------------------------*
- |                          Vincoli per la tabella EVENTO                                    |
- *-------------------------------------------------------------------------------------------*/
-
- --L'inizio e la fine dell'evento devono essere compresi tra l'inizio la fine della sessione
-
-create or replace function check_data_evento() returns trigger as $$
-declare
-    inizio_sessione timestamp;
-    fine_sessione timestamp;
-begin
-    select inizio,fine into inizio_sessione,fine_sessione
-    from sessione
-    where id_sessione = 
-        (select id_sessione 
-        from programma 
-        where id_programma = new.id_programma);
-
-    if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
-        raise exception 'L''evento non è compreso nella sessione';
-    end if;
-    return new;
-end;
-$$ language plpgsql;
-
-create trigger check_data_evento
-before insert or update on evento
-for each row
-execute function check_data_evento();
-/*------------------------------------------------------------------------------------------*
- |                          Vincoli per la tabella INTERVALLO                               |
- *------------------------------------------------------------------------------------------*/
-
---l'inizio e la fine dell'intervallo devono essere compresi tra l'inizio e la fine della sessione
-create or replace function check_data_intervallo() returns trigger as $$
-declare
-    inizio_sessione timestamp;
-    fine_sessione timestamp;
-begin
-    select inizio,fine into inizio_sessione,fine_sessione
-    from sessione
-    where id_sessione = (select id_sessione from programma where id_programma = new.id_programma);
-
-    if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
-        raise exception 'L''intervallo non è compreso nella sessione';
-    end if;
-    return new;
-end;
-$$ language plpgsql;
-
-create trigger check_data_intervallo
-before insert or update on intervallo
-for each row
-execute function check_data_intervallo();
-
-/*------------------------------------------------------------------------------------------*
- |                          Vincoli per la tabella INTERVENTO                               |
- *------------------------------------------------------------------------------------------*/
-
 --  la data e l'orario devono essere compresi in quelli della sessione 
-create or replace function check_data_intervento() returns trigger as $$
+create or replace function check_data() returns trigger as $$
 declare
     inizio_sessione timestamp;
     fine_sessione timestamp;
@@ -149,10 +90,20 @@ begin
 end;
 $$ language plpgsql;
 
+create trigger check_data_evento
+before insert or update on evento
+for each row
+execute function check_data();
+
 create trigger check_data_intervento
 before insert or update on intervento
 for each row
-execute function check_data_intervento();
+execute function check_data();
+
+create trigger check_data_intervallo
+before insert or update on intervallo
+for each row
+execute function check_data();
 /*------------------------------------------------------------------------------------------*
  |                          Vincoli per la tabella SESSIONE                                 |
  *------------------------------------------------------------------------------------------*/
@@ -187,7 +138,7 @@ begin
     where id_sala = new.id_sala;
     
     IF sala IS NULL THEN
-        RAISE EXCEPTION 'La sala non esiste';
+        Return new;
     END IF;
     
     IF sala NOT IN (
@@ -237,12 +188,13 @@ create or replace function check_coordinatore_sessione() returns trigger as $$
 declare 
     id_comitato_scientifico_conferenza integer;
 begin
+
 select comitato_s into id_comitato_scientifico_conferenza
 from conferenza c
 where c.id_conferenza = new.id_conferenza;
 
 if (new.id_coordinatore is not null) then
-    if (select id_comitato from organizzatore_comitato where id_organizzatore = new.id_coordinatore) <> id_comitato_scientifico_conferenza then
+    if (id_comitato_scientifico_conferenza not in (select id_comitato from organizzatore_comitato where id_organizzatore = new.id_coordinatore))  then
         raise exception 'Il coordinatore della sessione deve appartenere al comitato scientifico della conferenza';
     end if;
 end if;
@@ -279,36 +231,6 @@ after insert on conferenza
 for each row
 execute function create_comitati_conferenza();
 
--- Ogni volta che aggiorno la data di inizio o di fine, l'orario di inizio o di fine della conferenza, 
--- tutti le sessioni devono trovarsi all'interno di questi intervalli
-create or replace function check_data_conferenza() returns trigger as $$
-declare
-    sessioni cursor for select id_sessione from sessione where id_conferenza = new.id_conferenza;
-    sessione integer;
-    inizio_sessione timestamp;
-    fine_sessione timestamp;
-begin
-    open sessioni;
-    loop
-        fetch sessioni into sessione;
-        exit when not found;
-        select inizio,fine into inizio_sessione,fine_sessione
-        from sessione
-        where id_sessione = sessione;
-        if (fine_sessione-inizio_sessione) > (new.fine-new.inizio) then
-            raise exception 'La sessione % deve essere compresa nella conferenza', sessione;
-        end if;
-    end loop;
-    close sessioni;
-    return new;
-end;
-$$ language plpgsql;
-
-create trigger check_data_conferenza
-before update on conferenza
-for each row
-execute function check_data_conferenza();
-
 /* 2. In fase di aggiornamento l'id del comitato scientifico deve riferirsi
    ad un comitato scientifico e l'id del comitato locale deve riferirsi ad un comitato locale*/
    
@@ -326,11 +248,11 @@ begin
     where id_comitato = new.comitato_l;
     
     IF id_comitato_scientifico IS NULL THEN
-        RAISE EXCEPTION 'Il comitato scientifico non esiste';
+        return new;
     END IF;
     
     IF id_comitato_locale IS NULL THEN
-        RAISE EXCEPTION 'Il comitato locale non esiste';
+        return new;
     END IF;
     
     IF (select tipologia from comitato where id_comitato = id_comitato_scientifico) <> 'scientifico' THEN
@@ -420,3 +342,31 @@ create trigger check_organizzatore_comitato
 before insert or update on organizzatore_comitato
 for each row
 execute function check_organizzatore_comitato();
+
+-- Ogni volta che aggiorno de date di inizio e fine di una conferenza bisogna eliminare tutte le sessioni che non si trovano più all'interno della conferenza
+create or replace function delete_sessioni_conferenza() returns trigger as $$
+declare
+    sessioni_cur cursor for 
+    select id_sessione 
+    from sessione 
+    where id_conferenza = old.id_conferenza;
+    sessione_id integer;
+begin
+    open sessioni_cur;
+    loop
+        fetch sessioni_cur into sessione_id;
+        exit when not found;
+        if (select inizio from sessione where id_sessione = sessione_id) < new.inizio 
+        OR (select fine from sessione where id_sessione = sessione_id) > new.fine then
+            delete from sessione where id_sessione = sessione_id;
+        end if;
+    end loop;
+    close sessioni_cur;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger delete_sessioni_conferenza
+before update on conferenza
+for each row
+execute function delete_sessioni_conferenza();

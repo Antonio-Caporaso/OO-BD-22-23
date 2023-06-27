@@ -1,6 +1,1030 @@
-\section{Implementazione fisica}
-\subsection{Definizione delle tabelle}
-\lstinputlisting[language=SQL,style=mystyle]{Scripts/Tables.sql}
-\subsection{Popolamento}
-\subsection{Trigger}
-\subsection{Funzioni e procedure}
+\chapter{Implementazione fisica}
+\section{Definizione delle tabelle}
+\lstinputlisting[language=SQL,style=mystyle,fontadjust]{Scripts/Tables.sql}
+\section{Definizione dei trigger}
+\subsection{\texttt{Check\_Programma\_Entry}}
+In un programma non devono esserci eventi, intervalli o interventi che si sovrappongono. Per questo motivo definiamo il trigger \texttt{check\_programma\_entry} che viene eseguito per ogni inserimento o aggiornamento nelle tabelle \textsc{Intervento}, \textsc{Intervallo} ed \textsc{Evento}.
+\begin{lstlisting}[language=SQL,style=mystyle,caption={check\_programma\_entry}]
+	create or replace function check_programma() 
+	returns trigger as $$
+	declare
+		inizio_evento timestamp;
+		fine_evento timestamp;
+		inizio_intervallo timestamp;
+		fine_intervallo timestamp;
+		inizio_intervento timestamp;
+		fine_intervento timestamp;
+		intervento_id integer;
+		intervallo_id integer;
+		evento_id integer;
+		interventi_cur cursor for 
+			select id_intervento 
+			from intervento 
+			where id_programma = new.id_programma;
+			
+		intervalli_cur cursor for 
+			select id_intervallo 
+			from intervallo 
+			where id_programma = new.id_programma;
+			
+		eventi_cur cursor for 
+			select id_evento 
+			from evento 
+			where id_programma = new.id_programma;
+
+	begin
+		/* Controlliamo che il punto non si sovrapponga con
+		 * ciascun punto gia' presente nel programma */
+		open interventi_cur;
+		loop 
+			fetch interventi_cur into intervento_id;
+			exit when not found;
+			select inizio,fine into inizio_intervento,fine_intervento
+				from intervento
+				where id_intervento = intervento_id;
+			if (inizio_intervento <= new.inizio OR 
+					fine_intervento >= new.fine) then
+				raise exception 'Impossibile inserire un punto del programma in questo orario';
+			end if;
+		end loop;
+		close interventi_cur;
+		
+		open intervalli_cur;
+		loop 
+			fetch intervalli_cur into intervallo_id;
+			exit when not found;
+			select inizio,fine into inizio_intervallo,fine_intervallo
+			from intervallo
+			where id_intervallo = intervallo_id;
+			if (inizio_intervallo <= new.inizio OR fine_intervallo >= new.fine) then
+				raise exception 'Impossibile inserire un punto del programma in questo orario';
+			end if;
+		end loop;
+		close intervalli_cur;
+		
+		open eventi_cur;
+		loop 
+		fetch eventi_cur into evento_id;
+		exit when not found;
+		select inizio,fine into inizio_evento,fine_evento
+		from evento
+		where id_evento = evento_id;
+		if (inizio_evento <= new.inizio OR fine_evento >= new.fine) then
+		raise exception 'Impossibile inserire un punto del programma in questo orario';
+		end if;
+		end loop;
+		close eventi_cur;
+		
+	return new;
+	end;
+	$$ language plpgsql;
+	
+	create trigger check_programma
+	before insert or update on intervento
+	for each row
+	execute function check_programma();
+	
+	create trigger check_programma
+	before insert or update on intervallo
+	for each row
+	execute function check_programma();
+	
+	create trigger check_programma
+	before insert or update on evento
+	for each row
+	execute function check_programma();
+\end{lstlisting}
+
+\subsection{\texttt{Check\_Data\_Intervento, Check\_Data\_Intervallo, Check\_Data\_Evento}}\label{trigger:check_data}
+Ogni volta che viene inserito o aggiornato un intervento, un intervallo o un evento bisogna controllare sempre che la data di inizio e di fine sia coerente con quella della sessione cui appartengono:
+\begin{lstlisting}[caption={check\_data\_intervento},language=SQL,style=mystyle]
+create or replace function check_data() 
+returns trigger as $$
+declare
+	inizio_sessione timestamp;
+	fine_sessione timestamp;
+begin
+	select inizio,fine into inizio_sessione,fine_sessione
+	from sessione
+	where id_sessione = 
+		(select id_sessione 
+		from programma 
+		where id_programma = new.id_programma);
+
+	if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
+		raise exception 'Gli orari non sono compatibili con quelli della sessione';
+	end if;
+	return new;
+end;
+$$ language plpgsql;
+
+create trigger check_data_intervento
+before insert or update on intervento
+for each row
+execute function check_data();
+
+create trigger check_data_intervallo
+before insert or update on intervallo
+for each row
+execute function check_data();
+
+create trigger check_data_evento
+before insert or update on evento
+for each row
+execute function check_data();
+\end{lstlisting}
+\subsection{\texttt{Create\_Programma\_Sessione}}
+Il trigger \texttt{Create\_Programma\_Sessione} viene attivato subito dopo aver inserito una nuova sessione ed effettua l'inserimento di un programma vuoto associato alla sessione.
+\begin{lstlisting}[language=SQL, caption={\texttt{create\_programma\_sessione}},style=mystyle]
+	create or replace function create_programma_sessione() 
+	returns trigger as $$
+	begin
+		insert into programma(id_sessione) values (new.id_sessione);
+	return new;
+	end;
+	$$ language plpgsql;
+	
+	create trigger create_programma_sessione
+	after insert on sessione
+	for each row
+	execute function create_programma_sessione();
+\end{lstlisting}
+\subsection{\texttt{Check\_Sala\_Sessione}}
+Quando inseriamo una sessione bisogna stare attenti che la chiave esterna della sala sia effettivamente una sala appartenente alla sede che ospita la conferenza della sessione in questione. Il trigger \texttt{check\_sala\_sessione} effettua quindi questo controllo prima di ciascun inserimento nella tabella \textsc{Sessione}:
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace function check_sala_sessione() 
+	returns trigger as $$
+	declare
+		sede integer;
+		sala integer;
+	begin
+		select id_sede into sede
+		from conferenza
+		where id_conferenza = new.id_conferenza;
+	
+		select id_sala into sala
+		from sala
+		where id_sala = new.id_sala;
+		
+		if sala is null then -- Nulla da controllare
+			return new;
+		end if;
+		
+		IF sala NOT IN (
+			SELECT id_sala
+			FROM sala
+			WHERE id_sede = sede
+		) THEN
+			RAISE EXCEPTION 'La sala selezionata non appartiene alla sede della conferenza';
+		END IF;
+		
+		return new;
+	end;
+	$$ language plpgsql;
+	
+	
+	create trigger check_sala_sessione
+	before insert or update on sessione
+	for each row
+	execute function check_sala_sessione();
+\end{lstlisting}
+\subsection{\texttt{Check\_Data\_Sessione}}
+Analogamente ai trigger \ref{trigger:check_data} si definisce il trigger \texttt{check\_data\_sessione} che controlla che le date di inizio e di fine di ciascuna sessione siano coerenti con quelle della relativa conferenza:
+\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{check\_data\_sessione}}]
+	create or replace function check_data_sessione() 
+	returns trigger as $$
+	declare
+		inizio_conferenza timestamp;
+		fine_conferenza timestamp;
+	begin
+		select inizio, fine into inizio_conferenza,fine_conferenza
+		from conferenza
+		where id_conferenza = new.id_conferenza;
+	
+		if (new.inizio < inizio_conferenza OR new.fine > fine_conferenza) then
+			raise exception 'Gli orari non sono compatibili con quelli della conferenza';
+		end if;
+		return new;
+	end;
+	$$ language plpgsql;
+	
+	create trigger check_data_sessione
+	before insert or update on sessione
+	for each row
+	execute function check_data_sessione();
+\end{lstlisting}
+\subsection{\texttt{Check\_Coordinatore\_Sessione}}
+Quando si specifica il coordinatore della sessione bisogna controllare che questi appartenga al comitato scientifico che è il gruppo di organizzatori che si occupano della gestione delle conferenze e delle sessioni:
+\begin{lstlisting}[caption={check\_coordinatore\_sessione}, language=sql, style=mystyle]
+create or replace function check_coordinatore_sessione() 
+returns trigger as $$
+declare 
+id_comitato_scientifico_conferenza integer;
+begin
+
+select comitato_s into id_comitato_scientifico_conferenza
+from conferenza c
+where c.id_conferenza = new.id_conferenza;
+
+if (new.id_coordinatore is not null) then
+	if (id_comitato_scientifico_conferenza not in 
+		(select id_comitato from organizzatore_comitato 
+			where id_organizzatore = new.id_coordinatore))  then
+			raise exception 'Il coordinatore della sessione deve appartenere al comitato scientifico della conferenza';
+	end if;
+end if;
+return new;
+end;
+$$ language plpgsql;
+
+create trigger check_coordinatore_sessione
+before insert or update on sessione
+for each row
+execute function check_coordinatore_sessione();
+\end{lstlisting}
+\subsection{\texttt{Create\_Comitati\_Conferenza}}
+Gli enti che organizzano le conferenze nominano due comitati per ogni conferenza che organizzano. Per questo motivo, ogni volta che viene inserita una nuova conferenza viene attivato il trigger \texttt{create\_comitati\_conferenza} che si occupa di creare due nuovi comitati di tipologica \textit{scientifica} e \textit{locale} e associarli alla nuova conferenza appena create:
+\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{create\_comitati\_conferenza}}]
+create or replace function create_comitati_conferenza() 
+returns trigger as $$
+declare 
+	id_comitatoscientifico integer;
+	id_comitatolocale integer;
+begin
+	insert into comitato(tipologia) values ('scientifico') returning id_comitato into id_comitatoscientifico;
+	insert into comitato(tipologia) values ('locale') returning id_comitato into id_comitatolocale;
+	update conferenza 
+	set comitato_s = id_comitatoscientifico, 
+	comitato_l = id_comitatolocale 
+	where id_conferenza = new.id_conferenza;
+return new;
+end;
+$$ language plpgsql;
+
+create trigger create_comitati_conferenza
+after insert on conferenza
+for each row
+execute function create_comitati_conferenza();	
+\end{lstlisting}
+\subsection{\texttt{Check\_Comitati\_Conferenza}}
+Ogni volta che si aggiorna una conferenza bisogna controllare che le chiavi esterne dei due comitati si riferiscano sempre a comitati della tipologia richiesta:
+\begin{lstlisting}[language=SQL, caption={\texttt{check\_comitati\_conferenza}},style=mystyle]
+	create or replace function check_comitati_conferenza() returns trigger as $$
+	declare 
+	id_comitato_scientifico integer;
+	id_comitato_locale integer;
+	begin
+	select id_comitato into id_comitato_scientifico
+	from comitato
+	where id_comitato = new.comitato_s;
+	
+	select id_comitato into id_comitato_locale
+	from comitato
+	where id_comitato = new.comitato_l;
+	
+	IF id_comitato_scientifico IS NULL THEN
+	return new;
+	END IF;
+	
+	IF id_comitato_locale IS NULL THEN
+	Return new;
+	END IF;
+	
+	IF (select tipologia from comitato where id_comitato = id_comitato_scientifico) <> 'scientifico' THEN
+	RAISE EXCEPTION 'Il comitato scientifico deve essere scientifico';
+	END IF;
+	
+	IF (select tipologia from comitato where id_comitato = id_comitato_locale) <> 'locale' THEN
+	RAISE EXCEPTION 'Il comitato locale deve essere locale';
+	END IF;
+	
+	return new;
+	end;
+	$$ language plpgsql;
+	
+	create trigger check_comitati_conferenza
+	before update on conferenza
+	for each row
+	execute function check_comitati_conferenza();
+\end{lstlisting}
+\subsection{\texttt{Check\_Sala\_Sessione\_Unica}}
+Una sala non può ospitare più di una sessione alla volta.
+\begin{lstlisting}[caption={\texttt{Check\_sala\_sessione\_unica}}, language=SQL, style=mystyle]
+	create or replace function check_sala_sessione_unica() 
+	returns trigger as $$
+	declare
+		inizio_sessione timestamp;
+		fine_sessione timestamp;
+		sessioni cursor for 
+			select id_sessione 
+			from sessione 
+			where id_sala = new.id_sala;
+		sessione_id integer;
+	begin
+	
+	open sessioni;
+	loop
+		fetch sessioni into sessione_id;
+		exit when not found;
+		select inizio,fine into inizio_sessione,fine_sessione
+		from sessione
+		where id_sessione = sessione_id;
+		if (new.inizio >= inizio_sessione AND new.inizio <= fine_sessione) 
+		OR (new.fine >= inizio_sessione AND new.fine <= fine_sessione) then
+			raise exception 'Impossibile ospitare due sessioni';
+		end if;
+	end loop;
+	close sessioni;
+	return new;
+	end;
+	$$ language plpgsql;
+	
+	create trigger check_sala_sessione_unica
+	before insert or update on sessione
+	for each row
+	execute function check_sala_sessione_unica();
+\end{lstlisting}
+\subsection{\texttt{Check\_Organizzatore\_Comitato}}
+Ogni volta che si inserisce un nuovo organizzatore all'interno di un comitato bisogna controllare che questo appartenga ad uno degli enti che organizzano la conferenza.
+\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{Check\_organizzatori\_comitato}}]
+	create or replace function check_organizzatore_comitato() 
+	returns trigger as $$
+	declare
+		ente_id integer;
+	begin
+	
+	select id_ente into ente_id
+	from organizzatore o
+	where o.id_organizzatore = new.id_organizzatore;
+	
+	IF ente_id NOT IN (
+		SELECT id_ente
+		FROM ente_conferenza
+		WHERE id_conferenza IN (
+			SELECT id_conferenza
+			FROM conferenza
+			WHERE NEW.id_comitato 
+			IN (id_comitato_scientifico, id_comitato_locale)
+		)
+	) THEN
+		RAISE EXCEPTION 'L''organizzatore deve appartenere ad un ente che ha organizzato la conferenza';
+	END IF;
+	return new;
+	end;
+	$$ language plpgsql;
+	
+	create trigger check_organizzatore_comitato
+	before insert or update on organizzatore_comitato
+	for each row
+	execute function check_organizzatore_comitato();
+\end{lstlisting}
+\subsection{\texttt{Delete\_Sessioni\_Conferenza}}
+Nel caso in cui si volesse modificare la data di inizio o di fine di una conferenza vengono automaticamente cancellate le sessioni che si trovano escluse dal nuovo intervallo di date.
+\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{delete\_sessioni\_conferenza}}]
+	create or replace function delete_sessioni_conferenza() 
+	returns trigger as $$
+	declare
+	sessioni_cur cursor for 
+		select id_sessione 
+		from sessione 
+		where id_conferenza = old.id_conferenza;
+	sessione_id integer;
+	begin
+		open sessioni_cur;
+		loop
+			fetch sessioni_cur into sessione_id;
+			exit when not found;
+			if (select inizio
+				from sessione 
+				where id_sessione = sessione_id) < new.inizio 
+			OR (select fine 
+				from sessione 
+				where id_sessione = sessione_id) > new.fine then
+			delete from sessione where id_sessione = sessione_id;
+			end if;
+		end loop;
+		close sessioni_cur;
+		return new;
+	end;
+	$$ language plpgsql;
+	
+	create trigger delete_sessioni_conferenza
+	before update on conferenza
+	for each row
+	execute function delete_sessioni_conferenza();
+\end{lstlisting}
+\section{Funzioni e procedure}
+\subsection{\texttt{Show\_Conferenze\_By\_Date(date,date)}}
+La funzione \texttt{Show\_Conferenze\_By\_Date} prende in ingresso due date e restituisce l'insieme di tutte le conferenze comprese tra queste:
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace function show_conference_by_date(dataI date, dataF date)
+	returns setof conferenza as $$
+	begin
+	return query
+	select * from conferenza
+	where inizio >= start and fine <= dataF;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_Conferenze\_By\_Sede(integer)}}
+La funzione \texttt{Show\_Conferenze\_By\_Sede} prende in ingresso la chiave primaria di una sede e restituisce l'insieme di tutte le conferenze ospitate in quella determinata sede:
+\begin{lstlisting}[language=SQL, style=mystyle]
+create or replace function show_conferences_by_sede(sede int)
+returns setof conferenza as $$
+begin
+return query
+select * from conferenza
+where id_sede = sede;
+end;
+$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_comitato\_scientifico(integer)}}
+La funzione \texttt{Show\_comitato\_scientifico} prende in ingresso la chiave primaria di una conferenza e restituisce la lista di tutti i membri organizzatori appartenenti al comitato scientifico della conferenza:
+\begin{lstlisting}[language=SQL, style=mystyle]
+create or replace function 
+show_comitato_scientifico(conferenza int)
+returns setof organizzatore as $$
+begin
+return query
+select * from organizzatore
+where id_organizzatore in (
+	select id_organizzatore 
+	from organizzatore_comitato
+	where id_comitato = (
+		select id_comitato_scientifico 
+		from conferenza
+		where id_conferenza = conferenza));
+end;
+$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_comitato\_locale(integer)}}
+La funzione \texttt{Show\_comitato\_locale} prende in ingresso la chiave primaria di una conferenza e restituisce la lista di tutti i membri organizzatori appartenenti al comitato locale della conferenza:
+\begin{lstlisting}[language=SQL, style=mystyle]
+create or replace function show_comitato_locale(conferenza int)
+returns setof organizzatore as $$
+begin
+return query
+select * from organizzatore
+where id_organizzatore in (
+	select id_organizzatore 
+	from organizzatore_comitato
+	where id_comitato = (
+		select id_comitato_locale 
+		from conferenza
+		where id_conferenza = conferenza));
+end;
+$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_Partecipanti(integer)}}
+La funzione \texttt{Show\_Partecipanti} prende in ingresso la chiave primaria di una conferenza e restituisce tutti i dettagli dei partecipanti di \textit{tutte le sessioni} della conferenza.
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create or replace function show_partecipanti(conferenza int)
+	returns setof partecipante as $$
+	begin
+	return query
+	select * from partecipante
+	where id_partecipante in (
+		select id_partecipante 
+		from partecipazione
+		where id_sessione in (
+			select id_sessione 
+			from sessione
+			where id_conferenza = conferenza));
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_Sessioni(integer)}}
+La funzione \texttt{show\_sessioni} prende in ingresso la chiave primaria di una conferenza e restituisce tutti i dettagli delle sessioni.
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace function show_sessioni(conferenza int)
+	returns setof sessione as $$
+	begin
+	return query
+	select * from sessione
+	where id_conferenza = conferenza
+	order by inizio;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_interventi\_sessione(integer)}}
+La funzione \texttt{show\_interventi\_sessione} prende in ingresso la chiave primaria di una sessione e mostra tutti gli interventi presenti nel programma di tale sessione:
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace function 
+	show_interventi_sessione(sessione int)
+	returns table
+	(
+		titolo text,
+		inizio timestamp,
+		fine timestamp,
+		abstract text,
+		speaker text
+	)  as $$
+	declare 
+		programma int;
+	begin
+		select id_programma into programma
+		from programma
+		where id_sessione = sessione;
+	
+		select titolo,inizio,fine,abstract, s.nome || ' ' || s.cognome as speaker
+		from intervento i join speaker s on i.id_speaker = s.id_speaker
+		where i.id_programma = programma
+		order by inizio;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_intervalli\_sessione(integer)}}
+La funzione \texttt{show\_intervalli\_sessione} prende in ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace function 
+	show_intervalli_sessione(sessione int)
+	returns table
+	(
+		tipologia intervallo_st,
+		inizio timestamp,
+		fine timestamp
+	)  
+	as $$
+	declare 
+	programma int;
+	begin
+	select id_programma into programma
+	from programma
+	where id_sessione = sessione;
+	
+	select tipologia,inizio,fine
+	from intervallo i
+	where id_programma = programma
+	order by inizio;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_eventi\_sociali\_sessione(integer)}}
+La funzione \texttt{show\_eventi\_sociali\_sessione} prende in ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
+\begin{lstlisting}[language=SQL, style=mystyle]
+create or replace function 
+show_eventi_sociali_sessione(sessione int)
+returns table
+(id_evento text,
+tipologia text,
+inizio timestamp,
+fine timestamp) 
+as $$
+declare 
+programma int;
+begin
+select id_programma into programma
+from programma
+where id_sessione = sessione;
+
+select id_evento,tipologia,inizio,fine
+from evento
+where id_programma = programma
+order by inizio;
+end;
+$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_keynote\_sessione(integer)}}
+La funzione \texttt{show\_keynote\_sessione} prende in ingresso la chiave primaria di una sessione e mostra i dettagli del keynote speaker, se presente:
+\begin{lstlisting}[language=SQL, style=mystyle]
+create or replace function show_keynote_sessione(sessione int)
+returns table(
+id_speaker text,
+nome text,
+cognome text,
+titolo text,
+email text,
+ente text) 
+as $$
+declare
+speaker_id text;
+begin
+select id_programma into programma
+from programma
+where id_sessione = sessione;
+
+select id_keynote into speaker_id
+from programma
+where id_sessione = sessione;
+
+if not found then
+	raise notice 'Keynote non presente';
+else
+	select s.id_speaker,s.nome,s.cognome,s.titolo,s.email,e.nome
+	from speaker s join ente e on s.id_ente = e.id_ente
+	where s.id_speaker = speaker_id;
+end if;
+end;
+$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_Programma(integer)}}
+La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di una sessione e restituisce una tabella che mostra tutti gli appuntamenti in progamma in ordine cronologico:
+\begin{lstlisting}[language=SQL, style=mystyle]
+	CREATE OR REPLACE FUNCTION 
+	show_programma(sessione int)
+	RETURNS TABLE 
+	(
+		id_entry text,
+		appuntamento text,
+		inizio timestamp,
+		fine timestamp,
+		descrizione text,
+		speaker text
+	)
+	AS $$
+	DECLARE
+		programma text;
+	BEGIN
+	SELECT id_programma INTO programma
+	FROM programma
+	WHERE id_sessione = sessione;
+	
+	RETURN QUERY
+	SELECT *
+	FROM (
+	SELECT distinct i.id_intervento AS id_entry,
+	'intervento' AS appuntamento,
+	i.inizio,
+	i.fine,
+	i.abstract,
+	s.nome || ' ' || s.cognome AS speaker
+	FROM intervento i
+	JOIN speaker s ON i.id_speaker = s.id_speaker
+	WHERE i.id_programma = programma
+	
+	UNION ALL
+	
+	SELECT i2.id_intervallo AS id_entry,
+	'intervallo' AS appuntamento,
+	i2.inizio,
+	i2.fine,
+	tipologia::text as descrizione,
+	NULL
+	FROM intervallo i2
+	WHERE i2.id_programma = programma
+	
+	UNION ALL
+	
+	SELECT e.id_evento AS id_entry,
+	'evento' AS appuntamento,
+	e.inizio,
+	e.fine,
+	e.tipologia::text AS descrizione,
+	NULL
+	FROM evento e
+	WHERE e.id_programma = programma
+	) AS subquery
+	ORDER BY inizio;
+	END;
+	$$ LANGUAGE plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_Intervento(text,text,text,int,interval)}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create or replace procedure 
+	add_intervento(titolo text, abstract text, speaker text, sessione int,durata interval)
+	as $$
+	declare
+	programma text;
+	id_entry text;
+	query text;
+	category text;
+	fine_prev timestamp;
+	begin
+	select id_programma into programma
+	from programma
+	where id_sessione = sessione;
+	
+	select id,appuntamento,max(fine) into id_entry,category,fine_prev
+	from show_programma(sessione)
+	GROUP BY id, appuntamento;
+	
+	if(fine_prev is null) then
+	fine_prev := (select inizio from sessione where id_sessione = session);
+	end if;
+	
+	insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
+	values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
+	raise notice 'Inserimento completato';
+	exception
+	when others then
+	raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_Intervallo(text,int,interval)}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create or replace procedure 
+	add_intervallo(tipologia text,sessioneP int,durata interval)
+	as $$
+	declare
+	programma text;
+	id_entry text;
+	query text;
+	category text;
+	fine_prev timestamp;
+	begin
+	select id_programma into programma
+	from programma
+	where id_sessione = sessioneP;
+	
+	select id,appuntamento, max(fine) into id_entry,category,fine_prev
+	from show_programma(sessioneP)
+	GROUP BY id, appuntamento;
+	
+	if(fine_prev is null) then
+	fine_prev := (select inizio from sessione where id_sessione = sessioneP);
+	end if;
+	
+	insert into intervallo(tipologia,id_programma,inizio,fine)
+	values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
+	raise notice 'Inserimento completato';
+	exception
+	when others then
+	raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_evento(text,int,interval)}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create or replace procedure 
+	add_evento(tipologia text, session int, durata interval)
+	as $$
+	declare
+	programma text;
+	id_entry text;
+	query text;
+	category text;
+	fine_prev timestamp;
+	begin
+	select id_programma into programma
+	from programma
+	where id_sessione = session;
+	
+	select id, appuntamento, max(fine) into id_entry,category,fine_prev
+	from show_programma(session)
+	GROUP BY id, appuntamento;
+	
+	if(fine_prev is null) then
+	fine_prev := (select inizio from sessione where id_sessione = session);
+	end if;
+	
+	insert into evento(tipologia,id_programma,inizio,fine)
+	values (tipologia,programma,fine_prev,fine_prev+durata);
+	raise notice 'Inserimento completato';
+	exception
+	when others then
+	raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_Conferenza\_Details(text,timestamp,timestamp,integer,text)}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	CREATE OR REPLACE FUNCTION add_conferenza_details(nome text, inizio timestamp, fine timestamp, sede integer, abstract text)
+	RETURNS integer AS $$
+	DECLARE
+	id integer;
+	BEGIN
+	INSERT INTO conferenza(titolo, inizio, fine, id_sede, descrizione) 
+	VALUES (nome, inizio, fine, sede, abstract)
+	RETURNING id_conferenza INTO id;
+	raise notice 'Inserimento completato';
+	RETURN id;
+	EXCEPTION
+	WHEN OTHERS THEN
+	RAISE NOTICE 'Errore nell''inserimento di una conferenza: %', SQLERRM;
+	RETURN 0; 
+	END;
+	$$ LANGUAGE plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_ente(integer, integer)}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create or replace procedure 
+	add_ente(ente integer, conferenza integer)
+	as $$
+	begin
+	insert into ente_conferenza(id_ente,id_conferenza)
+	values (ente,conferenza);
+	raise notice 'Inserimento completato';
+	exception
+	when others then
+	raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_Sponsorizzazione(integer,numeric,char(3),integer)}}
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace procedure 
+	add_sponsorizzazione(sponsor integer, contributo numeric(1000,2), valuta char(3), conferenza integer)
+	as $$
+	begin
+	insert into sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
+	values (sponsor,contributo,valuta,conferenza);
+	raise notice 'Inserimento completato';
+	exception
+	when others then
+	raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_Sessione(text,timestamp,timestamp, integer,integer)}}
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace procedure 
+	add_sessione(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer)
+	as $$
+	begin
+	insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
+	values (titolo,inizio,fine,sala,conferenza);
+	raise notice 'Inserimento completato';
+	exception
+	when others then
+	raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_Partecipante(integer, integer)}}
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace procedure 
+	add_partecipante(partecipante integer, sessione integer)
+	as $$
+	begin
+	insert into partecipante_sessione(id_partecipante,id_sessione)
+	values (partecipante,sessione);
+	raise notice 'Inserimento completato';
+	exception
+	when others then
+	raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_Enti(integer,text)}}
+\begin{lstlisting}[language=SQL, style=mystyle]
+	CREATE OR REPLACE PROCEDURE 
+	add_enti(conferenza integer, sigle text)
+	AS $$
+	DECLARE
+	sigla_ente text;
+	ente_id integer;
+	BEGIN
+	FOR sigla_ente IN SELECT unnest(string_to_array(sigle, ',')) LOOP
+	SELECT id_ente INTO ente_id FROM ente WHERE sigla = sigla_ente;
+
+	INSERT INTO ente_conferenza(id_ente, id_conferenza) VALUES (ente_id, conferenza);
+	END LOOP;
+	RAISE NOTICE 'Inserimento completato';
+	
+	EXCEPTION
+	WHEN OTHERS THEN
+	RAISE EXCEPTION 'Errore durante l''inserimento delle tuple nella tabella ente_conferenza: %', SQLERRM;
+	END;
+	$$ LANGUAGE plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Add\_Conferenza(text,timestamp,timestamp,integer, text, text)}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create or replace procedure 
+	add_conferenza(nome text, inizio timestamp, fine timestamp, sede integer, descrizione text, sigle text)
+	as $$
+	declare
+	id_conferenza int;
+	begin
+	id_conferenza := add_conferenza_details(nome,inizio,fine,sede,descrizione);
+	call add_enti(id_conferenza,sigle);
+	exception
+	when others then
+	raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Slitta\_Conferenza(interval)}}
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace procedure 
+	slitta_conferenza(id_conferenza integer, durata interval)
+	as $$
+	declare
+		id_sessione integer;
+		id_intervento text;
+		id_evento text;
+		id_intervallo text;
+		sessioni cursor for 
+			select id_sessione 
+			from sessione 
+			where id_conferenza = id_conferenza;
+			
+		interventi cursor for
+			select id_intervento 
+			from intervento i join programma p 
+			on i.id_programma = p.id_programma 
+			where p.id_sessione in 
+			(select id_sessione 
+			from sessione 
+			where id_conferenza = id_conferenza);
+			
+		intervalli cursor for
+			select id_intervallo 
+			from intervallo i join programma p 
+			on i.id_programma = p.id_programma 
+			where p.id_sessione in 
+				(select id_sessione 
+				from sessione 
+				where id_conferenza = id_conferenza);
+				
+		eventi cursor for
+			select id_evento 
+			from evento e join programma p 
+			on e.id_programma = p.id_programma 
+			where p.id_sessione in 
+				(select id_sessione 
+				from sessione 
+				where id_conferenza = id_conferenza);
+	begin
+	
+		alter table conferenza disable trigger check_data_conferenza;
+		alter table sessione disable trigger check_data_sessione;
+		alter table interventi disable trigger check_data_intervento;
+		alter table intervallo disable trigger check_data_intervallo;
+		alter table evento disable trigger check_data_evento;
+		alter table conferenza disable trigger delete_sessioni_conferenza;
+		
+		update conferenza
+		set inizio = inizio + durata, fine = fine + durata
+		where id_conferenza = id_conferenza;
+	
+		open sessioni;
+		loop
+			fetch sessioni into id_sessione;
+			exit when not found;
+			
+			update sessione
+			set inizio = inizio + durata, fine = fine + durata
+			where id_sessione = id_sessione;
+		
+			open interventi;
+			loop
+				fetch interventi into id_intervento;
+				exit when not found;
+	
+				update intervento
+				set inizio = inizio + durata, fine = fine + durata
+				where id_intervento = id_intervento;
+			end loop;
+			close interventi;
+			
+			open intervalli;
+			loop
+				fetch intervalli into id_intervallo;
+				exit when not found;
+	
+				update intervallo
+				set inizio = inizio + durata, fine = fine + durata
+				where id_intervallo = id_intervallo;
+			end loop;
+			close intervalli;
+			
+			open eventi;
+			loop
+				fetch eventi into id_evento;
+				exit when not found;
+	
+				update evento
+				set inizio = inizio + durata, fine = fine + durata
+				where id_evento = id_evento;
+			end loop;
+			close eventi;
+		end loop;
+		close sessioni;
+		raise notice 'Slittamento completato';
+	
+		alter table conferenza enable trigger check_data_conferenza;
+		alter table sessione enable trigger check_data_sessione;
+		alter table evento enable trigger check_data_evento;
+		alter table intervallo enable trigger check_data_intervallo;
+		alter table interventi enable trigger check_data_intervento;
+	exception
+		when others then
+			raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}
+
+\subsection{\texttt{Show\_members()}}
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace function 
+	show_members(conferenza integer)
+	returns table 
+	(
+	id integer, 
+	nome text, 
+	cognome text, 
+	email text,
+	titolo titolo_st, 
+	sigla varchar(7)
+	) as $$
+	begin
+	return query
+	select o.id_organizzatore, o.nome, o.cognome, o.email,o.titolo, e.sigla
+	from organizzatore o join ente_conferenza ec natural join ente e  
+	on o.id_ente = ec.id_ente
+	where ec.id_conferenza = conferenza
+	GROUP by e.sigla;
+	end;
+	$$ language plpgsql;
+\end{lstlisting}

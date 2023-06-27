@@ -1,5 +1,3 @@
---Funzioni ausiliarie per la gestione del database
-
 --Funzione che restituisce tutte le conferenze che si svolgono in un determinato periodo di tempo
 create or replace function show_conference_by_date(dataI date, dataF date)
 returns setof conferenza as $$
@@ -116,6 +114,7 @@ $$ language plpgsql;
 create or replace function show_intervalli_sessione(sessione int)
 returns table
 (
+id_intervallo text,
 tipologia intervallo_st,
 inizio timestamp,
 fine timestamp
@@ -128,7 +127,7 @@ begin
     from programma
     where id_sessione = sessione;
 
-    select tipologia,inizio,fine
+    select id_intervallo,tipologia,inizio,fine
     from intervallo i
     where id_programma = programma
     order by inizio;
@@ -138,9 +137,11 @@ $$ language plpgsql;
 -- Funzione che mostra tutti gli eventi sociali di una sessione in ordine cronologico
 create or replace function show_eventi_sociali_sessione(sessione int)
 returns table
-(id_evento int,
+(
+id_evento text,
 tipologia text,
-inizio timestamp) 
+inizio timestamp,
+fine timestamp) 
  as $$
 declare 
     programma int;
@@ -149,8 +150,8 @@ begin
     from programma
     where id_sessione = sessione;
 
-    select id_evento,tipologia,inizio
-    from evento_sociale
+    select id_evento,tipologia,inizio,fine
+    from evento
     where id_programma = programma
     order by inizio;
 end;
@@ -159,7 +160,7 @@ $$ language plpgsql;
 -- Funzione che mostra i dettagli del keynote speaker di una sessione
 create or replace function show_keynote_sessione(sessione int)
 returns table(
-id_speaker int,
+id_speaker text,
 nome text,
 cognome text,
 titolo text,
@@ -186,7 +187,7 @@ $$ language plpgsql;
 -- Funzione che mostra tutti gli elementi all'interno di un programma 
 CREATE OR REPLACE FUNCTION show_programma(sessione int)
 RETURNS TABLE (
-    id int,
+    id_entry text,
     appuntamento text,
     inizio timestamp,
     fine timestamp,
@@ -195,7 +196,7 @@ RETURNS TABLE (
 )
 AS $$
 DECLARE
-    programma int;
+    programma text;
 BEGIN
     SELECT id_programma INTO programma
     FROM programma
@@ -204,7 +205,7 @@ BEGIN
     RETURN QUERY
     SELECT *
     FROM (
-        SELECT distinct i.id_intervento AS id,
+        SELECT distinct i.id_intervento AS id_entry,
                'intervento' AS appuntamento,
                i.inizio,
                i.fine,
@@ -216,7 +217,7 @@ BEGIN
 
         UNION ALL
 
-        SELECT i2.id_intervallo AS id,
+        SELECT i2.id_intervallo AS id_entry,
                'intervallo' AS appuntamento,
                i2.inizio,
                i2.fine,
@@ -227,7 +228,7 @@ BEGIN
 
         UNION ALL
 
-        SELECT e.id_evento AS id,
+        SELECT e.id_evento AS id_entry,
                'evento' AS appuntamento,
                e.inizio,
                e.fine,
@@ -241,11 +242,11 @@ END;
 $$ LANGUAGE plpgsql;
 
 --Funzione per aggiungere un nuovo intervento nel programma di una sessione
-create or replace procedure add_intervento(titolo text, abstract text, speaker int, sessione int,durata interval)
+create or replace procedure add_intervento(titolo text, abstract text, speaker text, sessione int,durata interval)
 as $$
 declare
-    programma int;
-    id_entry int;
+    programma text;
+    id_entry text;
     query text;
     category text;
     fine_prev timestamp;
@@ -275,8 +276,8 @@ $$ language plpgsql;
 create or replace procedure add_intervallo(tipologia text , sessioneP int,durata interval)
 as $$
 declare
-    programma int;
-    id_entry int;
+    programma text;
+    id_entry text;
     query text;
     category text;
     fine_prev timestamp;
@@ -306,8 +307,8 @@ $$ language plpgsql;
 create or replace procedure add_evento(tipologia text, session int, durata interval)
 as $$
 declare
-    programma int;
-    id_entry int;
+    programma text;
+    id_entry text;
     query text;
     category text;
     fine_prev timestamp;
@@ -440,95 +441,131 @@ end;
 $$ language plpgsql;
 
 -- Procedura per slittare una conferenza in avanti nel tempo
-create or replace procedure slitta_conferenza(id_conferenza integer, durata interval)
-as $$
-declare
-	id_sessione integer;
-	id_intervento integer;
-	id_evento integer;
-	id_intervallo integer;
-    sessioni cursor for 
-        select id_sessione 
-        from sessione 
-        where id_conferenza = id_conferenza;
-    interventi cursor for
-        select id_intervento 
-        from intervento i join programma p on i.id_programma = p.id_programma 
-        where p.id_sessione in (select id_sessione from sessione where id_conferenza = id_conferenza);
-    intervalli cursor for
-        select id_intervallo 
-        from intervallo i join programma p on i.id_programma = p.id_programma 
-        where p.id_sessione in (select id_sessione from sessione where id_conferenza = id_conferenza);
-    eventi cursor for
-        select id_evento 
-        from evento e join programma p on e.id_programma = p.id_programma 
-        where p.id_sessione in (select id_sessione from sessione where id_conferenza = id_conferenza);
-begin
-    alter table conferenza disable trigger check_data_conferenza;
-    update conferenza
-    set inizio = inizio + durata, fine = fine + durata
-    where id_conferenza = id_conferenza;
-    open sessioni;
-    loop
-        -- Seleziono l'id delle sessioni della conferenza
-        fetch sessioni into id_sessione;
-        exit when not found;
-        alter table sessione disable trigger check_data_sessione;
-        update sessione
-        set inizio = inizio + durata, fine = fine + durata
-        where id_sessione = id_sessione;
-        alter table sessione enable trigger check_data_sessione;
-        open interventi;
-        loop
-            fetch interventi into id_intervento;
-            exit when not found;
-            alter table interventi disable trigger check_data_intervento;
-            update intervento
-            set inizio = inizio + durata, fine = fine + durata
-            where id_intervento = id_intervento;
-            alter table interventi enable trigger check_data_intervento;
-        end loop;
-        close interventi;
-        open intervalli;
-        loop
-            fetch intervalli into id_intervallo;
-            exit when not found;
-            alter table intervallo disable trigger check_data_intervallo;
-            update intervallo
-            set inizio = inizio + durata, fine = fine + durata
-            where id_intervallo = id_intervallo;
-            alter table intervallo enable trigger check_data_intervallo;
-        end loop;
-        close intervalli;
-        open eventi;
-        loop
-            fetch eventi into id_evento;
-            exit when not found;
-            alter table evento disable trigger check_data_evento;
-            update evento
-            set inizio = inizio + durata, fine = fine + durata
-            where id_evento = id_evento;
-            alter table evento enable trigger check_data_evento;
-        end loop;
-        close eventi;
-    end loop;
-    close sessioni;
-    raise notice 'Slittamento completato';
-    alter table conferenza enable trigger check_data_conferenza;
-    exception
-        when others then
-            raise notice '%', sqlerrm;
-end;
-$$ language plpgsql;
+	create or replace procedure 
+	slitta_conferenza(id_conferenza integer, durata interval)
+	as $$
+	declare
+		id_sessione integer;
+		id_intervento text;
+		id_evento text;
+		id_intervallo text;
+		sessioni cursor for 
+			select id_sessione 
+			from sessione 
+			where id_conferenza = id_conferenza;
+			
+		interventi cursor for
+			select id_intervento 
+			from intervento i join programma p 
+			on i.id_programma = p.id_programma 
+			where p.id_sessione in 
+			(select id_sessione 
+			from sessione 
+			where id_conferenza = id_conferenza);
+			
+		intervalli cursor for
+			select id_intervallo 
+			from intervallo i join programma p 
+			on i.id_programma = p.id_programma 
+			where p.id_sessione in 
+				(select id_sessione 
+				from sessione 
+				where id_conferenza = id_conferenza);
+				
+		eventi cursor for
+			select id_evento 
+			from evento e join programma p 
+			on e.id_programma = p.id_programma 
+			where p.id_sessione in 
+				(select id_sessione 
+				from sessione 
+				where id_conferenza = id_conferenza);
+	begin
+	
+		alter table conferenza disable trigger check_data_conferenza;
+		alter table sessione disable trigger check_data_sessione;
+		alter table interventi disable trigger check_data_intervento;
+		alter table intervallo disable trigger check_data_intervallo;
+		alter table evento disable trigger check_data_evento;
+		alter table conferenza disable trigger delete_sessioni_conferenza;
+		
+		update conferenza
+		set inizio = inizio + durata, fine = fine + durata
+		where id_conferenza = id_conferenza;
+	
+		open sessioni;
+		loop
+			fetch sessioni into id_sessione;
+			exit when not found;
+			
+			update sessione
+			set inizio = inizio + durata, fine = fine + durata
+			where id_sessione = id_sessione;
+		
+			open interventi;
+			loop
+				fetch interventi into id_intervento;
+				exit when not found;
+	
+				update intervento
+				set inizio = inizio + durata, fine = fine + durata
+				where id_intervento = id_intervento;
+			end loop;
+			close interventi;
+			
+			open intervalli;
+			loop
+				fetch intervalli into id_intervallo;
+				exit when not found;
+	
+				update intervallo
+				set inizio = inizio + durata, fine = fine + durata
+				where id_intervallo = id_intervallo;
+			end loop;
+			close intervalli;
+			
+			open eventi;
+			loop
+				fetch eventi into id_evento;
+				exit when not found;
+	
+				update evento
+				set inizio = inizio + durata, fine = fine + durata
+				where id_evento = id_evento;
+			end loop;
+			close eventi;
+		end loop;
+		close sessioni;
+		raise notice 'Slittamento completato';
+	
+		alter table conferenza enable trigger check_data_conferenza;
+		alter table sessione enable trigger check_data_sessione;
+		alter table evento enable trigger check_data_evento;
+		alter table intervallo enable trigger check_data_intervallo;
+		alter table interventi enable trigger check_data_intervento;
+	exception
+		when others then
+			raise notice '%', sqlerrm;
+	end;
+	$$ language plpgsql;
 
 -- Funzione che mostra tutti i membri degli enti organizzatori di una conferenza
 create or replace function show_members(conferenza integer)
-returns table (id integer, nome text, cognome text, email text,titolo titolo_st, sigla varchar(7))
-as $$
+returns table 
+(
+    id integer, 
+    nome text, 
+    cognome text, 
+    email text,
+    titolo titolo_st, 
+    sigla varchar(7)
+) as $$
 begin
     return query
     select o.id_organizzatore, o.nome, o.cognome, o.email,o.titolo, e.sigla
-    from organizzatore o join ente_conferenza ec natural join ente e  on o.id_ente = ec.id_ente
-    where ec.id_conferenza = conferenza;
+    from organizzatore o join ente_conferenza ec natural join ente e  
+    on o.id_ente = ec.id_ente
+    where ec.id_conferenza = conferenza
+    GROUP by e.sigla;
 end;
 $$ language plpgsql;
