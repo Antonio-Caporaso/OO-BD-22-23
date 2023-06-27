@@ -1,9 +1,11 @@
 \chapter{Implementazione fisica}
+
 \section{Definizione delle tabelle}
 \lstinputlisting[language=SQL,style=mystyle,fontadjust]{Scripts/Tables.sql}
 \section{Definizione dei trigger}
 \subsection{\texttt{Check\_Programma\_Entry}}
 In un programma non devono esserci eventi, intervalli o interventi che si sovrappongono. Per questo motivo definiamo il trigger \texttt{check\_programma\_entry} che viene eseguito per ogni inserimento o aggiornamento nelle tabelle \textsc{Intervento}, \textsc{Intervallo} ed \textsc{Evento}.
+
 \begin{lstlisting}[language=SQL,style=mystyle,caption={check\_programma\_entry}]
 	create or replace function check_programma() 
 	returns trigger as $$
@@ -21,17 +23,14 @@ In un programma non devono esserci eventi, intervalli o interventi che si sovrap
 			select id_intervento 
 			from intervento 
 			where id_programma = new.id_programma;
-			
 		intervalli_cur cursor for 
 			select id_intervallo 
 			from intervallo 
-			where id_programma = new.id_programma;
-			
+			where id_programma = new.id_programma;	
 		eventi_cur cursor for 
 			select id_evento 
 			from evento 
 			where id_programma = new.id_programma;
-
 	begin
 		/* Controlliamo che il punto non si sovrapponga con
 		 * ciascun punto gia' presente nel programma */
@@ -48,7 +47,6 @@ In un programma non devono esserci eventi, intervalli o interventi che si sovrap
 			end if;
 		end loop;
 		close interventi_cur;
-		
 		open intervalli_cur;
 		loop 
 			fetch intervalli_cur into intervallo_id;
@@ -61,7 +59,6 @@ In un programma non devono esserci eventi, intervalli o interventi che si sovrap
 			end if;
 		end loop;
 		close intervalli_cur;
-		
 		open eventi_cur;
 		loop 
 		fetch eventi_cur into evento_id;
@@ -74,11 +71,10 @@ In un programma non devono esserci eventi, intervalli o interventi che si sovrap
 		end if;
 		end loop;
 		close eventi_cur;
-		
 	return new;
 	end;
-	$$ language plpgsql;
-	
+	$$ 
+	language plpgsql;
 	create trigger check_programma
 	before insert or update on intervento
 	for each row
@@ -1028,3 +1024,4 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	end;
 	$$ language plpgsql;
 \end{lstlisting}
+\subsection{Definizione delle viste}
