@@ -504,7 +504,7 @@ La funzione \texttt{show\_sessioni} prende in ingresso la chiave primaria di una
 \end{lstlisting}
 \subsection{\texttt{Show\_interventi\_sessione(integer)}}
 La funzione \texttt{show\_interventi\_sessione} prende in ingresso la chiave primaria di una sessione e mostra tutti gli interventi presenti nel programma di tale sessione:
-\begin{lstlisting}[language=SQL, style=mystyle]
+\begin{lstlisting}[language=SQL,style=mystyle]
 	create or replace function 
 	show_interventi_sessione(sessione int)
 	returns table
@@ -529,9 +529,10 @@ La funzione \texttt{show\_interventi\_sessione} prende in ingresso la chiave pri
 	end;
 	$$ language plpgsql;
 \end{lstlisting}
+
 \subsection{\texttt{Show\_intervalli\_sessione(integer)}}
 La funzione \texttt{show\_intervalli\_sessione} prende in ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
-\begin{lstlisting}[language=SQL, style=mystyle]
+\begin{lstlisting}[language=SQL,style=mystyle]
 	create or replace function 
 	show_intervalli_sessione(sessione int)
 	returns table
@@ -553,11 +554,12 @@ La funzione \texttt{show\_intervalli\_sessione} prende in ingresso la chiave pri
 	where id_programma = programma
 	order by inizio;
 	end;
-	$$ language plpgsql;
+	$$ 
+	language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_eventi\_sociali\_sessione(integer)}}
 La funzione \texttt{show\_eventi\_sociali\_sessione} prende in ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
-\begin{lstlisting}[language=SQL, style=mystyle]
+\begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function 
 show_eventi_sociali_sessione(sessione int)
 returns table
@@ -582,7 +584,7 @@ $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_keynote\_sessione(integer)}}
 La funzione \texttt{show\_keynote\_sessione} prende in ingresso la chiave primaria di una sessione e mostra i dettagli del keynote speaker, se presente:
-\begin{lstlisting}[language=SQL, style=mystyle]
+\begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function show_keynote_sessione(sessione int)
 returns table(
 id_speaker text,
@@ -615,7 +617,7 @@ $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_Programma(integer)}}
 La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di una sessione e restituisce una tabella che mostra tutti gli appuntamenti in progamma in ordine cronologico:
-\begin{lstlisting}[language=SQL, style=mystyle]
+\begin{lstlisting}[language=SQL,style=mystyle]
 	CREATE OR REPLACE FUNCTION 
 	show_programma(sessione int)
 	RETURNS TABLE 
@@ -853,7 +855,7 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	$$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Enti(integer,text)}}
-\begin{lstlisting}[language=SQL, style=mystyle]
+\begin{lstlisting}[language=SQL,style=mystyle]
 	CREATE OR REPLACE PROCEDURE 
 	add_enti(conferenza integer, sigle text)
 	AS $$
@@ -891,7 +893,7 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	$$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Slitta\_Conferenza(interval)}}
-\begin{lstlisting}[language=SQL, style=mystyle]
+\begin{lstlisting}[language=SQL,style=mystyle]
 	create or replace procedure 
 	slitta_conferenza(id_conferenza integer, durata interval)
 	as $$
@@ -1002,7 +1004,7 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 \end{lstlisting}
 
 \subsection{\texttt{Show\_members()}}
-\begin{lstlisting}[language=SQL, style=mystyle]
+\begin{lstlisting}[language=SQL,style=mystyle]
 	create or replace function 
 	show_members(conferenza integer)
 	returns table 
@@ -1024,4 +1026,110 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	end;
 	$$ language plpgsql;
 \end{lstlisting}
-\subsection{Definizione delle viste}
+\subsection{\texttt{Show\_percentage\_interventi}(int,int)}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create or replace function 
+	show_percentage_interventi(mese int, anno int)
+	returns table
+	(
+		sigla varchar(7),
+		percentuale text
+	) as $$
+	declare
+	totale int;
+	begin
+	select count(*) into totale
+	from intervento
+	where date_part('month',inizio) = mese and date_part('year',inizio) = anno;
+	
+	return query
+	select e.sigla, (count(*)*100/totale)::text || '%'
+	from intervento i join speaker s 
+	on i.id_speaker = s.id_speaker join ente e 
+	on s.id_ente = e.id_ente
+	where date_part('month',inizio) = mese and date_part('year',inizio) = anno
+	group by e.sigla;
+	end;
+	$$ 
+	language plpgsql;
+\end{lstlisting}
+\subsection{\texttt{Show\_percentage(int)}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create or replace function 
+	show_percentage_interventi(anno int)
+	returns table
+	(
+		sigla varchar(7),
+		percentuale text
+	) as $$
+	declare
+	totale int;
+	begin
+	select count(*) into totale
+	from intervento
+	where date_part('year',inizio) = anno;
+	
+	return query
+	select e.sigla, (count(*)*100/totale)::text || '%'
+	from intervento i join speaker s 
+	on i.id_speaker = s.id_speaker join ente e 
+	on s.id_ente = e.id_ente
+	where date_part('year',inizio) = anno
+	group by e.sigla;
+	end;
+	$$ 
+	language plpgsql;
+\end{lstlisting}
+\section{Definizione delle viste}
+\subsection{\texttt{SediView}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view SediView as 
+	select s.nome as Sede, 
+	i.via ||', ' 
+	|| i.civico
+	|| ', ' 
+	||  i.cap 
+	||', ' 
+	|| i.city 
+	|| ' (' 
+	|| i.provincia 
+	||'), '
+	|| i.nazione as Indirizzo
+	from sede s natural join indirizzo i;
+\end{lstlisting}
+\subsection{\texttt{Conferenze\_Sede}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view conferenze_sede as
+	select s.nome as Sede, count(id_conferenza) as Numero_Conferenze
+	from sede s,conferenza c
+	where s.id_sede = c.id_sede
+	group by s.nome;
+\end{lstlisting}
+\subsection{\texttt{Interventi\_Speaker}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view interventi_speaker as
+	select s.nome || ' ' || s.cognome as Speaker, count(i.id_intervento)
+	from speaker s, intervento i 
+	where s.id_speaker = i.id_speaker
+	group by s.nome,s.cognome;
+\end{lstlisting}
+\subsection{\texttt{Partecipanti\_Sessione}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view partecipanti_sessioni as
+	select s.titolo as Sessione, 
+		count(p.id_partecipante) as Numero_partecipanti
+	from sessione s, partecipazione p 
+	where s.id_sessione = p.id_sessione
+	group by s.titolo;
+\end{lstlisting}
+\subsection{\texttt{Partecipanti\_Conferenze}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view partecipanti_conferenze as
+	select c.titolo as Conferenza, 
+		count(p.id_partecipante) as Numero_partecipanti
+	from conferenza c, sessione s, partecipazione p
+	where c.id_conferenza = s.id_conferenza 
+	and s.id_sessione = p.id_sessione
+	group by c.titolo;
+	
+\end{lstlisting}

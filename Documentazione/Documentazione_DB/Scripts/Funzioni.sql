@@ -569,3 +569,51 @@ begin
     GROUP by e.sigla;
 end;
 $$ language plpgsql;
+
+--Funzione che calcola la percentuale di enti sulla base degli interventi in un preciso mese
+create or replace function show_percentage_interventi(mese int, anno int)
+returns table
+(
+    sigla varchar(7),
+    percentuale text
+) as $$
+declare
+    totale int;
+begin
+    select count(*) into totale
+    from intervento
+    where date_part('month',inizio) = mese and date_part('year',inizio) = anno;
+
+    return query
+    select e.sigla, (count(*)*100/totale)::text || '%'
+    from intervento i join speaker s 
+    on i.id_speaker = s.id_speaker join ente e 
+    on s.id_ente = e.id_ente
+    where date_part('month',inizio) = mese and date_part('year',inizio) = anno
+    group by e.sigla;
+end;
+$$ language plpgsql;
+
+--Funzione che calcola la percentuale di enti sulla base degli interventi in un preciso anno
+create or replace function show_percentage_interventi(anno int)
+returns table
+(
+    sigla varchar(7),
+    percentuale text
+) as $$
+declare
+    totale int;
+begin
+    select count(*) into totale
+    from intervento
+    where date_part('year',inizio) = anno;
+
+    return query
+    select e.sigla, (count(*)*100/totale)::text || '%'
+    from intervento i join speaker s 
+    on i.id_speaker = s.id_speaker join ente e 
+    on s.id_ente = e.id_ente
+    where date_part('year',inizio) = anno
+    group by e.sigla;
+end;
+$$ language plpgsql;
