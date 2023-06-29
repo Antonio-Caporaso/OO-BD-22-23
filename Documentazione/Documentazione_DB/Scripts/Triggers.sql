@@ -370,3 +370,29 @@ create trigger delete_sessioni_conferenza
 before update on conferenza
 for each row
 execute function delete_sessioni_conferenza();
+
+-- Ogni volta che aggiungo un partecipante alla sessione devo controllare che la capienza della sala non sia stata raggiunta
+create or replace function check_capienza_sala() returns trigger as $$
+declare
+    capienza_s integer;
+    partecipanti integer;
+begin
+    select capienza into capienza_s
+    from sala
+    where id_sala = new.id_sala;
+    
+    select count(*) into partecipanti
+    from partecipante
+    where id_sessione = new.id_sessione;
+    
+    if (partecipanti >= capienza_s) then
+        raise exception 'La capienza della sala è stata raggiunta';
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger check_capienza_sala
+before insert on partecipazione
+for each row
+execute function check_capienza_sala();

@@ -370,7 +370,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Funzione per l'aggiunta di un ente organizzatore di una conferenza
-create or replace procedure add_ente(ente integer, conferenza text)
+create or replace procedure add_ente(ente text, conferenza integer)
 as $$
 begin
     insert into ente_conferenza(id_ente,id_conferenza)
