@@ -13,9 +13,9 @@ declare
     fine_intervallo timestamp;
     inizio_intervento timestamp;
     fine_intervento timestamp;
-    intervento_id integer;
-    intervallo_id integer;
-    evento_id integer;
+    intervento_id text;
+    intervallo_id text;
+    evento_id text;
     interventi_cur cursor for select id_intervento from intervento where id_programma = new.id_programma;
     intervalli_cur cursor for select id_intervallo from intervallo where id_programma = new.id_programma;
     eventi_cur cursor for select id_evento from evento where id_programma = new.id_programma;
@@ -27,8 +27,8 @@ loop
     select inizio,fine into inizio_intervento,fine_intervento
     from intervento
     where id_intervento = intervento_id;
-    if (inizio_intervento <= new.inizio OR fine_intervento >= new.fine) then
-        raise exception 'Impossibile inserire un punto del programma in questo orario';
+    if (new.inizio>=inizio_intervento AND new.fine<=fine_intervento) then
+        raise exception 'Impossibile inserire questo intervento in questo orario';
     end if;
 end loop;
 close interventi_cur;
@@ -39,8 +39,8 @@ loop
     select inizio,fine into inizio_intervallo,fine_intervallo
     from intervallo
     where id_intervallo = intervallo_id;
-    if (inizio_intervallo <= new.inizio OR fine_intervallo >= new.fine) then
-        raise exception 'Impossibile inserire un punto del programma in questo orario';
+    if (new.inizio>=inizio_intervallo AND new.fine<=fine_intervallo) then
+        raise exception 'Impossibile inserire questo intervallo in questo orario';
     end if;
 end loop;
 close intervalli_cur;
@@ -51,8 +51,8 @@ loop
     select inizio,fine into inizio_evento,fine_evento
     from evento
     where id_evento = evento_id;
-    if (inizio_evento <= new.inizio OR fine_evento >= new.fine) then
-        raise exception 'Impossibile inserire un punto del programma in questo orario';
+    if (new.inizio>=inizio_evento AND new.fine<=fine_evento) then
+        raise exception 'Impossibile inserire questo evento in questo orario';
     end if;
 end loop;
 close eventi_cur;
@@ -146,7 +146,7 @@ begin
         FROM sala
         WHERE id_sede = sede
     ) THEN
-        RAISE EXCEPTION 'La sala selezionata non appartiene alla sede della conferenza';
+        RAISE exception 'La sala selezionata non appartiene alla sede della conferenza';
     END IF;
     
     return new;

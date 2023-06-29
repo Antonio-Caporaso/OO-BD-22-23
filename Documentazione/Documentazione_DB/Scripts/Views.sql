@@ -41,3 +41,10 @@ from conferenza c, sessione s, partecipazione p
 where c.id_conferenza = s.id_conferenza and s.id_sessione = p.id_sessione
 group by c.titolo;
 
+-- Vista di tutte le sessioni
+create view sessioni as
+select s.titolo as Sessione,s.inizio,s.fine,c.titolo as Conferenza,s1.nome from sessione s, conferenza c,sala s1
+    where s.id_conferenza=c.id_conferenza and s.id_sala=s1.id_sala
+    order by s.id_conferenza, s.inizio;
+
+

@@ -146,7 +146,7 @@ create table speaker(
     cognome text not null,
     titolo titolo_st,
     email text not null unique,
-    id_ente text references ente(id_ente) on delete set null
+    id_ente text references ente(id_ente) on delete cascade NOT NULL
 );
 
 create sequence programma_id_programma_seq;

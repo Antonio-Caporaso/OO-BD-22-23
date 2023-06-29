@@ -37,4 +37,3 @@ INSERT INTO sala (nome, capienza, id_sede) VALUES ('Sala delle Feste', 80, 9);
 INSERT INTO sala (nome, capienza, id_sede) VALUES ('Sala Anaconda', 300, 10);
 INSERT INTO sala (nome, capienza, id_sede) VALUES ('Sala Boa', 200, 10);
 INSERT INTO sala (nome, capienza, id_sede) VALUES ('Sala Cobra', 100, 10);
-
