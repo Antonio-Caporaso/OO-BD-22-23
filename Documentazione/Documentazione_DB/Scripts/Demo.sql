@@ -19,3 +19,4 @@ select * from show_programma(5);
 select * from sessione s where id_conferenza =2;
 select max(fine) from show_programma(5);
 select * from sessioni;
+call add_sessione('Il fenomeno della sciamatura','2023-06-30 12:00','2023-06-30 15:00',2,2);
