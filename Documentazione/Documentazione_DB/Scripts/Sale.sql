@@ -1,3 +1,4 @@
+SET search_path TO conference;
 INSERT INTO sala (nome, capienza, id_sede) VALUES ('Sala A', 100, 1);
 INSERT INTO sala (nome, capienza, id_sede) VALUES ('Sala B', 150, 1);
 INSERT INTO sala (nome, capienza, id_sede) VALUES ('Sala C', 80, 1);

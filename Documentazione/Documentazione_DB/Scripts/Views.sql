@@ -1,3 +1,4 @@
+SET search_path TO conference;
 -- Vista delle sedi con il loro indirizzo:
 create view SediView as 
 select s.nome as Sede, 

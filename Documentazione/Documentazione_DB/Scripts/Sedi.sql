@@ -1,3 +1,4 @@
+SET search_path TO conference;
 INSERT INTO indirizzo (via, civico, cap, city, provincia, nazione) values
 ('Via del Corso','123','00186','Roma','RM','Italia'),
 ('Strada Statale Sempione', '28', '20017', 'Rho','MI','Italia'),

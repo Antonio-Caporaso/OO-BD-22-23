@@ -1,3 +1,4 @@
+set search_path to conference;
 /* Definizione dei vincoli e dei trigger */
 
 /*-------------------------------------------------------------------------------------------*

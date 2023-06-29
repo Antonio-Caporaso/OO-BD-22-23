@@ -1,5 +1,5 @@
 -- Popolamento tabella Organizzatori
-
+SET search_path TO conference;
   insert into organizzatore (nome, cognome, titolo, email, id_ente) values
   ('Carlina', 'Alexandre', 'Professoressa', 'calexandre0@flickr.com', 'IST0004'),
   ('Loise', 'Wilkowski', 'Dottoressa', 'lwilkowski1@sohu.com', 'IST0013'),

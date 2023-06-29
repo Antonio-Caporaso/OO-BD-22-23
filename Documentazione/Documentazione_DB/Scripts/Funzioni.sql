@@ -1,3 +1,4 @@
+set search_path to conference;
 --Funzione che restituisce tutte le conferenze che si svolgono in un determinato periodo di tempo
 create or replace function show_conference_by_date(dataI date, dataF date)
 returns setof conferenza as $$
