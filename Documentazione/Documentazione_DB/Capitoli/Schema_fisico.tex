@@ -3,92 +3,63 @@
 \section{Definizione delle tabelle}
 \lstinputlisting[language=SQL,style=mystyle,fontadjust]{Scripts/Tables.sql}
 \section{Definizione dei trigger}
-\subsection{\texttt{Check\_Programma\_Entry}}
+\subsection{\texttt{Check\_Programma}}
 In un programma non devono esserci eventi, intervalli o interventi che si sovrappongono. Per questo motivo definiamo il trigger \texttt{check\_programma\_entry} che viene eseguito per ogni inserimento o aggiornamento nelle tabelle \textsc{Intervento}, \textsc{Intervallo} ed \textsc{Evento}.
-
 \begin{lstlisting}[language=SQL,style=mystyle,caption={check\_programma\_entry}]
-	create or replace function check_programma() 
-	returns trigger as $$
-	declare
-		inizio_evento timestamp;
-		fine_evento timestamp;
-		inizio_intervallo timestamp;
-		fine_intervallo timestamp;
-		inizio_intervento timestamp;
-		fine_intervento timestamp;
-		intervento_id integer;
-		intervallo_id integer;
-		evento_id integer;
-		interventi_cur cursor for 
-			select id_intervento 
-			from intervento 
-			where id_programma = new.id_programma;
-		intervalli_cur cursor for 
-			select id_intervallo 
-			from intervallo 
-			where id_programma = new.id_programma;	
-		eventi_cur cursor for 
-			select id_evento 
-			from evento 
-			where id_programma = new.id_programma;
-	begin
-		/* Controlliamo che il punto non si sovrapponga con
-		 * ciascun punto gia' presente nel programma */
-		open interventi_cur;
-		loop 
-			fetch interventi_cur into intervento_id;
-			exit when not found;
-			select inizio,fine into inizio_intervento,fine_intervento
-				from intervento
-				where id_intervento = intervento_id;
-			if (inizio_intervento <= new.inizio OR 
-					fine_intervento >= new.fine) then
-				raise exception 'Impossibile inserire un punto del programma in questo orario';
-			end if;
-		end loop;
-		close interventi_cur;
-		open intervalli_cur;
-		loop 
-			fetch intervalli_cur into intervallo_id;
-			exit when not found;
-			select inizio,fine into inizio_intervallo,fine_intervallo
-			from intervallo
-			where id_intervallo = intervallo_id;
-			if (inizio_intervallo <= new.inizio OR fine_intervallo >= new.fine) then
-				raise exception 'Impossibile inserire un punto del programma in questo orario';
-			end if;
-		end loop;
-		close intervalli_cur;
-		open eventi_cur;
-		loop 
-		fetch eventi_cur into evento_id;
-		exit when not found;
-		select inizio,fine into inizio_evento,fine_evento
-		from evento
-		where id_evento = evento_id;
-		if (inizio_evento <= new.inizio OR fine_evento >= new.fine) then
-		raise exception 'Impossibile inserire un punto del programma in questo orario';
-		end if;
-		end loop;
-		close eventi_cur;
-	return new;
-	end;
-	$$ 
-	language plpgsql;
-	create trigger check_programma
-	before insert or update on intervento
-	for each row
-	execute function check_programma();
-	
-	create trigger check_programma
-	before insert or update on intervallo
-	for each row
-	execute function check_programma();
-	
-	create trigger check_programma
-	before insert or update on evento
-	for each row
-	execute function check_programma();
+create or replace function check_programma() returns trigger as $$
+declare
+inizio_evento timestamp;
+fine_evento timestamp;
+inizio_intervallo timestamp;
+fine_intervallo timestamp;
+inizio_intervento timestamp;
+fine_intervento timestamp;
+intervento_id text;
+intervallo_id text;
+evento_id text;
+interventi_cur cursor for select id_intervento from intervento where id_programma = new.id_programma;
+intervalli_cur cursor for select id_intervallo from intervallo where id_programma = new.id_programma;
+eventi_cur cursor for select id_evento from evento where id_programma = new.id_programma;
+begin
+open interventi_cur;
+loop 
+fetch interventi_cur into intervento_id;
+exit when not found;
+select inizio,fine into inizio_intervento,fine_intervento
+from intervento
+where id_intervento = intervento_id;
+if (new.inizio>=inizio_intervento AND new.fine<=fine_intervento) then
+raise exception 'Impossibile inserire questo intervento in questo orario';
+end if;
+end loop;
+close interventi_cur;
+open intervalli_cur;
+loop 
+fetch intervalli_cur into intervallo_id;
+exit when not found;
+select inizio,fine into inizio_intervallo,fine_intervallo
+from intervallo
+where id_intervallo = intervallo_id;
+if (new.inizio>=inizio_intervallo AND new.fine<=fine_intervallo) then
+raise exception 'Impossibile inserire questo intervallo in questo orario';
+end if;
+end loop;
+close intervalli_cur;
+open eventi_cur;
+loop 
+fetch eventi_cur into evento_id;
+exit when not found;
+select inizio,fine into inizio_evento,fine_evento
+from evento
+where id_evento = evento_id;
+if (new.inizio>=inizio_evento AND new.fine<=fine_evento) then
+raise exception 'Impossibile inserire questo evento in questo orario';
+end if;
+end loop;
+close eventi_cur;
+return new;
+end;
+$$ language plpgsql;
 \end{lstlisting}
 
 \subsection{\texttt{Check\_Data\_Intervento, Check\_Data\_Intervallo, Check\_Data\_Evento}}\label{trigger:check_data}
@@ -409,6 +380,36 @@ Nel caso in cui si volesse modificare la data di inizio o di fine di una confere
 	for each row
 	execute function delete_sessioni_conferenza();
 \end{lstlisting}
+\subsection{\texttt{Check\_Capienza}}
+Ogni volta che si aggiunge un nuovo partecipante della sessione bisogna controllare prima che la capienza della sala dove si svolge la sessione non sia stata raggiunta:
+\begin{lstlisting}[language=SQL, style=mystyle]
+	create or replace function check_capienza_sala() 
+	returns trigger as $$
+	declare
+	capienza_s integer;
+	partecipanti integer;
+	begin
+	select capienza into capienza_s
+	from sala
+	where id_sala = new.id_sala;
+	
+	select count(*) into partecipanti
+	from partecipante
+	where id_sessione = new.id_sessione;
+	
+	if (partecipanti >= capienza_s) then
+	raise exception 'La capienza della sala e'' stata raggiunta';
+	end if;
+	return new;
+	end;
+	$$ language plpgsql;
+	
+	create trigger check_capienza_sala
+	before insert on partecipazione
+	for each row
+	execute function check_capienza_sala();
+	
+\end{lstlisting}
 \section{Funzioni e procedure}
 \subsection{\texttt{Show\_Conferenze\_By\_Date(date,date)}}
 La funzione \texttt{Show\_Conferenze\_By\_Date} prende in ingresso due date e restituisce l'insieme di tutte le conferenze comprese tra queste:
@@ -674,108 +675,126 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	) AS subquery
 	ORDER BY inizio;
 	END;
-	$$ LANGUAGE plpgsql;
+	$$
+	LANGUAGE plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Intervento(text,text,text,int,interval)}}
+La procedura \texttt{Add\_intervento} provvede all'inserimento di un intervento all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create or replace procedure 
-	add_intervento(titolo text, abstract text, speaker text, sessione int,durata interval)
-	as $$
-	declare
-	programma text;
-	id_entry text;
-	query text;
-	category text;
-	fine_prev timestamp;
-	begin
-	select id_programma into programma
-	from programma
-	where id_sessione = sessione;
-	
-	select id,appuntamento,max(fine) into id_entry,category,fine_prev
-	from show_programma(sessione)
-	GROUP BY id, appuntamento;
-	
-	if(fine_prev is null) then
-	fine_prev := (select inizio from sessione where id_sessione = session);
-	end if;
-	
-	insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
-	values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
-	raise notice 'Inserimento completato';
-	exception
-	when others then
-	raise notice '%', sqlerrm;
-	end;
-	$$ language plpgsql;
+create or replace procedure add_intervento
+(titolo text, 
+abstract text, 
+speaker text, 
+sessione_id int,
+durata interval)
+as $$
+declare
+programma text;
+id text;
+query text;
+category text;
+fine_prev timestamp;
+begin
+select id_programma into programma
+from programma
+where id_sessione = sessione_id;
+
+select max(fine) into fine_prev
+from show_programma(sessione_id);
+
+if (fine_prev is null) then
+select inizio into fine_prev
+from sessione
+where id_sessione = sessione_id;
+end if;
+
+insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
+values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
+raise notice 'Inserimento completato';
+exception
+when others then
+raise notice '%', sqlerrm;
+end;
 \end{lstlisting}
 \subsection{\texttt{Add\_Intervallo(text,int,interval)}}
+La procedura \texttt{Add\_Intervallo} provvede all'inserimento di un intervallo all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create or replace procedure 
-	add_intervallo(tipologia text,sessioneP int,durata interval)
-	as $$
-	declare
-	programma text;
-	id_entry text;
-	query text;
-	category text;
-	fine_prev timestamp;
-	begin
-	select id_programma into programma
-	from programma
-	where id_sessione = sessioneP;
-	
-	select id,appuntamento, max(fine) into id_entry,category,fine_prev
-	from show_programma(sessioneP)
-	GROUP BY id, appuntamento;
-	
-	if(fine_prev is null) then
-	fine_prev := (select inizio from sessione where id_sessione = sessioneP);
-	end if;
-	
-	insert into intervallo(tipologia,id_programma,inizio,fine)
-	values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
-	raise notice 'Inserimento completato';
-	exception
-	when others then
-	raise notice '%', sqlerrm;
-	end;
-	$$ language plpgsql;
+create or replace procedure 
+add_intervallo(tipologia text , sessione_id int, durata interval)
+as $$
+declare
+programma text;
+id text;
+query text;
+category text;
+fine_prev timestamp;
+begin
+select id_programma into programma
+from programma
+where id_sessione = sessione_id;
+
+select max(fine) into fine_prev
+from show_programma(sessione_id);
+
+if (fine_prev is null) then
+select inizio into fine_prev
+from sessione
+where id_sessione = sessione_id;
+end if;
+
+insert into intervallo(tipologia,id_programma,inizio,fine)
+values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
+raise notice 'Inserimento completato';
+exception
+when others then
+raise notice '%', sqlerrm;
+end;
+$$ 
+language plpgsql;
 \end{lstlisting}
-\subsection{\texttt{Add\_evento(text,int,interval)}}
+\subsection{\texttt{Add\_Evento(text,int,interval)}}
+La procedura \texttt{Add\_Evento} provvede all'inserimento di un evento all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create or replace procedure 
-	add_evento(tipologia text, session int, durata interval)
-	as $$
-	declare
-	programma text;
-	id_entry text;
-	query text;
-	category text;
-	fine_prev timestamp;
-	begin
-	select id_programma into programma
-	from programma
-	where id_sessione = session;
-	
-	select id, appuntamento, max(fine) into id_entry,category,fine_prev
-	from show_programma(session)
-	GROUP BY id, appuntamento;
-	
-	if(fine_prev is null) then
-	fine_prev := (select inizio from sessione where id_sessione = session);
-	end if;
-	
-	insert into evento(tipologia,id_programma,inizio,fine)
-	values (tipologia,programma,fine_prev,fine_prev+durata);
-	raise notice 'Inserimento completato';
-	exception
-	when others then
-	raise notice '%', sqlerrm;
-	end;
-	$$ language plpgsql;
+create or replace procedure 
+add_evento
+(tipologia text, 
+sessione_id int, 
+durata interval)
+as $$
+declare
+programma_id text;
+id text;
+query text;
+category text;
+fine_prev timestamp;
+begin
+-- Recupera l'id del programma della sessione
+select id_programma into programma_id
+from programma
+where id_sessione = sessione_id;
+
+-- Recupera l'id dell'ultimo punto in programma, la tipologia e la fine
+select max(fine) into fine_prev
+from show_programma(sessione_id);
+
+if (fine_prev is null) then
+select inizio into fine_prev
+from sessione
+where id_sessione = sessione_id;
+end if;
+
+insert into evento(tipologia, id_programma, inizio, fine)
+values (tipologia, programma_id, fine_prev, fine_prev+durata);
+raise notice 'Inserimento completato';
+exception
+when others then
+raise notice '%', sqlerrm;
+end;
+$$
+language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Conferenza\_Details(text,timestamp,timestamp,integer,text)}}
+La funzione \texttt{Add\_Conferenza\_Details} aggiunge una conferenza e restituisce la chiave primaria della nuova conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
 	CREATE OR REPLACE FUNCTION add_conferenza_details(nome text, inizio timestamp, fine timestamp, sede integer, abstract text)
 	RETURNS integer AS $$
@@ -792,12 +811,14 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	RAISE NOTICE 'Errore nell''inserimento di una conferenza: %', SQLERRM;
 	RETURN 0; 
 	END;
-	$$ LANGUAGE plpgsql;
+	$$ 
+	language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_ente(integer, integer)}}
+La procedura \texttt{Add\_ente} provvede all'inserimento di una nuova istituzione tra gli organizzatori di una conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
 	create or replace procedure 
-	add_ente(ente integer, conferenza integer)
+	add_ente(ente text, conferenza integer)
 	as $$
 	begin
 	insert into ente_conferenza(id_ente,id_conferenza)
@@ -807,9 +828,11 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	when others then
 	raise notice '%', sqlerrm;
 	end;
-	$$ language plpgsql;
+	$$ 
+	language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Sponsorizzazione(integer,numeric,char(3),integer)}}
+La procedura \texttt{Add\_Sponsorizzazione} inserisce una nuova sponsorizzazione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
 	create or replace procedure 
 	add_sponsorizzazione(sponsor integer, contributo numeric(1000,2), valuta char(3), conferenza integer)
@@ -825,6 +848,7 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	$$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Sessione(text,timestamp,timestamp, integer,integer)}}
+La procedura \texttt{Add\_Sessione} aggiunge una nuova sessione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
 	create or replace procedure 
 	add_sessione(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer)
@@ -840,19 +864,21 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	$$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Partecipante(integer, integer)}}
+La procedura \texttt{Add\_Partecipante} inserisce un nuovo partecipante alla sessione:
 \begin{lstlisting}[language=SQL, style=mystyle]
 	create or replace procedure 
 	add_partecipante(partecipante integer, sessione integer)
 	as $$
 	begin
-	insert into partecipante_sessione(id_partecipante,id_sessione)
-	values (partecipante,sessione);
+		insert into partecipante_sessione(id_partecipante,id_sessione)
+		values (partecipante,sessione);
 	raise notice 'Inserimento completato';
 	exception
-	when others then
-	raise notice '%', sqlerrm;
+		when others then
+			raise notice '%', sqlerrm;
 	end;
-	$$ language plpgsql;
+	$$ 
+	language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Enti(integer,text)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
@@ -895,112 +921,110 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 \subsection{\texttt{Slitta\_Conferenza(interval)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
 	create or replace procedure 
-	slitta_conferenza(id_conferenza integer, durata interval)
-	as $$
-	declare
-		id_sessione integer;
-		id_intervento text;
-		id_evento text;
-		id_intervallo text;
-		sessioni cursor for 
-			select id_sessione 
-			from sessione 
-			where id_conferenza = id_conferenza;
-			
-		interventi cursor for
-			select id_intervento 
-			from intervento i join programma p 
-			on i.id_programma = p.id_programma 
-			where p.id_sessione in 
-			(select id_sessione 
-			from sessione 
-			where id_conferenza = id_conferenza);
-			
-		intervalli cursor for
-			select id_intervallo 
-			from intervallo i join programma p 
-			on i.id_programma = p.id_programma 
-			where p.id_sessione in 
-				(select id_sessione 
-				from sessione 
-				where id_conferenza = id_conferenza);
-				
-		eventi cursor for
-			select id_evento 
-			from evento e join programma p 
-			on e.id_programma = p.id_programma 
-			where p.id_sessione in 
-				(select id_sessione 
-				from sessione 
-				where id_conferenza = id_conferenza);
-	begin
-	
-		alter table conferenza disable trigger check_data_conferenza;
-		alter table sessione disable trigger check_data_sessione;
-		alter table interventi disable trigger check_data_intervento;
-		alter table intervallo disable trigger check_data_intervallo;
-		alter table evento disable trigger check_data_evento;
-		alter table conferenza disable trigger delete_sessioni_conferenza;
-		
-		update conferenza
-		set inizio = inizio + durata, fine = fine + durata
-		where id_conferenza = id_conferenza;
-	
-		open sessioni;
-		loop
-			fetch sessioni into id_sessione;
-			exit when not found;
-			
-			update sessione
-			set inizio = inizio + durata, fine = fine + durata
-			where id_sessione = id_sessione;
-		
-			open interventi;
-			loop
-				fetch interventi into id_intervento;
-				exit when not found;
-	
-				update intervento
-				set inizio = inizio + durata, fine = fine + durata
-				where id_intervento = id_intervento;
-			end loop;
-			close interventi;
-			
-			open intervalli;
-			loop
-				fetch intervalli into id_intervallo;
-				exit when not found;
-	
-				update intervallo
-				set inizio = inizio + durata, fine = fine + durata
-				where id_intervallo = id_intervallo;
-			end loop;
-			close intervalli;
-			
-			open eventi;
-			loop
-				fetch eventi into id_evento;
-				exit when not found;
-	
-				update evento
-				set inizio = inizio + durata, fine = fine + durata
-				where id_evento = id_evento;
-			end loop;
-			close eventi;
-		end loop;
-		close sessioni;
-		raise notice 'Slittamento completato';
-	
-		alter table conferenza enable trigger check_data_conferenza;
-		alter table sessione enable trigger check_data_sessione;
-		alter table evento enable trigger check_data_evento;
-		alter table intervallo enable trigger check_data_intervallo;
-		alter table interventi enable trigger check_data_intervento;
-	exception
-		when others then
-			raise notice '%', sqlerrm;
-	end;
-	$$ language plpgsql;
+slitta_conferenza(conferenza_id integer, durata interval)
+as $$
+declare
+sessione_id integer;
+intervento_id text;
+evento_id text;
+intervallo_id text;
+sessioni cursor for 
+select id_sessione 
+from sessione 
+where id_conferenza = conferenza_id;
+
+interventi cursor for
+select id_intervento 
+from intervento i join programma p 
+on i.id_programma = p.id_programma 
+where p.id_sessione in 
+(select id_sessione 
+from sessione 
+where id_conferenza = conferenza_id);
+
+intervalli cursor for
+select id_intervallo 
+from intervallo i join programma p 
+on i.id_programma = p.id_programma 
+where p.id_sessione in 
+(select id_sessione 
+from sessione 
+where id_conferenza = conferenza_id);
+
+eventi cursor for
+select id_evento 
+from evento e join programma p 
+on e.id_programma = p.id_programma 
+where p.id_sessione in 
+(select id_sessione 
+from sessione 
+where id_conferenza = conferenza_id);
+begin
+alter table conferenza disable trigger all;
+alter table sessione disable trigger all;
+alter table intervento disable trigger all;
+alter table intervallo disable trigger all;
+alter table evento disable trigger all;
+alter table programma disable trigger all;
+update conferenza
+set inizio = inizio + durata, fine = fine + durata
+where id_conferenza = conferenza_id;
+
+open sessioni;
+loop
+fetch sessioni into sessione_id;
+exit when not found;
+
+update sessione
+set inizio = inizio + durata, fine = fine + durata
+where id_sessione = sessione_id;
+
+open interventi;
+loop
+fetch interventi into intervento_id;
+exit when not found;
+
+update intervento
+set inizio = inizio + durata, fine = fine + durata
+where id_intervento = intervento_id ;
+end loop;
+close interventi;
+
+open intervalli;
+loop
+fetch intervalli into intervallo_id;
+exit when not found;
+
+update intervallo
+set inizio = inizio + durata, fine = fine + durata
+where id_intervallo = intervallo_id;
+end loop;
+close intervalli;
+
+open eventi;
+loop
+fetch eventi into evento_id;
+exit when not found;
+
+update evento
+set inizio = inizio + durata, fine = fine + durata
+where id_evento = evento_id;
+end loop;
+close eventi;
+end loop;
+close sessioni;
+alter table conferenza enable trigger all;
+alter table sessione enable trigger all;
+alter table intervento enable trigger all;
+alter table intervallo enable trigger all;
+alter table evento enable trigger all;
+alter table programma enable trigger all;
+raise notice 'Slittamento completato';
+exception
+when others then
+raise notice '%', sqlerrm;
+end;
+$$ language plpgsql;
 \end{lstlisting}
 
 \subsection{\texttt{Show\_members()}}
@@ -1131,5 +1155,11 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 	where c.id_conferenza = s.id_conferenza 
 	and s.id_sessione = p.id_sessione
 	group by c.titolo;
-	
+\end{lstlisting}
+\subsection{\texttt{Sessioni}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view sessioni as
+	select s.titolo as Sessione,s.inizio,s.fine,c.titolo as Conferenza,s1.nome from sessione s, conferenza c,sala s1
+	where s.id_conferenza=c.id_conferenza and s.id_sala=s1.id_sala
+	order by s.id_conferenza, s.inizio;
 \end{lstlisting}
