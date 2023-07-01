@@ -394,7 +394,7 @@ Ogni volta che si aggiunge un nuovo partecipante della sessione bisogna controll
 	where id_sala = new.id_sala;
 	
 	select count(*) into partecipanti
-	from partecipante
+	from partecipazione
 	where id_sessione = new.id_sessione;
 	
 	if (partecipanti >= capienza_s) then
@@ -517,7 +517,7 @@ La funzione \texttt{show\_interventi\_sessione} prende in ingresso la chiave pri
 		speaker text
 	)  as $$
 	declare 
-		programma int;
+		programma text;
 	begin
 		select id_programma into programma
 		from programma
@@ -544,7 +544,7 @@ La funzione \texttt{show\_intervalli\_sessione} prende in ingresso la chiave pri
 	)  
 	as $$
 	declare 
-	programma int;
+	programma text;
 	begin
 	select id_programma into programma
 	from programma
@@ -564,13 +564,15 @@ La funzione \texttt{show\_eventi\_sociali\_sessione} prende in ingresso la chiav
 create or replace function 
 show_eventi_sociali_sessione(sessione int)
 returns table
-(id_evento text,
-tipologia text,
-inizio timestamp,
-fine timestamp) 
+(
+	id_evento text,
+	tipologia text,
+	inizio timestamp,
+	fine timestamp
+) 
 as $$
 declare 
-programma int;
+programma text;
 begin
 select id_programma into programma
 from programma
@@ -587,13 +589,15 @@ $$ language plpgsql;
 La funzione \texttt{show\_keynote\_sessione} prende in ingresso la chiave primaria di una sessione e mostra i dettagli del keynote speaker, se presente:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function show_keynote_sessione(sessione int)
-returns table(
-id_speaker text,
-nome text,
-cognome text,
-titolo text,
-email text,
-ente text) 
+returns table
+(
+	id_speaker text,
+	nome text,
+	cognome text,
+	titolo text,
+	email text,
+	ente text
+) 
 as $$
 declare
 speaker_id text;
@@ -682,11 +686,7 @@ La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di un
 La procedura \texttt{Add\_intervento} provvede all'inserimento di un intervento all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure add_intervento
-(titolo text, 
-abstract text, 
-speaker text, 
-sessione_id int,
-durata interval)
+(titolo text, abstract text, speaker text, sessione_id int, durata interval)
 as $$
 declare
 programma text;
@@ -756,10 +756,7 @@ language plpgsql;
 La procedura \texttt{Add\_Evento} provvede all'inserimento di un evento all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure 
-add_evento
-(tipologia text, 
-sessione_id int, 
-durata interval)
+add_evento (tipologia text, sessione_id int, durata interval)
 as $$
 declare
 programma_id text;
@@ -768,12 +765,11 @@ query text;
 category text;
 fine_prev timestamp;
 begin
--- Recupera l'id del programma della sessione
+
 select id_programma into programma_id
 from programma
 where id_sessione = sessione_id;
 
--- Recupera l'id dell'ultimo punto in programma, la tipologia e la fine
 select max(fine) into fine_prev
 from show_programma(sessione_id);
 

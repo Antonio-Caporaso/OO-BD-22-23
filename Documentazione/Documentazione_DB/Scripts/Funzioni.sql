@@ -97,7 +97,7 @@ fine timestamp,
 abstract text,
 speaker text)  as $$
 declare 
-    programma int;
+    programma TEXT;
 begin
     select id_programma into programma
     from programma
@@ -122,7 +122,7 @@ fine timestamp
 )  
 as $$
 declare 
-    programma int;
+    programma text;
 begin
     select id_programma into programma
     from programma
@@ -145,7 +145,7 @@ inizio timestamp,
 fine timestamp) 
  as $$
 declare 
-    programma int;
+    programma text;
 begin
     select id_programma into programma
     from programma
@@ -169,7 +169,7 @@ email text,
 ente text) 
  as $$
 declare 
-    programma int;
+    programma text;
 begin
     select id_programma into programma
     from programma

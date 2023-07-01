@@ -32,19 +32,16 @@ create table sede(
     id_indirizzo integer references indirizzo(id_indirizzo) on delete set null
 );
 
-
 create table sponsor(
     id_sponsor serial primary key,
     nome text not null
 );
-
 
 create type comitato_st as enum ('locale','scientifico');
 create table comitato(
     id_comitato serial primary key,
     tipologia comitato_st not null
 );
-
 
 create type titolo_st as enum ('Dottore','Dottoressa','Professore','Professoressa','Assistente','Ricercatore','Ricercatrice','Ingegnere');
 create table organizzatore(
@@ -56,14 +53,12 @@ create table organizzatore(
     id_ente text references ente(id_ente) on delete cascade
 );
 
-
 create table sala(
     id_sala serial primary key,
     nome text not null,
     capienza integer not null,
     id_sede integer references sede(id_sede) on delete cascade
 );
-
 
 create table conferenza(
     id_conferenza serial primary key,
@@ -74,12 +69,9 @@ create table conferenza(
     id_sede integer references sede(id_sede) on delete set null,
     comitato_s integer references comitato(id_comitato) on delete set null,
     comitato_l integer references comitato(id_comitato) on delete set null,
-    -- Vincolo di integrita': la conferenza deve iniziare prima di finire
     check (inizio <= fine), 
-    -- Vincolo di integrita': la conferenza deve iniziare in futuro
     check (inizio >= now()) 
 );
-
 
 create table partecipante(
     id_partecipante serial primary key,
@@ -90,7 +82,6 @@ create table partecipante(
     id_ente text references ente(id_ente) on delete set null
 );
 
-
 create table sessione(
     id_sessione serial primary key,
     titolo text not null,
@@ -99,21 +90,18 @@ create table sessione(
     id_coordinatore integer references organizzatore(id_organizzatore) on delete set null,
     id_conferenza integer references conferenza(id_conferenza) on delete cascade,
     id_sala integer references sala(id_sala) on delete set null,
-    -- Vincolo di integrita': la sessione deve iniziare prima di finire
     check (inizio <= fine)
 );
 
 create table partecipazione(
     id_partecipante integer references partecipante(id_partecipante) on delete cascade,
     id_sessione integer references sessione(id_sessione) on delete cascade,
-    -- Vincolo di unicita': un partecipante puo' partecipare ad una sessione una sola volta
     unique (id_partecipante,id_sessione) 
 );
 
 create table ente_conferenza(
     id_ente text references ente(id_ente) on delete cascade,
     id_conferenza integer references conferenza(id_conferenza) on delete cascade,
-    -- Vincolo di unicita': un ente puo' organizzare una conferenza una sola volta
     unique (id_ente,id_conferenza)
 );
 
@@ -128,7 +116,6 @@ create table sponsor_conferenza(
     contributo numeric(1000,2) not null,
     valuta char(3) references valuta(iso) not null,
     id_conferenza integer references conferenza(id_conferenza) on delete cascade not null,
-    -- Vincolo di unicita': uno sponsor puo' sponsorizzare una conferenza una sola volta
     unique (id_sponsor,id_conferenza) 
 );
 
@@ -180,9 +167,7 @@ create table intervento(
     fine timestamp not null,
     id_speaker text references speaker(id_speaker) on delete cascade,
     id_programma text references programma(id_programma) on delete cascade not null,
-    -- Vincolo di unicita': uno speaker puo' intervenire in una sessione una sola volta
     unique (id_speaker,id_programma), 
-    -- Vincolo di integrita': l'intervento deve iniziare prima di finire
     check (inizio <= fine) 
 );
 
@@ -200,7 +185,6 @@ create table intervallo(
     tipologia intervallo_st not null,
     inizio timestamp not null,
     fine timestamp not null,
-    -- Vincolo di integrita': l'intervallo deve iniziare prima di finire
     check (inizio <= fine), 
     id_programma text references programma(id_programma) on delete cascade not null
 );
@@ -218,7 +202,6 @@ create table evento(
     tipologia text not null,
     inizio timestamp not null,
     fine timestamp not null,
-    -- Vincolo di integrita': l'evento deve iniziare prima di finire
     check (inizio <= fine), 
     id_programma text references programma(id_programma) on delete cascade not null
 );
@@ -226,6 +209,5 @@ create table evento(
 create table organizzatore_comitato(
     id_organizzatore integer references organizzatore(id_organizzatore) on delete cascade,
     id_comitato integer references comitato(id_comitato) on delete cascade,
-    -- Vincolo di integrita': un organizzatore puo' far parte di un comitato una sola volta
     unique (id_organizzatore,id_comitato) 
 );

@@ -383,7 +383,7 @@ begin
     where id_sala = new.id_sala;
     
     select count(*) into partecipanti
-    from partecipante
+    from partecipazione
     where id_sessione = new.id_sessione;
     
     if (partecipanti >= capienza_s) then
