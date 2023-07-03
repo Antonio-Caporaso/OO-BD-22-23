@@ -1,5 +1,7 @@
 package Persistence.Entities.partecipanti;
 
+import Persistence.Entities.organizzazione.Ente;
+
 import java.util.Objects;
 
 public class Partecipante {
@@ -7,12 +9,12 @@ public class Partecipante {
     private String titolo;
     protected String cognome;
     protected String nome;
-    private String istituzione;
+    private Ente istituzione;
     private String email;
 
     public Partecipante() {}
 
-    public Partecipante(String titolo, String cognome, String nome, String istituzione, String email) {
+    public Partecipante(String titolo, String cognome, String nome, Ente istituzione, String email) {
         this.titolo = titolo;
         this.cognome = cognome;
         this.nome = nome;
@@ -52,11 +54,11 @@ public class Partecipante {
         this.nome = nome;
     }
 
-    public String getIstituzione() {
+    public Ente getIstituzione() {
         return istituzione;
     }
 
-    public void setIstituzione(String istituzione) {
+    public void setIstituzione(Ente istituzione) {
         this.istituzione = istituzione;
     }
 

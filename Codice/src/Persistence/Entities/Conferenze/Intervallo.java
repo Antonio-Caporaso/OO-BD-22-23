@@ -9,10 +9,6 @@ public class Intervallo extends Activity {
 
     public Intervallo(){
     }
-    public Intervallo(Timestamp orario) {
-        super(orario);
-    }
-
     public int getId() {
         return id;
     }

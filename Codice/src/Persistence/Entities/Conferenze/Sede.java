@@ -1,25 +1,22 @@
 package Persistence.Entities.Conferenze;
 
 
+import Persistence.Entities.organizzazione.Indirizzo;
+
 import java.util.LinkedList;
 
 public class Sede {
     private int sedeID;
-    private String indirizzo;
-    private String cap;
-    private String city;
     private String nomeSede;
-    private double costoAffitto;
+    private Indirizzo indirizzo;
     private LinkedList<Sala> sale;
     private LinkedList<Conferenza> conferenze;
 
-    public Sede(int id, String nomeSede, String indirizzo, String cap, String city, double costoAffitto) {
+    public Sede(int id, String nomeSede, Indirizzo indirizzo) {
         this.sedeID = id;
         this.nomeSede = nomeSede;
         this.indirizzo = indirizzo;
-        this.cap = cap;
-        this.city = city;
-        this.costoAffitto = costoAffitto;
+
     }
 
     public Sede() {
@@ -34,7 +31,7 @@ public class Sede {
         this.sedeID = sedeID;
     }
 
-    public void setIndirizzo(String indirizzo) {
+    public void setIndirizzo(Indirizzo indirizzo) {
         this.indirizzo = indirizzo;
     }
 
@@ -46,32 +43,8 @@ public class Sede {
         this.nomeSede = nomeSede;
     }
 
-    public double getCostoAffitto() {
-        return costoAffitto;
-    }
-
-    public void setCostoAffitto(double costoAffitto) {
-        this.costoAffitto = costoAffitto;
-    }
-
-    public String getIndirizzo() {
+    public Indirizzo getIndirizzo() {
         return indirizzo;
-    }
-
-    public String getCap() {
-        return cap;
-    }
-
-    public void setCap(String cap) {
-        this.cap = cap;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public LinkedList<Sala> getSale() {

@@ -15,8 +15,8 @@ import java.util.Objects;
         private Speaker speaker;
         private Programma programma;
 
-        public Intervento(Timestamp orario, String estratto, Speaker speaker, Programma programma) {
-            super(orario);
+        public Intervento(Timestamp inizio, Timestamp fine, String estratto, Speaker speaker, Programma programma) {
+            super(inizio, fine);
             this.estratto = estratto;
             this.speaker = speaker;
             this.programma=programma;
@@ -75,10 +75,4 @@ import java.util.Objects;
             return Objects.hash(super.hashCode(), speaker);
         }
 
-        @Override
-        public String toString() {
-            return titolo + ", orario=" + getOrario() +
-                    ", estratto='" + estratto + ", speaker=" + speaker +
-                    '.';
-        }
 }

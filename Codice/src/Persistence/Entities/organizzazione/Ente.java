@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Ente {
     private int enteID;
     private String nome;
+    private String sigla;
 
     public Ente() {}
 
@@ -15,9 +16,10 @@ public class Ente {
         this.nome = nome;
     }
 
-    public Ente(int id, String nome) {
+    public Ente(int id, String nome, String sigla) {
         this.enteID = id;
         this.nome = nome;
+        this.sigla = sigla;
     }
 
     public int getEnteID() {
@@ -33,6 +35,14 @@ public class Ente {
     }
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
     @Override

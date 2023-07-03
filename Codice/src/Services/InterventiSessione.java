@@ -5,6 +5,7 @@ import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.postgresql.util.PGInterval;
 
 import java.sql.SQLException;
 
@@ -38,9 +39,9 @@ public class InterventiSessione {
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
-    public void addIntervento(Intervento intervento) throws SQLException {
+    public void addIntervento(Intervento intervento, PGInterval durata) throws SQLException {
         InterventoDao dao = new InterventoDao();
-            int id = dao.addIntervento(intervento);
+            int id = dao.addIntervento(intervento,durata);
             intervento.setInterventoID(id);
             interventi.add(intervento);
     }

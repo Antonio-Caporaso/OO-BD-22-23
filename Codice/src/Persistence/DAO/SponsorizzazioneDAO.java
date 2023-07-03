@@ -18,18 +18,17 @@ public class SponsorizzazioneDAO {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         SponsorDao dao = new SponsorDao();
-        int id = dao.getSponsorID(s.getSponsor());
-        String query = "DELETE FROM SPONSORIZZAZIONE WHERE idconferenza = ?  and idsponsor = ?";
+        String query = "DELETE FROM sponsor_conferenza WHERE id_conferenza = ?  and id_sponsor = ?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,s.getConferenza().getConferenzaID());
-        stm.setInt(2,id);
+        stm.setInt(2,dao.getSponsorID(s.getSponsor()));
         stm.executeUpdate();
     }
 
     public LinkedList<Sponsorizzazione> retrieveSponsorizzazioni(Conferenza c) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT idsponsor, contributo,valuta from sponsorizzazione WHERE idconferenza = ?";
+        String query = "SELECT id_sponsor, contributo,valuta from sponsor_conferenza WHERE id_conferenza = ?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,c.getConferenzaID());
         LinkedList<Sponsorizzazione> sponsorizzazioni = new LinkedList<>();
@@ -38,9 +37,9 @@ public class SponsorizzazioneDAO {
             Sponsorizzazione sp = new Sponsorizzazione();
             SponsorDao dao = new SponsorDao();
             sp.setConferenza(c);
-            sp.setSponsor(dao.getSponsorByID(rs.getInt(1)));
-            sp.setContributo(rs.getFloat(2));
-            sp.setValuta(rs.getString(3));
+            sp.setSponsor(dao.getSponsorByID(rs.getInt("id_sponsor")));
+            sp.setContributo(rs.getFloat("contributo"));
+            sp.setValuta(rs.getString("valuta"));
             sponsorizzazioni.add(sp);
         }
         return sponsorizzazioni;
@@ -49,7 +48,7 @@ public class SponsorizzazioneDAO {
     public void saveSponsorizzazione(Sponsorizzazione s) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "INSERT INTO sponsorizzazione VALUES (?,?,?,?)";
+        String query = "INSERT INTO sponsor_conferenza(id_conferenza,id_sponsor,contributo,valuta) VALUES (?,?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,s.getConferenza().getConferenzaID());
         stm.setInt(2,s.getSponsor().getSponsorID());
@@ -60,7 +59,7 @@ public class SponsorizzazioneDAO {
     public LinkedList<String> retrieveSimboloValute() throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT simbolo from valute";
+        String query = "SELECT simbolo from valuta";
         PreparedStatement stm = conn.prepareStatement(query);
         LinkedList<String> valute = new LinkedList<>();
         ResultSet rs = stm.executeQuery();

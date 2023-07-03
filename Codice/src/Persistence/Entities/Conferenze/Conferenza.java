@@ -18,13 +18,12 @@ public class Conferenza {
     private Comitato comitatoLocale;
     private Comitato comitatoScientifico;
     private Sede sede;
-    private float budget;
-    private String valuta;
     private LinkedList<Ente> organizzataDa;
     private LinkedList<Sessione> sessioni;
     private LinkedList<Sponsorizzazione> sponsorizzataDa;
 
-    public Conferenza(int conferenzaID, String nome, Utente proprietario, Timestamp dataInizio, Timestamp dataFine, String descrizione, Comitato comitatoLocale, Comitato comitatoScientifico, Sede sede, float budget, String valuta) {
+
+    public Conferenza(int conferenzaID, String nome, Utente proprietario, Timestamp dataInizio, Timestamp dataFine, String descrizione, Comitato comitatoLocale, Comitato comitatoScientifico, Sede sede) {
         this.conferenzaID = conferenzaID;
         this.nome = nome;
         this.proprietario = proprietario;
@@ -34,36 +33,10 @@ public class Conferenza {
         this.comitatoLocale = comitatoLocale;
         this.comitatoScientifico = comitatoScientifico;
         this.sede = sede;
-        this.budget = budget;
-        this.valuta = valuta;
     }
 
-    public Conferenza() {
-    }
+    public Conferenza() {}
 
-    public Conferenza(String nome, Timestamp dataI, Timestamp dataF, String descrizione, float budget, Sede sede, Utente user, String valuta) {
-        this.nome = nome;
-        this.dataInizio=dataI;
-        this.dataFine=dataF;
-        this.descrizione=descrizione;
-        this.budget=budget;
-        this.sede=sede;
-        this.proprietario=user;
-        this.valuta=valuta;
-    }
-
-    public Conferenza(int id, String nome, Utente proprietario, Timestamp datainizio, Timestamp datafine, String descrizione, Comitato local, Comitato scientific, Sede sede, float budget) {
-        this.conferenzaID=id;
-        this.nome=nome;
-        this.proprietario=proprietario;
-        this.dataInizio=datainizio;
-        this.dataFine=datafine;
-        this.descrizione=descrizione;
-        this.comitatoLocale=local;
-        this.comitatoScientifico=scientific;
-        this.sede=sede;
-        this.budget=budget;
-    }
 
     public LinkedList<Ente> getOrganizzataDa() {
         return organizzataDa;
@@ -140,12 +113,6 @@ public class Conferenza {
     public void setComitatoScientifico(Comitato comitatoScientifico) {
         this.comitatoScientifico = comitatoScientifico;
     }
-    public float getBudget() {
-        return budget;
-    }
-    public void setBudget(float budget) {
-        this.budget = budget;
-    }
     public Sede getSede() {
         return sede;
     }
@@ -163,27 +130,6 @@ public class Conferenza {
             return "JPY";
         else return null;
     }
-    public void setValuta(String valuta){
-       this.valuta=valuta;
-    }
-    public String getCodiceValuta()
-    {
-        if(valuta.equals("$"))
-            return "USD";
-        else if(valuta.equals("€"))
-            return "EUR";
-        else if(valuta.equals("£"))
-            return "GBP";
-        else if(valuta.equals("¥"))
-            return "JPY";
-        else
-            return null;
-    }
-
-    public String getValuta() {
-        return valuta;
-    }
-
     @Override
     public String toString() {
         return nome;

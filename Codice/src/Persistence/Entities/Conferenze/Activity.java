@@ -3,21 +3,31 @@ package Persistence.Entities.Conferenze;
 import java.sql.Timestamp;
 
 public abstract class Activity {
-    private Timestamp orario;
+    private Timestamp inizio;
+    private Timestamp fine;
     public Activity() {
     }
-    public Activity(Timestamp orario) {
-        this.orario = orario;
+
+    public Activity(Timestamp inizio, Timestamp fine) {
+        this.inizio = inizio;
+        this.fine = fine;
     }
 
-    public Timestamp getOrario() {
-        return orario;
+    public Timestamp getInizio() {
+        return inizio;
     }
 
-    public void setOrario(Timestamp orario) {
-        this.orario = orario;
+    public void setInizio(Timestamp inizio) {
+        this.inizio = inizio;
     }
 
+    public Timestamp getFine() {
+        return fine;
+    }
+
+    public void setFine(Timestamp fine) {
+        this.fine = fine;
+    }
 }
 
 

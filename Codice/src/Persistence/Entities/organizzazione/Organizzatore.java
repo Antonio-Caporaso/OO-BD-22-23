@@ -9,14 +9,14 @@ public class Organizzatore {
     private String titolo;
     private String cognome;
     private String nome;
-    private String istituzione;
+    private Ente istituzione;
     private String email;
     private Comitato appartieneA;
 
     public Organizzatore() {
     }
 
-    public Organizzatore(String titolo, String cognome, String nome, String istituzione, String email, Comitato appartieneA) {
+    public Organizzatore(String titolo, String cognome, String nome, Ente istituzione, String email, Comitato appartieneA) {
         this.titolo = titolo;
         this.cognome = cognome;
         this.nome = nome;
@@ -65,11 +65,11 @@ public class Organizzatore {
         this.nome = nome;
     }
 
-    public String getIstituzione() {
+    public Ente getIstituzione() {
         return istituzione;
     }
 
-    public void setIstituzione(String istituzione) {
+    public void setIstituzione(Ente istituzione) {
         this.istituzione = istituzione;
     }
 

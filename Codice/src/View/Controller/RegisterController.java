@@ -5,6 +5,7 @@ import Exceptions.BlankFieldException;
 import Exceptions.PasswordMismatchException;
 import Exceptions.UtentePresenteException;
 import Persistence.Entities.Utente;
+import Persistence.Entities.organizzazione.Ente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,13 +58,13 @@ public class RegisterController implements Initializable, FormChecker{
     @FXML
     private Label istituzioneLabel;
     @FXML
-    private TextField istituzioneTextField;
+    private ChoiceBox<Ente> istituzioneChoice;
     @FXML
     private MediaView mediaView;
     private Media media;
     private File file;
     private MediaPlayer mediaPlayer;
-    private String[]titoli={"Dr.","Dott.","Dott.ssa","Prof.","Prof.ssa","Ing.","Sig","Sig.ra","Altro"};
+    private String[]titoli={"Dottore","Dottoressa","Professore","Professoressa","Assistente","Ricercatore","Ricercatrice","Ingegnere"};
     @FXML
     void backButtonOnAction(ActionEvent event) {
         try {
@@ -80,8 +81,8 @@ public class RegisterController implements Initializable, FormChecker{
         String usernameUtente = usernameTextField.getText();
         String cognomeUtente = cognomeTextField.getText();
         String passwordUtente = passwordTextField.getText();
-        String istituzioneUtente = istituzioneTextField.getText();
-        return new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente,istituzioneUtente);
+        Ente istituzioneUtente = istituzioneChoice.getSelectionModel().getSelectedItem();
+        return new Utente(titoloUtente,usernameUtente,passwordUtente,nomeUtente,cognomeUtente,emailUtente,istituzioneUtente);
     }
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
@@ -90,8 +91,7 @@ public class RegisterController implements Initializable, FormChecker{
                 || nomeTextField.getText().isBlank()
                 || usernameTextField.getText().isBlank()
                 || cognomeTextField.getText().isBlank()
-                || passwordTextField.getText().isBlank()
-                || istituzioneTextField.getText().isBlank())
+                || passwordTextField.getText().isBlank())
             throw new BlankFieldException();
     }
 
