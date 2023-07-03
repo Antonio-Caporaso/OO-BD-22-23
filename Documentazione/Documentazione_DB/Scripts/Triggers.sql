@@ -14,9 +14,9 @@ declare
     fine_intervallo timestamp;
     inizio_intervento timestamp;
     fine_intervento timestamp;
-    intervento_id text;
-    intervallo_id text;
-    evento_id text;
+    intervento_id integer;
+    intervallo_id integer;
+    evento_id integer;
     interventi_cur cursor for select id_intervento from intervento where id_programma = new.id_programma;
     intervalli_cur cursor for select id_intervallo from intervallo where id_programma = new.id_programma;
     eventi_cur cursor for select id_evento from evento where id_programma = new.id_programma;

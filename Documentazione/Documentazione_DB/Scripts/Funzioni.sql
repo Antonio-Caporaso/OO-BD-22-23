@@ -95,9 +95,10 @@ titolo text,
 inizio timestamp,
 fine timestamp,
 abstract text,
-speaker text)  as $$
+speaker text
+)  as $$
 declare 
-    programma TEXT;
+    programma integer;
 begin
     select id_programma into programma
     from programma
@@ -115,14 +116,14 @@ $$ language plpgsql;
 create or replace function show_intervalli_sessione(sessione int)
 returns table
 (
-id_intervallo text,
+id_intervallo integer,
 tipologia intervallo_st,
 inizio timestamp,
 fine timestamp
 )  
 as $$
 declare 
-    programma text;
+    programma integer;
 begin
     select id_programma into programma
     from programma
@@ -139,13 +140,13 @@ $$ language plpgsql;
 create or replace function show_eventi_sociali_sessione(sessione int)
 returns table
 (
-id_evento text,
+id_evento integer,
 tipologia text,
 inizio timestamp,
 fine timestamp) 
  as $$
 declare 
-    programma text;
+    programma integer;
 begin
     select id_programma into programma
     from programma
@@ -161,7 +162,7 @@ $$ language plpgsql;
 -- Funzione che mostra i dettagli del keynote speaker di una sessione
 create or replace function show_keynote_sessione(sessione int)
 returns table(
-id_speaker text,
+id_speaker integer,
 nome text,
 cognome text,
 titolo text,
@@ -169,7 +170,7 @@ email text,
 ente text) 
  as $$
 declare 
-    programma text;
+    programma integer;
 begin
     select id_programma into programma
     from programma
@@ -188,7 +189,7 @@ $$ language plpgsql;
 -- Funzione che mostra tutti gli elementi all'interno di un programma 
 CREATE OR REPLACE FUNCTION show_programma(sessione int)
 RETURNS TABLE (
-    id_entry text,
+    id_entry integer,
     appuntamento text,
     inizio timestamp,
     fine timestamp,
@@ -197,7 +198,7 @@ RETURNS TABLE (
 )
 AS $$
 DECLARE
-    programma text;
+    programma integer;
 BEGIN
     SELECT id_programma INTO programma
     FROM programma
@@ -251,10 +252,7 @@ sessione_id int,
 durata interval)
 as $$
 declare
-    programma text;
-    id text;
-    query text;
-    category text;
+    programma integer;
     fine_prev timestamp;
 begin
     select id_programma into programma
@@ -284,10 +282,7 @@ create or replace procedure
 add_intervallo(tipologia text , sessione_id int, durata interval)
 as $$
 declare
-    programma text;
-    id text;
-    query text;
-    category text;
+    programma integer;
     fine_prev timestamp;
 begin
     select id_programma into programma
@@ -321,10 +316,7 @@ sessione_id int,
 durata interval)
 as $$
 declare
-    programma_id text;
-    id text;
-    query text;
-    category text;
+    programma_id integer;
     fine_prev timestamp;
 begin
     -- Recupera l'id del programma della sessione
@@ -427,7 +419,7 @@ CREATE OR REPLACE PROCEDURE add_enti(conferenza integer, sigle text)
 AS $$
 DECLARE
     sigla_ente text;
-    ente_id TEXT;
+    ente_id integer;
 BEGIN
         FOR sigla_ente IN SELECT unnest(string_to_array(sigle, ',')) LOOP
             -- Cerca l'id dell'ente corrispondente alla sigla
@@ -464,9 +456,9 @@ $$ language plpgsql;
 	as $$
 	declare
 		sessione_id integer;
-		intervento_id text;
-		evento_id text;
-		intervallo_id text;
+		intervento_id integer;
+		evento_id integer;
+		intervallo_id integer;
 		sessioni cursor for 
 			select id_sessione 
 			from sessione 
@@ -575,7 +567,8 @@ returns table
     email text,
     titolo titolo_st, 
     sigla varchar(7)
-) as $$
+) 
+as $$
 begin
     return query
     select o.id_organizzatore, o.nome, o.cognome, o.email,o.titolo, e.sigla

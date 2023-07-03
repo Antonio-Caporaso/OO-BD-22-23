@@ -1,0 +1,9 @@
+\i Tables.sql
+\i Funzioni.sql
+\i Triggers.sql
+\i Views.sql
+\i Enti.sql
+\i Organizzatori.sql
+\i Sedi.sql
+\i Sale.sql
+\i Speaker.sql
