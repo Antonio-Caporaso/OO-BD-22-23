@@ -48,6 +48,7 @@ create table organizzatore(
 
 create table utente(
     id_utente serial primary key,
+    username text not null unique,
     nome text not null,
     cognome text not null,
     titolo titolo_st,

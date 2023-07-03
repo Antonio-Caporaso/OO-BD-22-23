@@ -277,6 +277,41 @@ begin
 end;
 $$ language plpgsql;
 
+create or replace function add_intervento
+(titolo text, 
+abstract text, 
+speaker text, 
+programma_id int,
+durata interval)
+as $$
+declare
+    sessione_id integer;
+    intervento_id integer;
+    fine_prev timestamp;
+begin
+    select id_sessione into sessione_id
+    from programma
+    where id_programma = programma_id;
+
+    select max(fine) into fine_prev
+    from show_programma(sessione_id);
+
+    if (fine_prev is null) then
+        select inizio into fine_prev
+        from sessione
+        where id_sessione = sessione_id;
+    end if;
+
+    insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
+    values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata) returning id_intervento into intervento_id;
+    raise notice 'Inserimento completato';
+    return intervento_id;
+    exception
+        when others then
+            raise notice '%', sqlerrm;
+end;
+$$ language plpgsql;
+
 --Funzione per aggiungere un nuovo intervallo nel programma di una sessione
 create or replace procedure 
 add_intervallo(tipologia text , sessione_id int, durata interval)
@@ -301,6 +336,39 @@ begin
     insert into intervallo(tipologia,id_programma,inizio,fine)
     values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
     raise notice 'Inserimento completato';
+    exception
+        when others then
+            raise notice '%', sqlerrm;
+end;
+$$ 
+language plpgsql;
+
+create or replace function 
+add_intervallo(tipologia text , programa_id int, durata interval)
+returns integer
+as $$
+declare
+    sessione_id integer;
+    fine_prev timestamp;
+    intervallo_id integer;
+begin
+    select id_sessione into sessione_id
+    from programma
+    where id_programma = programma_id;
+
+    select max(fine) into fine_prev
+    from show_programma(sessione_id);
+
+    if (fine_prev is null) then
+        select inizio into fine_prev
+        from sessione
+        where id_sessione = sessione_id;
+    end if;
+
+    insert into intervallo(tipologia,id_programma,inizio,fine)
+    values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata) returning id_intervallo into intervallo_id;
+    raise notice 'Inserimento completato';
+    return intervallo_id;
     exception
         when others then
             raise notice '%', sqlerrm;
@@ -344,14 +412,53 @@ end;
 $$
 language plpgsql;
 
+create or replace function
+add_evento
+(tipologia text, 
+programma_id int, 
+durata interval)
+returns integer
+as $$
+declare
+    evento_id integer;
+    sessione_id integer;
+    fine_prev timestamp;
+begin
+    -- Recupera l'id della sessione
+    select id_sessione into sessione_id
+    from programma
+    where id_programma = programma_id;
+
+    -- Recupera l'id dell'ultimo punto in programma, la tipologia e la fine
+    select max(fine) into fine_prev
+    from show_programma(sessione_id);
+
+    if (fine_prev is null) then
+        select inizio into fine_prev
+        from sessione
+        where id_sessione = sessione_id;
+    end if;
+
+    insert into evento(tipologia, id_programma, inizio, fine)
+    values (tipologia, programma_id, fine_prev, fine_prev+durata) returning id_evento into evento_id;
+    raise notice 'Inserimento completato';
+    return evento_id;
+    exception
+        when others then
+            raise notice '%', sqlerrm;
+end;
+$$
+language plpgsql;
+
 --Funzione per aggiungere una nuova conferenza
-CREATE OR REPLACE FUNCTION add_conferenza_details(nome text, inizio timestamp, fine timestamp, sede integer, abstract text)
+CREATE OR REPLACE FUNCTION add_conferenza_details
+(nome text, inizio timestamp, fine timestamp, sede integer, abstract text, utente integer)
 RETURNS integer AS $$
 DECLARE
     id integer;
 BEGIN
-        INSERT INTO conferenza(titolo, inizio, fine, id_sede, descrizione) 
-        VALUES (nome, inizio, fine, sede, abstract)
+        INSERT INTO conferenza(titolo, inizio, fine, id_sede, descrizione, id_utente) 
+        VALUES (nome, inizio, fine, sede, abstract,utente)
         RETURNING id_conferenza INTO id;
         raise notice 'Inserimento completato';
         RETURN id;
@@ -363,7 +470,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Funzione per l'aggiunta di un ente organizzatore di una conferenza
-create or replace procedure add_ente(ente text, conferenza integer)
+create or replace procedure add_ente(ente integer, conferenza integer)
 as $$
 begin
     insert into ente_conferenza(id_ente,id_conferenza)
@@ -395,6 +502,21 @@ begin
     insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
     values (titolo,inizio,fine,sala,conferenza);
     raise notice 'Inserimento completato';
+    exception
+        when others then
+            raise notice '%', sqlerrm;
+end;
+$$ language plpgsql;
+
+create or replace function add_sessione(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer) return integer
+as $$
+declare
+    sessione_id integer;
+begin
+    insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
+    values (titolo,inizio,fine,sala,conferenza) returning id_sessione into sessione_id;
+    raise notice 'Inserimento completato';
+    return sessione_id;
     exception
         when others then
             raise notice '%', sqlerrm;
@@ -583,7 +705,7 @@ $$ language plpgsql;
 create or replace function show_percentage_interventi(mese int, anno int)
 returns table
 (
-    sigla varchar(7),
+    ente text,
     percentuale text
 ) as $$
 declare
@@ -594,12 +716,12 @@ begin
     where date_part('month',inizio) = mese and date_part('year',inizio) = anno;
 
     return query
-    select e.sigla, (count(*)*100/totale)::text || '%'
+    select e.nome, (count(*)*100/totale)::text || '%'
     from intervento i join speaker s 
     on i.id_speaker = s.id_speaker join ente e 
     on s.id_ente = e.id_ente
     where date_part('month',inizio) = mese and date_part('year',inizio) = anno
-    group by e.sigla;
+    group by e.nome;
 end;
 $$ language plpgsql;
 
@@ -607,7 +729,7 @@ $$ language plpgsql;
 create or replace function show_percentage_interventi(anno int)
 returns table
 (
-    sigla varchar(7),
+    nome varchar(7),
     percentuale text
 ) as $$
 declare
@@ -618,12 +740,12 @@ begin
     where date_part('year',inizio) = anno;
 
     return query
-    select e.sigla, (count(*)*100/totale)::text || '%'
+    select e.nome, (count(*)*100/totale)::text || '%'
     from intervento i join speaker s 
     on i.id_speaker = s.id_speaker join ente e 
     on s.id_ente = e.id_ente
     where date_part('year',inizio) = anno
-    group by e.sigla;
+    group by e.nome;
 end;
 $$ language plpgsql;
 
