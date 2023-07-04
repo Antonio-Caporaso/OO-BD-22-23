@@ -203,14 +203,15 @@ Per ciascuna delle associazioni binarie di tipo uno a molti si identificano le e
 		\underline{id\_Conferenza} & Nome & Descrizione & Inizio & Fine & \underline{\underline{id\_sede}} \\ \hline
 	\end{tabular}
 
-\item Una conferenza ha due comitati, uno scientifico ed uno locale:
+\item Una conferenza ha due comitati, uno scientifico ed uno locale;
 
 	
+\item Ogni conferenza ha un utente che la crea;
 
 \end{enumerate}
-\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
 	\multicolumn{6}{l}{\textsc{Conferenza}} \\ \hline
-	\underline{id\_Conferenza} & Nome & Descrizione & Inizio & Fine & \underline{\underline{id\_sede}} & \underline{\underline{id\_com\_locale}}& \underline{\underline{id\_com\_scientifico}}\\ \hline
+	\underline{id\_Conferenza} & Nome & Descrizione & Inizio & Fine & \underline{\underline{id\_sede}} & \underline{\underline{comitato\_s}}& \underline{\underline{comitato\_l}} & \underline{\underline{id\_utente}}\\ \hline
 \end{tabular}
 \subsubsection{Traduzione delle associazioni uno a uno}
 Si ha:
