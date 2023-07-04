@@ -277,12 +277,13 @@ begin
 end;
 $$ language plpgsql;
 
-create or replace function add_intervento
+create or replace function add_new_intervento 
 (titolo text, 
 abstract text, 
 speaker text, 
 programma_id int,
 durata interval)
+returns integer
 as $$
 declare
     sessione_id integer;
@@ -344,7 +345,7 @@ $$
 language plpgsql;
 
 create or replace function 
-add_intervallo(tipologia text , programa_id int, durata interval)
+add_new_intervallo(tipologia text , programa_id int, durata interval)
 returns integer
 as $$
 declare
@@ -413,7 +414,7 @@ $$
 language plpgsql;
 
 create or replace function
-add_evento
+add_new_evento
 (tipologia text, 
 programma_id int, 
 durata interval)
@@ -508,7 +509,9 @@ begin
 end;
 $$ language plpgsql;
 
-create or replace function add_sessione(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer) return integer
+create or replace function add_new_sessione
+(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer) 
+returns integer
 as $$
 declare
     sessione_id integer;
