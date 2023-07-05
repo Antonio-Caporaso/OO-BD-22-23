@@ -1,3 +1,4 @@
+drop schema conference cascade;
 \i Tables.sql
 \i Funzioni.sql
 \i Triggers.sql
