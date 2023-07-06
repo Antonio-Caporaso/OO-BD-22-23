@@ -28,13 +28,9 @@ public class LoginController implements Initializable, FormChecker {
     @FXML
     private Button loginButton;
     @FXML
-    private Button registratiButton;
-    @FXML
     private TextField usernameTextField;
     @FXML
     private PasswordField passwordTextField;
-    @FXML
-    private Button skipButton;
     @FXML
     private MediaView mediaView;
     private Media media;

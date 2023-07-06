@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 public class AddInterventoController implements Initializable {
     private Programma programma;
     private ObservableList<Speaker> speakers;
-    private InterventiSessione interventiSessione;
     @FXML
     private TextArea abstractTextArea;
 
@@ -41,21 +40,13 @@ public class AddInterventoController implements Initializable {
     private Button annullaButton;
 
     @FXML
-    private DateTimePicker dateTimePicker;
+    private DateTimePicker durataDT;
 
     @FXML
     private ChoiceBox<Speaker> speakerChoice;
 
     @FXML
     private TextField titleTextField;
-
-    public InterventiSessione getInterventiSessione() {
-        return interventiSessione;
-    }
-
-    public void setInterventiSessione(InterventiSessione interventiSessione) {
-        this.interventiSessione = interventiSessione;
-    }
 
     public Programma getProgramma() {
         return programma;
@@ -69,7 +60,7 @@ public class AddInterventoController implements Initializable {
     void addOnAction(ActionEvent event) {
         Intervento i = retrieveDettagliIntervento();
         try {
-            interventiSessione.addIntervento(i,durata);
+            programma.addIntervento(i,durata);
             Stage stage = (Stage) addButton.getScene().getWindow();
             stage.close();
         }catch (SQLException e){
@@ -85,7 +76,6 @@ public class AddInterventoController implements Initializable {
         i.setSpeaker(speakerChoice.getValue());
         i.setTitolo(titleTextField.getText());
         i.setEstratto(abstractTextArea.getText());
-        i.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         return i;
     }
 

@@ -24,9 +24,8 @@ public class AddIntervalloController implements Initializable {
     @FXML
     private Button addButton;
     private Programma programma;
-    private IntervalliSessione intervalliSessione;
     @FXML
-    private DateTimePicker dateTimePicker;
+    private DateTimePicker durataDT;
 
     @FXML
     private Button annullaButton;
@@ -49,34 +48,24 @@ public class AddIntervalloController implements Initializable {
     @FXML
     void addOnAction(ActionEvent event) {
         Intervallo e = new Intervallo();
-        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
         e.setProgramma(programma);
         Stage stage = (Stage) addButton.getScene().getWindow();
         stage.close();
         try{
-            intervalliSessione.addIntervallo(e);
+            programma.addIntervallo(e,durata);
         }catch (SQLException exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(exception.getMessage());
             alert.showAndWait();
         }
     }
-
     public Programma getProgramma() {
         return programma;
     }
 
     public void setProgramma(Programma programma) {
         this.programma = programma;
-    }
-
-    public IntervalliSessione getIntervalliSessione() {
-        return intervalliSessione;
-    }
-
-    public void setIntervalliSessione(IntervalliSessione intervalliSessione) {
-        this.intervalliSessione = intervalliSessione;
     }
 
     @FXML

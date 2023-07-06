@@ -1,5 +1,4 @@
 package View.Controller;
-
 import Persistence.Entities.Conferenze.EventoSociale;
 import Persistence.Entities.Conferenze.Programma;
 import javafx.collections.FXCollections;
@@ -12,25 +11,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import tornadofx.control.DateTimePicker;
-
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
-
 public class AddEventoController implements Initializable {
     @FXML
     private Button addButton;
     private Programma programma;
-    private EventiSocialiSessione eventi;
     @FXML
-    private DateTimePicker dateTimePicker;
-
+    private DateTimePicker durata;
     @FXML
     private Button annullaButton;
-
     @FXML
     private DateTimePicker orario;
     @FXML
@@ -51,7 +43,7 @@ public class AddEventoController implements Initializable {
     void addOnAction(ActionEvent event) {
         EventoSociale e = retrieveDettagliEvento();
         try{
-            eventi.addEvento(e);
+            programma.addEvento(e,durata);
             Stage stage = (Stage) addButton.getScene().getWindow();
             stage.close();
         }catch (SQLException exception){
@@ -60,35 +52,21 @@ public class AddEventoController implements Initializable {
             alert.showAndWait();
         }
     }
-
     private EventoSociale retrieveDettagliEvento() {
         EventoSociale e = new EventoSociale();
-        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
         e.setProgramma(programma);
         return e;
     }
-
     public Programma getProgramma() {
         return programma;
     }
-
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
-
-    public EventiSocialiSessione getEventi() {
-        return eventi;
-    }
-
-    public void setEventi(EventiSocialiSessione eventi) {
-        this.eventi = eventi;
-    }
-
     @FXML
     void annullaOnAction(ActionEvent event) {
         Stage stage = (Stage) annullaButton.getScene().getWindow();
         stage.close();
     }
-
 }

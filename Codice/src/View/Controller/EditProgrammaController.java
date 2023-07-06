@@ -24,10 +24,7 @@ public class EditProgrammaController implements Initializable {
     private Programma programma;
     private SubScene subscene;
     private ManageSessioniController manageSessioniController;
-    private InterventiSessione interventi;
-    private IntervalliSessione intervalli;
     private Sessione sessione;
-    private EventiSocialiSessione eventi;
     @FXML
     private TableColumn<Intervento, String> abstractColumn;
     @FXML
@@ -97,30 +94,6 @@ public class EditProgrammaController implements Initializable {
         this.programma = programma;
     }
 
-    public InterventiSessione getInterventi() {
-        return interventi;
-    }
-
-    public void setInterventi(InterventiSessione interventi) {
-        this.interventi = interventi;
-    }
-
-    public IntervalliSessione getIntervalli() {
-        return intervalli;
-    }
-
-    public void setIntervalli(IntervalliSessione intervalli) {
-        this.intervalli = intervalli;
-    }
-
-    public EventiSocialiSessione getEventi() {
-        return eventi;
-    }
-
-    public void setEventi(EventiSocialiSessione eventi) {
-        this.eventi = eventi;
-    }
-
     public Sessione getSessione() {
         return sessione;
     }
@@ -171,12 +144,11 @@ public class EditProgrammaController implements Initializable {
 
     private void setInterventiTable() {
         try {
-            interventi = new InterventiSessione(programma);
-            interventi.loadInterventi();
+            programma.loadInterventi();
             orarioInterventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
             speakerColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
             abstractColumn.setCellValueFactory(new PropertyValueFactory<>("estratto"));
-            interventiTable.setItems(interventi.getInterventi());
+            interventiTable.setItems(programma.getInterventi());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -184,24 +156,22 @@ public class EditProgrammaController implements Initializable {
 
     private void setEventiTable() {
         try {
-            eventi = new EventiSocialiSessione(programma);
-            eventi.loadEventiSociali();
+            programma.loadEventiSociali();
             orarioEventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
             tipologiaEventoColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
-            eventiTable.setItems(eventi.getEventi());
+            eventiTable.setItems(programma.getEventi());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void setIntervalliTable() {
-        intervalli = new IntervalliSessione(programma);
         try{
-            intervalli.loadIntervalli();
+            programma.loadIntervalli();
             titleColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
             orarioIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
             tipologiaIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
-            intervalliTable.setItems(intervalli.getIntervalli());
+            intervalliTable.setItems(programma.getIntervalli());
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -223,7 +193,6 @@ public class EditProgrammaController implements Initializable {
         controller.setProgramma(programma);
         controller.setSessione(sessione);
         controller.setSubScene(subscene);
-        controller.setEventi(eventi);
         loader.setController(controller);
         Parent root = loader.load();
         subscene.setRoot(root);
@@ -237,7 +206,6 @@ public class EditProgrammaController implements Initializable {
         controller.setProgramma(programma);
         controller.setSessione(sessione);
         controller.setSubScene(subscene);
-        controller.setIntervalliSessione(intervalli);
         loader.setController(controller);
         Parent root = loader.load();
         subscene.setRoot(root);
@@ -251,7 +219,6 @@ public class EditProgrammaController implements Initializable {
         controller.setProgramma(programma);
         controller.setSessione(sessione);
         controller.setSubScene(subscene);
-        controller.setInterventiSessione(interventi);
         loader.setController(controller);
         Parent root = loader.load();
         subscene.setRoot(root);
@@ -264,7 +231,6 @@ public class EditProgrammaController implements Initializable {
         controller.setProgramma(programma);
         controller.setSubScene(subscene);
         controller.setKeynote(programma.getKeynote());
-        controller.setInterventiSessione(interventi);
         loader.setController(controller);
         Parent root = loader.load();
         subscene.setRoot(root);

@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ChooseKeynoteController implements Initializable {
-    private InterventiSessione interventiSessione;
     private Programma programma;
     @FXML
     private Button annullaButton;
@@ -38,14 +37,6 @@ public class ChooseKeynoteController implements Initializable {
         this.programma = programma;
     }
 
-    public InterventiSessione getInterventiSessione() {
-        return interventiSessione;
-    }
-
-    public void setInterventiSessione(InterventiSessione interventiSessione) {
-        this.interventiSessione = interventiSessione;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setSpeakersChoiceBox();
@@ -53,7 +44,7 @@ public class ChooseKeynoteController implements Initializable {
 
     private void setSpeakersChoiceBox() {
         ObservableList<Speaker> speakers = FXCollections.observableArrayList();
-        for (Intervento i : interventiSessione.getInterventi()){
+        for (Intervento i : programma.getInterventi()){
             speakers.add(i.getSpeaker());
         }
         speakerChoice.setItems(speakers);

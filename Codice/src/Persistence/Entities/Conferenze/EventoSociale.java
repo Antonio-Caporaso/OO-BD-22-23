@@ -1,8 +1,12 @@
 package Persistence.Entities.Conferenze;
 
 
-public class EventoSociale extends Activity {
+import java.sql.Timestamp;
+
+public class EventoSociale implements Activity {
     private int id_evento;
+    private Timestamp inizio;
+    private Timestamp fine;
     private Programma programma;
     private String tipologia;
 
@@ -28,6 +32,14 @@ public class EventoSociale extends Activity {
 
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
+    }
+    @Override
+    public Timestamp getInizio() {
+        return inizio;
+    }
+    @Override
+    public Timestamp getFine() {
+        return fine;
     }
 
     @Override

@@ -6,15 +6,18 @@ import Persistence.Entities.partecipanti.Speaker;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-    public class Intervento extends Activity {
+    public class Intervento implements Activity {
         private int id_intervento;
         private String titolo;
         private String estratto;
+        private Timestamp inizio;
+        private Timestamp fine;
         private Speaker speaker;
         private Programma programma;
 
         public Intervento(Timestamp inizio, Timestamp fine, String estratto, Speaker speaker, Programma programma) {
-            super(inizio, fine);
+            this.inizio = inizio;
+            this.fine = fine;
             this.estratto = estratto;
             this.speaker = speaker;
             this.programma=programma;
@@ -56,6 +59,14 @@ import java.util.Objects;
         }
         public Programma getProgramma() {return programma;}
         public void setProgramma(Programma programma) {this.programma = programma;}
+        @Override
+        public Timestamp getInizio() {
+            return inizio;
+        }
+        @Override
+        public Timestamp getFine() {
+            return fine;
+        }
 
         @Override
         public boolean equals(Object o) {

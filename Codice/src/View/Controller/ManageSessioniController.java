@@ -22,7 +22,6 @@ import java.util.ResourceBundle;
 
 public class ManageSessioniController implements Initializable {
     private Conferenza conferenza;
-    private Sessioni sessioni ;
     private SubScene subscene;
     private Utente user;
     private ModificaConferenzaController modificaConferenzaController;
@@ -59,13 +58,13 @@ public class ManageSessioniController implements Initializable {
         oraInizioColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioInizio"));
         orarioFineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioFine"));
         salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
-        table.setItems(sessioni.getSessioni());
+        table.setItems(conferenza.getSessioni());
         nomeSessioneColumn.isSortable();
         oraInizioColumn.isSortable();
     }
     public void reloadSessioni(){
         try {
-            sessioni.loadSessioni();
+            conferenza.loadSessioni();
             setTable();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -79,7 +78,6 @@ public class ManageSessioniController implements Initializable {
         controller.setConferenza(conferenza);
         controller.setManageSessioniController(this);
         controller.setSubscene(subscene);
-        controller.setSessioni(sessioni);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -138,7 +136,7 @@ public class ManageSessioniController implements Initializable {
             Optional<ButtonType> result = showConfirmationAlert(s);
             if (result.get() == ButtonType.OK) {
                 try {
-                    sessioni.removeSessione(s);
+                    conferenza.removeSessione(s);
                 } catch (SQLException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(e.getMessage());
@@ -160,9 +158,5 @@ public class ManageSessioniController implements Initializable {
         alert.setContentText("Sicuro di voler rimuovere la sessione '" + s.getTitolo() + "'?");
         Optional<ButtonType> result = alert.showAndWait();
         return result;
-    }
-
-    public void setSessioni(Sessioni sessioni) {
-        this.sessioni = sessioni;
     }
 }

@@ -7,8 +7,8 @@ import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.organizzazione.Organizzatore;
-import Services.MembriComitato;
-import Services.Sale;
+import Utilities.MembriComitato;
+import Utilities.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,11 +24,11 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class AddSessioneController implements Initializable,FormChecker {
     private Conferenza conferenza;
-    private Sessioni sessioni;
     private Sale sale;
     private ManageSessioniController manageSessioniController;
     private ModificaConferenzaController modificaConferenzaController;
@@ -101,13 +101,6 @@ public class AddSessioneController implements Initializable,FormChecker {
         return dao.retrieveProgrammaBySessione(s);
     }
 
-    public Sessioni getSessioni() {
-        return sessioni;
-    }
-
-    public void setSessioni(Sessioni sessioni) {
-        this.sessioni = sessioni;
-    }
 
     private Sessione setSessione() {
         Sessione s = new Sessione();
@@ -115,10 +108,9 @@ public class AddSessioneController implements Initializable,FormChecker {
         s.setTitolo(nomeTF.getText());
         s.setLocazione(saleChoice.getValue());
         s.setCoordinatore(coordinatoreChoiceBox.getValue());
-        s.setDataInizio(Date.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalDate()));
-        s.setDataFine(Date.valueOf(fineDateTimePicker.getDateTimeValue().toLocalDate()));
-        s.setOrarioInizio(Time.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalTime()));
-        s.setOrarioFine(Time.valueOf(fineDateTimePicker.getDateTimeValue().toLocalTime()));
+        s.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
+        s.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
+
         return  s;
     }
     @Override

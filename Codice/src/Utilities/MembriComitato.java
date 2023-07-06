@@ -1,4 +1,4 @@
-package Services;
+package Utilities;
 
 import Persistence.DAO.OrganizzatoreDao;
 import Persistence.Entities.Conferenze.Conferenza;

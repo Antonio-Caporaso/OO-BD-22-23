@@ -26,7 +26,6 @@ public class EditIntervalloController implements Initializable {
     @FXML
     private Button addButton;
     private Programma programma;
-    private IntervalliSessione intervalliSessione;
     @FXML
     private DateTimePicker dateTimePicker;
     @FXML
@@ -42,14 +41,6 @@ public class EditIntervalloController implements Initializable {
         this.intervallo = intervallo;
     }
 
-    public IntervalliSessione getIntervalliSessione() {
-        return intervalliSessione;
-    }
-
-    public void setIntervalliSessione(IntervalliSessione intervalliSessione) {
-        this.intervalliSessione = intervalliSessione;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setTipologieChoice();
@@ -57,7 +48,7 @@ public class EditIntervalloController implements Initializable {
     }
 
     private void setDateTimePicker() {
-        dateTimePicker.setValue(intervallo.getOrario().toLocalDateTime().toLocalDate());
+
     }
 
     private void setTipologieChoice() {
@@ -83,12 +74,12 @@ public class EditIntervalloController implements Initializable {
     }
 
     public void editButtonOnAction(ActionEvent event){
-        intervallo.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+
         intervallo.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
         Stage stage = (Stage) editButton.getScene().getWindow();
         stage.close();
         try{
-            intervalliSessione.updateIntervallo(intervallo);
+            programma.updateIntervallo(intervallo);
         }catch (SQLException exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(exception.getMessage());

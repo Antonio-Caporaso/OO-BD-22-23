@@ -20,14 +20,6 @@ public class LandingController implements Initializable{
     @FXML
     private Button LogoutButton;
     @FXML
-    private Button creaConferenzaButton;
-    @FXML
-    private Button gestisciConferenzaButton;
-    @FXML
-    private Button visualizzaConferenza;
-    @FXML
-    private Button visualizzaStatisticheButton;
-    @FXML
     private Button backToLandingButton;
     @FXML
     private SubScene subscene;

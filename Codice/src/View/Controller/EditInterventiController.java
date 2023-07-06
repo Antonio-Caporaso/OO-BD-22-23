@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 
 public class EditInterventiController implements Initializable {
     private Programma programma;
-    private InterventiSessione interventiSessione;
     private SubScene subScene;
     private Sessione sessione;
     private ManageSessioniController manageSessioniController;
@@ -71,13 +70,6 @@ public class EditInterventiController implements Initializable {
         this.programma = programma;
     }
 
-    public InterventiSessione getInterventiSessione() {
-        return interventiSessione;
-    }
-
-    public void setInterventiSessione(InterventiSessione interventiSessione) {
-        this.interventiSessione = interventiSessione;
-    }
 
     public SubScene getSubScene() {
         return subScene;
@@ -107,7 +99,6 @@ public class EditInterventiController implements Initializable {
     void addInterventoButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento.fxml"));
         AddInterventoController controller = new AddInterventoController();
-        controller.setInterventiSessione(interventiSessione);
         controller.setProgramma(programma);
         loader.setController(controller);
         Parent root = loader.load();
@@ -131,7 +122,7 @@ public class EditInterventiController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 try {
-                    interventiSessione.removeIntervento(i);
+                    programma.removeIntervento(i);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -143,7 +134,6 @@ public class EditInterventiController implements Initializable {
     void editInterventoOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervento.fxml"));
         EditInterventoController controller = new EditInterventoController();
-        controller.setInterventiSessione(interventiSessione);
         controller.setIntervento(interventiTable.getSelectionModel().getSelectedItem());
         loader.setController(controller);
         Parent root = loader.load();
@@ -172,7 +162,7 @@ public class EditInterventiController implements Initializable {
         abstractColumn.setCellValueFactory(new PropertyValueFactory<>("estratto"));
         speakerColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
         orarioInterventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
-        interventiTable.setItems(interventiSessione.getInterventi());
+        interventiTable.setItems(programma.getInterventi());
     }
 }
 

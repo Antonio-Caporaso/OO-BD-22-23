@@ -28,7 +28,6 @@ public class EditInterventoController implements Initializable {
     private Intervento intervento;
     private Programma programma;
     private ObservableList<Speaker> speakers;
-    private InterventiSessione interventiSessione;
     @FXML
     private TextArea abstractTextArea;
 
@@ -58,14 +57,6 @@ public class EditInterventoController implements Initializable {
         this.intervento = intervento;
     }
 
-    public InterventiSessione getInterventiSessione() {
-        return interventiSessione;
-    }
-
-    public void setInterventiSessione(InterventiSessione interventiSessione) {
-        this.interventiSessione = interventiSessione;
-    }
-
     public Programma getProgramma() {
         return programma;
     }
@@ -80,7 +71,7 @@ public class EditInterventoController implements Initializable {
         Stage stage = (Stage) editButton.getScene().getWindow();
         stage.close();
         try{
-            interventiSessione.updateIntervento(i);
+            programma.updateIntervento(i);
         }catch (SQLException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
@@ -94,7 +85,7 @@ public class EditInterventoController implements Initializable {
         i.setSpeaker(speakerChoice.getValue());
         i.setTitolo(titleTextField.getText());
         i.setEstratto(abstractTextArea.getText());
-        i.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+       // Gestione inizio e fine
         return i;
     }
 
@@ -128,7 +119,7 @@ public class EditInterventoController implements Initializable {
             setSpeakerChoice();
             speakerChoice.setValue(intervento.getSpeaker());
             abstractTextArea.setText(intervento.getEstratto());
-            dateTimePicker.setValue(intervento.getOrario().toLocalDateTime().toLocalDate());
+           // gestione orario inizio e fine
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -65,4 +65,17 @@ public class ProgrammaDao {
         stm.setInt(2,programma.getProgrammaID());
         stm.executeUpdate();
     }
+
+    public int retrieveKeynoteSpeakerID(Sessione sessione) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select id_speaker from programma where id_sessione = ?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        int id = 0;
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            id = rs.getInt(1);
+        }
+        return id;
+    }
 }

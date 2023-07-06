@@ -1,7 +1,11 @@
 package Persistence.Entities.Conferenze;
 
-public class Intervallo extends Activity {
+import java.sql.Timestamp;
+
+public class Intervallo implements Activity {
     private int id_intervallo;
+    private Timestamp inizio;
+    private Timestamp fine;
     private String tipologia;
     private Programma programma;
 
@@ -29,5 +33,13 @@ public class Intervallo extends Activity {
 
     public void setProgramma(Programma programma) {
         this.programma = programma;
+    }
+    @Override
+    public Timestamp getInizio() {
+        return inizio;
+    }
+    @Override
+    public Timestamp getFine() {
+        return fine;
     }
 }

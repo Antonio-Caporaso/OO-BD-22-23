@@ -1,5 +1,6 @@
 package Persistence.Entities.Conferenze;
 
+import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.EnteDao;
 import Persistence.DAO.SessioneDao;
 import Persistence.DAO.SponsorizzazioneDAO;
@@ -44,6 +45,15 @@ public class Conferenza {
     }
 
     public Conferenza() {}
+
+    public Conferenza(String nome, Timestamp dataI, Timestamp dataF, String descrizione, Sede sede, Utente user) {
+        this.titolo=nome;
+        this.inizio=dataI;
+        this.fine=dataF;
+        this.descrizione=descrizione;
+        this.sede=sede;
+        this.proprietario=user;
+    }
 
     public int getId_conferenza() {
         return id_conferenza;
@@ -135,12 +145,10 @@ public class Conferenza {
     }
     public void addSessione(Sessione sessione) throws SQLException{
         SessioneDao sessioneDao = new SessioneDao();
-        sessioneDao.saveSessione(sessione);
         sessioni.add(sessione);
     }
     public void removeSessione(Sessione sessione) throws SQLException {
         SessioneDao dao = new SessioneDao();
-        dao.removeSessione(sessione);
         sessioni.remove(sessione);
     }
     public void loadSponsorizzazioni() throws SQLException {
@@ -150,12 +158,10 @@ public class Conferenza {
     }
     public void addSponsorizzazione(Sponsorizzazione s) throws SQLException {
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-        dao.saveSponsorizzazione(s);
         sponsorizzazioni.add(s);
     }
     public void removeSponsorizzazione(Sponsorizzazione s) throws SQLException {
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-        dao.removeSponsorizzazione(s);
         sponsorizzazioni.remove(s);
     }
     public void loadOrganizzatori() throws SQLException {
@@ -170,7 +176,7 @@ public class Conferenza {
     }
     public void removeEnte(Ente e) throws SQLException {
         EnteDao dao = new EnteDao();
-        dao.removeEnteOrganizzatore(e,this);
+        dao.removeEnteOrganizzatore(e, this);
         enti.remove(e);
     }
 }

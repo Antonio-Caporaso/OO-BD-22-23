@@ -1,7 +1,7 @@
 package View.Controller;
 
 import Persistence.DAO.InterventoDao;
-import Services.Stats;
+import Utilities.Stats;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

@@ -6,6 +6,7 @@ import Exceptions.PasswordMismatchException;
 import Exceptions.UtentePresenteException;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Ente;
+import Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,43 +25,27 @@ public class RegisterController implements Initializable, FormChecker{
     @FXML
     private Button backButton;
     @FXML
-    private Label cognomeLabel;
-    @FXML
     private TextField cognomeTextField;
-    @FXML
-    private Label confermaPasswordLabel;
     @FXML
     private PasswordField confermaPasswordTextField;
     @FXML
-    private Button confirmButton;
-    @FXML
-    private Label emailLabel;
-    @FXML
     private TextField emailTextField;
     @FXML
-    private Label nomeLabel;
-    @FXML
     private TextField nomeTextField;
-    @FXML
-    private Label passwordLabel;
     @FXML
     private PasswordField passwordTextField;
     @FXML
     private ChoiceBox<String> titoloChoiceBox;
-    @FXML
-    private Label titoloLabel;
-    @FXML
-    private Label usernameLabel;
+
     @FXML
     private TextField usernameTextField;
     @FXML
     private Label errorLabel;
     @FXML
-    private Label istituzioneLabel;
-    @FXML
     private ChoiceBox<Ente> istituzioneChoice;
     @FXML
     private MediaView mediaView;
+    private Enti enti = new Enti();
     private Media media;
     private File file;
     private MediaPlayer mediaPlayer;
@@ -129,7 +114,13 @@ public class RegisterController implements Initializable, FormChecker{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titoloChoiceBox.getItems().addAll(titoli);
+        setIstituzioni();
         setMediaPlayer();
+    }
+
+    private void setIstituzioni() {
+        enti.loadEnti();
+        istituzioneChoice.setItems(enti.getEnti());
     }
 
     private void setMediaPlayer() {

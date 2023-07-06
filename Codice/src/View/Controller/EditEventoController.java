@@ -27,7 +27,6 @@ public class EditEventoController implements Initializable {
     @FXML
     private javafx.scene.control.Button addButton;
     private Programma programma;
-    private EventiSocialiSessione eventi;
     @FXML
     private DateTimePicker dateTimePicker;
     @FXML
@@ -50,7 +49,7 @@ public class EditEventoController implements Initializable {
     }
 
     private void setDateTimePicker() {
-        dateTimePicker.setValue(eventoSociale.getOrario().toLocalDateTime().toLocalDate());
+
     }
 
     private void setTipologieChoice() {
@@ -70,12 +69,6 @@ public class EditEventoController implements Initializable {
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
-    public EventiSocialiSessione getEventi() {
-        return eventi;
-    }
-    public void setEventi(EventiSocialiSessione eventi) {
-        this.eventi = eventi;
-    }
     @FXML
     void annullaOnAction(javafx.event.ActionEvent event) {
         Stage stage = (Stage) annullaButton.getScene().getWindow();
@@ -83,12 +76,11 @@ public class EditEventoController implements Initializable {
     }
 
     public void editButtonOnAction(ActionEvent event){
-        eventoSociale.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         eventoSociale.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
         Stage stage = (Stage) editButton.getScene().getWindow();
         stage.close();
         try{
-            eventi.updateEvento(eventoSociale);
+            programma.updateEvento(eventoSociale);
         }catch (SQLException exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(exception.getMessage());

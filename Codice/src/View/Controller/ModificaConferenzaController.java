@@ -22,9 +22,6 @@ import java.sql.Time;
 import java.util.ResourceBundle;
 public class ModificaConferenzaController implements Initializable {
     private Conferenza conferenza;
-    private Sessioni sessioni ;
-    private EntiOrganizzatori organizzatori;
-    private SponsorizzazioniConferenza sponsorizzazioniConferenza;
     private SubScene subscene;
     private Utente user;
     @FXML
@@ -124,7 +121,6 @@ public class ModificaConferenzaController implements Initializable {
         loader.setController(controller);
         controller.setConferenza(conferenza);
         controller.setSubscene(subscene);
-        controller.setSessioni(sessioni);
         controller.setEditConferenceController(this);
         Parent root = loader.load();
         subscene.setRoot(root);
@@ -146,17 +142,15 @@ public class ModificaConferenzaController implements Initializable {
         this.setTitleLabel();
         nomeLabel.setText(conferenza.getTitolo());
         descrizioneLabel.setText(conferenza.getDescrizione());
-        budgetLabel.setText(Float.toString(conferenza.getBudget())+""+conferenza.getValuta());
         dataInizioLabel.setText(conferenza.getInizio().toString());
         dataFineLabel.setText(conferenza.getFine().toString());
         sedeLabel.setText(conferenza.getSede().toString());
     }
     public void setOrganizzatori() {
-        organizzatori = new EntiOrganizzatori(conferenza);
         try{
-            organizzatori.loadOrganizzatori();
+            conferenza.loadOrganizzatori();
             entiView.setText("");
-            for(Ente e: organizzatori.getEnti()){
+            for(Ente e: conferenza.getEnti()){
                 entiView.appendText(e.toString()+"\n");
             }
         }catch(SQLException e){
@@ -164,11 +158,10 @@ public class ModificaConferenzaController implements Initializable {
         }
     }
     public void setSponsorizzazioni(){
-        sponsorizzazioniConferenza = new SponsorizzazioniConferenza(conferenza);
         try{
-            sponsorizzazioniConferenza.loadSponsorizzazioni();
+            conferenza.loadSponsorizzazioni();
             sponsorizzazioniView.setText("");
-            for(Sponsorizzazione s : sponsorizzazioniConferenza.getSponsorizzazioni()){
+            for(Sponsorizzazione s : conferenza.getSponsorizzazioni()){
                 sponsorizzazioniView.appendText(s.toString()+"\n");
             }
         }catch (SQLException e){
@@ -187,9 +180,8 @@ public class ModificaConferenzaController implements Initializable {
     }
     private void setTable(){
         table.setEditable(false);
-        sessioni = new Sessioni(conferenza);
         try{
-            sessioni.loadSessioni();
+            conferenza.loadSessioni();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -199,7 +191,7 @@ public class ModificaConferenzaController implements Initializable {
         oraInizioColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioInizio"));
         orarioFineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioFine"));
         salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
-        table.getItems().addAll(sessioni.getSessioni());
+        table.getItems().addAll(conferenza.getSessioni());
         nomeSessioneColumn.isSortable();
         oraInizioColumn.isSortable();
     }

@@ -2,7 +2,7 @@ package View.Controller;
 
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
-import Services.ConferenzeUtente;
+import Utilities.ConferenzeUtente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -3,7 +3,7 @@ package Persistence.DAO;
 import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
-import Services.Stats;
+import Utilities.Stats;
 import org.postgresql.util.PGInterval;
 
 import java.sql.Connection;
