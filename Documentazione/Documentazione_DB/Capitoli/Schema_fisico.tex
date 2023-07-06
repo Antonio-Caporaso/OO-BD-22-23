@@ -777,10 +777,10 @@ La funzione \texttt{show\_sessioni} prende IN ingresso la chiave primaria di una
 CREATE OR REPLACE FUNCTION show_sessioni(conferenza INTEGER)
 RETURNS SETOF sessione AS $$
 BEGIN
-RETURN QUERY
-SELECT * FROM sessione
-WHERE id_conferenza = conferenza
-order by inizio;
+	RETURN QUERY
+	SELECT * FROM sessione
+	WHERE id_conferenza = conferenza
+	order by inizio;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
@@ -797,16 +797,16 @@ abstract TEXT,
 speaker TEXT
 )  AS $$
 DECLARE 
-programma INTEGER;
+	programma INTEGER;
 BEGIN
-SELECT id_programma INTO programma
-FROM programma
-WHERE id_sessione = sessione;
+	SELECT id_programma INTO programma
+	FROM programma
+	WHERE id_sessione = sessione;
 
-SELECT titolo,inizio,fine,abstract, s.nome || ' ' || s.cognome AS speaker
-FROM intervento i JOIN speaker s ON i.id_speaker = s.id_speaker
-WHERE i.id_programma = programma
-order by inizio;
+	SELECT titolo,inizio,fine,abstract, s.nome || ' ' || s.cognome AS speaker
+	FROM intervento i JOIN speaker s ON i.id_speaker = s.id_speaker
+	WHERE i.id_programma = programma
+	order by inizio;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
@@ -824,23 +824,24 @@ fine TIMESTAMP
 )  
 AS $$
 DECLARE 
-programma INTEGER;
+	programma INTEGER;
 BEGIN
-SELECT id_programma INTO programma
-FROM programma
-WHERE id_sessione = sessione;
+	SELECT id_programma INTO programma
+	FROM programma
+	WHERE id_sessione = sessione;
 
-SELECT id_intervallo,tipologia,inizio,fine
-FROM intervallo i
-WHERE id_programma = programma
-order by inizio;
+	SELECT id_intervallo,tipologia,inizio,fine
+	FROM intervallo i
+	WHERE id_programma = programma
+	order by inizio;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_eventi\_sociali\_sessione(INTEGER)}}
 La funzione \texttt{show\_eventi\_sociali\_sessione} prende IN ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-CREATE OR REPLACE FUNCTION show_eventi_sociali_sessione(sessione INTEGER)
+CREATE OR REPLACE FUNCTION 
+show_eventi_sociali_sessione(sessione INTEGER)
 RETURNS TABLE
 (
 id_evento INTEGER,
@@ -849,16 +850,16 @@ inizio TIMESTAMP,
 fine TIMESTAMP) 
 AS $$
 DECLARE 
-programma INTEGER;
+	programma_id INTEGER;
 BEGIN
-SELECT id_programma INTO programma
-FROM programma
-WHERE id_sessione = sessione;
+	SELECT id_programma INTO programma_id
+	FROM programma
+	WHERE id_sessione = sessione;
 
-SELECT id_evento,tipologia,inizio,fine
-FROM evento
-WHERE id_programma = programma
-order by inizio;
+	SELECT id_evento,tipologia,inizio,fine
+	FROM evento
+	WHERE id_programma = programma_id
+	order by inizio;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
@@ -875,26 +876,27 @@ email TEXT,
 ente TEXT) 
 AS $$
 DECLARE 
-programma INTEGER;
+	programma_id INTEGER;
 BEGIN
-SELECT id_programma INTO programma
-FROM programma
-WHERE id_sessione = sessione;
+	SELECT id_programma INTO programma_id
+	FROM programma
+	WHERE id_sessione = sessione;
 
-SELECT s.id_speaker,s.nome,s.cognome,s.titolo,s.email,e.nome
-FROM speaker s JOIN ente e ON s.id_ente = e.id_ente
-WHERE s.id_speaker = (
-SELECT id_keynote
-FROM programma
-WHERE id_programma = programma
-);
+	SELECT s.id_speaker,s.nome,s.cognome,s.titolo,s.email,e.nome
+	FROM speaker s JOIN ente e ON s.id_ente = e.id_ente
+	WHERE s.id_speaker = (
+		SELECT id_keynote
+		FROM programma
+		WHERE id_programma = programma_id
+	);
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_Programma(INTEGER)}}
 La funzione \texttt{Show\_Programma} prende IN ingresso la chiave primaria di una sessione e restituisce una tabella che mostra tutti gli appuntamenti IN progamma IN ordine cronologico:
 \begin{lstlisting}[language=SQL,style=mystyle]
-CREATE OR REPLACE FUNCTION show_programma(sessione INTEGER)
+CREATE OR REPLACE FUNCTION 
+show_programma(sessione INTEGER)
 RETURNS TABLE (
 id_entry INTEGER,
 appuntamento TEXT,
@@ -905,55 +907,45 @@ speaker TEXT
 )
 AS $$
 DECLARE
-programma INTEGER;
+	programma_id INTEGER;
 BEGIN
-SELECT id_programma INTO programma
-FROM programma
-WHERE id_sessione = sessione;
+	SELECT id_programma INTO programma_id
+	FROM programma
+	WHERE id_sessione = sessione;
 
-RETURN QUERY
-SELECT *
-FROM (
-SELECT distinct i.id_intervento AS id_entry,
-'intervento' AS appuntamento,
-i.inizio,
-i.fine,
-i.abstract,
-s.nome || ' ' || s.cognome AS speaker
-FROM intervento i
-JOIN speaker s ON i.id_speaker = s.id_speaker
-WHERE i.id_programma = programma
+	RETURN QUERY
+	SELECT *
+	FROM (
+		SELECT distinct i.id_intervento AS id_entry,
+		'intervento' AS appuntamento,
+		i.inizio,
+		i.fine,
+		i.abstract,
+		s.nome || ' ' || s.cognome AS speaker
+		FROM intervento i JOIN speaker s 
+		ON i.id_speaker = s.id_speaker
+		WHERE i.id_programma = programma
+	
+	UNION ALL
 
-UNION ALL
+	SELECT i2.id_intervallo AS id_entry,'intervallo' AS appuntamento,i2.inizio, i2.fine,tipologia::TEXT AS descrizione,NULL
+	FROM intervallo i2
+	WHERE i2.id_programma = programma
+	
+	UNION ALL
 
-SELECT i2.id_intervallo AS id_entry,
-'intervallo' AS appuntamento,
-i2.inizio,
-i2.fine,
-tipologia::TEXT AS descrizione,
-NULL
-FROM intervallo i2
-WHERE i2.id_programma = programma
-
-UNION ALL
-
-SELECT e.id_evento AS id_entry,
-'evento' AS appuntamento,
-e.inizio,
-e.fine,
-e.tipologia::TEXT AS descrizione,
-NULL
-FROM evento e
-WHERE e.id_programma = programma
-) AS subquery
-ORDER BY inizio;
+	SELECT e.id_evento AS id_entry,'evento' AS appuntamento,e.inizio,e.fine,e.tipologia::TEXT AS descrizione,NULL
+	FROM evento e
+	WHERE e.id_programma = programma
+	) AS subquery
+	ORDER BY inizio;
 END;
 $$ LANGUAGE plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Intervento(TEXT,TEXT,TEXT,INTEGER,INTERVAL)}}
-La procedura \texttt{Add\_intervento} provvede all'inserimento di un intervento all'interno del programma della sessione. Questa calcola l'orario esatto IN cui inserire il nuovo punto sulla base dell'ultimo punto IN programma. Se non esistono punti IN programma allora l'ora di inizio è calcolato come l'inizio della sessione:
+La procedura \texttt{Add\_intervento} provvede all'inserimento di un intervento all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure add_intervento
+CREATE OR REPLACE PROCEDURE add_intervento
 (titolo TEXT, 
 abstract TEXT, 
 speaker TEXT, 
@@ -987,9 +979,9 @@ END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Add\_Intervallo(TEXT,INTEGER,INTERVAL)}}
-La procedura \texttt{Add\_Intervallo} provvede all'inserimento di un intervallo all'interno del programma della sessione. Questa calcola l'orario esatto IN cui inserire il nuovo punto sulla base dell'ultimo punto IN programma. Se non esistono punti IN programma allora l'ora di inizio è calcolato come l'inizio della sessione:
+La procedura \texttt{Add\_Intervallo} provvede all'inserimento di un intervallo all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure 
+CREATE OR REPLACE PROCEDURE 
 add_intervallo(tipologia TEXT , sessione_id INTEGER, durata INTERVAL)
 AS $$
 DECLARE
@@ -1022,7 +1014,7 @@ LANGUAGE PLPGSQL;
 \subsection{\texttt{Add\_Evento(TEXT,INTEGER,INTERVAL)}}
 La procedura \texttt{Add\_Evento} provvede all'inserimento di un evento all'interno del programma della sessione. Questa calcola l'orario esatto IN cui inserire il nuovo punto sulla base dell'ultimo punto IN programma. Se non esistono punti IN programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure 
+CREATE OR REPLACE PROCEDURE 
 add_evento
 (tipologia TEXT, 
 sessione_id INTEGER, 
@@ -1081,7 +1073,7 @@ $$ LANGUAGE plpgsql;
 \subsection{\texttt{Add\_ente(INTEGER, INTEGER)}}
 La procedura \texttt{Add\_ente} provvede all'inserimento di una nuova istituzione tra gli organizzatori di una conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure add_ente(ente INTEGER, conferenza INTEGER)
+CREATE OR REPLACE PROCEDURE add_ente(ente INTEGER, conferenza INTEGER)
 AS $$
 BEGIN
 INSERT INTO ente_conferenza(id_ente,id_conferenza)
@@ -1096,7 +1088,7 @@ $$ LANGUAGE PLPGSQL;
 \subsection{\texttt{Add\_Sponsorizzazione(INTEGER,NUMERIC,CHAR(3),INTEGER)}}
 La procedura \texttt{Add\_Sponsorizzazione} inserisce una nuova sponsorizzazione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_sponsorizzazione(sponsor INTEGER, contributo NUMERIC(1000,2), valuta CHAR(3), conferenza INTEGER)
+CREATE OR REPLACE PROCEDURE add_sponsorizzazione(sponsor INTEGER, contributo NUMERIC(1000,2), valuta CHAR(3), conferenza INTEGER)
 AS $$
 BEGIN
 INSERT INTO sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
@@ -1111,7 +1103,7 @@ $$ LANGUAGE PLPGSQL;
 \subsection{\texttt{Add\_Sessione(TEXT,TIMESTAMP,TIMESTAMP, INTEGER,INTEGER)}}
 La procedura \texttt{Add\_Sessione} aggiunge una nuova sessione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_sessione(titolo TEXT, inizio TIMESTAMP, fine TIMESTAMP, sala INTEGER, conferenza INTEGER)
+CREATE OR REPLACE PROCEDURE add_sessione(titolo TEXT, inizio TIMESTAMP, fine TIMESTAMP, sala INTEGER, conferenza INTEGER)
 AS $$
 BEGIN
 INSERT INTO sessione(titolo,inizio,fine,id_sala,id_conferenza)
@@ -1126,7 +1118,7 @@ $$ LANGUAGE PLPGSQL;
 \subsection{\texttt{Add\_Partecipante(INTEGER, INTEGER)}}
 La procedura \texttt{Add\_Partecipante} inserisce un nuovo partecipante alla sessione:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_partecipante(partecipante INTEGER, sessione INTEGER)
+CREATE OR REPLACE PROCEDURE add_partecipante(partecipante INTEGER, sessione INTEGER)
 AS $$
 BEGIN
 INSERT INTO partecipante_sessione(id_partecipante,id_sessione)
@@ -1162,7 +1154,7 @@ $$ LANGUAGE plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Conferenza(TEXT,TIMESTAMP,TIMESTAMP,INTEGER, TEXT, TEXT)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure 
+CREATE OR REPLACE PROCEDURE 
 add_conferenza (nome TEXT, inizio TIMESTAMP, fine TIMESTAMP, sede INTEGER, descrizione TEXT, sigle TEXT,utente INTEGER)
 AS $$
 DECLARE
@@ -1179,7 +1171,7 @@ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Slitta\_Conferenza(INTERVAL)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create or replace procedure 
+	CREATE OR REPLACE PROCEDURE 
 slitta_conferenza(conferenza_id INTEGER, durata INTERVAL)
 AS $$
 DECLARE
