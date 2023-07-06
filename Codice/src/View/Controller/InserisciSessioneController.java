@@ -23,7 +23,6 @@ import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
 import Services.Sale;
-import Services.Sessioni;
 
 public class InserisciSessioneController implements Initializable,FormChecker {
     @FXML

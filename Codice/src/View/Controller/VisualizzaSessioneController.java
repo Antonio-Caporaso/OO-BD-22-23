@@ -20,7 +20,6 @@ import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.organizzazione.Organizzatore;
-import Services.Sessioni;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class VisualizzaSessioneController implements Initializable {

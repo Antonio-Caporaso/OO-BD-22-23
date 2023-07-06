@@ -2,7 +2,6 @@ package View.Controller;
 
 import Persistence.Entities.Conferenze.EventoSociale;
 import Persistence.Entities.Conferenze.Programma;
-import Services.EventiSocialiSessione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

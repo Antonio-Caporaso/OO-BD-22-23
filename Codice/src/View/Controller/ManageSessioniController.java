@@ -4,7 +4,6 @@ import Exceptions.SessioneNotSelectedException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
-import Services.Sessioni;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

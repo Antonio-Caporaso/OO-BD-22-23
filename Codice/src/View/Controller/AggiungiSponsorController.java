@@ -20,7 +20,6 @@ import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Sponsor;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
-import Services.SponsorizzazioniConferenza;
 import Services.Sponsors;
 import org.postgresql.util.PSQLException;
 

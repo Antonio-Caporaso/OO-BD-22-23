@@ -3,7 +3,6 @@ package View.Controller;
 import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.partecipanti.Speaker;
-import Services.InterventiSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

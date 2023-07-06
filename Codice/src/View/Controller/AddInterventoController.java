@@ -4,7 +4,6 @@ import Persistence.DAO.SpeakerDao;
 import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.partecipanti.Speaker;
-import Services.InterventiSessione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

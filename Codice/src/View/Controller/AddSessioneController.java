@@ -9,7 +9,6 @@ import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.organizzazione.Organizzatore;
 import Services.MembriComitato;
 import Services.Sale;
-import Services.Sessioni;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

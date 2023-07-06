@@ -4,7 +4,6 @@ import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.partecipanti.Speaker;
-import Services.InterventiSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
