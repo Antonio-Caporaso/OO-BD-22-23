@@ -562,12 +562,12 @@ $$ LANGUAGE plpgsql;
 
 
 --Procedura per l'aggiunta di una conferenza con enti organizzatori
-create or replace procedure add_conferenza(nome text, inizio timestamp, fine timestamp, sede integer, descrizione text, sigle text)
+create or replace procedure add_conferenza(nome text, inizio timestamp, fine timestamp, sede integer, descrizione text, sigle text, utente integer)
 as $$
 declare
     id_conferenza int;
 begin
-    id_conferenza := add_conferenza_details(nome,inizio,fine,sede,descrizione);
+    id_conferenza := add_conferenza_details(nome,inizio,fine,sede,descrizione,utente);
     call add_enti(id_conferenza,sigle);
     exception
         when others then
@@ -767,5 +767,13 @@ begin
     select s.titolo,s.inizio,s.fine,c.titolo,s1.nome from sessione s, conferenza c,sala s1
     where s.id_conferenza=c.id_conferenza and s.id_sala=s1.id_sala
     order by s.id_conferenza, s.inizio;
+end;
+$$ language plpgsql;
+
+--Aggiungere un organizzatore ad un comitato
+create or replace procedure add_membro_comitato(organizzatore integer, comitato integer)
+as $$
+begin
+    insert into membro_comitato values (organizzatore,comitato);
 end;
 $$ language plpgsql;
