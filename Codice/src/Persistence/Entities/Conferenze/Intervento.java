@@ -59,6 +59,15 @@ import java.util.Objects;
         }
         public Programma getProgramma() {return programma;}
         public void setProgramma(Programma programma) {this.programma = programma;}
+
+        public void setInizio(Timestamp inizio) {
+            this.inizio = inizio;
+        }
+
+        public void setFine(Timestamp fine) {
+            this.fine = fine;
+        }
+
         @Override
         public Timestamp getInizio() {
             return inizio;

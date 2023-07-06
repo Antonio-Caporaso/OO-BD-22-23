@@ -42,6 +42,14 @@ public class EventoSociale implements Activity {
         return fine;
     }
 
+    public void setInizio(Timestamp inizio) {
+        this.inizio = inizio;
+    }
+
+    public void setFine(Timestamp fine) {
+        this.fine = fine;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -42,4 +42,12 @@ public class Intervallo implements Activity {
     public Timestamp getFine() {
         return fine;
     }
+
+    public void setInizio(Timestamp inizio) {
+        this.inizio = inizio;
+    }
+
+    public void setFine(Timestamp fine) {
+        this.fine = fine;
+    }
 }
