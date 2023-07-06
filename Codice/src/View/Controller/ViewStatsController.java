@@ -41,7 +41,7 @@ public class ViewStatsController implements Initializable {
     void monthlyButtonOnAction(ActionEvent event) {
         ObservableList<Stats> stats = FXCollections.observableArrayList();
         try {
-            stats.addAll(retrieveIstituzioniByMonth(Integer.parseInt(meseTextField.getText())));
+            stats.addAll(retrieveIstituzioniByMonth(Integer.parseInt(meseTextField.getText()),Integer.parseInt(annoTextField.getText())));
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
             if(stats.isEmpty()){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -75,9 +75,9 @@ public class ViewStatsController implements Initializable {
         InterventoDao dao = new InterventoDao();
         return dao.retrieveInterventiStatsByYear(i);
     }
-    private LinkedList<Stats> retrieveIstituzioniByMonth(int i) throws SQLException {
+    private LinkedList<Stats> retrieveIstituzioniByMonth(int m,int y) throws SQLException {
         InterventoDao dao = new InterventoDao();
-        return dao.retrieveInterventiStatsByMonth(i);
+        return dao.retrieveInterventiStatsByMonth(m,y);
     }
     @FXML
     void pulisciButtonOnAction(ActionEvent event) {
