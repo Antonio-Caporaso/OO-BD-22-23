@@ -2,359 +2,375 @@
 
 \section{Definizione delle tabelle}
 \subsection{\textsc{Utente}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-	create table utente(
-	id_utente serial primary key,
-	username text not null unique,
-	nome text not null,
-	cognome text not null,
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Utente}]
+	CREATE TABLE utente(
+	id_utente serial PRIMARY KEY,
+	username text NOT NULL UNIQUE,
+	nome text NOT NULL,
+	cognome text NOT NULL,
 	titolo titolo_st,
-	email text not null unique,
-	password text not null,
-	id_ente integer references ente(id_ente) on delete cascade
+	email text NOT NULL UNIQUE,
+	password text NOT NULL,
+	id_ente INTEGER REFERENCES ente(id_ente) ON delete cascade
 	);
 \end{lstlisting}
 \subsection{\textsc{Ente}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-	create table ente(
-	id_ente serial primary key,
-	nome text not null unique,
-	sigla varchar(7) not null,
-	unique (nome,sigla)
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Ente}]
+	CREATE TABLE ente(
+	id_ente serial PRIMARY KEY,
+	nome text NOT NULL UNIQUE,
+	sigla varchar(7) NOT NULL,
+	UNIQUE (nome,sigla)
 	);
 \end{lstlisting}
 \subsection{\textsc{Indirizzo}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table indirizzo(
-id_indirizzo serial primary key,
-via text not null,
-civico varchar(5) not null,
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Indirizzo}]
+CREATE TABLE indirizzo(
+id_indirizzo serial PRIMARY KEY,
+via text NOT NULL,
+civico varchar(5) NOT NULL,
 cap varchar(5) ,
-city text not null,
-provincia varchar(2) not null,
+city text NOT NULL,
+provincia varchar(2) NOT NULL,
 nazione text
 );
 \end{lstlisting}
 \subsection{\textsc{Sede}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table sede(
-id_sede serial primary key,
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella:  Sede}]
+CREATE TABLE sede(
+id_sede serial PRIMARY KEY,
 nome text ,
-id_indirizzo integer references indirizzo(id_indirizzo) on delete set null
+id_indirizzo INTEGER REFERENCES indirizzo(id_indirizzo) ON delete SET null
 );
 \end{lstlisting}
 \subsection{\textsc{Sponsor}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table sponsor(
-id_sponsor serial primary key,
-nome text not null
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Sponsor}]
+CREATE TABLE sponsor(
+id_sponsor serial PRIMARY KEY,
+nome text NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Comitato}}
 Ogni comitato ha una tipologia che varia tra i valori \textit{scientifico} e \textit{locale}. Definiamo quindi il tipo \texttt{comitato\_st} che useremo per specificare la tipologia del comitato:
-\begin{lstlisting}[language=SQL,style=mystyle]
-create type comitato_st as enum ('locale','scientifico');
-create table comitato(
-id_comitato serial primary key,
-tipologia comitato_st not null
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Comitato}]
+CREATE TYPE comitato_st AS enum ('locale','scientifico');
+CREATE TABLE comitato(
+id_comitato serial PRIMARY KEY,
+tipologia comitato_st NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Organizzatore, Speaker, Partecipante}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create type titolo_st as enum ('Dottore','Dottoressa','Professore','Professoressa','Assistente','Ricercatore','Ricercatrice','Ingegnere');
-create table organizzatore(
-id_organizzatore serial primary key,
-nome text not null,
-cognome text not null,
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Organizzatore}]
+CREATE TYPE titolo_st AS enum ('Dottore','Dottoressa','Professore','Professoressa','Assistente','Ricercatore','Ricercatrice','Ingegnere');
+
+CREATE TABLE organizzatore(
+id_organizzatore serial PRIMARY KEY,
+nome text NOT NULL,
+cognome text NOT NULL,
 titolo titolo_st,
-email text not null unique,
-id_ente integer references ente(id_ente) on delete cascade
+email text NOT NULL UNIQUE,
+id_ente INTEGER REFERENCES ente(id_ente) ON delete cascade
 );
 \end{lstlisting}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table partecipante(
-id_partecipante serial primary key,
-nome text not null,
-cognome text not null,
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Partecipante}]
+CREATE TABLE partecipante(
+id_partecipante serial PRIMARY KEY,
+nome text NOT NULL,
+cognome text NOT NULL,
 titolo titolo_st,
-email text not null unique, 
-id_ente integer references ente(id_ente) on delete set null
+email text NOT NULL UNIQUE, 
+id_ente INTEGER REFERENCES ente(id_ente) ON delete SET null
 );
 \end{lstlisting}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table speaker(
-id_speaker serial primary key,
-nome text not null,
-cognome text not null,
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Speaker}]
+CREATE TABLE speaker(
+id_speaker serial PRIMARY KEY,
+nome text NOT NULL,
+cognome text NOT NULL,
 titolo titolo_st,
-email text not null unique,
-id_ente integer references ente(id_ente) on delete cascade NOT NULL
+email text NOT NULL UNIQUE,
+id_ente INTEGER REFERENCES ente(id_ente) ON delete cascade NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Sala}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-	create table sala(
-	id_sala serial primary key,
-	nome text not null,
-	capienza integer not null,
-	id_sede integer references sede(id_sede) on delete cascade
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Sala}]
+	CREATE TABLE sala(
+	id_sala serial PRIMARY KEY,
+	nome text NOT NULL,
+	capienza INTEGER NOT NULL,
+	id_sede INTEGER REFERENCES sede(id_sede) ON delete cascade
 	);
 \end{lstlisting}
 \subsection{\textsc{Conferenza}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table conferenza(
-id_conferenza serial primary key,
-titolo text not null,
-descrizione text not null,
-inizio timestamp not null,
-fine timestamp not null,
-id_sede integer references sede(id_sede) on delete set null,
-comitato_s integer references comitato(id_comitato) on delete set null,
-comitato_l integer references comitato(id_comitato) on delete set null,
-id_utente integer references utente(id_utente) on delete cascade,
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Conferenza}]
+CREATE TABLE conferenza(
+id_conferenza serial PRIMARY KEY,
+titolo text NOT NULL,
+descrizione text NOT NULL,
+inizio TIMESTAMP NOT NULL,
+fine TIMESTAMP NOT NULL,
+id_sede INTEGER REFERENCES sede(id_sede) ON delete SET null,
+comitato_s INTEGER REFERENCES comitato(id_comitato) ON delete SET null,
+comitato_l INTEGER REFERENCES comitato(id_comitato) ON delete SET null,
+id_utente INTEGER REFERENCES utente(id_utente) ON delete cascade,
 check (inizio <= fine), 
 check (inizio >= now()) 
 );
 \end{lstlisting}
 \subsection{\textsc{Sessione}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table sessione(
-id_sessione serial primary key,
-titolo text not null,
-inizio timestamp not null,
-fine timestamp not null,
-id_coordinatore integer references organizzatore(id_organizzatore) on delete set null,
-id_conferenza integer references conferenza(id_conferenza) on delete cascade,
-id_sala integer references sala(id_sala) on delete set null,
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Sessione}]
+CREATE TABLE sessione(
+id_sessione serial PRIMARY KEY,
+titolo text NOT NULL,
+inizio TIMESTAMP NOT NULL,
+fine TIMESTAMP NOT NULL,
+id_coordinatore INTEGER REFERENCES organizzatore(id_organizzatore) ON delete SET null,
+id_conferenza INTEGER REFERENCES conferenza(id_conferenza) ON delete cascade,
+id_sala INTEGER REFERENCES sala(id_sala) ON delete SET null,
 check (inizio <= fine)
 );
 \end{lstlisting}
 \subsection{\textsc{Partecipazione}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table partecipazione(
-id_partecipante integer references partecipante(id_partecipante) on delete cascade,
-id_sessione integer references sessione(id_sessione) on delete cascade,
-unique (id_partecipante,id_sessione) 
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Partecipazione}]
+CREATE TABLE partecipazione(
+id_partecipante INTEGER REFERENCES partecipante(id_partecipante) ON delete cascade,
+id_sessione INTEGER REFERENCES sessione(id_sessione) ON delete cascade,
+UNIQUE (id_partecipante,id_sessione) 
 );
 \end{lstlisting}
 \subsection{\textsc{Ente\_Conferenza}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table ente_conferenza(
-id_ente integer references ente(id_ente) on delete cascade,
-id_conferenza integer references conferenza(id_conferenza) on delete cascade,
-unique (id_ente,id_conferenza)
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Ente\_Conferenza}]
+CREATE TABLE ente_conferenza(
+id_ente INTEGER REFERENCES ente(id_ente) ON delete cascade,
+id_conferenza INTEGER REFERENCES conferenza(id_conferenza) ON delete cascade,
+UNIQUE (id_ente,id_conferenza)
 );
 \end{lstlisting}
 \subsection{\textsc{Valuta}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table valuta(
-iso char(3) primary key,
-nome text not null,
-simbolo text not null
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Valuta}]
+CREATE TABLE valuta(
+iso char(3) PRIMARY KEY,
+nome text NOT NULL,
+simbolo text NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Sponsor\_Conferenza}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table sponsor_conferenza(
-id_sponsor integer references sponsor(id_sponsor) on delete cascade not null,
-contributo numeric(1000,2) not null,
-valuta char(3) references valuta(iso) not null,
-id_conferenza integer references conferenza(id_conferenza) on delete cascade not null,
-unique (id_sponsor,id_conferenza) 
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Sponsor\_Conferenza}]
+CREATE TABLE sponsor_conferenza(
+id_sponsor INTEGER REFERENCES sponsor(id_sponsor) ON delete cascade NOT NULL,
+contributo numeric(1000,2) NOT NULL,
+valuta char(3) REFERENCES valuta(iso) NOT NULL,
+id_conferenza INTEGER REFERENCES conferenza(id_conferenza) ON delete cascade NOT NULL,
+UNIQUE (id_sponsor,id_conferenza) 
 );
 \end{lstlisting}
 \subsection{\textsc{Programma}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table programma(
-id_programma serial primary key,
-id_sessione integer references sessione(id_sessione) on delete cascade not null,
-id_keynote integer references speaker(id_speaker) on delete set null,
-unique (id_programma, id_sessione)
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Programma}]
+CREATE TABLE programma(
+id_programma serial PRIMARY KEY,
+id_sessione INTEGER REFERENCES sessione(id_sessione) ON delete cascade NOT NULL,
+id_keynote INTEGER REFERENCES speaker(id_speaker) ON delete SET null,
+UNIQUE (id_programma, id_sessione)
 );
 
 \end{lstlisting}
 \subsection{\textsc{Intervento}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table intervento(
-id_intervento serial primary key,
-titolo text not null,
-abstract text not null,
-inizio timestamp not null,
-fine timestamp not null,
-id_speaker integer references speaker(id_speaker) on delete cascade,
-id_programma integer references programma(id_programma) on delete cascade not null,
-unique (id_speaker,id_programma), 
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Intervento}]
+CREATE TABLE intervento(
+id_intervento serial PRIMARY KEY,
+titolo text NOT NULL,
+abstract text NOT NULL,
+inizio TIMESTAMP NOT NULL,
+fine TIMESTAMP NOT NULL,
+id_speaker INTEGER REFERENCES speaker(id_speaker) ON delete cascade,
+id_programma INTEGER REFERENCES programma(id_programma) ON delete cascade NOT NULL,
+UNIQUE (id_speaker,id_programma), 
 check (inizio <= fine) 
 );
 \end{lstlisting}
 \subsection{\textsc{Intervallo}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create type intervallo_st as enum ('pranzo','coffee break');
-create table intervallo(
-id_intervallo serial primary key,
-tipologia intervallo_st not null,
-inizio timestamp not null,
-fine timestamp not null,
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Programma}]
+CREATE TYPE intervallo_st AS enum ('pranzo','coffee break');
+CREATE TABLE intervallo(
+id_intervallo serial PRIMARY KEY,
+tipologia intervallo_st NOT NULL,
+inizio TIMESTAMP NOT NULL,
+fine TIMESTAMP NOT NULL,
 check (inizio <= fine), 
-id_programma integer references programma(id_programma) on delete cascade not null
+id_programma INTEGER REFERENCES programma(id_programma) ON delete cascade NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Evento}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table evento(
-id_evento serial primary key,
-tipologia text not null,
-inizio timestamp not null,
-fine timestamp not null,
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Evento}]
+CREATE TABLE evento(
+id_evento serial PRIMARY KEY,
+tipologia text NOT NULL,
+inizio TIMESTAMP NOT NULL,
+fine TIMESTAMP NOT NULL,
 check (inizio <= fine), 
-id_programma integer references programma(id_programma) on delete cascade not null
+id_programma INTEGER REFERENCES programma(id_programma) ON delete cascade NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Organizzatore\_Comitato}}
-\begin{lstlisting}[language=SQL,style=mystyle]
-create table organizzatore_comitato(
-id_organizzatore integer references organizzatore(id_organizzatore) on delete cascade,
-id_comitato integer references comitato(id_comitato) on delete cascade,
-unique (id_organizzatore,id_comitato) 
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Organizzatore\_Comitato}]
+CREATE TABLE organizzatore_comitato(
+id_organizzatore INTEGER REFERENCES organizzatore(id_organizzatore) ON delete cascade,
+id_comitato INTEGER REFERENCES comitato(id_comitato) ON delete cascade,
+UNIQUE (id_organizzatore,id_comitato) 
 );
 \end{lstlisting}
 \section{Definizione dei trigger}
 \subsection{\texttt{Check\_Programma}}
 In un programma non devono esserci eventi, intervalli o interventi che si sovrappongono. Per questo motivo definiamo il trigger \texttt{check\_programma\_entry} che viene eseguito per ogni inserimento o aggiornamento nelle tabelle \textsc{Intervento}, \textsc{Intervallo} ed \textsc{Evento}.
 \begin{lstlisting}[language=SQL,style=mystyle,caption={check\_programma\_entry}]
-create or replace function check_programma() returns trigger as $$
-declare
-inizio_evento timestamp;
-fine_evento timestamp;
-inizio_intervallo timestamp;
-fine_intervallo timestamp;
-inizio_intervento timestamp;
-fine_intervento timestamp;
-intervento_id integer;
-intervallo_id integer;
-evento_id integer;
-interventi_cur cursor for select id_intervento from intervento where id_programma = new.id_programma;
-intervalli_cur cursor for select id_intervallo from intervallo where id_programma = new.id_programma;
-eventi_cur cursor for select id_evento from evento where id_programma = new.id_programma;
-begin
-open interventi_cur;
-loop 
-fetch interventi_cur into intervento_id;
-exit when not found;
-select inizio,fine into inizio_intervento,fine_intervento
-from intervento
-where id_intervento = intervento_id;
-if (new.inizio>=inizio_intervento AND new.fine<=fine_intervento) then
-raise exception 'Impossibile inserire questo intervento in questo orario';
-end if;
-end loop;
-close interventi_cur;
-open intervalli_cur;
-loop 
-fetch intervalli_cur into intervallo_id;
-exit when not found;
-select inizio,fine into inizio_intervallo,fine_intervallo
-from intervallo
-where id_intervallo = intervallo_id;
-if (new.inizio>=inizio_intervallo AND new.fine<=fine_intervallo) then
-raise exception 'Impossibile inserire questo intervallo in questo orario';
-end if;
-end loop;
-close intervalli_cur;
-open eventi_cur;
-loop 
-fetch eventi_cur into evento_id;
-exit when not found;
-select inizio,fine into inizio_evento,fine_evento
-from evento
-where id_evento = evento_id;
-if (new.inizio>=inizio_evento AND new.fine<=fine_evento) then
-raise exception 'Impossibile inserire questo evento in questo orario';
-end if;
-end loop;
-close eventi_cur;
-return new;
-end;
-$$ language plpgsql;
+CREATE OR REPLACE FUNCTION check_programma() 
+RETURNS TRIGGER AS $$
+DECLARE
+	inizio_evento TIMESTAMP;
+	fine_evento TIMESTAMP;
+	inizio_intervallo TIMESTAMP;
+	fine_intervallo TIMESTAMP;
+	inizio_intervento TIMESTAMP;
+	fine_intervento TIMESTAMP;
+	intervento_id INTEGER;
+	intervallo_id INTEGER;
+	evento_id INTEGER;
+	interventi_cur cursor FOR 
+		SELECT id_intervento 
+		FROM intervento 
+		WHERE id_programma = new.id_programma;
+	intervalli_cur cursor FOR 
+		SELECT id_intervallo 
+		FROM intervallo 
+		WHERE id_programma = new.id_programma;
+	eventi_cur cursor FOR 
+		SELECT id_evento 
+		FROM evento 
+		WHERE id_programma = new.id_programma;
+BEGIN
+	OPEN interventi_cur;
+	LOOP 
+		FETCH interventi_cur INTO intervento_id;
+		EXIT WHEN NOT FOUND;
+		SELECT inizio,fine INTO inizio_intervento,fine_intervento
+		FROM intervento
+		WHERE id_intervento = intervento_id;
+		IF (new.inizio>=inizio_intervento AND new.fine<=fine_intervento) THEN
+			RAISE EXCEPTION 'Impossibile inserire intervento';
+		END IF;
+	END LOOP;
+	CLOSE interventi_cur;
+	
+	OPEN intervalli_cur;
+	LOOP 
+		FETCH intervalli_cur INTO intervallo_id;
+		EXIT WHEN NOT FOUND;
+		SELECT inizio,fine INTO inizio_intervallo,fine_intervallo
+		FROM intervallo
+		WHERE id_intervallo = intervallo_id;
+		IF (new.inizio>=inizio_intervallo AND new.fine<=fine_intervallo) THEN
+			RAISE EXCEPTION 'Impossibile inserire intervallo';
+		END IF;
+		END LOOP;
+	CLOSE intervalli_cur;
+	
+	OPEN eventi_cur;
+	LOOP 
+		FETCH eventi_cur INTO evento_id;
+		EXIT WHEN NOT FOUND;
+		SELECT inizio,fine INTO inizio_evento,fine_evento
+		FROM evento
+		WHERE id_evento = evento_id;
+		IF (new.inizio>=inizio_evento AND new.fine<=fine_evento) THEN
+			RAISE EXCEPTION 'Impossibile inserire evento';
+		END IF;
+	END LOOP;
+	CLOSE eventi_cur;
+	RETURN NEW;
+END;
+$$ 
+LANGUAGE PLPGSQL;
 
-create trigger check_programma
-before insert or update on intervento
-for each row
-execute function check_programma();
-create trigger check_programma
-before insert or update on intervallo
-for each row
-execute function check_programma();
-create trigger check_programma
-before insert or update on evento
-for each row
-execute function check_programma();
+CREATE TRIGGER check_programma
+BEFORE INSERT OR UPDATE ON intervento
+FOR EACH ROW
+EXECUTE FUNCTION check_programma();
+
+CREATE TRIGGER check_programma
+BEFORE INSERT OR UPDATE ON intervallo
+FOR EACH ROW
+EXECUTE FUNCTION check_programma();
+
+CREATE TRIGGER check_programma
+BEFORE INSERT OR UPDATE ON evento
+FOR EACH ROW
+EXECUTE FUNCTION check_programma();
 \end{lstlisting}
 
 \subsection{\texttt{Check\_Data\_Intervento, Check\_Data\_Intervallo, Check\_Data\_Evento}}\label{trigger:check_data}
 Ogni volta che viene inserito o aggiornato un intervento, un intervallo o un evento bisogna controllare sempre che la data di inizio e di fine sia coerente con quella della sessione cui appartengono:
 \begin{lstlisting}[caption={check\_data\_intervento},language=SQL,style=mystyle]
-create or replace function check_data() returns trigger as $$
-declare
-inizio_sessione timestamp;
-fine_sessione timestamp;
-begin
-select inizio,fine into inizio_sessione,fine_sessione
-from sessione
-where id_sessione = (select id_sessione from programma where id_programma = new.id_programma);
+CREATE OR REPLACE FUNCTION check_data() RETURNS TRIGGER AS $$
+DECLARE
+inizio_sessione TIMESTAMP;
+fine_sessione TIMESTAMP;
+BEGIN
+SELECT inizio,fine INTO inizio_sessione,fine_sessione
+FROM sessione
+WHERE id_sessione = (SELECT id_sessione FROM programma WHERE id_programma = new.id_programma);
 
-if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
-raise exception 'L''intervento non e'' compreso nella sessione';
-end if;
-return new;
-end;
-$$ language plpgsql;
+IF (new.inizio < inizio_sessione OR new.fine > fine_sessione) THEN
+RAISE EXCEPTION 'L''intervento non e'' compreso nella sessione';
+END IF;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger check_data_evento
-before insert or update on evento
-for each row
-execute function check_data();
+CREATE TRIGGER check_data_evento
+BEFORE INSERT OR UPDATE ON evento
+FOR EACH ROW
+EXECUTE FUNCTION check_data();
 
-create trigger check_data_intervento
-before insert or update on intervento
-for each row
-execute function check_data();
+CREATE TRIGGER check_data_intervento
+BEFORE INSERT OR UPDATE ON intervento
+FOR EACH ROW
+EXECUTE FUNCTION check_data();
 
-create trigger check_data_intervallo
-before insert or update on intervallo
-for each row
-execute function check_data();
+CREATE TRIGGER check_data_intervallo
+BEFORE INSERT OR UPDATE ON intervallo
+FOR EACH ROW
+EXECUTE FUNCTION check_data();
 \end{lstlisting}
 \subsection{\texttt{Create\_Programma\_Sessione}}
 Il trigger \texttt{Create\_Programma\_Sessione} viene attivato subito dopo aver inserito una nuova sessione ed effettua l'inserimento di un programma vuoto associato alla sessione.
 \begin{lstlisting}[language=SQL, caption={\texttt{create\_programma\_sessione}},style=mystyle]
-create or replace function create_programma_sessione() returns trigger as $$
-begin
-insert into programma(id_sessione) values (new.id_sessione);
-return new;
-end;
-$$ language plpgsql;
+CREATE OR REPLACE FUNCTION create_programma_sessione() RETURNS TRIGGER AS $$
+BEGIN
+INSERT INTO programma(id_sessione) VALUES (new.id_sessione);
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger create_programma_sessione
-after insert on sessione
-for each row
-execute function create_programma_sessione();
+CREATE TRIGGER create_programma_sessione
+AFTER INSERT ON sessione
+FOR EACH ROW
+EXECUTE FUNCTION create_programma_sessione();
 \end{lstlisting}
 \subsection{\texttt{Check\_Sala\_Sessione}}
-Quando inseriamo una sessione bisogna stare attenti che la chiave esterna della sala sia effettivamente una sala appartenente alla sede che ospita la conferenza della sessione in questione. Il trigger \texttt{check\_sala\_sessione} effettua quindi questo controllo prima di ciascun inserimento nella tabella \textsc{Sessione}:
+Quando inseriamo una sessione bisogna stare attenti che la chiave esterna della sala sia effettivamente una sala appartenente alla sede che ospita la conferenza della sessione IN questione. Il trigger \texttt{check\_sala\_sessione} effettua quindi questo controllo prima di ciascun inserimento nella tabella \textsc{Sessione}:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function check_sala_sessione() returns trigger as $$
-declare
-sede integer;
-sala integer;
-begin
-select id_sede into sede
-from conferenza
-where id_conferenza = new.id_conferenza;
+CREATE OR REPLACE FUNCTION check_sala_sessione() RETURNS TRIGGER AS $$
+DECLARE
+sede INTEGER;
+sala INTEGER;
+BEGIN
+SELECT id_sede INTO sede
+FROM conferenza
+WHERE id_conferenza = new.id_conferenza;
 
-select id_sala into sala
-from sala
-where id_sala = new.id_sala;
+SELECT id_sala INTO sala
+FROM sala
+WHERE id_sala = new.id_sala;
 
 IF sala IS NULL THEN
 Return new;
@@ -365,173 +381,173 @@ SELECT id_sala
 FROM sala
 WHERE id_sede = sede
 ) THEN
-RAISE exception 'La sala selezionata non appartiene alla sede della conferenza';
+RAISE EXCEPTION 'La sala selezionata non appartiene alla sede della conferenza';
 END IF;
 
-return new;
-end;
-$$ language plpgsql;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
 
-create trigger check_sala_sessione
-before insert or update on sessione
-for each row
-execute function check_sala_sessione();
+CREATE TRIGGER check_sala_sessione
+BEFORE INSERT OR UPDATE ON sessione
+FOR EACH ROW
+EXECUTE FUNCTION check_sala_sessione();
 \end{lstlisting}
 \subsection{\texttt{Check\_Data\_Sessione}}
-Analogamente ai trigger \ref{trigger:check_data} si definisce il trigger \texttt{check\_data\_sessione} che controlla che le date di inizio e di fine di ciascuna sessione siano coerenti con quelle della relativa conferenza:
+Analogamente ai trigger \ref{trigger:check_data} si definisce il trigger \texttt{check\_data\_sessione} che controlla che le DATE di inizio e di fine di ciascuna sessione siano coerenti con quelle della relativa conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{check\_data\_sessione}}]
-create or replace function check_data_sessione() returns trigger as $$
-declare
-inizio_conferenza timestamp;
-fine_conferenza timestamp;
-begin
-select inizio, fine into inizio_conferenza,fine_conferenza
-from conferenza
-where id_conferenza = new.id_conferenza;
+CREATE OR REPLACE FUNCTION check_data_sessione() RETURNS TRIGGER AS $$
+DECLARE
+inizio_conferenza TIMESTAMP;
+fine_conferenza TIMESTAMP;
+BEGIN
+SELECT inizio, fine INTO inizio_conferenza,fine_conferenza
+FROM conferenza
+WHERE id_conferenza = new.id_conferenza;
 
-if (new.inizio < inizio_conferenza OR new.fine > fine_conferenza) then
-raise exception 'La sessione non e'' compresa nella conferenza';
-end if;
-return new;
-end;
-$$ language plpgsql;
+IF (new.inizio < inizio_conferenza OR new.fine > fine_conferenza) THEN
+RAISE EXCEPTION 'La sessione non e'' compresa nella conferenza';
+END IF;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger check_data_sessione
-before insert or update on sessione
-for each row
-execute function check_data_sessione();
+CREATE TRIGGER check_data_sessione
+BEFORE INSERT OR UPDATE ON sessione
+FOR EACH ROW
+EXECUTE FUNCTION check_data_sessione();
 \end{lstlisting}
 \subsection{\texttt{Check\_Coordinatore\_Sessione}}
 Quando si specifica il coordinatore della sessione bisogna controllare che questi appartenga al comitato scientifico che è il gruppo di organizzatori che si occupano della gestione delle conferenze e delle sessioni:
 \begin{lstlisting}[caption={check\_coordinatore\_sessione}, language=sql, style=mystyle]
-create or replace function check_coordinatore_sessione() returns trigger as $$
-declare 
-id_comitato_scientifico_conferenza integer;
-begin
+CREATE OR REPLACE FUNCTION check_coordinatore_sessione() RETURNS TRIGGER AS $$
+DECLARE 
+id_comitato_scientifico_conferenza INTEGER;
+BEGIN
 
-select comitato_s into id_comitato_scientifico_conferenza
-from conferenza c
-where c.id_conferenza = new.id_conferenza;
+SELECT comitato_s INTO id_comitato_scientifico_conferenza
+FROM conferenza c
+WHERE c.id_conferenza = new.id_conferenza;
 
-if (new.id_coordinatore is not null) then
-if (id_comitato_scientifico_conferenza not in (select id_comitato from organizzatore_comitato where id_organizzatore = new.id_coordinatore))  then
-raise exception 'Il coordinatore della sessione deve appartenere al comitato scientifico della conferenza';
-end if;
-end if;
-return new;
-end;
-$$ language plpgsql;
+IF (new.id_coordinatore is NOT NULL) THEN
+IF (id_comitato_scientifico_conferenza NOT IN (SELECT id_comitato FROM organizzatore_comitato WHERE id_organizzatore = new.id_coordinatore))  THEN
+RAISE EXCEPTION 'Il coordinatore della sessione deve appartenere al comitato scientifico della conferenza';
+END IF;
+END IF;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger check_coordinatore_sessione
-before insert or update on sessione
-for each row
-execute function check_coordinatore_sessione();
+CREATE TRIGGER check_coordinatore_sessione
+BEFORE INSERT OR UPDATE ON sessione
+FOR EACH ROW
+EXECUTE FUNCTION check_coordinatore_sessione();
 
 \end{lstlisting}
 \subsection{\texttt{Create\_Comitati\_Conferenza}}
 Gli enti che organizzano le conferenze nominano due comitati per ogni conferenza che organizzano. Per questo motivo, ogni volta che viene inserita una nuova conferenza viene attivato il trigger \texttt{create\_comitati\_conferenza} che si occupa di creare due nuovi comitati di tipologica \textit{scientifica} e \textit{locale} e associarli alla nuova conferenza appena create:
 \begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{create\_comitati\_conferenza}}]
-create or replace function create_comitati_conferenza() returns trigger as $$
-declare 
-id_comitatoscientifico integer;
-id_comitatolocale integer;
-begin
-insert into comitato(tipologia) values ('scientifico') returning id_comitato into id_comitatoscientifico;
-insert into comitato(tipologia) values ('locale') returning id_comitato into id_comitatolocale;
-update conferenza set comitato_s = id_comitatoscientifico, comitato_l = id_comitatolocale where id_conferenza = new.id_conferenza;
-return new;
-end;
-$$ language plpgsql;
+CREATE OR REPLACE FUNCTION create_comitati_conferenza() RETURNS TRIGGER AS $$
+DECLARE 
+id_comitatoscientifico INTEGER;
+id_comitatolocale INTEGER;
+BEGIN
+INSERT INTO comitato(tipologia) VALUES ('scientifico') returning id_comitato INTO id_comitatoscientifico;
+INSERT INTO comitato(tipologia) VALUES ('locale') returning id_comitato INTO id_comitatolocale;
+UPDATE conferenza SET comitato_s = id_comitatoscientifico, comitato_l = id_comitatolocale WHERE id_conferenza = new.id_conferenza;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger create_comitati_conferenza
-after insert on conferenza
-for each row
-execute function create_comitati_conferenza();
+CREATE TRIGGER create_comitati_conferenza
+AFTER INSERT ON conferenza
+FOR EACH ROW
+EXECUTE FUNCTION create_comitati_conferenza();
 \end{lstlisting}
 \subsection{\texttt{Check\_Comitati\_Conferenza}}
 Ogni volta che si aggiorna una conferenza bisogna controllare che le chiavi esterne dei due comitati si riferiscano sempre a comitati della tipologia richiesta:
 \begin{lstlisting}[language=SQL, caption={\texttt{check\_comitati\_conferenza}},style=mystyle]
-create or replace function check_comitati_conferenza() returns trigger as $$
-declare 
-id_comitato_scientifico integer;
-id_comitato_locale integer;
-begin
-select id_comitato into id_comitato_scientifico
-from comitato
-where id_comitato = new.comitato_s;
+CREATE OR REPLACE FUNCTION check_comitati_conferenza() RETURNS TRIGGER AS $$
+DECLARE 
+id_comitato_scientifico INTEGER;
+id_comitato_locale INTEGER;
+BEGIN
+SELECT id_comitato INTO id_comitato_scientifico
+FROM comitato
+WHERE id_comitato = new.comitato_s;
 
-select id_comitato into id_comitato_locale
-from comitato
-where id_comitato = new.comitato_l;
+SELECT id_comitato INTO id_comitato_locale
+FROM comitato
+WHERE id_comitato = new.comitato_l;
 
 IF id_comitato_scientifico IS NULL THEN
-return new;
+RETURN NEW;
 END IF;
 
 IF id_comitato_locale IS NULL THEN
-return new;
+RETURN NEW;
 END IF;
 
-IF (select tipologia from comitato where id_comitato = id_comitato_scientifico) <> 'scientifico' THEN
+IF (SELECT tipologia FROM comitato WHERE id_comitato = id_comitato_scientifico) <> 'scientifico' THEN
 RAISE EXCEPTION 'Il comitato scientifico deve essere scientifico';
 END IF;
 
-IF (select tipologia from comitato where id_comitato = id_comitato_locale) <> 'locale' THEN
+IF (SELECT tipologia FROM comitato WHERE id_comitato = id_comitato_locale) <> 'locale' THEN
 RAISE EXCEPTION 'Il comitato locale deve essere locale';
 END IF;
 
-return new;
-end;
-$$ language plpgsql;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger check_comitati_conferenza
-before update on conferenza
-for each row
-execute function check_comitati_conferenza();
+CREATE TRIGGER check_comitati_conferenza
+BEFORE UPDATE ON conferenza
+FOR EACH ROW
+EXECUTE FUNCTION check_comitati_conferenza();
 \end{lstlisting}
 \subsection{\texttt{Check\_Sala\_Sessione\_Unica}}
 Una sala non può ospitare più di una sessione alla volta.
 \begin{lstlisting}[caption={\texttt{Check\_sala\_sessione\_unica}}, language=SQL, style=mystyle]
-create or replace function check_sala_sessione_unica() returns trigger as $$
-declare
-inizio_sessione timestamp;
-fine_sessione timestamp;
-sessioni cursor for select id_sessione from sessione where id_sala = new.id_sala;
-sessione_id integer;
-begin
-open sessioni;
-loop
-fetch sessioni into sessione_id;
-exit when not found;
-select inizio,fine into inizio_sessione,fine_sessione
-from sessione
-where id_sessione = sessione_id;
-if (new.inizio >= inizio_sessione AND new.inizio <= fine_sessione) OR (new.fine >= inizio_sessione AND new.fine <= fine_sessione) then
-raise exception 'La sala non puo'' ospitare piu'' di una sessione alla volta';
-end if;
-end loop;
-close sessioni;
-return new;
-end;
-$$ language plpgsql;
+CREATE OR REPLACE FUNCTION check_sala_sessione_unica() RETURNS TRIGGER AS $$
+DECLARE
+inizio_sessione TIMESTAMP;
+fine_sessione TIMESTAMP;
+sessioni cursor FOR SELECT id_sessione FROM sessione WHERE id_sala = new.id_sala;
+sessione_id INTEGER;
+BEGIN
+OPEN sessioni;
+LOOP
+FETCH sessioni INTO sessione_id;
+EXIT WHEN NOT FOUND;
+SELECT inizio,fine INTO inizio_sessione,fine_sessione
+FROM sessione
+WHERE id_sessione = sessione_id;
+IF (new.inizio >= inizio_sessione AND new.inizio <= fine_sessione) OR (new.fine >= inizio_sessione AND new.fine <= fine_sessione) THEN
+RAISE EXCEPTION 'La sala non puo'' ospitare piu'' di una sessione alla volta';
+END IF;
+END LOOP;
+CLOSE sessioni;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger check_sala_sessione_unica
-before insert or update on sessione
-for each row
-execute function check_sala_sessione_unica();
+CREATE TRIGGER check_sala_sessione_unica
+BEFORE INSERT OR UPDATE ON sessione
+FOR EACH ROW
+EXECUTE FUNCTION check_sala_sessione_unica();
 \end{lstlisting}
 \subsection{\texttt{Check\_Organizzatore\_Comitato}}
 Ogni volta che si inserisce un nuovo organizzatore all'interno di un comitato bisogna controllare che questo appartenga ad uno degli enti che organizzano la conferenza.
 \begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{Check\_organizzatori\_comitato}}]
-create or replace function check_organizzatore_comitato() returns trigger as $$
-declare
-ente_id integer;
-begin
+CREATE OR REPLACE FUNCTION check_organizzatore_comitato() RETURNS TRIGGER AS $$
+DECLARE
+ente_id INTEGER;
+BEGIN
 
-select id_ente into ente_id
-from organizzatore o
-where o.id_organizzatore = new.id_organizzatore;
+SELECT id_ente INTO ente_id
+FROM organizzatore o
+WHERE o.id_organizzatore = new.id_organizzatore;
 
 IF ente_id IS NULL THEN
 RAISE EXCEPTION 'L''organizzatore non esiste';
@@ -548,296 +564,296 @@ WHERE NEW.id_comitato IN (id_comitato_scientifico, id_comitato_locale)
 ) THEN
 RAISE EXCEPTION 'L''organizzatore deve appartenere ad un ente che ha organizzato la conferenza';
 END IF;
-return new;
-end;
-$$ language plpgsql;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger check_organizzatore_comitato
-before insert or update on organizzatore_comitato
-for each row
-execute function check_organizzatore_comitato();
+CREATE TRIGGER check_organizzatore_comitato
+BEFORE INSERT OR UPDATE ON organizzatore_comitato
+FOR EACH ROW
+EXECUTE FUNCTION check_organizzatore_comitato();
 \end{lstlisting}
 \subsection{\texttt{Delete\_Sessioni\_Conferenza}}
-Nel caso in cui si volesse modificare la data di inizio o di fine di una conferenza vengono automaticamente cancellate le sessioni che si trovano escluse dal nuovo intervallo di date.
+Nel caso IN cui si volesse modificare la data di inizio o di fine di una conferenza vengono automaticamente cancellate le sessioni che si trovano escluse dal nuovo intervallo di DATE.
 \begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{delete\_sessioni\_conferenza}}]
-create or replace function delete_sessioni_conferenza() returns trigger as $$
-declare
-sessioni_cur cursor for 
-select id_sessione 
-from sessione 
-where id_conferenza = old.id_conferenza;
-sessione_id integer;
-begin
-open sessioni_cur;
-loop
-fetch sessioni_cur into sessione_id;
-exit when not found;
-if (select inizio from sessione where id_sessione = sessione_id) < new.inizio 
-OR (select fine from sessione where id_sessione = sessione_id) > new.fine then
-delete from sessione where id_sessione = sessione_id;
-end if;
-end loop;
-close sessioni_cur;
-return new;
-end;
-$$ language plpgsql;
+CREATE OR REPLACE FUNCTION delete_sessioni_conferenza() RETURNS TRIGGER AS $$
+DECLARE
+sessioni_cur cursor FOR 
+SELECT id_sessione 
+FROM sessione 
+WHERE id_conferenza = old.id_conferenza;
+sessione_id INTEGER;
+BEGIN
+OPEN sessioni_cur;
+LOOP
+FETCH sessioni_cur INTO sessione_id;
+EXIT WHEN NOT FOUND;
+IF (SELECT inizio FROM sessione WHERE id_sessione = sessione_id) < new.inizio 
+OR (SELECT fine FROM sessione WHERE id_sessione = sessione_id) > new.fine THEN
+delete FROM sessione WHERE id_sessione = sessione_id;
+END IF;
+END LOOP;
+CLOSE sessioni_cur;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger delete_sessioni_conferenza
-before update on conferenza
-for each row
-execute function delete_sessioni_conferenza();
+CREATE TRIGGER delete_sessioni_conferenza
+BEFORE UPDATE ON conferenza
+FOR EACH ROW
+EXECUTE FUNCTION delete_sessioni_conferenza();
 \end{lstlisting}
 \subsection{\texttt{Check\_Capienza}}
 Ogni volta che si aggiunge un nuovo partecipante della sessione bisogna controllare prima che la capienza della sala dove si svolge la sessione non sia stata raggiunta:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function check_capienza_sala() returns trigger as $$
-declare
-capienza_s integer;
-partecipanti integer;
-begin
-select capienza into capienza_s
-from sala
-where id_sala = new.id_sala;
+CREATE OR REPLACE FUNCTION check_capienza_sala() RETURNS TRIGGER AS $$
+DECLARE
+capienza_s INTEGER;
+partecipanti INTEGER;
+BEGIN
+SELECT capienza INTO capienza_s
+FROM sala
+WHERE id_sala = new.id_sala;
 
-select count(*) into partecipanti
-from partecipazione
-where id_sessione = new.id_sessione;
+SELECT count(*) INTO partecipanti
+FROM partecipazione
+WHERE id_sessione = new.id_sessione;
 
-if (partecipanti >= capienza_s) then
-raise exception 'La capienza della sala e'' stata raggiunta';
-end if;
-return new;
-end;
-$$ language plpgsql;
+IF (partecipanti >= capienza_s) THEN
+RAISE EXCEPTION 'La capienza della sala e'' stata raggiunta';
+END IF;
+RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
 
-create trigger check_capienza_sala
-before insert on partecipazione
-for each row
-execute function check_capienza_sala();
+CREATE TRIGGER check_capienza_sala
+before insert ON partecipazione
+FOR EACH ROW
+EXECUTE FUNCTION check_capienza_sala();
 \end{lstlisting}
 \section{Funzioni e procedure}
-\subsection{\texttt{Show\_Conferenze\_By\_Date(date,date)}}
-La funzione \texttt{Show\_Conferenze\_By\_Date} prende in ingresso due date e restituisce l'insieme di tutte le conferenze comprese tra queste:
+\subsection{\texttt{Show\_Conferenze\_By\_Date(DATE,DATE)}}
+La funzione \texttt{Show\_Conferenze\_By\_Date} prende IN ingresso due DATE e restituisce l'insieme di tutte le conferenze comprese tra queste:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function show_conference_by_date(dataI date, dataF date)
-returns setof conferenza as $$
-begin
-return query
-select * from conferenza
-where inizio >= start and fine <= dataF;
-end;
-$$ language plpgsql;
+CREATE OR REPLACE FUNCTION show_conference_by_date(dataI DATE, dataF DATE)
+RETURNS SETOF conferenza AS $$
+BEGIN
+RETURN QUERY
+SELECT * FROM conferenza
+WHERE inizio >= dataI AND fine <= dataF;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_Conferenze\_By\_Sede(integer)}}
-La funzione \texttt{Show\_Conferenze\_By\_Sede} prende in ingresso la chiave primaria di una sede e restituisce l'insieme di tutte le conferenze ospitate in quella determinata sede:
+La funzione \texttt{Show\_Conferenze\_By\_Sede} prende IN ingresso la chiave primaria di una sede e restituisce l'insieme di tutte le conferenze ospitate IN quella determinata sede:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function show_conferences_by_sede(sede int)
-returns setof conferenza as $$
-begin
-return query
-select * from conferenza
-where id_sede = sede;
-end;
-$$ language plpgsql;
+CREATE OR REPLACE FUNCTION show_conferences_by_sede(sede INTEGER)
+RETURNS SETOF conferenza AS $$
+BEGIN
+RETURN QUERY
+SELECT * FROM conferenza
+WHERE id_sede = sede;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_comitato\_scientifico(integer)}}
-La funzione \texttt{Show\_comitato\_scientifico} prende in ingresso la chiave primaria di una conferenza e restituisce la lista di tutti i membri organizzatori appartenenti al comitato scientifico della conferenza:
+La funzione \texttt{Show\_comitato\_scientifico} prende IN ingresso la chiave primaria di una conferenza e restituisce la lista di tutti i membri organizzatori appartenenti al comitato scientifico della conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function show_comitato_scientifico(conferenza int)
-returns setof organizzatore as $$
-begin
-return query
+CREATE OR REPLACE FUNCTION show_comitato_scientifico(conferenza INTEGER)
+RETURNS SETOF organizzatore AS $$
+BEGIN
+RETURN QUERY
 -- Select dei dettagli dell'organizzatore
-select * from organizzatore
-where id_organizzatore in (
+SELECT * FROM organizzatore
+WHERE id_organizzatore IN (
 -- Select degli id degli organizzatori appartenenti al comitato scientifico
-select id_organizzatore from organizzatore_comitato
-where id_comitato = (
+SELECT id_organizzatore FROM organizzatore_comitato
+WHERE id_comitato = (
 -- Select dell'id del comitato scientifico della conferenza
-select id_comitato_scientifico from conferenza
-where id_conferenza = conferenza
+SELECT id_comitato_scientifico FROM conferenza
+WHERE id_conferenza = conferenza
 )
 );
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_comitato\_locale(integer)}}
-La funzione \texttt{Show\_comitato\_locale} prende in ingresso la chiave primaria di una conferenza e restituisce la lista di tutti i membri organizzatori appartenenti al comitato locale della conferenza:
+La funzione \texttt{Show\_comitato\_locale} prende IN ingresso la chiave primaria di una conferenza e restituisce la lista di tutti i membri organizzatori appartenenti al comitato locale della conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function show_comitato_locale(conferenza int)
-returns setof organizzatore as $$
-begin
-return query
+CREATE OR REPLACE FUNCTION show_comitato_locale(conferenza INTEGER)
+RETURNS SETOF organizzatore AS $$
+BEGIN
+RETURN QUERY
 -- Select dei dettagli dell'organizzatore
-select * from organizzatore
-where id_organizzatore in (
+SELECT * FROM organizzatore
+WHERE id_organizzatore IN (
 -- Select degli id degli organizzatori appartenenti al comitato locale
-select id_organizzatore from organizzatore_comitato
-where id_comitato = (
+SELECT id_organizzatore FROM organizzatore_comitato
+WHERE id_comitato = (
 -- Select dell'id del comitato locale della conferenza
-select id_comitato_locale from conferenza
-where id_conferenza = conferenza
+SELECT id_comitato_locale FROM conferenza
+WHERE id_conferenza = conferenza
 )
 );
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Show\_Partecipanti(integer)}}
-La funzione \texttt{Show\_Partecipanti} prende in ingresso la chiave primaria di una conferenza e restituisce tutti i dettagli dei partecipanti di \textit{tutte le sessioni} della conferenza.
+\subsection{\texttt{Show\_Partecipanti(INTEGER)}}
+La funzione \texttt{Show\_Partecipanti} prende IN ingresso la chiave primaria di una conferenza e restituisce tutti i dettagli dei partecipanti di \textit{tutte le sessioni} della conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_partecipanti(conferenza int)
-returns setof partecipante as $$
-begin
-return query
+CREATE OR REPLACE FUNCTION show_partecipanti(conferenza INTEGER)
+RETURNS SETOF partecipante AS $$
+BEGIN
+RETURN QUERY
 -- Select dei dettagli del partecipante
-select * from partecipante
-where id_partecipante in (
+SELECT * FROM partecipante
+WHERE id_partecipante IN (
 -- Select degli id dei partecipanti
-select id_partecipante from partecipazione
-where id_sessione in (
+SELECT id_partecipante FROM partecipazione
+WHERE id_sessione IN (
 -- Select degli id delle sessioni della conferenza
-select id_sessione from sessione
-where id_conferenza = conferenza
+SELECT id_sessione FROM sessione
+WHERE id_conferenza = conferenza
 )
 );
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_Sessioni(integer)}}
-La funzione \texttt{show\_sessioni} prende in ingresso la chiave primaria di una conferenza e restituisce tutti i dettagli delle sessioni.
+La funzione \texttt{show\_sessioni} prende IN ingresso la chiave primaria di una conferenza e restituisce tutti i dettagli delle sessioni.
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function show_sessioni(conferenza int)
-returns setof sessione as $$
-begin
-return query
-select * from sessione
-where id_conferenza = conferenza
+CREATE OR REPLACE FUNCTION show_sessioni(conferenza INTEGER)
+RETURNS SETOF sessione AS $$
+BEGIN
+RETURN QUERY
+SELECT * FROM sessione
+WHERE id_conferenza = conferenza
 order by inizio;
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_interventi\_sessione(integer)}}
-La funzione \texttt{show\_interventi\_sessione} prende in ingresso la chiave primaria di una sessione e mostra tutti gli interventi presenti nel programma di tale sessione:
+La funzione \texttt{show\_interventi\_sessione} prende IN ingresso la chiave primaria di una sessione e mostra tutti gli interventi presenti nel programma di tale sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_interventi_sessione(sessione int)
-returns table
+CREATE OR REPLACE FUNCTION show_interventi_sessione(sessione INTEGER)
+RETURNS TABLE
 (
 titolo text,
-inizio timestamp,
-fine timestamp,
+inizio TIMESTAMP,
+fine TIMESTAMP,
 abstract text,
 speaker text
-)  as $$
-declare 
-programma integer;
-begin
-select id_programma into programma
-from programma
-where id_sessione = sessione;
+)  AS $$
+DECLARE 
+programma INTEGER;
+BEGIN
+SELECT id_programma INTO programma
+FROM programma
+WHERE id_sessione = sessione;
 
-select titolo,inizio,fine,abstract, s.nome || ' ' || s.cognome as speaker
-from intervento i join speaker s on i.id_speaker = s.id_speaker
-where i.id_programma = programma
+SELECT titolo,inizio,fine,abstract, s.nome || ' ' || s.cognome AS speaker
+FROM intervento i JOIN speaker s ON i.id_speaker = s.id_speaker
+WHERE i.id_programma = programma
 order by inizio;
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 
 \subsection{\texttt{Show\_intervalli\_sessione(integer)}}
-La funzione \texttt{show\_intervalli\_sessione} prende in ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
+La funzione \texttt{show\_intervalli\_sessione} prende IN ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_intervalli_sessione(sessione int)
-returns table
+CREATE OR REPLACE FUNCTION show_intervalli_sessione(sessione INTEGER)
+RETURNS TABLE
 (
-id_intervallo integer,
+id_intervallo INTEGER,
 tipologia intervallo_st,
-inizio timestamp,
-fine timestamp
+inizio TIMESTAMP,
+fine TIMESTAMP
 )  
-as $$
-declare 
-programma integer;
-begin
-select id_programma into programma
-from programma
-where id_sessione = sessione;
+AS $$
+DECLARE 
+programma INTEGER;
+BEGIN
+SELECT id_programma INTO programma
+FROM programma
+WHERE id_sessione = sessione;
 
-select id_intervallo,tipologia,inizio,fine
-from intervallo i
-where id_programma = programma
+SELECT id_intervallo,tipologia,inizio,fine
+FROM intervallo i
+WHERE id_programma = programma
 order by inizio;
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_eventi\_sociali\_sessione(integer)}}
-La funzione \texttt{show\_eventi\_sociali\_sessione} prende in ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
+La funzione \texttt{show\_eventi\_sociali\_sessione} prende IN ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_eventi_sociali_sessione(sessione int)
-returns table
+CREATE OR REPLACE FUNCTION show_eventi_sociali_sessione(sessione INTEGER)
+RETURNS TABLE
 (
-id_evento integer,
+id_evento INTEGER,
 tipologia text,
-inizio timestamp,
-fine timestamp) 
-as $$
-declare 
-programma integer;
-begin
-select id_programma into programma
-from programma
-where id_sessione = sessione;
+inizio TIMESTAMP,
+fine TIMESTAMP) 
+AS $$
+DECLARE 
+programma INTEGER;
+BEGIN
+SELECT id_programma INTO programma
+FROM programma
+WHERE id_sessione = sessione;
 
-select id_evento,tipologia,inizio,fine
-from evento
-where id_programma = programma
+SELECT id_evento,tipologia,inizio,fine
+FROM evento
+WHERE id_programma = programma
 order by inizio;
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_keynote\_sessione(integer)}}
-La funzione \texttt{show\_keynote\_sessione} prende in ingresso la chiave primaria di una sessione e mostra i dettagli del keynote speaker, se presente:
+La funzione \texttt{show\_keynote\_sessione} prende IN ingresso la chiave primaria di una sessione e mostra i dettagli del keynote speaker, se presente:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_keynote_sessione(sessione int)
-returns table(
-id_speaker integer,
+CREATE OR REPLACE FUNCTION show_keynote_sessione(sessione INTEGER)
+RETURNS TABLE(
+id_speaker INTEGER,
 nome text,
 cognome text,
 titolo text,
 email text,
 ente text) 
-as $$
-declare 
-programma integer;
-begin
-select id_programma into programma
-from programma
-where id_sessione = sessione;
+AS $$
+DECLARE 
+programma INTEGER;
+BEGIN
+SELECT id_programma INTO programma
+FROM programma
+WHERE id_sessione = sessione;
 
-select s.id_speaker,s.nome,s.cognome,s.titolo,s.email,e.nome
-from speaker s join ente e on s.id_ente = e.id_ente
-where s.id_speaker = (
-select id_keynote
-from programma
-where id_programma = programma
+SELECT s.id_speaker,s.nome,s.cognome,s.titolo,s.email,e.nome
+FROM speaker s JOIN ente e ON s.id_ente = e.id_ente
+WHERE s.id_speaker = (
+SELECT id_keynote
+FROM programma
+WHERE id_programma = programma
 );
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_Programma(integer)}}
-La funzione \texttt{Show\_Programma} prende in ingresso la chiave primaria di una sessione e restituisce una tabella che mostra tutti gli appuntamenti in progamma in ordine cronologico:
+La funzione \texttt{Show\_Programma} prende IN ingresso la chiave primaria di una sessione e restituisce una tabella che mostra tutti gli appuntamenti IN progamma IN ordine cronologico:
 \begin{lstlisting}[language=SQL,style=mystyle]
-CREATE OR REPLACE FUNCTION show_programma(sessione int)
+CREATE OR REPLACE FUNCTION show_programma(sessione INTEGER)
 RETURNS TABLE (
-id_entry integer,
+id_entry INTEGER,
 appuntamento text,
-inizio timestamp,
-fine timestamp,
+inizio TIMESTAMP,
+fine TIMESTAMP,
 descrizione text,
 speaker text
 )
 AS $$
 DECLARE
-programma integer;
+programma INTEGER;
 BEGIN
 SELECT id_programma INTO programma
 FROM programma
@@ -862,7 +878,7 @@ SELECT i2.id_intervallo AS id_entry,
 'intervallo' AS appuntamento,
 i2.inizio,
 i2.fine,
-tipologia::text as descrizione,
+tipologia::text AS descrizione,
 NULL
 FROM intervallo i2
 WHERE i2.id_programma = programma
@@ -882,126 +898,126 @@ ORDER BY inizio;
 END;
 $$ LANGUAGE plpgsql;
 \end{lstlisting}
-\subsection{\texttt{Add\_Intervento(text,text,text,int,interval)}}
-La procedura \texttt{Add\_intervento} provvede all'inserimento di un intervento all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
+\subsection{\texttt{Add\_Intervento(text,text,text,INTEGER,interval)}}
+La procedura \texttt{Add\_intervento} provvede all'inserimento di un intervento all'interno del programma della sessione. Questa calcola l'orario esatto IN cui inserire il nuovo punto sulla base dell'ultimo punto IN programma. Se non esistono punti IN programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure add_intervento
 (titolo text, 
 abstract text, 
 speaker text, 
-sessione_id int,
+sessione_id INTEGER,
 durata interval)
-as $$
-declare
-programma integer;
-fine_prev timestamp;
-begin
-select id_programma into programma
-from programma
-where id_sessione = sessione_id;
+AS $$
+DECLARE
+programma INTEGER;
+fine_prev TIMESTAMP;
+BEGIN
+SELECT id_programma INTO programma
+FROM programma
+WHERE id_sessione = sessione_id;
 
-select max(fine) into fine_prev
-from show_programma(sessione_id);
+SELECT max(fine) INTO fine_prev
+FROM show_programma(sessione_id);
 
-if (fine_prev is null) then
-select inizio into fine_prev
-from sessione
-where id_sessione = sessione_id;
-end if;
+IF (fine_prev is null) THEN
+SELECT inizio INTO fine_prev
+FROM sessione
+WHERE id_sessione = sessione_id;
+END IF;
 
-insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
-values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
-raise notice 'Inserimento completato';
-exception
-when others then
-raise notice '%', sqlerrm;
-end;
-$$ language plpgsql;
+INSERT INTO intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
+VALUES (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
+RAISE NOTICE 'Inserimento completato';
+EXCEPTION
+WHEN OTHERS THEN
+RAISE NOTICE '%', SQLERRM;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Intervallo(text,int,interval)}}
-La procedura \texttt{Add\_Intervallo} provvede all'inserimento di un intervallo all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
+\subsection{\texttt{Add\_Intervallo(text,INTEGER,interval)}}
+La procedura \texttt{Add\_Intervallo} provvede all'inserimento di un intervallo all'interno del programma della sessione. Questa calcola l'orario esatto IN cui inserire il nuovo punto sulla base dell'ultimo punto IN programma. Se non esistono punti IN programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure 
-add_intervallo(tipologia text , sessione_id int, durata interval)
-as $$
-declare
-programma integer;
-fine_prev timestamp;
-begin
-select id_programma into programma
-from programma
-where id_sessione = sessione_id;
+add_intervallo(tipologia text , sessione_id INTEGER, durata interval)
+AS $$
+DECLARE
+programma INTEGER;
+fine_prev TIMESTAMP;
+BEGIN
+SELECT id_programma INTO programma
+FROM programma
+WHERE id_sessione = sessione_id;
 
-select max(fine) into fine_prev
-from show_programma(sessione_id);
+SELECT max(fine) INTO fine_prev
+FROM show_programma(sessione_id);
 
-if (fine_prev is null) then
-select inizio into fine_prev
-from sessione
-where id_sessione = sessione_id;
-end if;
+IF (fine_prev is null) THEN
+SELECT inizio INTO fine_prev
+FROM sessione
+WHERE id_sessione = sessione_id;
+END IF;
 
-insert into intervallo(tipologia,id_programma,inizio,fine)
-values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
-raise notice 'Inserimento completato';
-exception
-when others then
-raise notice '%', sqlerrm;
-end;
+INSERT INTO intervallo(tipologia,id_programma,inizio,fine)
+VALUES (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
+RAISE NOTICE 'Inserimento completato';
+EXCEPTION
+WHEN OTHERS THEN
+RAISE NOTICE '%', SQLERRM;
+END;
 $$ 
-language plpgsql;
+LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Evento(text,int,interval)}}
-La procedura \texttt{Add\_Evento} provvede all'inserimento di un evento all'interno del programma della sessione. Questa calcola l'orario esatto in cui inserire il nuovo punto sulla base dell'ultimo punto in programma. Se non esistono punti in programma allora l'ora di inizio è calcolato come l'inizio della sessione:
+\subsection{\texttt{Add\_Evento(text,INTEGER,interval)}}
+La procedura \texttt{Add\_Evento} provvede all'inserimento di un evento all'interno del programma della sessione. Questa calcola l'orario esatto IN cui inserire il nuovo punto sulla base dell'ultimo punto IN programma. Se non esistono punti IN programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure 
 add_evento
 (tipologia text, 
-sessione_id int, 
+sessione_id INTEGER, 
 durata interval)
-as $$
-declare
-programma_id integer;
-fine_prev timestamp;
-begin
+AS $$
+DECLARE
+programma_id INTEGER;
+fine_prev TIMESTAMP;
+BEGIN
 -- Recupera l'id del programma della sessione
-select id_programma into programma_id
-from programma
-where id_sessione = sessione_id;
+SELECT id_programma INTO programma_id
+FROM programma
+WHERE id_sessione = sessione_id;
 
--- Recupera l'id dell'ultimo punto in programma, la tipologia e la fine
-select max(fine) into fine_prev
-from show_programma(sessione_id);
+-- Recupera l'id dell'ultimo punto IN programma, la tipologia e la fine
+SELECT max(fine) INTO fine_prev
+FROM show_programma(sessione_id);
 
-if (fine_prev is null) then
-select inizio into fine_prev
-from sessione
-where id_sessione = sessione_id;
-end if;
+IF (fine_prev is null) THEN
+SELECT inizio INTO fine_prev
+FROM sessione
+WHERE id_sessione = sessione_id;
+END IF;
 
-insert into evento(tipologia, id_programma, inizio, fine)
-values (tipologia, programma_id, fine_prev, fine_prev+durata);
-raise notice 'Inserimento completato';
-exception
-when others then
-raise notice '%', sqlerrm;
-end;
+INSERT INTO evento(tipologia, id_programma, inizio, fine)
+VALUES (tipologia, programma_id, fine_prev, fine_prev+durata);
+RAISE NOTICE 'Inserimento completato';
+EXCEPTION
+WHEN OTHERS THEN
+RAISE NOTICE '%', SQLERRM;
+END;
 $$
-language plpgsql;
+LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Conferenza\_Details(text,timestamp,timestamp,integer,text)}}
+\subsection{\texttt{Add\_Conferenza\_Details(text,TIMESTAMP,TIMESTAMP,integer,text)}}
 La funzione \texttt{Add\_Conferenza\_Details} aggiunge una conferenza e restituisce la chiave primaria della nuova conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
 CREATE OR REPLACE FUNCTION add_conferenza_details
-(nome text, inizio timestamp, fine timestamp, sede integer, abstract text, utente integer)
-RETURNS integer AS $$
+(nome text, inizio TIMESTAMP, fine TIMESTAMP, sede INTEGER, abstract text, utente INTEGER)
+RETURNS INTEGER AS $$
 DECLARE
-id integer;
+id INTEGER;
 BEGIN
 INSERT INTO conferenza(titolo, inizio, fine, id_sede, descrizione, id_utente) 
 VALUES (nome, inizio, fine, sede, abstract,utente)
 RETURNING id_conferenza INTO id;
-raise notice 'Inserimento completato';
+RAISE NOTICE 'Inserimento completato';
 RETURN id;
 EXCEPTION
 WHEN OTHERS THEN
@@ -1013,70 +1029,70 @@ $$ LANGUAGE plpgsql;
 \subsection{\texttt{Add\_ente(integer, integer)}}
 La procedura \texttt{Add\_ente} provvede all'inserimento di una nuova istituzione tra gli organizzatori di una conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure add_ente(ente integer, conferenza integer)
-as $$
-begin
-insert into ente_conferenza(id_ente,id_conferenza)
-values (ente,conferenza);
-raise notice 'Inserimento completato';
-exception
-when others then
-raise notice '%', sqlerrm;
-end;
-$$ language plpgsql;
+create or replace procedure add_ente(ente INTEGER, conferenza INTEGER)
+AS $$
+BEGIN
+INSERT INTO ente_conferenza(id_ente,id_conferenza)
+VALUES (ente,conferenza);
+RAISE NOTICE 'Inserimento completato';
+EXCEPTION
+WHEN OTHERS THEN
+RAISE NOTICE '%', SQLERRM;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Add\_Sponsorizzazione(integer,numeric,char(3),integer)}}
 La procedura \texttt{Add\_Sponsorizzazione} inserisce una nuova sponsorizzazione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_sponsorizzazione(sponsor integer, contributo numeric(1000,2), valuta char(3), conferenza integer)
-as $$
-begin
-insert into sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
-values (sponsor,contributo,valuta,conferenza);
-raise notice 'Inserimento completato';
-exception
-when others then
-raise notice '%', sqlerrm;
-end;
-$$ language plpgsql;
+create or replace procedure add_sponsorizzazione(sponsor INTEGER, contributo numeric(1000,2), valuta char(3), conferenza INTEGER)
+AS $$
+BEGIN
+INSERT INTO sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
+VALUES (sponsor,contributo,valuta,conferenza);
+RAISE NOTICE 'Inserimento completato';
+EXCEPTION
+WHEN OTHERS THEN
+RAISE NOTICE '%', SQLERRM;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Sessione(text,timestamp,timestamp, integer,integer)}}
+\subsection{\texttt{Add\_Sessione(text,TIMESTAMP,TIMESTAMP, integer,integer)}}
 La procedura \texttt{Add\_Sessione} aggiunge una nuova sessione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_sessione(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer)
-as $$
-begin
-insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
-values (titolo,inizio,fine,sala,conferenza);
-raise notice 'Inserimento completato';
-exception
-when others then
-raise notice '%', sqlerrm;
-end;
-$$ language plpgsql;
+create or replace procedure add_sessione(titolo text, inizio TIMESTAMP, fine TIMESTAMP, sala INTEGER, conferenza INTEGER)
+AS $$
+BEGIN
+INSERT INTO sessione(titolo,inizio,fine,id_sala,id_conferenza)
+VALUES (titolo,inizio,fine,sala,conferenza);
+RAISE NOTICE 'Inserimento completato';
+EXCEPTION
+WHEN OTHERS THEN
+RAISE NOTICE '%', SQLERRM;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Add\_Partecipante(integer, integer)}}
 La procedura \texttt{Add\_Partecipante} inserisce un nuovo partecipante alla sessione:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_partecipante(partecipante integer, sessione integer)
-as $$
-begin
-insert into partecipante_sessione(id_partecipante,id_sessione)
-values (partecipante,sessione);
-raise notice 'Inserimento completato';
-exception
-when others then
-raise notice '%', sqlerrm;
-end;
-$$ language plpgsql;
+create or replace procedure add_partecipante(partecipante INTEGER, sessione INTEGER)
+AS $$
+BEGIN
+INSERT INTO partecipante_sessione(id_partecipante,id_sessione)
+VALUES (partecipante,sessione);
+RAISE NOTICE 'Inserimento completato';
+EXCEPTION
+WHEN OTHERS THEN
+RAISE NOTICE '%', SQLERRM;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Add\_Enti(integer,text)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-CREATE OR REPLACE PROCEDURE add_enti(conferenza integer, sigle text)
+CREATE OR REPLACE PROCEDURE add_enti(conferenza INTEGER, sigle text)
 AS $$
 DECLARE
 sigla_ente text;
-ente_id integer;
+ente_id INTEGER;
 BEGIN
 FOR sigla_ente IN SELECT unnest(string_to_array(sigle, ',')) LOOP
 -- Cerca l'id dell'ente corrispondente alla sigla
@@ -1092,208 +1108,208 @@ RAISE EXCEPTION 'Errore durante l''inserimento delle tuple nella tabella ente_co
 END;
 $$ LANGUAGE plpgsql;
 \end{lstlisting}
-\subsection{\texttt{Add\_Conferenza(text,timestamp,timestamp,integer, text, text)}}
+\subsection{\texttt{Add\_Conferenza(text,TIMESTAMP,TIMESTAMP,integer, text, text)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure add_conferenza(nome text, inizio timestamp, fine timestamp, sede integer, descrizione text, sigle text)
-as $$
-declare
-id_conferenza int;
-begin
+create or replace procedure add_conferenza(nome text, inizio TIMESTAMP, fine TIMESTAMP, sede INTEGER, descrizione text, sigle text)
+AS $$
+DECLARE
+id_conferenza INTEGER;
+BEGIN
 id_conferenza := add_conferenza_details(nome,inizio,fine,sede,descrizione);
 call add_enti(id_conferenza,sigle);
-exception
-when others then
-raise notice '%', sqlerrm;
-end;
-$$ language plpgsql;
+EXCEPTION
+WHEN OTHERS THEN
+RAISE NOTICE '%', SQLERRM;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Slitta\_Conferenza(interval)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
 	create or replace procedure 
-slitta_conferenza(conferenza_id integer, durata interval)
-as $$
-declare
-sessione_id integer;
-intervento_id integer;
-evento_id integer;
-intervallo_id integer;
-sessioni cursor for 
-select id_sessione 
-from sessione 
-where id_conferenza = conferenza_id;
+slitta_conferenza(conferenza_id INTEGER, durata interval)
+AS $$
+DECLARE
+sessione_id INTEGER;
+intervento_id INTEGER;
+evento_id INTEGER;
+intervallo_id INTEGER;
+sessioni cursor FOR 
+SELECT id_sessione 
+FROM sessione 
+WHERE id_conferenza = conferenza_id;
 
-interventi cursor for
-select id_intervento 
-from intervento i join programma p 
-on i.id_programma = p.id_programma 
-where p.id_sessione in 
-(select id_sessione 
-from sessione 
-where id_conferenza = conferenza_id);
+interventi cursor FOR
+SELECT id_intervento 
+FROM intervento i JOIN programma p 
+ON i.id_programma = p.id_programma 
+WHERE p.id_sessione IN 
+(SELECT id_sessione 
+FROM sessione 
+WHERE id_conferenza = conferenza_id);
 
-intervalli cursor for
-select id_intervallo 
-from intervallo i join programma p 
-on i.id_programma = p.id_programma 
-where p.id_sessione in 
-(select id_sessione 
-from sessione 
-where id_conferenza = conferenza_id);
+intervalli cursor FOR
+SELECT id_intervallo 
+FROM intervallo i JOIN programma p 
+ON i.id_programma = p.id_programma 
+WHERE p.id_sessione IN 
+(SELECT id_sessione 
+FROM sessione 
+WHERE id_conferenza = conferenza_id);
 
-eventi cursor for
-select id_evento 
-from evento e join programma p 
-on e.id_programma = p.id_programma 
-where p.id_sessione in 
-(select id_sessione 
-from sessione 
-where id_conferenza = conferenza_id);
-begin
-alter table conferenza disable trigger all;
-alter table sessione disable trigger all;
-alter table intervento disable trigger all;
-alter table intervallo disable trigger all;
-alter table evento disable trigger all;
-alter table programma disable trigger all;
-update conferenza
-set inizio = inizio + durata, fine = fine + durata
-where id_conferenza = conferenza_id;
+eventi cursor FOR
+SELECT id_evento 
+FROM evento e JOIN programma p 
+ON e.id_programma = p.id_programma 
+WHERE p.id_sessione IN 
+(SELECT id_sessione 
+FROM sessione 
+WHERE id_conferenza = conferenza_id);
+BEGIN
+ALTER TABLE conferenza DISABLE TRIGGER ALL;
+ALTER TABLE sessione DISABLE TRIGGER ALL;
+ALTER TABLE intervento DISABLE TRIGGER ALL;
+ALTER TABLE intervallo DISABLE TRIGGER ALL;
+ALTER TABLE evento DISABLE TRIGGER ALL;
+ALTER TABLE programma DISABLE TRIGGER ALL;
+UPDATE conferenza
+SET inizio = inizio + durata, fine = fine + durata
+WHERE id_conferenza = conferenza_id;
 
-open sessioni;
-loop
-fetch sessioni into sessione_id;
-exit when not found;
+OPEN sessioni;
+LOOP
+FETCH sessioni INTO sessione_id;
+EXIT WHEN NOT FOUND;
 
-update sessione
-set inizio = inizio + durata, fine = fine + durata
-where id_sessione = sessione_id;
+UPDATE sessione
+SET inizio = inizio + durata, fine = fine + durata
+WHERE id_sessione = sessione_id;
 
-open interventi;
-loop
-fetch interventi into intervento_id;
-exit when not found;
+OPEN interventi;
+LOOP
+FETCH interventi INTO intervento_id;
+EXIT WHEN NOT FOUND;
 
-update intervento
-set inizio = inizio + durata, fine = fine + durata
-where id_intervento = intervento_id ;
-end loop;
-close interventi;
+UPDATE intervento
+SET inizio = inizio + durata, fine = fine + durata
+WHERE id_intervento = intervento_id ;
+END LOOP;
+CLOSE interventi;
 
-open intervalli;
-loop
-fetch intervalli into intervallo_id;
-exit when not found;
+OPEN intervalli;
+LOOP
+FETCH intervalli INTO intervallo_id;
+EXIT WHEN NOT FOUND;
 
-update intervallo
-set inizio = inizio + durata, fine = fine + durata
-where id_intervallo = intervallo_id;
-end loop;
-close intervalli;
+UPDATE intervallo
+SET inizio = inizio + durata, fine = fine + durata
+WHERE id_intervallo = intervallo_id;
+END LOOP;
+CLOSE intervalli;
 
-open eventi;
-loop
-fetch eventi into evento_id;
-exit when not found;
+OPEN eventi;
+LOOP
+FETCH eventi INTO evento_id;
+EXIT WHEN NOT FOUND;
 
-update evento
-set inizio = inizio + durata, fine = fine + durata
-where id_evento = evento_id;
-end loop;
-close eventi;
-end loop;
-close sessioni;
-alter table conferenza enable trigger all;
-alter table sessione enable trigger all;
-alter table intervento enable trigger all;
-alter table intervallo enable trigger all;
-alter table evento enable trigger all;
-alter table programma enable trigger all;
-raise notice 'Slittamento completato';
-exception
-when others then
-raise notice '%', sqlerrm;
-end;
-$$ language plpgsql;
+UPDATE evento
+SET inizio = inizio + durata, fine = fine + durata
+WHERE id_evento = evento_id;
+END LOOP;
+CLOSE eventi;
+END LOOP;
+CLOSE sessioni;
+ALTER TABLE conferenza ENABLE TRIGGER ALL;
+ALTER TABLE sessione ENABLE TRIGGER ALL;
+ALTER TABLE intervento ENABLE TRIGGER ALL;
+ALTER TABLE intervallo ENABLE TRIGGER ALL;
+ALTER TABLE evento ENABLE TRIGGER ALL;
+ALTER TABLE programma ENABLE TRIGGER ALL;
+RAISE NOTICE 'Slittamento completato';
+EXCEPTION
+WHEN OTHERS THEN
+RAISE NOTICE '%', SQLERRM;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 
 \subsection{\texttt{Show\_members()}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_members(conferenza integer)
-returns table 
+CREATE OR REPLACE FUNCTION show_members(conferenza INTEGER)
+RETURNS TABLE 
 (
-id integer, 
+id INTEGER, 
 nome text, 
 cognome text, 
 email text,
 titolo titolo_st, 
 sigla varchar(7)
 ) 
-as $$
-begin
-return query
-select o.id_organizzatore, o.nome, o.cognome, o.email,o.titolo, e.sigla
-from organizzatore o join ente_conferenza ec natural join ente e  
-on o.id_ente = ec.id_ente
-where ec.id_conferenza = conferenza
+AS $$
+BEGIN
+RETURN QUERY
+SELECT o.id_organizzatore, o.nome, o.cognome, o.email,o.titolo, e.sigla
+FROM organizzatore o JOIN ente_conferenza ec natural JOIN ente e  
+ON o.id_ente = ec.id_ente
+WHERE ec.id_conferenza = conferenza
 GROUP by e.sigla;
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Show\_percentage\_interventi}(int,int)}
+\subsection{\texttt{Show\_percentage\_interventi}(INTEGER,INTEGER)}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_percentage_interventi(mese int, anno int)
-returns table
+CREATE OR REPLACE FUNCTION show_percentage_interventi(mese INTEGER, anno INTEGER)
+RETURNS TABLE
 (
 ente text,
 percentuale text
-) as $$
-declare
-totale int;
-begin
-select count(*) into totale
-from intervento
-where date_part('month',inizio) = mese and date_part('year',inizio) = anno;
+) AS $$
+DECLARE
+totale INTEGER;
+BEGIN
+SELECT count(*) INTO totale
+FROM intervento
+WHERE date_part('month',inizio) = mese AND date_part('year',inizio) = anno;
 
-return query
-select e.nome, (count(*)*100/totale)::text || '%'
-from intervento i join speaker s 
-on i.id_speaker = s.id_speaker join ente e 
-on s.id_ente = e.id_ente
-where date_part('month',inizio) = mese and date_part('year',inizio) = anno
+RETURN QUERY
+SELECT e.nome, (count(*)*100/totale)::text || '%'
+FROM intervento i JOIN speaker s 
+ON i.id_speaker = s.id_speaker JOIN ente e 
+ON s.id_ente = e.id_ente
+WHERE date_part('month',inizio) = mese AND date_part('year',inizio) = anno
 group by e.nome;
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Show\_percentage(int)}}
+\subsection{\texttt{Show\_percentage(INTEGER)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_percentage_interventi(anno int)
-returns table
+CREATE OR REPLACE FUNCTION show_percentage_interventi(anno INTEGER)
+RETURNS TABLE
 (
 nome varchar(7),
 percentuale text
-) as $$
-declare
-totale int;
-begin
-select count(*) into totale
-from intervento
-where date_part('year',inizio) = anno;
+) AS $$
+DECLARE
+totale INTEGER;
+BEGIN
+SELECT count(*) INTO totale
+FROM intervento
+WHERE date_part('year',inizio) = anno;
 
-return query
-select e.nome, (count(*)*100/totale)::text || '%'
-from intervento i join speaker s 
-on i.id_speaker = s.id_speaker join ente e 
-on s.id_ente = e.id_ente
-where date_part('year',inizio) = anno
+RETURN QUERY
+SELECT e.nome, (count(*)*100/totale)::text || '%'
+FROM intervento i JOIN speaker s 
+ON i.id_speaker = s.id_speaker JOIN ente e 
+ON s.id_ente = e.id_ente
+WHERE date_part('year',inizio) = anno
 group by e.nome;
-end;
-$$ language plpgsql;
+END;
+$$ LANGUAGE PLPGSQL;
 \end{lstlisting}
 \section{Definizione delle viste}
 \subsection{\texttt{SediView}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create view SediView as 
-	select s.nome as Sede, 
+	create view SediView AS 
+	SELECT s.nome AS Sede, 
 	i.via ||', ' 
 	|| i.civico
 	|| ', ' 
@@ -1303,48 +1319,48 @@ $$ language plpgsql;
 	|| ' (' 
 	|| i.provincia 
 	||'), '
-	|| i.nazione as Indirizzo
-	from sede s natural join indirizzo i;
+	|| i.nazione AS Indirizzo
+	FROM sede s natural JOIN indirizzo i;
 \end{lstlisting}
 \subsection{\texttt{Conferenze\_Sede}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create view conferenze_sede as
-	select s.nome as Sede, count(id_conferenza) as Numero_Conferenze
-	from sede s,conferenza c
-	where s.id_sede = c.id_sede
+	create view conferenze_sede AS
+	SELECT s.nome AS Sede, count(id_conferenza) AS Numero_Conferenze
+	FROM sede s,conferenza c
+	WHERE s.id_sede = c.id_sede
 	group by s.nome;
 \end{lstlisting}
 \subsection{\texttt{Interventi\_Speaker}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create view interventi_speaker as
-	select s.nome || ' ' || s.cognome as Speaker, count(i.id_intervento)
-	from speaker s, intervento i 
-	where s.id_speaker = i.id_speaker
+	create view interventi_speaker AS
+	SELECT s.nome || ' ' || s.cognome AS Speaker, count(i.id_intervento)
+	FROM speaker s, intervento i 
+	WHERE s.id_speaker = i.id_speaker
 	group by s.nome,s.cognome;
 \end{lstlisting}
 \subsection{\texttt{Partecipanti\_Sessione}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create view partecipanti_sessioni as
-	select s.titolo as Sessione, 
-		count(p.id_partecipante) as Numero_partecipanti
-	from sessione s, partecipazione p 
-	where s.id_sessione = p.id_sessione
+	create view partecipanti_sessioni AS
+	SELECT s.titolo AS Sessione, 
+		count(p.id_partecipante) AS Numero_partecipanti
+	FROM sessione s, partecipazione p 
+	WHERE s.id_sessione = p.id_sessione
 	group by s.titolo;
 \end{lstlisting}
 \subsection{\texttt{Partecipanti\_Conferenze}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create view partecipanti_conferenze as
-	select c.titolo as Conferenza, 
-		count(p.id_partecipante) as Numero_partecipanti
-	from conferenza c, sessione s, partecipazione p
-	where c.id_conferenza = s.id_conferenza 
-	and s.id_sessione = p.id_sessione
+	create view partecipanti_conferenze AS
+	SELECT c.titolo AS Conferenza, 
+		count(p.id_partecipante) AS Numero_partecipanti
+	FROM conferenza c, sessione s, partecipazione p
+	WHERE c.id_conferenza = s.id_conferenza 
+	AND s.id_sessione = p.id_sessione
 	group by c.titolo;
 \end{lstlisting}
 \subsection{\texttt{Sessioni}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-	create view sessioni as
-	select s.titolo as Sessione,s.inizio,s.fine,c.titolo as Conferenza,s1.nome from sessione s, conferenza c,sala s1
-	where s.id_conferenza=c.id_conferenza and s.id_sala=s1.id_sala
+	create view sessioni AS
+	SELECT s.titolo AS Sessione,s.inizio,s.fine,c.titolo AS Conferenza,s1.nome FROM sessione s, conferenza c,sala s1
+	WHERE s.id_conferenza=c.id_conferenza AND s.id_sala=s1.id_sala
 	order by s.id_conferenza, s.inizio;
 \end{lstlisting}
