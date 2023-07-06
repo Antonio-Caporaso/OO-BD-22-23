@@ -138,14 +138,10 @@ public class InserisciSessioneController implements Initializable,FormChecker {
             throw new RuntimeException(e);
         }
     }
-
     private void loadCoordinatoreChoiceBox() throws SQLException {
         MembriComitato membriComitato = new MembriComitato(conferenza);
         membriComitato.loadMembriComitatoScientifico();
-        membriComitato.loadMembriComitatoLocale();
         coordinatoreChoiceBox.setItems(membriComitato.getMembriComitatoScientifico());
-//        if (coordinatoreChoiceBox.equals(null)){
-            coordinatoreChoiceBox.setItems((membriComitato.getMembriComitatoLocale()));
-//        }
+        coordinatoreChoiceBox.setItems((membriComitato.getMembriComitatoLocale()));
     }
 }
