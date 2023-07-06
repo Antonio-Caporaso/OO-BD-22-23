@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" scaleShape="false" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" scaleShape="false" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="27.0" text="Modifica intervalli" textFill="WHITE">
@@ -21,11 +21,6 @@
       <VBox layoutX="707.0" layoutY="112.0" prefHeight="542.0" prefWidth="190.0">
          <children>
             <Button fx:id="addIntervalloButton" mnemonicParsing="false" onAction="#addIntervalloButtonOnAction" prefHeight="65.0" prefWidth="190.0" text="Aggiungi intervallo" />
-            <Button fx:id="editIntervalloOnAction" mnemonicParsing="false" onAction="#editIntervalloOnAction" prefHeight="65.0" prefWidth="190.0" text="Modifica intervallo">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
             <Button fx:id="deleteIntervalloButton" mnemonicParsing="false" onAction="#deleteIntervalloOnAction" prefHeight="65.0" prefWidth="190.0" text="Rimuovi intervallo">
                <VBox.margin>
                   <Insets top="10.0" />

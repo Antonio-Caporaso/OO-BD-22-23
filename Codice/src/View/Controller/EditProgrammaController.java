@@ -185,20 +185,6 @@ public class EditProgrammaController implements Initializable {
         subscene.setRoot(root);
     }
     @FXML
-    void editEventiButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEventi.fxml"));
-        EditEventiController controller = new EditEventiController();
-        controller.setManageSessioniController(manageSessioniController);
-        controller.setEditProgrammaController(this);
-        controller.setProgramma(programma);
-        controller.setSessione(sessione);
-        controller.setSubScene(subscene);
-        loader.setController(controller);
-        Parent root = loader.load();
-        subscene.setRoot(root);
-    }
-
-    @FXML
     void editIntervalliButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervalli.fxml"));
         EditIntervalliController controller = new EditIntervalliController();

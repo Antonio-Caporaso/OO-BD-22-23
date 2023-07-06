@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" scaleShape="false" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" scaleShape="false" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="27.0" text="Modifica eventi" textFill="WHITE">
@@ -21,11 +21,6 @@
       <VBox layoutX="707.0" layoutY="112.0" prefHeight="542.0" prefWidth="190.0">
          <children>
             <Button fx:id="addEventoButton" mnemonicParsing="false" onAction="#addEventoButtonOnAction" prefHeight="65.0" prefWidth="190.0" text="Aggiungi evento" />
-            <Button fx:id="editEventoOnAction" mnemonicParsing="false" onAction="#editEventoOnAction" prefHeight="65.0" prefWidth="190.0" text="Modifica evento">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
             <Button fx:id="deleteEventoButton" mnemonicParsing="false" onAction="#deleteEventoOnAction" prefHeight="65.0" prefWidth="190.0" text="Rimuovi evento">
                <VBox.margin>
                   <Insets top="10.0" />

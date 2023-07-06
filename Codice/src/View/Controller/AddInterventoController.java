@@ -78,20 +78,6 @@ public class AddInterventoController implements Initializable {
         i.setEstratto(abstractTextArea.getText());
         return i;
     }
-
-    @FXML
-    void addSpeakerOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSpeaker.fxml"));
-        AddSpeakerController controller = new AddSpeakerController();
-        controller.setAddInterventoController(this);
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.show();
-    }
     public void setSpeaker(Speaker speaker){
         speakers.add(speaker);
         speakerChoice.setValue(speaker);
