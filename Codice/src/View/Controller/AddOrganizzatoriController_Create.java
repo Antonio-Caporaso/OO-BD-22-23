@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddOrganizzatoriController implements Initializable {
+public class AddOrganizzatoriController_Create implements Initializable {
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -114,7 +114,7 @@ public class AddOrganizzatoriController implements Initializable {
     private void loadAggiungiSponsor(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
-            AggiungiSponsorController controller = new AggiungiSponsorController();
+            AddSponsorController_Create controller = new AddSponsorController_Create();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -136,7 +136,7 @@ public class AddOrganizzatoriController implements Initializable {
     private void loadEditConferenza(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-            ModificaConferenzaController controller = new ModificaConferenzaController();
+            ConferenzaController_Edit controller = new ConferenzaController_Edit();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);

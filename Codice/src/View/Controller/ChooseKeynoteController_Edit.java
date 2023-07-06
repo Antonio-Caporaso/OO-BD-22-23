@@ -19,7 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ChooseKeynoteController implements Initializable {
+public class ChooseKeynoteController_Edit implements Initializable {
     private InterventiSessione interventiSessione;
     private Programma programma;
     @FXML

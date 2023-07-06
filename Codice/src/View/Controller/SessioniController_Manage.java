@@ -21,12 +21,12 @@ import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ManageSessioniController implements Initializable {
+public class SessioniController_Manage implements Initializable {
     private Conferenza conferenza;
     private Sessioni sessioni ;
     private SubScene subscene;
     private Utente user;
-    private ModificaConferenzaController modificaConferenzaController;
+    private ConferenzaController_Edit conferenzaControllerEdit;
     @FXML
     private TableView<Sessione> table;
     @FXML
@@ -75,7 +75,7 @@ public class ManageSessioniController implements Initializable {
     @FXML
     public void addSessioneOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSessione.fxml"));
-        AddSessioneController controller = new AddSessioneController();
+        AddSessioneController_Edit controller = new AddSessioneController_Edit();
         loader.setController(controller);
         controller.setConferenza(conferenza);
         controller.setManageSessioniController(this);
@@ -88,7 +88,7 @@ public class ManageSessioniController implements Initializable {
     public void editSessionsOnAction(ActionEvent event) throws IOException {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
-            EditSessioneController controller = new EditSessioneController();
+            SessioneController_Edit controller = new SessioneController_Edit();
             loader.setController(controller);
             Sessione s = table.getSelectionModel().getSelectedItem();
             if(s == null)
@@ -109,8 +109,8 @@ public class ManageSessioniController implements Initializable {
         setTable();
     }
 
-    public void setEditConferenceController(ModificaConferenzaController modificaConferenzaController) {
-        this.modificaConferenzaController = modificaConferenzaController;
+    public void setEditConferenceController(ConferenzaController_Edit conferenzaControllerEdit) {
+        this.conferenzaControllerEdit = conferenzaControllerEdit;
     }
 
     public void setSubscene(SubScene subscene) {
@@ -123,9 +123,9 @@ public class ManageSessioniController implements Initializable {
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-        loader.setController(modificaConferenzaController);
-        modificaConferenzaController.setSubscene(subscene);
-        modificaConferenzaController.setConferenza(conferenza);
+        loader.setController(conferenzaControllerEdit);
+        conferenzaControllerEdit.setSubscene(subscene);
+        conferenzaControllerEdit.setConferenza(conferenza);
         Parent root = loader.load();
         subscene.setRoot(root);
     }

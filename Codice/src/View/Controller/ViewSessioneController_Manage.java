@@ -24,10 +24,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class ViewSessioneController implements Initializable {
+public class ViewSessioneController_Manage implements Initializable {
     private Sessione sessione;
     private Conferenza conferenza;
-    private VisualizzaConferenzaController visualizzaConferenzaController;
+    private VisualizzaConferenzaController_Edit visualizzaConferenzaControllerEdit;
     private SubScene subScene;
     private Programma programma;
     private IntervalliSessione intervalli;
@@ -98,12 +98,12 @@ public class ViewSessioneController implements Initializable {
         this.conferenza = conferenza;
     }
 
-    public VisualizzaConferenzaController getVisualizzaConferenzaController() {
-        return visualizzaConferenzaController;
+    public VisualizzaConferenzaController_Edit getVisualizzaConferenzaController() {
+        return visualizzaConferenzaControllerEdit;
     }
 
-    public void setVisualizzaConferenzaController(VisualizzaConferenzaController visualizzaConferenzaController) {
-        this.visualizzaConferenzaController = visualizzaConferenzaController;
+    public void setVisualizzaConferenzaController(VisualizzaConferenzaController_Edit visualizzaConferenzaControllerEdit) {
+        this.visualizzaConferenzaControllerEdit = visualizzaConferenzaControllerEdit;
     }
 
     public SubScene getSubScene() {
@@ -230,7 +230,7 @@ public class ViewSessioneController implements Initializable {
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
-        loader.setController(visualizzaConferenzaController);
+        loader.setController(visualizzaConferenzaControllerEdit);
         subScene.setRoot(loader.load());
     }
 }

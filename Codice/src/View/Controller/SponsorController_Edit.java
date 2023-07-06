@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class EditSponsorController implements Initializable, FormChecker {
+public class SponsorController_Edit implements Initializable, FormChecker {
     @FXML
     private TableColumn<Sponsorizzazione, Float> contributoColumn;
     @FXML
@@ -37,7 +37,7 @@ public class EditSponsorController implements Initializable, FormChecker {
     private SponsorizzazioniConferenza sponsorizzazioni;
     private Sponsors sponsors = new Sponsors();
     private Conferenza conferenza;
-    private ModificaConferenzaController controller;
+    private ConferenzaController_Edit controller;
     private SubScene subscene;
     @FXML
     private Button annullaButton;
@@ -130,7 +130,7 @@ public class EditSponsorController implements Initializable, FormChecker {
     public void setConferenza(Conferenza conferenza) {
         this.conferenza = conferenza;
     }
-    public void setEditConferenceController(ModificaConferenzaController controller) {
+    public void setEditConferenceController(ConferenzaController_Edit controller) {
         this.controller = controller;
     }
 

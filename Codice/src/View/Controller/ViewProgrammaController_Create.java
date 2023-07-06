@@ -10,7 +10,6 @@ import Persistence.DAO.*;
 import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.ActivityModel;
-import Persistence.Entities.organizzazione.Sponsorizzazione;
 import Services.ProgrammaSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +20,7 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ViewProgrammaController implements Initializable {
+public class ViewProgrammaController_Create implements Initializable {
     @FXML
     private ResourceBundle resources;
 
@@ -102,7 +101,7 @@ public class ViewProgrammaController implements Initializable {
     private void loadInserisciSessione(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessione.fxml"));
-            VisualizzaSessioneController controller = new  VisualizzaSessioneController();
+            ViewSessioniController_Create controller = new ViewSessioniController_Create();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -116,7 +115,7 @@ public class ViewProgrammaController implements Initializable {
     private void loadAggiungiPuntoProgramma(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/addActivity.fxml"));
-            AddActivityController controller = new  AddActivityController();
+            AddActivityController_Create controller = new AddActivityController_Create();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -132,7 +131,7 @@ public class ViewProgrammaController implements Initializable {
     private void loadEditConferenza(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-            ModificaConferenzaController controller = new ModificaConferenzaController();
+            ConferenzaController_Edit controller = new ConferenzaController_Edit();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);

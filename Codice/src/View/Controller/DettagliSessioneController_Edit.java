@@ -24,12 +24,12 @@ import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModificaDettagliSessioneController implements Initializable {
+public class DettagliSessioneController_Edit implements Initializable {
     private Conferenza conferenza;
     private Sessione sessione;
     private SubScene subscene;
     private Sale sale;
-    private EditSessioneController editSessioneController;
+    private SessioneController_Edit sessioneControllerEdit;
     @FXML
     private Label inizioConferenzaLabel;
     @FXML
@@ -61,7 +61,7 @@ public class ModificaDettagliSessioneController implements Initializable {
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
-        loader.setController(editSessioneController);
+        loader.setController(sessioneControllerEdit);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -84,9 +84,9 @@ public class ModificaDettagliSessioneController implements Initializable {
 
     private void goToEditWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
-        loader.setController(editSessioneController);
-        editSessioneController.setSessione(sessione);
-        editSessioneController.setDettagliSessione();
+        loader.setController(sessioneControllerEdit);
+        sessioneControllerEdit.setSessione(sessione);
+        sessioneControllerEdit.setDettagliSessione();
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -167,11 +167,11 @@ public class ModificaDettagliSessioneController implements Initializable {
         this.subscene = subscene;
     }
 
-    public EditSessioneController getEditSessioneController() {
-        return editSessioneController;
+    public SessioneController_Edit getEditSessioneController() {
+        return sessioneControllerEdit;
     }
 
-    public void setEditSessioneController(EditSessioneController editSessioneController) {
-        this.editSessioneController = editSessioneController;
+    public void setEditSessioneController(SessioneController_Edit sessioneControllerEdit) {
+        this.sessioneControllerEdit = sessioneControllerEdit;
     }
 }

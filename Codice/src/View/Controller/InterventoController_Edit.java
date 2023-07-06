@@ -25,7 +25,7 @@ import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class EditInterventoController implements Initializable {
+public class InterventoController_Edit implements Initializable {
     private Intervento intervento;
     private Programma programma;
     private ObservableList<Speaker> speakers;
@@ -102,7 +102,7 @@ public class EditInterventoController implements Initializable {
     @FXML
     void addSpeakerOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSpeaker.fxml"));
-        AddSpeakerController controller = new AddSpeakerController();
+        AddSpeakerController_Edit controller = new AddSpeakerController_Edit();
         controller.setEditInterventoController(this);
         loader.setController(controller);
         Parent root = loader.load();

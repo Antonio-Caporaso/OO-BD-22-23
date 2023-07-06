@@ -18,8 +18,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddSpeakerController implements Initializable,FormChecker {
-    private AddInterventoController addInterventoController;
+public class AddSpeakerController_Edit implements Initializable,FormChecker {
+    private AddInterventoController_Edit addInterventoControllerEdit;
 
     @FXML
     private Button addButton;
@@ -41,18 +41,18 @@ public class AddSpeakerController implements Initializable,FormChecker {
 
     @FXML
     private ChoiceBox<String> titoloChoice;
-    private EditInterventoController editInterventoController;
+    private InterventoController_Edit interventoControllerEdit;
 
-    public void setEditInterventoController(EditInterventoController editInterventoController) {
-        this.editInterventoController =editInterventoController;
+    public void setEditInterventoController(InterventoController_Edit interventoControllerEdit) {
+        this.interventoControllerEdit = interventoControllerEdit;
     }
 
-    public AddInterventoController getAddInterventoController() {
-        return addInterventoController;
+    public AddInterventoController_Edit getAddInterventoController() {
+        return addInterventoControllerEdit;
     }
 
-    public void setAddInterventoController(AddInterventoController addInterventoController) {
-        this.addInterventoController = addInterventoController;
+    public void setAddInterventoController(AddInterventoController_Edit addInterventoControllerEdit) {
+        this.addInterventoControllerEdit = addInterventoControllerEdit;
     }
 
     @FXML
@@ -62,7 +62,7 @@ public class AddSpeakerController implements Initializable,FormChecker {
         try{
             int id = dao.createSpeaker(s);
             s.setIdSpeaker(id);
-            addInterventoController.setSpeaker(s);
+            addInterventoControllerEdit.setSpeaker(s);
             Stage stage = (Stage) annullaButton.getScene().getWindow();
             stage.close();
         }catch (SQLException e){

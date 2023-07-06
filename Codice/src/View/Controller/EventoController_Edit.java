@@ -21,24 +21,40 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-public class AddEventoController implements Initializable {
+public class EventoController_Edit implements Initializable {
+    private EventoSociale eventoSociale;
     @FXML
-    private Button addButton;
+    private Button editButton;
+    @FXML
+    private javafx.scene.control.Button addButton;
     private Programma programma;
     private EventiSocialiSessione eventi;
     @FXML
     private DateTimePicker dateTimePicker;
-
     @FXML
-    private Button annullaButton;
-
-    @FXML
-    private DateTimePicker orario;
+    private javafx.scene.control.Button annullaButton;
     @FXML
     private ChoiceBox<String> tipologiaChoice;
 
+    public EventoSociale getEventoSociale() {
+        return eventoSociale;
+    }
+
+    public void setEventoSociale(EventoSociale eventoSociale) {
+        this.eventoSociale = eventoSociale;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setTipologieChoice();
+        setDateTimePicker();
+    }
+
+    private void setDateTimePicker() {
+        dateTimePicker.setValue(eventoSociale.getOrario().toLocalDateTime().toLocalDate());
+    }
+
+    private void setTipologieChoice() {
         LinkedList<String> tipologie = new LinkedList<>();
         tipologie.add("Cena");
         tipologie.add("Gita");
@@ -46,50 +62,38 @@ public class AddEventoController implements Initializable {
         ObservableList<String> tip = FXCollections.observableArrayList();
         tip.setAll(tipologie);
         tipologiaChoice.setItems(tip);
+        tipologiaChoice.setValue(eventoSociale.getTipologia());
     }
 
+    public Programma getProgramma() {
+        return programma;
+    }
+    public void setProgramma(Programma programma) {
+        this.programma = programma;
+    }
+    public EventiSocialiSessione getEventi() {
+        return eventi;
+    }
+    public void setEventi(EventiSocialiSessione eventi) {
+        this.eventi = eventi;
+    }
     @FXML
-    void addOnAction(ActionEvent event) {
-        EventoSociale e = retrieveDettagliEvento();
+    void annullaOnAction(javafx.event.ActionEvent event) {
+        Stage stage = (Stage) annullaButton.getScene().getWindow();
+        stage.close();
+    }
+
+    public void editButtonOnAction(ActionEvent event){
+        eventoSociale.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+        eventoSociale.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
+        Stage stage = (Stage) editButton.getScene().getWindow();
+        stage.close();
         try{
-            eventi.addEvento(e);
-            Stage stage = (Stage) addButton.getScene().getWindow();
-            stage.close();
+            eventi.updateEvento(eventoSociale);
         }catch (SQLException exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(exception.getMessage());
             alert.showAndWait();
         }
     }
-
-    private EventoSociale retrieveDettagliEvento() {
-        EventoSociale e = new EventoSociale();
-        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
-        e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
-        e.setProgramma(programma);
-        return e;
-    }
-
-    public Programma getProgramma() {
-        return programma;
-    }
-
-    public void setProgramma(Programma programma) {
-        this.programma = programma;
-    }
-
-    public EventiSocialiSessione getEventi() {
-        return eventi;
-    }
-
-    public void setEventi(EventiSocialiSessione eventi) {
-        this.eventi = eventi;
-    }
-
-    @FXML
-    void annullaOnAction(ActionEvent event) {
-        Stage stage = (Stage) annullaButton.getScene().getWindow();
-        stage.close();
-    }
-
 }

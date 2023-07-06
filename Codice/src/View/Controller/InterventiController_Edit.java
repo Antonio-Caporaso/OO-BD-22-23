@@ -24,13 +24,13 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class EditInterventiController implements Initializable {
+public class InterventiController_Edit implements Initializable {
     private Programma programma;
     private InterventiSessione interventiSessione;
     private SubScene subScene;
     private Sessione sessione;
-    private ManageSessioniController manageSessioniController;
-    private EditProgrammaController editProgrammaController;
+    private SessioniController_Manage sessioniControllerManage;
+    private ProgrammaController_Edit programmaControllerEdit;
     @FXML
     private TableColumn<Intervento, String> abstractColumn;
     @FXML
@@ -56,12 +56,12 @@ public class EditInterventiController implements Initializable {
     @FXML
     private TableColumn<Intervento, Speaker> speakerColumn;
 
-    public EditProgrammaController getEditProgrammaController() {
-        return editProgrammaController;
+    public ProgrammaController_Edit getEditProgrammaController() {
+        return programmaControllerEdit;
     }
 
-    public void setEditProgrammaController(EditProgrammaController editProgrammaController) {
-        this.editProgrammaController = editProgrammaController;
+    public void setEditProgrammaController(ProgrammaController_Edit programmaControllerEdit) {
+        this.programmaControllerEdit = programmaControllerEdit;
     }
 
     public Programma getProgramma() {
@@ -96,18 +96,18 @@ public class EditInterventiController implements Initializable {
         this.sessione = sessione;
     }
 
-    public ManageSessioniController getManageSessioniController() {
-        return manageSessioniController;
+    public SessioniController_Manage getManageSessioniController() {
+        return sessioniControllerManage;
     }
 
-    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
-        this.manageSessioniController = manageSessioniController;
+    public void setManageSessioniController(SessioniController_Manage sessioniControllerManage) {
+        this.sessioniControllerManage = sessioniControllerManage;
     }
 
     @FXML
     void addInterventoButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento.fxml"));
-        AddInterventoController controller = new AddInterventoController();
+        AddInterventoController_Edit controller = new AddInterventoController_Edit();
         controller.setInterventiSessione(interventiSessione);
         controller.setProgramma(programma);
         loader.setController(controller);
@@ -143,7 +143,7 @@ public class EditInterventiController implements Initializable {
     @FXML
     void editInterventoOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervento.fxml"));
-        EditInterventoController controller = new EditInterventoController();
+        InterventoController_Edit controller = new InterventoController_Edit();
         controller.setInterventiSessione(interventiSessione);
         controller.setIntervento(interventiTable.getSelectionModel().getSelectedItem());
         loader.setController(controller);
@@ -158,7 +158,7 @@ public class EditInterventiController implements Initializable {
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
-        loader.setController(editProgrammaController);
+        loader.setController(programmaControllerEdit);
         Parent root = loader.load();
         subScene.setRoot(root);
     }

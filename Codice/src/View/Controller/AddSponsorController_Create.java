@@ -24,7 +24,7 @@ import Services.SponsorizzazioniConferenza;
 import Services.Sponsors;
 import org.postgresql.util.PSQLException;
 
-public class AggiungiSponsorController implements Initializable {
+public class AddSponsorController_Create implements Initializable {
     @FXML
     private ResourceBundle resources;
     @FXML
@@ -128,7 +128,7 @@ public class AggiungiSponsorController implements Initializable {
     private void loadInserisciSessione(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
-            InserisciSessioneController controller = new InserisciSessioneController();
+            AddSessioneController_Create controller = new AddSessioneController_Create();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -151,7 +151,7 @@ public class AggiungiSponsorController implements Initializable {
     private void loadAddOrganizzatore(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddOrganizzatori.fxml"));
-            AddOrganizzatoriController controller = new AddOrganizzatoriController();
+            AddOrganizzatoriController_Create controller = new AddOrganizzatoriController_Create();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
