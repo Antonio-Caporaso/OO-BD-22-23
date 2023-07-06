@@ -28,4 +28,4 @@
 \contentsline {lstlisting}{\numberline {3.28}{\ignorespaces \texttt {check\_comitati\_conferenza}}}{25}{lstlisting.3.28}%
 \contentsline {lstlisting}{\numberline {3.29}{\ignorespaces \texttt {Check\_sala\_sessione\_unica}}}{26}{lstlisting.3.29}%
 \contentsline {lstlisting}{\numberline {3.30}{\ignorespaces \texttt {Check\_organizzatori\_comitato}}}{27}{lstlisting.3.30}%
-\contentsline {lstlisting}{\numberline {3.31}{\ignorespaces \texttt {delete\_sessioni\_conferenza}}}{27}{lstlisting.3.31}%
+\contentsline {lstlisting}{\numberline {3.31}{\ignorespaces \texttt {DELETE\_sessioni\_conferenza}}}{27}{lstlisting.3.31}%

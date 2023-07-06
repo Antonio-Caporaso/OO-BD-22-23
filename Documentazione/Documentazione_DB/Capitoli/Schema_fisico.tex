@@ -4,21 +4,21 @@
 \subsection{\textsc{Utente}}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Utente}]
 	CREATE TABLE utente(
-	id_utente serial PRIMARY KEY,
-	username text NOT NULL UNIQUE,
-	nome text NOT NULL,
-	cognome text NOT NULL,
+	id_utente SERIAL PRIMARY KEY,
+	username TEXT NOT NULL UNIQUE,
+	nome TEXT NOT NULL,
+	cognome TEXT NOT NULL,
 	titolo titolo_st,
-	email text NOT NULL UNIQUE,
-	password text NOT NULL,
-	id_ente INTEGER REFERENCES ente(id_ente) ON delete cascade
+	email TEXT NOT NULL UNIQUE,
+	password TEXT NOT NULL,
+	id_ente INTEGER REFERENCES ente(id_ente) ON DELETE CASCADE
 	);
 \end{lstlisting}
 \subsection{\textsc{Ente}}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Ente}]
 	CREATE TABLE ente(
-	id_ente serial PRIMARY KEY,
-	nome text NOT NULL UNIQUE,
+	id_ente SERIAL PRIMARY KEY,
+	nome TEXT NOT NULL UNIQUE,
 	sigla varchar(7) NOT NULL,
 	UNIQUE (nome,sigla)
 	);
@@ -26,28 +26,28 @@
 \subsection{\textsc{Indirizzo}}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Indirizzo}]
 CREATE TABLE indirizzo(
-id_indirizzo serial PRIMARY KEY,
-via text NOT NULL,
+id_indirizzo SERIAL PRIMARY KEY,
+via TEXT NOT NULL,
 civico varchar(5) NOT NULL,
 cap varchar(5) ,
-city text NOT NULL,
+city TEXT NOT NULL,
 provincia varchar(2) NOT NULL,
-nazione text
+nazione TEXT
 );
 \end{lstlisting}
 \subsection{\textsc{Sede}}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella:  Sede}]
 CREATE TABLE sede(
-id_sede serial PRIMARY KEY,
-nome text ,
-id_indirizzo INTEGER REFERENCES indirizzo(id_indirizzo) ON delete SET null
+id_sede SERIAL PRIMARY KEY,
+nome TEXT ,
+id_indirizzo INTEGER REFERENCES indirizzo(id_indirizzo) ON DELETE SET NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Sponsor}}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Sponsor}]
 CREATE TABLE sponsor(
-id_sponsor serial PRIMARY KEY,
-nome text NOT NULL
+id_sponsor SERIAL PRIMARY KEY,
+nome TEXT NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Comitato}}
@@ -55,7 +55,7 @@ Ogni comitato ha una tipologia che varia tra i valori \textit{scientifico} e \te
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Comitato}]
 CREATE TYPE comitato_st AS enum ('locale','scientifico');
 CREATE TABLE comitato(
-id_comitato serial PRIMARY KEY,
+id_comitato SERIAL PRIMARY KEY,
 tipologia comitato_st NOT NULL
 );
 \end{lstlisting}
@@ -64,112 +64,112 @@ tipologia comitato_st NOT NULL
 CREATE TYPE titolo_st AS enum ('Dottore','Dottoressa','Professore','Professoressa','Assistente','Ricercatore','Ricercatrice','Ingegnere');
 
 CREATE TABLE organizzatore(
-id_organizzatore serial PRIMARY KEY,
-nome text NOT NULL,
-cognome text NOT NULL,
+id_organizzatore SERIAL PRIMARY KEY,
+nome TEXT NOT NULL,
+cognome TEXT NOT NULL,
 titolo titolo_st,
-email text NOT NULL UNIQUE,
-id_ente INTEGER REFERENCES ente(id_ente) ON delete cascade
+email TEXT NOT NULL UNIQUE,
+id_ente INTEGER REFERENCES ente(id_ente) ON DELETE CASCADE
 );
 \end{lstlisting}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Partecipante}]
 CREATE TABLE partecipante(
-id_partecipante serial PRIMARY KEY,
-nome text NOT NULL,
-cognome text NOT NULL,
+id_partecipante SERIAL PRIMARY KEY,
+nome TEXT NOT NULL,
+cognome TEXT NOT NULL,
 titolo titolo_st,
-email text NOT NULL UNIQUE, 
-id_ente INTEGER REFERENCES ente(id_ente) ON delete SET null
+email TEXT NOT NULL UNIQUE, 
+id_ente INTEGER REFERENCES ente(id_ente) ON DELETE SET NULL
 );
 \end{lstlisting}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Speaker}]
 CREATE TABLE speaker(
-id_speaker serial PRIMARY KEY,
-nome text NOT NULL,
-cognome text NOT NULL,
+id_speaker SERIAL PRIMARY KEY,
+nome TEXT NOT NULL,
+cognome TEXT NOT NULL,
 titolo titolo_st,
-email text NOT NULL UNIQUE,
-id_ente INTEGER REFERENCES ente(id_ente) ON delete cascade NOT NULL
+email TEXT NOT NULL UNIQUE,
+id_ente INTEGER REFERENCES ente(id_ente) ON DELETE CASCADE NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Sala}}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Sala}]
 	CREATE TABLE sala(
-	id_sala serial PRIMARY KEY,
-	nome text NOT NULL,
+	id_sala SERIAL PRIMARY KEY,
+	nome TEXT NOT NULL,
 	capienza INTEGER NOT NULL,
-	id_sede INTEGER REFERENCES sede(id_sede) ON delete cascade
+	id_sede INTEGER REFERENCES sede(id_sede) ON DELETE CASCADE
 	);
 \end{lstlisting}
 \subsection{\textsc{Conferenza}}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Conferenza}]
 CREATE TABLE conferenza(
-id_conferenza serial PRIMARY KEY,
-titolo text NOT NULL,
-descrizione text NOT NULL,
+id_conferenza SERIAL PRIMARY KEY,
+titolo TEXT NOT NULL,
+descrizione TEXT NOT NULL,
 inizio TIMESTAMP NOT NULL,
 fine TIMESTAMP NOT NULL,
-id_sede INTEGER REFERENCES sede(id_sede) ON delete SET null,
-comitato_s INTEGER REFERENCES comitato(id_comitato) ON delete SET null,
-comitato_l INTEGER REFERENCES comitato(id_comitato) ON delete SET null,
-id_utente INTEGER REFERENCES utente(id_utente) ON delete cascade,
-check (inizio <= fine), 
-check (inizio >= now()) 
+id_sede INTEGER REFERENCES sede(id_sede) ON DELETE SET NULL,
+comitato_s INTEGER REFERENCES comitato(id_comitato) ON DELETE SET NULL,
+comitato_l INTEGER REFERENCES comitato(id_comitato) ON DELETE SET NULL,
+id_utente INTEGER REFERENCES utente(id_utente) ON DELETE CASCADE,
+CHECK (inizio <= fine), 
+CHECK (inizio >= now()) 
 );
 \end{lstlisting}
 \subsection{\textsc{Sessione}}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Sessione}]
 CREATE TABLE sessione(
-id_sessione serial PRIMARY KEY,
-titolo text NOT NULL,
+id_sessione SERIAL PRIMARY KEY,
+titolo TEXT NOT NULL,
 inizio TIMESTAMP NOT NULL,
 fine TIMESTAMP NOT NULL,
-id_coordinatore INTEGER REFERENCES organizzatore(id_organizzatore) ON delete SET null,
-id_conferenza INTEGER REFERENCES conferenza(id_conferenza) ON delete cascade,
-id_sala INTEGER REFERENCES sala(id_sala) ON delete SET null,
-check (inizio <= fine)
+id_coordinatore INTEGER REFERENCES organizzatore(id_organizzatore) ON DELETE SET NULL,
+id_conferenza INTEGER REFERENCES conferenza(id_conferenza) ON DELETE CASCADE,
+id_sala INTEGER REFERENCES sala(id_sala) ON DELETE SET NULL,
+CHECK (inizio <= fine)
 );
 \end{lstlisting}
 \subsection{\textsc{Partecipazione}}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Partecipazione}]
 CREATE TABLE partecipazione(
-id_partecipante INTEGER REFERENCES partecipante(id_partecipante) ON delete cascade,
-id_sessione INTEGER REFERENCES sessione(id_sessione) ON delete cascade,
+id_partecipante INTEGER REFERENCES partecipante(id_partecipante) ON DELETE CASCADE,
+id_sessione INTEGER REFERENCES sessione(id_sessione) ON DELETE CASCADE,
 UNIQUE (id_partecipante,id_sessione) 
 );
 \end{lstlisting}
 \subsection{\textsc{Ente\_Conferenza}}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Ente\_Conferenza}]
 CREATE TABLE ente_conferenza(
-id_ente INTEGER REFERENCES ente(id_ente) ON delete cascade,
-id_conferenza INTEGER REFERENCES conferenza(id_conferenza) ON delete cascade,
+id_ente INTEGER REFERENCES ente(id_ente) ON DELETE CASCADE,
+id_conferenza INTEGER REFERENCES conferenza(id_conferenza) ON DELETE CASCADE,
 UNIQUE (id_ente,id_conferenza)
 );
 \end{lstlisting}
 \subsection{\textsc{Valuta}}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Valuta}]
 CREATE TABLE valuta(
-iso char(3) PRIMARY KEY,
-nome text NOT NULL,
-simbolo text NOT NULL
+iso CHAR(3) PRIMARY KEY,
+nome TEXT NOT NULL,
+simbolo TEXT NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Sponsor\_Conferenza}}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Sponsor\_Conferenza}]
 CREATE TABLE sponsor_conferenza(
-id_sponsor INTEGER REFERENCES sponsor(id_sponsor) ON delete cascade NOT NULL,
-contributo numeric(1000,2) NOT NULL,
-valuta char(3) REFERENCES valuta(iso) NOT NULL,
-id_conferenza INTEGER REFERENCES conferenza(id_conferenza) ON delete cascade NOT NULL,
+id_sponsor INTEGER REFERENCES sponsor(id_sponsor) ON DELETE CASCADE NOT NULL,
+contributo NUMERIC(1000,2) NOT NULL,
+valuta CHAR(3) REFERENCES valuta(iso) NOT NULL,
+id_conferenza INTEGER REFERENCES conferenza(id_conferenza) ON DELETE CASCADE NOT NULL,
 UNIQUE (id_sponsor,id_conferenza) 
 );
 \end{lstlisting}
 \subsection{\textsc{Programma}}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Programma}]
 CREATE TABLE programma(
-id_programma serial PRIMARY KEY,
-id_sessione INTEGER REFERENCES sessione(id_sessione) ON delete cascade NOT NULL,
-id_keynote INTEGER REFERENCES speaker(id_speaker) ON delete SET null,
+id_programma SERIAL PRIMARY KEY,
+id_sessione INTEGER REFERENCES sessione(id_sessione) ON DELETE CASCADE NOT NULL,
+id_keynote INTEGER REFERENCES speaker(id_speaker) ON DELETE SET NULL,
 UNIQUE (id_programma, id_sessione)
 );
 
@@ -177,45 +177,45 @@ UNIQUE (id_programma, id_sessione)
 \subsection{\textsc{Intervento}}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Intervento}]
 CREATE TABLE intervento(
-id_intervento serial PRIMARY KEY,
-titolo text NOT NULL,
-abstract text NOT NULL,
+id_intervento SERIAL PRIMARY KEY,
+titolo TEXT NOT NULL,
+abstract TEXT NOT NULL,
 inizio TIMESTAMP NOT NULL,
 fine TIMESTAMP NOT NULL,
-id_speaker INTEGER REFERENCES speaker(id_speaker) ON delete cascade,
-id_programma INTEGER REFERENCES programma(id_programma) ON delete cascade NOT NULL,
+id_speaker INTEGER REFERENCES speaker(id_speaker) ON DELETE CASCADE,
+id_programma INTEGER REFERENCES programma(id_programma) ON DELETE CASCADE NOT NULL,
 UNIQUE (id_speaker,id_programma), 
-check (inizio <= fine) 
+CHECK (inizio <= fine) 
 );
 \end{lstlisting}
 \subsection{\textsc{Intervallo}}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Programma}]
 CREATE TYPE intervallo_st AS enum ('pranzo','coffee break');
 CREATE TABLE intervallo(
-id_intervallo serial PRIMARY KEY,
+id_intervallo SERIAL PRIMARY KEY,
 tipologia intervallo_st NOT NULL,
 inizio TIMESTAMP NOT NULL,
 fine TIMESTAMP NOT NULL,
-check (inizio <= fine), 
-id_programma INTEGER REFERENCES programma(id_programma) ON delete cascade NOT NULL
+CHECK (inizio <= fine), 
+id_programma INTEGER REFERENCES programma(id_programma) ON DELETE CASCADE NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Evento}}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Evento}]
 CREATE TABLE evento(
-id_evento serial PRIMARY KEY,
-tipologia text NOT NULL,
+id_evento SERIAL PRIMARY KEY,
+tipologia TEXT NOT NULL,
 inizio TIMESTAMP NOT NULL,
 fine TIMESTAMP NOT NULL,
-check (inizio <= fine), 
-id_programma INTEGER REFERENCES programma(id_programma) ON delete cascade NOT NULL
+CHECK (inizio <= fine), 
+id_programma INTEGER REFERENCES programma(id_programma) ON DELETE CASCADE NOT NULL
 );
 \end{lstlisting}
 \subsection{\textsc{Organizzatore\_Comitato}}
 \begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Organizzatore\_Comitato}]
 CREATE TABLE organizzatore_comitato(
-id_organizzatore INTEGER REFERENCES organizzatore(id_organizzatore) ON delete cascade,
-id_comitato INTEGER REFERENCES comitato(id_comitato) ON delete cascade,
+id_organizzatore INTEGER REFERENCES organizzatore(id_organizzatore) ON DELETE CASCADE,
+id_comitato INTEGER REFERENCES comitato(id_comitato) ON DELETE CASCADE,
 UNIQUE (id_organizzatore,id_comitato) 
 );
 \end{lstlisting}
@@ -575,7 +575,7 @@ EXECUTE FUNCTION check_organizzatore_comitato();
 \end{lstlisting}
 \subsection{\texttt{Delete\_Sessioni\_Conferenza}}
 Nel caso IN cui si volesse modificare la data di inizio o di fine di una conferenza vengono automaticamente cancellate le sessioni che si trovano escluse dal nuovo intervallo di DATE.
-\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{delete\_sessioni\_conferenza}}]
+\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{DELETE\_sessioni\_conferenza}}]
 CREATE OR REPLACE FUNCTION delete_sessioni_conferenza() RETURNS TRIGGER AS $$
 DECLARE
 sessioni_cur cursor FOR 
@@ -590,7 +590,7 @@ FETCH sessioni_cur INTO sessione_id;
 EXIT WHEN NOT FOUND;
 IF (SELECT inizio FROM sessione WHERE id_sessione = sessione_id) < new.inizio 
 OR (SELECT fine FROM sessione WHERE id_sessione = sessione_id) > new.fine THEN
-delete FROM sessione WHERE id_sessione = sessione_id;
+DELETE FROM sessione WHERE id_sessione = sessione_id;
 END IF;
 END LOOP;
 CLOSE sessioni_cur;
@@ -738,11 +738,11 @@ La funzione \texttt{show\_interventi\_sessione} prende IN ingresso la chiave pri
 CREATE OR REPLACE FUNCTION show_interventi_sessione(sessione INTEGER)
 RETURNS TABLE
 (
-titolo text,
+titolo TEXT,
 inizio TIMESTAMP,
 fine TIMESTAMP,
-abstract text,
-speaker text
+abstract TEXT,
+speaker TEXT
 )  AS $$
 DECLARE 
 programma INTEGER;
@@ -792,7 +792,7 @@ CREATE OR REPLACE FUNCTION show_eventi_sociali_sessione(sessione INTEGER)
 RETURNS TABLE
 (
 id_evento INTEGER,
-tipologia text,
+tipologia TEXT,
 inizio TIMESTAMP,
 fine TIMESTAMP) 
 AS $$
@@ -816,11 +816,11 @@ La funzione \texttt{show\_keynote\_sessione} prende IN ingresso la chiave primar
 CREATE OR REPLACE FUNCTION show_keynote_sessione(sessione INTEGER)
 RETURNS TABLE(
 id_speaker INTEGER,
-nome text,
-cognome text,
-titolo text,
-email text,
-ente text) 
+nome TEXT,
+cognome TEXT,
+titolo TEXT,
+email TEXT,
+ente TEXT) 
 AS $$
 DECLARE 
 programma INTEGER;
@@ -845,11 +845,11 @@ La funzione \texttt{Show\_Programma} prende IN ingresso la chiave primaria di un
 CREATE OR REPLACE FUNCTION show_programma(sessione INTEGER)
 RETURNS TABLE (
 id_entry INTEGER,
-appuntamento text,
+appuntamento TEXT,
 inizio TIMESTAMP,
 fine TIMESTAMP,
-descrizione text,
-speaker text
+descrizione TEXT,
+speaker TEXT
 )
 AS $$
 DECLARE
@@ -878,7 +878,7 @@ SELECT i2.id_intervallo AS id_entry,
 'intervallo' AS appuntamento,
 i2.inizio,
 i2.fine,
-tipologia::text AS descrizione,
+tipologia::TEXT AS descrizione,
 NULL
 FROM intervallo i2
 WHERE i2.id_programma = programma
@@ -889,7 +889,7 @@ SELECT e.id_evento AS id_entry,
 'evento' AS appuntamento,
 e.inizio,
 e.fine,
-e.tipologia::text AS descrizione,
+e.tipologia::TEXT AS descrizione,
 NULL
 FROM evento e
 WHERE e.id_programma = programma
@@ -898,13 +898,13 @@ ORDER BY inizio;
 END;
 $$ LANGUAGE plpgsql;
 \end{lstlisting}
-\subsection{\texttt{Add\_Intervento(text,text,text,INTEGER,interval)}}
+\subsection{\texttt{Add\_Intervento(TEXT,TEXT,TEXT,INTEGER,interval)}}
 La procedura \texttt{Add\_intervento} provvede all'inserimento di un intervento all'interno del programma della sessione. Questa calcola l'orario esatto IN cui inserire il nuovo punto sulla base dell'ultimo punto IN programma. Se non esistono punti IN programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure add_intervento
-(titolo text, 
-abstract text, 
-speaker text, 
+(titolo TEXT, 
+abstract TEXT, 
+speaker TEXT, 
 sessione_id INTEGER,
 durata interval)
 AS $$
@@ -919,7 +919,7 @@ WHERE id_sessione = sessione_id;
 SELECT max(fine) INTO fine_prev
 FROM show_programma(sessione_id);
 
-IF (fine_prev is null) THEN
+IF (fine_prev is NULL) THEN
 SELECT inizio INTO fine_prev
 FROM sessione
 WHERE id_sessione = sessione_id;
@@ -934,11 +934,11 @@ RAISE NOTICE '%', SQLERRM;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Intervallo(text,INTEGER,interval)}}
+\subsection{\texttt{Add\_Intervallo(TEXT,INTEGER,interval)}}
 La procedura \texttt{Add\_Intervallo} provvede all'inserimento di un intervallo all'interno del programma della sessione. Questa calcola l'orario esatto IN cui inserire il nuovo punto sulla base dell'ultimo punto IN programma. Se non esistono punti IN programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure 
-add_intervallo(tipologia text , sessione_id INTEGER, durata interval)
+add_intervallo(tipologia TEXT , sessione_id INTEGER, durata interval)
 AS $$
 DECLARE
 programma INTEGER;
@@ -951,7 +951,7 @@ WHERE id_sessione = sessione_id;
 SELECT max(fine) INTO fine_prev
 FROM show_programma(sessione_id);
 
-IF (fine_prev is null) THEN
+IF (fine_prev is NULL) THEN
 SELECT inizio INTO fine_prev
 FROM sessione
 WHERE id_sessione = sessione_id;
@@ -967,12 +967,12 @@ END;
 $$ 
 LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Evento(text,INTEGER,interval)}}
+\subsection{\texttt{Add\_Evento(TEXT,INTEGER,interval)}}
 La procedura \texttt{Add\_Evento} provvede all'inserimento di un evento all'interno del programma della sessione. Questa calcola l'orario esatto IN cui inserire il nuovo punto sulla base dell'ultimo punto IN programma. Se non esistono punti IN programma allora l'ora di inizio è calcolato come l'inizio della sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure 
 add_evento
-(tipologia text, 
+(tipologia TEXT, 
 sessione_id INTEGER, 
 durata interval)
 AS $$
@@ -989,7 +989,7 @@ WHERE id_sessione = sessione_id;
 SELECT max(fine) INTO fine_prev
 FROM show_programma(sessione_id);
 
-IF (fine_prev is null) THEN
+IF (fine_prev is NULL) THEN
 SELECT inizio INTO fine_prev
 FROM sessione
 WHERE id_sessione = sessione_id;
@@ -1005,11 +1005,11 @@ END;
 $$
 LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Conferenza\_Details(text,TIMESTAMP,TIMESTAMP,integer,text)}}
+\subsection{\texttt{Add\_Conferenza\_Details(TEXT,TIMESTAMP,TIMESTAMP,integer,TEXT)}}
 La funzione \texttt{Add\_Conferenza\_Details} aggiunge una conferenza e restituisce la chiave primaria della nuova conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
 CREATE OR REPLACE FUNCTION add_conferenza_details
-(nome text, inizio TIMESTAMP, fine TIMESTAMP, sede INTEGER, abstract text, utente INTEGER)
+(nome TEXT, inizio TIMESTAMP, fine TIMESTAMP, sede INTEGER, abstract TEXT, utente INTEGER)
 RETURNS INTEGER AS $$
 DECLARE
 id INTEGER;
@@ -1041,10 +1041,10 @@ RAISE NOTICE '%', SQLERRM;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Sponsorizzazione(integer,numeric,char(3),integer)}}
+\subsection{\texttt{Add\_Sponsorizzazione(integer,NUMERIC,CHAR(3),integer)}}
 La procedura \texttt{Add\_Sponsorizzazione} inserisce una nuova sponsorizzazione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_sponsorizzazione(sponsor INTEGER, contributo numeric(1000,2), valuta char(3), conferenza INTEGER)
+create or replace procedure add_sponsorizzazione(sponsor INTEGER, contributo NUMERIC(1000,2), valuta CHAR(3), conferenza INTEGER)
 AS $$
 BEGIN
 INSERT INTO sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
@@ -1056,10 +1056,10 @@ RAISE NOTICE '%', SQLERRM;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Sessione(text,TIMESTAMP,TIMESTAMP, integer,integer)}}
+\subsection{\texttt{Add\_Sessione(TEXT,TIMESTAMP,TIMESTAMP, integer,integer)}}
 La procedura \texttt{Add\_Sessione} aggiunge una nuova sessione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_sessione(titolo text, inizio TIMESTAMP, fine TIMESTAMP, sala INTEGER, conferenza INTEGER)
+create or replace procedure add_sessione(titolo TEXT, inizio TIMESTAMP, fine TIMESTAMP, sala INTEGER, conferenza INTEGER)
 AS $$
 BEGIN
 INSERT INTO sessione(titolo,inizio,fine,id_sala,id_conferenza)
@@ -1086,12 +1086,12 @@ RAISE NOTICE '%', SQLERRM;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
-\subsection{\texttt{Add\_Enti(integer,text)}}
+\subsection{\texttt{Add\_Enti(integer,TEXT)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-CREATE OR REPLACE PROCEDURE add_enti(conferenza INTEGER, sigle text)
+CREATE OR REPLACE PROCEDURE add_enti(conferenza INTEGER, sigle TEXT)
 AS $$
 DECLARE
-sigla_ente text;
+sigla_ente TEXT;
 ente_id INTEGER;
 BEGIN
 FOR sigla_ente IN SELECT unnest(string_to_array(sigle, ',')) LOOP
@@ -1108,9 +1108,9 @@ RAISE EXCEPTION 'Errore durante l''inserimento delle tuple nella tabella ente_co
 END;
 $$ LANGUAGE plpgsql;
 \end{lstlisting}
-\subsection{\texttt{Add\_Conferenza(text,TIMESTAMP,TIMESTAMP,integer, text, text)}}
+\subsection{\texttt{Add\_Conferenza(TEXT,TIMESTAMP,TIMESTAMP,integer, TEXT, TEXT)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure add_conferenza(nome text, inizio TIMESTAMP, fine TIMESTAMP, sede INTEGER, descrizione text, sigle text)
+create or replace procedure add_conferenza(nome TEXT, inizio TIMESTAMP, fine TIMESTAMP, sede INTEGER, descrizione TEXT, sigle TEXT)
 AS $$
 DECLARE
 id_conferenza INTEGER;
@@ -1238,9 +1238,9 @@ CREATE OR REPLACE FUNCTION show_members(conferenza INTEGER)
 RETURNS TABLE 
 (
 id INTEGER, 
-nome text, 
-cognome text, 
-email text,
+nome TEXT, 
+cognome TEXT, 
+email TEXT,
 titolo titolo_st, 
 sigla varchar(7)
 ) 
@@ -1260,8 +1260,8 @@ $$ LANGUAGE PLPGSQL;
 CREATE OR REPLACE FUNCTION show_percentage_interventi(mese INTEGER, anno INTEGER)
 RETURNS TABLE
 (
-ente text,
-percentuale text
+ente TEXT,
+percentuale TEXT
 ) AS $$
 DECLARE
 totale INTEGER;
@@ -1271,7 +1271,7 @@ FROM intervento
 WHERE date_part('month',inizio) = mese AND date_part('year',inizio) = anno;
 
 RETURN QUERY
-SELECT e.nome, (count(*)*100/totale)::text || '%'
+SELECT e.nome, (count(*)*100/totale)::TEXT || '%'
 FROM intervento i JOIN speaker s 
 ON i.id_speaker = s.id_speaker JOIN ente e 
 ON s.id_ente = e.id_ente
@@ -1286,7 +1286,7 @@ CREATE OR REPLACE FUNCTION show_percentage_interventi(anno INTEGER)
 RETURNS TABLE
 (
 nome varchar(7),
-percentuale text
+percentuale TEXT
 ) AS $$
 DECLARE
 totale INTEGER;
@@ -1296,7 +1296,7 @@ FROM intervento
 WHERE date_part('year',inizio) = anno;
 
 RETURN QUERY
-SELECT e.nome, (count(*)*100/totale)::text || '%'
+SELECT e.nome, (count(*)*100/totale)::TEXT || '%'
 FROM intervento i JOIN speaker s 
 ON i.id_speaker = s.id_speaker JOIN ente e 
 ON s.id_ente = e.id_ente
