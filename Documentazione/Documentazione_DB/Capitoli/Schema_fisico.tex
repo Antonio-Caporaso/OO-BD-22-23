@@ -310,21 +310,28 @@ EXECUTE FUNCTION check_programma();
 \subsection{\texttt{Check\_Data\_Intervento, Check\_Data\_Intervallo, Check\_Data\_Evento}}\label{trigger:check_data}
 Ogni volta che viene inserito o aggiornato un intervento, un intervallo o un evento bisogna controllare sempre che la data di inizio e di fine sia coerente con quella della sessione cui appartengono:
 \begin{lstlisting}[caption={check\_data\_intervento},language=SQL,style=mystyle]
-CREATE OR REPLACE FUNCTION check_data() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION check_data() 
+RETURNS TRIGGER AS $$
 DECLARE
 inizio_sessione TIMESTAMP;
 fine_sessione TIMESTAMP;
 BEGIN
-SELECT inizio,fine INTO inizio_sessione,fine_sessione
-FROM sessione
-WHERE id_sessione = (SELECT id_sessione FROM programma WHERE id_programma = new.id_programma);
+	SELECT inizio,fine INTO inizio_sessione,fine_sessione
+	FROM sessione
+	WHERE id_sessione = 
+		(
+		SELECT id_sessione 
+		FROM programma
+		WHERE id_programma = new.id_programma
+		);
 
-IF (new.inizio < inizio_sessione OR new.fine > fine_sessione) THEN
-RAISE EXCEPTION 'L''intervento non e'' compreso nella sessione';
-END IF;
-RETURN NEW;
+	IF (new.inizio < inizio_sessione OR new.fine > fine_sessione) THEN
+		RAISE EXCEPTION 'L''intervento non e'' compreso nella sessione';
+	END IF;
+	RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 
 CREATE TRIGGER check_data_evento
 BEFORE INSERT OR UPDATE ON evento
@@ -344,12 +351,16 @@ EXECUTE FUNCTION check_data();
 \subsection{\texttt{Create\_Programma\_Sessione}}
 Il trigger \texttt{Create\_Programma\_Sessione} viene attivato subito dopo aver inserito una nuova sessione ed effettua l'inserimento di un programma vuoto associato alla sessione.
 \begin{lstlisting}[language=SQL, caption={\texttt{create\_programma\_sessione}},style=mystyle]
-CREATE OR REPLACE FUNCTION create_programma_sessione() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION create_programma_sessione() 
+RETURNS TRIGGER AS 
+$$
 BEGIN
-INSERT INTO programma(id_sessione) VALUES (new.id_sessione);
-RETURN NEW;
+	INSERT INTO programma(id_sessione) 
+	VALUES (new.id_sessione);
+	RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 
 CREATE TRIGGER create_programma_sessione
 AFTER INSERT ON sessione
@@ -359,34 +370,37 @@ EXECUTE FUNCTION create_programma_sessione();
 \subsection{\texttt{Check\_Sala\_Sessione}}
 Quando inseriamo una sessione bisogna stare attenti che la chiave esterna della sala sia effettivamente una sala appartenente alla sede che ospita la conferenza della sessione IN questione. Il trigger \texttt{check\_sala\_sessione} effettua quindi questo controllo prima di ciascun inserimento nella tabella \textsc{Sessione}:
 \begin{lstlisting}[language=SQL, style=mystyle]
-CREATE OR REPLACE FUNCTION check_sala_sessione() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION check_sala_sessione() 
+RETURNS TRIGGER AS 
+$$
 DECLARE
-sede INTEGER;
-sala INTEGER;
+	sede INTEGER;
+	sala INTEGER;
 BEGIN
-SELECT id_sede INTO sede
-FROM conferenza
-WHERE id_conferenza = new.id_conferenza;
+	SELECT id_sede INTO sede
+	FROM conferenza
+	WHERE id_conferenza = new.id_conferenza;
 
-SELECT id_sala INTO sala
-FROM sala
-WHERE id_sala = new.id_sala;
+	SELECT id_sala INTO sala
+	FROM sala
+	WHERE id_sala = new.id_sala;
 
-IF sala IS NULL THEN
-Return new;
-END IF;
+	IF sala IS NULL THEN
+		Return new;
+	END IF;
 
-IF sala NOT IN (
-SELECT id_sala
-FROM sala
-WHERE id_sede = sede
-) THEN
-RAISE EXCEPTION 'La sala selezionata non appartiene alla sede della conferenza';
-END IF;
+	IF sala NOT IN (
+		SELECT id_sala
+		FROM sala
+		WHERE id_sede = sede
+	) THEN
+		RAISE EXCEPTION 'La sala selezionata non appartiene alla sede della conferenza';
+	END IF;
 
-RETURN NEW;
+	RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 
 
 CREATE TRIGGER check_sala_sessione
@@ -397,19 +411,21 @@ EXECUTE FUNCTION check_sala_sessione();
 \subsection{\texttt{Check\_Data\_Sessione}}
 Analogamente ai trigger \ref{trigger:check_data} si definisce il trigger \texttt{check\_data\_sessione} che controlla che le DATE di inizio e di fine di ciascuna sessione siano coerenti con quelle della relativa conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{check\_data\_sessione}}]
-CREATE OR REPLACE FUNCTION check_data_sessione() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION check_data_sessione() 
+RETURNS TRIGGER 
+AS $$
 DECLARE
-inizio_conferenza TIMESTAMP;
-fine_conferenza TIMESTAMP;
+	inizio_conferenza TIMESTAMP;
+	fine_conferenza TIMESTAMP;
 BEGIN
-SELECT inizio, fine INTO inizio_conferenza,fine_conferenza
-FROM conferenza
-WHERE id_conferenza = new.id_conferenza;
+	SELECT inizio, fine INTO inizio_conferenza,fine_conferenza
+	FROM conferenza
+	WHERE id_conferenza = new.id_conferenza;
 
-IF (new.inizio < inizio_conferenza OR new.fine > fine_conferenza) THEN
-RAISE EXCEPTION 'La sessione non e'' compresa nella conferenza';
-END IF;
-RETURN NEW;
+	IF (new.inizio < inizio_conferenza OR new.fine > fine_conferenza) THEN
+		RAISE EXCEPTION 'La sessione non e'' compresa nella conferenza';
+	END IF;
+	RETURN NEW;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -421,21 +437,27 @@ EXECUTE FUNCTION check_data_sessione();
 \subsection{\texttt{Check\_Coordinatore\_Sessione}}
 Quando si specifica il coordinatore della sessione bisogna controllare che questi appartenga al comitato scientifico che è il gruppo di organizzatori che si occupano della gestione delle conferenze e delle sessioni:
 \begin{lstlisting}[caption={check\_coordinatore\_sessione}, language=sql, style=mystyle]
-CREATE OR REPLACE FUNCTION check_coordinatore_sessione() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION check_coordinatore_sessione() 
+RETURNS TRIGGER AS $$
 DECLARE 
-id_comitato_scientifico_conferenza INTEGER;
+	id_comitato_scientifico_conferenza INTEGER;
 BEGIN
 
-SELECT comitato_s INTO id_comitato_scientifico_conferenza
-FROM conferenza c
-WHERE c.id_conferenza = new.id_conferenza;
+	SELECT comitato_s INTO id_comitato_scientifico_conferenza
+	FROM conferenza c
+	WHERE c.id_conferenza = new.id_conferenza;
 
-IF (new.id_coordinatore is NOT NULL) THEN
-IF (id_comitato_scientifico_conferenza NOT IN (SELECT id_comitato FROM organizzatore_comitato WHERE id_organizzatore = new.id_coordinatore))  THEN
-RAISE EXCEPTION 'Il coordinatore della sessione deve appartenere al comitato scientifico della conferenza';
-END IF;
-END IF;
-RETURN NEW;
+	IF (new.id_coordinatore IS NOT NULL) THEN
+		IF (id_comitato_scientifico_conferenza NOT IN 
+			(
+			SELECT id_comitato 
+			FROM organizzatore_comitato 
+			WHERE id_organizzatore = new.id_coordinatore)
+			) THEN
+				RAISE EXCEPTION 'Il coordinatore della sessione deve appartenere al comitato scientifico della conferenza';
+		END IF;
+	END IF;
+	RETURN NEW;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -448,17 +470,23 @@ EXECUTE FUNCTION check_coordinatore_sessione();
 \subsection{\texttt{Create\_Comitati\_Conferenza}}
 Gli enti che organizzano le conferenze nominano due comitati per ogni conferenza che organizzano. Per questo motivo, ogni volta che viene inserita una nuova conferenza viene attivato il trigger \texttt{create\_comitati\_conferenza} che si occupa di creare due nuovi comitati di tipologica \textit{scientifica} e \textit{locale} e associarli alla nuova conferenza appena create:
 \begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{create\_comitati\_conferenza}}]
-CREATE OR REPLACE FUNCTION create_comitati_conferenza() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION create_comitati_conferenza() 
+RETURNS TRIGGER AS $$
 DECLARE 
-id_comitatoscientifico INTEGER;
-id_comitatolocale INTEGER;
+	id_comitatoscientifico INTEGER;
+	id_comitatolocale INTEGER;
 BEGIN
-INSERT INTO comitato(tipologia) VALUES ('scientifico') returning id_comitato INTO id_comitatoscientifico;
-INSERT INTO comitato(tipologia) VALUES ('locale') returning id_comitato INTO id_comitatolocale;
-UPDATE conferenza SET comitato_s = id_comitatoscientifico, comitato_l = id_comitatolocale WHERE id_conferenza = new.id_conferenza;
+	INSERT INTO comitato(tipologia) VALUES ('scientifico') returning id_comitato INTO id_comitatoscientifico;
+	
+	INSERT INTO comitato(tipologia) VALUES ('locale') returning id_comitato INTO id_comitatolocale;
+	
+	UPDATE conferenza 
+	SET comitato_s = id_comitatoscientifico, comitato_l = id_comitatolocale 
+	WHERE id_conferenza = new.id_conferenza;
 RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 
 CREATE TRIGGER create_comitati_conferenza
 AFTER INSERT ON conferenza
@@ -468,38 +496,48 @@ EXECUTE FUNCTION create_comitati_conferenza();
 \subsection{\texttt{Check\_Comitati\_Conferenza}}
 Ogni volta che si aggiorna una conferenza bisogna controllare che le chiavi esterne dei due comitati si riferiscano sempre a comitati della tipologia richiesta:
 \begin{lstlisting}[language=SQL, caption={\texttt{check\_comitati\_conferenza}},style=mystyle]
-CREATE OR REPLACE FUNCTION check_comitati_conferenza() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION check_comitati_conferenza() 
+RETURNS TRIGGER AS $$
 DECLARE 
-id_comitato_scientifico INTEGER;
-id_comitato_locale INTEGER;
+	id_comitato_scientifico INTEGER;
+	id_comitato_locale INTEGER;
 BEGIN
-SELECT id_comitato INTO id_comitato_scientifico
-FROM comitato
-WHERE id_comitato = new.comitato_s;
+	SELECT id_comitato INTO id_comitato_scientifico
+	FROM comitato
+	WHERE id_comitato = new.comitato_s;
 
-SELECT id_comitato INTO id_comitato_locale
-FROM comitato
-WHERE id_comitato = new.comitato_l;
+	SELECT id_comitato INTO id_comitato_locale
+	FROM comitato
+	WHERE id_comitato = new.comitato_l;
 
-IF id_comitato_scientifico IS NULL THEN
-RETURN NEW;
-END IF;
+	IF id_comitato_scientifico IS NULL THEN
+		RETURN NEW;
+	END IF;
 
-IF id_comitato_locale IS NULL THEN
-RETURN NEW;
-END IF;
+	IF id_comitato_locale IS NULL THEN
+		RETURN NEW;
+	END IF;
 
-IF (SELECT tipologia FROM comitato WHERE id_comitato = id_comitato_scientifico) <> 'scientifico' THEN
-RAISE EXCEPTION 'Il comitato scientifico deve essere scientifico';
-END IF;
+	IF (
+		SELECT tipologia 
+		FROM comitato 
+		WHERE id_comitato = id_comitato_scientifico
+		) <> 'scientifico' THEN
+			RAISE EXCEPTION 'Il comitato scientifico deve essere scientifico';
+	END IF;
 
-IF (SELECT tipologia FROM comitato WHERE id_comitato = id_comitato_locale) <> 'locale' THEN
-RAISE EXCEPTION 'Il comitato locale deve essere locale';
-END IF;
+	IF (
+	SELECT tipologia 
+	FROM comitato 
+	WHERE id_comitato = id_comitato_locale
+	) <> 'locale' THEN
+		RAISE EXCEPTION 'Il comitato locale deve essere locale';
+	END IF;
 
-RETURN NEW;
+	RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 
 CREATE TRIGGER check_comitati_conferenza
 BEFORE UPDATE ON conferenza
@@ -509,28 +547,33 @@ EXECUTE FUNCTION check_comitati_conferenza();
 \subsection{\texttt{Check\_Sala\_Sessione\_Unica}}
 Una sala non può ospitare più di una sessione alla volta.
 \begin{lstlisting}[caption={\texttt{Check\_sala\_sessione\_unica}}, language=SQL, style=mystyle]
-CREATE OR REPLACE FUNCTION check_sala_sessione_unica() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION check_sala_sessione_unica() 
+RETURNS TRIGGER AS $$
 DECLARE
-inizio_sessione TIMESTAMP;
-fine_sessione TIMESTAMP;
-sessioni cursor FOR SELECT id_sessione FROM sessione WHERE id_sala = new.id_sala;
-sessione_id INTEGER;
+	inizio_sessione TIMESTAMP;
+	fine_sessione TIMESTAMP;
+	sessioni cursor FOR 
+	SELECT id_sessione 
+	FROM sessione 
+	WHERE id_sala = new.id_sala;
+	sessione_id INTEGER;
 BEGIN
-OPEN sessioni;
-LOOP
-FETCH sessioni INTO sessione_id;
-EXIT WHEN NOT FOUND;
-SELECT inizio,fine INTO inizio_sessione,fine_sessione
-FROM sessione
-WHERE id_sessione = sessione_id;
-IF (new.inizio >= inizio_sessione AND new.inizio <= fine_sessione) OR (new.fine >= inizio_sessione AND new.fine <= fine_sessione) THEN
-RAISE EXCEPTION 'La sala non puo'' ospitare piu'' di una sessione alla volta';
-END IF;
-END LOOP;
-CLOSE sessioni;
-RETURN NEW;
+	OPEN sessioni;
+	LOOP
+		FETCH sessioni INTO sessione_id;
+		EXIT WHEN NOT FOUND;
+		SELECT inizio,fine INTO inizio_sessione,fine_sessione
+		FROM sessione
+		WHERE id_sessione = sessione_id;
+		IF (new.inizio >= inizio_sessione AND new.inizio <= fine_sessione) OR (new.fine >= inizio_sessione AND new.fine <= fine_sessione) THEN
+			RAISE EXCEPTION 'La sala non puo'' ospitare piu'' di una sessione alla volta';
+		END IF;
+	END LOOP;
+	CLOSE sessioni;
+	RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 
 CREATE TRIGGER check_sala_sessione_unica
 BEFORE INSERT OR UPDATE ON sessione
@@ -540,33 +583,35 @@ EXECUTE FUNCTION check_sala_sessione_unica();
 \subsection{\texttt{Check\_Organizzatore\_Comitato}}
 Ogni volta che si inserisce un nuovo organizzatore all'interno di un comitato bisogna controllare che questo appartenga ad uno degli enti che organizzano la conferenza.
 \begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{Check\_organizzatori\_comitato}}]
-CREATE OR REPLACE FUNCTION check_organizzatore_comitato() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION check_organizzatore_comitato() 
+RETURNS TRIGGER AS $$
 DECLARE
-ente_id INTEGER;
+	ente_id INTEGER;
 BEGIN
 
-SELECT id_ente INTO ente_id
-FROM organizzatore o
-WHERE o.id_organizzatore = new.id_organizzatore;
+	SELECT id_ente INTO ente_id
+	FROM organizzatore o
+	WHERE o.id_organizzatore = new.id_organizzatore;
 
-IF ente_id IS NULL THEN
-RAISE EXCEPTION 'L''organizzatore non esiste';
-END IF;
+	IF ente_id IS NULL THEN
+	RAISE EXCEPTION 'L''organizzatore non esiste';
+	END IF;
 
-IF ente_id NOT IN (
-SELECT id_ente
-FROM ente_conferenza
-WHERE id_conferenza IN (
-SELECT id_conferenza
-FROM conferenza
-WHERE NEW.id_comitato IN (id_comitato_scientifico, id_comitato_locale)
-)
-) THEN
-RAISE EXCEPTION 'L''organizzatore deve appartenere ad un ente che ha organizzato la conferenza';
-END IF;
-RETURN NEW;
+	IF ente_id NOT IN (
+		SELECT id_ente
+		FROM ente_conferenza
+		WHERE id_conferenza IN (
+			SELECT id_conferenza
+			FROM conferenza
+			WHERE NEW.id_comitato IN (id_comitato_scientifico, id_comitato_locale)
+		)
+	) THEN
+		RAISE EXCEPTION 'L''organizzatore deve appartenere ad un ente che ha organizzato la conferenza';
+	END IF;
+	RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 
 CREATE TRIGGER check_organizzatore_comitato
 BEFORE INSERT OR UPDATE ON organizzatore_comitato
@@ -576,27 +621,38 @@ EXECUTE FUNCTION check_organizzatore_comitato();
 \subsection{\texttt{Delete\_Sessioni\_Conferenza}}
 Nel caso IN cui si volesse modificare la data di inizio o di fine di una conferenza vengono automaticamente cancellate le sessioni che si trovano escluse dal nuovo intervallo di DATE.
 \begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{DELETE\_sessioni\_conferenza}}]
-CREATE OR REPLACE FUNCTION delete_sessioni_conferenza() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION delete_sessioni_conferenza() 
+RETURNS TRIGGER AS $$
 DECLARE
-sessioni_cur cursor FOR 
-SELECT id_sessione 
-FROM sessione 
-WHERE id_conferenza = old.id_conferenza;
-sessione_id INTEGER;
+	sessioni_cur cursor FOR 
+		SELECT id_sessione 
+		FROM sessione 
+		WHERE id_conferenza = old.id_conferenza;
+	sessione_id INTEGER;
 BEGIN
-OPEN sessioni_cur;
-LOOP
-FETCH sessioni_cur INTO sessione_id;
-EXIT WHEN NOT FOUND;
-IF (SELECT inizio FROM sessione WHERE id_sessione = sessione_id) < new.inizio 
-OR (SELECT fine FROM sessione WHERE id_sessione = sessione_id) > new.fine THEN
-DELETE FROM sessione WHERE id_sessione = sessione_id;
-END IF;
-END LOOP;
-CLOSE sessioni_cur;
-RETURN NEW;
+	OPEN sessioni_cur;
+	LOOP
+		FETCH sessioni_cur INTO sessione_id;
+		EXIT WHEN NOT FOUND;
+		IF (
+				SELECT inizio 
+				FROM sessione 
+				WHERE id_sessione = sessione_id
+			) < new.inizio
+			OR
+			(
+				SELECT fine 
+				FROM sessione 
+				WHERE id_sessione = sessione_id
+			) > new.fine THEN
+			DELETE FROM sessione WHERE id_sessione = sessione_id;
+		END IF;
+	END LOOP;
+	CLOSE sessioni_cur;
+	RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 
 CREATE TRIGGER delete_sessioni_conferenza
 BEFORE UPDATE ON conferenza
@@ -606,25 +662,27 @@ EXECUTE FUNCTION delete_sessioni_conferenza();
 \subsection{\texttt{Check\_Capienza}}
 Ogni volta che si aggiunge un nuovo partecipante della sessione bisogna controllare prima che la capienza della sala dove si svolge la sessione non sia stata raggiunta:
 \begin{lstlisting}[language=SQL, style=mystyle]
-CREATE OR REPLACE FUNCTION check_capienza_sala() RETURNS TRIGGER AS $$
+CREATE OR REPLACE FUNCTION check_capienza_sala() 
+RETURNS TRIGGER AS $$
 DECLARE
-capienza_s INTEGER;
-partecipanti INTEGER;
+	capienza_s INTEGER;
+	partecipanti INTEGER;
 BEGIN
-SELECT capienza INTO capienza_s
-FROM sala
-WHERE id_sala = new.id_sala;
+	SELECT capienza INTO capienza_s
+	FROM sala
+	WHERE id_sala = new.id_sala;
 
-SELECT count(*) INTO partecipanti
-FROM partecipazione
-WHERE id_sessione = new.id_sessione;
+	SELECT count(*) INTO partecipanti
+	FROM partecipazione
+	WHERE id_sessione = new.id_sessione;
 
-IF (partecipanti >= capienza_s) THEN
-RAISE EXCEPTION 'La capienza della sala e'' stata raggiunta';
-END IF;
-RETURN NEW;
+	IF (partecipanti >= capienza_s) THEN
+		RAISE EXCEPTION 'La capienza della sala e'' stata raggiunta';
+	END IF;
+	RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 
 CREATE TRIGGER check_capienza_sala
 before insert ON partecipazione
@@ -638,9 +696,9 @@ La funzione \texttt{Show\_Conferenze\_By\_Date} prende IN ingresso due DATE e re
 CREATE OR REPLACE FUNCTION show_conference_by_date(dataI DATE, dataF DATE)
 RETURNS SETOF conferenza AS $$
 BEGIN
-RETURN QUERY
-SELECT * FROM conferenza
-WHERE inizio >= dataI AND fine <= dataF;
+	RETURN QUERY
+	SELECT * FROM conferenza
+	WHERE inizio >= dataI AND fine <= dataF;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
@@ -650,9 +708,9 @@ La funzione \texttt{Show\_Conferenze\_By\_Sede} prende IN ingresso la chiave pri
 CREATE OR REPLACE FUNCTION show_conferences_by_sede(sede INTEGER)
 RETURNS SETOF conferenza AS $$
 BEGIN
-RETURN QUERY
-SELECT * FROM conferenza
-WHERE id_sede = sede;
+	RETURN QUERY
+	SELECT * FROM conferenza
+	WHERE id_sede = sede;
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
@@ -662,20 +720,18 @@ La funzione \texttt{Show\_comitato\_scientifico} prende IN ingresso la chiave pr
 CREATE OR REPLACE FUNCTION show_comitato_scientifico(conferenza INTEGER)
 RETURNS SETOF organizzatore AS $$
 BEGIN
-RETURN QUERY
--- Select dei dettagli dell'organizzatore
-SELECT * FROM organizzatore
-WHERE id_organizzatore IN (
--- Select degli id degli organizzatori appartenenti al comitato scientifico
-SELECT id_organizzatore FROM organizzatore_comitato
-WHERE id_comitato = (
--- Select dell'id del comitato scientifico della conferenza
-SELECT id_comitato_scientifico FROM conferenza
-WHERE id_conferenza = conferenza
-)
-);
+	RETURN QUERY
+	SELECT * FROM organizzatore
+	WHERE id_organizzatore IN (
+		SELECT id_organizzatore FROM organizzatore_comitato
+		WHERE id_comitato = (
+			SELECT id_comitato_scientifico FROM conferenza
+			WHERE id_conferenza = conferenza
+		)
+	);
 END;
-$$ LANGUAGE PLPGSQL;
+$$ 
+LANGUAGE PLPGSQL;
 \end{lstlisting}
 \subsection{\texttt{Show\_comitato\_locale(integer)}}
 La funzione \texttt{Show\_comitato\_locale} prende IN ingresso la chiave primaria di una conferenza e restituisce la lista di tutti i membri organizzatori appartenenti al comitato locale della conferenza:
@@ -683,18 +739,17 @@ La funzione \texttt{Show\_comitato\_locale} prende IN ingresso la chiave primari
 CREATE OR REPLACE FUNCTION show_comitato_locale(conferenza INTEGER)
 RETURNS SETOF organizzatore AS $$
 BEGIN
-RETURN QUERY
--- Select dei dettagli dell'organizzatore
-SELECT * FROM organizzatore
-WHERE id_organizzatore IN (
--- Select degli id degli organizzatori appartenenti al comitato locale
-SELECT id_organizzatore FROM organizzatore_comitato
-WHERE id_comitato = (
--- Select dell'id del comitato locale della conferenza
-SELECT id_comitato_locale FROM conferenza
-WHERE id_conferenza = conferenza
-)
-);
+	RETURN QUERY
+	SELECT * FROM organizzatore
+	WHERE id_organizzatore IN (
+		SELECT id_organizzatore 
+		FROM organizzatore_comitato
+		WHERE id_comitato = (
+			SELECT id_comitato_locale 
+			FROM conferenza
+			WHERE id_conferenza = conferenza
+		)
+	);
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
@@ -705,17 +760,14 @@ CREATE OR REPLACE FUNCTION show_partecipanti(conferenza INTEGER)
 RETURNS SETOF partecipante AS $$
 BEGIN
 RETURN QUERY
--- Select dei dettagli del partecipante
 SELECT * FROM partecipante
 WHERE id_partecipante IN (
--- Select degli id dei partecipanti
-SELECT id_partecipante FROM partecipazione
-WHERE id_sessione IN (
--- Select degli id delle sessioni della conferenza
-SELECT id_sessione FROM sessione
-WHERE id_conferenza = conferenza
-)
-);
+	SELECT id_partecipante 
+	FROM partecipazione
+	WHERE id_sessione IN (
+		SELECT id_sessione FROM sessione
+		WHERE id_conferenza = conferenza)
+	);
 END;
 $$ LANGUAGE PLPGSQL;
 \end{lstlisting}
@@ -919,7 +971,7 @@ WHERE id_sessione = sessione_id;
 SELECT max(fine) INTO fine_prev
 FROM show_programma(sessione_id);
 
-IF (fine_prev is NULL) THEN
+IF (fine_prev IS NULL) THEN
 SELECT inizio INTO fine_prev
 FROM sessione
 WHERE id_sessione = sessione_id;
@@ -951,7 +1003,7 @@ WHERE id_sessione = sessione_id;
 SELECT max(fine) INTO fine_prev
 FROM show_programma(sessione_id);
 
-IF (fine_prev is NULL) THEN
+IF (fine_prev IS NULL) THEN
 SELECT inizio INTO fine_prev
 FROM sessione
 WHERE id_sessione = sessione_id;
@@ -989,7 +1041,7 @@ WHERE id_sessione = sessione_id;
 SELECT max(fine) INTO fine_prev
 FROM show_programma(sessione_id);
 
-IF (fine_prev is NULL) THEN
+IF (fine_prev IS NULL) THEN
 SELECT inizio INTO fine_prev
 FROM sessione
 WHERE id_sessione = sessione_id;

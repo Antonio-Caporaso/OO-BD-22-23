@@ -23,9 +23,9 @@
 \contentsline {lstlisting}{\numberline {3.23}{\ignorespaces check\_data\_intervento}}{22}{lstlisting.3.23}%
 \contentsline {lstlisting}{\numberline {3.24}{\ignorespaces \texttt {create\_programma\_sessione}}}{23}{lstlisting.3.24}%
 \contentsline {lstlisting}{\numberline {3.25}{\ignorespaces \texttt {check\_data\_sessione}}}{24}{lstlisting.3.25}%
-\contentsline {lstlisting}{\numberline {3.26}{\ignorespaces check\_coordinatore\_sessione}}{24}{lstlisting.3.26}%
+\contentsline {lstlisting}{\numberline {3.26}{\ignorespaces check\_coordinatore\_sessione}}{25}{lstlisting.3.26}%
 \contentsline {lstlisting}{\numberline {3.27}{\ignorespaces \texttt {create\_comitati\_conferenza}}}{25}{lstlisting.3.27}%
-\contentsline {lstlisting}{\numberline {3.28}{\ignorespaces \texttt {check\_comitati\_conferenza}}}{25}{lstlisting.3.28}%
-\contentsline {lstlisting}{\numberline {3.29}{\ignorespaces \texttt {Check\_sala\_sessione\_unica}}}{26}{lstlisting.3.29}%
+\contentsline {lstlisting}{\numberline {3.28}{\ignorespaces \texttt {check\_comitati\_conferenza}}}{26}{lstlisting.3.28}%
+\contentsline {lstlisting}{\numberline {3.29}{\ignorespaces \texttt {Check\_sala\_sessione\_unica}}}{27}{lstlisting.3.29}%
 \contentsline {lstlisting}{\numberline {3.30}{\ignorespaces \texttt {Check\_organizzatori\_comitato}}}{27}{lstlisting.3.30}%
-\contentsline {lstlisting}{\numberline {3.31}{\ignorespaces \texttt {DELETE\_sessioni\_conferenza}}}{27}{lstlisting.3.31}%
+\contentsline {lstlisting}{\numberline {3.31}{\ignorespaces \texttt {DELETE\_sessioni\_conferenza}}}{28}{lstlisting.3.31}%
