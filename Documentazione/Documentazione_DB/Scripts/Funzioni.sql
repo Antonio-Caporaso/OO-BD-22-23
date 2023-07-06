@@ -248,16 +248,16 @@ create or replace procedure add_intervento
 (titolo text, 
 abstract text, 
 speaker text, 
-sessione_id int,
+programma_id int,
 durata interval)
 as $$
 declare
-    programma integer;
+    sessione_id integer;
     fine_prev timestamp;
 begin
-    select id_programma into programma
+    select id_sessione into sessione_id
     from programma
-    where id_sessione = sessione_id;
+    where id_programma = programma_id;
 
     select max(fine) into fine_prev
     from show_programma(sessione_id);
@@ -315,15 +315,15 @@ $$ language plpgsql;
 
 --Funzione per aggiungere un nuovo intervallo nel programma di una sessione
 create or replace procedure 
-add_intervallo(tipologia text , sessione_id int, durata interval)
+add_intervallo(tipologia text , programma_id int, durata interval)
 as $$
 declare
-    programma integer;
+    sessione_id integer;
     fine_prev timestamp;
 begin
-    select id_programma into programma
+    select id_sessione into sessione_id
     from programma
-    where id_sessione = sessione_id;
+    where id_programma = programma_id;
 
     select max(fine) into fine_prev
     from show_programma(sessione_id);
@@ -381,19 +381,17 @@ language plpgsql;
 create or replace procedure 
 add_evento
 (tipologia text, 
-sessione_id int, 
+programma_id int, 
 durata interval)
 as $$
 declare
-    programma_id integer;
+    sessione_id integer;
     fine_prev timestamp;
 begin
-    -- Recupera l'id del programma della sessione
-    select id_programma into programma_id
+    select id_sessione into sessione_id
     from programma
-    where id_sessione = sessione_id;
+    where id_programma = programma_id;
 
-    -- Recupera l'id dell'ultimo punto in programma, la tipologia e la fine
     select max(fine) into fine_prev
     from show_programma(sessione_id);
 
