@@ -48,7 +48,7 @@ public class UtenteDAO {
                 query.setString(4,utente.getTitolo());
                 query.setString(5, utente.getEmail());
                 query.setString(6,utente.getUsername());
-                query.setInt(7,utente.getIstituzione().getEnteID());
+                query.setInt(7,utente.getIstituzione().getId_ente());
                 query.executeUpdate();
             }else{
                 throw new UtentePresenteException();

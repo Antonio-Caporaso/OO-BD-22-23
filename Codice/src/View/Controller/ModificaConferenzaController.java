@@ -147,11 +147,11 @@ public class ModificaConferenzaController implements Initializable {
     }
     public void setDetails() {
         this.setTitleLabel();
-        nomeLabel.setText(conferenza.getNome());
+        nomeLabel.setText(conferenza.getTitolo());
         descrizioneLabel.setText(conferenza.getDescrizione());
         budgetLabel.setText(Float.toString(conferenza.getBudget())+""+conferenza.getValuta());
-        dataInizioLabel.setText(conferenza.getDataInizio().toString());
-        dataFineLabel.setText(conferenza.getDataFine().toString());
+        dataInizioLabel.setText(conferenza.getInizio().toString());
+        dataFineLabel.setText(conferenza.getFine().toString());
         sedeLabel.setText(conferenza.getSede().toString());
     }
     public void setOrganizzatori() {
@@ -183,7 +183,7 @@ public class ModificaConferenzaController implements Initializable {
     }
     public void setTitleLabel(){
         if(conferenza!=null)
-            titleLabel.setText("Modifica della conferenza: "+ conferenza.getNome());
+            titleLabel.setText("Modifica della conferenza: "+ conferenza.getTitolo());
     }
     public void setUser(Utente user) {
         this.user = user;

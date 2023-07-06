@@ -1,12 +1,9 @@
 package Persistence.Entities.organizzazione;
 
-import Persistence.Entities.Conferenze.Conferenza;
-
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class Ente {
-    private int enteID;
+    private int id_ente;
     private String nome;
     private String sigla;
 
@@ -17,17 +14,17 @@ public class Ente {
     }
 
     public Ente(int id, String nome, String sigla) {
-        this.enteID = id;
+        this.id_ente = id;
         this.nome = nome;
         this.sigla = sigla;
     }
 
-    public int getEnteID() {
-        return enteID;
+    public int getId_ente() {
+        return id_ente;
     }
 
-    public void setEnteID(int enteID) {
-        this.enteID = enteID;
+    public void setId_ente(int id_ente) {
+        this.id_ente = id_ente;
     }
 
     public String getNome() {

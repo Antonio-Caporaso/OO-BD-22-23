@@ -26,7 +26,7 @@ public class InterventoDao {
         SpeakerDao dao = new SpeakerDao();
         while(rs.next()){
             Intervento i = new Intervento();
-            i.setInterventoID(rs.getInt("id_intervento"));
+            i.setId_intervento(rs.getInt("id_intervento"));
             i.setProgramma(programma);
             i.setTitolo(rs.getString("titolo"));
             i.setSpeaker(dao.retrieveSpeakerByID(rs.getInt("id_speaker")));
@@ -37,23 +37,8 @@ public class InterventoDao {
         }
         return interventi;
     }
-    public LinkedList<Stats> retrieveInterventiStatsByYear(int i) throws SQLException {
-        dbcon = DBConnection.getDBconnection();
-        conn = dbcon.getConnection();
-        String query = "select * from calcola_percentuale_interventi_by_anno(?)";
-        PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,i);
-        ResultSet rs = stm.executeQuery();
-        LinkedList<Stats> stats = new LinkedList<>();
-        while(rs.next()){
-            Stats s = new Stats();
-            s.setIstituzione(rs.getString(1));
-            s.setPercentuale(rs.getInt(2));
-            stats.add(s);
-        }
-        return stats;
-    }
-    public int addIntervento(Intervento intervento, PGInterval durata) throws SQLException {
+
+    public int createIntervento(Intervento intervento, PGInterval durata) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         String query = "select * from add_intervento(?,?,?,?,?)";
@@ -75,7 +60,7 @@ public class InterventoDao {
         conn = dbcon.getConnection();
         String query = "delete from intervento where id_intervento=?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,intervento.getInterventoID());
+        stm.setInt(1,intervento.getId_intervento());
         stm.executeUpdate();
     }
     public void updateIntervento(Intervento i) throws SQLException {
@@ -88,7 +73,7 @@ public class InterventoDao {
         stm.setTimestamp(3,i.getInizio());
         stm.setTimestamp(4,i.getFine());
         stm.setString(5,i.getEstratto());
-        stm.setInt(6,i.getInterventoID());
+        stm.setInt(6,i.getId_intervento());
         stm.executeUpdate();
     }
     public LinkedList<Stats> retrieveInterventiStatsByMonth(Integer month, Integer year) throws SQLException {
@@ -98,6 +83,22 @@ public class InterventoDao {
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,month);
         stm.setInt(2,year);
+        ResultSet rs = stm.executeQuery();
+        LinkedList<Stats> stats = new LinkedList<>();
+        while(rs.next()){
+            Stats s = new Stats();
+            s.setIstituzione(rs.getString(1));
+            s.setPercentuale(rs.getInt(2));
+            stats.add(s);
+        }
+        return stats;
+    }
+    public LinkedList<Stats> retrieveInterventiStatsByYear(Integer i) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select * from calcola_percentuale_interventi_by_anno(?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,i);
         ResultSet rs = stm.executeQuery();
         LinkedList<Stats> stats = new LinkedList<>();
         while(rs.next()){

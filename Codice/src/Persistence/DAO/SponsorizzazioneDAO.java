@@ -20,7 +20,7 @@ public class SponsorizzazioneDAO {
         SponsorDao dao = new SponsorDao();
         String query = "DELETE FROM sponsor_conferenza WHERE id_conferenza = ?  and id_sponsor = ?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,s.getConferenza().getConferenzaID());
+        stm.setInt(1,s.getConferenza().getId_conferenza());
         stm.setInt(2,dao.getSponsorID(s.getSponsor()));
         stm.executeUpdate();
     }
@@ -30,7 +30,7 @@ public class SponsorizzazioneDAO {
         conn = dbcon.getConnection();
         String query = "SELECT id_sponsor, contributo,valuta from sponsor_conferenza WHERE id_conferenza = ?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,c.getConferenzaID());
+        stm.setInt(1,c.getId_conferenza());
         LinkedList<Sponsorizzazione> sponsorizzazioni = new LinkedList<>();
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
@@ -50,8 +50,8 @@ public class SponsorizzazioneDAO {
         conn = dbcon.getConnection();
         String query = "INSERT INTO sponsor_conferenza(id_conferenza,id_sponsor,contributo,valuta) VALUES (?,?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,s.getConferenza().getConferenzaID());
-        stm.setInt(2,s.getSponsor().getSponsorID());
+        stm.setInt(1,s.getConferenza().getId_conferenza());
+        stm.setInt(2,s.getSponsor().getId_sponsor());
         stm.setDouble(3,s.getContributo());
         stm.setString(4,s.getCodiceValuta());
         stm.executeUpdate();

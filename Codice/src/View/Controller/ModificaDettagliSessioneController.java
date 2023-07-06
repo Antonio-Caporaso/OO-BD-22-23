@@ -77,7 +77,7 @@ public class ModificaDettagliSessioneController implements Initializable {
 
     private Optional<ButtonType> confirmationAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler modificare i dettagli della sessione "+sessione.getSessioneID()+"?");
+        alert.setContentText("Sicuro di voler modificare i dettagli della sessione "+sessione.getId_sessione()+"?");
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
@@ -94,7 +94,7 @@ public class ModificaDettagliSessioneController implements Initializable {
     private void updateSessione() {
         SessioneDao dao = new SessioneDao();
         Sessione s = new Sessione();
-        s.setSessioneID(sessione.getSessioneID());
+        s.setId_sessione(sessione.getId_sessione());
         s.setTitolo(nomeTF.getText());
         s.setLocazione(saleChoice.getValue());
         s.setDataInizio(Date.valueOf(inizioDatePicker.getValue()));
@@ -107,15 +107,15 @@ public class ModificaDettagliSessioneController implements Initializable {
             sessione = s;
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage()+"\n"+"Data inizio conferenza:"+conferenza.getDataInizio()+"\n"+"Data fine conferenza:"+conferenza.getDataFine());
+            alert.setContentText(e.getMessage()+"\n"+"Data inizio conferenza:"+conferenza.getInizio()+"\n"+"Data fine conferenza:"+conferenza.getFine());
             alert.showAndWait();
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        inizioConferenzaLabel.setText(conferenza.getDataInizio().toString());
-        fineConferenzaLabel.setText(conferenza.getDataFine().toString());
+        inizioConferenzaLabel.setText(conferenza.getInizio().toString());
+        fineConferenzaLabel.setText(conferenza.getFine().toString());
         try {
             setTitoloSessione();
             setSale();

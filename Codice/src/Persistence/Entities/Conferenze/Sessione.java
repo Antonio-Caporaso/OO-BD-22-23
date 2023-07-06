@@ -1,12 +1,11 @@
 package Persistence.Entities.Conferenze;
 import Persistence.Entities.organizzazione.Organizzatore;
-import java.sql.Date;
-import java.sql.Time;
+
 import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Sessione {
-    private int sessioneID;
+    private int id_sessione;
     private Timestamp inizio;
     private Timestamp fine;
     private String titolo;
@@ -19,7 +18,7 @@ public class Sessione {
     public Sessione(){}
 
     public Sessione(int sessioneID, Timestamp inizio, Timestamp fine, String titolo, Sala locazione, Organizzatore coordinatore, Conferenza conferenza, Programma programma) {
-        this.sessioneID = sessioneID;
+        this.id_sessione = sessioneID;
         this.inizio = inizio;
         this.fine = fine;
         this.titolo = titolo;
@@ -29,12 +28,12 @@ public class Sessione {
         this.programma = programma;
     }
 
-    public int getSessioneID() {
-        return sessioneID;
+    public int getId_sessione() {
+        return id_sessione;
     }
 
-    public void setSessioneID(int sessioneID) {
-        this.sessioneID = sessioneID;
+    public void setId_sessione(int id_sessione) {
+        this.id_sessione = id_sessione;
     }
 
     public Timestamp getInizio() {

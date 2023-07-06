@@ -1,7 +1,6 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
-import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Comitato;
 
 import java.sql.*;
@@ -19,7 +18,7 @@ public class ComitatoDao {
         OrganizzatoreDao dao = new OrganizzatoreDao();
         Comitato c = new Comitato();
         while(rs.next()){
-            c.setComitatoID(rs.getInt("id_comitato"));
+            c.setId_comitato(rs.getInt("id_comitato"));
             c.setTipologia(rs.getString("tipologia"));
         }
         return c;

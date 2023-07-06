@@ -52,7 +52,7 @@ public class ConferenzeUtente extends Conferenze {
     public void addConferenza(Conferenza conferenza) throws SQLException {
         ConferenzaDao d = new ConferenzaDao();
         int id = d.saveConferenza(conferenza);
-        conferenza.setConferenzaID(id);
+        conferenza.setId_conferenza(id);
         conferenzeUtente.add(conferenza);
     }
 

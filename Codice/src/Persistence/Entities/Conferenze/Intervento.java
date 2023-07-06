@@ -1,15 +1,13 @@
 
 package Persistence.Entities.Conferenze;
 
-import Persistence.DAO.InterventoDao;
 import Persistence.Entities.partecipanti.Speaker;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Objects;
 
     public class Intervento extends Activity {
-        private int interventoID;
+        private int id_intervento;
         private String titolo;
         private String estratto;
         private Speaker speaker;
@@ -49,12 +47,12 @@ import java.util.Objects;
             this.estratto = estratto;
         }
 
-        public int getInterventoID() {
-            return interventoID;
+        public int getId_intervento() {
+            return id_intervento;
         }
 
-        public void setInterventoID(int interventoID) {
-            this.interventoID = interventoID;
+        public void setId_intervento(int id_intervento) {
+            this.id_intervento = id_intervento;
         }
         public Programma getProgramma() {return programma;}
         public void setProgramma(Programma programma) {this.programma = programma;}

@@ -1,8 +1,6 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.partecipanti.Speaker;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,7 +59,7 @@ public class SpeakerDao {
         stm.setString(1,s.getNome());
         stm.setString(2,s.getCognome());
         stm.setString(3,s.getTitolo());
-        stm.setInt(4,s.getIstituzione().getEnteID());
+        stm.setInt(4,s.getIstituzione().getId_ente());
         stm.setString(5,s.getEmail());
         ResultSet rs = stm.executeQuery();
         int result = 0;

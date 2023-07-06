@@ -1,6 +1,7 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
+import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Organizzatore;
 
 import java.sql.Connection;
@@ -22,7 +23,7 @@ public class OrganizzatoreDao {
         EnteDao dao = new EnteDao();
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
-            org.setOrganizzatoreID(id);
+            org.setId_organizzatore(id);
             org.setNome(rs.getString("nome"));
             org.setCognome(rs.getString("cognome"));
             org.setTitolo(rs.getString("titolo"));
@@ -42,7 +43,7 @@ public class OrganizzatoreDao {
         LinkedList<Organizzatore> membri = new LinkedList<>();
         while(rs.next()){
             Organizzatore o = new Organizzatore();
-            o.setOrganizzatoreID(rs.getInt("id_organizzatore"));
+            o.setId_organizzatore(rs.getInt("id_organizzatore"));
             o.setNome(rs.getString("nome"));
             o.setCognome(rs.getString("cognome"));
             o.setTitolo(rs.getString("titolo"));

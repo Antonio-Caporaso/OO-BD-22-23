@@ -1,20 +1,18 @@
 package Persistence.Entities.Conferenze;
 
-import java.sql.Timestamp;
-
 public class Intervallo extends Activity {
-    private int id;
+    private int id_intervallo;
     private String tipologia;
     private Programma programma;
 
     public Intervallo(){
     }
-    public int getId() {
-        return id;
+    public int getId_intervallo() {
+        return id_intervallo;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_intervallo(int id_intervallo) {
+        this.id_intervallo = id_intervallo;
     }
 
     public String getTipologia() {

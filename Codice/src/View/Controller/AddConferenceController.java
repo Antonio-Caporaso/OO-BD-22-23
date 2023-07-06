@@ -121,16 +121,16 @@ public class AddConferenceController implements Initializable,FormChecker{
     private void loadAddOrganizzatori(Conferenza c){
          ConferenzaDao conferenzaDao= new ConferenzaDao();
          ComitatoDao comitatoDao=new ComitatoDao();
-        conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
+        conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getTitolo(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
 
         try {
             // Non mi è molto chiara sta porzione... una volta salvata una conferenza si attiva il trigger create_comitati_trigger quindi gli ID non saranno mai uguali a 0
             //Il trigger non funziona,puoi testarlo anche tu andando ad inserire una sessione dopo che hai creato una conferenza senza questo if.
             //Questa è una selezione ad cazzum, ma mi permette d'inserire le sessioni e non bloccare il tutto
-            if(conferenza.getComitatoLocale().getComitatoID()==0){
-            comitatoDao.insertComitato(1, conferenza.getComitatoScientifico().getComitatoID());
+            if(conferenza.getComitato_l().getId_comitato()==0){
+            comitatoDao.insertComitato(1, conferenza.getComitato_s().getId_comitato());
             }else{
-                comitatoDao.insertComitato(1, conferenza.getComitatoLocale().getComitatoID());
+                comitatoDao.insertComitato(1, conferenza.getComitato_l().getId_comitato());
             }
             goToAddEntiWindow();
         } catch (Exception e) {

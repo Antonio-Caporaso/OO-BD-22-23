@@ -15,8 +15,8 @@ public class EnteDao {
         connection = dbConnection.getConnection();
         String query = "call add_ente(?,?)";
         CallableStatement stm = connection.prepareCall(query);
-        stm.setInt(1,ente.getEnteID());
-        stm.setInt(2,conferenza.getConferenzaID());
+        stm.setInt(1,ente.getId_ente());
+        stm.setInt(2,conferenza.getId_conferenza());
         stm.executeUpdate();
     }
     public void removeEnteOrganizzatore(Ente ente, Conferenza conferenza) throws SQLException {
@@ -24,8 +24,8 @@ public class EnteDao {
         connection = dbConnection.getConnection();
         String query = "delete from ente_conferenza where id_conferenza=? and id_ente=?";
         PreparedStatement stm = connection.prepareStatement(query);
-        stm.setInt(1,conferenza.getConferenzaID());
-        stm.setInt(2,ente.getEnteID());
+        stm.setInt(1,conferenza.getId_conferenza());
+        stm.setInt(2,ente.getId_ente());
         stm.executeUpdate();
     }
     public LinkedList<String> retrieveAllNomiEnti() {
@@ -68,12 +68,12 @@ public class EnteDao {
         connection= dbConnection.getConnection();
         String query ="select e.id_ente, e.nome, e.sigla from enti_conferenza e1 natural join ente e where id_conferenza=?";
         PreparedStatement stm = connection.prepareStatement(query);
-        stm.setInt(1,conferenza.getConferenzaID());
+        stm.setInt(1,conferenza.getId_conferenza());
         LinkedList<Ente> enti = new LinkedList<Ente>();
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
             Ente e = new Ente();
-            e.setEnteID(rs.getInt(1));
+            e.setId_ente(rs.getInt(1));
             e.setNome(rs.getString(2));
             e.setSigla(rs.getString(3));
             enti.add(e);
@@ -89,7 +89,7 @@ public class EnteDao {
         ResultSet rs = stm.executeQuery();
         Ente e = new Ente();
         while (rs.next()) {
-            e.setEnteID(rs.getInt(1));
+            e.setId_ente(rs.getInt(1));
             e.setNome(rs.getString(2));
             e.setSigla(rs.getString(3));
         }

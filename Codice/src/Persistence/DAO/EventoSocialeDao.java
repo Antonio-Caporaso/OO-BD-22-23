@@ -20,7 +20,7 @@ public class EventoSocialeDao {
         conn = dbcon.getConnection();
         String query = "DELETE FROM evento where id_evento=?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,e.getId());
+        stm.setInt(1,e.getId_evento());
         stm.executeUpdate();
     }
 
@@ -35,7 +35,7 @@ public class EventoSocialeDao {
         ProgrammaDao dao = new ProgrammaDao();
         while(rs.next()){
             EventoSociale e = new EventoSociale();
-            e.setId(rs.getInt("id_evento"));
+            e.setId_evento(rs.getInt("id_evento"));
             e.setProgramma(dao.retrieveProgrammaByID(rs.getInt("id_programma")));
             e.setTipologia(rs.getString("tipologia"));
             e.setInizio(rs.getTimestamp("inizio"));
@@ -69,7 +69,7 @@ public class EventoSocialeDao {
         stm.setString(1,eventoSociale.getTipologia());
         stm.setTimestamp(2,eventoSociale.getInizio());
         stm.setTimestamp(3,eventoSociale.getFine());
-        stm.setInt(4,eventoSociale.getId());
+        stm.setInt(4,eventoSociale.getId_evento());
         stm.executeUpdate();
     }
 }

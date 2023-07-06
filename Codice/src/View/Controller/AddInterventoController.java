@@ -70,7 +70,7 @@ public class AddInterventoController implements Initializable {
     void addOnAction(ActionEvent event) {
         Intervento i = retrieveDettagliIntervento();
         try {
-            interventiSessione.addIntervento(i);
+            interventiSessione.addIntervento(i,durata);
             Stage stage = (Stage) addButton.getScene().getWindow();
             stage.close();
         }catch (SQLException e){

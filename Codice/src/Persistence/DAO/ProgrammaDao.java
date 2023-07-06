@@ -44,7 +44,7 @@ public class ProgrammaDao {
         conn = dbcon.getConnection();
         String query = "SELECT * from programma where id_sessione=?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,sessione.getSessioneID());
+        stm.setInt(1,sessione.getId_sessione());
         Programma programma = new Programma();
         SpeakerDao dao = new SpeakerDao();
         ResultSet rs = stm.executeQuery();

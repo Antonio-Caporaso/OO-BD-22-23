@@ -124,10 +124,10 @@ public class AddSessioneController implements Initializable,FormChecker {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        inizioConferenzaLabel.setText(conferenza.getDataInizio().toString());
+        inizioConferenzaLabel.setText(conferenza.getInizio().toString());
         inizioConferenzaLabel.setTextFill(Color.WHITE);
         fineConferenzaLabel.setTextFill(Color.WHITE);
-        fineConferenzaLabel.setText(conferenza.getDataFine().toString());
+        fineConferenzaLabel.setText(conferenza.getFine().toString());
         setSale();
         try {
             setCoordinatoreChoiceBox();

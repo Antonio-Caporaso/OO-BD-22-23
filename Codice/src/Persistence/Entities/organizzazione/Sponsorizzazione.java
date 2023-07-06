@@ -12,12 +12,9 @@ public class Sponsorizzazione {
         this.sponsor = s;
         this.conferenza = conferenza;
         this.contributo = contributo;
-        this.valuta = valuta; //Questa modifica al costruttore ha degli effetti collaterali
+        this.valuta = valuta;
     }
-
-    public Sponsorizzazione() {
-
-    }
+    public Sponsorizzazione() {}
 
     public double getContributo() {
         return contributo;

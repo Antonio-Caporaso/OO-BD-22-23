@@ -55,7 +55,7 @@ public class SponsorDao {
         stm.setInt(1,id);
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
-            s.setSponsorID(rs.getInt(1));
+            s.setId_sponsor(rs.getInt(1));
             s.setNome(rs.getString(2));
         }
         rs.close();

@@ -5,6 +5,7 @@ import Persistence.Entities.Conferenze.Intervallo;
 import Persistence.Entities.Conferenze.Programma;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.postgresql.util.PGInterval;
 
 import java.sql.SQLException;
 
@@ -30,15 +31,15 @@ public class IntervalliSessione {
         this.intervalli = intervalli;
     }
 
-    public void addIntervallo(Intervallo intervallo) throws SQLException {
+    public void addIntervallo(Intervallo intervallo,PGInterval durata) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
-        int id = dao.saveInterval(intervallo);
-        intervallo.setId(id);
+        int id = dao.createIntervallo(intervallo,durata);
+        intervallo.setId_intervallo(id);
         intervalli.add(intervallo);
     }
     public void removeIntervallo(Intervallo intervallo) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
-        dao.removeIntervallo(intervallo);
+        dao.deleteIntervallo(intervallo);
         intervalli.remove(intervallo);
     }
     public void updateIntervallo(Intervallo intervallo) throws SQLException {
@@ -49,10 +50,10 @@ public class IntervalliSessione {
             dao.updateIntervallo(intervallo);
         }
     }
-    public void addIntervallo2(Intervallo intervallo) throws SQLException {
+    public void addIntervallo2(Intervallo intervallo, PGInterval durata) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
-        int id = dao.saveIntervallo(intervallo);
-        intervallo.setId(id);
+        int id = dao.createIntervallo(intervallo,durata);
+        intervallo.setId_intervallo(id);
         intervalli.add(intervallo);
     }
 }

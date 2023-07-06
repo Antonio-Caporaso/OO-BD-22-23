@@ -88,7 +88,7 @@ public class GestioneConferenzeController implements Initializable {
             Conferenza c = conferenzeView.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Eliminare conferenza");
-            alert.setHeaderText("Sicuro di voler eliminare la conferenza "+c.getNome()+"?");
+            alert.setHeaderText("Sicuro di voler eliminare la conferenza "+c.getTitolo()+"?");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 try{

@@ -2,16 +2,16 @@ package Persistence.Entities.Conferenze;
 
 
 public class EventoSociale extends Activity {
-    private int id;
+    private int id_evento;
     private Programma programma;
     private String tipologia;
 
-    public int getId() {
-        return id;
+    public int getId_evento() {
+        return id_evento;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_evento(int id_evento) {
+        this.id_evento = id_evento;
     }
 
     public Programma getProgramma() {
@@ -37,11 +37,11 @@ public class EventoSociale extends Activity {
 
         EventoSociale that = (EventoSociale) o;
 
-        return id == that.id;
+        return id_evento == that.id_evento;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return id_evento;
     }
 }

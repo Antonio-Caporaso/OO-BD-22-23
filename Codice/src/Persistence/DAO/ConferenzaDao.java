@@ -4,9 +4,6 @@ import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.Utente;
-import Persistence.Entities.organizzazione.Comitato;
-import jfxtras.scene.layout.HBox;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,13 +27,13 @@ public class ConferenzaDao {
         while(rs.next())
         {
             Conferenza c = new Conferenza();
-            c.setConferenzaID(rs.getInt("id_conferenza"));
-            c.setNome(rs.getString("titolo"));
-            c.setDataInizio(rs.getTimestamp("inizio"));
-            c.setDataFine(rs.getTimestamp("fine"));
+            c.setId_conferenza(rs.getInt("id_conferenza"));
+            c.setTitolo(rs.getString("titolo"));
+            c.setInizio(rs.getTimestamp("inizio"));
+            c.setFine(rs.getTimestamp("fine"));
             c.setDescrizione(rs.getString("descrizione"));
-            c.setComitatoScientifico(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
-            c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
+            c.setComitato_s(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
+            c.setComitato_l(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
             c.setSede(sedeDao.retrieveSedeByID(rs.getInt("id_sede")));
             list.add(c);
         }
@@ -57,14 +54,14 @@ public class ConferenzaDao {
         ComitatoDao comitatodao = new ComitatoDao();
         while(rs.next()){
             Conferenza c = new Conferenza();
-            c.setConferenzaID(rs.getInt("id_conferenza"));
-            c.setNome(rs.getString("titolo"));
-            c.setDataInizio(rs.getTimestamp("inizio"));
-            c.setDataFine(rs.getTimestamp("fine"));
+            c.setId_conferenza(rs.getInt("id_conferenza"));
+            c.setTitolo(rs.getString("titolo"));
+            c.setInizio(rs.getTimestamp("inizio"));
+            c.setFine(rs.getTimestamp("fine"));
             c.setDescrizione(rs.getString("descrizione"));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("id_utente")));
-            c.setComitatoScientifico(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
-            c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
+            c.setComitato_s(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
+            c.setComitato_l(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
             c.setSede(daosede.retrieveSedeByID(rs.getInt("id_sede")));
             conferenze.add(c);
         }
@@ -76,9 +73,9 @@ public class ConferenzaDao {
         conn = dbcon.getConnection();
         String query = "select * from add_conferenza_details(?,?,?,?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setString(1,c.getNome());
-        stm.setTimestamp(2,c.getDataInizio());
-        stm.setTimestamp(3,c.getDataFine());
+        stm.setString(1,c.getTitolo());
+        stm.setTimestamp(2,c.getInizio());
+        stm.setTimestamp(3,c.getFine());
         stm.setInt(4,c.getSede().getSedeID());
         stm.setString(5,c.getDescrizione());
         stm.setInt(6,c.getProprietario().getIdUtente());
@@ -95,7 +92,7 @@ public class ConferenzaDao {
         conn=dbcon.getConnection();
         String query = "DELETE FROM conferenza where id_conferenza = ?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,c.getConferenzaID());
+        stm.setInt(1,c.getId_conferenza());
         stm.executeUpdate();
     }
 
@@ -104,12 +101,12 @@ public class ConferenzaDao {
         conn = dbcon.getConnection();
         String update = "UPDATE conferenza SET nome=?,descrizione=?,inizio=?,fine=?,id_sede=? WHERE id_conferenza=?";
         PreparedStatement stm = conn.prepareStatement(update);
-        stm.setString(1,conferenza.getNome());
+        stm.setString(1,conferenza.getTitolo());
         stm.setString(2,conferenza.getDescrizione());
-        stm.setTimestamp(3,conferenza.getDataInizio());
-        stm.setTimestamp(4,conferenza.getDataFine());
+        stm.setTimestamp(3,conferenza.getInizio());
+        stm.setTimestamp(4,conferenza.getFine());
         stm.setInt(5,conferenza.getSede().getSedeID());
-        stm.setInt(6,conferenza.getConferenzaID());
+        stm.setInt(6,conferenza.getId_conferenza());
         stm.executeUpdate();
     }
     public LinkedList<Conferenza> retrieveBySede(Sede sede) throws SQLException {
@@ -124,14 +121,14 @@ public class ConferenzaDao {
         ComitatoDao comitatodao = new ComitatoDao();
         while(rs.next()){
             Conferenza c = new Conferenza();
-            c.setConferenzaID(rs.getInt("id_conferenza"));
-            c.setNome(rs.getString("titolo"));
-            c.setDataInizio(rs.getTimestamp("inizio"));
-            c.setDataFine(rs.getTimestamp("fine"));
+            c.setId_conferenza(rs.getInt("id_conferenza"));
+            c.setTitolo(rs.getString("titolo"));
+            c.setInizio(rs.getTimestamp("inizio"));
+            c.setFine(rs.getTimestamp("fine"));
             c.setDescrizione(rs.getString("descrizione"));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("id_utente")));
-            c.setComitatoScientifico(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
-            c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
+            c.setComitato_s(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
+            c.setComitato_l(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
             c.setSede(sede);
             conferenze.add(c);
         }
@@ -152,14 +149,14 @@ public class ConferenzaDao {
         ComitatoDao comitatodao = new ComitatoDao();
         Conferenza c = new Conferenza();
         while(rs.next()){
-            c.setConferenzaID(rs.getInt("id_conferenza"));
-            c.setNome(rs.getString("titolo"));
-            c.setDataInizio(rs.getTimestamp("inizio"));
-            c.setDataFine(rs.getTimestamp("fine"));
+            c.setId_conferenza(rs.getInt("id_conferenza"));
+            c.setTitolo(rs.getString("titolo"));
+            c.setInizio(rs.getTimestamp("inizio"));
+            c.setFine(rs.getTimestamp("fine"));
             c.setDescrizione(rs.getString("descrizione"));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("id_utente")));
-            c.setComitatoScientifico(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
-            c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
+            c.setComitato_s(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
+            c.setComitato_l(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
             c.setSede(sededao.retrieveSedeByID(rs.getInt("id_sede")));
             conferenze.add(c);
         }
@@ -177,14 +174,14 @@ public class ConferenzaDao {
         UtenteDAO utentedao = new UtenteDAO();
         SedeDao sededao = new SedeDao();
         while(rs.next()){
-            c.setConferenzaID(idConferenza);
-            c.setNome(rs.getString("titolo"));
-            c.setDataInizio(rs.getTimestamp("inizio"));
-            c.setDataFine(rs.getTimestamp("fine"));
+            c.setId_conferenza(idConferenza);
+            c.setTitolo(rs.getString("titolo"));
+            c.setInizio(rs.getTimestamp("inizio"));
+            c.setFine(rs.getTimestamp("fine"));
             c.setDescrizione(rs.getString("descrizione"));
             c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("id_utente")));
-            c.setComitatoScientifico(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
-            c.setComitatoLocale(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
+            c.setComitato_s(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
+            c.setComitato_l(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
             c.setSede(sededao.retrieveSedeByID(rs.getInt("id_sede")));
         }
         return  c;

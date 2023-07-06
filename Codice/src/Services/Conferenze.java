@@ -43,7 +43,7 @@ public class Conferenze {
     public void addConferenza(Conferenza conferenza) throws SQLException {
         ConferenzaDao d = new ConferenzaDao();
         int id = d.saveConferenza(conferenza);
-        conferenza.setConferenzaID(id);
+        conferenza.setId_conferenza(id);
         conferenze.add(conferenza);
     }
 

@@ -16,7 +16,7 @@ public class SessioneDao {
         conn = dbcon.getConnection();
         String query = "delete from sessione where id_sessione = ?";
         PreparedStatement statement = conn.prepareStatement(query);
-        statement.setInt(1,sessione.getSessioneID());
+        statement.setInt(1,sessione.getId_sessione());
         statement.executeUpdate();
     }
     public void updateSessione(Sessione sessione) throws SQLException {
@@ -28,8 +28,8 @@ public class SessioneDao {
         stm.setTimestamp(2,sessione.getInizio());
         stm.setTimestamp(3,sessione.getFine());
         stm.setInt(4,sessione.getLocazione().getSalaID());
-        stm.setInt(5,sessione.getCoordinatore().getOrganizzatoreID());
-        stm.setInt(6,sessione.getSessioneID());
+        stm.setInt(5,sessione.getCoordinatore().getId_organizzatore());
+        stm.setInt(6,sessione.getId_sessione());
         stm.executeUpdate();
     }
     public LinkedList<Sessione> retrieveSessioniByConferenza(Conferenza conferenza) throws SQLException {
@@ -38,7 +38,7 @@ public class SessioneDao {
         OrganizzatoreDao dao = new OrganizzatoreDao();
         String query = "SELECT * from sessione WHERE idconferenza = ?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,conferenza.getConferenzaID());
+        stm.setInt(1,conferenza.getId_conferenza());
         LinkedList<Sessione> sessioni = new LinkedList<>();
         SalaDao salaDao = new SalaDao();
         OrganizzatoreDao organizzatoreDao = new OrganizzatoreDao();
@@ -64,7 +64,7 @@ public class SessioneDao {
         stm.setTimestamp(2,sessione.getInizio());
         stm.setTimestamp(3,sessione.getFine());
         stm.setInt(4,sessione.getLocazione().getSalaID());
-        stm.setInt(5,sessione.getConferenza().getConferenzaID());
+        stm.setInt(5,sessione.getConferenza().getId_conferenza());
         ResultSet rs = stm.executeQuery();
         int result = 0;
         while(rs.next()){
@@ -92,5 +92,27 @@ public class SessioneDao {
             s.setLocazione(salaDao.retrieveSalaByID(rs.getInt("id_sala")));
         }
         return  s;
+    }
+    public LinkedList<Sessione> retrieveSessioni() throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "SELECT * FROM show_all_sessioni()";
+        PreparedStatement stm = conn.prepareStatement(query);
+        ResultSet rs = stm.executeQuery();
+        LinkedList<Sessione> sessioni = new LinkedList<>();
+        ConferenzaDao conferenzaDao = new ConferenzaDao();
+        OrganizzatoreDao organizzatoreDao = new OrganizzatoreDao();
+        SalaDao salaDao = new SalaDao();
+        while(rs.next()){
+            Sessione s = new Sessione();
+            s.setId_sessione(rs.getInt("id_sessione"));
+            s.setInizio(rs.getTimestamp("inizio"));
+            s.setFine(rs.getTimestamp("fine"));
+            s.setCoordinatore(organizzatoreDao.retrieveOrganizzatoreByID(rs.getInt("id_coordinatore")));
+            s.setLocazione(salaDao.retrieveSalaByID(rs.getInt("id_sala")));
+            s.setConferenza(conferenzaDao.retrieveConferenzaByID(rs.getInt("id_conferenza")));
+            sessioni.add(s);
+        }
+        return  sessioni;
     }
 }

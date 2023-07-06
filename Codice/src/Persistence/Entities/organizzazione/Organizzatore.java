@@ -1,44 +1,31 @@
 package Persistence.Entities.organizzazione;
-
-import Exceptions.ExistingMemberException;
-
 import java.util.Objects;
 
 public class Organizzatore {
-    private int organizzatoreID;
+    private int id_organizzatore;
     private String titolo;
     private String cognome;
     private String nome;
     private Ente istituzione;
     private String email;
-    private Comitato appartieneA;
 
     public Organizzatore() {
     }
 
-    public Organizzatore(String titolo, String cognome, String nome, Ente istituzione, String email, Comitato appartieneA) {
+    public Organizzatore(String titolo, String cognome, String nome, Ente istituzione, String email) {
         this.titolo = titolo;
         this.cognome = cognome;
         this.nome = nome;
         this.istituzione = istituzione;
         this.email = email;
-        this.appartieneA = appartieneA;
     }
 
-    public int getOrganizzatoreID() {
-        return organizzatoreID;
+    public int getId_organizzatore() {
+        return id_organizzatore;
     }
 
-    public void setOrganizzatoreID(int organizzatoreID) {
-        this.organizzatoreID = organizzatoreID;
-    }
-
-    public void setAppartieneA(Comitato appartieneA) throws ExistingMemberException {
-        this.appartieneA = appartieneA;
-        appartieneA.add(this);
-    }
-    public Comitato getAppartieneA(){
-        return appartieneA;
+    public void setId_organizzatore(int id_organizzatore) {
+        this.id_organizzatore = id_organizzatore;
     }
 
     public String getTitolo() {
@@ -82,31 +69,34 @@ public class Organizzatore {
     }
 
     @Override
+    public String toString() {
+        return cognome + " " + nome + " (" + istituzione + ")";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Organizzatore that = (Organizzatore) o;
 
+        if (id_organizzatore != that.id_organizzatore) return false;
+        if (!Objects.equals(titolo, that.titolo)) return false;
         if (!Objects.equals(cognome, that.cognome)) return false;
         if (!Objects.equals(nome, that.nome)) return false;
         if (!Objects.equals(istituzione, that.istituzione)) return false;
-        if (!Objects.equals(email, that.email)) return false;
-        return Objects.equals(appartieneA, that.appartieneA);
-    }
-
-    @Override
-    public String toString() {
-        return cognome + " "+ nome+" ("+istituzione+")";
+        return Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        int result = cognome != null ? cognome.hashCode() : 0;
+        int result = id_organizzatore;
+        result = 31 * result + (titolo != null ? titolo.hashCode() : 0);
+        result = 31 * result + (cognome != null ? cognome.hashCode() : 0);
         result = 31 * result + (nome != null ? nome.hashCode() : 0);
         result = 31 * result + (istituzione != null ? istituzione.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (appartieneA != null ? appartieneA.hashCode() : 0);
         return result;
     }
 }
+

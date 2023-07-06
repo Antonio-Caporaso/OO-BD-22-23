@@ -109,7 +109,7 @@ public class ProgrammaSessione {
             }
             for (Intervallo intervallo: intervalli){
                 if(intervallo.getTipologia().equals(activityModel.getAttivita())&&intervallo.getOrario().equals(activityModel.getDataInizio())){
-                    intervalloDao.removeIntervallo(intervallo);
+                    intervalloDao.deleteIntervallo(intervallo);
                 }
             }
             for (EventoSociale eventoSociale: eventiSociali){

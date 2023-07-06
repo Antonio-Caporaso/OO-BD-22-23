@@ -41,8 +41,8 @@ public class InterventiSessione {
     }
     public void addIntervento(Intervento intervento, PGInterval durata) throws SQLException {
         InterventoDao dao = new InterventoDao();
-            int id = dao.addIntervento(intervento,durata);
-            intervento.setInterventoID(id);
+            int id = dao.createIntervento(intervento,durata);
+            intervento.setId_intervento(id);
             interventi.add(intervento);
     }
     public void removeIntervento(Intervento intervento) throws SQLException {
