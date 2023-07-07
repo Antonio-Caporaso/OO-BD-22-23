@@ -775,3 +775,39 @@ begin
     insert into membro_comitato values (organizzatore,comitato);
 end;
 $$ language plpgsql;
+
+-- Funzione che riceve in input un id di un comitato e restituisce tutti i membri di quel comitato
+create or replace function show_membri_comitato(comitato integer)
+returns table
+(
+    id integer,
+    nome text,
+    cognome text,
+    email text,
+    titolo titolo_st
+) as $$
+begin
+    return query
+    select o.id_organizzatore, o.nome, o.cognome, o.email, o.titolo
+    from organizzatore o join membro_comitato mc
+    on o.id_organizzatore = mc.id_organizzatore
+    where mc.id_comitato = comitato;
+end;
+$$ language plpgsql;
+
+-- Funzione che riceve in input una stringa contenente varie chiavi primarie di organizzatori e l'id di un comitato e aggiunge i membri al comitato
+create or replace procedure add_membri_comitato(organizzatori text, comitato integer)
+as $$
+declare
+    id_organizzatore integer;
+begin
+    for id_organizzatore in select unnest(string_to_array(organizzatori,','))::integer
+    loop
+        call add_membro_comitato(id_organizzatore,comitato);
+    end loop;
+    exception
+        when others then
+            raise notice '%', sqlerrm;
+end;
+$$
+language plpgsql;
