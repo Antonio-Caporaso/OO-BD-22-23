@@ -75,7 +75,7 @@ create table conferenza(
     comitato_l integer references comitato(id_comitato) on delete set null,
     id_utente integer references utente(id_utente) on delete cascade,
     check (inizio <= fine), 
-    check (inizio >= now()) 
+    --check (inizio >= now()) 
 );
 
 create table partecipante(
