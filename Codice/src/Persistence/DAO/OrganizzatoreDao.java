@@ -1,6 +1,7 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
+import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Organizzatore;
 
 import java.sql.Connection;
@@ -15,17 +16,18 @@ public class OrganizzatoreDao {
     public Organizzatore retrieveOrganizzatoreByID(int id) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT * FROM organizzatore WHERE idorganizzatore=?";
+        String query = "SELECT * FROM organizzatore WHERE id_organizzatore=?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,id);
         Organizzatore org = new Organizzatore();
+        EnteDao dao = new EnteDao();
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
-            org.setOrganizzatoreID(id);
+            org.setId_organizzatore(id);
             org.setNome(rs.getString("nome"));
             org.setCognome(rs.getString("cognome"));
             org.setTitolo(rs.getString("titolo"));
-            org.setIstituzione(rs.getString("istituzione"));
+            org.setIstituzione(dao.retrieveEnte(rs.getInt("id_ente")));
             org.setEmail(rs.getString("email"));
         }
         return org;
@@ -33,19 +35,20 @@ public class OrganizzatoreDao {
     public LinkedList<Organizzatore> retrieveOrganizzatoriComitato(int idComitato) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "select * from organizzatore o where idorganizzatore in (select organizzatore from membrocomitato m where comitato=?)";
+        String query = "select * from organizzatore o where id_organizzatore in (select id_organizzatore from organizzatore_comitato m where id_comitato=?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,idComitato);
         ResultSet rs = stm.executeQuery();
+        EnteDao dao = new EnteDao();
         LinkedList<Organizzatore> membri = new LinkedList<>();
         while(rs.next()){
             Organizzatore o = new Organizzatore();
-            o.setOrganizzatoreID(rs.getInt(1));
-            o.setNome(rs.getString(2));
-            o.setCognome(rs.getString(3));
-            o.setTitolo(rs.getString(4));
-            o.setIstituzione(rs.getString(5));
-            o.setEmail(rs.getString(6));
+            o.setId_organizzatore(rs.getInt("id_organizzatore"));
+            o.setNome(rs.getString("nome"));
+            o.setCognome(rs.getString("cognome"));
+            o.setTitolo(rs.getString("titolo"));
+            o.setIstituzione(dao.retrieveEnte(rs.getInt("id_ente")));
+            o.setEmail(rs.getString("email"));
             membri.add(o);
         }
         return membri;

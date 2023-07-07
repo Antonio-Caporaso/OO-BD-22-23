@@ -3,7 +3,6 @@ package View.Controller;
 import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.partecipanti.Speaker;
-import Services.InterventiSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +25,6 @@ public class EditKeynoteController implements Initializable {
     private EditProgrammaController editProgrammaController;
     private Speaker keynote;
     private Programma programma;
-    private InterventiSessione interventiSessione;
     private SubScene subScene;
     @FXML
     private Button addKeynoteButton;
@@ -69,14 +67,6 @@ public class EditKeynoteController implements Initializable {
         this.programma = programma;
     }
 
-    public InterventiSessione getInterventiSessione() {
-        return interventiSessione;
-    }
-
-    public void setInterventiSessione(InterventiSessione interventiSessione) {
-        this.interventiSessione = interventiSessione;
-    }
-
     public SubScene getSubScene() {
         return subScene;
     }
@@ -102,7 +92,6 @@ public class EditKeynoteController implements Initializable {
     void addKeynoteButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ChoiceKeynote.fxml"));
         ChooseKeynoteController controller = new ChooseKeynoteController();
-        controller.setInterventiSessione(interventiSessione);
         controller.setProgramma(programma);
         loader.setController(controller);
         Parent root = loader.load();

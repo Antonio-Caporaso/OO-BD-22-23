@@ -2,8 +2,8 @@ package View.Controller;
 
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
-import Services.Conferenze;
-import Services.Sedi;
+import Utilities.Conferenze;
+import Utilities.Sedi;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

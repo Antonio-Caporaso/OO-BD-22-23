@@ -20,17 +20,11 @@ import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Sponsor;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
-import Services.SponsorizzazioniConferenza;
-import Services.Sponsors;
+import Utilities.Sponsors;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.postgresql.util.PSQLException;
 
-public class AggiungiSponsorController implements Initializable {
-    @FXML
-    private ResourceBundle resources;
-    @FXML
-    private URL location;
-    @FXML
-    private Button backButton;
+public class AddSponsorController implements Initializable {
     @FXML
     private TextField importoTextField;
     @FXML
@@ -42,7 +36,13 @@ public class AggiungiSponsorController implements Initializable {
     @FXML
     private ChoiceBox<Sponsor> selezionaSponsorChoiceBox;
     @FXML
-    private ListView<Sponsorizzazione> sponsorListView;
+    private TableView<Sponsorizzazione> sponsorTable;
+    @FXML
+    private TableColumn<Sponsorizzazione, String> sponsorColumn;
+    @FXML
+    private TableColumn<Sponsorizzazione, Float> contributoColumn;
+    @FXML
+    private TableColumn<Sponsorizzazione,String> valutaColumn;
     @FXML
     private ChoiceBox<String> valutaChoiceBox;
     @FXML
@@ -50,7 +50,6 @@ public class AggiungiSponsorController implements Initializable {
     private Conferenza conferenza;
     private Utente user;
     private Sponsors sponsors= new Sponsors();
-    //Public Setters
     public void setConferenza(Conferenza c){
         this.conferenza=c;
     }
@@ -60,10 +59,9 @@ public class AggiungiSponsorController implements Initializable {
     public void setUtente(Utente utente){
         this.user=utente;
     }
-    //Button methods
     @FXML
     void backButtonOnAction(ActionEvent event) {
-        loadAddOrganizzatore();
+        loadAddEnti();
     }
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
@@ -74,11 +72,8 @@ public class AggiungiSponsorController implements Initializable {
             }
             double contributo = Double.parseDouble(importoTextField.getText());
             String valuta = valutaChoiceBox.getValue();
-            SponsorizzazioniConferenza sponsorizzazioniConferenza= new SponsorizzazioniConferenza(conferenza);
             Sponsorizzazione sponsorizzazione=new Sponsorizzazione(sponsorSelezionato,conferenza,contributo,valuta);
-            sponsorizzazioniConferenza.addSponsorizzazione(sponsorizzazione);
-            setSponsorizzazioniListView();
-
+            conferenza.addSponsorizzazione(sponsorizzazione);
         }catch(PSQLException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Questo sponsor è già presente!");
@@ -96,18 +91,17 @@ public class AggiungiSponsorController implements Initializable {
         loadInserisciSessione();
     }
     @FXML
-    void rimuoviButtonOnAction(ActionEvent event) {
-        SponsorizzazioniConferenza sponsorizzazioniConferenza= new SponsorizzazioniConferenza(conferenza);
+    void rimuoviButtonOnAction(ActionEvent event) {;
         try{
-            Sponsorizzazione sp = sponsorListView.getSelectionModel().getSelectedItem();
+            Sponsorizzazione sp = sponsorTable.getSelectionModel().getSelectedItem();
             if (sp == null){
                 throw new NullPointerException();
             }
             Optional<ButtonType> result = showDeleteDialog();
             if(result.get() == ButtonType.OK) {
                 try{
-                    sponsorizzazioniConferenza.removeSponsorizzazione(sp);
-                    setSponsorizzazioniListView();
+                    conferenza.removeSponsorizzazione(sp);
+                    setSponsorizzazioniTable();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -124,7 +118,6 @@ public class AggiungiSponsorController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
-    //Private Methods
     private void loadInserisciSessione(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
@@ -139,19 +132,11 @@ public class AggiungiSponsorController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void setSponsorizzazioniListView() {
-        SponsorizzazioniConferenza sponsorizzazioniConferenza=new SponsorizzazioniConferenza(conferenza);
+
+    private void loadAddEnti(){
         try{
-            sponsorizzazioniConferenza.loadSponsorizzazioni();
-            sponsorListView.setItems(sponsorizzazioniConferenza.getSponsorizzazioni());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    private void loadAddOrganizzatore(){
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddOrganizzatori.fxml"));
-            AddOrganizzatoriController controller = new AddOrganizzatoriController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEnti.fxml"));
+            AddEntiController controller = new AddEntiController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -162,13 +147,25 @@ public class AggiungiSponsorController implements Initializable {
             e.printStackTrace();
         }
     }
-    //Overrides
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sponsors.loadSponsor();
         setValute();
         selezionaSponsorChoiceBox.setItems(sponsors.getSponsors());
-        setSponsorizzazioniListView();
+        setSponsorizzazioniTable();
+    }
+    private void setSponsorizzazioniTable() {
+        sponsorTable.setEditable(false);
+        try {
+            conferenza.loadSponsorizzazioni();
+            sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("sponsor"));
+            contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,Float>("contributo"));
+            valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("valuta"));
+            sponsorTable.setItems(conferenza.getSponsorizzazioni());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void setValute() {
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();

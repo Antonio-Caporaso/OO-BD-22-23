@@ -5,8 +5,8 @@ import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.organizzazione.Organizzatore;
-import Services.MembriComitato;
-import Services.Sale;
+import Utilities.MembriComitato;
+import Utilities.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,12 +15,14 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import jfxtras.scene.control.LocalTimeTextField;
+import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -43,13 +45,9 @@ public class ModificaDettagliSessioneController implements Initializable {
     @FXML
     private ChoiceBox<Sala> saleChoice;
     @FXML
-    private DatePicker fineDatePicker;
+    private DateTimePicker inizioDT;
     @FXML
-    private DatePicker inizioDatePicker;
-    @FXML
-    private LocalTimeTextField oraFineTimePicker;
-    @FXML
-    private LocalTimeTextField oraInizioTimePicker;
+    private DateTimePicker fineDT;
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
     private MembriComitato membriComitatoScientifico;
@@ -77,7 +75,7 @@ public class ModificaDettagliSessioneController implements Initializable {
 
     private Optional<ButtonType> confirmationAlert() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler modificare i dettagli della sessione "+sessione.getSessioneID()+"?");
+        alert.setContentText("Sicuro di voler modificare i dettagli della sessione "+sessione.getId_sessione()+"?");
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
@@ -94,28 +92,26 @@ public class ModificaDettagliSessioneController implements Initializable {
     private void updateSessione() {
         SessioneDao dao = new SessioneDao();
         Sessione s = new Sessione();
-        s.setSessioneID(sessione.getSessioneID());
+        s.setId_sessione(sessione.getId_sessione());
         s.setTitolo(nomeTF.getText());
         s.setLocazione(saleChoice.getValue());
-        s.setDataInizio(Date.valueOf(inizioDatePicker.getValue()));
-        s.setDataFine(Date.valueOf(fineDatePicker.getValue()));
-        s.setOrarioInizio(Time.valueOf(oraInizioTimePicker.localTimeProperty().getValue()));
-        s.setOrarioFine(Time.valueOf(oraFineTimePicker.localTimeProperty().getValue()));
+        s.setInizio(Timestamp.valueOf(inizioDT.getDateTimeValue()));
+        s.setFine(Timestamp.valueOf(fineDT.getDateTimeValue()));
         s.setCoordinatore(coordinatoreChoiceBox.getValue());
         try {
             dao.updateSessione(s);
             sessione = s;
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage()+"\n"+"Data inizio conferenza:"+conferenza.getDataInizio()+"\n"+"Data fine conferenza:"+conferenza.getDataFine());
+            alert.setContentText(e.getMessage()+"\n"+"Data inizio conferenza:"+conferenza.getInizio()+"\n"+"Data fine conferenza:"+conferenza.getFine());
             alert.showAndWait();
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        inizioConferenzaLabel.setText(conferenza.getDataInizio().toString());
-        fineConferenzaLabel.setText(conferenza.getDataFine().toString());
+        inizioConferenzaLabel.setText(conferenza.getInizio().toString());
+        fineConferenzaLabel.setText(conferenza.getFine().toString());
         try {
             setTitoloSessione();
             setSale();
@@ -138,10 +134,8 @@ public class ModificaDettagliSessioneController implements Initializable {
     }
 
     private void setDate() throws SQLException {
-        inizioDatePicker.setValue(sessione.getDataInizio().toLocalDate());
-        fineDatePicker.setValue(sessione.getDataFine().toLocalDate());
-        oraInizioTimePicker.setLocalTime(sessione.getOrarioInizio().toLocalTime());
-        oraFineTimePicker.setLocalTime(sessione.getOrarioFine().toLocalTime());
+       inizioDT.setDateTimeValue(sessione.getInizio().toLocalDateTime());
+       fineDT.setDateTimeValue(sessione.getFine().toLocalDateTime());
     }
 
     private void setSale() throws SQLException {

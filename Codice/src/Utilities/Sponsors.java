@@ -1,4 +1,4 @@
-package Services;
+package Utilities;
 
 import Persistence.DAO.SponsorDao;
 import Persistence.Entities.organizzazione.Sponsor;

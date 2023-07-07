@@ -4,9 +4,6 @@ import Persistence.DAO.ProgrammaDao;
 import Persistence.DAO.SpeakerDao;
 import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.partecipanti.Speaker;
-import Services.EventiSocialiSessione;
-import Services.IntervalliSessione;
-import Services.InterventiSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,9 +28,6 @@ public class EditSessioneController implements Initializable {
     private ManageSessioniController manageSessioniController;
     private SubScene subScene;
     private Programma programma;
-    private IntervalliSessione intervalli;
-    private InterventiSessione interventi;
-    private EventiSocialiSessione eventi;
     @FXML
     private TableColumn<Intervento, String> abstractColumn;
 
@@ -168,9 +162,6 @@ public class EditSessioneController implements Initializable {
         controller.setManageSessioniController(manageSessioniController);
         controller.setSessione(sessione);
         controller.setProgramma(programma);
-        controller.setEventi(eventi);
-        controller.setIntervalli(intervalli);
-        controller.setInterventi(interventi);
         loader.setController(controller);
         Parent root = loader.load();
         subScene.setRoot(root);
@@ -213,10 +204,8 @@ public class EditSessioneController implements Initializable {
     public void setDettagliSessione() {
         titleLabel.setText(sessione.getTitolo());
         nomeLabel.setText(sessione.getTitolo());
-        dataInizioLabel.setText(String.valueOf(sessione.getDataInizio()));
-        dataFineLabel.setText(String.valueOf(sessione.getDataFine()));
-        oraInizioLabel.setText(String.valueOf(sessione.getOrarioInizio()));
-        oraFineLabel.setText(String.valueOf(sessione.getOrarioFine()));
+        dataInizioLabel.setText(String.valueOf(sessione.getInizio()));
+        dataFineLabel.setText(String.valueOf(sessione.getFine()));
         salaLabel.setText(sessione.getLocazione().getNomeSala());
         coordinatoreLabel.setText(sessione.getCoordinatore().toString());
     }
@@ -225,9 +214,8 @@ public class EditSessioneController implements Initializable {
         SpeakerDao dao = new SpeakerDao();
         Speaker keynote;
         try {
-            int id = programmaDao.retrieveKeynoteSpeakerID(sessione);
-            if(id != 0) {
-                keynote = dao.retrieveSpeakerByID(id);
+            keynote = dao.retrieveSpeakerByID(programmaDao.retrieveKeynoteSpeakerID(sessione));
+            if(!(keynote.equals(null))) {
                 nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
                 cognomeKeynote.setCellValueFactory(new PropertyValueFactory<>("cognome"));
                 emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -242,36 +230,33 @@ public class EditSessioneController implements Initializable {
 
     private void setInterventiTable() {
         try {
-            interventi = new InterventiSessione(programma);
-            interventi.loadInterventi();
+            programma.loadInterventi();
             orarioInterventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
             speakerColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
             abstractColumn.setCellValueFactory(new PropertyValueFactory<>("estratto"));
-            interventiTable.setItems(interventi.getInterventi());
+            interventiTable.setItems(programma.getInterventi());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void setEventiTable() {
-        eventi = new EventiSocialiSessione(programma);
         try {
-            eventi.loadEventiSociali();
+            programma.loadEventiSociali();
             orarioEventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
             tipologiaEventoColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
-            eventiTable.setItems(eventi.getEventi());
+            eventiTable.setItems(programma.getEventi());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void setIntervalliTable() {
-        intervalli = new IntervalliSessione(programma);
         try{
-            intervalli.loadIntervalli();
+            programma.loadIntervalli();
             orarioIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
             tipologiaIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
-            intervalliTable.setItems(intervalli.getIntervalli());
+            intervalliTable.setItems(programma.getIntervalli());
         }catch (SQLException e){
             e.printStackTrace();
         }

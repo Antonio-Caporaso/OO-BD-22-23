@@ -18,7 +18,7 @@ public class SponsorDao {
         dbConnection = DBConnection.getDBconnection();
         connection = dbConnection.getConnection();
         LinkedList<String> nomi = new LinkedList<>();
-        String query = "SELECT idsponsor from sponsor where nome = ?";
+        String query = "SELECT id_sponsor from sponsor where nome = ?";
         PreparedStatement stm = connection.prepareStatement(query);
         stm.setString(1,sponsor.getNome());
         ResultSet rs = stm.executeQuery();
@@ -26,22 +26,6 @@ public class SponsorDao {
             id = rs.getInt(1);
         }
         return id;
-    }
-
-    public LinkedList<String> retrieveNomiSponsor() {
-        dbConnection = DBConnection.getDBconnection();
-        connection = dbConnection.getConnection();
-        LinkedList<String> nomi = new LinkedList<>();
-        try{
-            PreparedStatement stm = connection.prepareStatement("SELECT nome FROM sponsor");
-            ResultSet rs = stm.executeQuery();
-            while(rs.next()){
-                nomi.add(rs.getString(1));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return nomi;
     }
 
     public LinkedList<Sponsor> retrieveSponsors() {
@@ -66,12 +50,12 @@ public class SponsorDao {
         dbConnection = DBConnection.getDBconnection();
         connection = dbConnection.getConnection();
         Sponsor s = new Sponsor();
-        String query = "SELECT * FROM SPONSOR WHERE idsponsor=?";
+        String query = "SELECT * FROM SPONSOR WHERE id_sponsor=?";
         PreparedStatement stm = connection.prepareStatement(query);
         stm.setInt(1,id);
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
-            s.setSponsorID(rs.getInt(1));
+            s.setId_sponsor(rs.getInt(1));
             s.setNome(rs.getString(2));
         }
         rs.close();

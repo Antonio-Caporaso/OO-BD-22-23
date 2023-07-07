@@ -4,7 +4,6 @@ import Persistence.DAO.SpeakerDao;
 import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.partecipanti.Speaker;
-import Services.InterventiSessione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.postgresql.util.PGInterval;
 import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
@@ -26,9 +26,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AddInterventoController implements Initializable {
+    @FXML
+    private Spinner<Integer> minutiSpinner;
+
+    @FXML
+    private Spinner<Integer> oraSpinner;
     private Programma programma;
     private ObservableList<Speaker> speakers;
-    private InterventiSessione interventiSessione;
     @FXML
     private TextArea abstractTextArea;
 
@@ -42,21 +46,13 @@ public class AddInterventoController implements Initializable {
     private Button annullaButton;
 
     @FXML
-    private DateTimePicker dateTimePicker;
+    private DateTimePicker durataDT;
 
     @FXML
     private ChoiceBox<Speaker> speakerChoice;
 
     @FXML
     private TextField titleTextField;
-
-    public InterventiSessione getInterventiSessione() {
-        return interventiSessione;
-    }
-
-    public void setInterventiSessione(InterventiSessione interventiSessione) {
-        this.interventiSessione = interventiSessione;
-    }
 
     public Programma getProgramma() {
         return programma;
@@ -70,7 +66,8 @@ public class AddInterventoController implements Initializable {
     void addOnAction(ActionEvent event) {
         Intervento i = retrieveDettagliIntervento();
         try {
-            interventiSessione.addIntervento(i);
+            PGInterval durata = new PGInterval(0,0,0,oraSpinner.getValue(), minutiSpinner.getValue(),0);
+            programma.addIntervento(i,durata);
             Stage stage = (Stage) addButton.getScene().getWindow();
             stage.close();
         }catch (SQLException e){
@@ -86,22 +83,7 @@ public class AddInterventoController implements Initializable {
         i.setSpeaker(speakerChoice.getValue());
         i.setTitolo(titleTextField.getText());
         i.setEstratto(abstractTextArea.getText());
-        i.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
         return i;
-    }
-
-    @FXML
-    void addSpeakerOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSpeaker.fxml"));
-        AddSpeakerController controller = new AddSpeakerController();
-        controller.setAddInterventoController(this);
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.show();
     }
     public void setSpeaker(Speaker speaker){
         speakers.add(speaker);

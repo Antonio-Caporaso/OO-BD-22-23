@@ -1,4 +1,4 @@
-package Services;
+package Utilities;
 
 import Persistence.DAO.EnteDao;
 import Persistence.Entities.organizzazione.Ente;

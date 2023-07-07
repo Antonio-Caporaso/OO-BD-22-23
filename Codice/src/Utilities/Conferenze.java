@@ -1,10 +1,12 @@
-package Services;
+package Utilities;
 
 import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.EnteDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
+import Persistence.Entities.organizzazione.Ente;
+import Persistence.Entities.organizzazione.Sponsorizzazione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.Date;
@@ -29,21 +31,21 @@ public class Conferenze {
     public void loadOrganizzatori() throws SQLException {
         EnteDao dao = new EnteDao();
         for (Conferenza c : conferenze) {
-            c.setOrganizzataDa(dao.retrieveEntiOrganizzatori(c));
+            c.setEnti((ObservableList<Ente>) dao.retrieveEntiOrganizzatori(c));
         }
     }
 
     public void loadSponsorizzazioni() throws SQLException {
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
         for (Conferenza c : conferenze) {
-            c.setSponsorizzataDa(dao.retrieveSponsorizzazioni(c));
+            c.setSponsorizzazioni((ObservableList<Sponsorizzazione>) dao.retrieveSponsorizzazioni(c));
         }
     }
 
     public void addConferenza(Conferenza conferenza) throws SQLException {
         ConferenzaDao d = new ConferenzaDao();
         int id = d.saveConferenza(conferenza);
-        conferenza.setConferenzaID(id);
+        conferenza.setId_conferenza(id);
         conferenze.add(conferenza);
     }
 

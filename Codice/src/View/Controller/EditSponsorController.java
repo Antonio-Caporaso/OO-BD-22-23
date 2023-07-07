@@ -5,8 +5,7 @@ import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Sponsor;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
-import Services.SponsorizzazioniConferenza;
-import Services.Sponsors;
+import Utilities.Sponsors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,8 +32,6 @@ public class EditSponsorController implements Initializable, FormChecker {
     private TableView<Sponsorizzazione> sponsorTable;
     @FXML
     private TableColumn<Sponsorizzazione, String> valutaColumn;
-
-    private SponsorizzazioniConferenza sponsorizzazioni;
     private Sponsors sponsors = new Sponsors();
     private Conferenza conferenza;
     private ModificaConferenzaController controller;
@@ -75,7 +72,7 @@ public class EditSponsorController implements Initializable, FormChecker {
             Optional<ButtonType> result = showDeleteDialog();
             if(result.get() == ButtonType.OK) {
                 try{
-                    sponsorizzazioni.removeSponsorizzazione(sp);
+                    conferenza.removeSponsorizzazione(sp);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -102,7 +99,7 @@ public class EditSponsorController implements Initializable, FormChecker {
             float contributo = Float.parseFloat(contributoTextField.getText());
             String valuta = valutaChoice.getValue();
             Sponsorizzazione sp = new Sponsorizzazione(s,conferenza,contributo,valuta);
-            sponsorizzazioni.addSponsorizzazione(sp);
+            conferenza.addSponsorizzazione(sp);
         }catch (BlankFieldException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Riempire tutti i campi");
@@ -146,7 +143,6 @@ public class EditSponsorController implements Initializable, FormChecker {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sponsors.loadSponsor();
         sponsorChoice.setItems(sponsors.getSponsors());
-        sponsorizzazioni = new SponsorizzazioniConferenza(conferenza);
         setTable();
         setValute();
     }
@@ -154,11 +150,11 @@ public class EditSponsorController implements Initializable, FormChecker {
     private void setTable() {
         sponsorTable.setEditable(true);
         try {
-            sponsorizzazioni.loadSponsorizzazioni();
+            conferenza.loadSponsorizzazioni();
             sponsorNameColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("sponsor"));
             contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,Float>("contributo"));
             valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("valuta"));
-            sponsorTable.setItems(sponsorizzazioni.getSponsorizzazioni());
+            sponsorTable.setItems(conferenza.getSponsorizzazioni());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

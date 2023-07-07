@@ -1,107 +1,73 @@
 package Persistence.Entities.Conferenze;
 
+import Persistence.DAO.ConferenzaDao;
+import Persistence.DAO.EnteDao;
+import Persistence.DAO.SessioneDao;
+import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Comitato;
 import Persistence.Entities.organizzazione.Ente;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 
 public class Conferenza {
-    private int conferenzaID;
-    private String nome;
+    private int id_conferenza;
+    private String titolo;
     private Utente proprietario;
-    private Timestamp dataInizio;
-    private Timestamp dataFine;
+    private Timestamp inizio;
+    private Timestamp fine;
     private String descrizione;
-    private Comitato comitatoLocale;
-    private Comitato comitatoScientifico;
+    private Comitato comitato_l;
+    private Comitato comitato_s;
     private Sede sede;
-    private float budget;
-    private String valuta;
-    private LinkedList<Ente> organizzataDa;
-    private LinkedList<Sessione> sessioni;
-    private LinkedList<Sponsorizzazione> sponsorizzataDa;
+    private ObservableList<Ente> enti;
+    private ObservableList<Sponsorizzazione> sponsorizzazioni;
+    private ObservableList<Sessione> sessioni;
 
-    public Conferenza(int conferenzaID, String nome, Utente proprietario, Timestamp dataInizio, Timestamp dataFine, String descrizione, Comitato comitatoLocale, Comitato comitatoScientifico, Sede sede, float budget, String valuta) {
-        this.conferenzaID = conferenzaID;
-        this.nome = nome;
+    public Conferenza(int conferenzaID, String titolo, Utente proprietario, Timestamp inizio, Timestamp fine, String descrizione, Comitato comitato_l, Comitato comitato_s, Sede sede) {
+        this.id_conferenza = conferenzaID;
+        this.titolo = titolo;
         this.proprietario = proprietario;
-        this.dataInizio = dataInizio;
-        this.dataFine = dataFine;
+        this.inizio = inizio;
+        this.fine = fine;
         this.descrizione = descrizione;
-        this.comitatoLocale = comitatoLocale;
-        this.comitatoScientifico = comitatoScientifico;
+        this.comitato_l = comitato_l;
+        this.comitato_s = comitato_s;
         this.sede = sede;
-        this.budget = budget;
-        this.valuta = valuta;
+        sponsorizzazioni = FXCollections.observableArrayList();
+        enti = FXCollections.observableArrayList();
+        sessioni = FXCollections.observableArrayList();
     }
 
-    public Conferenza() {
-    }
+    public Conferenza() {}
 
-    public Conferenza(String nome, Timestamp dataI, Timestamp dataF, String descrizione, float budget, Sede sede, Utente user, String valuta) {
-        this.nome = nome;
-        this.dataInizio=dataI;
-        this.dataFine=dataF;
+    public Conferenza(String nome, Timestamp dataI, Timestamp dataF, String descrizione, Sede sede, Utente user) {
+        this.titolo=nome;
+        this.inizio=dataI;
+        this.fine=dataF;
         this.descrizione=descrizione;
-        this.budget=budget;
         this.sede=sede;
         this.proprietario=user;
-        this.valuta=valuta;
     }
 
-    public Conferenza(int id, String nome, Utente proprietario, Timestamp datainizio, Timestamp datafine, String descrizione, Comitato local, Comitato scientific, Sede sede, float budget) {
-        this.conferenzaID=id;
-        this.nome=nome;
-        this.proprietario=proprietario;
-        this.dataInizio=datainizio;
-        this.dataFine=datafine;
-        this.descrizione=descrizione;
-        this.comitatoLocale=local;
-        this.comitatoScientifico=scientific;
-        this.sede=sede;
-        this.budget=budget;
+    public int getId_conferenza() {
+        return id_conferenza;
     }
 
-    public LinkedList<Ente> getOrganizzataDa() {
-        return organizzataDa;
+    public void setId_conferenza(int id_conferenza) {
+        this.id_conferenza = id_conferenza;
     }
 
-    public void setOrganizzataDa(LinkedList<Ente> organizzataDa) {
-        this.organizzataDa = organizzataDa;
+    public String getTitolo() {
+        return titolo;
     }
-
-    public LinkedList<Sessione> getSessioni() {
-        return sessioni;
-    }
-
-    public void setSessioni(LinkedList<Sessione> sessioni) {
-        this.sessioni = sessioni;
-    }
-
-    public LinkedList<Sponsorizzazione> getSponsorizzataDa() {
-        return sponsorizzataDa;
-    }
-
-    public void setSponsorizzataDa(LinkedList<Sponsorizzazione> sponsorizzatoDa) {
-        this.sponsorizzataDa = sponsorizzatoDa;
-    }
-
-    public int getConferenzaID() {
-        return conferenzaID;
-    }
-
-    public void setConferenzaID(int conferenzaID) {
-        this.conferenzaID = conferenzaID;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
     }
 
     public Utente getProprietario() {
@@ -110,17 +76,17 @@ public class Conferenza {
     public void setProprietario(Utente proprietario) {
         this.proprietario = proprietario;
     }
-    public Timestamp getDataInizio() {
-        return dataInizio;
+    public Timestamp getInizio() {
+        return inizio;
     }
-    public void setDataInizio(Timestamp dataInizio) {
-        this.dataInizio = dataInizio;
+    public void setInizio(Timestamp inizio) {
+        this.inizio = inizio;
     }
-    public Timestamp getDataFine() {
-        return dataFine;
+    public Timestamp getFine() {
+        return fine;
     }
-    public void setDataFine(Timestamp dataFine) {
-        this.dataFine = dataFine;
+    public void setFine(Timestamp fine) {
+        this.fine = fine;
     }
     public String getDescrizione() {
         return descrizione;
@@ -128,23 +94,17 @@ public class Conferenza {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
-    public Comitato getComitatoLocale() {
-        return comitatoLocale;
+    public Comitato getComitato_l() {
+        return comitato_l;
     }
-    public void setComitatoLocale(Comitato comitatoLocale) {
-        this.comitatoLocale = comitatoLocale;
+    public void setComitato_l(Comitato comitato_l) {
+        this.comitato_l = comitato_l;
     }
-    public Comitato getComitatoScientifico() {
-        return comitatoScientifico;
+    public Comitato getComitato_s() {
+        return comitato_s;
     }
-    public void setComitatoScientifico(Comitato comitatoScientifico) {
-        this.comitatoScientifico = comitatoScientifico;
-    }
-    public float getBudget() {
-        return budget;
-    }
-    public void setBudget(float budget) {
-        this.budget = budget;
+    public void setComitato_s(Comitato comitato_s) {
+        this.comitato_s = comitato_s;
     }
     public Sede getSede() {
         return sede;
@@ -152,40 +112,71 @@ public class Conferenza {
     public void setSede(Sede sede) {
         this.sede = sede;
     }
-    public String setCodiceValuta(String valuta){
-        if(valuta.equals("$"))
-            return "USD";
-        else if(valuta.equals("€"))
-            return "EUR";
-        else if(valuta.equals("£"))
-            return  "GBP";
-        else if(valuta.equals("¥"))
-            return "JPY";
-        else return null;
+
+    public ObservableList<Ente> getEnti() {
+        return enti;
     }
-    public void setValuta(String valuta){
-       this.valuta=valuta;
+    public ObservableList<Sponsorizzazione> getSponsorizzazioni() {
+        return sponsorizzazioni;
     }
-    public String getCodiceValuta()
-    {
-        if(valuta.equals("$"))
-            return "USD";
-        else if(valuta.equals("€"))
-            return "EUR";
-        else if(valuta.equals("£"))
-            return "GBP";
-        else if(valuta.equals("¥"))
-            return "JPY";
-        else
-            return null;
+    public ObservableList<Sessione> getSessioni() {
+        return sessioni;
+    }
+    public void setEnti(ObservableList<Ente> enti) {
+        this.enti = enti;
     }
 
-    public String getValuta() {
-        return valuta;
+    public void setSponsorizzazioni(ObservableList<Sponsorizzazione> sponsorizzazioni) {
+        this.sponsorizzazioni = sponsorizzazioni;
+    }
+
+    public void setSessioni(ObservableList<Sessione> sessioni) {
+        this.sessioni = sessioni;
     }
 
     @Override
     public String toString() {
-        return nome;
+        return titolo;
+    }
+    public void loadSessioni() throws SQLException {
+        SessioneDao dao = new SessioneDao();
+        sessioni.clear();
+        sessioni.addAll(dao.retrieveSessioniByConferenza(this));
+    }
+    public void addSessione(Sessione sessione) throws SQLException{
+        SessioneDao sessioneDao = new SessioneDao();
+        sessioni.add(sessione);
+    }
+    public void removeSessione(Sessione sessione) throws SQLException {
+        SessioneDao dao = new SessioneDao();
+        sessioni.remove(sessione);
+    }
+    public void loadSponsorizzazioni() throws SQLException {
+        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+        sponsorizzazioni.clear();
+        sponsorizzazioni.addAll(dao.retrieveSponsorizzazioni(this));
+    }
+    public void addSponsorizzazione(Sponsorizzazione s) throws SQLException {
+        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+        sponsorizzazioni.add(s);
+    }
+    public void removeSponsorizzazione(Sponsorizzazione s) throws SQLException {
+        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+        sponsorizzazioni.remove(s);
+    }
+    public void loadOrganizzatori() throws SQLException {
+        EnteDao dao = new EnteDao();
+        enti.clear();
+        enti.addAll(dao.retrieveEntiOrganizzatori(this));
+    }
+    public void addEnte(Ente e) throws SQLException {
+        EnteDao dao = new EnteDao();
+        dao.saveEnteOrganizzatore(e,this);
+        enti.add(e);
+    }
+    public void removeEnte(Ente e) throws SQLException {
+        EnteDao dao = new EnteDao();
+        dao.removeEnteOrganizzatore(e, this);
+        enti.remove(e);
     }
 }

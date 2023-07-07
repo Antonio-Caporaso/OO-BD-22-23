@@ -1,4 +1,4 @@
-package Services;
+package Utilities;
 
 import Persistence.DAO.OrganizzatoreDao;
 import Persistence.Entities.Conferenze.Conferenza;
@@ -21,12 +21,12 @@ public class MembriComitato {
     public void loadMembriComitatoScientifico() throws SQLException {
         OrganizzatoreDao dao = new OrganizzatoreDao();
         membriComitatoScientifico.clear();
-        membriComitatoScientifico.addAll(dao.retrieveOrganizzatoriComitato(conferenza.getComitatoScientifico().getComitatoID()));
+        membriComitatoScientifico.addAll(dao.retrieveOrganizzatoriComitato(conferenza.getComitato_s().getId_comitato()));
     }
     public void loadMembriComitatoLocale() throws SQLException{
         OrganizzatoreDao dao = new OrganizzatoreDao();
         membriComitatoLocale.clear();
-        membriComitatoLocale.addAll(dao.retrieveOrganizzatoriComitato(conferenza.getComitatoLocale().getComitatoID()));
+        membriComitatoLocale.addAll(dao.retrieveOrganizzatoriComitato(conferenza.getComitato_l().getId_comitato()));
     }
     public ObservableList<Organizzatore> getMembriComitatoScientifico(){
         return membriComitatoScientifico;

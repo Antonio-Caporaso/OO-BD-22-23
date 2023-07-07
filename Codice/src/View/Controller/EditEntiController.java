@@ -2,8 +2,7 @@ package View.Controller;
 
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.organizzazione.Ente;
-import Services.Enti;
-import Services.EntiOrganizzatori;
+import Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,7 +22,6 @@ public class EditEntiController implements Initializable {
     private ModificaConferenzaController editController;
     private SubScene subScene;
     private Conferenza conferenza;
-    private EntiOrganizzatori entiOrganizzatori;
     @FXML
     private Button addButton;
     @FXML
@@ -37,35 +35,29 @@ public class EditEntiController implements Initializable {
     private Enti enti = new Enti();
     @FXML
     private Button okButton;
-
     public Conferenza getConferenza() {
         return conferenza;
     }
-
     public void setConferenza(Conferenza conferenza) {
         this.conferenza = conferenza;
     }
-
     public ModificaConferenzaController getEditController() {
         return editController;
     }
-
     public void setEditController(ModificaConferenzaController editController) {
         this.editController = editController;
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         enti.loadEnti();
         entiChoice.setItems(enti.getEnti());
-        entiOrganizzatori = new EntiOrganizzatori(conferenza);
-        entiView.setItems(entiOrganizzatori.getEnti());
+        entiView.setItems(conferenza.getEnti());
     }
     @FXML
     void aggiungiOnAction(ActionEvent event){
         Ente e = entiChoice.getSelectionModel().getSelectedItem();
         try{
-            entiOrganizzatori.addEnte(e);
+            conferenza.addEnte(e);
         }catch (SQLException exp){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Ente non aggiunto");
@@ -77,7 +69,7 @@ public class EditEntiController implements Initializable {
     void deleteOnAction(ActionEvent event) {
         Ente e = (Ente) entiView.getSelectionModel().getSelectedItem();
         try {
-            entiOrganizzatori.removeEnte(e);
+            conferenza.removeEnte(e);
         } catch (SQLException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ente non rimosso");
@@ -85,7 +77,6 @@ public class EditEntiController implements Initializable {
             alert.showAndWait();
         }
     }
-
     @FXML
     void okOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
@@ -95,20 +86,11 @@ public class EditEntiController implements Initializable {
         Parent root = loader.load();
         subScene.setRoot(root);
     }
-
     public SubScene getSubScene() {
         return subScene;
     }
-
     public void setSubScene(SubScene subScene) {
         this.subScene = subScene;
     }
 
-    public EntiOrganizzatori getEntiOrganizzatori() {
-        return entiOrganizzatori;
-    }
-
-    public void setEntiOrganizzatori(EntiOrganizzatori entiOrganizzatori) {
-        this.entiOrganizzatori = entiOrganizzatori;
-    }
 }

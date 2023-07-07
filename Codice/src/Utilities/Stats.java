@@ -1,4 +1,4 @@
-package Services;
+package Utilities;
 
 public class Stats {
     private String istituzione;

@@ -4,7 +4,7 @@ import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
-import Services.Sedi;
+import Utilities.Sedi;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,8 +31,6 @@ public class ModificaDettagliConferenzaController implements Initializable {
     @FXML
     private Button annullaButton;
     @FXML
-    private TextField budgetTextField;
-    @FXML
     private TextField descrizioneTF;
     @FXML
     private TextField nomeTF;
@@ -44,8 +42,6 @@ public class ModificaDettagliConferenzaController implements Initializable {
     private DateTimePicker dataInizioDP;
     @FXML
     private ChoiceBox<Sede> sedeChoice;
-    @FXML
-    private ChoiceBox<String> valutaChoice;
 
     public void setEditConferenceController(ModificaConferenzaController modificaConferenzaController) {
         this.modificaConferenzaController = modificaConferenzaController;
@@ -67,13 +63,11 @@ public class ModificaDettagliConferenzaController implements Initializable {
         if (result.get() == ButtonType.OK){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
             loader.setController(modificaConferenzaController);
-            conferenza.setNome(nomeTF.getText());
+            conferenza.setTitolo(nomeTF.getText());
             conferenza.setDescrizione(descrizioneTF.getText());
-            conferenza.setBudget(Float.parseFloat(budgetTextField.getText()));
-            conferenza.setDataInizio(Timestamp.valueOf(dataInizioDP.getDateTimeValue()));
-            conferenza.setDataFine(Timestamp.valueOf(dataFineDP.getDateTimeValue()));
+            conferenza.setInizio(Timestamp.valueOf(dataInizioDP.getDateTimeValue()));
+            conferenza.setFine(Timestamp.valueOf(dataFineDP.getDateTimeValue()));
             conferenza.setSede(sedeChoice.getValue());
-            conferenza.setValuta(valutaChoice.getValue());
             ConferenzaDao dao = new ConferenzaDao();
             dao.updateDettagliConferenza(conferenza);
             modificaConferenzaController.setConferenza(conferenza);
@@ -82,45 +76,27 @@ public class ModificaDettagliConferenzaController implements Initializable {
             subScene.setRoot(root);
         }
     }
-
     public Conferenza getConferenza() {
         return conferenza;
     }
-
     public void setConferenza(Conferenza conferenza) {
         this.conferenza = conferenza;
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        nomeTF.setText(conferenza.getNome());
+        nomeTF.setText(conferenza.getTitolo());
         descrizioneTF.setText(conferenza.getDescrizione());
-        dataInizioDP.setValue(conferenza.getDataInizio().toLocalDateTime().toLocalDate());
-        dataFineDP.setValue(conferenza.getDataFine().toLocalDateTime().toLocalDate());
-        budgetTextField.setText(Float.toString(conferenza.getBudget()));
+        dataInizioDP.setValue(conferenza.getInizio().toLocalDateTime().toLocalDate());
+        dataFineDP.setValue(conferenza.getFine().toLocalDateTime().toLocalDate());
         sedi.loadSedi();
         sedeChoice.setItems(sedi.getSedi());
         sedeChoice.setValue(conferenza.getSede());
-        setValute();
-        valutaChoice.setValue(conferenza.getValuta());
     }
-
     public SubScene getSubScene() {
         return subScene;
     }
-
     public void setSubScene(SubScene subScene) {
         this.subScene = subScene;
     }
 
-    private void setValute() {
-        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-        ObservableList<String> valute = FXCollections.observableArrayList();
-        try{
-            valute.addAll(dao.retrieveSimboloValute());
-            valutaChoice.setItems(valute);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
 }

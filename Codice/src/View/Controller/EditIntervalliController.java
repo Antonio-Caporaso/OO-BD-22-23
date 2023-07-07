@@ -3,7 +3,6 @@ package View.Controller;
 import Persistence.Entities.Conferenze.Intervallo;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
-import Services.IntervalliSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +25,6 @@ import java.util.ResourceBundle;
 public class EditIntervalliController implements Initializable {
     private EditProgrammaController editProgrammaController;
     private Programma programma;
-    private IntervalliSessione intervalliSessione;
     private SubScene subScene;
     private Sessione sessione;
     private ManageSessioniController manageSessioniController;
@@ -66,14 +64,6 @@ public class EditIntervalliController implements Initializable {
         this.programma = programma;
     }
 
-    public IntervalliSessione getIntervalliSessione() {
-        return intervalliSessione;
-    }
-
-    public void setIntervalliSessione(IntervalliSessione intervalliSessione) {
-        this.intervalliSessione = intervalliSessione;
-    }
-
     public SubScene getSubScene() {
         return subScene;
     }
@@ -105,10 +95,10 @@ public class EditIntervalliController implements Initializable {
 
     private void setIntervalliTable() {
         try {
-            intervalliSessione.loadIntervalli();
+            programma.loadIntervalli();
             tipologiaIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
             orarioIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
-            intervalliTable.setItems(intervalliSessione.getIntervalli());
+            intervalliTable.setItems(programma.getIntervalli());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -118,7 +108,6 @@ public class EditIntervalliController implements Initializable {
     void addIntervalloButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo.fxml"));
         AddIntervalloController controller = new AddIntervalloController();
-        controller.setIntervalliSessione(intervalliSessione);
         controller.setProgramma(programma);
         loader.setController(controller);
         Parent root = loader.load();
@@ -142,7 +131,7 @@ public class EditIntervalliController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 try {
-                    intervalliSessione.removeIntervallo(intervallo);
+                    programma.removeIntervallo(intervallo);
                 } catch (SQLException e) {
                     Alert alerta = new Alert(Alert.AlertType.ERROR);
                     alerta.setContentText(e.getMessage());
@@ -157,7 +146,6 @@ public class EditIntervalliController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervallo.fxml"));
         Intervallo intervallo = intervalliTable.getSelectionModel().getSelectedItem();
         EditIntervalloController controller = new EditIntervalloController();
-        controller.setIntervalliSessione(intervalliSessione);
         controller.setIntervallo(intervallo);
         controller.setProgramma(programma);
         loader.setController(controller);

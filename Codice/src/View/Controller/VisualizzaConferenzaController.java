@@ -4,7 +4,6 @@ import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.organizzazione.Ente;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
-import Services.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,12 +23,6 @@ import java.util.ResourceBundle;
 public class VisualizzaConferenzaController implements Initializable {
     private Conferenza conferenza;
     private SubScene subScene;
-    private EntiOrganizzatori entiOrganizzatori;
-    private InterventiSessione interventiSessione;
-    private EventiSocialiSessione eventiSocialiSessione;
-    private IntervalliSessione intervalliSessione;
-    private Sessioni sessioni;
-    private SponsorizzazioniConferenza sponsorizzazioniConferenza;
     private VisualizzaConferenzeController visualizzaConferenzeController;
     @FXML
     private Label budgetLabel;
@@ -128,19 +121,17 @@ public class VisualizzaConferenzaController implements Initializable {
     }
     public void setDetails() {
         this.setTitleLabel();
-        nomeLabel.setText(conferenza.getNome());
+        nomeLabel.setText(conferenza.getTitolo());
         descrizioneLabel.setText(conferenza.getDescrizione());
-        budgetLabel.setText(Float.toString(conferenza.getBudget())+""+conferenza.getValuta());
-        dataInizioLabel.setText(conferenza.getDataInizio().toString());
-        dataFineLabel.setText(conferenza.getDataFine().toString());
+        dataInizioLabel.setText(conferenza.getInizio().toString());
+        dataFineLabel.setText(conferenza.getFine().toString());
         sedeLabel.setText(conferenza.getSede().toString());
     }
     public void setOrganizzatori() {
-        entiOrganizzatori = new EntiOrganizzatori(conferenza);
         try{
-            entiOrganizzatori.loadOrganizzatori();
+            conferenza.loadOrganizzatori();
             entiView.setText("");
-            for(Ente e: entiOrganizzatori.getEnti()){
+            for(Ente e: conferenza.getEnti()){
                 entiView.appendText(e.toString()+"\n");
             }
         }catch(SQLException e){
@@ -149,14 +140,13 @@ public class VisualizzaConferenzaController implements Initializable {
     }
     public void setTitleLabel(){
         if(conferenza!=null)
-            titleLabel.setText("Modifica della conferenza: "+ conferenza.getNome());
+            titleLabel.setText("Modifica della conferenza: "+ conferenza.getTitolo());
     }
     public void setSponsorizzazioni(){
-        sponsorizzazioniConferenza = new SponsorizzazioniConferenza(conferenza);
         try{
-            sponsorizzazioniConferenza.loadSponsorizzazioni();
+            conferenza.loadSponsorizzazioni();
             sponsorizzazioniView.setText("");
-            for(Sponsorizzazione s : sponsorizzazioniConferenza.getSponsorizzazioni()){
+            for(Sponsorizzazione s : conferenza.getSponsorizzazioni()){
                 sponsorizzazioniView.appendText(s.toString()+"\n");
             }
         }catch (SQLException e){
@@ -165,9 +155,8 @@ public class VisualizzaConferenzaController implements Initializable {
     }
     private void setTable(){
         table.setEditable(false);
-        sessioni = new Sessioni(conferenza);
         try{
-            sessioni.loadSessioni();
+            conferenza.loadSessioni();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -177,7 +166,7 @@ public class VisualizzaConferenzaController implements Initializable {
         oraInizioColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioInizio"));
         orarioFineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioFine"));
         salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
-        table.getItems().addAll(sessioni.getSessioni());
+        table.getItems().addAll(conferenza.getSessioni());
         nomeSessioneColumn.isSortable();
         oraInizioColumn.isSortable();
     }

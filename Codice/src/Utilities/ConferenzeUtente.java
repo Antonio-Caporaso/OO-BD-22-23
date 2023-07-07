@@ -1,11 +1,14 @@
-package Services;
+package Utilities;
 
 import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.EnteDao;
 import Persistence.DAO.SessioneDao;
 import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
+import Persistence.Entities.organizzazione.Ente;
+import Persistence.Entities.organizzazione.Sponsorizzazione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -28,19 +31,19 @@ public class ConferenzeUtente extends Conferenze {
     public void loadOrganizzatori() throws SQLException {
         EnteDao dao = new EnteDao();
         for(Conferenza c: conferenzeUtente){
-            c.setOrganizzataDa(dao.retrieveEntiOrganizzatori(c));
+            c.setEnti((ObservableList<Ente>) dao.retrieveEntiOrganizzatori(c));
         }
     }
     public void loadSponsorizzazioni() throws SQLException{
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
         for(Conferenza c: conferenzeUtente){
-            c.setSponsorizzataDa(dao.retrieveSponsorizzazioni(c));
+            c.setSponsorizzazioni((ObservableList<Sponsorizzazione>) dao.retrieveSponsorizzazioni(c));
         }
     }
     public void loadSessioni() throws SQLException {
         SessioneDao sessionedao = new SessioneDao();
         for(Conferenza c: conferenzeUtente){
-            c.setSessioni(sessionedao.retrieveSessioniByConferenza(c));
+            c.setSessioni((ObservableList<Sessione>) sessionedao.retrieveSessioniByConferenza(c));
         }
     }
     public ObservableList<Conferenza> getConferenzeUtente() {
@@ -52,7 +55,7 @@ public class ConferenzeUtente extends Conferenze {
     public void addConferenza(Conferenza conferenza) throws SQLException {
         ConferenzaDao d = new ConferenzaDao();
         int id = d.saveConferenza(conferenza);
-        conferenza.setConferenzaID(id);
+        conferenza.setId_conferenza(id);
         conferenzeUtente.add(conferenza);
     }
 

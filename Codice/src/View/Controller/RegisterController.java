@@ -5,65 +5,51 @@ import Exceptions.BlankFieldException;
 import Exceptions.PasswordMismatchException;
 import Exceptions.UtentePresenteException;
 import Persistence.Entities.Utente;
+import Persistence.Entities.organizzazione.Ente;
+import Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable, FormChecker{
     @FXML
     private Button backButton;
     @FXML
-    private Label cognomeLabel;
-    @FXML
     private TextField cognomeTextField;
-    @FXML
-    private Label confermaPasswordLabel;
     @FXML
     private PasswordField confermaPasswordTextField;
     @FXML
-    private Button confirmButton;
-    @FXML
-    private Label emailLabel;
-    @FXML
     private TextField emailTextField;
     @FXML
-    private Label nomeLabel;
-    @FXML
     private TextField nomeTextField;
-    @FXML
-    private Label passwordLabel;
     @FXML
     private PasswordField passwordTextField;
     @FXML
     private ChoiceBox<String> titoloChoiceBox;
-    @FXML
-    private Label titoloLabel;
-    @FXML
-    private Label usernameLabel;
+
     @FXML
     private TextField usernameTextField;
     @FXML
     private Label errorLabel;
     @FXML
-    private Label istituzioneLabel;
-    @FXML
-    private TextField istituzioneTextField;
+    private ChoiceBox<Ente> istituzioneChoice;
     @FXML
     private MediaView mediaView;
+    private Enti enti = new Enti();
     private Media media;
     private File file;
     private MediaPlayer mediaPlayer;
-    private String[]titoli={"Dr.","Dott.","Dott.ssa","Prof.","Prof.ssa","Ing.","Sig","Sig.ra","Altro"};
+    private String[]titoli={"Dottore","Dottoressa","Professore","Professoressa","Assistente","Ricercatore","Ricercatrice","Ingegnere"};
     @FXML
     void backButtonOnAction(ActionEvent event) {
         try {
@@ -80,8 +66,8 @@ public class RegisterController implements Initializable, FormChecker{
         String usernameUtente = usernameTextField.getText();
         String cognomeUtente = cognomeTextField.getText();
         String passwordUtente = passwordTextField.getText();
-        String istituzioneUtente = istituzioneTextField.getText();
-        return new Utente(nomeUtente,cognomeUtente,titoloUtente,usernameUtente,passwordUtente,emailUtente,istituzioneUtente);
+        Ente istituzioneUtente = istituzioneChoice.getSelectionModel().getSelectedItem();
+        return new Utente(titoloUtente,usernameUtente,passwordUtente,nomeUtente,cognomeUtente,emailUtente,istituzioneUtente);
     }
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
@@ -90,8 +76,7 @@ public class RegisterController implements Initializable, FormChecker{
                 || nomeTextField.getText().isBlank()
                 || usernameTextField.getText().isBlank()
                 || cognomeTextField.getText().isBlank()
-                || passwordTextField.getText().isBlank()
-                || istituzioneTextField.getText().isBlank())
+                || passwordTextField.getText().isBlank())
             throw new BlankFieldException();
     }
 
@@ -104,13 +89,15 @@ public class RegisterController implements Initializable, FormChecker{
     }
 
     void registraUtente() throws UtentePresenteException {
-            UtenteDAO dao = new UtenteDAO();
-            Utente newUser = getUserDetails();
-            try{
-                dao.saveUtente(newUser);
-            }catch (UtentePresenteException e){
-                throw e;
-            }
+        UtenteDAO dao = new UtenteDAO();
+        Utente newUser = getUserDetails();
+        try{
+            dao.saveUtente(newUser);
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
     @FXML
     void confirmButtonOnAction(ActionEvent event){
@@ -118,31 +105,29 @@ public class RegisterController implements Initializable, FormChecker{
             checkFieldsAreBlank();
             passwordMatcher();
             registraUtente();
+            goToLoginWindow();
         } catch (BlankFieldException e) {
                 errorLabel.setText(e.getMessage());
         } catch (PasswordMismatchException e) {
             errorLabel.setText(e.getMessage());
-        }catch (UtentePresenteException e){
+        } catch (UtentePresenteException e){
             errorLabel.setText(e.getMessage());
         }
     }
+
+    private void goToLoginWindow() {
+        NavigationController.getInstance().setStage((Stage) backButton.getScene().getWindow());
+        NavigationController.getInstance().loadScene("../FXML/Login.fxml");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titoloChoiceBox.getItems().addAll(titoli);
-        setMediaPlayer();
+        setIstituzioni();
     }
 
-    private void setMediaPlayer() {
-        try{
-        //         file = new File ("Codice/src/View/Resources/Scientists1.mp4");
-        file = new File ("src/View/Resources/Scientists1.mp4");
-        media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaView.setMediaPlayer(mediaPlayer);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-    }catch (MediaException e){
-        System.out.println(e.getMessage());
-    }
+    private void setIstituzioni() {
+        enti.loadEnti();
+        istituzioneChoice.setItems(enti.getEnti());
     }
 }

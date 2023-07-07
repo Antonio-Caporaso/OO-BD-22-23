@@ -4,10 +4,11 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 import Persistence.Entities.organizzazione.Organizzatore;
-import Services.MembriComitato;
+import Utilities.MembriComitato;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +23,7 @@ import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
-import Services.Sale;
-import Services.Sessioni;
+import Utilities.Sale;
 
 public class InserisciSessioneController implements Initializable,FormChecker {
     @FXML
@@ -44,7 +44,6 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     private SubScene subscene;
     private Utente user;
     private Sale sale;
-    private Sessioni sessioni;
 
     //Public Setters
     public void setConferenza(Conferenza conferenza){
@@ -65,9 +64,8 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     void inserisciButtonOnAction(ActionEvent event) {
         try {
             checkFieldsAreBlank();
-            sessioni = new Sessioni(conferenza);
             Sessione s = setSessione();
-            sessioni.addSessione(s);
+            conferenza.addSessione(s);
             openAddSessioneDialogWindow();
             loadViewSessioni(conferenza);
         }catch (BlankFieldException e){
@@ -79,18 +77,15 @@ public class InserisciSessioneController implements Initializable,FormChecker {
             e.printStackTrace();
         }
     }
-    //private Methods
     private Sessione setSessione() {
         Sessione s = new Sessione();
         s.setConferenza(conferenza);
         s.setTitolo(titoloSessioneTextField .getText());
         s.setLocazione(saleChoiceBox.getValue());
         s.setCoordinatore(coordinatoreChoiceBox.getValue());
-        s.setDataInizio(Date.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalDate()));
-        s.setDataFine(Date.valueOf(fineDateTimePicker.getDateTimeValue().toLocalDate()));
-        s.setOrarioInizio(Time.valueOf(inizioDateTimePicker.getDateTimeValue().toLocalTime()));
-        s.setOrarioFine(Time.valueOf(fineDateTimePicker.getDateTimeValue().toLocalTime()));
-        return  s;
+        s.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
+        s.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
+        return s;
     }
     private void loadViewSessioni(Conferenza c){
         try{

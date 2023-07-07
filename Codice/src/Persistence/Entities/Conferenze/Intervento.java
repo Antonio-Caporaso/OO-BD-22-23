@@ -1,22 +1,23 @@
 
 package Persistence.Entities.Conferenze;
 
-import Persistence.DAO.InterventoDao;
 import Persistence.Entities.partecipanti.Speaker;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-    public class Intervento extends Activity {
-        private int interventoID;
+    public class Intervento implements Activity {
+        private int id_intervento;
         private String titolo;
         private String estratto;
+        private Timestamp inizio;
+        private Timestamp fine;
         private Speaker speaker;
         private Programma programma;
 
-        public Intervento(Timestamp orario, String estratto, Speaker speaker, Programma programma) {
-            super(orario);
+        public Intervento(Timestamp inizio, Timestamp fine, String estratto, Speaker speaker, Programma programma) {
+            this.inizio = inizio;
+            this.fine = fine;
             this.estratto = estratto;
             this.speaker = speaker;
             this.programma=programma;
@@ -49,15 +50,32 @@ import java.util.Objects;
             this.estratto = estratto;
         }
 
-        public int getInterventoID() {
-            return interventoID;
+        public int getId_intervento() {
+            return id_intervento;
         }
 
-        public void setInterventoID(int interventoID) {
-            this.interventoID = interventoID;
+        public void setId_intervento(int id_intervento) {
+            this.id_intervento = id_intervento;
         }
         public Programma getProgramma() {return programma;}
         public void setProgramma(Programma programma) {this.programma = programma;}
+
+        public void setInizio(Timestamp inizio) {
+            this.inizio = inizio;
+        }
+
+        public void setFine(Timestamp fine) {
+            this.fine = fine;
+        }
+
+        @Override
+        public Timestamp getInizio() {
+            return inizio;
+        }
+        @Override
+        public Timestamp getFine() {
+            return fine;
+        }
 
         @Override
         public boolean equals(Object o) {
@@ -75,10 +93,4 @@ import java.util.Objects;
             return Objects.hash(super.hashCode(), speaker);
         }
 
-        @Override
-        public String toString() {
-            return titolo + ", orario=" + getOrario() +
-                    ", estratto='" + estratto + ", speaker=" + speaker +
-                    '.';
-        }
 }

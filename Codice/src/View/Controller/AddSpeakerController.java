@@ -4,7 +4,7 @@ import Exceptions.BlankFieldException;
 import Persistence.DAO.SpeakerDao;
 import Persistence.Entities.organizzazione.Ente;
 import Persistence.Entities.partecipanti.Speaker;
-import Services.Enti;
+import Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -77,7 +77,7 @@ public class AddSpeakerController implements Initializable,FormChecker {
         s.setCognome(cognomeTextField.getText());
         s.setNome(nomeTextField.getText());
         s.setEmail(emailTextField.getText());
-        s.setIstituzione(istituzioneChoice.getValue().getNome());
+        s.setIstituzione(istituzioneChoice.getValue());
         s.setTitolo(titoloChoice.getValue());
         return s;
     }

@@ -1,19 +1,21 @@
 package Persistence.Entities;
 
+import Persistence.Entities.organizzazione.Ente;
+
 import java.util.Objects;
 
 public class Utente {
-    private int idUtente;
+    private int id_utente;
     private String titolo;
     private String username;
     private String password;
     private String nome;
     private String cognome;
     private String email;
-    private String istituzione;
+    private Ente istituzione;
 
-    public Utente(int idUtente, String titolo, String username, String password, String nome, String cognome, String email, String istituzione) {
-        this.idUtente = idUtente;
+    public Utente(int idUtente, String titolo, String username, String password, String nome, String cognome, String email, Ente istituzione) {
+        this.id_utente = idUtente;
         this.titolo = titolo;
         this.username = username;
         this.password = password;
@@ -22,42 +24,34 @@ public class Utente {
         this.email = email;
         this.istituzione = istituzione;
     }
-    public Utente(String nomeUtente, String cognomeUtente, String titoloUtente, String usernameUtente, String passwordUtente, String emailUtente, String istituzioneUtente) {
-        this.nome = nomeUtente;
-        this.cognome = cognomeUtente;
-        this.titolo = titoloUtente;
-        this.username = usernameUtente;
-        this.password = passwordUtente;
-        this.email = emailUtente;
-        this.istituzione = istituzioneUtente;
-    }
-    public Utente(Utente utente){
-        this.idUtente = utente.getIdUtente();
-        this.nome = utente.getNome();
-        this.cognome = utente.getCognome();
-        this.email = utente.getEmail();
-        this.password = utente.getPassword();
-        this.istituzione = utente.getIstituzione();
-        this.titolo = utente.getTitolo();
-        this.username = utente.getUsername();
-    }
-    public Utente() {
-    }
 
-    public String getIstituzione() {
-        return istituzione;
-    }
-
-    public void setIstituzione(String istituzione) {
+    public Utente(String titolo, String username, String password, String nome, String cognome, String email, Ente istituzione) {
+        this.titolo = titolo;
+        this.username = username;
+        this.password = password;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
         this.istituzione = istituzione;
     }
 
-    public int getIdUtente() {
-        return idUtente;
+    public Utente() {
     }
 
-    public void setIdUtente(int idUtente) {
-        this.idUtente = idUtente;
+    public Ente getIstituzione() {
+        return istituzione;
+    }
+
+    public void setIstituzione(Ente istituzione) {
+        this.istituzione = istituzione;
+    }
+
+    public int getId_utente() {
+        return id_utente;
+    }
+
+    public void setId_utente(int id_utente) {
+        this.id_utente = id_utente;
     }
 
     public String getTitolo() {

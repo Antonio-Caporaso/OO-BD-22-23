@@ -3,6 +3,7 @@ package Persistence.DAO;
 import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Intervallo;
 import Persistence.Entities.Conferenze.Programma;
+import org.postgresql.util.PGInterval;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -20,24 +21,25 @@ public class IntervalloDao {
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
             Intervallo i = new Intervallo();
-            i.setId(rs.getInt(1));
+            i.setId_intervallo(rs.getInt(1));
             i.setProgramma(programma);
             i.setTipologia(rs.getString("tipologia"));
-            i.setOrario(rs.getTimestamp(4));
+            i.setInizio(rs.getTimestamp("inizio"));
+            i.setFine(rs.getTimestamp("fine"));
             intervalli.add(i);
         }
         return intervalli;
     }
 
-    public int saveIntervallo(Intervallo intervallo) throws SQLException {
+    public int createIntervallo(Intervallo intervallo, PGInterval durata) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         int result = 0;
-        String query = "INSERT INTO intervallo VALUES (default, CAST(? AS intervallost), ?, ?) RETURNING id_intervallo";
+        String query = "select * from save_intervallo(?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setObject(1, intervallo.getTipologia(), Types.OTHER);
-        stm.setInt(2, intervallo.getProgramma().getProgrammaID());
-        stm.setTimestamp(3, intervallo.getOrario());
+        stm.setString(1, intervallo.getTipologia());
+        stm.setInt(2,intervallo.getProgramma().getProgrammaID());
+        stm.setObject(3,durata);
         ResultSet rs = stm.executeQuery();
         if (rs.next()) {
             result = rs.getInt(1);
@@ -45,39 +47,24 @@ public class IntervalloDao {
         return result;
     }
 
-    public int saveInterval(Intervallo intervallo) throws SQLException {
-        dbcon = DBConnection.getDBconnection();
-        conn = dbcon.getConnection();
-        int result = 0;
-        String query = "select * from save_intervallo(?,?,?)";
-        PreparedStatement stm = conn.prepareStatement(query);
-        stm.setString(2, intervallo.getTipologia());
-        stm.setInt(1,intervallo.getProgramma().getProgrammaID());
-        stm.setTimestamp(3,intervallo.getOrario());
-        ResultSet rs = stm.executeQuery();
-        while(rs.next()){
-            result = rs.getInt(1);
-        }
-        return result;
-    }
-
-    public void removeIntervallo(Intervallo intervallo) throws SQLException {
+    public void deleteIntervallo(Intervallo intervallo) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         String query = "DELETE FROM intervallo where id_intervallo=?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,intervallo.getId());
+        stm.setInt(1,intervallo.getId_intervallo());
         stm.executeUpdate();
     }
 
     public void updateIntervallo(Intervallo intervallo) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "update intervallo set tipologia=?, orario=? where id_intervallo=?";
+        String query = "update intervallo set tipologia=?, inizio= ?, fine=? where id_intervallo=?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(3,intervallo.getId());
         stm.setString(1,intervallo.getTipologia());
-        stm.setTimestamp(2,intervallo.getOrario());
+        stm.setTimestamp(2,intervallo.getInizio());
+        stm.setTimestamp(3,intervallo.getFine());
+        stm.setInt(4,intervallo.getId_intervallo());
         stm.executeUpdate();
     }
 }

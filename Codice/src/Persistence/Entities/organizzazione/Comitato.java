@@ -6,43 +6,24 @@ import java.util.HashSet;
 import java.util.Objects;
 
 public class Comitato {
-    private int comitatoID;
+    private int id_comitato;
     private String tipologia;
-    private HashSet<Organizzatore> membri;
-
+    public Comitato() {}
     public void setTipologia(String tipologia) {
         this.tipologia=tipologia;
     }
 
-    public Comitato() {}
-
-    public Comitato(HashSet<Organizzatore> membri) {
-        this.membri = membri;
+    public String getTipologia() {
+        return tipologia;
     }
 
-    public void add(Organizzatore organizzatore) throws ExistingMemberException {
-        if(membri.contains(organizzatore))
-            throw new ExistingMemberException();
-        else
-            membri.add(organizzatore);
+    public int getId_comitato() {
+        return id_comitato;
     }
 
-    public int getComitatoID() {
-        return comitatoID;
+    public void setId_comitato(int id_comitato) {
+        this.id_comitato = id_comitato;
     }
-
-    public void setComitatoID(int comitatoID) {
-        this.comitatoID = comitatoID;
-    }
-
-    public HashSet<Organizzatore> getMembri() {
-        return membri;
-    }
-
-    public void setMembri(HashSet<Organizzatore> membri) {
-        this.membri = membri;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,13 +31,13 @@ public class Comitato {
 
         Comitato comitato = (Comitato) o;
 
-        if (comitatoID != comitato.comitatoID) return false;
+        if (id_comitato != comitato.id_comitato) return false;
         return Objects.equals(tipologia, comitato.tipologia);
     }
 
     @Override
     public int hashCode() {
-        int result = comitatoID;
+        int result = id_comitato;
         result = 31 * result + (tipologia != null ? tipologia.hashCode() : 0);
         return result;
     }

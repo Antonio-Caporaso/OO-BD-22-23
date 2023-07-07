@@ -3,7 +3,6 @@ package View.Controller;
 import Persistence.Entities.Conferenze.EventoSociale;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
-import Services.EventiSocialiSessione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +24,6 @@ import java.util.ResourceBundle;
 
 public class EditEventiController implements Initializable {
     private EditProgrammaController editProgrammaController;
-    private EventiSocialiSessione eventi;
     private Programma programma;
     private SubScene subScene;
     private Sessione sessione;
@@ -58,14 +56,6 @@ public class EditEventiController implements Initializable {
 
     public void setEditProgrammaController(EditProgrammaController editProgrammaController) {
         this.editProgrammaController=editProgrammaController;
-    }
-
-    public EventiSocialiSessione getEventi() {
-        return eventi;
-    }
-
-    public void setEventi(EventiSocialiSessione eventi) {
-        this.eventi = eventi;
     }
 
     public ManageSessioniController getManageSessioniController() {
@@ -104,7 +94,6 @@ public class EditEventiController implements Initializable {
     void addEventoButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEvento.fxml"));
         AddEventoController controller = new AddEventoController();
-        controller.setEventi(eventi);
         controller.setProgramma(programma);
         loader.setController(controller);
         Parent root = loader.load();
@@ -128,7 +117,7 @@ public class EditEventiController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 try {
-                    eventi.removeEvento(evento);
+                    programma.removeEvento(evento);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -149,7 +138,6 @@ public class EditEventiController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEvento.fxml"));
             EditEventoController controller = new EditEventoController();
             controller.setEventoSociale(e);
-            controller.setEventi(eventi);
             controller.setProgramma(programma);
             loader.setController(controller);
             Parent root = loader.load();
@@ -170,10 +158,10 @@ public class EditEventiController implements Initializable {
     }
     private void setEventiTable() {
         try {
-            eventi.loadEventiSociali();
+            programma.loadEventiSociali();
             orarioEventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
             tipologiaEventoColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
-            eventiTable.setItems(eventi.getEventi());
+            eventiTable.setItems(programma.getEventi());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

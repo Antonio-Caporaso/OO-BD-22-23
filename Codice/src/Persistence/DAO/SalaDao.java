@@ -19,56 +19,26 @@ public class SalaDao {
     public Sala retrieveSalaByID(int id) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT * FROM sala WHERE idsala = ?";
+        String query = "SELECT * FROM sala WHERE id_sala = ?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,id);
         Sala s = new Sala();
         SedeDao sedeDao = new SedeDao();
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
-            s.setSalaID(rs.getInt(1));
-            s.setSede(sedeDao.retrieveSedeByID(rs.getInt(2)));
-            s.setCapacity(rs.getInt(3));
-            s.setNomeSala(rs.getString(4));
-        }
-        return s;
-    }
-    public List<String> retrieveNomeSalaBySedeID(int idsede) throws SQLException {
-        dbcon = DBConnection.getDBconnection();
-        conn = dbcon.getConnection();
-        String query = "SELECT nomesala FROM sala WHERE idsede = ?";
-        PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,idsede);
-        List<String> salaNames = new ArrayList<>();
-        ResultSet rs = stm.executeQuery();
-        while (rs.next()) {
-            salaNames.add(rs.getString(1));
-        }
-        return salaNames;
-    }
-    public Sala retreiveSalaBySedeIdAndNomeSala(int idsede, String nomeSala) throws SQLException{
-        dbcon = DBConnection.getDBconnection();
-        conn = dbcon.getConnection();
-        String query = "SELECT * FROM sala WHERE idsede = ? AND nomesala= ?";
-        PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,idsede);
-        stm.setString(2,nomeSala);
-        Sala s = new Sala();
-        SedeDao sedeDao = new SedeDao();
-        ResultSet rs = stm.executeQuery();
-        while(rs.next()){
-            s.setSalaID(rs.getInt(1));
-            s.setSede(sedeDao.retrieveSedeByID(rs.getInt(2)));
-            s.setCapacity(rs.getInt(3));
-            s.setNomeSala(rs.getString(4));
+            s.setSalaID(rs.getInt("id_sala"));
+            s.setSede(sedeDao.retrieveSedeByID(rs.getInt("id_sede")));
+            s.setCapacity(rs.getInt("capienza"));
+            s.setNomeSala(rs.getString("nome"));
         }
         return s;
     }
 
+
     public LinkedList<Sala> retrieveSaleBySede(Sede sede) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT * from sala where idsede = ?";
+        String query = "SELECT * from sala where id_sede = ?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,sede.getSedeID());
         LinkedList<Sala> sale = new LinkedList<>();
@@ -76,10 +46,10 @@ public class SalaDao {
         SedeDao dao = new SedeDao();
         while(rs.next()){
             Sala s = new Sala();
-            s.setSalaID(rs.getInt(1));
-            s.setSede(dao.retrieveSedeByID(rs.getInt(2)));
-            s.setCapacity(rs.getInt(3));
-            s.setNomeSala(rs.getString(4));
+            s.setSalaID(rs.getInt("id_sala"));
+            s.setSede(sede);
+            s.setCapacity(rs.getInt("capienza"));
+            s.setNomeSala(rs.getString("nome"));
             sale.add(s);
         }
         return sale;

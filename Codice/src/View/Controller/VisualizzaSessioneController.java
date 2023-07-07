@@ -20,7 +20,6 @@ import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
 import Persistence.Entities.Conferenze.Sala;
 import Persistence.Entities.organizzazione.Organizzatore;
-import Services.Sessioni;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class VisualizzaSessioneController implements Initializable {
@@ -53,7 +52,6 @@ public class VisualizzaSessioneController implements Initializable {
     @FXML
     private SubScene subscene;
     private Conferenza conferenza;
-    private Sessioni sessioni = new Sessioni(conferenza);
     private Utente user;
     //Public Setters
     public void setConferenza(Conferenza c){
@@ -103,7 +101,7 @@ public class VisualizzaSessioneController implements Initializable {
             Optional<ButtonType> result = showDeleteDialog();
             if(result.get() == ButtonType.OK) {
                 try {
-                    sessioni.removeSessione(selected);
+                    conferenza.removeSessione(selected);
                     setSessioni();
                 }catch (SQLException e) {
                     e.printStackTrace();
@@ -115,7 +113,6 @@ public class VisualizzaSessioneController implements Initializable {
             alert.showAndWait();
         }
     }
-    //Private methods
     private void loadInserisciSessione(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
@@ -133,7 +130,7 @@ public class VisualizzaSessioneController implements Initializable {
     private void loadAggiungiSponsor(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
-            AggiungiSponsorController controller = new AggiungiSponsorController();
+            AddSponsorController controller = new AddSponsorController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -175,10 +172,8 @@ public class VisualizzaSessioneController implements Initializable {
         }
     }
     private void setSessioni() {
-    Sessioni sessioni= new Sessioni(conferenza);
     try {
-        sessioni.loadSessioni();
-        sessioni.orderSessioni();
+        conferenza.loadSessioni();
         titoloTableColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
         dataInizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
         inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("orarioInizio"));
@@ -186,7 +181,7 @@ public class VisualizzaSessioneController implements Initializable {
         fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("orarioFine"));
         salaTableColumn.setCellValueFactory(new PropertyValueFactory<>("locazione"));
         chairTableColumn.setCellValueFactory(new PropertyValueFactory<>("coordinatore"));
-        sessioniTableView.setItems(sessioni.getSessioni());
+        sessioniTableView.setItems(conferenza.getSessioni());
     }catch(SQLException e){
         e.printStackTrace();
     }
@@ -197,7 +192,6 @@ public class VisualizzaSessioneController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
-    //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setSessioni();

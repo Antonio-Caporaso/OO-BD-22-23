@@ -5,21 +5,22 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import tornadofx.control.DateTimePicker?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/defaultScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/defaultScene.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="75.0" layoutY="-5.0" stroke="#00416a" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
-      <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="417.0" style="-fx-background-color: #00416A;" text="Inserisci un punto del Programma" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+      <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="568.0" style="-fx-background-color: #00416A;" text="Inserisci un punto del Programma" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -76,7 +77,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label fx:id="inizioLabel" layoutX="14.0" layoutY="44.0" text="Inizio" textFill="WHITE">
+                  <Label fx:id="inizioLabel" layoutX="14.0" layoutY="44.0" text="Durata" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -84,11 +85,10 @@
                </children>
             </Pane>
             <ChoiceBox fx:id="eventiChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <DateTimePicker fx:id="inizioDateTimePicker" promptText="Inserisci la data e l'orario di Inizio" stylesheets="@../CSS/datePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ChoiceBox fx:id="tipologiaChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" />
             <Pane prefHeight="103.0" prefWidth="290.0" GridPane.rowIndex="4">
                <children>
-                  <Label fx:id="abstractLabel" layoutX="14.0" layoutY="40.0" text="Abstarct" textFill="WHITE">
+                  <Label fx:id="abstractLabel" layoutX="14.0" layoutY="40.0" text="Abstract" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -103,6 +103,20 @@
             <ChoiceBox fx:id="intervalloChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="titoloTextField" prefHeight="25.0" prefWidth="326.0" promptText="Inserisci il titolo dell'Intervento" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ChoiceBox fx:id="speakerChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Spinner prefHeight="24.0" prefWidth="65.0">
+                     <HBox.margin>
+                        <Insets top="45.0" />
+                     </HBox.margin>
+                  </Spinner>
+                  <Spinner prefHeight="24.0" prefWidth="62.0">
+                     <HBox.margin>
+                        <Insets left="10.0" top="45.0" />
+                     </HBox.margin>
+                  </Spinner>
+               </children>
+            </HBox>
          </children>
       </GridPane>
       <ButtonBar layoutX="670.0" layoutY="648.0" prefHeight="29.0" prefWidth="248.0">

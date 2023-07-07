@@ -1,4 +1,4 @@
-package Services;
+package Utilities;
 
 import Persistence.DAO.SpeakerDao;
 import Persistence.Entities.partecipanti.Speaker;

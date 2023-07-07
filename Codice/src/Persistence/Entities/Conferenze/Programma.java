@@ -1,76 +1,139 @@
 package Persistence.Entities.Conferenze;
-
+import Persistence.DAO.EventoSocialeDao;
+import Persistence.DAO.IntervalloDao;
+import Persistence.DAO.InterventoDao;
 import Persistence.Entities.partecipanti.Speaker;
+import javafx.collections.ObservableList;
+import org.postgresql.util.PGInterval;
 
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.sql.SQLException;
 
 public class Programma {
     private int programmaID;
     private Sessione sessione;
     private Speaker keynote;
-    private HashSet<EventoSociale> eventi;
-    private HashSet<Intervallo> intervalli;
-    private LinkedList<Intervento> interventi;
-
+    private ObservableList<EventoSociale> eventi;
+    private ObservableList<Intervallo> intervalli;
+    private ObservableList<Intervento> interventi;
     public Programma(Sessione sessione) {
         this.sessione = sessione;
     }
-
-    public Programma() {    }
-
+    public Programma() {}
     public Speaker getKeynote() {
         return keynote;
     }
-
     public void setKeynote(Speaker keynote) {
         this.keynote = keynote;
     }
-
-    public HashSet<EventoSociale> getEventi() {
-        return eventi;
-    }
-
-    public void setEventi(HashSet<EventoSociale> eventi) {
-        this.eventi = eventi;
-    }
-
-    public HashSet<Intervallo> getIntervalli() {
-        return intervalli;
-    }
-
-    public void setIntervalli(HashSet<Intervallo> intervalli) {
-        this.intervalli = intervalli;
-    }
-
     public Sessione getSessione() {
         return sessione;
     }
-
     public void setSessione(Sessione sessione) {
         this.sessione = sessione;
     }
-
     public int getProgrammaID() {
         return programmaID;
     }
-
     public void setProgrammaID(int programmaID) {
         this.programmaID = programmaID;
     }
 
-    public LinkedList<Intervento> getInterventi() {
+    public ObservableList<EventoSociale> getEventi() {
+        return eventi;
+    }
+
+    public void setEventi(ObservableList<EventoSociale> eventi) {
+        this.eventi = eventi;
+    }
+
+    public ObservableList<Intervallo> getIntervalli() {
+        return intervalli;
+    }
+
+    public void setIntervalli(ObservableList<Intervallo> intervalli) {
+        this.intervalli = intervalli;
+    }
+
+    public ObservableList<Intervento> getInterventi() {
         return interventi;
     }
 
-    public void setInterventi(LinkedList<Intervento> interventi) {
+    public void setInterventi(ObservableList<Intervento> interventi) {
         this.interventi = interventi;
     }
 
-    public void addIntervento(Intervento intervento){
-        if(!interventi.contains(intervento)){
-            interventi.add(intervento);
-        }
+    public void loadEventiSociali() throws SQLException {
+        EventoSocialeDao dao = new EventoSocialeDao();
+        eventi.clear();
+        eventi.addAll(dao.retrieveEventiByProgramma(this));
+    }
+    public void addEvento(EventoSociale e, PGInterval durata) throws SQLException {
+        EventoSocialeDao dao = new EventoSocialeDao();
+        int id = dao.saveEvento(e,durata);
+        e.setId_evento(id);
+        eventi.add(e);
+    }
+    public void removeEvento(EventoSociale e) throws SQLException {
+        EventoSocialeDao dao = new EventoSocialeDao();
+        dao.deleteEvento(e);
+        eventi.remove(e);
     }
 
+    public void updateEvento(EventoSociale e) throws SQLException {
+        if(eventi.contains(e)){
+            eventi.remove(e);
+            eventi.add(e);
+            EventoSocialeDao dao = new EventoSocialeDao();
+            dao.updateEvento(e);
+        }
+    }
+    public void loadIntervalli() throws SQLException {
+        IntervalloDao dao = new IntervalloDao();
+        intervalli.clear();
+        intervalli.addAll(dao.retrieveIntervalliByProgramma(this));
+    }
+
+    public void addIntervallo(Intervallo intervallo,PGInterval durata) throws SQLException {
+        IntervalloDao dao = new IntervalloDao();
+        int id = dao.createIntervallo(intervallo,durata);
+        intervallo.setId_intervallo(id);
+        intervalli.add(intervallo);
+    }
+    public void removeIntervallo(Intervallo intervallo) throws SQLException {
+        IntervalloDao dao = new IntervalloDao();
+        dao.deleteIntervallo(intervallo);
+        intervalli.remove(intervallo);
+    }
+    public void updateIntervallo(Intervallo intervallo) throws SQLException {
+        if(intervalli.contains(intervallo)){
+            intervalli.remove(intervallo);
+            intervalli.add(intervallo);
+            IntervalloDao dao = new IntervalloDao();
+            dao.updateIntervallo(intervallo);
+        }
+    }
+    public void loadInterventi() throws SQLException {
+        InterventoDao dao = new InterventoDao();
+        interventi.clear();
+        interventi.addAll(dao.retrieveInterventiByProgramma(this));
+    }
+    public void addIntervento(Intervento intervento, PGInterval durata) throws SQLException {
+        InterventoDao dao = new InterventoDao();
+        int id = dao.createIntervento(intervento,durata);
+        intervento.setId_intervento(id);
+        interventi.add(intervento);
+    }
+    public void removeIntervento(Intervento intervento) throws SQLException {
+        InterventoDao dao = new InterventoDao();
+        dao.removeIntervento(intervento);
+        interventi.remove(intervento);
+    }
+    public void updateIntervento(Intervento i) throws SQLException {
+        if(interventi.contains(i)){
+            interventi.remove(i);
+            interventi.add(i);
+            InterventoDao dao = new InterventoDao();
+            dao.updateIntervento(i);
+        }
+    }
 }

@@ -3,8 +3,7 @@ package View.Controller;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Ente;
-import Services.Enti;
-import Services.EntiOrganizzatori;
+import Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,35 +11,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
-import org.postgresql.util.PSQLException;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddOrganizzatoriController implements Initializable {
+public class AddEntiController implements Initializable {
+    private AddConferenceController addConferenceController;
     @FXML
-    private ResourceBundle resources;
+    private ChoiceBox<Ente> entiChoiceBox;
     @FXML
-    private URL location;
-    @FXML
-    private Button backButton;
-    @FXML
-    private Button inserisciButton;
-    @FXML
-    private Button nextButton;
-    @FXML
-    private Button rimuoviButton;
-    @FXML
-    private ChoiceBox<Ente> organizzatoriChoiceBox;
-    @FXML
-    private ListView<Ente> organizzatoriListView;
+    private ListView<Ente> entiListView;
     @FXML
     private SubScene subscene;
     private Conferenza conferenza;
     private Utente user;
-    private EntiOrganizzatori organizzatori ;
     private Enti enti = new Enti();
     //Public Setters
     public void setConferenza(Conferenza c){
@@ -59,19 +45,15 @@ public class AddOrganizzatoriController implements Initializable {
     }
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
-        Ente enteSelezionato = organizzatoriChoiceBox.getSelectionModel().getSelectedItem();
+        Ente enteSelezionato = entiChoiceBox.getSelectionModel().getSelectedItem();
         try{
-            if(enteSelezionato==null){
+            if(enteSelezionato==null)
                 throw new NullPointerException();
-            }
-            organizzatori.addEnte(enteSelezionato);
-            setOrganizzatoriListView();
-        }catch(PSQLException e) {
+            conferenza.addEnte(enteSelezionato);
+        }catch(SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Questo organizzatore è già presente!");
             alert.showAndWait();
-        }catch (SQLException e){
-            e.printStackTrace();
         }catch(NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Nessun ente selezionato");
@@ -84,7 +66,7 @@ public class AddOrganizzatoriController implements Initializable {
     }
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
-        Ente enteSelezionato = organizzatoriListView.getSelectionModel().getSelectedItem();
+        Ente enteSelezionato = entiListView.getSelectionModel().getSelectedItem();
         try{
             if (enteSelezionato == null){
                 throw new NullPointerException();
@@ -92,8 +74,7 @@ public class AddOrganizzatoriController implements Initializable {
             Optional<ButtonType> result = showDeleteDialog();
             if(result.get() == ButtonType.OK) {
                 try{
-                    organizzatori.removeEnte(enteSelezionato);
-                    setOrganizzatoriListView();
+                    conferenza.removeEnte(enteSelezionato);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -106,7 +87,7 @@ public class AddOrganizzatoriController implements Initializable {
     }
     private Optional<ButtonType> showDeleteDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler eliminare il seguente organizzatore?");
+        alert.setContentText("Sicuro di voler eliminare il seguente ente?");
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
@@ -114,7 +95,7 @@ public class AddOrganizzatoriController implements Initializable {
     private void loadAggiungiSponsor(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
-            AggiungiSponsorController controller = new AggiungiSponsorController();
+            AddSponsorController controller = new AddSponsorController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -127,8 +108,8 @@ public class AddOrganizzatoriController implements Initializable {
     }
     private void setOrganizzatoriListView() {
         try{
-            organizzatori.loadOrganizzatori();
-            organizzatoriListView.setItems(organizzatori.getEnti());
+            conferenza.loadOrganizzatori();
+            entiListView.setItems(conferenza.getEnti());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -150,7 +131,7 @@ public class AddOrganizzatoriController implements Initializable {
     private void setOrganizzatoriChoiceBox() {
         try {
             enti.loadEnti();
-            organizzatoriChoiceBox.setItems(enti.getEnti());
+            entiChoiceBox.setItems(enti.getEnti());
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -158,9 +139,15 @@ public class AddOrganizzatoriController implements Initializable {
     //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        organizzatori=new EntiOrganizzatori(conferenza);
         setOrganizzatoriListView();
         setOrganizzatoriChoiceBox();
     }
 
+    public AddConferenceController getAddConferenceController() {
+        return addConferenceController;
+    }
+
+    public void setAddConferenceController(AddConferenceController addConferenceController) {
+        this.addConferenceController = addConferenceController;
+    }
 }

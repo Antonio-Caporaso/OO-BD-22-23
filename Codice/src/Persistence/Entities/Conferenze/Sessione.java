@@ -1,67 +1,55 @@
 package Persistence.Entities.Conferenze;
 import Persistence.Entities.organizzazione.Organizzatore;
-import java.sql.Date;
-import java.sql.Time;
+
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class Sessione {
-    private int sessioneID;
-    private Date dataInizio;
-    private Date dataFine;
+    private int id_sessione;
+    private Timestamp inizio;
+    private Timestamp fine;
     private String titolo;
     private Sala locazione;
     private Organizzatore coordinatore;
     private Conferenza conferenza;
     private Programma programma;
-    private Time orarioInizio;
-    private Time orarioFine;
 
 
     public Sessione(){}
-    public Sessione(String titolo, Date dataInizio, Date dataFine, Sala sala, Conferenza conferenza, Time orarioInizio, Time orarioFine) {
-        this.titolo = titolo;
-        this.dataInizio = dataInizio;
-        this.dataFine = dataFine;
-        this.locazione=sala;
-        this.conferenza=conferenza;
-        this.orarioInizio=orarioInizio;
-        this.orarioFine=orarioFine;
-    }
 
-    public Sessione(Date dataInizio, Date dataFine, String titolo, Sala locazione, Organizzatore coordinatore, Conferenza conferenza, Programma programma, Time orarioInizio, Time orarioFine) {
-        this.dataInizio = dataInizio;
-        this.dataFine = dataFine;
+    public Sessione(int sessioneID, Timestamp inizio, Timestamp fine, String titolo, Sala locazione, Organizzatore coordinatore, Conferenza conferenza, Programma programma) {
+        this.id_sessione = sessioneID;
+        this.inizio = inizio;
+        this.fine = fine;
         this.titolo = titolo;
         this.locazione = locazione;
         this.coordinatore = coordinatore;
         this.conferenza = conferenza;
         this.programma = programma;
-        this.orarioInizio = orarioInizio;
-        this.orarioFine = orarioFine;
     }
 
-    public int getSessioneID() {
-        return sessioneID;
+    public int getId_sessione() {
+        return id_sessione;
     }
 
-    public void setSessioneID(int sessioneID) {
-        this.sessioneID = sessioneID;
+    public void setId_sessione(int id_sessione) {
+        this.id_sessione = id_sessione;
     }
 
-    public Date getDataInizio() {
-        return dataInizio;
+    public Timestamp getInizio() {
+        return inizio;
     }
 
-    public void setDataInizio(Date dataInizio) {
-        this.dataInizio = dataInizio;
+    public void setInizio(Timestamp inizio) {
+        this.inizio = inizio;
     }
 
-    public Date getDataFine() {
-        return dataFine;
+    public Timestamp getFine() {
+        return fine;
     }
 
-    public void setDataFine(Date dataFine) {
-        this.dataFine = dataFine;
+    public void setFine(Timestamp fine) {
+        this.fine = fine;
     }
 
     public String getTitolo() {
@@ -112,21 +100,6 @@ public class Sessione {
 
     public void setProgramma(Programma programma) {
         this.programma = programma;
-    }
-    public Time getOrarioInizio() {
-        return orarioInizio;
-    }
-
-    public void setOrarioInizio(Time orarioInizio) {
-        this.orarioInizio = orarioInizio;
-    }
-
-    public Time getOrarioFine() {
-        return orarioFine;
-    }
-
-    public void setOrarioFine(Time orarioFine) {
-        this.orarioFine = orarioFine;
     }
 
     @Override

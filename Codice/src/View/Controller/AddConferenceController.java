@@ -1,16 +1,11 @@
 package View.Controller;
 
 import Exceptions.BlankFieldException;
-import Persistence.DAO.ComitatoDao;
-import Persistence.DAO.ConferenzaDao;
-import Persistence.DAO.SponsorizzazioneDAO;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.Utente;
-import Services.Conferenze;
-import Services.Sedi;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import Utilities.Conferenze;
+import Utilities.Sedi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +15,6 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -32,11 +26,8 @@ public class AddConferenceController implements Initializable,FormChecker{
     private Utente user;
     private Sedi sedi = new Sedi();
     private String nome;
-    private int idConferenza;
     private Conferenza conferenza;
     private Conferenze conference = new Conferenze();
-    @FXML
-    private ChoiceBox<String> valutaChoice;
     @FXML
     private Button annullaButton;
     @FXML
@@ -44,13 +35,11 @@ public class AddConferenceController implements Initializable,FormChecker{
     @FXML
     private DateTimePicker dataInizioDP;
     @FXML
-    private Button creaButton;
+    private Button avantiButton;
     @FXML
     private TextField nomeConferenzaTF;
     @FXML
     private ChoiceBox<Sede> sedeChoice;
-    @FXML
-    private TextField budgetTextField;
     @FXML
     private TextArea descrizioneTextArea;
     @FXML
@@ -70,37 +59,35 @@ public class AddConferenceController implements Initializable,FormChecker{
         dataInizioDP.setValue(null);
         dataInizioDP.hide();
         nomeConferenzaTF.setText("");
-        budgetTextField.setText("");
         descrizioneTextArea.setText("");
     }
 
     @FXML
-    public void creaButtonOnAction(ActionEvent event){
+    public void avantiButtonOnAction(ActionEvent event){
         try {
             checkFieldsAreBlank();
             conferenza = retrieveConferenza();
             conference.addConferenza(conferenza);
             openAddedConferenceDialogWindow();
-            loadAddOrganizzatori(conferenza);
+            loadAddEnti(conferenza);
         }catch (BlankFieldException e){
             showAlert(e);
-        }catch (SQLException e){
-            showAlert(e);
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
     private Conferenza retrieveConferenza() {
         String nome = nomeConferenzaTF.getText();
-        float budget = Float.parseFloat(budgetTextField.getText());
         String descrizione = descrizioneTextArea.getText();
         LocalDateTime dataIselected = dataInizioDP.getDateTimeValue();
         LocalDateTime dataFselected = dataFineDP.getDateTimeValue();
         Timestamp dataI = Timestamp.valueOf(dataIselected);
         Timestamp dataF = Timestamp.valueOf(dataFselected);
         Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
-        String valuta = valutaChoice.getValue();
-        Conferenza c = new Conferenza(nome, dataI, dataF, descrizione, budget, sede, user, valuta);
-        return c;
+        return new Conferenza(nome, dataI, dataF, descrizione, sede, user);
     }
 
     private void showAlert(Exception e) {
@@ -118,29 +105,18 @@ public class AddConferenceController implements Initializable,FormChecker{
         alert.showAndWait();
     }
 
-    private void loadAddOrganizzatori(Conferenza c){
-         ConferenzaDao conferenzaDao= new ConferenzaDao();
-         ComitatoDao comitatoDao=new ComitatoDao();
-        conferenza= conferenzaDao.retrieveConferenzaByNomeAndIdUtente(c.getNome(),user.getIdUtente()); //Nel momento della creazione l'ID della conferenza è ignoto, da valutare altri modi per eseguire la retreive del'ID
-
+    private void loadAddEnti(Conferenza c){
         try {
-            // Non mi è molto chiara sta porzione... una volta salvata una conferenza si attiva il trigger create_comitati_trigger quindi gli ID non saranno mai uguali a 0
-            //Il trigger non funziona,puoi testarlo anche tu andando ad inserire una sessione dopo che hai creato una conferenza senza questo if.
-            //Questa è una selezione ad cazzum, ma mi permette d'inserire le sessioni e non bloccare il tutto
-            if(conferenza.getComitatoLocale().getComitatoID()==0){
-            comitatoDao.insertComitato(1, conferenza.getComitatoScientifico().getComitatoID());
-            }else{
-                comitatoDao.insertComitato(1, conferenza.getComitatoLocale().getComitatoID());
-            }
             goToAddEntiWindow();
-        } catch (Exception e) {
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
 
     private void goToAddEntiWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddOrganizzatori.fxml"));
-        AddOrganizzatoriController controller = new AddOrganizzatoriController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEnti.fxml"));
+        AddEntiController controller = new AddEntiController();
+        controller.setAddConferenceController(this);
         controller.setSubscene(subscene);
         controller.setConferenza(conferenza);
         controller.setUtente(user);
@@ -156,7 +132,6 @@ public class AddConferenceController implements Initializable,FormChecker{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sedi.loadSedi();
         sedeChoice.setItems(sedi.getSedi());
-        setValute();
     }
     @FXML
     void showSedi(MouseEvent event) {
@@ -164,24 +139,12 @@ public class AddConferenceController implements Initializable,FormChecker{
     }
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
-            if (nomeConferenzaTF.getText().isBlank() || descrizioneTextArea.getText().isBlank() ||
-                    budgetTextField.getText().isBlank() || sedeChoice.getValue() == null ||
-                    valutaChoice.getValue()==null|| dataFineDP.getValue()==null||
-                    dataInizioDP.getValue()==null){
+            if (nomeConferenzaTF.getText().isBlank()
+                    || descrizioneTextArea.getText().isBlank()
+                    || dataInizioDP.getValue()==null
+                    || dataFineDP.getValue()==null) {
                 throw new BlankFieldException();
             }
-    }
-
-
-    private void setValute() {
-        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-        ObservableList<String> valute = FXCollections.observableArrayList();
-        try{
-            valute.addAll(dao.retrieveSimboloValute());
-            valutaChoice.setItems(valute);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 }
 
