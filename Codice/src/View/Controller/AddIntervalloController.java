@@ -1,8 +1,10 @@
 package View.Controller;
 
 import Persistence.Entities.Conferenze.EventoSociale;
+import Persistence.Entities.Conferenze.Intervallo;
 import Persistence.Entities.Conferenze.Programma;
 import Services.EventiSocialiSessione;
+import Services.IntervalliSessione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,11 +23,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-public class AddEventoController_Edit implements Initializable {
+public class AddIntervalloController implements Initializable {
     @FXML
     private Button addButton;
     private Programma programma;
-    private EventiSocialiSessione eventi;
+    private IntervalliSessione intervalliSessione;
     @FXML
     private DateTimePicker dateTimePicker;
 
@@ -40,9 +42,8 @@ public class AddEventoController_Edit implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         LinkedList<String> tipologie = new LinkedList<>();
-        tipologie.add("Cena");
-        tipologie.add("Gita");
-        tipologie.add("Proiezione");
+        tipologie.add("Coffee Break");
+        tipologie.add("Pranzo");
         ObservableList<String> tip = FXCollections.observableArrayList();
         tip.setAll(tipologie);
         tipologiaChoice.setItems(tip);
@@ -50,24 +51,19 @@ public class AddEventoController_Edit implements Initializable {
 
     @FXML
     void addOnAction(ActionEvent event) {
-        EventoSociale e = retrieveDettagliEvento();
+        Intervallo e = new Intervallo();
+        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+        e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
+        e.setProgramma(programma);
+        Stage stage = (Stage) addButton.getScene().getWindow();
+        stage.close();
         try{
-            eventi.addEvento(e);
-            Stage stage = (Stage) addButton.getScene().getWindow();
-            stage.close();
+            intervalliSessione.addIntervallo(e);
         }catch (SQLException exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(exception.getMessage());
             alert.showAndWait();
         }
-    }
-
-    private EventoSociale retrieveDettagliEvento() {
-        EventoSociale e = new EventoSociale();
-        e.setOrario(Timestamp.valueOf(dateTimePicker.getDateTimeValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
-        e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
-        e.setProgramma(programma);
-        return e;
     }
 
     public Programma getProgramma() {
@@ -78,12 +74,12 @@ public class AddEventoController_Edit implements Initializable {
         this.programma = programma;
     }
 
-    public EventiSocialiSessione getEventi() {
-        return eventi;
+    public IntervalliSessione getIntervalliSessione() {
+        return intervalliSessione;
     }
 
-    public void setEventi(EventiSocialiSessione eventi) {
-        this.eventi = eventi;
+    public void setIntervalliSessione(IntervalliSessione intervalliSessione) {
+        this.intervalliSessione = intervalliSessione;
     }
 
     @FXML

@@ -106,7 +106,7 @@ public class VisualizzaConferenzeController implements Initializable {
             alert.showAndWait();
         }else{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
-            VisualizzaConferenzaController_Edit controller = new VisualizzaConferenzaController_Edit();
+            VisualizzaConferenzaController controller = new VisualizzaConferenzaController();
             controller.setConferenza(c);
             controller.setViewConferencesController(this);
             controller.setSubScene(subScene);

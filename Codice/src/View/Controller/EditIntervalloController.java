@@ -1,7 +1,9 @@
 package View.Controller;
 
+import Persistence.Entities.Conferenze.EventoSociale;
 import Persistence.Entities.Conferenze.Intervallo;
 import Persistence.Entities.Conferenze.Programma;
+import Services.EventiSocialiSessione;
 import Services.IntervalliSessione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-public class IntervalloController_Edit implements Initializable {
+public class EditIntervalloController implements Initializable {
     private Intervallo intervallo;
     @FXML
     private Button editButton;

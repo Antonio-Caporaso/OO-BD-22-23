@@ -2,9 +2,12 @@ package View.Controller;
 
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Ente;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
-import Services.*;
+import Services.EntiOrganizzatori;
+import Services.Sessioni;
+import Services.SponsorizzazioniConferenza;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,17 +23,15 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ResourceBundle;
-
-public class VisualizzaConferenzaController_Edit implements Initializable {
+public class ModificaConferenzaController implements Initializable {
     private Conferenza conferenza;
-    private SubScene subScene;
-    private EntiOrganizzatori entiOrganizzatori;
-    private InterventiSessione interventiSessione;
-    private EventiSocialiSessione eventiSocialiSessione;
-    private IntervalliSessione intervalliSessione;
-    private Sessioni sessioni;
+    private Sessioni sessioni ;
+    private EntiOrganizzatori organizzatori;
     private SponsorizzazioniConferenza sponsorizzazioniConferenza;
-    private VisualizzaConferenzeController visualizzaConferenzeController;
+    private SubScene subscene;
+    private Utente user;
+    @FXML
+    private Button annullaButton;
     @FXML
     private Label budgetLabel;
     @FXML
@@ -41,16 +42,27 @@ public class VisualizzaConferenzaController_Edit implements Initializable {
     private Label dataInizioLabel;
     @FXML
     private Label descrizioneLabel;
+    private GestioneConferenzeController gestioneConferenzeController;
+    @FXML
+    private Button editDetailsButton;
+    @FXML
+    private Button editEntiButton;
+    @FXML
+    private TextArea entiView;
     @FXML
     private Button editSessioniButton;
     @FXML
-    private TextArea entiView;
+    private Button editSponsorshipsButton;
     @FXML
     private Label nomeLabel;
     @FXML
     private Label sedeLabel;
     @FXML
+    private Label titleLabel;
+    @FXML
     private TextArea sponsorizzazioniView;
+    @FXML
+    private TableView<Sessione> table;
     @FXML
     private TableColumn<Sessione,String> nomeSessioneColumn;
     @FXML
@@ -63,61 +75,65 @@ public class VisualizzaConferenzaController_Edit implements Initializable {
     private TableColumn<Sessione, Time> oraInizioColumn;
     @FXML
     private TableColumn<Sessione, Time> orarioFineSessioneColumn;
-    @FXML
-    private TableView<Sessione> table;
-    @FXML
-    private Label titleLabel;
 
-    public VisualizzaConferenzeController getViewConferencesController() {
-        return visualizzaConferenzeController;
-    }
-
-    public void setViewConferencesController(VisualizzaConferenzeController visualizzaConferenzeController) {
-        this.visualizzaConferenzeController = visualizzaConferenzeController;
-    }
-
-    public SubScene getSubScene() {
-        return subScene;
-    }
-
-    public void setSubScene(SubScene subScene) {
-        this.subScene = subScene;
-    }
-
-    public Conferenza getConferenza() {
-        return conferenza;
-    }
-
-    public void setConferenza(Conferenza conferenza) {
-        this.conferenza = conferenza;
+    public void setGestioneConferenzeController(GestioneConferenzeController gestioneConferenzeController) {
+        this.gestioneConferenzeController = gestioneConferenzeController;
     }
 
     @FXML
-    void viewSessioniButtonOnAction(ActionEvent event) throws IOException {
-        Sessione s = table.getSelectionModel().getSelectedItem();
-        if(s.equals(null)){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Selezionare una sessione");
-            alert.setContentText("Nessuna sessione selezionata");
-            alert.showAndWait();
-        }else{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ViewSessione.fxml"));
-            ViewSessioneController_Manage controller = new ViewSessioneController_Manage();
-            controller.setSessione(s);
-            controller.setVisualizzaConferenzaController(this);
-            controller.setSubScene(subScene);
-            loader.setController(controller);
-            Parent root = loader.load();
-            subScene.setRoot(root);
-        }
-    }
-
-    @FXML
-    void confermaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenze.fxml"));
-        loader.setController(visualizzaConferenzeController);
+    public void confermaButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/GestioneConferenze.fxml"));
+        loader.setController(gestioneConferenzeController);
         Parent root = loader.load();
-        subScene.setRoot(root);
+        subscene.setRoot(root);
+    }
+    @FXML
+    public void editDetailsOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConferenceDetails.fxml"));
+        ModificaDettagliConferenzaController controller = new ModificaDettagliConferenzaController();
+        loader.setController(controller);
+        controller.setEditConferenceController(this);
+        controller.setConferenza(conferenza);
+        controller.setSubScene(subscene);
+        Parent root = loader.load();
+        subscene.setRoot(root);
+    }
+    @FXML
+    public void editEntiOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEnti.fxml"));
+        EditEntiController controller = new EditEntiController();
+        loader.setController(controller);
+        controller.setConferenza(conferenza);
+        controller.setSubScene(subscene);
+        controller.setEditController(this);
+        Parent root = loader.load();
+        subscene.setRoot(root);
+    }
+    @FXML
+    public void editSponsorshipOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSponsor.fxml"));
+        EditSponsorController controller = new EditSponsorController();
+        loader.setController(controller);
+        controller.setConferenza(conferenza);
+        controller.setsubscene(subscene);
+        controller.setEditConferenceController(this);
+        Parent root = loader.load();
+        subscene.setRoot(root);
+    }
+    @FXML
+    public void editSessioniButtonOnAction(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
+        ManageSessioniController controller = new ManageSessioniController();
+        loader.setController(controller);
+        controller.setConferenza(conferenza);
+        controller.setSubscene(subscene);
+        controller.setSessioni(sessioni);
+        controller.setEditConferenceController(this);
+        Parent root = loader.load();
+        subscene.setRoot(root);
+    }
+    public SubScene getsubscene() {
+        return subscene;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -125,6 +141,9 @@ public class VisualizzaConferenzaController_Edit implements Initializable {
         setOrganizzatori();
         setSponsorizzazioni();
         setTable();
+    }
+    public void setConferenza(Conferenza c){
+        this.conferenza=c;
     }
     public void setDetails() {
         this.setTitleLabel();
@@ -136,20 +155,16 @@ public class VisualizzaConferenzaController_Edit implements Initializable {
         sedeLabel.setText(conferenza.getSede().toString());
     }
     public void setOrganizzatori() {
-        entiOrganizzatori = new EntiOrganizzatori(conferenza);
+        organizzatori = new EntiOrganizzatori(conferenza);
         try{
-            entiOrganizzatori.loadOrganizzatori();
+            organizzatori.loadOrganizzatori();
             entiView.setText("");
-            for(Ente e: entiOrganizzatori.getEnti()){
+            for(Ente e: organizzatori.getEnti()){
                 entiView.appendText(e.toString()+"\n");
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
-    }
-    public void setTitleLabel(){
-        if(conferenza!=null)
-            titleLabel.setText("Modifica della conferenza: "+ conferenza.getNome());
     }
     public void setSponsorizzazioni(){
         sponsorizzazioniConferenza = new SponsorizzazioniConferenza(conferenza);
@@ -162,6 +177,16 @@ public class VisualizzaConferenzaController_Edit implements Initializable {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+    public void setSubscene(SubScene subscene) {
+        this.subscene = subscene;
+    }
+    public void setTitleLabel(){
+        if(conferenza!=null)
+            titleLabel.setText("Modifica della conferenza: "+ conferenza.getNome());
+    }
+    public void setUser(Utente user) {
+        this.user = user;
     }
     private void setTable(){
         table.setEditable(false);

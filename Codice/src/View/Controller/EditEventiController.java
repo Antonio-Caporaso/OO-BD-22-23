@@ -23,13 +23,13 @@ import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class EventiController_Edit implements Initializable {
-    private ProgrammaController_Edit programmaControllerEdit;
+public class EditEventiController implements Initializable {
+    private EditProgrammaController editProgrammaController;
     private EventiSocialiSessione eventi;
     private Programma programma;
     private SubScene subScene;
     private Sessione sessione;
-    private SessioniController_Manage sessioniControllerManage;
+    private ManageSessioniController manageSessioniController;
     @FXML
     private Button addEventoButton;
 
@@ -56,8 +56,8 @@ public class EventiController_Edit implements Initializable {
         setEventiTable();
     }
 
-    public void setEditProgrammaController(ProgrammaController_Edit programmaControllerEdit) {
-        this.programmaControllerEdit = programmaControllerEdit;
+    public void setEditProgrammaController(EditProgrammaController editProgrammaController) {
+        this.editProgrammaController=editProgrammaController;
     }
 
     public EventiSocialiSessione getEventi() {
@@ -68,12 +68,12 @@ public class EventiController_Edit implements Initializable {
         this.eventi = eventi;
     }
 
-    public SessioniController_Manage getManageSessioniController() {
-        return sessioniControllerManage;
+    public ManageSessioniController getManageSessioniController() {
+        return manageSessioniController;
     }
 
-    public void setManageSessioniController(SessioniController_Manage sessioniControllerManage) {
-        this.sessioniControllerManage = sessioniControllerManage;
+    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+        this.manageSessioniController = manageSessioniController;
     }
 
     public Programma getProgramma() {
@@ -103,7 +103,7 @@ public class EventiController_Edit implements Initializable {
     @FXML
     void addEventoButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEvento.fxml"));
-        AddEventoController_Edit controller = new AddEventoController_Edit();
+        AddEventoController controller = new AddEventoController();
         controller.setEventi(eventi);
         controller.setProgramma(programma);
         loader.setController(controller);
@@ -147,7 +147,7 @@ public class EventiController_Edit implements Initializable {
             alert.showAndWait();
         }else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEvento.fxml"));
-            EventoController_Edit controller = new EventoController_Edit();
+            EditEventoController controller = new EditEventoController();
             controller.setEventoSociale(e);
             controller.setEventi(eventi);
             controller.setProgramma(programma);
@@ -164,7 +164,7 @@ public class EventiController_Edit implements Initializable {
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
-        loader.setController(programmaControllerEdit);
+        loader.setController(editProgrammaController);
         Parent root = loader.load();
         subScene.setRoot(root);
     }

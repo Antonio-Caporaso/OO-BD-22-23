@@ -23,9 +23,9 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class DettagliConferenzaController_Edit implements Initializable {
+public class ModificaDettagliConferenzaController implements Initializable {
     private Conferenza conferenza;
-    private ConferenzaController_Edit conferenzaControllerEdit;
+    private ModificaConferenzaController modificaConferenzaController;
     private SubScene subScene;
     private Sedi sedi = new Sedi();
     @FXML
@@ -47,14 +47,14 @@ public class DettagliConferenzaController_Edit implements Initializable {
     @FXML
     private ChoiceBox<String> valutaChoice;
 
-    public void setEditConferenceController(ConferenzaController_Edit conferenzaControllerEdit) {
-        this.conferenzaControllerEdit = conferenzaControllerEdit;
+    public void setEditConferenceController(ModificaConferenzaController modificaConferenzaController) {
+        this.modificaConferenzaController = modificaConferenzaController;
     }
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-        loader.setController(conferenzaControllerEdit);
+        loader.setController(modificaConferenzaController);
         Parent root = loader.load();
         subScene.setRoot(root);
     }
@@ -66,7 +66,7 @@ public class DettagliConferenzaController_Edit implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-            loader.setController(conferenzaControllerEdit);
+            loader.setController(modificaConferenzaController);
             conferenza.setNome(nomeTF.getText());
             conferenza.setDescrizione(descrizioneTF.getText());
             conferenza.setBudget(Float.parseFloat(budgetTextField.getText()));
@@ -76,8 +76,8 @@ public class DettagliConferenzaController_Edit implements Initializable {
             conferenza.setValuta(valutaChoice.getValue());
             ConferenzaDao dao = new ConferenzaDao();
             dao.updateDettagliConferenza(conferenza);
-            conferenzaControllerEdit.setConferenza(conferenza);
-            conferenzaControllerEdit.setDetails();
+            modificaConferenzaController.setConferenza(conferenza);
+            modificaConferenzaController.setDetails();
             Parent root = loader.load();
             subScene.setRoot(root);
         }

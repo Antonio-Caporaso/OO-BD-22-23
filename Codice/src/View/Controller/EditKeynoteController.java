@@ -22,8 +22,8 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class KeynoteController_Edit implements Initializable {
-    private ProgrammaController_Edit programmaControllerEdit;
+public class EditKeynoteController implements Initializable {
+    private EditProgrammaController editProgrammaController;
     private Speaker keynote;
     private Programma programma;
     private InterventiSessione interventiSessione;
@@ -45,12 +45,12 @@ public class KeynoteController_Edit implements Initializable {
     @FXML
     private TableColumn<Speaker, String> nomeKeynoteColumn;
 
-    public ProgrammaController_Edit getEditProgrammaController() {
-        return programmaControllerEdit;
+    public EditProgrammaController getEditProgrammaController() {
+        return editProgrammaController;
     }
 
-    public void setEditProgrammaController(ProgrammaController_Edit programmaControllerEdit) {
-        this.programmaControllerEdit = programmaControllerEdit;
+    public void setEditProgrammaController(EditProgrammaController editProgrammaController) {
+        this.editProgrammaController = editProgrammaController;
     }
 
     public Speaker getKeynote() {
@@ -101,7 +101,7 @@ public class KeynoteController_Edit implements Initializable {
     @FXML
     void addKeynoteButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ChoiceKeynote.fxml"));
-        ChooseKeynoteController_Edit controller = new ChooseKeynoteController_Edit();
+        ChooseKeynoteController controller = new ChooseKeynoteController();
         controller.setInterventiSessione(interventiSessione);
         controller.setProgramma(programma);
         loader.setController(controller);
@@ -132,8 +132,8 @@ public class KeynoteController_Edit implements Initializable {
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
-        programmaControllerEdit.setProgramma(programma);
-        loader.setController(programmaControllerEdit);
+        editProgrammaController.setProgramma(programma);
+        loader.setController(editProgrammaController);
         Parent root = loader.load();
         subScene.setRoot(root);
     }

@@ -27,12 +27,12 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ResourceBundle;
 
-public class AddSessioneController_Edit implements Initializable,FormChecker {
+public class AddSessioneController implements Initializable,FormChecker {
     private Conferenza conferenza;
     private Sessioni sessioni;
     private Sale sale;
-    private SessioniController_Manage sessioniControllerManage;
-    private ConferenzaController_Edit conferenzaControllerEdit;
+    private ManageSessioniController manageSessioniController;
+    private ModificaConferenzaController modificaConferenzaController;
     private SubScene subscene;
     @FXML
     private Label inizioConferenzaLabel;
@@ -61,12 +61,12 @@ public class AddSessioneController_Edit implements Initializable,FormChecker {
             throw new BlankFieldException();
     }
 
-    public SessioniController_Manage getManageSessioniController() {
-        return sessioniControllerManage;
+    public ManageSessioniController getManageSessioniController() {
+        return manageSessioniController;
     }
 
-    public void setManageSessioniController(SessioniController_Manage sessioniControllerManage) {
-        this.sessioniControllerManage = sessioniControllerManage;
+    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+        this.manageSessioniController = manageSessioniController;
     }
 
     @FXML
@@ -88,8 +88,8 @@ public class AddSessioneController_Edit implements Initializable,FormChecker {
 
     private void goToAddProgrammaWindow(Sessione s) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
-        ProgrammaController_Edit controller = new ProgrammaController_Edit();
-        controller.setManageSessioniController(sessioniControllerManage);
+        EditProgrammaController controller = new EditProgrammaController();
+        controller.setManageSessioniController(manageSessioniController);
         controller.setSessione(s);
         controller.setSubscene(subscene);
         loader.setController(controller);
@@ -153,7 +153,7 @@ public class AddSessioneController_Edit implements Initializable,FormChecker {
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
-        loader.setController(sessioniControllerManage);
+        loader.setController(manageSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
     }

@@ -23,7 +23,7 @@ import Persistence.Entities.organizzazione.Organizzatore;
 import Services.Sessioni;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ViewSessioniController_Create implements Initializable {
+public class VisualizzaSessioneController implements Initializable {
     @FXML
     private Button backButton;
     @FXML
@@ -119,7 +119,7 @@ public class ViewSessioniController_Create implements Initializable {
     private void loadInserisciSessione(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
-            AddSessioneController_Create controller = new AddSessioneController_Create();
+            InserisciSessioneController controller = new InserisciSessioneController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -133,7 +133,7 @@ public class ViewSessioniController_Create implements Initializable {
     private void loadAggiungiSponsor(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
-            AddSponsorController_Create controller = new AddSponsorController_Create();
+            AggiungiSponsorController controller = new AggiungiSponsorController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -148,7 +148,7 @@ public class ViewSessioniController_Create implements Initializable {
         try{
             Sessione s = sessioniTableView.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ViewProgrammaSessione.fxml"));
-            ViewProgrammaController_Create controller = new ViewProgrammaController_Create();
+            ViewProgrammaController controller = new ViewProgrammaController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -163,7 +163,7 @@ public class ViewSessioniController_Create implements Initializable {
     private void loadEditConferenza(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-            ConferenzaController_Edit controller = new ConferenzaController_Edit();
+            ModificaConferenzaController controller = new ModificaConferenzaController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);

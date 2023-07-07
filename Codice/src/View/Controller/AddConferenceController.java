@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-public class AddConferenceController_Create implements Initializable,FormChecker{
+public class AddConferenceController implements Initializable,FormChecker{
     private Utente user;
     private Sedi sedi = new Sedi();
     private String nome;
@@ -140,7 +140,7 @@ public class AddConferenceController_Create implements Initializable,FormChecker
 
     private void goToAddEntiWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddOrganizzatori.fxml"));
-        AddOrganizzatoriController_Create controller = new AddOrganizzatoriController_Create();
+        AddOrganizzatoriController controller = new AddOrganizzatoriController();
         controller.setSubscene(subscene);
         controller.setConferenza(conferenza);
         controller.setUtente(user);

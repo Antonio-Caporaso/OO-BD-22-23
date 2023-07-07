@@ -23,13 +23,13 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class IntervalliController_Edit implements Initializable {
-    private ProgrammaController_Edit programmaControllerEdit;
+public class EditIntervalliController implements Initializable {
+    private EditProgrammaController editProgrammaController;
     private Programma programma;
     private IntervalliSessione intervalliSessione;
     private SubScene subScene;
     private Sessione sessione;
-    private SessioniController_Manage sessioniControllerManage;
+    private ManageSessioniController manageSessioniController;
     @FXML
     private Button addIntervalloButton;
 
@@ -50,12 +50,12 @@ public class IntervalliController_Edit implements Initializable {
 
     @FXML
     private TableColumn<Intervallo, String> tipologiaIntervalloColumn;
-    public ProgrammaController_Edit getEditProgrammaController() {
-        return programmaControllerEdit;
+    public EditProgrammaController getEditProgrammaController() {
+        return editProgrammaController;
     }
 
-    public void setEditProgrammaController(ProgrammaController_Edit programmaControllerEdit) {
-        this.programmaControllerEdit = programmaControllerEdit;
+    public void setEditProgrammaController(EditProgrammaController editProgrammaController) {
+        this.editProgrammaController = editProgrammaController;
     }
 
     public Programma getProgramma() {
@@ -90,12 +90,12 @@ public class IntervalliController_Edit implements Initializable {
         this.sessione = sessione;
     }
 
-    public SessioniController_Manage getManageSessioniController() {
-        return sessioniControllerManage;
+    public ManageSessioniController getManageSessioniController() {
+        return manageSessioniController;
     }
 
-    public void setManageSessioniController(SessioniController_Manage sessioniControllerManage) {
-        this.sessioniControllerManage = sessioniControllerManage;
+    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+        this.manageSessioniController = manageSessioniController;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class IntervalliController_Edit implements Initializable {
     @FXML
     void addIntervalloButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo.fxml"));
-        AddIntervalloController_Edit controller = new AddIntervalloController_Edit();
+        AddIntervalloController controller = new AddIntervalloController();
         controller.setIntervalliSessione(intervalliSessione);
         controller.setProgramma(programma);
         loader.setController(controller);
@@ -156,7 +156,7 @@ public class IntervalliController_Edit implements Initializable {
     void editIntervalloOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervallo.fxml"));
         Intervallo intervallo = intervalliTable.getSelectionModel().getSelectedItem();
-        IntervalloController_Edit controller = new IntervalloController_Edit();
+        EditIntervalloController controller = new EditIntervalloController();
         controller.setIntervalliSessione(intervalliSessione);
         controller.setIntervallo(intervallo);
         controller.setProgramma(programma);
@@ -172,7 +172,7 @@ public class IntervalliController_Edit implements Initializable {
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
-        loader.setController(programmaControllerEdit);
+        loader.setController(editProgrammaController);
         Parent root = loader.load();
         subScene.setRoot(root);
     }

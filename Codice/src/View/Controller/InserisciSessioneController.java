@@ -25,7 +25,7 @@ import Persistence.Entities.Utente;
 import Services.Sale;
 import Services.Sessioni;
 
-public class AddSessioneController_Create implements Initializable,FormChecker {
+public class InserisciSessioneController implements Initializable,FormChecker {
     @FXML
     private Button backButton;
     @FXML
@@ -95,7 +95,7 @@ public class AddSessioneController_Create implements Initializable,FormChecker {
     private void loadViewSessioni(Conferenza c){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessione.fxml"));
-            ViewSessioniController_Create controller = new ViewSessioniController_Create();
+            VisualizzaSessioneController controller = new VisualizzaSessioneController();
             controller.setSubscene(subscene);
             loader.setController(controller);
             controller.setConferenza(c);
@@ -142,7 +142,6 @@ public class AddSessioneController_Create implements Initializable,FormChecker {
         MembriComitato membriComitato = new MembriComitato(conferenza);
         membriComitato.loadMembriComitatoScientifico();
         coordinatoreChoiceBox.setItems(membriComitato.getMembriComitatoScientifico());
-        membriComitato.loadMembriComitatoLocale();
         coordinatoreChoiceBox.setItems((membriComitato.getMembriComitatoLocale()));
     }
 }

@@ -19,8 +19,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class EntiController_Edit implements Initializable {
-    private ConferenzaController_Edit editController;
+public class EditEntiController implements Initializable {
+    private ModificaConferenzaController editController;
     private SubScene subScene;
     private Conferenza conferenza;
     private EntiOrganizzatori entiOrganizzatori;
@@ -46,11 +46,11 @@ public class EntiController_Edit implements Initializable {
         this.conferenza = conferenza;
     }
 
-    public ConferenzaController_Edit getEditController() {
+    public ModificaConferenzaController getEditController() {
         return editController;
     }
 
-    public void setEditController(ConferenzaController_Edit editController) {
+    public void setEditController(ModificaConferenzaController editController) {
         this.editController = editController;
     }
 

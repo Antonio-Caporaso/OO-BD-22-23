@@ -23,7 +23,7 @@ import Persistence.Entities.Utente;
 import Persistence.Entities.partecipanti.Speaker;
 import Services.*;
 
-public class AddActivityController_Create implements Initializable, FormChecker {
+public class AddActivityController implements Initializable, FormChecker {
     @FXML
     private TextArea abstractTextArea;
     @FXML
@@ -105,7 +105,7 @@ public class AddActivityController_Create implements Initializable, FormChecker 
     private void loadViewProgramma(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ViewProgrammaSessione.fxml"));
-            ViewProgrammaController_Create controller = new ViewProgrammaController_Create();
+            ViewProgrammaController controller = new ViewProgrammaController();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);

@@ -23,10 +23,10 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ResourceBundle;
 
-public class ProgrammaController_Edit implements Initializable {
+public class EditProgrammaController implements Initializable {
     private Programma programma;
     private SubScene subscene;
-    private SessioniController_Manage sessioniControllerManage;
+    private ManageSessioniController manageSessioniController;
     private InterventiSessione interventi;
     private IntervalliSessione intervalli;
     private Sessione sessione;
@@ -140,8 +140,8 @@ public class ProgrammaController_Edit implements Initializable {
         this.subscene = subscene;
     }
 
-    public void setManageSessioniController(SessioniController_Manage sessioniControllerManage) {
-        this.sessioniControllerManage = sessioniControllerManage;
+    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+        this.manageSessioniController = manageSessioniController;
     }
 
     @Override
@@ -213,15 +213,15 @@ public class ProgrammaController_Edit implements Initializable {
     @FXML
     private void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
-        loader.setController(sessioniControllerManage);
+        loader.setController(manageSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
     @FXML
     void editEventiButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEventi.fxml"));
-        EventiController_Edit controller = new EventiController_Edit();
-        controller.setManageSessioniController(sessioniControllerManage);
+        EditEventiController controller = new EditEventiController();
+        controller.setManageSessioniController(manageSessioniController);
         controller.setEditProgrammaController(this);
         controller.setProgramma(programma);
         controller.setSessione(sessione);
@@ -235,7 +235,7 @@ public class ProgrammaController_Edit implements Initializable {
     @FXML
     void editIntervalliButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervalli.fxml"));
-        IntervalliController_Edit controller = new IntervalliController_Edit();
+        EditIntervalliController controller = new EditIntervalliController();
         controller.setEditProgrammaController(this);
         controller.setProgramma(programma);
         controller.setSessione(sessione);
@@ -249,7 +249,7 @@ public class ProgrammaController_Edit implements Initializable {
     @FXML
     void editInterventiButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditInterventi.fxml"));
-        InterventiController_Edit controller = new InterventiController_Edit();
+        EditInterventiController controller = new EditInterventiController();
         controller.setEditProgrammaController(this);
         controller.setProgramma(programma);
         controller.setSessione(sessione);
@@ -262,7 +262,7 @@ public class ProgrammaController_Edit implements Initializable {
     @FXML
     void editKeynoteButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditKeynote.fxml"));
-        KeynoteController_Edit controller = new KeynoteController_Edit();
+        EditKeynoteController controller = new EditKeynoteController();
         controller.setEditProgrammaController(this);
         controller.setProgramma(programma);
         controller.setSubScene(subscene);
