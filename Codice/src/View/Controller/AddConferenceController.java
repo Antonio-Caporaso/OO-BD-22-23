@@ -11,9 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import tornadofx.control.DateTimePicker;
 import java.io.IOException;
 import java.net.URL;
@@ -54,12 +56,22 @@ public class AddConferenceController implements Initializable,FormChecker{
     }
     @FXML
     void annullaOnAction(ActionEvent event) {
-        dataFineDP.setValue(null);
-        dataFineDP.hide();
-        dataInizioDP.setValue(null);
-        dataInizioDP.hide();
-        nomeConferenzaTF.setText("");
-        descrizioneTextArea.setText("");
+        try {
+            goToLandingWindow();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void goToLandingWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Landing.fxml"));
+        LandingController controller = new LandingController();
+        loader.setController(controller);
+        Parent root = loader.load();
+        controller.setUser(user);
+        Scene landingScene = new Scene(root);
+        Stage stage = (Stage) avantiButton.getScene().getWindow();
+        stage.setScene(landingScene);
     }
 
     @FXML
