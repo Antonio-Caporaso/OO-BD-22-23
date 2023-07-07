@@ -9,13 +9,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Spinner;
 import javafx.stage.Stage;
+import org.postgresql.util.PGInterval;
 import tornadofx.control.DateTimePicker;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 public class AddEventoController implements Initializable {
+    @FXML
+    private Spinner<Integer> minutiSpinner;
+
+    @FXML
+    private Spinner<Integer> oraSpinner;
     @FXML
     private Button addButton;
     private Programma programma;
@@ -43,6 +50,7 @@ public class AddEventoController implements Initializable {
     void addOnAction(ActionEvent event) {
         EventoSociale e = retrieveDettagliEvento();
         try{
+            PGInterval durata = new PGInterval(0,0,0,oraSpinner.getValue(), minutiSpinner.getValue(),0);
             programma.addEvento(e,durata);
             Stage stage = (Stage) addButton.getScene().getWindow();
             stage.close();

@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
@@ -20,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable, FormChecker {
@@ -60,20 +58,21 @@ public class LoginController implements Initializable, FormChecker {
         String username = usernameTextField.getText();
         String pwd = passwordTextField.getText();
         UtenteDAO userdao = new UtenteDAO();
-        try {
+        try{
             user = userdao.retrieveUtentebyUsername(username);
-            if(pwd.equals(user.getPassword())){
-                try {
-                    changeToLandingWindow();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }else
+            if(pwd.equals(user.getPassword()))
+                changeToLandingWindow();
+            else
                 errorLabel.setText("Password errata");
-        }catch (Exception e){
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }catch (NullPointerException e){
             errorLabel.setText("Utente non presente");
+        }catch (IOException e){
+            e.printStackTrace();
         }
-
     }
 
     private void changeToLandingWindow() throws IOException {
@@ -89,20 +88,7 @@ public class LoginController implements Initializable, FormChecker {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setMediaPlayer();
-    }
-
-    private void setMediaPlayer() {
-        try{
-            // file = new File("Codice/src/View/Resources/Scientists.mp4");
-            file = new File ("src/View/Resources/Scientists.mp4");
-            media = new Media(file.toURI().toString());mediaPlayer = new MediaPlayer(media);
-            mediaView.setMediaPlayer(mediaPlayer);
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            mediaPlayer.play();
-        }catch (MediaException e){
-            System.out.println(e.getMessage());
-        }
+        //setMediaPlayer();
     }
 
     public Utente getUser() {

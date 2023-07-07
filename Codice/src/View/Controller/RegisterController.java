@@ -9,16 +9,16 @@ import Persistence.Entities.organizzazione.Ente;
 import Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable, FormChecker{
@@ -89,13 +89,15 @@ public class RegisterController implements Initializable, FormChecker{
     }
 
     void registraUtente() throws UtentePresenteException {
-            UtenteDAO dao = new UtenteDAO();
-            Utente newUser = getUserDetails();
-            try{
-                dao.saveUtente(newUser);
-            }catch (UtentePresenteException e){
-                throw e;
-            }
+        UtenteDAO dao = new UtenteDAO();
+        Utente newUser = getUserDetails();
+        try{
+            dao.saveUtente(newUser);
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
     @FXML
     void confirmButtonOnAction(ActionEvent event){
@@ -103,37 +105,29 @@ public class RegisterController implements Initializable, FormChecker{
             checkFieldsAreBlank();
             passwordMatcher();
             registraUtente();
+            goToLoginWindow();
         } catch (BlankFieldException e) {
                 errorLabel.setText(e.getMessage());
         } catch (PasswordMismatchException e) {
             errorLabel.setText(e.getMessage());
-        }catch (UtentePresenteException e){
+        } catch (UtentePresenteException e){
             errorLabel.setText(e.getMessage());
         }
     }
+
+    private void goToLoginWindow() {
+        NavigationController.getInstance().setStage((Stage) backButton.getScene().getWindow());
+        NavigationController.getInstance().loadScene("../FXML/Login.fxml");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         titoloChoiceBox.getItems().addAll(titoli);
         setIstituzioni();
-        setMediaPlayer();
     }
 
     private void setIstituzioni() {
         enti.loadEnti();
         istituzioneChoice.setItems(enti.getEnti());
-    }
-
-    private void setMediaPlayer() {
-        try{
-        //         file = new File ("Codice/src/View/Resources/Scientists1.mp4");
-        file = new File ("src/View/Resources/Scientists1.mp4");
-        media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaView.setMediaPlayer(mediaPlayer);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-    }catch (MediaException e){
-        System.out.println(e.getMessage());
-    }
     }
 }

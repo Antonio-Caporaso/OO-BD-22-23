@@ -28,22 +28,6 @@ public class EnteDao {
         stm.setInt(2,ente.getId_ente());
         stm.executeUpdate();
     }
-    public LinkedList<String> retrieveAllNomiEnti() {
-        dbConnection = DBConnection.getDBconnection();
-        connection = dbConnection.getConnection();
-        LinkedList<String> enti = new LinkedList<>();
-        try{
-            PreparedStatement stm = connection.prepareStatement("SELECT nome FROM ente");
-            ResultSet rs = stm.executeQuery();
-            while(rs.next()){
-                enti.add(rs.getString(1));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return enti;
-    }
-
     public LinkedList<Ente> retrieveEnti() {
         dbConnection = DBConnection.getDBconnection();
         connection = dbConnection.getConnection();
@@ -86,6 +70,7 @@ public class EnteDao {
         connection = dbConnection.getConnection();
         String query = "select * from ente where id_ente=?";
         PreparedStatement stm = connection.prepareStatement(query);
+        stm.setInt(1,id);
         ResultSet rs = stm.executeQuery();
         Ente e = new Ente();
         while (rs.next()) {

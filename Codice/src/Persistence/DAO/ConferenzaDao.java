@@ -21,7 +21,7 @@ public class ConferenzaDao {
         List<Conferenza> list = new ArrayList<>();
         String query = "SELECT * FROM conferenza where id_utente = ?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,user.getIdUtente());
+        stm.setInt(1,user.getId_utente());
         ResultSet rs = stm.executeQuery();
         ComitatoDao comitatodao = new ComitatoDao();
         while(rs.next())
@@ -78,7 +78,7 @@ public class ConferenzaDao {
         stm.setTimestamp(3,c.getFine());
         stm.setInt(4,c.getSede().getSedeID());
         stm.setString(5,c.getDescrizione());
-        stm.setInt(6,c.getProprietario().getIdUtente());
+        stm.setInt(6,c.getProprietario().getId_utente());
         ResultSet rs = stm.executeQuery();
         int result = 0;
         while(rs.next()){

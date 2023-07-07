@@ -42,8 +42,8 @@
             <ChoiceBox fx:id="tipologiaChoice" prefHeight="24.0" prefWidth="197.0" GridPane.columnIndex="1" />
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Spinner layoutY="23.0" prefHeight="24.0" prefWidth="59.0" />
-                  <Spinner layoutX="59.0" layoutY="23.0" prefHeight="24.0" prefWidth="59.0" />
+                  <Spinner fx:id="oraSpinner" editable="true" layoutY="23.0" prefHeight="24.0" prefWidth="59.0" />
+                  <Spinner fx:id="minutiSpinner" layoutX="59.0" layoutY="23.0" prefHeight="24.0" prefWidth="59.0" />
                </children>
             </Pane>
          </children>

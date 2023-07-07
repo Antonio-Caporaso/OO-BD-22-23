@@ -5,7 +5,7 @@ import Persistence.Entities.organizzazione.Ente;
 import java.util.Objects;
 
 public class Utente {
-    private int idUtente;
+    private int id_utente;
     private String titolo;
     private String username;
     private String password;
@@ -15,7 +15,7 @@ public class Utente {
     private Ente istituzione;
 
     public Utente(int idUtente, String titolo, String username, String password, String nome, String cognome, String email, Ente istituzione) {
-        this.idUtente = idUtente;
+        this.id_utente = idUtente;
         this.titolo = titolo;
         this.username = username;
         this.password = password;
@@ -46,12 +46,12 @@ public class Utente {
         this.istituzione = istituzione;
     }
 
-    public int getIdUtente() {
-        return idUtente;
+    public int getId_utente() {
+        return id_utente;
     }
 
-    public void setIdUtente(int idUtente) {
-        this.idUtente = idUtente;
+    public void setId_utente(int id_utente) {
+        this.id_utente = id_utente;
     }
 
     public String getTitolo() {

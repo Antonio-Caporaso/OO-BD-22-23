@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.postgresql.util.PGInterval;
 import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
@@ -25,6 +26,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class AddInterventoController implements Initializable {
+    @FXML
+    private Spinner<Integer> minutiSpinner;
+
+    @FXML
+    private Spinner<Integer> oraSpinner;
     private Programma programma;
     private ObservableList<Speaker> speakers;
     @FXML
@@ -60,6 +66,7 @@ public class AddInterventoController implements Initializable {
     void addOnAction(ActionEvent event) {
         Intervento i = retrieveDettagliIntervento();
         try {
+            PGInterval durata = new PGInterval(0,0,0,oraSpinner.getValue(), minutiSpinner.getValue(),0);
             programma.addIntervento(i,durata);
             Stage stage = (Stage) addButton.getScene().getWindow();
             stage.close();

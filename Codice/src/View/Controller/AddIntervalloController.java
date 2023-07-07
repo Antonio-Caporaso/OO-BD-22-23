@@ -10,7 +10,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Spinner;
 import javafx.stage.Stage;
+import org.postgresql.util.PGInterval;
 import tornadofx.control.DateTimePicker;
 
 import java.net.URL;
@@ -22,16 +24,15 @@ import java.util.ResourceBundle;
 
 public class AddIntervalloController implements Initializable {
     @FXML
+    private Spinner<Integer> minutiSpinner;
+
+    @FXML
+    private Spinner<Integer> oraSpinner;
+    @FXML
     private Button addButton;
     private Programma programma;
     @FXML
-    private DateTimePicker durataDT;
-
-    @FXML
     private Button annullaButton;
-
-    @FXML
-    private DateTimePicker orario;
     @FXML
     private ChoiceBox<String> tipologiaChoice;
 
@@ -53,6 +54,7 @@ public class AddIntervalloController implements Initializable {
         Stage stage = (Stage) addButton.getScene().getWindow();
         stage.close();
         try{
+            PGInterval durata = new PGInterval(0,0,0,oraSpinner.getValue(), minutiSpinner.getValue(),0);
             programma.addIntervallo(e,durata);
         }catch (SQLException exception){
             Alert alert = new Alert(Alert.AlertType.ERROR);
