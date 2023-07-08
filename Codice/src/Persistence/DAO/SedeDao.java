@@ -22,6 +22,8 @@ public class SedeDao {
                 Sede s = new Sede();
                 s.setSedeID(rs.getInt(1));
                 s.setNomeSede(rs.getString(2));
+                //La s.setIndirizzo è il problema del ritardo nei caricamenti delle sedi nelle choice box
+                //Da considerare la possibilità di modificarla per ridurre le tempistiche, ora si aggira intorno ad 1.7 secondi rispetto ai 0.68 della V.1
                 s.setIndirizzo(dao.retrieveIndirizzoByID(rs.getInt("id_indirizzo")));
                 sedi.add(s);
             }

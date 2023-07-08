@@ -90,7 +90,6 @@ public class AddConferenceController implements Initializable,FormChecker{
             alert.showAndWait();
         }
     }
-
     private Conferenza retrieveConferenza() {
         String nome = nomeConferenzaTF.getText();
         String descrizione = descrizioneTextArea.getText();
@@ -144,10 +143,6 @@ public class AddConferenceController implements Initializable,FormChecker{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sedi.loadSedi();
         sedeChoice.setItems(sedi.getSedi());
-    }
-    @FXML
-    void showSedi(MouseEvent event) {
-        sedeChoice.show();
     }
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
