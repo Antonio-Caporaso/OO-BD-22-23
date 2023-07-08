@@ -53,6 +53,9 @@ public class Conferenza {
         this.descrizione=descrizione;
         this.sede=sede;
         this.proprietario=user;
+        sponsorizzazioni = FXCollections.observableArrayList();
+        enti = FXCollections.observableArrayList();
+        sessioni = FXCollections.observableArrayList();
     }
 
     public int getId_conferenza() {
