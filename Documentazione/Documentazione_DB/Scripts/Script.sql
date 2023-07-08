@@ -8,3 +8,4 @@ drop schema conference cascade;
 \i Sedi.sql
 \i Sale.sql
 \i Speaker.sql
+\i Sponsors.sql
