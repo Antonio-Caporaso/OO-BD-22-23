@@ -51,6 +51,6 @@ VALUES
 ('Colgate-Palmolive Company'),
 ('Accenture plc'),
 ('BMW AG'),
-('Ford Motor Company')
-('SSC Napoli')
+('Ford Motor Company'),
+('SSC Napoli'),
 ('Tesla Inc.');

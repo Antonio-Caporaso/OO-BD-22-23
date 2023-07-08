@@ -7,5 +7,6 @@ drop schema conference cascade;
 \i Organizzatori.sql
 \i Sedi.sql
 \i Sale.sql
+\i Utente.sql
 \i Speaker.sql
 \i Sponsors.sql
