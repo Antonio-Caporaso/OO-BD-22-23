@@ -174,9 +174,12 @@ public class Conferenza {
     }
     public void addEnte(Ente e) throws SQLException {
         EnteDao dao = new EnteDao();
-        dao.saveEnteOrganizzatore(e,this);
-        enti.add(e);
+        if (!enti.contains(e)){
+            dao.saveEnteOrganizzatore(e, this);
+            enti.add(e);
+        }
     }
+
     public void removeEnte(Ente e) throws SQLException {
         EnteDao dao = new EnteDao();
         dao.removeEnteOrganizzatore(e, this);
