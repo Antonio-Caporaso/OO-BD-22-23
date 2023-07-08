@@ -50,7 +50,7 @@ public class EnteDao {
     public LinkedList<Ente> retrieveEntiOrganizzatori(Conferenza conferenza) throws SQLException {
         dbConnection = DBConnection.getDBconnection();
         connection= dbConnection.getConnection();
-        String query ="select e.id_ente, e.nome, e.sigla from enti_conferenza e1 natural join ente e where id_conferenza=?";
+        String query ="select e.id_ente, e.nome, e.sigla from ente_conferenza e1 natural join ente e where id_conferenza=?";
         PreparedStatement stm = connection.prepareStatement(query);
         stm.setInt(1,conferenza.getId_conferenza());
         LinkedList<Ente> enti = new LinkedList<Ente>();
