@@ -161,10 +161,12 @@ public class Conferenza {
     }
     public void addSponsorizzazione(Sponsorizzazione s) throws SQLException {
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+        dao.saveSponsorizzazione(s);
         sponsorizzazioni.add(s);
     }
     public void removeSponsorizzazione(Sponsorizzazione s) throws SQLException {
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+        dao.removeSponsorizzazione(s);
         sponsorizzazioni.remove(s);
     }
     public void loadOrganizzatori() throws SQLException {

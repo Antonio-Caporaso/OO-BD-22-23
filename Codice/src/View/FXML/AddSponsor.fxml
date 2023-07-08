@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" style="-fx-background-color: #33749D;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" style="-fx-background-color: #33749D;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="75.0" layoutY="-5.0" stroke="#00416a" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
         <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #00416A;" text="Aggiungi Sponsor" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
@@ -44,29 +44,29 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="172.0" text="Inserisci importo ricevtuto" textFill="WHITE">
+      <Label layoutX="14.0" layoutY="172.0" text="Inserisci importo ricevuto" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="selezionaSponsorChoiceBox" layoutX="279.0" layoutY="100.0" prefHeight="26.0" prefWidth="439.0" stylesheets="@../CSS/choiceBox.css" />
+      <ChoiceBox fx:id="selezionaSponsorChoiceBox" layoutX="279.0" layoutY="100.0" prefHeight="26.0" prefWidth="423.0" stylesheets="@../CSS/choiceBox.css" />
       <ChoiceBox fx:id="valutaChoiceBox" layoutX="466.0" layoutY="169.0" prefHeight="26.0" prefWidth="54.0" stylesheets="@../CSS/choiceBox.css" />
       <TextField fx:id="importoTextField" layoutX="279.0" layoutY="170.0" promptText="Inserisci importo" />
-      <Button fx:id="inserisciButton" layoutX="769.0" layoutY="93.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="104.0" prefWidth="134.0" stylesheets="@../CSS/defaultButton.css" text="Inserisci" textFill="WHITE">
+      <Button fx:id="inserisciButton" layoutX="769.0" layoutY="98.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="25.0" prefWidth="134.0" stylesheets="@../CSS/defaultButton.css" text="Inserisci" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="221.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="134.0" stylesheets="@../CSS/defaultButton.css" text="Rimuovi" textFill="WHITE">
+      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="446.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="134.0" stylesheets="@../CSS/defaultButton.css" text="Rimuovi" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <TableView fx:id="sponsorTable" layoutX="12.0" layoutY="221.0" prefHeight="481.0" prefWidth="703.0">
+      <TableView fx:id="sponsorTable" layoutX="12.0" layoutY="221.0" prefHeight="481.0" prefWidth="703.0" stylesheets="@../CSS/TableView.css">
         <columns>
-          <TableColumn fx:id="sponsorColumn" prefWidth="170.0" resizable="false" text="Sponsor" />
-          <TableColumn fx:id="contributoColumn" prefWidth="238.0" resizable="false" text="Contributo" />
-            <TableColumn fx:id="valutaColumn" prefWidth="294.0" text="Valuta" />
+          <TableColumn fx:id="sponsorColumn" editable="false" prefWidth="262.0" resizable="false" sortable="false" text="Sponsor" />
+          <TableColumn fx:id="contributoColumn" editable="false" prefWidth="195.0" resizable="false" sortable="false" text="Contributo" />
+            <TableColumn fx:id="valutaColumn" editable="false" prefWidth="245.0" resizable="false" sortable="false" text="Valuta" />
         </columns>
       </TableView>
     </children>
