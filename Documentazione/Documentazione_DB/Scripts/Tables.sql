@@ -1,7 +1,6 @@
 create schema conference;
 set search_path to conference;
 
-
 create table ente(
 id_ente serial primary key,
 nome text not null unique,
@@ -74,8 +73,8 @@ create table conferenza(
     comitato_s integer references comitato(id_comitato) on delete set null,
     comitato_l integer references comitato(id_comitato) on delete set null,
     id_utente integer references utente(id_utente) on delete cascade,
-    check (inizio <= fine) 
-    --check (inizio >= now()) 
+    check (inizio <= fine),
+    unique (titolo,inizio,fine,id_sede)
 );
 
 create table partecipante(
@@ -95,7 +94,8 @@ create table sessione(
     id_coordinatore integer references organizzatore(id_organizzatore) on delete set null,
     id_conferenza integer references conferenza(id_conferenza) on delete cascade,
     id_sala integer references sala(id_sala) on delete set null,
-    check (inizio <= fine)
+    check (inizio <= fine),
+    unique (titolo,inizio,fine,id_conferenza,id_sala)
 );
 
 create table partecipazione(
@@ -152,7 +152,7 @@ create table intervento(
     fine timestamp not null,
     id_speaker integer references speaker(id_speaker) on delete cascade,
     id_programma integer references programma(id_programma) on delete cascade not null,
-    unique (id_speaker,id_programma), 
+    unique (id_speaker,titolo,id_programma), 
     check (inizio <= fine) 
 );
 
