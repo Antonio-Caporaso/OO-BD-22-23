@@ -1,6 +1,5 @@
 package Persistence.Entities.Conferenze;
 
-import Persistence.DAO.ConferenzaDao;
 import Persistence.DAO.EnteDao;
 import Persistence.DAO.SessioneDao;
 import Persistence.DAO.SponsorizzazioneDAO;
@@ -13,7 +12,6 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.LinkedList;
 
 public class Conferenza {
     private int id_conferenza;
@@ -148,10 +146,12 @@ public class Conferenza {
     }
     public void addSessione(Sessione sessione) throws SQLException{
         SessioneDao sessioneDao = new SessioneDao();
+        sessione.setId_sessione(sessioneDao.saveSessione(sessione));
         sessioni.add(sessione);
     }
     public void removeSessione(Sessione sessione) throws SQLException {
         SessioneDao dao = new SessioneDao();
+        dao.removeSessione(sessione);
         sessioni.remove(sessione);
     }
     public void loadSponsorizzazioni() throws SQLException {
