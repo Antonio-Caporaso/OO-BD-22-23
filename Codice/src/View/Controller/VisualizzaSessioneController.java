@@ -42,10 +42,6 @@ public class VisualizzaSessioneController implements Initializable {
     @FXML
     private TableColumn<Sessione, Time> fineTableColumn;
     @FXML
-    private TableColumn<Sessione, Date> dataInizioTableColumn;
-    @FXML
-    private TableColumn<Sessione, Date> dataFineTableColumn;
-    @FXML
     private TableColumn<Sessione, Sala> salaTableColumn;
     @FXML
     private TableColumn<Sessione, Organizzatore> chairTableColumn;
@@ -175,10 +171,8 @@ public class VisualizzaSessioneController implements Initializable {
     try {
         conferenza.loadSessioni();
         titoloTableColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
-        dataInizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
-        inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("orarioInizio"));
-        dataFineTableColumn.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
-        fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("orarioFine"));
+        inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+        fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
         salaTableColumn.setCellValueFactory(new PropertyValueFactory<>("locazione"));
         chairTableColumn.setCellValueFactory(new PropertyValueFactory<>("coordinatore"));
         sessioniTableView.setItems(conferenza.getSessioni());

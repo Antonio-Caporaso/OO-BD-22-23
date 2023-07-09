@@ -33,13 +33,11 @@
       </ButtonBar>
       <TableView fx:id="sessioniTableView" layoutX="14.0" layoutY="124.0" prefHeight="500.0" prefWidth="725.0" stylesheets="@../CSS/TableView.css">
         <columns>
-          <TableColumn fx:id="titoloTableColumn" editable="false" maxWidth="256.0" prefWidth="100.0" text="Titolo" />
-            <TableColumn fx:id="dataInizioTableColumn" editable="false" maxWidth="209.0" minWidth="0.0" resizable="false" text="Data Inizio" />
-          <TableColumn fx:id="inizioTableColumn" editable="false" maxWidth="229.0" minWidth="0.0" resizable="false" text="Orario Inizio" />
-            <TableColumn fx:id="dataFineTableColumn" editable="false" maxWidth="306.0" resizable="false" text="Data Fine" />
-            <TableColumn fx:id="fineTableColumn" editable="false" maxWidth="300.0" resizable="false" text="Orario Fine" />
-            <TableColumn fx:id="salaTableColumn" editable="false" maxWidth="409.0" sortable="false" text="Sala" />
-            <TableColumn fx:id="chairTableColumn" editable="false" maxWidth="500.0" prefWidth="223.0" sortable="false" text="Chair" />
+          <TableColumn fx:id="titoloTableColumn" editable="false" maxWidth="256.0" prefWidth="135.0" text="Titolo" />
+            <TableColumn fx:id="inizioTableColumn" editable="false" maxWidth="209.0" minWidth="0.0" prefWidth="160.0" resizable="false" text="Inizio" />
+            <TableColumn fx:id="fineTableColumn" editable="false" maxWidth="209.0" minWidth="0.0" prefWidth="160.0" resizable="false" text="Fine" />
+            <TableColumn fx:id="salaTableColumn" editable="false" maxWidth="409.0" prefWidth="110.0" sortable="false" text="Sala" />
+            <TableColumn fx:id="chairTableColumn" editable="false" maxWidth="500.0" prefWidth="146.0" sortable="false" text="Chair" />
         </columns>
       </TableView>
       <Button fx:id="inserisciButton" layoutX="752.0" layoutY="269.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/defaultButton.css" text="Inserisci Sessione" />
