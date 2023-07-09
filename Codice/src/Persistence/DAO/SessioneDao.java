@@ -3,6 +3,7 @@ package Persistence.DAO;
 import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
+import org.postgresql.util.PSQLException;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -55,10 +56,10 @@ public class SessioneDao {
         }
         return sessioni;
     }
-    public int saveSessione(Sessione sessione)throws SQLException{
+    public int saveSessione(Sessione sessione)throws SQLException, PSQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "select * from add_sessione(?,?,?,?,?)";
+        String query = "SELECT add_new_sessione(?,?,?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setString(1,sessione.getTitolo());
         stm.setTimestamp(2,sessione.getInizio());
@@ -67,7 +68,7 @@ public class SessioneDao {
         stm.setInt(5,sessione.getConferenza().getId_conferenza());
         ResultSet rs = stm.executeQuery();
         int result = 0;
-        while(rs.next()){
+        if (rs.next()) {
             result = rs.getInt(1);
         }
         return result;
