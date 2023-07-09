@@ -1,5 +1,6 @@
 package Persistence.Entities.Conferenze;
 
+import Exceptions.EntePresenteException;
 import Persistence.DAO.EnteDao;
 import Persistence.DAO.SessioneDao;
 import Persistence.DAO.SponsorizzazioneDAO;
@@ -174,11 +175,13 @@ public class Conferenza {
         enti.clear();
         enti.addAll(dao.retrieveEntiOrganizzatori(this));
     }
-    public void addEnte(Ente e) throws SQLException {
+    public void addEnte(Ente e) throws SQLException, EntePresenteException {
         EnteDao dao = new EnteDao();
         if (!enti.contains(e)){
             dao.saveEnteOrganizzatore(e, this);
             enti.add(e);
+        }else {
+            throw new EntePresenteException();
         }
     }
 

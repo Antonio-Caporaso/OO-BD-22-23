@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Exceptions.EntePresenteException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
 import Persistence.Entities.organizzazione.Ente;
@@ -54,7 +55,13 @@ public class AddEntiController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Questo organizzatore è già presente!");
             alert.showAndWait();
-        }catch(NullPointerException e){
+        }catch (EntePresenteException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("EntePresenteException");
+            alert.setContentText("Questo organizzatore è già presente!");
+            alert.showAndWait();
+        }
+        catch(NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Nessun ente selezionato");
             alert.showAndWait();
