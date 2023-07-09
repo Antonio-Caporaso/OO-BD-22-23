@@ -2,6 +2,7 @@ package Utilities;
 
 import Persistence.DAO.OrganizzatoreDao;
 import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.organizzazione.Ente;
 import Persistence.Entities.organizzazione.Organizzatore;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +28,18 @@ public class MembriComitato {
         OrganizzatoreDao dao = new OrganizzatoreDao();
         membriComitatoLocale.clear();
         membriComitatoLocale.addAll(dao.retrieveOrganizzatoriComitato(conferenza.getComitato_l().getId_comitato()));
+    }
+    public void loadOrganizzatoriEnte(ObservableList<Ente> enti)throws SQLException{
+        OrganizzatoreDao dao= new OrganizzatoreDao();
+        membriComitatoScientifico.clear();
+        for (Ente ente: enti) {
+            membriComitatoScientifico.addAll(dao.retrieveOrganizzatoreByEnte(ente.getId_ente()));
+        }
+    }
+    public void loadAllOrganizzatori() throws SQLException{
+        OrganizzatoreDao dao=new OrganizzatoreDao();
+        membriComitatoScientifico.clear();
+        membriComitatoScientifico.addAll(dao.retrieveAllOrganizzatori());
     }
     public ObservableList<Organizzatore> getMembriComitatoScientifico(){
         return membriComitatoScientifico;
