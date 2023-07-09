@@ -37,7 +37,7 @@ public class SessioneDao {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         OrganizzatoreDao dao = new OrganizzatoreDao();
-        String query = "SELECT * from sessione WHERE idconferenza = ?";
+        String query = "SELECT * from sessione WHERE id_conferenza = ? order by inizio";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,conferenza.getId_conferenza());
         LinkedList<Sessione> sessioni = new LinkedList<>();
