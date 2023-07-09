@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import org.postgresql.util.PSQLException;
 import tornadofx.control.DateTimePicker;
 
 import Exceptions.BlankFieldException;
@@ -73,7 +74,13 @@ public class InserisciSessioneController implements Initializable,FormChecker {
             alert.setTitle("Error");
             alert.setHeaderText(e.getMessage());
             alert.showAndWait();
-        }catch (SQLException e){
+        }catch (PSQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Sessione inserita al di fuori delle date previste");
+            alert.showAndWait();
+        }
+        catch (SQLException e){
             e.printStackTrace();
         }
     }
@@ -117,6 +124,24 @@ public class InserisciSessioneController implements Initializable,FormChecker {
             e.printStackTrace();
         }
     }
+    private void loadCoordinatoreChoiceBox() throws SQLException {
+        MembriComitato membriComitato = new MembriComitato(conferenza);
+        if (!conferenza.getEnti().isEmpty()) {
+            try {
+                membriComitato.loadOrganizzatoriEnte(conferenza.getEnti());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            coordinatoreChoiceBox.setItems(membriComitato.getMembriComitatoScientifico());
+        }else {
+            try{
+                membriComitato.loadAllOrganizzatori();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+            coordinatoreChoiceBox.setItems(membriComitato.getMembriComitatoScientifico());
+        }
+    }
     //Overrides
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
@@ -132,11 +157,5 @@ public class InserisciSessioneController implements Initializable,FormChecker {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-    private void loadCoordinatoreChoiceBox() throws SQLException {
-        MembriComitato membriComitato = new MembriComitato(conferenza);
-        membriComitato.loadMembriComitatoScientifico();
-        coordinatoreChoiceBox.setItems(membriComitato.getMembriComitatoScientifico());
-        coordinatoreChoiceBox.setItems((membriComitato.getMembriComitatoLocale()));
     }
 }
