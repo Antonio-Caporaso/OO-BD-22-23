@@ -198,9 +198,9 @@ RETURNS TABLE (
 )
 AS $$
 DECLARE
-    programma integer;
+    programma_id integer;
 BEGIN
-    SELECT id_programma INTO programma
+    SELECT id_programma INTO programma_id
     FROM programma
     WHERE id_sessione = sessione;
 
@@ -215,7 +215,7 @@ BEGIN
                s.nome || ' ' || s.cognome AS speaker
         FROM intervento i
         JOIN speaker s ON i.id_speaker = s.id_speaker
-        WHERE i.id_programma = programma
+        WHERE i.id_programma = programma_id
 
         UNION ALL
 
@@ -226,7 +226,7 @@ BEGIN
                tipologia::text as descrizione,
                NULL
         FROM intervallo i2
-        WHERE i2.id_programma = programma
+        WHERE i2.id_programma = programma_id
 
         UNION ALL
 
@@ -237,7 +237,7 @@ BEGIN
                e.tipologia::text AS descrizione,
                NULL
         FROM evento e
-        WHERE e.id_programma = programma
+        WHERE e.id_programma = programma_id
     ) AS subquery
     ORDER BY inizio;
 END;
