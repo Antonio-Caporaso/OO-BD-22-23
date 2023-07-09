@@ -1,0 +1,396 @@
+\section{Definizione dei trigger}
+\subsection{\texttt{Check\_Programma}}
+In un programma non devono esserci eventi, intervalli o interventi che si sovrappongono. Per questo motivo definiamo il trigger \texttt{check\_programma\_entry} che viene eseguito per ogni inserimento o aggiornamento nelle tabelle \textsc{Intervento}, \textsc{Intervallo} ed \textsc{Evento}.
+\begin{lstlisting}[language=SQL,style=mystyle,caption={check\_programma\_entry}]
+create or replace function check_programma() returns trigger as $$
+declare
+    inizio_evento timestamp;
+    fine_evento timestamp;
+    inizio_intervallo timestamp;
+    fine_intervallo timestamp;
+    inizio_intervento timestamp;
+    fine_intervento timestamp;
+    intervento_id integer;
+    intervallo_id integer;
+    evento_id integer;
+    interventi_cur cursor for select id_intervento from intervento where id_programma = new.id_programma;
+    intervalli_cur cursor for select id_intervallo from intervallo where id_programma = new.id_programma;
+    eventi_cur cursor for select id_evento from evento where id_programma = new.id_programma;
+begin
+open interventi_cur;
+loop 
+    fetch interventi_cur into intervento_id;
+    exit when not found;
+    select inizio,fine into inizio_intervento,fine_intervento
+    from intervento
+    where id_intervento = intervento_id;
+    if (new.inizio>=inizio_intervento AND new.fine<=fine_intervento) then
+        raise exception 'Impossibile inserire questo intervento in questo orario';
+    end if;
+end loop;
+close interventi_cur;
+open intervalli_cur;
+loop 
+    fetch intervalli_cur into intervallo_id;
+    exit when not found;
+    select inizio,fine into inizio_intervallo,fine_intervallo
+    from intervallo
+    where id_intervallo = intervallo_id;
+    if (new.inizio>=inizio_intervallo AND new.fine<=fine_intervallo) then
+        raise exception 'Impossibile inserire questo intervallo in questo orario';
+    end if;
+end loop;
+close intervalli_cur;
+open eventi_cur;
+loop 
+    fetch eventi_cur into evento_id;
+    exit when not found;
+    select inizio,fine into inizio_evento,fine_evento
+    from evento
+    where id_evento = evento_id;
+    if (new.inizio>=inizio_evento AND new.fine<=fine_evento) then
+        raise exception 'Impossibile inserire questo evento in questo orario';
+    end if;
+end loop;
+close eventi_cur;
+return new;
+end;
+$$ language plpgsql;
+
+create trigger check_programma
+before insert or update on intervento
+for each row
+execute function check_programma();
+create trigger check_programma
+before insert or update on intervallo
+for each row
+execute function check_programma();
+create trigger check_programma
+before insert or update on evento
+for each row
+execute function check_programma();
+\end{lstlisting}
+
+\subsection{\texttt{Check\_Data\_Intervento, Check\_Data\_Intervallo, Check\_Data\_Evento}}\label{trigger:check_data}
+Ogni volta che viene inserito o aggiornato un intervento, un intervallo o un evento bisogna controllare sempre che le loro date di inizio e di fine siano coerenti con quella della sessione cui appartengono:
+\begin{lstlisting}[caption={check\_data\_intervento},language=SQL,style=mystyle]
+create or replace function check_data() returns trigger as $$
+declare
+    inizio_sessione timestamp;
+    fine_sessione timestamp;
+begin
+    select inizio,fine into inizio_sessione,fine_sessione
+    from sessione
+    where id_sessione = (select id_sessione from programma where id_programma = new.id_programma);
+
+    if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
+        raise exception 'L''intervento non e'' compreso nella sessione';
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger check_data_evento
+before insert or update on evento
+for each row
+execute function check_data();
+
+create trigger check_data_intervento
+before insert or update on intervento
+for each row
+execute function check_data();
+
+create trigger check_data_intervallo
+before insert or update on intervallo
+for each row
+execute function check_data();
+\end{lstlisting}
+\subsection{\texttt{Create\_Programma\_Sessione}}
+Il trigger \texttt{Create\_Programma\_Sessione} viene attivato subito dopo aver inserito una nuova sessione ed effettua l'inserimento di un programma vuoto associato alla sessione.
+\begin{lstlisting}[language=SQL, caption={\texttt{create\_programma\_sessione}},style=mystyle]
+create or replace function create_programma_sessione() returns trigger as $$
+begin
+    insert into programma(id_sessione) values (new.id_sessione);
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger create_programma_sessione
+after insert on sessione
+for each row
+execute function create_programma_sessione();
+\end{lstlisting}
+\subsection{\texttt{Check\_Sala\_Sessione}}
+Quando inseriamo una sessione bisogna stare attenti che la chiave esterna della sala sia effettivamente una sala appartenente alla sede che ospita la conferenza della sessione IN questione. Il trigger \texttt{check\_sala\_sessione} effettua quindi questo controllo prima di ciascun inserimento nella tabella \textsc{Sessione}:
+\begin{lstlisting}[language=SQL, style=mystyle]
+create or replace function check_sala_sessione() returns trigger as $$
+declare
+    sede integer;
+    sala integer;
+begin
+    select id_sede into sede
+    from conferenza
+    where id_conferenza = new.id_conferenza;
+    
+    select id_sala into sala
+    from sala
+    where id_sala = new.id_sala;
+    
+    IF sala IS NULL THEN
+        Return new;
+    END IF;
+    
+    IF sala NOT IN (
+        SELECT id_sala
+        FROM sala
+        WHERE id_sede = sede
+    ) THEN
+        RAISE exception 'La sala selezionata non appartiene alla sede della conferenza';
+    END IF;
+    
+    return new;
+end;
+$$ language plpgsql;
+
+
+create trigger check_sala_sessione
+before insert or update on sessione
+for each row
+execute function check_sala_sessione();
+\end{lstlisting}
+\subsection{\texttt{Check\_Data\_Sessione}}
+Analogamente ai trigger \ref{trigger:check_data} si definisce il trigger \texttt{check\_data\_sessione} che controlla che l'inizio e la fine di ciascuna sessione siano coerenti con quelle della relativa conferenza:
+\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{check\_data\_sessione}}]
+create or replace function check_data_sessione() returns trigger as $$
+declare
+    inizio_conferenza timestamp;
+    fine_conferenza timestamp;
+begin
+    select inizio, fine into inizio_conferenza,fine_conferenza
+    from conferenza
+    where id_conferenza = new.id_conferenza;
+
+    if (new.inizio < inizio_conferenza OR new.fine > fine_conferenza) then
+        raise exception 'La sessione non e'' compresa nella conferenza';
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger check_data_sessione
+before insert or update on sessione
+for each row
+execute function check_data_sessione();
+\end{lstlisting}
+\subsection{\texttt{Check\_Coordinatore\_Sessione}}
+Quando si specifica il coordinatore della sessione bisogna controllare che questi appartenga al comitato scientifico che è il gruppo di organizzatori che si occupa della gestione delle conferenze e delle sessioni:
+\begin{lstlisting}[caption={check\_coordinatore\_sessione}, language=sql, style=mystyle]
+create or replace function check_coordinatore_sessione() returns trigger as $$
+declare 
+    id_comitato_scientifico_conferenza integer;
+begin
+
+select comitato_s into id_comitato_scientifico_conferenza
+from conferenza c
+where c.id_conferenza = new.id_conferenza;
+
+if (new.id_coordinatore is not null) then
+    if (id_comitato_scientifico_conferenza not in (select id_comitato from organizzatore_comitato where id_organizzatore = new.id_coordinatore))  then
+        raise exception 'Il coordinatore della sessione deve appartenere al comitato scientifico della conferenza';
+    end if;
+end if;
+return new;
+end;
+$$ language plpgsql;
+
+create trigger check_coordinatore_sessione
+before insert or update on sessione
+for each row
+execute function check_coordinatore_sessione();
+\end{lstlisting}
+\subsection{\texttt{Create\_Comitati\_Conferenza}}
+Gli enti che organizzano le conferenze nominano due comitati per ogni conferenza che organizzano. Per questo motivo, ogni volta che viene inserita una nuova conferenza viene attivato il trigger \texttt{create\_comitati\_conferenza} che si occupa di creare due nuovi comitati di tipologica \textit{scientifica} e \textit{locale} e associarli alla nuova conferenza appena create:
+\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{create\_comitati\_conferenza}}]
+create or replace function create_comitati_conferenza() returns trigger as $$
+declare 
+    id_comitatoscientifico integer;
+    id_comitatolocale integer;
+begin
+    insert into comitato(tipologia) values ('scientifico') returning id_comitato into id_comitatoscientifico;
+    insert into comitato(tipologia) values ('locale') returning id_comitato into id_comitatolocale;
+    update conferenza set comitato_s = id_comitatoscientifico, comitato_l = id_comitatolocale where id_conferenza = new.id_conferenza;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger create_comitati_conferenza
+after insert on conferenza
+for each row
+execute function create_comitati_conferenza();
+\end{lstlisting}
+\subsection{\texttt{Check\_Comitati\_Conferenza}}
+Ogni volta che si aggiorna una conferenza bisogna controllare che le chiavi esterne dei due comitati si riferiscano sempre a comitati della tipologia richiesta:
+\begin{lstlisting}[language=SQL, caption={\texttt{check\_comitati\_conferenza}},style=mystyle]
+create or replace function check_comitati_conferenza() returns trigger as $$
+declare 
+    id_comitato_scientifico integer;
+    id_comitato_locale integer;
+begin
+    select id_comitato into id_comitato_scientifico
+    from comitato
+    where id_comitato = new.comitato_s;
+    
+    select id_comitato into id_comitato_locale
+    from comitato
+    where id_comitato = new.comitato_l;
+    
+    IF id_comitato_scientifico IS NULL THEN
+        return new;
+    END IF;
+    
+    IF id_comitato_locale IS NULL THEN
+        return new;
+    END IF;
+    
+    IF (select tipologia from comitato where id_comitato = id_comitato_scientifico) <> 'scientifico' THEN
+        RAISE EXCEPTION 'Il comitato scientifico deve essere scientifico';
+    END IF;
+    
+    IF (select tipologia from comitato where id_comitato = id_comitato_locale) <> 'locale' THEN
+        RAISE EXCEPTION 'Il comitato locale deve essere locale';
+    END IF;
+    
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger check_comitati_conferenza
+before update on conferenza
+for each row
+execute function check_comitati_conferenza();
+\end{lstlisting}
+\subsection{\texttt{Check\_Sala\_Sessione\_Unica}}
+Una sala non può ospitare più di una sessione alla volta.
+\begin{lstlisting}[caption={\texttt{Check\_sala\_sessione\_unica}}, language=SQL, style=mystyle]
+create or replace function check_sala_sessione_unica() returns trigger as $$
+declare
+    inizio_sessione timestamp;
+    fine_sessione timestamp;
+    sessioni cursor for select id_sessione from sessione where id_sala = new.id_sala;
+    sessione_id integer;
+begin
+    open sessioni;
+    loop
+        fetch sessioni into sessione_id;
+        exit when not found;
+        select inizio,fine into inizio_sessione,fine_sessione
+        from sessione
+        where id_sessione = sessione_id;
+        if (new.inizio >= inizio_sessione AND new.inizio <= fine_sessione) OR (new.fine >= inizio_sessione AND new.fine <= fine_sessione) then
+            raise exception 'La sala non puo'' ospitare piu'' di una sessione alla volta';
+        end if;
+    end loop;
+    close sessioni;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger check_sala_sessione_unica
+before insert or update on sessione
+for each row
+execute function check_sala_sessione_unica();
+\end{lstlisting}
+\subsection{\texttt{Check\_Organizzatore\_Comitato}}
+Ogni volta che si inserisce un nuovo organizzatore all'interno di un comitato bisogna controllare che questo appartenga ad uno degli enti che organizzano la conferenza.
+\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{Check\_organizzatori\_comitato}}]
+create or replace function check_organizzatore_comitato() returns trigger as $$
+declare
+    ente_id integer;
+begin
+
+    select id_ente into ente_id
+    from organizzatore o
+    where o.id_organizzatore = new.id_organizzatore;
+    
+    IF ente_id IS NULL THEN
+        RAISE EXCEPTION 'L''organizzatore non esiste';
+    END IF;
+    
+    IF ente_id NOT IN (
+        SELECT id_ente
+        FROM ente_conferenza
+        WHERE id_conferenza IN (
+            SELECT id_conferenza
+            FROM conferenza
+            WHERE NEW.id_comitato IN (id_comitato_scientifico, id_comitato_locale)
+        )
+    ) THEN
+        RAISE EXCEPTION 'L''organizzatore deve appartenere ad un ente che ha organizzato la conferenza';
+    END IF;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger check_organizzatore_comitato
+before insert or update on organizzatore_comitato
+for each row
+execute function check_organizzatore_comitato();
+\end{lstlisting}
+\subsection{\texttt{Delete\_Sessioni\_Conferenza}}
+Nel caso IN cui si volesse modificare la data di inizio o di fine di una conferenza vengono automaticamente cancellate le sessioni che si trovano escluse dal nuovo intervallo di DATE.
+\begin{lstlisting}[language=SQL, style=mystyle, caption={\texttt{DELETE\_sessioni\_conferenza}}]
+create or replace function delete_sessioni_conferenza() returns trigger as $$
+declare
+    sessioni_cur cursor for 
+    	select id_sessione 
+    	from sessione 
+    	where id_conferenza = old.id_conferenza;
+    sessione_id integer;
+begin
+    open sessioni_cur;
+    loop
+        fetch sessioni_cur into sessione_id;
+        exit when not found;
+        if (select inizio from sessione where id_sessione = sessione_id) < new.inizio 
+        	OR (select fine from sessione where id_sessione = sessione_id) > new.fine then
+            	delete from sessione where id_sessione = sessione_id;
+        end if;
+    end loop;
+    close sessioni_cur;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger delete_sessioni_conferenza
+before update on conferenza
+for each row
+execute function delete_sessioni_conferenza();
+\end{lstlisting}
+\subsection{\texttt{Check\_Capienza}}
+Ogni volta che si aggiunge un nuovo partecipante della sessione bisogna controllare prima che la capienza della sala dove si svolge la sessione non sia stata raggiunta:
+\begin{lstlisting}[language=SQL, style=mystyle]
+create or replace function check_capienza_sala() returns trigger as $$
+declare
+    capienza_s integer;
+    partecipanti integer;
+begin
+    select capienza into capienza_s
+    from sala
+    where id_sala = new.id_sala;
+    
+    select count(*) into partecipanti
+    from partecipazione
+    where id_sessione = new.id_sessione;
+    
+    if (partecipanti >= capienza_s) then
+        raise exception 'La capienza della sala e'' stata raggiunta';
+    end if;
+    return new;
+end;
+$$ language plpgsql;
+
+create trigger check_capienza_sala
+before insert on partecipazione
+for each row
+execute function check_capienza_sala();
+\end{lstlisting}
