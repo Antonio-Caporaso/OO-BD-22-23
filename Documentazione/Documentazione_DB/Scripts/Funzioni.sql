@@ -190,7 +190,7 @@ end;
 $$ language plpgsql;
 
 -- Funzione che mostra tutti gli elementi all'interno di un programma 
-CREATE OR REPLACE FUNCTION show_programma(sessione int)
+CREATE OR REPLACE FUNCTION show_programma(sessione_id int)
 RETURNS TABLE (
     id_entry integer,
     appuntamento text,
@@ -205,7 +205,7 @@ DECLARE
 BEGIN
     SELECT id_programma INTO programma_id
     FROM programma
-    WHERE id_sessione = sessione;
+    WHERE id_sessione = sessione_id;
 
     RETURN QUERY
     SELECT *
