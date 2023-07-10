@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 public class ConferenzeUtente extends Conferenze {
     private ObservableList<Conferenza> conferenzeUtente;
@@ -31,19 +32,25 @@ public class ConferenzeUtente extends Conferenze {
     public void loadOrganizzatori() throws SQLException {
         EnteDao dao = new EnteDao();
         for(Conferenza c: conferenzeUtente){
-            c.setEnti((ObservableList<Ente>) dao.retrieveEntiOrganizzatori(c));
+            LinkedList<Ente> entiList = dao.retrieveEntiOrganizzatori(c);
+            ObservableList<Ente> entiObservableList = FXCollections.observableList(entiList);
+            c.setEnti(entiObservableList);
         }
     }
     public void loadSponsorizzazioni() throws SQLException{
         SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
         for(Conferenza c: conferenzeUtente){
-            c.setSponsorizzazioni((ObservableList<Sponsorizzazione>) dao.retrieveSponsorizzazioni(c));
+            LinkedList<Sponsorizzazione> sponsorList = dao.retrieveSponsorizzazioni(c);
+            ObservableList<Sponsorizzazione> sponsorObservableList = FXCollections.observableList(sponsorList);
+            c.setSponsorizzazioni(sponsorObservableList);
         }
     }
     public void loadSessioni() throws SQLException {
         SessioneDao sessionedao = new SessioneDao();
         for(Conferenza c: conferenzeUtente){
-            c.setSessioni((ObservableList<Sessione>) sessionedao.retrieveSessioniByConferenza(c));
+            LinkedList<Sessione> sessioneList = sessionedao.retrieveSessioniByConferenza(c);
+            ObservableList<Sessione> sessioneObservableList = FXCollections.observableList(sessioneList);
+            c.setSessioni(sessioneObservableList);
         }
     }
     public ObservableList<Conferenza> getConferenzeUtente() {
