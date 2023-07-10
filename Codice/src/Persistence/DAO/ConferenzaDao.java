@@ -4,6 +4,8 @@ import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.Utente;
+import org.postgresql.util.PGInterval;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -86,7 +88,15 @@ public class ConferenzaDao {
         }
         return result;
     }
-
+    public void slittaConferenza(Conferenza c, PGInterval durata) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "call slitta_conferenza(?,?)";
+        PreparedStatement stm = conn.prepareCall(query);
+        stm.setInt(1,c.getId_conferenza());
+        stm.setObject(2,durata);
+        stm.executeUpdate();
+    }
     public void deleteConferenza(Conferenza c) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn=dbcon.getConnection();

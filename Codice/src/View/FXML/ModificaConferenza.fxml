@@ -17,14 +17,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label fx:id="titleLabel" layoutX="14.0" layoutY="27.0" text="Label" textFill="WHITE">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <VBox layoutX="714.0" layoutY="99.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="315.0" prefWidth="204.0">
+      <VBox layoutX="714.0" layoutY="99.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="405.0" prefWidth="204.0">
          <children>
             <Button fx:id="editDetailsButton" mnemonicParsing="false" onAction="#editDetailsOnAction" prefHeight="70.0" prefWidth="204.0" text="Modifica dettagli" />
             <Button fx:id="editEntiButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#editEntiOnAction" prefHeight="70.0" prefWidth="204.0" text="Modifica organizzatori" textAlignment="CENTER">
@@ -41,6 +41,11 @@
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin></Button>
+            <Button fx:id="slittaConferenzaButton" mnemonicParsing="false" onAction="#SlittaConferenzaButtonOnAction" prefHeight="70.0" prefWidth="216.0" text="Slitta conferenza">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
       <Accordion layoutX="14.0" layoutY="99.0" prefHeight="599.0" prefWidth="683.0">
@@ -55,7 +60,6 @@
                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="551.0" minWidth="10.0" prefWidth="530.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -83,7 +87,7 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Budget:">
+                                    <Label layoutX="14.0" layoutY="24.0" text="Inizio:">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
@@ -92,7 +96,7 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Data di inizio:">
+                                    <Label layoutX="14.0" layoutY="24.0" text="Fine:">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
@@ -100,15 +104,6 @@
                                  </children>
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Data di fine:">
-                                       <font>
-                                          <Font name="System Bold" size="13.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
                                  <children>
                                     <Label layoutX="14.0" layoutY="24.0" text="Sede:">
                                        <font>
@@ -129,20 +124,15 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <Label fx:id="budgetLabel" layoutX="14.0" layoutY="24.0" text="Label" />
+                                    <Label fx:id="dataInizioLabel" layoutX="14.0" layoutY="24.0" text="Label" />
                                  </children>
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <children>
-                                    <Label fx:id="dataInizioLabel" layoutX="14.0" layoutY="24.0" text="Label" />
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                 <children>
                                     <Label fx:id="dataFineLabel" layoutX="14.0" layoutY="24.0" text="Label" />
                                  </children>
                               </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
                                     <Label fx:id="sedeLabel" layoutX="14.0" layoutY="24.0" text="Label" />
                                  </children>
@@ -156,7 +146,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
           </TitledPane>
-          <TitledPane animated="false" text="Organizzatori">
+          <TitledPane animated="false" text="Enti organizzatori">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -211,6 +201,6 @@
         </panes>
       </Accordion>
       <Accordion layoutX="14.0" layoutY="172.0" />
-      <Button fx:id="confermaButton" layoutX="714.0" layoutY="674.0" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="204.0" text="Conferma" />
+      <Button fx:id="confermaButton" layoutX="714.0" layoutY="674.0" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="204.0" text="Fine" />
    </children>
 </AnchorPane>

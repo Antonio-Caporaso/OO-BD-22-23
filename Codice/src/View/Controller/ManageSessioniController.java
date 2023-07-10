@@ -97,7 +97,14 @@ public class ManageSessioniController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setTable();
+        try {
+            conferenza.loadSessioni();
+            setTable();
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     public void setEditConferenceController(ModificaConferenzaController modificaConferenzaController) {

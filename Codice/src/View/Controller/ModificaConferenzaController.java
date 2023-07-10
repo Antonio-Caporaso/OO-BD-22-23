@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Persistence.DAO.ConferenzaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.Utente;
@@ -10,20 +11,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ResourceBundle;
 public class ModificaConferenzaController implements Initializable {
     private Conferenza conferenza;
     private SubScene subscene;
     private Utente user;
+    @FXML
+    private Button slittaConferenzaButton;
     @FXML
     private Button annullaButton;
     @FXML
@@ -81,8 +86,8 @@ public class ModificaConferenzaController implements Initializable {
     }
     @FXML
     public void editDetailsOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditConferenceDetails.fxml"));
-        ModificaDettagliConferenzaController controller = new ModificaDettagliConferenzaController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditDettagliConferenza.fxml"));
+        EditDettagliConferenzaController controller = new EditDettagliConferenzaController();
         loader.setController(controller);
         controller.setEditConferenceController(this);
         controller.setConferenza(conferenza);
@@ -176,7 +181,7 @@ public class ModificaConferenzaController implements Initializable {
     public void setUser(Utente user) {
         this.user = user;
     }
-    private void setTable(){
+    protected void setTable(){
         table.setEditable(false);
         try{
             conferenza.loadSessioni();
@@ -189,5 +194,25 @@ public class ModificaConferenzaController implements Initializable {
         salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
         table.getItems().addAll(conferenza.getSessioni());
         nomeSessioneColumn.isSortable();
+    }
+    @FXML
+    void SlittaConferenzaButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SlittaConferenza.fxml"));
+        SlittaConferenzaController controller = new SlittaConferenzaController();
+        controller.setConferenza(conferenza);
+        controller.setModificaConferenzaController(this);
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+    protected void reloadConferenza() throws SQLException {
+        ConferenzaDao dao = new ConferenzaDao();
+        conferenza = dao.retrieveConferenzaByID(conferenza.getId_conferenza());
+        setDetails();
+        setTable();
     }
 }

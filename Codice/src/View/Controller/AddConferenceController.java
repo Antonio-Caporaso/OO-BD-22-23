@@ -83,7 +83,8 @@ public class AddConferenceController implements Initializable,FormChecker{
             sedi.loadSediLibere(inizio, fine);
             if (sedi.getSedi().isEmpty())
                 throw new SediNonDisponibiliException();
-            sedeChoice.setItems(sedi.getSedi());
+            else
+                sedeChoice.setItems(sedi.getSedi());
         }catch (SediNonDisponibiliException e){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText(e.getMessage());

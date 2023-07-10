@@ -25,7 +25,6 @@ public class SedeDao {
             Sede s = new Sede();
             s.setSedeID(rs.getInt("id_sede"));
             s.setNomeSede(rs.getString("nome"));
-            s.setIndirizzo(indirizzoDAO.retrieveIndirizzoByID(rs.getInt("id_indirizzo")));
             sedi.add(s);
         }
         return sedi;

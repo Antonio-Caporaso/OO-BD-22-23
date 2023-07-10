@@ -5,22 +5,22 @@ returns setof conferenza as $$
 begin
     return query
     select * from conferenza
-    where inizio >= start and fine <= dataF;
+    where inizio >= dataI and fine <= dataF;
 end;
 $$ language plpgsql;
 
 --Funzione che restituisce tutte le conferenze che si svolgono in una determinata sede
-create or replace function show_conferences_by_sede(sede int)
+create or replace function show_conferences_by_sede(sede_id int)
 returns setof conferenza as $$
 begin
     return query
     select * from conferenza
-    where id_sede = sede;
+    where id_sede = sede_id;
 end;
 $$ language plpgsql;
 
 --Funzione che mostra tutti gli organizzatori appartenenti al comitato scientifico di una conferenza
-CREATE OR REPLACE FUNCTION conference.show_comitato_scientifico(conferenza integer)
+CREATE OR REPLACE FUNCTION conference.show_comitato_scientifico(conferenza_id integer)
  RETURNS SETOF conference.organizzatore
  LANGUAGE plpgsql
 AS $function$
@@ -34,7 +34,7 @@ BEGIN
         WHERE id_comitato = (
             -- Select dell'id del comitato scientifico della conferenza
             SELECT comitato_s FROM conference.conferenza
-            WHERE id_conferenza = show_comitato_scientifico.conferenza
+            WHERE id_conferenza = conferenza_id
         )
     );
 END;
@@ -42,7 +42,7 @@ $function$;
 
 
 --Funzione che mostra tutti gli organizzatori appartenenti al comitato locale di una conferenza
-create or replace function show_comitato_locale(conferenza int)
+create or replace function show_comitato_locale(conferenza_id int)
 returns setof organizzatore as $$
 begin
     return query
@@ -54,14 +54,14 @@ begin
         where id_comitato = (
             -- Select dell'id del comitato locale della conferenza
             select id_comitato_locale from conferenza
-            where id_conferenza = conferenza
+            where id_conferenza = conferenza_id
         )
     );
 end;
 $$ language plpgsql;
 
 --Funzione che mostra tutti i partecipanti di una conferenza
-create or replace function show_partecipanti(conferenza int)
+create or replace function show_partecipanti(conferenza_id int)
 returns setof partecipante as $$
 begin
     return query
@@ -73,25 +73,25 @@ begin
         where id_sessione in (
             -- Select degli id delle sessioni della conferenza
             select id_sessione from sessione
-            where id_conferenza = conferenza
+            where id_conferenza = conferenza_id
         )
     );
 end;
 $$ language plpgsql;
 
 --Funzione che mostra tutte le sessioni di una conferenza
-create or replace function show_sessioni(conferenza int)
+create or replace function show_sessioni(conferenza_id int)
 returns setof sessione as $$
 begin
     return query
     select * from sessione
-    where id_conferenza = conferenza
+    where id_conferenza = conferenza_id
     order by inizio;
 end;
 $$ language plpgsql;
 
 -- Funzione che mostra il programma di una sessione elencando tutti gli interventi in ordine cronologico
-create or replace function show_interventi_sessione(sessione int)
+create or replace function show_interventi_sessione(sessione_id int)
 returns table
 (
 titolo text,
@@ -105,7 +105,7 @@ declare
 begin
     select id_programma into programma
     from programma
-    where id_sessione = sessione;
+    where id_sessione = sessione_id;
 
     select titolo,inizio,fine,abstract, s.nome || ' ' || s.cognome as speaker
     from intervento i join speaker s on i.id_speaker = s.id_speaker
@@ -116,7 +116,7 @@ $$ language plpgsql;
 
 
 -- Funzione che mostra il programma di una sessione elencando tutti gli intervalli in ordine cronologico
-create or replace function show_intervalli_sessione(sessione int)
+create or replace function show_intervalli_sessione(sessione_id int)
 returns table
 (
 id_intervallo integer,
@@ -126,21 +126,21 @@ fine timestamp
 )  
 as $$
 declare 
-    programma integer;
+    programma_id integer;
 begin
-    select id_programma into programma
+    select id_programma into programma_id
     from programma
-    where id_sessione = sessione;
+    where id_sessione = sessione_id;
 
     select id_intervallo,tipologia,inizio,fine
     from intervallo i
-    where id_programma = programma
+    where id_programma = programma_id
     order by inizio;
 end;
 $$ language plpgsql;
 
 -- Funzione che mostra tutti gli eventi sociali di una sessione in ordine cronologico
-create or replace function show_eventi_sociali_sessione(sessione int)
+create or replace function show_eventi_sociali_sessione(sessione_id int)
 returns table
 (
 id_evento integer,
@@ -149,21 +149,21 @@ inizio timestamp,
 fine timestamp) 
  as $$
 declare 
-    programma integer;
+    programma_id integer;
 begin
-    select id_programma into programma
+    select id_programma into programma_id
     from programma
-    where id_sessione = sessione;
+    where id_sessione = sessione_id;
 
     select id_evento,tipologia,inizio,fine
     from evento
-    where id_programma = programma
+    where id_programma = programma_id
     order by inizio;
 end;
 $$ language plpgsql;
 
 -- Funzione che mostra i dettagli del keynote speaker di una sessione
-create or replace function show_keynote_sessione(sessione int)
+create or replace function show_keynote_sessione(sessione_id int)
 returns table(
 id_speaker integer,
 nome text,
@@ -172,19 +172,19 @@ titolo text,
 email text,
 ente text) 
  as $$
-declare 
-    programma integer;
+declare
+    programma_id integer;
 begin
-    select id_programma into programma
+    select id_programma into programma_id
     from programma
-    where id_sessione = sessione;
+    where id_sessione = sessione_id;
 
     select s.id_speaker,s.nome,s.cognome,s.titolo,s.email,e.nome
     from speaker s join ente e on s.id_ente = e.id_ente
     where s.id_speaker = (
         select id_keynote
         from programma
-        where id_programma = programma
+        where id_programma = programma_id
     );
 end;
 $$ language plpgsql;
@@ -454,13 +454,13 @@ language plpgsql;
 
 --Funzione per aggiungere una nuova conferenza
 CREATE OR REPLACE FUNCTION add_conferenza_details
-(nome text, inizio timestamp, fine timestamp, sede integer, abstract text, utente integer)
+(nome text, inizio timestamp, fine timestamp, sede_id integer, abstract text, utente_id integer)
 RETURNS integer AS $$
 DECLARE
     id integer;
 BEGIN
         INSERT INTO conferenza(titolo, inizio, fine, id_sede, descrizione, id_utente) 
-        VALUES (nome, inizio, fine, sede, abstract,utente)
+        VALUES (nome, inizio, fine, sede_id, abstract,utente_id)
         RETURNING id_conferenza INTO id;
         raise notice 'Inserimento completato';
         RETURN id;
@@ -472,11 +472,11 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Funzione per l'aggiunta di un ente organizzatore di una conferenza
-create or replace procedure add_ente(ente integer, conferenza integer)
+create or replace procedure add_ente(ente_id integer, conferenza_id integer)
 as $$
 begin
     insert into ente_conferenza(id_ente,id_conferenza)
-    values (ente,conferenza);
+    values (ente_id,conferenza_id);
     raise notice 'Inserimento completato';
     exception
         when others then
@@ -485,11 +485,11 @@ end;
 $$ language plpgsql;
 
 -- Funzione per l'aggiunta di una sponsorizzazione di una conferenza
-create or replace procedure add_sponsorizzazione(sponsor integer, contributo numeric(1000,2), valuta char(3), conferenza integer)
+create or replace procedure add_sponsorizzazione(sponsor_id integer, contributo numeric(1000,2), valuta char(3), conferenza_id integer)
 as $$
 begin
     insert into sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
-    values (sponsor,contributo,valuta,conferenza);
+    values (sponsor_id,contributo,valuta,conferenza_id);
     raise notice 'Inserimento completato';
     exception
         when others then
@@ -498,11 +498,11 @@ end;
 $$ language plpgsql;
 
 --Funzione per aggiunta di una sessione di una conferenza
-create or replace procedure add_sessione(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer)
+create or replace procedure add_sessione(titolo text, inizio timestamp, fine timestamp, sala_id integer, conferenza_id integer)
 as $$
 begin
     insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
-    values (titolo,inizio,fine,sala,conferenza);
+    values (titolo,inizio,fine,sala_id,conferenza_id);
     raise notice 'Inserimento completato';
     exception
         when others then
@@ -511,14 +511,14 @@ end;
 $$ language plpgsql;
 
 create or replace function add_new_sessione
-(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer) 
+(titolo text, inizio timestamp, fine timestamp, sala_id integer, conferenza_id integer) 
 returns integer
 as $$
 declare
     sessione_id integer;
 begin
     insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
-    values (titolo,inizio,fine,sala,conferenza) returning id_sessione into sessione_id;
+    values (titolo,inizio,fine,sala_id,conferenza_id) returning id_sessione into sessione_id;
     raise notice 'Inserimento completato';
     return sessione_id;
     exception
@@ -528,11 +528,11 @@ end;
 $$ language plpgsql;
 
 -- Funzione per l'aggiunta di un partecipante di una sessione
-create or replace procedure add_partecipante(partecipante integer, sessione integer)
+create or replace procedure add_partecipante(partecipante_id integer, sessione_id integer)
 as $$
 begin
     insert into partecipante_sessione(id_partecipante,id_sessione)
-    values (partecipante,sessione);
+    values (partecipante_id,sessione_id);
     raise notice 'Inserimento completato';
     exception
         when others then
@@ -541,7 +541,7 @@ end;
 $$ language plpgsql;
 
 -- Funzione in sql dinamico che presa una conferenza e una stringa di Sigle separate da virgola aggiunge gli enti come organizzatori di quella conferenza
-CREATE OR REPLACE PROCEDURE add_enti(conferenza integer, sigle text)
+CREATE OR REPLACE PROCEDURE add_enti(conferenza_id integer, sigle text)
 AS $$
 DECLARE
     sigla_ente text;
@@ -552,7 +552,7 @@ BEGIN
             SELECT id_ente INTO ente_id FROM ente WHERE sigla = sigla_ente;
             
             -- Inserisci la tupla (id_ente, conferenza) nella tabella ente_conferenza
-            INSERT INTO ente_conferenza(id_ente, id_conferenza) VALUES (ente_id, conferenza);
+            INSERT INTO ente_conferenza(id_ente, id_conferenza) VALUES (ente_id, conferenza_id);
         END LOOP;
         RAISE NOTICE 'Inserimento completato';
     EXCEPTION
@@ -817,10 +817,13 @@ language plpgsql;
 
 --Funzione che mostra le sedi con sale libere nel periodo indicato
 create or replace function show_sedi_libere(inizio_c timestamp, fine_c timestamp)
-returns setof sede as $$
+returns table(
+    id_sede integer,
+    nome text
+) as $$
 begin
     return query
-    select s.id_sede, s.nome, s.id_indirizzo
+    select s.id_sede, s.nome
     from sede s
     where not exists
     (
@@ -832,7 +835,7 @@ begin
             select *
             from sessione s2
             where s2.id_sala = s1.id_sala and
-            (s2.inizio, s2.fine) overlaps (inizio_c, fine_c)
+            (s2.inizio>=inizio_c and s2.inizio<=fine_c)
         )
     );
 end;
