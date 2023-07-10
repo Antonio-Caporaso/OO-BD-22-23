@@ -54,7 +54,7 @@ public class ManageSessioniController implements Initializable {
         salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
         table.setItems(conferenza.getSessioni());
         nomeSessioneColumn.isSortable();
-        oraInizioColumn.isSortable();
+
     }
     public void reloadSessioni(){
         try {
