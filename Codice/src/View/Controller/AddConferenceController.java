@@ -1,6 +1,7 @@
 package View.Controller;
 
 import Exceptions.BlankFieldException;
+import Exceptions.SediNonDisponibiliException;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.Utente;
@@ -76,11 +77,17 @@ public class AddConferenceController implements Initializable,FormChecker{
     }
     @FXML
     void showSedi(MouseEvent event)  {
-        try{
+        try {
             Timestamp inizio = Timestamp.valueOf(dataInizioDP.getDateTimeValue());
             Timestamp fine = Timestamp.valueOf(dataFineDP.getDateTimeValue());
-            sedi.loadSediLibere(inizio,fine);
+            sedi.loadSediLibere(inizio, fine);
+            if (sedi.getSedi().isEmpty())
+                throw new SediNonDisponibiliException();
             sedeChoice.setItems(sedi.getSedi());
+        }catch (SediNonDisponibiliException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Inserire delle date per visualizzare le sedi libere");
