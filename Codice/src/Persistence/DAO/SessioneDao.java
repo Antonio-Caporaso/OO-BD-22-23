@@ -47,6 +47,7 @@ public class SessioneDao {
         while(rs.next()){
             Sessione s = new Sessione();
             s.setConferenza(conferenza);
+            s.setId_sessione(rs.getInt("id_sessione"));
             s.setTitolo(rs.getString("titolo"));
             s.setInizio(rs.getTimestamp("inizio"));
             s.setFine(rs.getTimestamp("fine"));
