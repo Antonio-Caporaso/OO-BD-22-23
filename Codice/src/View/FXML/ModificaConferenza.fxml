@@ -195,9 +195,7 @@
                            <columns>
                               <TableColumn fx:id="nomeSessioneColumn" prefWidth="160.0" text="Titolo" />
                               <TableColumn fx:id="inizioSessioneColumn" prefWidth="140.0" text="Inizio" />
-                              <TableColumn fx:id="oraInizioColumn" prefWidth="135.0" text="Ora inizio" />
                               <TableColumn fx:id="fineSessioneColumn" prefWidth="92.0" text="Fine" />
-                              <TableColumn fx:id="orarioFineSessioneColumn" prefWidth="75.0" text="Ora fine" />
                               <TableColumn fx:id="salaSessioneColumn" prefWidth="75.0" text="Sala" />
                            </columns>
                            <columnResizePolicy>

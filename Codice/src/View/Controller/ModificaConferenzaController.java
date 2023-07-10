@@ -65,11 +65,6 @@ public class ModificaConferenzaController implements Initializable {
     private TableColumn<Sessione, Date> fineSessioneColumn;
     @FXML
     private TableColumn<Sessione, String> salaSessioneColumn;
-    @FXML
-    private TableColumn<Sessione, Time> oraInizioColumn;
-    @FXML
-    private TableColumn<Sessione, Time> orarioFineSessioneColumn;
-
     public void setGestioneConferenzeController(GestioneConferenzeController gestioneConferenzeController) {
         this.gestioneConferenzeController = gestioneConferenzeController;
     }
@@ -77,7 +72,10 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     public void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/GestioneConferenze.fxml"));
-        loader.setController(gestioneConferenzeController);
+        GestioneConferenzeController controller = new GestioneConferenzeController(user);
+        loader.setController(controller);
+        controller.setUser(user);
+        controller.setSubscene(subscene);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -186,13 +184,10 @@ public class ModificaConferenzaController implements Initializable {
             e.printStackTrace();
         }
         nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("titolo"));
-        inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataInizio"));
-        fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataFine"));
-        oraInizioColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioInizio"));
-        orarioFineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioFine"));
+        inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("inizio"));
+        fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("fine"));
         salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
         table.getItems().addAll(conferenza.getSessioni());
         nomeSessioneColumn.isSortable();
-        oraInizioColumn.isSortable();
     }
 }

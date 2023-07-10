@@ -36,10 +36,6 @@ public class ManageSessioniController implements Initializable {
     @FXML
     private TableColumn<Sessione, String> salaSessioneColumn;
     @FXML
-    private TableColumn<Sessione, Time> oraInizioColumn;
-    @FXML
-    private TableColumn<Sessione, Time> orarioFineSessioneColumn;
-    @FXML
     private Button addSessioneButton;
 
     @FXML
@@ -53,10 +49,8 @@ public class ManageSessioniController implements Initializable {
     private void setTable(){
         table.setEditable(false);
         nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("titolo"));
-        inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataInizio"));
-        fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataFine"));
-        oraInizioColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioInizio"));
-        orarioFineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioFine"));
+        inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("inizio"));
+        fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("fine"));
         salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
         table.setItems(conferenza.getSessioni());
         nomeSessioneColumn.isSortable();
