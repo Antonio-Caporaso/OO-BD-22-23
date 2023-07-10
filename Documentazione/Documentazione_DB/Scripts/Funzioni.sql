@@ -20,23 +20,26 @@ end;
 $$ language plpgsql;
 
 --Funzione che mostra tutti gli organizzatori appartenenti al comitato scientifico di una conferenza
-create or replace function show_comitato_scientifico(conferenza int)
-returns setof organizzatore as $$
-begin
-    return query
+CREATE OR REPLACE FUNCTION conference.show_comitato_scientifico(conferenza integer)
+ RETURNS SETOF conference.organizzatore
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+    RETURN QUERY
     -- Select dei dettagli dell'organizzatore
-    select * from organizzatore
-    where id_organizzatore in (
+    SELECT * FROM conference.organizzatore
+    WHERE id_organizzatore IN (
         -- Select degli id degli organizzatori appartenenti al comitato scientifico
-        select id_organizzatore from organizzatore_comitato
-        where id_comitato = (
+        SELECT id_organizzatore FROM conference.organizzatore_comitato
+        WHERE id_comitato = (
             -- Select dell'id del comitato scientifico della conferenza
-            select id_comitato_scientifico from conferenza
-            where id_conferenza = conferenza
+            SELECT comitato_s FROM conference.conferenza
+            WHERE id_conferenza = show_comitato_scientifico.conferenza
         )
     );
-end;
-$$ language plpgsql;
+END;
+$function$;
+
 
 --Funzione che mostra tutti gli organizzatori appartenenti al comitato locale di una conferenza
 create or replace function show_comitato_locale(conferenza int)

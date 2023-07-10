@@ -11,7 +11,7 @@ public class ComitatoDao {
     public Comitato retrieveComitatobyId(int id) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT * from retrieve_comitato(?)";
+        String query = "SELECT * from show_comitato_scientifico(?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,id);
         ResultSet rs = stm.executeQuery();
