@@ -237,7 +237,7 @@ BEGIN
                'evento' AS appuntamento,
                e.inizio,
                e.fine,
-               e.tipologia::text AS descrizione,
+               e.tipologia AS descrizione,
                NULL
         FROM evento e
         WHERE e.id_programma = programma_id
