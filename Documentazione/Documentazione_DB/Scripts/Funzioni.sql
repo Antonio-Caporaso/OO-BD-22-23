@@ -250,7 +250,7 @@ $$ LANGUAGE plpgsql;
 create or replace procedure add_intervento
 (titolo text, 
 abstract text, 
-speaker text, 
+speaker_id int, 
 programma_id int,
 durata interval)
 as $$
@@ -283,7 +283,7 @@ $$ language plpgsql;
 create or replace function add_new_intervento 
 (titolo text, 
 abstract text, 
-speaker text, 
+speaker_id int, 
 programma_id int,
 durata interval)
 returns integer
