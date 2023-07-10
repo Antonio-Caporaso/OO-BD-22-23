@@ -55,7 +55,7 @@
       </AnchorPane>
       <ImageView fitHeight="776.0" fitWidth="999.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Resources/Speaker%20di%20spalle%20(2).jpg" />
+            <Image url="@../Resources/A%20scientist%20talking%20on%20stage%20to%20a%20blurry%20audience.jpg" />
          </image>
       </ImageView>
    </children>
