@@ -1,9 +1,13 @@
 package Utilities;
 
 import Persistence.DAO.SedeDao;
+import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class Sedi {
     private ObservableList<Sede> sedi;
@@ -16,6 +20,11 @@ public class Sedi {
         SedeDao dao = new SedeDao();
         sedi.clear();
         sedi.addAll(dao.retrieveAllSedi());
+    }
+    public void loadSediLibere(Timestamp inizio, Timestamp fine) throws SQLException {
+        SedeDao dao = new SedeDao();
+        sedi.clear();
+        sedi.addAll(dao.retrieveSediLibere(inizio,fine));
     }
     public void loadNomiFromDB(){
         SedeDao dao = new SedeDao();

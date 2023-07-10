@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tornadofx.control.DateTimePicker;
@@ -73,7 +74,23 @@ public class AddConferenceController implements Initializable,FormChecker{
         Stage stage = (Stage) avantiButton.getScene().getWindow();
         stage.setScene(landingScene);
     }
-
+    @FXML
+    void showSedi(MouseEvent event)  {
+        try{
+            Timestamp inizio = Timestamp.valueOf(dataInizioDP.getDateTimeValue());
+            Timestamp fine = Timestamp.valueOf(dataFineDP.getDateTimeValue());
+            sedi.loadSediLibere(inizio,fine);
+            sedeChoice.setItems(sedi.getSedi());
+        }catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Inserire delle date per visualizzare le sedi libere");
+            alert.showAndWait();
+        } catch(SQLException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
     @FXML
     public void avantiButtonOnAction(ActionEvent event){
         try {
@@ -98,7 +115,7 @@ public class AddConferenceController implements Initializable,FormChecker{
         Timestamp dataI = Timestamp.valueOf(dataIselected);
         Timestamp dataF = Timestamp.valueOf(dataFselected);
         Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
-        return new Conferenza(nome, dataI, dataF, descrizione, sede, user);
+        return new Conferenza(nome, dataI, dataF, descrizione,sede, user);
     }
 
     private void showAlert(Exception e) {
@@ -141,8 +158,6 @@ public class AddConferenceController implements Initializable,FormChecker{
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        sedi.loadSedi();
-        sedeChoice.setItems(sedi.getSedi());
     }
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {

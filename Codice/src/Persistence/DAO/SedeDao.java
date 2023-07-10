@@ -1,6 +1,7 @@
 package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
+import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
 import Persistence.Entities.organizzazione.Indirizzo;
 
@@ -10,6 +11,25 @@ import java.util.LinkedList;
 public class SedeDao {
     Connection conn = null;
     DBConnection dbCon = null;
+    public LinkedList<Sede> retrieveSediLibere(Timestamp inizio, Timestamp fine) throws SQLException {
+        dbCon = DBConnection.getDBconnection();
+        conn = dbCon.getConnection();
+        String function = "select * from show_sedi_libere(?,?)";
+        PreparedStatement stm = conn.prepareStatement(function);
+        stm.setTimestamp(1,inizio);
+        stm.setTimestamp(2,fine);
+        ResultSet rs = stm.executeQuery();
+        LinkedList<Sede> sedi = new LinkedList<>();
+        IndirizzoDAO indirizzoDAO = new IndirizzoDAO();
+        while(rs.next()){
+            Sede s = new Sede();
+            s.setSedeID(rs.getInt("id_sede"));
+            s.setNomeSede(rs.getString("nome"));
+            s.setIndirizzo(indirizzoDAO.retrieveIndirizzoByID(rs.getInt("id_indirizzo")));
+            sedi.add(s);
+        }
+        return sedi;
+    }
     public LinkedList<Sede> retrieveAllSedi(){
         dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();

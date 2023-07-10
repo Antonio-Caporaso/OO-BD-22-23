@@ -814,3 +814,26 @@ begin
 end;
 $$
 language plpgsql;
+
+--Funzione che mostra le sedi con sale libere nel periodo indicato
+create or replace function show_sedi_libere(inizio_c timestamp, fine_c timestamp)
+returns setof sede as $$
+begin
+    return query
+    select s.id_sede, s.nome, s.id_indirizzo
+    from sede s
+    where not exists
+    (
+        select *
+        from sala s1
+        where s1.id_sede = s.id_sede and
+        exists
+        (
+            select *
+            from sessione s2
+            where s2.id_sala = s1.id_sala and
+            (s2.inizio, s2.fine) overlaps (inizio_c, fine_c)
+        )
+    );
+end;
+$$ language plpgsql;

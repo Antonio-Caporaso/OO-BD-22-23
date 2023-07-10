@@ -6,7 +6,7 @@ import Persistence.Entities.partecipanti.Speaker;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-    public class Intervento implements Activity {
+    public class Intervento  {
         private int id_intervento;
         private String titolo;
         private String estratto;
@@ -59,20 +59,15 @@ import java.util.Objects;
         }
         public Programma getProgramma() {return programma;}
         public void setProgramma(Programma programma) {this.programma = programma;}
-
         public void setInizio(Timestamp inizio) {
             this.inizio = inizio;
         }
-
         public void setFine(Timestamp fine) {
             this.fine = fine;
         }
-
-        @Override
         public Timestamp getInizio() {
             return inizio;
         }
-        @Override
         public Timestamp getFine() {
             return fine;
         }

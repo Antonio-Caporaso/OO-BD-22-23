@@ -3,7 +3,7 @@ package Persistence.Entities.Conferenze;
 
 import java.sql.Timestamp;
 
-public class EventoSociale implements Activity {
+public class EventoSociale  {
     private int id_evento;
     private Timestamp inizio;
     private Timestamp fine;
@@ -33,11 +33,11 @@ public class EventoSociale implements Activity {
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
     }
-    @Override
+
     public Timestamp getInizio() {
         return inizio;
     }
-    @Override
+
     public Timestamp getFine() {
         return fine;
     }
