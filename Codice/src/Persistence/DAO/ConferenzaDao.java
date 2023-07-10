@@ -99,7 +99,7 @@ public class ConferenzaDao {
     public void updateDettagliConferenza(Conferenza conferenza) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String update = "UPDATE conferenza SET nome=?,descrizione=?,inizio=?,fine=?,id_sede=? WHERE id_conferenza=?";
+        String update = "UPDATE conferenza SET titolo=?,descrizione=?,inizio=?,fine=?,id_sede=? WHERE id_conferenza=?";
         PreparedStatement stm = conn.prepareStatement(update);
         stm.setString(1,conferenza.getTitolo());
         stm.setString(2,conferenza.getDescrizione());
