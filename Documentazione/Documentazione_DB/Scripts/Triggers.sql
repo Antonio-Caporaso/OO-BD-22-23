@@ -292,7 +292,7 @@ begin
         select inizio,fine into inizio_sessione,fine_sessione
         from sessione
         where id_sessione = sessione_id;
-        if (new.inizio >= inizio_sessione AND new.inizio <= fine_sessione) OR (new.fine >= inizio_sessione AND new.fine <= fine_sessione) then
+        if (new.inizio>=inizio_sessione OR new.inizio<=fine_sessione) then
             raise exception 'La sala non può ospitare più di una sessione alla volta';
         end if;
     end loop;
