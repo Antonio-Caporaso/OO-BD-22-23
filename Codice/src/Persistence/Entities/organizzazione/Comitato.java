@@ -1,7 +1,9 @@
 package Persistence.Entities.organizzazione;
 
 import Exceptions.ExistingMemberException;
+import Persistence.DAO.ComitatoDao;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -24,6 +26,7 @@ public class Comitato {
     public void setId_comitato(int id_comitato) {
         this.id_comitato = id_comitato;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
