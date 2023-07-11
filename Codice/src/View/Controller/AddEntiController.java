@@ -72,7 +72,7 @@ public class AddEntiController implements Initializable {
     }
     @FXML
     void nextOnAction(ActionEvent event) {
-        loadAggiungiSponsor();
+        loadAggiungiComitati();
     }
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
@@ -103,10 +103,10 @@ public class AddEntiController implements Initializable {
         return result;
     }
     //Private Methods
-    private void loadAggiungiSponsor(){
+    private void loadAggiungiComitati(){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
-            AddSponsorController controller = new AddSponsorController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddComitati_Create.fxml"));
+            AddComitati_Create controller = new AddComitati_Create();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
@@ -114,14 +114,6 @@ public class AddEntiController implements Initializable {
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private void setOrganizzatoriListView() {
-        try{
-            conferenza.loadOrganizzatori();
-            entiListView.setItems(conferenza.getEnti());
-        }catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -139,6 +131,15 @@ public class AddEntiController implements Initializable {
             e.printStackTrace();
         }
     }
+    private void setOrganizzatoriListView() {
+        try{
+            conferenza.loadOrganizzatori();
+            entiListView.setItems(conferenza.getEnti());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void setOrganizzatoriChoiceBox() {
         try {
             enti.loadEnti();
