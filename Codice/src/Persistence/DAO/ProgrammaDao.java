@@ -78,4 +78,17 @@ public class ProgrammaDao {
         }
         return id;
     }
+    public int retrieveIDProgramma (Sessione sessione) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select id_programma from programma where id_sessione = ?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,sessione.getId_sessione());
+        int id = 0;
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            id = rs.getInt(1);
+        }
+        return id;
+    }
 }
