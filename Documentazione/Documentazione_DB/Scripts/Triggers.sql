@@ -273,21 +273,36 @@ before update on conferenza
 for each row
 execute function check_comitati_conferenza();
  
--- 3. La sede di una conferenza deve essere libera nel periodo indicato
+-- 3. La sede di una conferenza deve essere libera nel periodo indicato. Una sede è libera
+-- se ha almeno una sala libera nel periodo indicato
 create or replace function check_sede_libera() returns trigger as $$
-declare 
-    conferenze_count integer;
-BEGIN
-    select count(*) into conferenze_count
-    from conferenza c
-    where c.id_sede = new.id_sede and
-    (new.inizio,new.fine) overlaps (c.inizio,c.fine);
+begin
+    if (new.id_sede is null) then
+        return new;
+    end if;
 
-    IF conferenze_count > 0 THEN
-        RAISE EXCEPTION 'La sede non è libera nel periodo indicato';
-    END IF;
+    if (new.inizio is null) then
+        return new;
+    end if;
+
+    if (new.fine is null) then
+        return new;
+    end if;
+
+    if ( select count(*) 
+         from sala 
+         where id_sede = new.id_sede 
+            and id_sala not in 
+                (select id_sala 
+                from sessione 
+                where id_conferenza = new.id_conferenza 
+                and (inizio < new.fine and fine > new.inizio)
+                )
+        ) = 0 then
+        raise exception 'La sede non ha sale libere';
+    end if;
     return new;
-END;
+end;
 $$ language plpgsql;
 
 create trigger verifica_disponibilita_sede

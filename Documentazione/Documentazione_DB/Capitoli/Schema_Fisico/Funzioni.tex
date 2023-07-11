@@ -7,47 +7,49 @@ returns setof conferenza as $$
 begin
     return query
     select * from conferenza
-    where inizio >= start and fine <= dataF;
+    where inizio >= dataI and fine <= dataF;
 end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_Conferenze\_By\_Sede(INTEGER)}}
 La funzione \texttt{Show\_Conferenze\_By\_Sede} prende IN ingresso la chiave primaria di una sede e restituisce l'insieme di tutte le conferenze ospitate IN quella determinata sede:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function show_conferences_by_sede(sede int)
+create or replace function show_conferences_by_sede(sede_id int)
 returns setof conferenza as $$
 begin
     return query
     select * from conferenza
-    where id_sede = sede;
+    where id_sede = sede_id;
 end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_comitato\_scientifico(INTEGER)}}
 La funzione \texttt{Show\_comitato\_scientifico} prende IN ingresso la chiave primaria di una conferenza e restituisce la lista di tutti i membri organizzatori appartenenti al comitato scientifico della conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function show_comitato_scientifico(conferenza int)
-returns setof organizzatore as $$
-begin
-    return query
+CREATE OR REPLACE FUNCTION show_comitato_scientifico(conferenza_id integer)
+RETURNS SETOF organizzatore
+LANGUAGE plpgsql
+AS $function$
+BEGIN
+    RETURN QUERY
     -- Select dei dettagli dell'organizzatore
-    select * from organizzatore
-    where id_organizzatore in (
+    SELECT * FROM organizzatore
+    WHERE id_organizzatore IN (
         -- Select degli id degli organizzatori appartenenti al comitato scientifico
-        select id_organizzatore from organizzatore_comitato
-        where id_comitato = (
+        SELECT id_organizzatore FROM organizzatore_comitato
+        WHERE id_comitato = (
             -- Select dell'id del comitato scientifico della conferenza
-            select id_comitato_scientifico from conferenza
-            where id_conferenza = conferenza
+            SELECT comitato_s FROM conferenza
+            WHERE id_conferenza = conferenza_id
         )
     );
-end;
-$$ language plpgsql;
+END;
+$function$;
 \end{lstlisting}
 \subsection{\texttt{Show\_comitato\_locale(INTEGER)}}
 La funzione \texttt{Show\_comitato\_locale} prende IN ingresso la chiave primaria di una conferenza e restituisce la lista di tutti i membri organizzatori appartenenti al comitato locale della conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function show_comitato_locale(conferenza int)
+create or replace function show_comitato_locale(conferenza_id int)
 returns setof organizzatore as $$
 begin
     return query
@@ -59,7 +61,7 @@ begin
         where id_comitato = (
             -- Select dell'id del comitato locale della conferenza
             select id_comitato_locale from conferenza
-            where id_conferenza = conferenza
+            where id_conferenza = conferenza_id
         )
     );
 end;
@@ -68,7 +70,7 @@ $$ language plpgsql;
 \subsection{\texttt{Show\_Partecipanti(INTEGER)}}
 La funzione \texttt{Show\_Partecipanti} prende IN ingresso la chiave primaria di una conferenza e restituisce tutti i dettagli dei partecipanti di \textit{tutte le sessioni} della conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_partecipanti(conferenza int)
+create or replace function show_partecipanti(conferenza_id int)
 returns setof partecipante as $$
 begin
     return query
@@ -80,7 +82,7 @@ begin
         where id_sessione in (
             -- Select degli id delle sessioni della conferenza
             select id_sessione from sessione
-            where id_conferenza = conferenza
+            where id_conferenza = conferenza_id
         )
     );
 end;
@@ -89,12 +91,12 @@ $$ language plpgsql;
 \subsection{\texttt{Show\_Sessioni(INTEGER)}}
 La funzione \texttt{show\_sessioni} prende IN ingresso la chiave primaria di una conferenza e restituisce tutti i dettagli delle sessioni.
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace function show_sessioni(conferenza int)
+create or replace function show_sessioni(conferenza_id int)
 returns setof sessione as $$
 begin
     return query
     select * from sessione
-    where id_conferenza = conferenza
+    where id_conferenza = conferenza_id
     order by inizio;
 end;
 $$ language plpgsql;
@@ -102,7 +104,8 @@ $$ language plpgsql;
 \subsection{\texttt{Show\_interventi\_sessione(INTEGER)}}
 La funzione \texttt{show\_interventi\_sessione} prende IN ingresso la chiave primaria di una sessione e mostra tutti gli interventi presenti nel programma di tale sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_interventi_sessione(sessione int)
+create or replace function 
+show_interventi_sessione(sessione_id int)
 returns table
 (
 titolo text,
@@ -116,7 +119,7 @@ declare
 begin
     select id_programma into programma
     from programma
-    where id_sessione = sessione;
+    where id_sessione = sessione_id;
 
     select titolo,inizio,fine,abstract, s.nome || ' ' || s.cognome as speaker
     from intervento i join speaker s on i.id_speaker = s.id_speaker
@@ -129,7 +132,8 @@ $$ language plpgsql;
 \subsection{\texttt{Show\_intervalli\_sessione(INTEGER)}}
 La funzione \texttt{show\_intervalli\_sessione} prende IN ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_intervalli_sessione(sessione int)
+create or replace function 
+show_intervalli_sessione(sessione_id int)
 returns table
 (
 id_intervallo integer,
@@ -139,15 +143,15 @@ fine timestamp
 )  
 as $$
 declare 
-    programma integer;
+    programma_id integer;
 begin
-    select id_programma into programma
+    select id_programma into programma_id
     from programma
-    where id_sessione = sessione;
+    where id_sessione = sessione_id;
 
     select id_intervallo,tipologia,inizio,fine
     from intervallo i
-    where id_programma = programma
+    where id_programma = programma_id
     order by inizio;
 end;
 $$ language plpgsql;
@@ -155,7 +159,7 @@ $$ language plpgsql;
 \subsection{\texttt{Show\_eventi\_sociali\_sessione(INTEGER)}}
 La funzione \texttt{show\_eventi\_sociali\_sessione} prende IN ingresso la chiave primaria di una sessione e mostra tutti gli intervalli presenti nel programma di tale sessione:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_eventi_sociali_sessione(sessione int)
+create or replace function show_eventi_sociali_sessione(sessione_id int)
 returns table
 (
 id_evento integer,
@@ -164,15 +168,15 @@ inizio timestamp,
 fine timestamp) 
  as $$
 declare 
-    programma integer;
+    programma_id integer;
 begin
-    select id_programma into programma
+    select id_programma into programma_id
     from programma
-    where id_sessione = sessione;
+    where id_sessione = sessione_id;
 
     select id_evento,tipologia,inizio,fine
     from evento
-    where id_programma = programma
+    where id_programma = programma_id
     order by inizio;
 end;
 $$ language plpgsql;
@@ -180,7 +184,7 @@ $$ language plpgsql;
 \subsection{\texttt{Show\_keynote\_sessione(INTEGER)}}
 La funzione \texttt{show\_keynote\_sessione} prende IN ingresso la chiave primaria di una sessione e mostra i dettagli del keynote speaker, se presente:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_keynote_sessione(sessione int)
+create or replace function show_keynote_sessione(sessione_id int)
 returns table(
 id_speaker integer,
 nome text,
@@ -189,19 +193,19 @@ titolo text,
 email text,
 ente text) 
  as $$
-declare 
-    programma integer;
+declare
+    programma_id integer;
 begin
-    select id_programma into programma
+    select id_programma into programma_id
     from programma
-    where id_sessione = sessione;
+    where id_sessione = sessione_id;
 
     select s.id_speaker,s.nome,s.cognome,s.titolo,s.email,e.nome
     from speaker s join ente e on s.id_ente = e.id_ente
     where s.id_speaker = (
         select id_keynote
         from programma
-        where id_programma = programma
+        where id_programma = programma_id
     );
 end;
 $$ language plpgsql;
@@ -210,8 +214,8 @@ $$ language plpgsql;
 \subsection{\texttt{Show\_Programma(INTEGER)}}
 La funzione \texttt{Show\_Programma} prende IN ingresso la chiave primaria di una sessione e restituisce una tabella che mostra tutti gli appuntamenti IN progamma IN ordine cronologico:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_programma(sessione int)
-returns table (
+CREATE OR REPLACE FUNCTION show_programma(sessione_id int)
+RETURNS TABLE (
     id_entry integer,
     appuntamento text,
     inizio timestamp,
@@ -219,13 +223,13 @@ returns table (
     descrizione text,
     speaker text
 )
-as $$
-declare
+AS $$
+DECLARE
     programma_id integer;
 BEGIN
     SELECT id_programma INTO programma_id
     FROM programma
-    WHERE id_sessione = sessione;
+    WHERE id_sessione = sessione_id;
 
     RETURN QUERY
     SELECT *
@@ -257,7 +261,7 @@ BEGIN
                'evento' AS appuntamento,
                e.inizio,
                e.fine,
-               e.tipologia::text AS descrizione,
+               e.tipologia AS descrizione,
                NULL
         FROM evento e
         WHERE e.id_programma = programma_id
@@ -272,7 +276,7 @@ La procedura \texttt{Add\_intervento} provvede all'inserimento di un intervento 
 create or replace procedure add_intervento
 (titolo text, 
 abstract text, 
-speaker text, 
+speaker_id int, 
 programma_id int,
 durata interval)
 as $$
@@ -376,13 +380,13 @@ language plpgsql;
 La funzione \texttt{Add\_Conferenza\_Details} aggiunge una conferenza e restituisce la chiave primaria della nuova conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
 CREATE OR REPLACE FUNCTION add_conferenza_details
-(nome text, inizio timestamp, fine timestamp, sede integer, abstract text, utente integer)
+(nome text, inizio timestamp, fine timestamp, sede_id integer, abstract text, utente_id integer)
 RETURNS integer AS $$
 DECLARE
     id integer;
 BEGIN
         INSERT INTO conferenza(titolo, inizio, fine, id_sede, descrizione, id_utente) 
-        VALUES (nome, inizio, fine, sede, abstract,utente)
+        VALUES (nome, inizio, fine, sede_id, abstract,utente_id)
         RETURNING id_conferenza INTO id;
         raise notice 'Inserimento completato';
         RETURN id;
@@ -396,11 +400,11 @@ $$ LANGUAGE plpgsql;
 \subsection{\texttt{Add\_ente(INTEGER, INTEGER)}}
 La procedura \texttt{Add\_ente} provvede all'inserimento di una nuova istituzione tra gli organizzatori di una conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure add_ente(ente integer, conferenza integer)
+create or replace procedure add_ente(ente_id integer, conferenza_id integer)
 as $$
 begin
     insert into ente_conferenza(id_ente,id_conferenza)
-    values (ente,conferenza);
+    values (ente_id,conferenza_id);
     raise notice 'Inserimento completato';
     exception
         when others then
@@ -411,11 +415,11 @@ $$ language plpgsql;
 \subsection{\texttt{Add\_Sponsorizzazione(INTEGER,NUMERIC,CHAR(3),INTEGER)}}
 La procedura \texttt{Add\_Sponsorizzazione} inserisce una nuova sponsorizzazione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_sponsorizzazione(sponsor integer, contributo numeric(1000,2), valuta char(3), conferenza integer)
+create or replace procedure add_sponsorizzazione(sponsor_id integer, contributo numeric(1000,2), valuta char(3), conferenza_id integer)
 as $$
 begin
     insert into sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
-    values (sponsor,contributo,valuta,conferenza);
+    values (sponsor_id,contributo,valuta,conferenza_id);
     raise notice 'Inserimento completato';
     exception
         when others then
@@ -426,11 +430,11 @@ $$ language plpgsql;
 \subsection{\texttt{Add\_Sessione(TEXT,TIMESTAMP,TIMESTAMP, INTEGER,INTEGER)}}
 La procedura \texttt{Add\_Sessione} aggiunge una nuova sessione per la conferenza:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_sessione(titolo text, inizio timestamp, fine timestamp, sala integer, conferenza integer)
+create or replace procedure add_sessione(titolo text, inizio timestamp, fine timestamp, sala_id integer, conferenza_id integer)
 as $$
 begin
     insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
-    values (titolo,inizio,fine,sala,conferenza);
+    values (titolo,inizio,fine,sala_id,conferenza_id);
     raise notice 'Inserimento completato';
     exception
         when others then
@@ -441,11 +445,11 @@ $$ language plpgsql;
 \subsection{\texttt{Add\_Partecipante(INTEGER, INTEGER)}}
 La procedura \texttt{Add\_Partecipante} inserisce un nuovo partecipante alla sessione:
 \begin{lstlisting}[language=SQL, style=mystyle]
-create or replace procedure add_partecipante(partecipante integer, sessione integer)
+create or replace procedure add_partecipante(partecipante_id integer, sessione_id integer)
 as $$
 begin
     insert into partecipante_sessione(id_partecipante,id_sessione)
-    values (partecipante,sessione);
+    values (partecipante_id,sessione_id);
     raise notice 'Inserimento completato';
     exception
         when others then
@@ -455,27 +459,27 @@ $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Enti(INTEGER,TEXT)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure add_enti(conferenza integer, sigle text)
-as $$
-declare
+CREATE OR REPLACE PROCEDURE add_enti(conferenza_id integer, sigle text)
+AS $$
+DECLARE
     sigla_ente text;
     ente_id integer;
-begin
-        for sigla_ente in select unnest(string_to_array(sigle, ',')) loop
+BEGIN
+        FOR sigla_ente IN SELECT unnest(string_to_array(sigle, ',')) LOOP
             -- Cerca l'id dell'ente corrispondente alla sigla
-            select id_ente into ente_id from ente where sigla = sigla_ente;
+            SELECT id_ente INTO ente_id FROM ente WHERE sigla = sigla_ente;
             
             -- Inserisci la tupla (id_ente, conferenza) nella tabella ente_conferenza
-            insert into ente_conferenza(id_ente, id_conferenza) values (ente_id, conferenza);
-        end loop;
-        raise notice 'Inserimento completato';
-    exception
-        when others then
-            raise exception 'Errore durante l''inserimento delle tuple nella tabella ente_conferenza: %', sqlerrm;
+            INSERT INTO ente_conferenza(id_ente, id_conferenza) VALUES (ente_id, conferenza_id);
+        END LOOP;
+        RAISE NOTICE 'Inserimento completato';
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE EXCEPTION 'Errore durante l''inserimento delle tuple nella tabella ente_conferenza: %', SQLERRM;
 END;
 $$ LANGUAGE plpgsql;
 \end{lstlisting}
-\subsection{\texttt{Add\_Conferenza(TEXT,TIMESTAMP,TIMESTAMP,INTEGER, TEXT, TEXT)}}
+\subsection{\texttt{Add\_Conferenza}}
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure add_conferenza(nome text, inizio timestamp, fine timestamp, sede integer, descrizione text, sigle text, utente integer)
 as $$
@@ -489,6 +493,7 @@ begin
             raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
+
 \end{lstlisting}
 \subsection{\texttt{Slitta\_Conferenza(INTERVAL)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
@@ -599,9 +604,9 @@ create or replace procedure
 	$$ language plpgsql;
 \end{lstlisting}
 
-\subsection{\texttt{Show\_members()}}
+\subsection{\texttt{Show\_members(integer)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_members(conferenza integer)
+create or replace function show_members(conferenza_id integer)
 returns table 
 (
     id integer, 
@@ -615,10 +620,9 @@ as $$
 begin
     return query
     select o.id_organizzatore, o.nome, o.cognome, o.email,o.titolo, e.sigla
-    from organizzatore o join ente_conferenza ec natural join ente e  
-    on o.id_ente = ec.id_ente
-    where ec.id_conferenza = conferenza
-    GROUP by e.sigla;
+    from organizzatore o natural join ente_conferenza ec natural join ente e  
+    where ec.id_conferenza = conferenza_id
+    group by e.sigla;
 end;
 $$ language plpgsql;
 \end{lstlisting}
@@ -671,20 +675,19 @@ begin
     group by e.nome;
 end;
 $$ language plpgsql;
-
 \end{lstlisting}
 \subsection{\texttt{Add\_Membro\_Comitato(integer,integer)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace procedure add_membro_comitato(organizzatore integer, comitato integer)
+create or replace procedure add_membro_comitato(organizzatore_id integer, comitato_id integer)
 as $$
 begin
-    insert into membro_comitato values (organizzatore,comitato);
+    insert into membro_comitato values (organizzatore_id,comitato_id);
 end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_Membri\_Comitato(integer)}}
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_membri_comitato(comitato integer)
+create or replace function show_membri_comitato(comitato_id integer)
 returns table
 (
     id integer,
@@ -696,9 +699,8 @@ returns table
 begin
     return query
     select o.id_organizzatore, o.nome, o.cognome, o.email, o.titolo
-    from organizzatore o join membro_comitato mc
-    on o.id_organizzatore = mc.id_organizzatore
-    where mc.id_comitato = comitato;
+    from organizzatore o natural join membro_comitato mc
+    where mc.id_comitato = comitato_id;
 end;
 $$ language plpgsql;
 \end{lstlisting}
@@ -719,4 +721,32 @@ begin
 end;
 $$
 language plpgsql;
+
+\end{lstlisting}
+\subsection{\texttt{Show\_Sedi\_Libere(timestamp,timestamp)}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+create or replace function show_sedi_libere(inizio_c timestamp, fine_c timestamp)
+returns table(
+    id_sede integer,
+    nome text
+) as $$
+begin
+    return query
+    select s.id_sede, s.nome
+    from sede s
+    where not exists
+    (
+        select *
+        from sala s1
+        where s1.id_sede = s.id_sede and
+        exists
+        (
+            select *
+            from sessione s2
+            where s2.id_sala = s1.id_sala and
+            (s2.inizio>=inizio_c and s2.inizio<=fine_c)
+        )
+    );
+end;
+$$ language plpgsql;
 \end{lstlisting}

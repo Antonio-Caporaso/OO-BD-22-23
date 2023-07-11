@@ -617,12 +617,13 @@ $$ language plpgsql;
 				from sessione 
 				where id_conferenza = conferenza_id);
 	begin
-        alter table conferenza disable trigger all;
+        alter table conferenza disable trigger delete_sessioni_conferenza;
         alter table sessione disable trigger all;
         alter table intervento disable trigger all;
         alter table intervallo disable trigger all;
         alter table evento disable trigger all;
         alter table programma disable trigger all;
+
 		update conferenza
 		set inizio = inizio + durata, fine = fine + durata
 		where id_conferenza = conferenza_id;
@@ -680,6 +681,7 @@ $$ language plpgsql;
 	exception
 		when others then
 			raise notice '%', sqlerrm;
+            rollback;
 	end;
 	$$ language plpgsql;
 
@@ -752,24 +754,6 @@ begin
 end;
 $$ language plpgsql;
 
--- Mostra tutte le sessioni presenti
-create or replace function show_all_sessioni()
-returns table
-(
-    titolo text,
-    inizio timestamp,
-    fine timestamp,
-    conferenza text,
-    sala text
-) as $$
-begin
-    return query
-    select s.titolo,s.inizio,s.fine,c.titolo,s1.nome from sessione s, conferenza c,sala s1
-    where s.id_conferenza=c.id_conferenza and s.id_sala=s1.id_sala
-    order by s.id_conferenza, s.inizio;
-end;
-$$ language plpgsql;
-
 --Aggiungere un organizzatore ad un comitato
 create or replace procedure add_membro_comitato(organizzatore_id integer, comitato_id integer)
 as $$
@@ -835,6 +819,27 @@ begin
             where s2.id_sala = s1.id_sala and
             (s2.inizio>=inizio_c and s2.inizio<=fine_c)
         )
+    );
+end;
+$$ language plpgsql;
+
+-- Funzione che mostra le sale libere in una sede nel periodo indicato
+create or replace function show_sale_libere(sede_id integer, inizio_c timestamp, fine_c timestamp)
+returns table(
+    id_sala integer,
+    nome text
+) as $$
+begin
+    return query
+    select s.id_sala, s.nome
+    from sala s
+    where s.id_sede = sede_id and
+    not exists
+    (
+        select *
+        from sessione s1
+        where s1.id_sala = s.id_sala and
+        (s1.inizio>=inizio_c and s1.inizio<=fine_c)
     );
 end;
 $$ language plpgsql;
