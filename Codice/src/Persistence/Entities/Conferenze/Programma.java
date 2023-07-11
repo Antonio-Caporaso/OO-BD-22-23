@@ -2,11 +2,15 @@ package Persistence.Entities.Conferenze;
 import Persistence.DAO.EventoSocialeDao;
 import Persistence.DAO.IntervalloDao;
 import Persistence.DAO.InterventoDao;
+import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.partecipanti.Speaker;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.postgresql.util.PGInterval;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Comparator;
 
 public class Programma {
     private int programmaID;
@@ -15,8 +19,13 @@ public class Programma {
     private ObservableList<EventoSociale> eventi;
     private ObservableList<Intervallo> intervalli;
     private ObservableList<Intervento> interventi;
+    private ObservableList<ActivityModel> programmaSessione;
     public Programma(Sessione sessione) {
         this.sessione = sessione;
+        programmaSessione = FXCollections.observableArrayList();
+        interventi=FXCollections.observableArrayList();
+        intervalli=FXCollections.observableArrayList();
+        eventi=FXCollections.observableArrayList();
     }
     public Programma() {}
     public Speaker getKeynote() {
@@ -60,6 +69,9 @@ public class Programma {
 
     public void setInterventi(ObservableList<Intervento> interventi) {
         this.interventi = interventi;
+    }
+    public ObservableList<ActivityModel> getProgrammaSessione(){
+        return programmaSessione;
     }
 
     public void loadEventiSociali() throws SQLException {
@@ -135,5 +147,41 @@ public class Programma {
             InterventoDao dao = new InterventoDao();
             dao.updateIntervento(i);
         }
+    }
+    public ObservableList loadProgramaSessione() throws SQLException{
+        ProgrammaDao programmaDao=new ProgrammaDao();
+        programmaSessione.clear();
+        retreiveProgrammaID(sessione);
+        loadInterventi();
+        loadIntervalli();
+        loadEventiSociali();
+        for (Intervento intervento: interventi){
+            String tipologia= intervento.getTitolo();
+            Timestamp inizio=intervento.getInizio();
+            Timestamp fine=intervento.getFine();
+            String descrizione= intervento.getEstratto();
+            Speaker speaker= intervento.getSpeaker();
+            ActivityModel activity=new ActivityModel(tipologia,inizio,fine,descrizione,speaker);
+            programmaSessione.add(activity);
+        }
+        for (Intervallo intervallo: intervalli){
+            String tipologia= intervallo.getTipologia();
+            Timestamp inizio=intervallo.getInizio();
+            Timestamp fine=intervallo.getFine();
+            ActivityModel activity=new ActivityModel(tipologia,inizio,fine);
+            programmaSessione.add(activity);
+        }
+        for (EventoSociale eventoSociale: eventi){
+            String tipologia= eventoSociale.getTipologia();
+            Timestamp inizio=eventoSociale.getInizio();
+            Timestamp fine=eventoSociale.getFine();
+            ActivityModel activity=new ActivityModel(tipologia,inizio,fine);
+            programmaSessione.add(activity);
+        }programmaSessione.sort(Comparator.comparing(ActivityModel::getInizio));
+        return programmaSessione;
+    }
+    private void retreiveProgrammaID(Sessione sessione) throws SQLException{
+        ProgrammaDao programmaDao = new ProgrammaDao();
+        setProgrammaID(programmaDao.retrieveIDProgramma(sessione));
     }
 }

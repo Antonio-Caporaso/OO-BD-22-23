@@ -1,14 +1,20 @@
 package View.Controller;
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
+
+import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.Utente;
 import Persistence.Entities.partecipanti.Speaker;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 public class ViewProgrammaController implements Initializable
 {
     @FXML
@@ -20,7 +26,11 @@ public class ViewProgrammaController implements Initializable
     @FXML
     private URL location;
     @FXML
-    private Button aggiungiButton;
+    private Button addInterventoButton;
+    @FXML
+    private Button addIntervalloButton;
+    @FXML
+    private Button addEventoSocialeButton;
     @FXML
     private Button backButton;
     @FXML
@@ -28,23 +38,26 @@ public class ViewProgrammaController implements Initializable
     @FXML
     private Button rimuoviButton;
     @FXML
-    private TableColumn<Activity, Speaker> SpeakerColumn;
+    private Label sessioneLabel;
     @FXML
-    private TableColumn<Activity, String> descrizioneColumn;
+    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
     @FXML
-    private TableColumn<Activity, String> entryColumn;
+    private TableColumn<ActivityModel, String> descrizioneTableColumn;
     @FXML
-    private TableColumn<Activity, Timestamp> fineColumn;
+    private TableColumn<ActivityModel, String> appuntamentoTableColumn;
     @FXML
-    private TableColumn<Activity, Timestamp> inizioColumn;
+    private TableColumn<ActivityModel, Timestamp> fineTableColumn;
     @FXML
-    private TableView<Activity> programmaTable;
+    private TableColumn<ActivityModel, Timestamp> inizioTableColumn;
+    @FXML
+    private TableView<ActivityModel> programmaTableView;
     @FXML
     private SubScene subscene;
     private Conferenza conferenza;
     private Sessione sessione;
     private Utente user;
-    private Programma programma= new Programma();
+    private Programma programma;
+    //Public setters
     public void setConferenza(Conferenza c){
         this.conferenza=c;
     }
@@ -54,7 +67,80 @@ public class ViewProgrammaController implements Initializable
     public void setUser(Utente utente){
         this.user=utente;
     }
-    public void setSessione(Sessione sessione){this.sessione=sessione;}
+    public void setSessione(Sessione sessione){
+        this.sessione=sessione;
+    }
+    //Button Methods
+    @FXML
+    void addIntervalloOnAction(ActionEvent event){
+        loadAddIntervallo();
+    }
+    @FXML
+    void addInterventoOnAction(ActionEvent event){
+        loadAddIntervento();
+    }
+    @FXML
+    void addEventoSocialeOnAction(ActionEvent event){
+        loadAddEventoSociale();
+    }
+    @FXML
+    void removeButtonOnAction(ActionEvent event){
+        removePuntoProgramma(programmaTableView.getSelectionModel().getSelectedItem());
+    }
+    @FXML
+    void riepilogoButtonOnAction(ActionEvent event){
+        loadRiepilogo();
+    }
+    @FXML
+    void backButtonOnAction(ActionEvent event){
+        loadVisualizzaSessione();
+    }
+
+
+    //Private Methods
+    private void loadAddIntervallo(){
+
+    }
+    private void loadAddIntervento(){
+
+    }
+    private void loadAddEventoSociale(){
+
+    }
+    private void removePuntoProgramma(ActivityModel activityModel){
+
+    }
+    private void loadRiepilogo(){
+
+    }
+    private void loadVisualizzaSessione(){
+    }
+    private void setProgrammaTableView(){
+        try{
+
+            programma.loadProgramaSessione();
+            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("appuntamento"));
+            inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
+            descrizioneTableColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
+            programmaTableView.setItems(programma.getProgrammaSessione());
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    private void loadSessioneLabel(){
+        sessioneLabel.setText(sessione.getTitolo());
+    }
+    private void setProgramma(){
+        programma=new Programma(sessione);
+    }
+    //Overrides
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setProgramma();
+        loadSessioneLabel();
+        setProgrammaTableView();
+    }
 }
