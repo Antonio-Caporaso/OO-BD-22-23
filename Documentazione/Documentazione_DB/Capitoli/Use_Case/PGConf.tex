@@ -1,9 +1,30 @@
 \section{PGConf NPL 2023}
+\subsection{Aggiunta della conferenza}
 PGConf è una conferenza di tre giorni a Napoli ricca di storie di utenti e best practice su come utilizzare PostgreSQL, il database open source più avanzato al mondo. La conferenza si terrà al Centro Congressi Napoli dal 3 agosto 2023 al 5 agosto 2023 ed è organizzata dalla Federico II di Napoli. Tra gli sponsor figurano aziende del mondo informatico quali Amazon, Apple, Cisco ed IBM. 
 \begin{lstlisting}[language=SQL, style=mystyle,caption={Aggiunta della conferenza}]
-call add_conferenza('PGConf NPL 2023','2023-08-03 9:00','2023-08-05 12:30',5,'PGConf è una conferenza di tre giorni a Napoli ricca di storie di utenti e best practice su come utilizzare PostgreSQL, il database open source più avanzato al mondo','UNINA',1);
+call add_conferenza(
+'PGConf NPL 2023', --Titolo conferenza
+'2023-08-03 9:00', --Inizio
+'2023-08-05 12:30',--Fine
+5,
+'PGConf e'' una conferenza di tre giorni a Napoli 
+ricca di storie di utenti e best practice su come utilizzare PostgreSQL, 
+il database open source pie'' avanzato al mondo', --Descrizione
+'UNINA', --Ente organizzatore
+1 --Utente che inserisce la conferenza 
+);
 \end{lstlisting}
 \begin{lstlisting}[language=SQL,style=mystyle,caption={Aggiunta delle sponsorizzazioni}]
-call add_sponsorizzazione(1,5000.50,'USD',1);
-call add_sponsorizzazione(2,3500.50,'USD',1);
+call add_sponsorizzazione(1,5000.50,'USD',1); --Apple
+call add_sponsorizzazione(2,3500.50,'USD',1); --Amazon
+call add_sponsorizzazione(17,3500.50,'USD',1); --Cisco
+call add_sponsorizzazione(30,3500.50,'USD',1); --IBM
 \end{lstlisting}
+Per popolare i comitati scientifico e locale della conferenza preleviamo quattro membri appartenenti alla Federico II e li aggiungiamo ai comitati:
+\begin{lstlisting}[caption={Aggiunta degli organizzatori nei comitati scientifici e locali della conferenza},language=sql,style=mystyle]
+call add_membri_comitato('1,2',1); -- Comitato scientifico
+call add_membri_comitato('3,4',2); -- Comitato locale
+\end{lstlisting}
+\subsection{Aggiunta delle sessioni}
+La conferenza avrà in totale 9 sessioni distribuite nell'arco delle tre giornate e saranno costellate da interventi, intervalli e vari eventi sociali durante i quali i partecipanti potranno fare networking e provare con mano insieme ad esperti le tecnologie presentate durante la conferenza.
+\subsubsection{Sessione 1: Utilizzo avanzato di PostgreSQL}

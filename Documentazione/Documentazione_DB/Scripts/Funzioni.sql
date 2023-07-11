@@ -755,10 +755,11 @@ end;
 $$ language plpgsql;
 
 --Aggiungere un organizzatore ad un comitato
-create or replace procedure add_membro_comitato(organizzatore_id integer, comitato_id integer)
+create or replace procedure 
+add_membro_comitato(organizzatore_id integer, comitato_id integer)
 as $$
 begin
-    insert into membro_comitato values (organizzatore_id,comitato_id);
+    insert into organizzatore_comitato values (organizzatore_id,comitato_id);
 end;
 $$ language plpgsql;
 

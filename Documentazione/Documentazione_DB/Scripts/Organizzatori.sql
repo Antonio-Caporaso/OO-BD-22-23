@@ -1,6 +1,10 @@
 -- Popolamento tabella Organizzatori
 SET search_path TO conference;
   insert into organizzatore (nome, cognome, titolo, email, id_ente) values
+  ('Mario', 'Rossi', 'Professore', 'mario.rossi@email.com', 31),
+  ('Laura', 'Bianchi', 'Professoressa', 'laura.bianchi@email.com', 31),
+  ('Luca', 'Verdi', 'Dottore', 'luca.verdi@email.com', 31),
+  ('Giulia', 'Neri', 'Ingegnere', 'giulia.neri@email.com', 31),
   ('Carlina', 'Alexandre', 'Professoressa', 'calexandre0@flickr.com', 4),
   ('Loise', 'Wilkowski', 'Dottoressa', 'lwilkowski1@sohu.com', 13),
   ('Robyn', 'O''Fielly', 'Dottore', 'rofielly2@europa.eu', 5),

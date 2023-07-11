@@ -366,7 +366,7 @@ begin
         WHERE id_conferenza IN (
             SELECT id_conferenza
             FROM conferenza
-            WHERE NEW.id_comitato IN (id_comitato_scientifico, id_comitato_locale)
+            WHERE NEW.id_comitato IN (comitato_s, comitato_l)
         )
     ) THEN
         RAISE EXCEPTION 'L''organizzatore deve appartenere ad un ente che ha organizzato la conferenza';
