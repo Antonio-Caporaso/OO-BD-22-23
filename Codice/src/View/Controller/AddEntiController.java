@@ -26,6 +26,8 @@ public class AddEntiController implements Initializable {
     private ListView<Ente> entiListView;
     @FXML
     private SubScene subscene;
+    @FXML
+    private Button nextButton;
     private Conferenza conferenza;
     private Utente user;
     private Enti enti = new Enti();
@@ -51,6 +53,7 @@ public class AddEntiController implements Initializable {
             if(enteSelezionato==null)
                 throw new NullPointerException();
             conferenza.addEnte(enteSelezionato);
+            checkAlmenoUnEnte();
         }catch(SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Questo organizzatore è già presente!");
@@ -82,6 +85,7 @@ public class AddEntiController implements Initializable {
             if(result.get() == ButtonType.OK) {
                 try{
                     conferenza.removeEnte(enteSelezionato);
+                    checkAlmenoUnEnte();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -143,11 +147,19 @@ public class AddEntiController implements Initializable {
             e.printStackTrace();
         }
     }
+    private void checkAlmenoUnEnte(){
+        if(entiListView.getItems().isEmpty()){
+            nextButton.setDisable(true);
+        }else{
+            nextButton.setDisable(false);
+        }
+    }
     //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setOrganizzatoriListView();
         setOrganizzatoriChoiceBox();
+        checkAlmenoUnEnte();
     }
 
     public AddConferenceController getAddConferenceController() {
