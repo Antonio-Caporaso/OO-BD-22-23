@@ -1,7 +1,7 @@
 \section{Progettazione logica}
 Una volta aver ristrutturato lo schema concettuale mostrato in Figura \ref{uml:schema_concettuale} si procede traducendo le varie associazioni descritte in Figura \ref{uml:schema_ristrutturato}. Iniziamo col tradurre direttamente tutte le classi. Man mano che si andranno a tradurre le varie associazioni andremo a modificare la struttura dei vari schemi relazionali laddove necessario.
 \subsection{Traduzione delle classi}
-Si ha quindi:
+Traduciamo ciascuna entità individuata nello schema concettuale ristrutturato in una relazione aggiungendo i vari identificatori primari:
 
 	\begin{tabular}{|l|l|l|l|l|l|l|}
 		\multicolumn{7}{l}{Indirizzo} \\
@@ -236,11 +236,9 @@ Si ha:
 		\underline{id\_sede} & nome & indirizzo \\ \hline
 	\end{tabular}
 \end{enumerate}
-\subsection{Schema logico}
 Nella Figura \ref{fig:schema_logico} è raffigurato lo schema logico risultante.
 \begin{figure}
 	\centering
 	\caption{Schema logico}
 	\includegraphics[scale=0.6]{Immagini/Schema_logico.png}\label{fig:schema_logico}
-	
 \end{figure}

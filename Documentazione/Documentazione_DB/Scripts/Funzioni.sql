@@ -23,7 +23,7 @@ $$ language plpgsql;
 CREATE OR REPLACE FUNCTION show_comitato_scientifico(conferenza_id integer)
 RETURNS SETOF organizzatore
 LANGUAGE plpgsql
-AS $function$
+AS $$
 BEGIN
     RETURN QUERY
     -- Select dei dettagli dell'organizzatore
@@ -38,7 +38,7 @@ BEGIN
         )
     );
 END;
-$function$;
+$$;
 
 
 --Funzione che mostra tutti gli organizzatori appartenenti al comitato locale di una conferenza
