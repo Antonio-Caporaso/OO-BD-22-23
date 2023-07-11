@@ -488,7 +488,7 @@ $$ language plpgsql;
 create or replace procedure add_sponsorizzazione(sponsor_id integer, contributo numeric(1000,2), valuta char(3), conferenza_id integer)
 as $$
 begin
-    insert into sponsorizzazione(id_sponsor,contributo,valuta,id_conferenza)
+    insert into sponsor_conferenza(id_sponsor,contributo,valuta,id_conferenza)
     values (sponsor_id,contributo,valuta,conferenza_id);
     raise notice 'Inserimento completato';
     exception

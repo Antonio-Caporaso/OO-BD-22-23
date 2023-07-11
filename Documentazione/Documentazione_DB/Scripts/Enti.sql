@@ -26,4 +26,13 @@ insert into ente (nome,sigla) values
 ('Istituto Superiore di Sanità','ISS'),
 ('Agenzia Nazionale per la Protezione Ambientale','ANPA'),
 ('Istituto Nazionale per la Fisica della Materia','INFM'),
-('Centro Interforze Studi per le Applicazioni Militari','CISAM');
+('Centro Interforze Studi per le Applicazioni Militari','CISAM'),
+('Università degli Studi di Roma La Sapienza', 'UNIROMA1'),
+('Politecnico di Milano', 'POLIMI'),
+('Università degli Studi di Bologna', 'UNIBO'),
+('Università degli Studi di Padova', 'UNIPD'),
+('Università degli Studi di Napoli Federico II', 'UNINA'),
+('Università degli Studi di Firenze', 'UNIFI'),
+('Università degli Studi di Genova','UNIGE'),
+('Università degli Studi di Milano','UNIMI'),
+('Università degli Studi di Torino','UNITO');

@@ -4,7 +4,7 @@ set search_path to conference;
 create table ente(
 id_ente serial primary key,
 nome text not null unique,
-sigla varchar(7) not null,
+sigla varchar(8) not null,
 unique (nome,sigla)
 );
 
