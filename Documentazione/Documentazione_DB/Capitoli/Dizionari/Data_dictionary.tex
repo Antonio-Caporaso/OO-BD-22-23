@@ -95,5 +95,12 @@
 	
 	\textbf{Valuta} & Tabella delle valute & \texttt{Iso} (\textit{Char(3)})(\textit{totale}): codice univoco internazionale delle valute. \\
 	& & \texttt{Nome}(\textit{text})(\textit{totale}): nome della valuta. \\
-	& & \texttt{Simbolo}(\textit{char(1)})(\textit{totale}): simbolo della valuta.\\
+	& & \texttt{Simbolo}(\textit{char(1)})(\textit{totale}): simbolo della valuta.\\ \hline
+	\textbf{Utente} & Tabella degli utenti dell'applicativo & \texttt{Id\_Utente}(\textit{serial})(\textit{totale}): chiave primaria di un utente. \\
+	& & \texttt{Username}(\textit{text})(\textit{totale}): nome per eseguire il login. \\
+	& & \texttt{Nome}(\textit{text})(\textit{totale}): nome proprio dell'utente. \\
+	& & \texttt{Cognome}(\textit{text})(\textit{totale}): cognome dell'utente. \\
+	& & \texttt{Titolo}(\textit{titolo\_ST})(\textit{parziale}): descrittore del titolo, se presente. \\
+	& & \texttt{Email}(\textit{text})(\textit{totale}): email dell'utente. \\ 
+	& & \texttt{Password}(\textit{text})(\textit{totale}): stringa per accedere nell'applicativo. \\ 
 \end{longtable}

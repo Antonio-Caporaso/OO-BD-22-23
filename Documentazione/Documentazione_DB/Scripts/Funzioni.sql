@@ -509,14 +509,14 @@ end;
 $$ language plpgsql;
 
 create or replace function add_new_sessione
-(titolo text, inizio timestamp, fine timestamp, sala_id integer, conferenza_id integer) 
+(titolo text, inizio timestamp, fine timestamp, sala_id integer, conferenza_id integer,coordinatore_id integer) 
 returns integer
 as $$
 declare
     sessione_id integer;
 begin
-    insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
-    values (titolo,inizio,fine,sala_id,conferenza_id) returning id_sessione into sessione_id;
+    insert into sessione(titolo,inizio,fine,id_sala,id_conferenza,id_coordinatore)
+    values (titolo,inizio,fine,sala_id,conferenza_id,coordinatore_id) returning id_sessione into sessione_id;
     raise notice 'Sessione inserita correttamente';
     return sessione_id;
     exception

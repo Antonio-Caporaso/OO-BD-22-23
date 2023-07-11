@@ -3,7 +3,11 @@ declare
 conferenza_id integer; --Id conferenza inserita
 comitato_sc_id integer; --Id comitato scientifico inserito
 comitato_lc_id integer; --Id comitato locale inserito
-
+sessione1_id integer;
+sessione2_id integer;
+sessione3_id integer;
+sessione4_id integer;
+sessione5_id integer;
 begin
 
 call add_conferenza(
@@ -36,6 +40,17 @@ call add_membri_comitato('1,2',comitato_sc_id); -- Comitato scientifico
 call add_membri_comitato('3,4',comitato_lc_id); -- Comitato locale
 
 -- Aggiunta sessioni
+sessione1_id = add_new_sessione('Best practice su PostgreSQL','2023-08-03 10:30','2023-08-03 12:30',13,conferenza_id,1);
+sessione2_id = add_new_sessione('PostgreSQL è il database del futuro','2023-08-03 14:30','2023-08-03 16:30',14,conferenza_id,2);
+sessione3_id = add_new_sessione('Performance di PostgreSQL','2023-08-04 10:30','2023-08-04 12:30',15,conferenza_id,1);
+sessione4_id = add_new_sessione('PostgreSQL e il mondo del lavoro','2023-08-04 14:30','2023-08-04 16:30',13,conferenza_id,2);
+sessione5_id = add_new_sessione('PostgreSQL e Kubernetes','2023-08-05 10:30','2023-08-05 12:30',14,conferenza_id,1);
+
+-- Specifica programma sessione 1
+-- Specifica programma sessione 2
+-- Specifica programma sessione 3
+-- Specifica programma sessione 4
+-- Specifica programma sessione 5
 
 exception
     when others then

@@ -31,6 +31,3 @@
 \contentsline {lstlisting}{\numberline {4.31}{\ignorespaces \texttt {Check\_organizzatori\_comitato}}}{30}{lstlisting.4.31}%
 \contentsline {lstlisting}{\numberline {4.32}{\ignorespaces \texttt {Delete\_sessioni\_conferenza}}}{30}{lstlisting.4.32}%
 \contentsline {lstlisting}{\numberline {4.33}{\ignorespaces {\texttt {Check\_Capienza}} style}}{31}{lstlisting.4.33}%
-\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Aggiunta della conferenza}}{47}{lstlisting.5.1}%
-\contentsline {lstlisting}{\numberline {5.2}{\ignorespaces Aggiunta delle sponsorizzazioni}}{47}{lstlisting.5.2}%
-\contentsline {lstlisting}{\numberline {5.3}{\ignorespaces Aggiunta degli organizzatori nei comitati scientifici e locali della conferenza}}{47}{lstlisting.5.3}%

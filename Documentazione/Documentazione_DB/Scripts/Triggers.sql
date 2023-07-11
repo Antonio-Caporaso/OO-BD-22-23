@@ -313,26 +313,29 @@ execute function check_sede_libera();
  |                          Vincoli per la tabella SALA                                        |
  *---------------------------------------------------------------------------------------------*/
 
--- 1. Una sala non può ospitare più di una sessione alla volta
+-- 1. Una sala non può ospitare più di una sessione contemporaneamente
 create or replace function check_sala_sessione_unica() returns trigger as $$
-declare
-    inizio_sessione timestamp;
-    fine_sessione timestamp;
-    sessioni cursor for select id_sessione from sessione where id_sala = new.id_sala;
-    sessione_id integer;
 begin
-    open sessioni;
-    loop
-        fetch sessioni into sessione_id;
-        exit when not found;
-        select inizio,fine into inizio_sessione,fine_sessione
-        from sessione
-        where id_sessione = sessione_id;
-        if (new.inizio>=inizio_sessione OR new.inizio<=fine_sessione) then
-            raise exception 'La sala non può ospitare più di una sessione alla volta';
-        end if;
-    end loop;
-    close sessioni;
+    if (new.id_sala is null) then
+        return new;
+    end if;
+
+    if (new.inizio is null) then
+        return new;
+    end if;
+
+    if (new.fine is null) then
+        return new;
+    end if;
+
+    if ( select count(*) 
+         from sessione 
+         where id_sala = new.id_sala 
+            and id_sessione <> new.id_sessione
+            and (inizio, fine) overlaps (new.inizio, new.fine)
+        ) > 0 then
+        raise exception 'La sala non è disponibile';
+    end if;
     return new;
 end;
 $$ language plpgsql;

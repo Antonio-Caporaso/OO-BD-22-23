@@ -1,5 +1,5 @@
 \section{Dizionario dei vincoli}
-\begin{longtable}{|p{0.3\textwidth}|p{0.2\textwidth}|p{0.45\textwidth}|}
+\begin{longtable}{|p{0.32\textwidth}|p{0.2\textwidth}|p{0.45\textwidth}|}
 	\hline
 	\textbf{Vincolo} & \textbf{Tipo} & \textbf{Descrizione} \\
 	\hline
@@ -27,7 +27,9 @@
 	\textsc{Check\_Data\_Sessione} & Interrelazionale & La data di inizio e di fine di ogni sessione deve essere compresa tra l'inizio e la fine della propria conferenza. \\ \hline
 	\textsc{Check\_Coordinatore} & Interrelazionale & Il coordinatore di una sessione deve appartenere al comitato scientifico della conferenza. \\ \hline
 	\textsc{Check\_Comitati} & Intrarelazionale & Ogni volta che si modifica la tabella \textsc{Conferenza} bisogna controllare che i valori indicati per i comitati siano coerenti con la tipologia di comitato della colonna. \\ \hline
-	\textsc{Check\_Sala} & Interrelazionale & Quando si inserisce una nuova sessione bisogna controllare che la sala indicata sia effettivamente disponibile e non occupata nei giorni indicati. \\ \hline
+	\textsc{Check\_Sede\_Disponibile} & Interrelazionale & Quando si inserisce una nuova conferenza bisogna controllare che la sede sia disponibile. Una sede è considerata disponibile se ha almeno una sala non occupata nel periodo di tempo indicato per la conferenza. \\ \hline
+	\textsc{Check\_Sala\_Disponibile} & Interrelazionale & Quando si inserisce una nuova sessione bisogna controllare che la sala indicata sia effettivamente disponibile e non occupata nei giorni indicati. \\ \hline
+	\textsc{Check\_Sala\_Sessione} & Interrelazionale & Quando si inserisce una nuova sessione bisogna controllare che la sala indicata appartenga alla sede della conferenz della sessione. \\ \hline
 	\textsc{Check\_Organizzatori} & Interrelazionale & Gli organizzatori appartenenti ai comitati di una conferenza devono appartenere agli enti che organizzano quella conferenza. \\ \hline
 	\textsc{Check\_Capienza} & Interrelazionale & Ogni volta che si aggiunge un nuovo partecipante di una sessione bisogna controllare che non sia stata raggiunta la capienza della sala in cui si svolge la sessione. \\
 	 
