@@ -69,7 +69,7 @@ public class UtenteDAO {
         conn = dbCon.getConnection();
         Utente user = null;
         try{
-            String query = "SELECT * from utente where id_user = ?";
+            String query = "SELECT * from utente where id_utente = ?";
             PreparedStatement stm = conn.prepareStatement(query);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
