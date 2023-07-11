@@ -20,9 +20,7 @@ call add_conferenza(
 '2023-08-03 9:00', --Inizio
 '2023-08-05 12:30',--Fine
 5,
-'PGConf e'' una conferenza di tre giorni a Napoli 
-ricca di storie di utenti e best practice su come utilizzare PostgreSQL, 
-il database open source pie'' avanzato al mondo', --Descrizione
+'PGConf e'' una conferenza di tre giorni a Napoli ricca di storie di utenti e best practice su come utilizzare PostgreSQL, il database open source pie'' avanzato al mondo', --Descrizione
 'UNINA', --Ente organizzatore
 1 --Utente che inserisce la conferenza 
 );
