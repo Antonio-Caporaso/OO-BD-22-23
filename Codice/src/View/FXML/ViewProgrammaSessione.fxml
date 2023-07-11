@@ -7,14 +7,13 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/defaultScene.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/defaultScene.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="75.0" layoutY="-5.0" stroke="#00416a" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
-      <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="512.0" style="-fx-background-color: #00416A;" text="Programma Sessione" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+      <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="512.0" style="-fx-background-color: #00416A;" text="Programma Sessione:" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
@@ -36,27 +35,26 @@
             </Button>
          </buttons>
       </ButtonBar>
-      <TableView fx:id="programmaTable" layoutX="14.0" layoutY="79.0" prefHeight="629.0" prefWidth="670.0">
+      <TableView fx:id="programmaTableView" layoutX="14.0" layoutY="117.0" prefHeight="500.0" prefWidth="725.0" stylesheets="@../CSS/TableView.css">
         <columns>
-          <TableColumn fx:id="entryColumn" prefWidth="141.0" text="Appuntamento" />
-          <TableColumn fx:id="inizioColumn" minWidth="0.0" prefWidth="122.0" text="Inizio" />
-            <TableColumn fx:id="fineColumn" prefWidth="113.0" text="Fine" />
-            <TableColumn fx:id="descrizioneColumn" prefWidth="164.0" text="Descrizione" />
-            <TableColumn fx:id="SpeakerColumn" prefWidth="137.0" text="Speaker" />
+          <TableColumn fx:id="appuntamentoTableColumn" maxWidth="256.0" prefWidth="135.0" resizable="false" text="Appuntamento" />
+          <TableColumn fx:id="inizioTableColumn" maxWidth="209.0" minWidth="0.0" prefWidth="160.0" resizable="false" text="Inizio" />
+            <TableColumn fx:id="fineTableColumn" maxWidth="209.0" minWidth="0.0" prefWidth="160.0" resizable="false" text="Fine" />
+            <TableColumn fx:id="speakerTableColumn" maxWidth="409.0" prefWidth="110.0" resizable="false" text="Speaker" />
+            <TableColumn fx:id="descrizioneTableColumn" maxWidth="500.0" prefWidth="146.0" text="Descrizione" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <VBox layoutX="700.0" layoutY="79.0" prefHeight="591.0" prefWidth="223.0">
-         <children>
-            <Button fx:id="addPuntoButton" mnemonicParsing="false" onAction="#addPuntoOnAction" prefHeight="29.0" prefWidth="228.0" text="Aggiungi punto" />
-            <Button fx:id="removePuntoButton" mnemonicParsing="false" onAction="#removeButtonOnAction" prefHeight="29.0" prefWidth="273.0" text="Rimuovi punto">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
+      <Label fx:id="sessioneLabel" layoutX="243.0" layoutY="19.0" prefHeight="31.0" prefWidth="280.0" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Button fx:id="removePuntoButton" layoutX="752.0" layoutY="494.0" mnemonicParsing="false" onAction="#removeButtonOnAction" prefHeight="31.0" prefWidth="173.0" text="Rimuovi punto" />
+      <Button fx:id="addInterventoButton" layoutX="752.0" layoutY="309.0" mnemonicParsing="false" onAction="#addInterventoOnAction" prefHeight="31.0" prefWidth="173.0" text="Aggiungi Intervento" />
+      <Button fx:id="addIntervalloButton" layoutX="752.0" layoutY="269.0" mnemonicParsing="false" onAction="#addIntervalloOnAction" prefHeight="31.0" prefWidth="173.0" text="Aggiungi Intervallo" />
+      <Button fx:id="addEventoSocialeButton" layoutX="752.0" layoutY="349.0" mnemonicParsing="false" onAction="#addEventoSocialeOnAction" prefHeight="31.0" prefWidth="173.0" text="Add Evento Sociale" />
    </children>
 </AnchorPane>
