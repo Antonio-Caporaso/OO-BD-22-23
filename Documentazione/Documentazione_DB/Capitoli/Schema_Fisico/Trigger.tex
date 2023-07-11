@@ -86,7 +86,7 @@ begin
     where id_sessione = (select id_sessione from programma where id_programma = new.id_programma);
 
     if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
-        raise exception 'L''intervento non è compreso nella sessione';
+        raise exception 'L''intervento non e'' compreso nella sessione';
     end if;
     return new;
 end;
@@ -173,7 +173,7 @@ begin
     where id_conferenza = new.id_conferenza;
 
     if (new.inizio < inizio_conferenza OR new.fine > fine_conferenza) then
-        raise exception 'La sessione non è compresa nella conferenza';
+        raise exception 'La sessione non e'' compresa nella conferenza';
     end if;
     return new;
 end;
@@ -332,7 +332,7 @@ begin
             and id_sessione <> new.id_sessione
             and (inizio, fine) overlaps (new.inizio, new.fine)
         ) > 0 then
-        raise exception 'La sala non è disponibile';
+        raise exception 'La sala non e'' disponibile';
     end if;
     return new;
 end;
@@ -426,7 +426,7 @@ begin
     where id_sessione = new.id_sessione;
     
     if (partecipanti >= capienza_s) then
-        raise exception 'La capienza della sala è stata raggiunta';
+        raise exception 'La capienza della sala e'' stata raggiunta';
     end if;
     return new;
 end;
