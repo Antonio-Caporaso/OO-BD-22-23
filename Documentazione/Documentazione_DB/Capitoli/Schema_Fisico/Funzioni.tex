@@ -295,7 +295,7 @@ begin
     end if;
 
     insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
-    values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
+    values (titolo,abstract,speaker_id,programma_id,fine_prev,fine_prev+durata);
     raise notice 'Intervento aggiunto con successo';
     exception
         when others then
@@ -305,6 +305,7 @@ $$ language plpgsql;
 \end{lstlisting}
 
 \subsection{\texttt{Add\_New\_Intervento}}
+La funzione \texttt{add\_new\_intervento} aggiunge un nuovo intervento nel programma di una sessione e ne restituisce la chiave primaria appena aggiunta.
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function add_new_intervento 
 (titolo text, 
@@ -333,7 +334,7 @@ begin
     end if;
 
     insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
-    values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata) returning id_intervento into intervento_id;
+    values (titolo,abstract,speaker_id,programma_id,fine_prev,fine_prev+durata) returning id_intervento into intervento_id;
     raise notice 'Intervento aggiunto con successo';
     return intervento_id;
     exception
@@ -366,7 +367,7 @@ begin
     end if;
 
     insert into intervallo(tipologia,id_programma,inizio,fine)
-    values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
+    values (LOWER(tipologia)::intervallo_st, programma_id, fine_prev, fine_prev+durata);
     raise notice 'Intervallo aggiunto con successo';
     exception
         when others then
@@ -376,7 +377,8 @@ $$
 language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_New\_Intervallo}}
-\begin{lstlisting}
+La funzione \texttt{add\_new\_intervallo} aggiunge un nuovo intervallo nel programma della sessione e ne restituisce la chiave primaria.
+\begin{lstlisting}[language=SQL, style=mystyle]
 create or replace function 
 add_new_intervallo(tipologia text , programa_id int, durata interval)
 returns integer
@@ -400,7 +402,7 @@ begin
     end if;
 
     insert into intervallo(tipologia,id_programma,inizio,fine)
-    values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata) returning id_intervallo into intervallo_id;
+    values (LOWER(tipologia)::intervallo_st, programma_id, fine_prev, fine_prev+durata) returning id_intervallo into intervallo_id;
     raise notice 'Intervallo aggiunto con successo';
     return intervallo_id;
     exception
@@ -447,7 +449,8 @@ $$
 language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_New\_Evento}}
-\begin{lstlisting}
+La funzione \texttt{add\_new\_evento} aggiunge un nuovo evento in programma e ne restituisce la chiave primaria.
+\begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function
 add_new_evento
 (tipologia text, 
@@ -551,7 +554,8 @@ end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_New\_Sessione}}
-\begin{lstlisting}
+La funzione \texttt{add\_new\_sessione} aggiunge una nuova sessione di una conferenza e ne restituisce la chiave primaria:
+\begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function add_new_sessione
 (titolo text, inizio timestamp, fine timestamp, sala_id integer, conferenza_id integer,coordinatore_id integer) 
 returns integer
@@ -585,6 +589,7 @@ end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Enti(INTEGER,TEXT)}}
+Questa procedura utilizza l'SQL dinamico per aggiungere una lista di enti tra gli organizzatori di una conferenza:
 \begin{lstlisting}[language=SQL,style=mystyle]
 CREATE OR REPLACE PROCEDURE add_enti(conferenza_id integer, sigle text)
 AS $$
@@ -607,6 +612,7 @@ END;
 $$ LANGUAGE plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Conferenza}}
+La procedura \texttt{Add\_conferenza} richiama in sè la funzione \texttt{add\_conferenza\_details} e \texttt{add\_enti} per aggiungere una nuova conferenza.
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure add_conferenza(nome text, inizio timestamp, fine timestamp, sede integer, descrizione text, sigle text, utente integer)
 as $$
@@ -755,6 +761,7 @@ end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_percentage\_interventi(INTEGER,INTEGER)}}
+Questa funzione restituisce una tabella contenente le percentuali di istituzioni di appartenenza di tutti gli speaker che hanno tenuto un discorso nel mese indicato:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function show_percentage_interventi(mese int, anno int)
 returns table
@@ -780,6 +787,7 @@ end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_percentage(INTEGER)}}
+Questa funzione restituisce una tabella contenente le percentuali di istituzioni di appartenenza di tutti gli speaker che hanno tenuto un discorso nell'anno indicato:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function show_percentage_interventi(anno int)
 returns table
@@ -805,6 +813,7 @@ end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Membro\_Comitato(integer,integer)}}
+La procedura aggiunge un nuovo membro all'interno di un comitato di una conferenza;
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure 
 add_membro_comitato(organizzatore_id integer, comitato_id integer)
@@ -815,6 +824,7 @@ end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_Membri\_Comitato(integer)}}
+La funzione elenca tutti i membri di un determinato comitato:
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function show_membri_comitato(comitato_id integer)
 returns table
@@ -834,6 +844,7 @@ end;
 $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Membri\_Comitato(text,int)}}
+Questa procedura utilizza l'SQL dinamico per inserire una lista di membri (una lista di chiavi primarie separate da virgole) all'interno di un comitato
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace procedure add_membri_comitato(organizzatori text, comitato integer)
 as $$
@@ -854,6 +865,7 @@ language plpgsql;
 
 \end{lstlisting}
 \subsection{\texttt{Show\_Sedi\_Libere(timestamp,timestamp)}}
+Questa funzione visualizza tutte le sedi che sono disponibili all'interno dell'arco temporale ricercato. Una sede è disponibile se non ha sale occupate da sessioni.
 \begin{lstlisting}[language=SQL,style=mystyle]
 create or replace function show_sedi_libere(inizio_c timestamp, fine_c timestamp)
 returns table(
@@ -882,8 +894,9 @@ $$ language plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_Sale\_Libere}}
 La funzione \texttt{Show\_Sale\_Libere} data la chiave primaria di una sede e due date restituisce tutte le sale presenti nella sede che non sono occupate da una sessione.
-\begin{lstlisting}
-create or replace function show_sale_libere(sede_id integer, inizio_c timestamp, fine_c timestamp)
+\begin{lstlisting}[language=SQL,style=mystyle]
+create or replace function 
+show_sale_libere(sede_id integer, inizio_c timestamp, fine_c timestamp)
 returns table(
     id_sala integer,
     nome text

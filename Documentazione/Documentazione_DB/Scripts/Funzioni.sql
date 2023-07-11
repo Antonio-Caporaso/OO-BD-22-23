@@ -272,7 +272,7 @@ begin
     end if;
 
     insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
-    values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
+    values (titolo,abstract,speaker_id,programma_id,fine_prev,fine_prev+durata);
     raise notice 'Intervento aggiunto con successo';
     exception
         when others then
@@ -307,7 +307,7 @@ begin
     end if;
 
     insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
-    values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata) returning id_intervento into intervento_id;
+    values (titolo,abstract,speaker_id,programma_id,fine_prev,fine_prev+durata) returning id_intervento into intervento_id;
     raise notice 'Intervento aggiunto con successo';
     return intervento_id;
     exception
@@ -338,7 +338,7 @@ begin
     end if;
 
     insert into intervallo(tipologia,id_programma,inizio,fine)
-    values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
+    values (tipologia::intervallo_st, programma_id, fine_prev, fine_prev+durata);
     raise notice 'Intervallo aggiunto con successo';
     exception
         when others then
@@ -370,7 +370,7 @@ begin
     end if;
 
     insert into intervallo(tipologia,id_programma,inizio,fine)
-    values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata) returning id_intervallo into intervallo_id;
+    values (tipologia::intervallo_st, programma_id, fine_prev, fine_prev+durata) returning id_intervallo into intervallo_id;
     raise notice 'Intervallo aggiunto con successo';
     return intervallo_id;
     exception
