@@ -273,7 +273,7 @@ begin
 
     insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
     values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata);
-    raise notice 'Inserimento completato';
+    raise notice 'Intervento aggiunto con successo';
     exception
         when others then
             raise notice '%', sqlerrm;
@@ -308,7 +308,7 @@ begin
 
     insert into intervento(titolo,abstract,id_speaker,id_programma,inizio,fine)
     values (titolo,abstract,speaker,programma,fine_prev,fine_prev+durata) returning id_intervento into intervento_id;
-    raise notice 'Inserimento completato';
+    raise notice 'Intervento aggiunto con successo';
     return intervento_id;
     exception
         when others then
@@ -339,7 +339,7 @@ begin
 
     insert into intervallo(tipologia,id_programma,inizio,fine)
     values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata);
-    raise notice 'Inserimento completato';
+    raise notice 'Intervallo aggiunto con successo';
     exception
         when others then
             raise notice '%', sqlerrm;
@@ -371,7 +371,7 @@ begin
 
     insert into intervallo(tipologia,id_programma,inizio,fine)
     values (tipologia::intervallo_st, programma, fine_prev, fine_prev+durata) returning id_intervallo into intervallo_id;
-    raise notice 'Inserimento completato';
+    raise notice 'Intervallo aggiunto con successo';
     return intervallo_id;
     exception
         when others then
@@ -406,7 +406,7 @@ begin
 
     insert into evento(tipologia, id_programma, inizio, fine)
     values (tipologia, programma_id, fine_prev, fine_prev+durata);
-    raise notice 'Inserimento completato';
+    raise notice 'Evento aggiunto con successo';
     exception
         when others then
             raise notice '%', sqlerrm;
@@ -443,7 +443,7 @@ begin
 
     insert into evento(tipologia, id_programma, inizio, fine)
     values (tipologia, programma_id, fine_prev, fine_prev+durata) returning id_evento into evento_id;
-    raise notice 'Inserimento completato';
+    raise notice 'Evento aggiunto con successo';
     return evento_id;
     exception
         when others then
@@ -462,7 +462,6 @@ BEGIN
         INSERT INTO conferenza(titolo, inizio, fine, id_sede, descrizione, id_utente) 
         VALUES (nome, inizio, fine, sede_id, abstract,utente_id)
         RETURNING id_conferenza INTO id;
-        raise notice 'Inserimento completato';
         RETURN id;
     EXCEPTION
         WHEN OTHERS THEN
@@ -477,7 +476,6 @@ as $$
 begin
     insert into ente_conferenza(id_ente,id_conferenza)
     values (ente_id,conferenza_id);
-    raise notice 'Inserimento completato';
     exception
         when others then
             raise notice '%', sqlerrm;
@@ -490,7 +488,7 @@ as $$
 begin
     insert into sponsor_conferenza(id_sponsor,contributo,valuta,id_conferenza)
     values (sponsor_id,contributo,valuta,conferenza_id);
-    raise notice 'Inserimento completato';
+    raise notice 'Sponsorizzazione aggiunta con successo';
     exception
         when others then
             raise notice '%', sqlerrm;
@@ -498,12 +496,12 @@ end;
 $$ language plpgsql;
 
 --Funzione per aggiunta di una sessione di una conferenza
-create or replace procedure add_sessione(titolo text, inizio timestamp, fine timestamp, sala_id integer, conferenza_id integer)
+create or replace procedure add_sessione(titolo text, inizio timestamp, fine timestamp, sala_id integer, conferenza_id integer,coordinatore_id integer)
 as $$
 begin
-    insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
-    values (titolo,inizio,fine,sala_id,conferenza_id);
-    raise notice 'Inserimento completato';
+    insert into sessione(titolo,inizio,fine,id_sala,id_conferenza,id_coordinatore)
+    values (titolo,inizio,fine,sala_id,conferenza_id,coordinatore_id);
+    raise notice 'Sessione inserita correttamente';
     exception
         when others then
             raise notice '%', sqlerrm;
@@ -519,7 +517,7 @@ declare
 begin
     insert into sessione(titolo,inizio,fine,id_sala,id_conferenza)
     values (titolo,inizio,fine,sala_id,conferenza_id) returning id_sessione into sessione_id;
-    raise notice 'Inserimento completato';
+    raise notice 'Sessione inserita correttamente';
     return sessione_id;
     exception
         when others then
@@ -533,7 +531,7 @@ as $$
 begin
     insert into partecipante_sessione(id_partecipante,id_sessione)
     values (partecipante_id,sessione_id);
-    raise notice 'Inserimento completato';
+    raise notice 'Partecipante inserito correttamente';
     exception
         when others then
             raise notice '%', sqlerrm;
@@ -554,7 +552,7 @@ BEGIN
             -- Inserisci la tupla (id_ente, conferenza) nella tabella ente_conferenza
             INSERT INTO ente_conferenza(id_ente, id_conferenza) VALUES (ente_id, conferenza_id);
         END LOOP;
-        RAISE NOTICE 'Inserimento completato';
+        RAISE NOTICE 'Enti inseriti correttamente';
     EXCEPTION
         WHEN OTHERS THEN
             RAISE EXCEPTION 'Errore durante l''inserimento delle tuple nella tabella ente_conferenza: %', SQLERRM;
@@ -570,6 +568,7 @@ declare
 begin
     id_conferenza := add_conferenza_details(nome,inizio,fine,sede,descrizione,utente);
     call add_enti(id_conferenza,sigle);
+    raise notice 'Conferenza inserita correttamente';
     exception
         when others then
             raise notice '%', sqlerrm;
