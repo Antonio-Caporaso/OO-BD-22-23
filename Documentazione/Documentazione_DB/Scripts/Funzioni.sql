@@ -20,20 +20,20 @@ end;
 $$ language plpgsql;
 
 --Funzione che mostra tutti gli organizzatori appartenenti al comitato scientifico di una conferenza
-CREATE OR REPLACE FUNCTION conference.show_comitato_scientifico(conferenza_id integer)
- RETURNS SETOF conference.organizzatore
- LANGUAGE plpgsql
+CREATE OR REPLACE FUNCTION show_comitato_scientifico(conferenza_id integer)
+RETURNS SETOF organizzatore
+LANGUAGE plpgsql
 AS $function$
 BEGIN
     RETURN QUERY
     -- Select dei dettagli dell'organizzatore
-    SELECT * FROM conference.organizzatore
+    SELECT * FROM organizzatore
     WHERE id_organizzatore IN (
         -- Select degli id degli organizzatori appartenenti al comitato scientifico
-        SELECT id_organizzatore FROM conference.organizzatore_comitato
+        SELECT id_organizzatore FROM organizzatore_comitato
         WHERE id_comitato = (
             -- Select dell'id del comitato scientifico della conferenza
-            SELECT comitato_s FROM conference.conferenza
+            SELECT comitato_s FROM conferenza
             WHERE id_conferenza = conferenza_id
         )
     );
@@ -684,7 +684,7 @@ $$ language plpgsql;
 	$$ language plpgsql;
 
 -- Funzione che mostra tutti i membri degli enti organizzatori di una conferenza
-create or replace function show_members(conferenza integer)
+create or replace function show_members(conferenza_id integer)
 returns table 
 (
     id integer, 
@@ -698,10 +698,9 @@ as $$
 begin
     return query
     select o.id_organizzatore, o.nome, o.cognome, o.email,o.titolo, e.sigla
-    from organizzatore o join ente_conferenza ec natural join ente e  
-    on o.id_ente = ec.id_ente
-    where ec.id_conferenza = conferenza
-    GROUP by e.sigla;
+    from organizzatore o natural join ente_conferenza ec natural join ente e  
+    where ec.id_conferenza = conferenza_id
+    group by e.sigla;
 end;
 $$ language plpgsql;
 
@@ -772,15 +771,15 @@ end;
 $$ language plpgsql;
 
 --Aggiungere un organizzatore ad un comitato
-create or replace procedure add_membro_comitato(organizzatore integer, comitato integer)
+create or replace procedure add_membro_comitato(organizzatore_id integer, comitato_id integer)
 as $$
 begin
-    insert into membro_comitato values (organizzatore,comitato);
+    insert into membro_comitato values (organizzatore_id,comitato_id);
 end;
 $$ language plpgsql;
 
 -- Funzione che riceve in input un id di un comitato e restituisce tutti i membri di quel comitato
-create or replace function show_membri_comitato(comitato integer)
+create or replace function show_membri_comitato(comitato_id integer)
 returns table
 (
     id integer,
@@ -792,9 +791,8 @@ returns table
 begin
     return query
     select o.id_organizzatore, o.nome, o.cognome, o.email, o.titolo
-    from organizzatore o join membro_comitato mc
-    on o.id_organizzatore = mc.id_organizzatore
-    where mc.id_comitato = comitato;
+    from organizzatore o natural join membro_comitato mc
+    where mc.id_comitato = comitato_id;
 end;
 $$ language plpgsql;
 

@@ -272,7 +272,28 @@ create trigger check_comitati_conferenza
 before update on conferenza
 for each row
 execute function check_comitati_conferenza();
+ 
+-- 3. La sede di una conferenza deve essere libera nel periodo indicato
+create or replace function check_sede_libera() returns trigger as $$
+declare 
+    conferenze_count integer;
+BEGIN
+    select count(*) into conferenze_count
+    from conferenza c
+    where c.id_sede = new.id_sede and
+    (new.inizio,new.fine) overlaps (c.inizio,c.fine);
 
+    IF conferenze_count > 0 THEN
+        RAISE EXCEPTION 'La sede non è libera nel periodo indicato';
+    END IF;
+    return new;
+END;
+$$ language plpgsql;
+
+create trigger verifica_disponibilita_sede
+before insert or update on conferenza
+for each row
+execute function check_sede_libera();
 /* --------------------------------------------------------------------------------------------*
  |                          Vincoli per la tabella SALA                                        |
  *---------------------------------------------------------------------------------------------*/
