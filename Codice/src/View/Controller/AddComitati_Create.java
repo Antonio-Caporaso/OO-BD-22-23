@@ -12,9 +12,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import org.postgresql.util.PSQLException;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddComitati_Create implements Initializable {
@@ -41,7 +43,9 @@ public class AddComitati_Create implements Initializable {
     private Button nextButton;
 
     @FXML
-    private Button rimuoviButton;
+    private Button rimuovicomitatoLocaleButton;
+    @FXML
+    private Button rimuoviComitatoScientificoButton;
     @FXML
     private SubScene subscene;
     private Conferenza conferenza;
@@ -84,38 +88,77 @@ public class AddComitati_Create implements Initializable {
     void inserisciComitatoLocaleButtonOnAction(ActionEvent event) {
         Organizzatore organizzatoreSelezionato= comitatoLocaleChoiceBox.getSelectionModel().getSelectedItem();
         try{
+            if(organizzatoreSelezionato==null)
+                throw new NullPointerException();
             saveMembroComitatoLocale(organizzatoreSelezionato,conferenza.getComitato_l());
             loadListView();
             checkAlmenoUnMembro();
-        }catch (Exception e){
-        e.printStackTrace();
-        }
-    }
-    @FXML
-    void rimuoviButtonOnAction(ActionEvent event) {
-        Organizzatore organizzatoreLocale= comitatoLocaleChoiceBox.getSelectionModel().getSelectedItem();
-        Organizzatore organizzatoreScientifico= comitatoScientificoChoiceBox.getSelectionModel().getSelectedItem();
-        try{
-            if (organizzatoreScientifico==null & organizzatoreLocale == null){
-                throw new NullPointerException();
-            }
-//            Optional<ButtonType> result = showDeleteDialog();
-//            if(result.get() == ButtonType.OK) {
-//                try{
-//                    conferenza.removeEnte(enteSelezionato);
-//                    checkAlmenoUnEnte();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-        }catch (NullPointerException e) {
+        }catch (NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Nessun ente selezionato");
+            alert.setContentText("Nessun organizzatore selezionato");
+            alert.showAndWait();
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Organizzatore già presente");
             alert.showAndWait();
         }
     }
+    @FXML
+    void rimuoviComitatoScientificoButtonOnAction(ActionEvent event) {
+        MembriComitato membriComitato =new MembriComitato(conferenza);
+        Organizzatore organizzatoreScientifico= comitatoScientificoListView.getSelectionModel().getSelectedItem();
+        try{
+            if (organizzatoreScientifico==null){
+                throw new NullPointerException();
+            }
+            Optional<ButtonType> result = showDeleteDialog();
+            if(result.get() == ButtonType.OK) {
+                try{
+                    membriComitato.removeMembroComitatoScientifico(organizzatoreScientifico,conferenza.getComitato_s());
+                    loadListView();
+                    checkAlmenoUnMembro();
 
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nessun organizzatore selezionato");
+            alert.showAndWait();
+        }
+    }
+    @FXML
+    void rimuoviComitatoLocaleButtonOnAction(ActionEvent event) {
+        MembriComitato membriComitato =new MembriComitato(conferenza);
+        Organizzatore organizzatoreLocale= comitatoLocaleListView.getSelectionModel().getSelectedItem();
+        try{
+            if (organizzatoreLocale==null){
+                throw new NullPointerException();
+            }
+            Optional<ButtonType> result = showDeleteDialog();
+            if(result.get() == ButtonType.OK) {
+                try{
+                    membriComitato.removeMembroComitatoLocale(organizzatoreLocale,conferenza.getComitato_l());
+                    loadListView();
+                    checkAlmenoUnMembro();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nessun organizzatore selezionato");
+            alert.showAndWait();
+        }
+    }
     //Private methods
+    private Optional<ButtonType> showDeleteDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler eliminare il seguente organizzatore?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
+    }
     private void loadSelezionaEnti(){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEnti.fxml"));
@@ -155,7 +198,7 @@ public class AddComitati_Create implements Initializable {
         }
     }
     private void checkAlmenoUnMembro(){
-        if(comitatoScientificoListView.getSelectionModel().isEmpty()&&comitatoLocaleListView.getSelectionModel().isEmpty()){
+        if(comitatoScientificoListView.getItems().isEmpty()){
             nextButton.setDisable(true);
         }else{
             nextButton.setDisable(false);
@@ -177,15 +220,21 @@ public class AddComitati_Create implements Initializable {
         try{
             membriComitato.addMembroComitatoScientifico(organizzatore, comitato);
         }catch (SQLException e){
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore in Inserimento");
+            alert.setHeaderText("L'organizzatore fa già parte del comitato");
+            alert.showAndWait();
         }
     }
-    private void saveMembroComitatoLocale(Organizzatore organizzatore, Comitato comitato){
+    private void saveMembroComitatoLocale(Organizzatore organizzatore, Comitato comitato) throws SQLException{
         MembriComitato membriComitato=new MembriComitato(conferenza);
         try{
             membriComitato.addMembroComitatoLocale(organizzatore, comitato);
         }catch (SQLException e){
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore in Inserimento");
+            alert.setHeaderText("L'organizzatore fa già parte del comitato");
+            alert.showAndWait();
         }
     }
     private void loadListView(){
@@ -193,14 +242,13 @@ public class AddComitati_Create implements Initializable {
         try{
             membriComitato.loadMembriComitatoScientifico();
             membriComitato.loadMembriComitatoLocale();
+
             comitatoScientificoListView.setItems(membriComitato.getMembriComitatoScientifico());
             comitatoLocaleListView.setItems(membriComitato.getMembriComitatoLocale());
         }catch (SQLException e){
             e.printStackTrace();
         }
-
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         retreiveComitati();
@@ -208,4 +256,5 @@ public class AddComitati_Create implements Initializable {
         loadListView();
         checkAlmenoUnMembro();
     }
+
 }

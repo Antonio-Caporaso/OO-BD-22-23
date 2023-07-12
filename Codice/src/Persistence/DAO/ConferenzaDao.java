@@ -197,30 +197,5 @@ public class ConferenzaDao {
         }
         return  c;
     }
-    public Conferenza retrieveConferenzaByID2(int idConferenza) throws SQLException {
-        dbcon = DBConnection.getDBconnection();
-        conn = dbcon.getConnection();
-        String query = "SELECT * FROM conferenza where id_conferenza =?";
-        PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,idConferenza);
-        ResultSet rs = stm.executeQuery();
-        Conferenza c = new Conferenza();
-        ComitatoDao comitatodao = new ComitatoDao();
-        UtenteDAO utentedao = new UtenteDAO();
-        SedeDao sededao = new SedeDao();
-        while(rs.next()){
-            c.setId_conferenza(idConferenza);
-            c.setTitolo(rs.getString("titolo"));
-            c.setInizio(rs.getTimestamp("inizio"));
-            c.setFine(rs.getTimestamp("fine"));
-            c.setDescrizione(rs.getString("descrizione"));
-            c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("id_utente")));
-            c.setComitato_s(comitatodao.retrieveComitatobyId2(rs.getInt("comitato_s")));
-            c.setComitato_l(comitatodao.retrieveComitatobyId2(rs.getInt("comitato_l")));
-            c.setSede(sededao.retrieveSedeByID(rs.getInt("id_sede")));
-        }
-        return  c;
-    }
-
 
 }

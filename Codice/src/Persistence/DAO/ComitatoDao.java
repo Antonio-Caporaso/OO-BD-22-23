@@ -15,7 +15,7 @@ public class ComitatoDao {
     public Comitato retrieveComitatobyId(int id) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT * from show_comitato_scientifico(?)";
+        String query = "SELECT * from comitato where id_comitato=(?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,id);
         ResultSet rs = stm.executeQuery();
@@ -36,10 +36,19 @@ public class ComitatoDao {
         stm.setInt(2,comitato.getId_comitato());
         stm.executeUpdate();
     }
-    public Comitato retrieveComitatobyId2(int id) throws SQLException {
+    public void removeMembroComitato (Organizzatore organizzatore, Comitato comitato) throws SQLException{
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT * from comitato where id_comitato=(?)";
+        String query = "DELETE FROM organizzatore_comitato WHERE id_organizzatore=? AND id_comitato=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,organizzatore.getId_organizzatore());
+        stm.setInt(2,comitato.getId_comitato());
+        stm.executeUpdate();
+    }
+    public Comitato retreiveMembriComitatoScientificoByIDComitato(int id) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "SELECT * from  show_comitato_scientifico(?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,id);
         ResultSet rs = stm.executeQuery();

@@ -51,10 +51,9 @@ public class MembriComitato {
     }
     public Conferenza retreiveComitati(Conferenza conferenza) throws SQLException{
         ConferenzaDao conferenzaDao = new ConferenzaDao();
-        conferenza=conferenzaDao.retrieveConferenzaByID2(conferenza.getId_conferenza());
+        conferenza=conferenzaDao.retrieveConferenzaByID(conferenza.getId_conferenza());
         return conferenza;
     }
-
     public ObservableList<Organizzatore> getMembriComitatoLocale(){
         return membriComitatoLocale;
     }
@@ -68,5 +67,15 @@ public class MembriComitato {
         ComitatoDao comitatoDao= new ComitatoDao();
         comitatoDao.addMembroComitato(organizzatore, comitato);
         membriComitatoLocale.add(organizzatore);
+    }
+    public void removeMembroComitatoScientifico(Organizzatore organizzatore, Comitato comitato) throws SQLException{
+        ComitatoDao comitatoDao= new ComitatoDao();
+        comitatoDao.removeMembroComitato(organizzatore,comitato);
+        membriComitatoScientifico.remove(organizzatore);
+    }
+    public void removeMembroComitatoLocale(Organizzatore organizzatore, Comitato comitato) throws SQLException{
+        ComitatoDao comitatoDao= new ComitatoDao();
+        comitatoDao.removeMembroComitato(organizzatore,comitato);
+        membriComitatoLocale.remove(organizzatore);
     }
 }

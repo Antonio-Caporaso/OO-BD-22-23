@@ -43,18 +43,18 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ListView fx:id="comitatoLocaleListView" layoutX="421.0" layoutY="214.0" prefHeight="455.0" prefWidth="324.0" stylesheets="@../CSS/ListView.css" />
-      <Button fx:id="inserisciComitatoLocaleButton" layoutX="639.0" layoutY="152.0" mnemonicParsing="false" onAction="#inserisciComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/defaultButton.css" text="Inserisci" textFill="WHITE">
+      <ListView fx:id="comitatoLocaleListView" layoutX="484.0" layoutY="214.0" prefHeight="455.0" prefWidth="324.0" stylesheets="@../CSS/ListView.css" />
+      <Button fx:id="inserisciComitatoLocaleButton" layoutX="709.0" layoutY="155.0" mnemonicParsing="false" onAction="#inserisciComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/defaultButton.css" text="Inserisci" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="rimuoviButton" layoutX="761.0" layoutY="372.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="134.0" stylesheets="@../CSS/defaultButton.css" text="Rimuovi" textFill="WHITE">
+      <Button fx:id="rimuoviComitatoLocaleButton" layoutX="817.0" layoutY="378.0" mnemonicParsing="false" onAction="#rimuoviComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/defaultButton.css" text="Rimuovi" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Label layoutX="411.0" layoutY="102.0" text="Seleziona i membri del comitato Locale" textFill="WHITE">
+      <Label layoutX="484.0" layoutY="102.0" text="Seleziona i membri del comitato Locale" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -66,6 +66,11 @@
          </font>
       </Button>
       <ChoiceBox fx:id="comitatoScientificoChoiceBox" layoutX="31.0" layoutY="155.0" prefHeight="25.0" prefWidth="202.0" stylesheets="@../CSS/choiceBox.css" />
-      <ChoiceBox fx:id="comitatoLocaleChoiceBox" layoutX="421.0" layoutY="155.0" prefHeight="25.0" prefWidth="202.0" stylesheets="@../CSS/choiceBox.css" />
+      <ChoiceBox fx:id="comitatoLocaleChoiceBox" layoutX="484.0" layoutY="155.0" prefHeight="25.0" prefWidth="202.0" stylesheets="@../CSS/choiceBox.css" />
+      <Button fx:id="rimuoviComitatoScientificoButton" layoutX="363.0" layoutY="378.0" mnemonicParsing="false" onAction="#rimuoviComitatoScientificoButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/defaultButton.css" text="Rimuovi" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

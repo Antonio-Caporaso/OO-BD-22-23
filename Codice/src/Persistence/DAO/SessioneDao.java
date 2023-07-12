@@ -60,14 +60,14 @@ public class SessioneDao {
     public int saveSessione(Sessione sessione)throws SQLException, PSQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT add_new_sessione(?,?,?,?,?/*,?*/)";
+        String query = "SELECT add_new_sessione(?,?,?,?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setString(1,sessione.getTitolo());
         stm.setTimestamp(2,sessione.getInizio());
         stm.setTimestamp(3,sessione.getFine());
         stm.setInt(4,sessione.getLocazione().getSalaID());
         stm.setInt(5,sessione.getConferenza().getId_conferenza());
-//        stm.setInt(6,sessione.getCoordinatore().getId_organizzatore());
+        stm.setInt(6,sessione.getCoordinatore().getId_organizzatore());
         ResultSet rs = stm.executeQuery();
         int result = 0;
         if (rs.next()) {

@@ -126,21 +126,15 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     }
     private void loadCoordinatoreChoiceBox() throws SQLException {
         MembriComitato membriComitato = new MembriComitato(conferenza);
-        if (!conferenza.getEnti().isEmpty()) {
-            try {
-                membriComitato.loadOrganizzatoriEnte(conferenza.getEnti());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+
+        try {
+            membriComitato.loadMembriComitatoScientifico();
             coordinatoreChoiceBox.setItems(membriComitato.getMembriComitatoScientifico());
-        }else {
-            try{
-                membriComitato.loadAllOrganizzatori();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-            coordinatoreChoiceBox.setItems(membriComitato.getMembriComitatoScientifico());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+
     }
     //Overrides
     @Override
