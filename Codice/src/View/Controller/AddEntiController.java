@@ -9,10 +9,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -54,15 +61,17 @@ public class AddEntiController implements Initializable {
                 throw new NullPointerException();
             conferenza.addEnte(enteSelezionato);
             checkAlmenoUnEnte();
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Questo organizzatore è già presente!");
             alert.showAndWait();
-        }catch (EntePresenteException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("EntePresenteException");
-            alert.setContentText("Questo organizzatore è già presente!");
-            alert.showAndWait();
+        } catch (EntePresenteException e){
+            String messaggio= "Questo organizzatore è già presente!";
+            try{
+                loadErrorWindow(messaggio);
+            } catch (IOException ex){
+                e.printStackTrace();
+            }
         }
         catch(NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -155,6 +164,23 @@ public class AddEntiController implements Initializable {
             nextButton.setDisable(false);
         }
     }
+    private void loadErrorWindow(String messaggio) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ExceptionWindow.fxml"));
+        Parent root = loader.load();
+        ExceptionWindowController controller = loader.getController();
+        controller.setErrorMessageLabel(messaggio);
+
+        Stage stage = new Stage();
+        stage.setTitle("Errore");
+        Scene scene = new Scene(root, 400, 200);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
