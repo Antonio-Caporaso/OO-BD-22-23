@@ -17,21 +17,16 @@
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
-      <Button fx:id="fineButton" layoutX="707.0" layoutY="675.0" mnemonicParsing="false" onAction="#fineButtonOnAction" prefHeight="24.0" prefWidth="190.0" text="Fine" />
-      <VBox layoutX="707.0" layoutY="99.0" prefHeight="328.0" prefWidth="190.0">
+      <Button fx:id="fineButton" layoutX="707.0" layoutY="675.0" mnemonicParsing="false" onAction="#fineButtonOnAction" prefHeight="24.0" prefWidth="216.0" text="Fine" />
+      <VBox layoutX="707.0" layoutY="99.0" prefHeight="328.0" prefWidth="216.0">
          <children>
-            <Button fx:id="editInterventiButton" mnemonicParsing="false" onAction="#editInterventiButtonOnAction" prefHeight="65.0" prefWidth="190.0" text="Modifica Interventi" />
-            <Button fx:id="editIntervalliButton" mnemonicParsing="false" onAction="#editIntervalliButtonOnAction" prefHeight="65.0" prefWidth="190.0" text="Modifica Intervalli">
+            <Button fx:id="addPuntoButton" mnemonicParsing="false" onAction="#addPuntoOnAction" prefHeight="65.0" prefWidth="222.0" text="Aggiungi punto" />
+            <Button fx:id="deletePuntoButton" mnemonicParsing="false" onAction="#deletePuntoOnAction" prefHeight="65.0" prefWidth="224.0" text="Rimuovi punto">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="editEventiButton" mnemonicParsing="false" onAction="#editEventiButtonOnAction" prefHeight="65.0" prefWidth="190.0" text="Modifica Eventi">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="editKeynoteButton" mnemonicParsing="false" onAction="#editKeynoteButtonOnAction" prefHeight="65.0" prefWidth="190.0" text="Modifica Keynote Speaker">
+            <Button fx:id="editPuntoOnAction" mnemonicParsing="false" onAction="#editPuntoOnAction" prefHeight="65.0" prefWidth="232.0" text="Modifica punto">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

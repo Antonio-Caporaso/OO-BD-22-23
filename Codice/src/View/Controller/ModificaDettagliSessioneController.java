@@ -15,6 +15,8 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import tornadofx.control.DateTimePicker;
+
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -108,9 +110,9 @@ public class ModificaDettagliSessioneController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inizioConferenzaLabel.setText(conferenza.getInizio().toString());
         fineConferenzaLabel.setText(conferenza.getFine().toString());
+        saleChoice.setValue(sessione.getLocazione());
         try {
             setTitoloSessione();
-            setSale();
             setDate();
             setMembriComitatoScientifico();
         } catch (SQLException e) {
@@ -133,12 +135,17 @@ public class ModificaDettagliSessioneController implements Initializable {
        inizioDateTimePicker.setDateTimeValue(sessione.getInizio().toLocalDateTime());
        fineDateTimePicker.setDateTimeValue(sessione.getFine().toLocalDateTime());
     }
-
-    private void setSale() throws SQLException {
-        sale = new Sale(sessione.getConferenza().getSede());
-        sale.loadSaleDisponibili(sessione.getInizio(),sessione.getFine());
-        saleChoice.setItems(sale.getSale());
-        saleChoice.setValue(sessione.getLocazione());
+    @FXML
+    void showSaleDisponibili(MouseEvent event) {
+        try {
+            sale = new Sale(sessione.getConferenza().getSede());
+            sale.loadSaleDisponibili(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()), Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
+            saleChoice.setItems(sale.getSale());
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     public Sessione getSessione() {

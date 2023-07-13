@@ -8,11 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,14 +29,6 @@ public class ModificaProgrammaSessioneController implements Initializable {
     private SubScene subscene;
     private ManageSessioniController manageSessioniController;
     private Sessione sessione;
-    @FXML
-    private Button editEventiButton;
-    @FXML
-    private Button editIntervalliButton;
-    @FXML
-    private Button editInterventiButton;
-    @FXML
-    private Button editKeynoteButton;
     @FXML
     private Button fineButton;
     @FXML
@@ -88,52 +83,35 @@ public class ModificaProgrammaSessioneController implements Initializable {
         Parent root = loader.load();
         subscene.setRoot(root);
     }
+
     @FXML
-    void editIntervalliButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditIntervalli.fxml"));
-        EditIntervalliController controller = new EditIntervalliController();
-        controller.setEditProgrammaController(this);
-        controller.setProgramma(programma);
-        controller.setSessione(sessione);
-        controller.setSubScene(subscene);
+    void addPuntoOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddPunto.fxml"));
+        AddPuntoController controller = new AddPuntoController(programma);
         loader.setController(controller);
         Parent root = loader.load();
-        subscene.setRoot(root);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Aggiunta nuovo punto");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    void editInterventiButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditInterventi.fxml"));
-        EditInterventiController controller = new EditInterventiController();
-        controller.setEditProgrammaController(this);
-        controller.setProgramma(programma);
-        controller.setSessione(sessione);
-        controller.setSubScene(subscene);
-        loader.setController(controller);
-        Parent root = loader.load();
-        subscene.setRoot(root);
+    void deletePuntoOnAction(ActionEvent event) {
+
     }
+
     @FXML
-    void editKeynoteButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditKeynote.fxml"));
-        EditKeynoteController controller = new EditKeynoteController();
-        controller.setEditProgrammaController(this);
-        controller.setProgramma(programma);
-        controller.setSubScene(subscene);
-        controller.setKeynote(programma.getKeynote());
-        loader.setController(controller);
-        Parent root = loader.load();
-        subscene.setRoot(root);
-    }
-    @FXML
-    void editEventiButtonOnAction(ActionEvent event) {
+    void editPuntoOnAction(ActionEvent event) {
 
     }
     private void setProgrammaTableView(){
         try{
 
             programma.loadProgramaSessione();
-            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("appuntamento"));
+            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
             fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
             speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
