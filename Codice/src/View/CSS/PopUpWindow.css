@@ -1,0 +1,56 @@
+.button {
+    -fx-background-color: linear-gradient(#33749D,#00416a);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-border-color: white;
+    -fx-border-radius: 30;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+}
+.root{
+    -fx-background-color:linear-gradient(#33749D,#00416a);
+    /*-fx-background-color:#33749D;*/
+    /*-fx-border-color: #00416a ;*/
+    /*-fx-border-width: 4px;*/
+    /*-fx-border-style: solid;*/
+}
+.choice-box {
+    -fx-primary-color: #00416a;
+    -fx-secondary-color: #33749D;
+    -fx-light-grey-color: #d1d1d1;
+
+    -fx-background-color: -fx-primary-color;
+    /*-fx-background-color: linear-gradient(#00416a,#33749D);*/
+    /*-fx-background-color: linear-gradient(from 30% 30% to 120% 120%, #00416a 0%, #33749D 100%);*/
+
+    -fx-mark-color: -fx-secondary-color;
+}
+
+.choice-box > .label { -fx-text-fill: white; }
+* {
+    -fx-primary-color: #00416a;
+    -fx-secondary-color: #33749D;
+
+    -fx-focus-color: -fx-secondary-color;
+}
+
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: -fx-primary-color;
+    -fx-background-radius: 0;
+}
+.spinner .increment-arrow-button:hover,
+.spinner .decrement-arrow-button:hover {
+    -fx-background-color: -fx-secondary-color;
+}
+.spinner .increment-arrow-button:hover:pressed,
+.spinner .decrement-arrow-button:hover:pressed,
+.spinner .increment-arrow-button:pressed,
+.spinner .decrement-arrow-button:pressed {
+    -fx-background-color: -fx-secondary-color;
+}
+.spinner .increment-arrow-button .increment-arrow,
+.spinner .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: white;
+}

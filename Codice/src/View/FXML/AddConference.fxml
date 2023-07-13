@@ -91,21 +91,21 @@
                   </Label>
                </children>
             </Pane>
-            <ChoiceBox fx:id="sedeChoice" onMouseClicked="#showSedi" prefHeight="24.0" prefWidth="642.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DateTimePicker fx:id="dataInizioDP" prefHeight="25.0" prefWidth="175.0" promptText="Data di Inizio" stylesheets="@../CSS/datePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DateTimePicker fx:id="dataFineDP" prefHeight="25.0" prefWidth="175.0" promptText="Data di Fine" stylesheets="@../CSS/datePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="sedeChoice" onMouseClicked="#showSedi" prefHeight="24.0" prefWidth="642.0" stylesheets="@../CSS/ChoiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DateTimePicker fx:id="dataInizioDP" prefHeight="25.0" prefWidth="175.0" promptText="Data di Inizio" stylesheets="@../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DateTimePicker fx:id="dataFineDP" prefHeight="25.0" prefWidth="175.0" promptText="Data di Fine" stylesheets="@../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <ButtonBar layoutX="718.0" layoutY="675.0" prefHeight="24.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" stylesheets="@../CSS/defaultButton.css" text="Annulla" textFill="WHITE">
+          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" stylesheets="@../CSS/DefaultButton.css" text="Annulla" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></Button>
-            <Button fx:id="avantiButton" mnemonicParsing="false" onAction="#avantiButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Avanti" textFill="WHITE">
+            <Button fx:id="avantiButton" mnemonicParsing="false" onAction="#avantiButtonOnAction" stylesheets="@../CSS/DefaultButton.css" text="Avanti" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font></Button>
