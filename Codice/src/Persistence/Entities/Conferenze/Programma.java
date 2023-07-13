@@ -27,7 +27,12 @@ public class Programma {
         intervalli=FXCollections.observableArrayList();
         eventi=FXCollections.observableArrayList();
     }
-    public Programma() {}
+    public Programma(){
+        programmaSessione = FXCollections.observableArrayList();
+        interventi=FXCollections.observableArrayList();
+        intervalli=FXCollections.observableArrayList();
+        eventi=FXCollections.observableArrayList();
+    }
     public Speaker getKeynote() {
         return keynote;
     }
