@@ -41,7 +41,7 @@ public class InterventoDao {
     public int createIntervento(Intervento intervento, PGInterval durata) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "select * from add_intervento(?,?,?,?,?)";
+        String query = "select * from add_new_intervento(?,?,?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setString(1,intervento.getTitolo());
         stm.setString(2,intervento.getEstratto());

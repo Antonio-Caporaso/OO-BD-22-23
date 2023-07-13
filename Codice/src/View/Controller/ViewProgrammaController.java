@@ -87,6 +87,7 @@ public class ViewProgrammaController implements Initializable
     @FXML
     void addInterventoOnAction(ActionEvent event){
         loadAddIntervento();
+        setProgrammaTableView();
     }
     @FXML
     void addEventoSocialeOnAction(ActionEvent event){
@@ -114,25 +115,40 @@ public class ViewProgrammaController implements Initializable
             AddIntervalloController_Create controller = loader.getController();
             controller.setProgramma(programma);
             Stage stage = new Stage();
-            stage.setTitle("Errore");
             Scene scene = new Scene(root, 608, 400);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
-//            stage.setOnCloseRequest(event -> {
-//                setProgrammaTableView();
-//            });
-            stage.showAndWait();
-            stage.setX(760);
+            stage.setX(860);
             stage.setY(360);
+            stage.showAndWait();
+
         }catch (IOException e){
             e.printStackTrace();
         }
     }
     private void loadAddIntervento(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento_Create.fxml"));
+            Parent root = loader.load();
+            AddInterventoController_Create controller = loader.getController();
+            controller.setProgramma(programma);
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, 523, 627);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
 
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
     private void loadAddEventoSociale(){
 
