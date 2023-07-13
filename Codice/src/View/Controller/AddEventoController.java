@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.postgresql.util.PGInterval;
 import tornadofx.control.DateTimePicker;
@@ -33,17 +30,10 @@ public class AddEventoController implements Initializable {
     @FXML
     private DateTimePicker orario;
     @FXML
-    private ChoiceBox<String> tipologiaChoice;
+    private TextField tipologiaTextField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        LinkedList<String> tipologie = new LinkedList<>();
-        tipologie.add("Cena");
-        tipologie.add("Gita");
-        tipologie.add("Proiezione");
-        ObservableList<String> tip = FXCollections.observableArrayList();
-        tip.setAll(tipologie);
-        tipologiaChoice.setItems(tip);
     }
 
     @FXML
@@ -62,7 +52,7 @@ public class AddEventoController implements Initializable {
     }
     private EventoSociale retrieveDettagliEvento() {
         EventoSociale e = new EventoSociale();
-        e.setTipologia(tipologiaChoice.getSelectionModel().getSelectedItem());
+        e.setTipologia(tipologiaTextField.getText());
         e.setProgramma(programma);
         return e;
     }

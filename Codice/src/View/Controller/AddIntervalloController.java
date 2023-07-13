@@ -39,8 +39,8 @@ public class AddIntervalloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         LinkedList<String> tipologie = new LinkedList<>();
-        tipologie.add("Coffee Break");
-        tipologie.add("Pranzo");
+        tipologie.add("coffee Break");
+        tipologie.add("pranzo");
         ObservableList<String> tip = FXCollections.observableArrayList();
         tip.setAll(tipologie);
         tipologiaChoice.setItems(tip);

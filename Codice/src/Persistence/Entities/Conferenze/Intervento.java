@@ -6,7 +6,7 @@ import Persistence.Entities.partecipanti.Speaker;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-    public class Intervento  {
+    public class Intervento  extends ActivityModel{
         private int id_intervento;
         private String titolo;
         private String estratto;
@@ -15,12 +15,9 @@ import java.util.Objects;
         private Speaker speaker;
         private Programma programma;
 
-        public Intervento(Timestamp inizio, Timestamp fine, String estratto, Speaker speaker, Programma programma) {
-            this.inizio = inizio;
-            this.fine = fine;
-            this.estratto = estratto;
-            this.speaker = speaker;
-            this.programma=programma;
+        public Intervento(int id,Timestamp inizio, Timestamp fine, String estratto, Speaker speaker, Programma programma) {
+            super(id,"Intervento",inizio,fine,estratto,programma);
+            this.speaker=speaker;
         }
 
         public Intervento() {
