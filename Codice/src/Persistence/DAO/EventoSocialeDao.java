@@ -49,10 +49,10 @@ public class EventoSocialeDao {
         dbcon=DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         int result = 0;
-        String query="select * from add_evento(?,?,?) ";
+        String query="select * from add_new_evento(?,?,?) ";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,e.getProgramma().getProgrammaID());
-        stm.setString(2,e.getTipologia());
+        stm.setString(1,e.getTipologia());
+        stm.setInt(2,e.getProgramma().getProgrammaID());
         stm.setObject(3,durata);
         ResultSet rs = stm.executeQuery();
         while (rs.next()) {

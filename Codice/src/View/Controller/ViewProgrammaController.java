@@ -92,6 +92,7 @@ public class ViewProgrammaController implements Initializable
     @FXML
     void addEventoSocialeOnAction(ActionEvent event){
         loadAddEventoSociale();
+        setProgrammaTableView();
     }
     @FXML
     void removeButtonOnAction(ActionEvent event){
@@ -151,7 +152,25 @@ public class ViewProgrammaController implements Initializable
         }
     }
     private void loadAddEventoSociale(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEventoSociale_Create.fxml"));
+            Parent root = loader.load();
+            AddEventoSocialeController_Create controller = loader.getController();
+            controller.setProgramma(programma);
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, 608, 400);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
 
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
     private void removePuntoProgramma(ActivityModel activityModel){
 
