@@ -2,6 +2,7 @@ package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.Conferenze.Conferenza;
+import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
 import org.postgresql.util.PSQLException;
 
@@ -44,16 +45,19 @@ public class SessioneDao {
         SalaDao salaDao = new SalaDao();
         OrganizzatoreDao organizzatoreDao = new OrganizzatoreDao();
         ResultSet rs  = stm.executeQuery();
+        ProgrammaDao programmaDao = new ProgrammaDao();
         while(rs.next()){
             Sessione s = new Sessione();
             s.setConferenza(conferenza);
-            s.setId_sessione(rs.getInt("id_sessione"));
+            int id = rs.getInt("id_sessione");
+            s.setId_sessione(id);
             s.setTitolo(rs.getString("titolo"));
             s.setInizio(rs.getTimestamp("inizio"));
             s.setFine(rs.getTimestamp("fine"));
             s.setCoordinatore(organizzatoreDao.retrieveOrganizzatoreByID(rs.getInt("id_coordinatore")));
             s.setLocazione(salaDao.retrieveSalaByID(rs.getInt("id_sala")));
             sessioni.add(s);
+            s.setProgramma(programmaDao.retrieveProgrammaBySessione(s));
         }
         return sessioni;
     }
@@ -81,18 +85,22 @@ public class SessioneDao {
         conn = dbcon.getConnection();
         String query = "SELECT * FROM sessione where id_sessione=?";
         PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,idSessione);
         Sessione s = new Sessione();
         ResultSet rs = stm.executeQuery();
         ConferenzaDao dao = new ConferenzaDao();
         OrganizzatoreDao organizzatoreDao = new OrganizzatoreDao();
         SalaDao salaDao = new SalaDao();
+        ProgrammaDao programmaDao = new ProgrammaDao();
         while(rs.next()){
+            s.setId_sessione(idSessione);
             s.setConferenza(dao.retrieveConferenzaByID(rs.getInt("id_conferenza")));
             s.setTitolo(rs.getString("titolo"));
             s.setInizio(rs.getTimestamp("inizio"));
             s.setFine(rs.getTimestamp("fine"));
             s.setCoordinatore(organizzatoreDao.retrieveOrganizzatoreByID(rs.getInt("id_coordinatore")));
             s.setLocazione(salaDao.retrieveSalaByID(rs.getInt("id_sala")));
+            s.setProgramma(programmaDao.retrieveProgrammaBySessione(s));
         }
         return  s;
     }
