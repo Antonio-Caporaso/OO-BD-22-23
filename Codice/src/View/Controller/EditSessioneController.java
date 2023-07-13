@@ -29,81 +29,37 @@ public class EditSessioneController implements Initializable {
     private SubScene subScene;
     private Programma programma;
     @FXML
-    private TableColumn<Intervento, String> abstractColumn;
-
+    private Label inizioLabel;
     @FXML
-    private TableColumn<Speaker, String> cognomeKeynote;
-
+    private Label fineLabel;
     @FXML
     private Button confermaButton;
-
     @FXML
     private Label coordinatoreLabel;
-
-    @FXML
-    private Label dataFineLabel;
-
-    @FXML
-    private Label dataInizioLabel;
-
     @FXML
     private Button editDetailsButton;
-
     @FXML
     private Button editProgrammaButton;
-
     @FXML
-    private TableColumn<Speaker, String> emailKeynoteColumn;
-
-    @FXML
-    private TableView<EventoSociale> eventiTable;
-
-    @FXML
-    private TableView<Intervento> interventiTable;
-
-    @FXML
-    private TableColumn<Speaker, String> istituzioneKeynoteColumn;
-
-    @FXML
-    private TableView<Intervallo> intervalliTable;
-
-    @FXML
-    private TableView<Speaker> keynoteSpeakerTable;
-
-    @FXML
-    private TableColumn<Speaker, String> nomeKeynoteColumn;
-
+    private Label keynoteSpeakerLabel;
     @FXML
     private Label nomeLabel;
-
-    @FXML
-    private Label oraFineLabel;
-
-    @FXML
-    private Label oraInizioLabel;
-    @FXML
-    private TableColumn<EventoSociale, Timestamp> orarioEventoColumn;
-
-    @FXML
-    private TableColumn<Intervallo, Timestamp> orarioIntervalloColumn;
-
-    @FXML
-    private TableColumn<Intervento, Timestamp> orarioInterventoColumn;
-
     @FXML
     private Label salaLabel;
-
-    @FXML
-    private TableColumn<Intervento, String> speakerColumn;
-
-    @FXML
-    private TableColumn<EventoSociale, String> tipologiaEventoColumn;
-
-    @FXML
-    private TableColumn<Intervallo, String> tipologiaIntervalloColumn;
-
     @FXML
     private Label titleLabel;
+    @FXML
+    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
+    @FXML
+    private TableColumn<ActivityModel, String> descrizioneTableColumn;
+    @FXML
+    private TableColumn<ActivityModel, String> appuntamentoTableColumn;
+    @FXML
+    private TableColumn<ActivityModel, Timestamp> fineTableColumn;
+    @FXML
+    private TableColumn<ActivityModel, Timestamp> inizioTableColumn;
+    @FXML
+    private TableView<ActivityModel> programmaTableView;
 
     public Conferenza getConferenza() {
         return conferenza;
@@ -185,11 +141,7 @@ public class EditSessioneController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         retrieveProgrammaSessione();
         setDettagliSessione();
-        setIntervalliTable();
-        setEventiTable();
-        setInterventiTable();
-        setKeynoteTable();
-
+        setProgrammaTableView();
     }
 
     private void retrieveProgrammaSessione() {
@@ -204,65 +156,25 @@ public class EditSessioneController implements Initializable {
     public void setDettagliSessione() {
         titleLabel.setText(sessione.getTitolo());
         nomeLabel.setText(sessione.getTitolo());
-        dataInizioLabel.setText(String.valueOf(sessione.getInizio()));
-        dataFineLabel.setText(String.valueOf(sessione.getFine()));
+        inizioLabel.setText(sessione.getInizio().toString());
+        fineLabel.setText(sessione.getFine().toString());
         salaLabel.setText(sessione.getLocazione().getNomeSala());
         coordinatoreLabel.setText(sessione.getCoordinatore().toString());
+        keynoteSpeakerLabel.setText(programma.getKeynote().toString());
     }
-    private void setKeynoteTable() {
-        ProgrammaDao programmaDao = new ProgrammaDao();
-        SpeakerDao dao = new SpeakerDao();
-        Speaker keynote;
-        try {
-            keynote = dao.retrieveSpeakerByID(programmaDao.retrieveKeynoteSpeakerID(sessione));
-            if(!(keynote.equals(null))) {
-                nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
-                cognomeKeynote.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-                emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-                istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
-                keynoteSpeakerTable.getItems().add(keynote);
-            }else
-                keynoteSpeakerTable.setDisable(true);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void setInterventiTable() {
-        try {
-            programma.loadInterventi();
-            orarioInterventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
-            speakerColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
-            abstractColumn.setCellValueFactory(new PropertyValueFactory<>("estratto"));
-            interventiTable.setItems(programma.getInterventi());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void setEventiTable() {
-        try {
-            programma.loadEventiSociali();
-            orarioEventoColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
-            tipologiaEventoColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
-            eventiTable.setItems(programma.getEventi());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void setIntervalliTable() {
+    private void setProgrammaTableView(){
         try{
-            programma.loadIntervalli();
-            orarioIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("orario"));
-            tipologiaIntervalloColumn.setCellValueFactory(new PropertyValueFactory<>("tipologia"));
-            intervalliTable.setItems(programma.getIntervalli());
+
+            programma.loadProgramaSessione();
+            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("appuntamento"));
+            inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
+            descrizioneTableColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
+            programmaTableView.setItems(programma.getProgrammaSessione());
+
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
-
-
-
-
 }
