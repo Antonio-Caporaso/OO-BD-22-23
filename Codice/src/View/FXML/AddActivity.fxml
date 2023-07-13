@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/defaultScene.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/DefaultScene.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="75.0" layoutY="-5.0" stroke="#00416a" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="568.0" style="-fx-background-color: #00416A;" text="Inserisci un punto del Programma" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
@@ -84,8 +84,8 @@
                   </Label>
                </children>
             </Pane>
-            <ChoiceBox fx:id="eventiChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ChoiceBox fx:id="tipologiaChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" />
+            <ChoiceBox fx:id="eventiChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/ChoiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="tipologiaChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/ChoiceBox.css" GridPane.columnIndex="1" />
             <Pane prefHeight="103.0" prefWidth="290.0" GridPane.rowIndex="4">
                <children>
                   <Label fx:id="abstractLabel" layoutX="14.0" layoutY="40.0" text="Abstract" textFill="WHITE">
@@ -100,9 +100,9 @@
                   <TextArea fx:id="abstractTextArea" prefHeight="76.0" prefWidth="519.0" promptText="Inserisci l' abstract dell'intervento" />
                </children>
             </Pane>
-            <ChoiceBox fx:id="intervalloChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="intervalloChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/ChoiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="titoloTextField" prefHeight="25.0" prefWidth="326.0" promptText="Inserisci il titolo dell'Intervento" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ChoiceBox fx:id="speakerChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/choiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ChoiceBox fx:id="speakerChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/ChoiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Spinner prefHeight="24.0" prefWidth="65.0">
@@ -121,7 +121,7 @@
       </GridPane>
       <ButtonBar layoutX="670.0" layoutY="648.0" prefHeight="29.0" prefWidth="248.0">
          <buttons>
-            <Button fx:id="backButton" minWidth="54.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="29.0" stylesheets="@../CSS/defaultButton.css" text="Back" textFill="WHITE">
+            <Button fx:id="backButton" minWidth="54.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="29.0" stylesheets="@../CSS/DefaultButton.css" text="Back" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -129,7 +129,7 @@
                   <Insets />
                </opaqueInsets>
             </Button>
-            <Button fx:id="inserisciButton" mnemonicParsing="false" onAction="#inserisciButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Inserisci" textFill="WHITE">
+            <Button fx:id="inserisciButton" mnemonicParsing="false" onAction="#inserisciButtonOnAction" stylesheets="@../CSS/DefaultButton.css" text="Inserisci" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>

@@ -28,10 +28,10 @@
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="backToLandingButton" layoutX="22.0" layoutY="24.0" mnemonicParsing="false" onAction="#backToLandingButtonOnAction" prefHeight="73.0" prefWidth="305.0" stylesheets="@../CSS/backtToLandingButton.css" />
+                  <Button fx:id="backToLandingButton" layoutX="22.0" layoutY="24.0" mnemonicParsing="false" onAction="#backToLandingButtonOnAction" prefHeight="73.0" prefWidth="305.0" stylesheets="@../CSS/BacktToLandingButton.css" />
                </children>
             </Pane>
-            <Button fx:id="creaConferenzaButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#creaConferenzaOnAction" prefHeight="58.0" prefWidth="348.0" stylesheets="@../CSS/landing.css" text="Crea Conferenza" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="creaConferenzaButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#creaConferenzaOnAction" prefHeight="58.0" prefWidth="348.0" stylesheets="@../CSS/Landing.css" text="Crea Conferenza" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -39,7 +39,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="gestisciConferenzaButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#gestisciConferenzaOnAction" prefHeight="58.0" prefWidth="348.0" stylesheets="@../CSS/landing.css" text="Gestisci Conferenza" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="gestisciConferenzaButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#gestisciConferenzaOnAction" prefHeight="58.0" prefWidth="348.0" stylesheets="@../CSS/Landing.css" text="Gestisci Conferenza" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -47,7 +47,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="visualizzaConferenza" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#visualizzaConferenzaOnAction" prefHeight="58.0" prefWidth="348.0" stylesheets="@../CSS/landing.css" text="Visualizza Conferenze" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="visualizzaConferenza" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#visualizzaConferenzaOnAction" prefHeight="58.0" prefWidth="348.0" stylesheets="@../CSS/Landing.css" text="Visualizza Conferenze" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -55,7 +55,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="visualizzaStatisticheButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#visualizzaStatisticheOnAction" prefHeight="58.0" prefWidth="348.0" stylesheets="@../CSS/landing.css" text="Visualizza Statistiche" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="visualizzaStatisticheButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#visualizzaStatisticheOnAction" prefHeight="58.0" prefWidth="348.0" stylesheets="@../CSS/Landing.css" text="Visualizza Statistiche" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -65,7 +65,7 @@
             </Button>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="LogoutButton" layoutX="115.0" layoutY="39.0" mnemonicParsing="false" onAction="#logoutButtonOnAction" prefHeight="39.0" prefWidth="118.0" stylesheets="@../CSS/landing.css" text="Logout" />
+                  <Button fx:id="LogoutButton" layoutX="115.0" layoutY="39.0" mnemonicParsing="false" onAction="#logoutButtonOnAction" prefHeight="39.0" prefWidth="118.0" stylesheets="@../CSS/Landing.css" text="Logout" />
                   <ImageView fitHeight="97.0" fitWidth="97.0" layoutX="126.0" layoutY="100.0">
                      <image>
                         <Image url="@../Resources/IconAtom.png" />

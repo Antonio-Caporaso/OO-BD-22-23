@@ -22,14 +22,14 @@
         </Label>
       <ButtonBar layoutX="716.0" layoutY="675.0" prefHeight="31.0" prefWidth="202.0">
         <buttons>
-          <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" stylesheets="@../CSS/defaultButton.css" text="Back" textFill="WHITE">
+          <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" stylesheets="@../CSS/DefaultButton.css" text="Back" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></Button>
-            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextOnAction" stylesheets="@../CSS/defaultButton.css" text="Next" textFill="WHITE">
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextOnAction" stylesheets="@../CSS/DefaultButton.css" text="Next" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -49,15 +49,15 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="selezionaSponsorChoiceBox" layoutX="279.0" layoutY="100.0" prefHeight="26.0" prefWidth="423.0" stylesheets="@../CSS/choiceBox.css" />
-      <ChoiceBox fx:id="valutaChoiceBox" layoutX="466.0" layoutY="169.0" prefHeight="26.0" prefWidth="54.0" stylesheets="@../CSS/choiceBox.css" />
+      <ChoiceBox fx:id="selezionaSponsorChoiceBox" layoutX="279.0" layoutY="100.0" prefHeight="26.0" prefWidth="423.0" stylesheets="@../CSS/ChoiceBox.css" />
+      <ChoiceBox fx:id="valutaChoiceBox" layoutX="466.0" layoutY="169.0" prefHeight="26.0" prefWidth="54.0" stylesheets="@../CSS/ChoiceBox.css" />
       <TextField fx:id="importoTextField" layoutX="279.0" layoutY="170.0" promptText="Inserisci importo" />
-      <Button fx:id="inserisciButton" layoutX="769.0" layoutY="98.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="25.0" prefWidth="134.0" stylesheets="@../CSS/defaultButton.css" text="Inserisci" textFill="WHITE">
+      <Button fx:id="inserisciButton" layoutX="769.0" layoutY="98.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="25.0" prefWidth="134.0" stylesheets="@../CSS/DefaultButton.css" text="Inserisci" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="446.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="134.0" stylesheets="@../CSS/defaultButton.css" text="Rimuovi" textFill="WHITE">
+      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="446.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="134.0" stylesheets="@../CSS/DefaultButton.css" text="Rimuovi" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

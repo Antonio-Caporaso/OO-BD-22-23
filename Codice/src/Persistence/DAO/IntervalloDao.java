@@ -46,6 +46,18 @@ public class IntervalloDao {
         }
         return result;
     }
+    public void createNewIntervallo(Intervallo intervallo, PGInterval durata) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        int result = 0;
+        String query = "CALL add_intervallo(?,?,?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setString(1, intervallo.getTipologia());
+        stm.setInt(2,intervallo.getProgramma().getProgrammaID());
+        stm.setObject(3,durata);
+        stm.execute();
+    }
+
 
     public void deleteIntervallo(Intervallo intervallo) throws SQLException {
         dbcon = DBConnection.getDBconnection();

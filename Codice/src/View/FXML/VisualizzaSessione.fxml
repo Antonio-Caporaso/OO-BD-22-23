@@ -19,12 +19,12 @@
       </Label>
       <ButtonBar layoutX="703.0" layoutY="655.0" prefHeight="31.0" prefWidth="215.0">
          <buttons>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="31.0" prefWidth="92.0" stylesheets="@../CSS/defaultButton.css" text="Back" textFill="WHITE">
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="31.0" prefWidth="92.0" stylesheets="@../CSS/DefaultButton.css" text="Back" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="riepilogoButton" mnemonicParsing="false" onAction="#riepilogoButtonOnAction" prefHeight="31.0" prefWidth="92.0" stylesheets="@../CSS/defaultButton.css" text="Riepilogo" textFill="WHITE">
+            <Button fx:id="riepilogoButton" mnemonicParsing="false" onAction="#riepilogoButtonOnAction" prefHeight="31.0" prefWidth="92.0" stylesheets="@../CSS/DefaultButton.css" text="Riepilogo" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -40,8 +40,8 @@
             <TableColumn fx:id="chairTableColumn" editable="false" maxWidth="500.0" prefWidth="146.0" resizable="false" sortable="false" text="Chair" />
         </columns>
       </TableView>
-      <Button fx:id="inserisciButton" layoutX="752.0" layoutY="269.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/defaultButton.css" text="Inserisci Sessione" />
-      <Button fx:id="rimuoviButton" layoutX="752.0" layoutY="494.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/defaultButton.css" text="Rimuovi Sessione" />
-      <Button fx:id="aggiungiProgrammaButton" layoutX="752.0" layoutY="309.0" mnemonicParsing="false" onAction="#aggiungiProgrammaButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/defaultButton.css" text="Aggiungi Programma" />
+      <Button fx:id="inserisciButton" layoutX="752.0" layoutY="269.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/DefaultButton.css" text="Inserisci Sessione" />
+      <Button fx:id="rimuoviButton" layoutX="752.0" layoutY="494.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/DefaultButton.css" text="Rimuovi Sessione" />
+      <Button fx:id="aggiungiProgrammaButton" layoutX="752.0" layoutY="309.0" mnemonicParsing="false" onAction="#aggiungiProgrammaButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/DefaultButton.css" text="Aggiungi Programma" />
    </children>
 </AnchorPane>
