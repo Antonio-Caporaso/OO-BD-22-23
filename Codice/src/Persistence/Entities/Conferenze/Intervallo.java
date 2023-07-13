@@ -2,7 +2,7 @@ package Persistence.Entities.Conferenze;
 
 import java.sql.Timestamp;
 
-public class Intervallo {
+public class Intervallo extends ActivityModel{
     private int id_intervallo;
     private Timestamp inizio;
     private Timestamp fine;
