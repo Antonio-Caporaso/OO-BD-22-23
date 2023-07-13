@@ -47,8 +47,6 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     private Button editEntiButton;
     @FXML
-    private TextArea entiView;
-    @FXML
     private Button editSessioniButton;
     @FXML
     private Button editSponsorshipsButton;
@@ -59,7 +57,13 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     private Label titleLabel;
     @FXML
-    private TextArea sponsorizzazioniView;
+    private TableView<Ente> entiTable;
+    @FXML
+    private Label indirizzoLabel;
+    @FXML
+    private TableColumn<Ente, String> siglaEnte;
+    @FXML
+    private TableColumn<Ente, String> nomeEnte;
     @FXML
     private TableView<Sessione> table;
     @FXML
@@ -68,6 +72,14 @@ public class ModificaConferenzaController implements Initializable {
     private TableColumn<Sessione, Date> inizioSessioneColumn;
     @FXML
     private TableColumn<Sessione, Date> fineSessioneColumn;
+    @FXML
+    private TableView<Sponsorizzazione> sponsorTable;
+    @FXML
+    private TableColumn<Sponsorizzazione, String> sponsorColumn;
+    @FXML
+    private TableColumn<Sponsorizzazione, Float> contributoColumn;
+    @FXML
+    private TableColumn<Sponsorizzazione,String> valutaColumn;
     @FXML
     private TableColumn<Sessione, String> salaSessioneColumn;
     public void setGestioneConferenzeController(GestioneConferenzeController gestioneConferenzeController) {
@@ -148,28 +160,19 @@ public class ModificaConferenzaController implements Initializable {
         dataInizioLabel.setText(conferenza.getInizio().toString());
         dataFineLabel.setText(conferenza.getFine().toString());
         sedeLabel.setText(conferenza.getSede().toString());
+        indirizzoLabel.setText(conferenza.getSede().getIndirizzo().toString());
     }
     public void setOrganizzatori() {
-        try{
-            conferenza.loadOrganizzatori();
-            entiView.setText("");
-            for(Ente e: conferenza.getEnti()){
-                entiView.appendText(e.toString()+"\n");
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+        entiTable.setEditable(false);
+        nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
+        entiTable.getItems().addAll(conferenza.getEnti());
     }
     public void setSponsorizzazioni(){
-        try{
-            conferenza.loadSponsorizzazioni();
-            sponsorizzazioniView.setText("");
-            for(Sponsorizzazione s : conferenza.getSponsorizzazioni()){
-                sponsorizzazioniView.appendText(s.toString()+"\n");
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+        sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("sponsor"));
+        contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,Float>("contributo"));
+        valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("valuta"));
+        sponsorTable.getItems().addAll(conferenza.getSponsorizzazioni());
     }
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;

@@ -18,6 +18,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class VisualizzaConferenzaController implements Initializable {
@@ -33,7 +34,7 @@ public class VisualizzaConferenzaController implements Initializable {
     @FXML
     private Label dataInizioLabel;
     @FXML
-    private Label descrizioneLabel;
+    private TextArea descrizioneArea;
     @FXML
     private Button editSessioniButton;
     @FXML
@@ -43,23 +44,41 @@ public class VisualizzaConferenzaController implements Initializable {
     @FXML
     private Label sedeLabel;
     @FXML
+    private TableView<Ente> entiTable;
+    @FXML
+    private TableColumn<Ente, String> siglaEnte;
+    @FXML
+    private TableColumn<Ente, String> nomeEnte;
+    @FXML
     private TextArea sponsorizzazioniView;
+    @FXML
+    private Label indirizzoLabel;
     @FXML
     private TableColumn<Sessione,String> nomeSessioneColumn;
     @FXML
-    private TableColumn<Sessione, Date> inizioSessioneColumn;
+    private TableColumn<Sessione, Timestamp> inizioSessioneColumn;
     @FXML
-    private TableColumn<Sessione, Date> fineSessioneColumn;
+    private TableColumn<Sessione, Timestamp> fineSessioneColumn;
     @FXML
     private TableColumn<Sessione, String> salaSessioneColumn;
     @FXML
-    private TableColumn<Sessione, Time> oraInizioColumn;
-    @FXML
-    private TableColumn<Sessione, Time> orarioFineSessioneColumn;
-    @FXML
     private TableView<Sessione> table;
     @FXML
+    private TableView<Sponsorizzazione> sponsorTable;
+    @FXML
+    private TableColumn<Sponsorizzazione, String> sponsorColumn;
+    @FXML
+    private TableColumn<Sponsorizzazione, Float> contributoColumn;
+    @FXML
+    private TableColumn<Sponsorizzazione,String> valutaColumn;
+
+    @FXML
     private Label titleLabel;
+    public VisualizzaConferenzaController(Conferenza conferenza,SubScene subScene, VisualizzaConferenzeController controller){
+        this.conferenza = conferenza;
+        this.subScene = subScene;
+        this.visualizzaConferenzeController = controller;
+    }
 
     public VisualizzaConferenzeController getViewConferencesController() {
         return visualizzaConferenzeController;
@@ -122,52 +141,50 @@ public class VisualizzaConferenzaController implements Initializable {
     public void setDetails() {
         this.setTitleLabel();
         nomeLabel.setText(conferenza.getTitolo());
-        descrizioneLabel.setText(conferenza.getDescrizione());
+        descrizioneArea.setText(conferenza.getDescrizione());
         dataInizioLabel.setText(conferenza.getInizio().toString());
         dataFineLabel.setText(conferenza.getFine().toString());
         sedeLabel.setText(conferenza.getSede().toString());
+        indirizzoLabel.setText(conferenza.getSede().getIndirizzo().toString());
     }
     public void setOrganizzatori() {
-        try{
+        try {
             conferenza.loadOrganizzatori();
-            entiView.setText("");
-            for(Ente e: conferenza.getEnti()){
-                entiView.appendText(e.toString()+"\n");
-            }
-        }catch(SQLException e){
+            entiTable.setEditable(false);
+            nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
+            entiTable.getItems().addAll(conferenza.getEnti());
+        }catch (SQLException e){
             e.printStackTrace();
+        }
+    }
+    private void setSponsorizzazioni() {
+        try {
+            conferenza.loadSponsorizzazioni();
+            sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("sponsor"));
+            contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,Float>("contributo"));
+            valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("valuta"));
+            sponsorTable.setItems(conferenza.getSponsorizzazioni());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
     public void setTitleLabel(){
         if(conferenza!=null)
-            titleLabel.setText("Modifica della conferenza: "+ conferenza.getTitolo());
+            titleLabel.setText("Conferenza: "+ conferenza.getTitolo());
     }
-    public void setSponsorizzazioni(){
-        try{
-            conferenza.loadSponsorizzazioni();
-            sponsorizzazioniView.setText("");
-            for(Sponsorizzazione s : conferenza.getSponsorizzazioni()){
-                sponsorizzazioniView.appendText(s.toString()+"\n");
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
+
     private void setTable(){
         table.setEditable(false);
         try{
             conferenza.loadSessioni();
+            nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+            inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
+            table.getItems().addAll(conferenza.getSessioni());
         }catch (SQLException e){
             e.printStackTrace();
         }
-        nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("titolo"));
-        inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataInizio"));
-        fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Date>("dataFine"));
-        oraInizioColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioInizio"));
-        orarioFineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,Time>("orarioFine"));
-        salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
-        table.getItems().addAll(conferenza.getSessioni());
-        nomeSessioneColumn.isSortable();
-        oraInizioColumn.isSortable();
     }
 }

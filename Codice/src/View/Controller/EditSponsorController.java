@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,13 +26,13 @@ import java.util.ResourceBundle;
 
 public class EditSponsorController implements Initializable, FormChecker {
     @FXML
-    private TableColumn<Sponsorizzazione, Float> contributoColumn;
-    @FXML
-    private TableColumn<Sponsorizzazione, String> sponsorNameColumn;
-    @FXML
     private TableView<Sponsorizzazione> sponsorTable;
     @FXML
-    private TableColumn<Sponsorizzazione, String> valutaColumn;
+    private TableColumn<Sponsorizzazione, String> sponsorColumn;
+    @FXML
+    private TableColumn<Sponsorizzazione, Float> contributoColumn;
+    @FXML
+    private TableColumn<Sponsorizzazione,String> valutaColumn;
     private Sponsors sponsors = new Sponsors();
     private Conferenza conferenza;
     private ModificaConferenzaController controller;
@@ -94,23 +95,23 @@ public class EditSponsorController implements Initializable, FormChecker {
     @FXML
     void inserisciSponsorOnAction(ActionEvent event) {
         try{
-            checkFieldsAreBlank();
-            Sponsor s = sponsorChoice.getSelectionModel().getSelectedItem();
-            float contributo = Float.parseFloat(contributoTextField.getText());
+            Sponsor sponsorSelezionato = sponsorChoice.getSelectionModel().getSelectedItem();
+            if(sponsorSelezionato ==null || contributoTextField.getText().isEmpty()){
+                throw new NullPointerException();
+            }
+            double contributo = Double.parseDouble(contributoTextField.getText());
             String valuta = valutaChoice.getValue();
-            Sponsorizzazione sp = new Sponsorizzazione(s,conferenza,contributo,valuta);
-            conferenza.addSponsorizzazione(sp);
-        }catch (BlankFieldException e){
+            Sponsorizzazione sponsorizzazione=new Sponsorizzazione(sponsorSelezionato,conferenza,contributo,valuta);
+            conferenza.addSponsorizzazione(sponsorizzazione);
+        }catch(PSQLException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Riempire tutti i campi");
+            alert.setContentText("Questo sponsor è già presente!");
             alert.showAndWait();
-        }catch (NumberFormatException e){
-            Alert alert = new Alert( Alert.AlertType.ERROR);
-            alert.setContentText("Inserire un numero");
-            alert.showAndWait();
-        }catch (SQLException e){
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch (NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
+            alert.setContentText("Seleziona tutti i campi prima di procedere");
             alert.showAndWait();
         }
     }
@@ -151,7 +152,7 @@ public class EditSponsorController implements Initializable, FormChecker {
         sponsorTable.setEditable(true);
         try {
             conferenza.loadSponsorizzazioni();
-            sponsorNameColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("sponsor"));
+            sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("sponsor"));
             contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,Float>("contributo"));
             valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("valuta"));
             sponsorTable.setItems(conferenza.getSponsorizzazioni());

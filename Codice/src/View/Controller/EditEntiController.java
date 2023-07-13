@@ -10,10 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -24,6 +23,12 @@ public class EditEntiController implements Initializable {
     private SubScene subScene;
     private Conferenza conferenza;
     @FXML
+    private TableView<Ente> entiTable;
+    @FXML
+    private TableColumn<Ente, String> siglaEnte;
+    @FXML
+    private TableColumn<Ente, String> nomeEnte;
+    @FXML
     private Button addButton;
     @FXML
     private Button annullaButton;
@@ -31,8 +36,6 @@ public class EditEntiController implements Initializable {
     private Button deleteButton;
     @FXML
     private ChoiceBox<Ente> entiChoice;
-    @FXML
-    private ListView entiView;
     private Enti enti = new Enti();
     @FXML
     private Button okButton;
@@ -50,10 +53,16 @@ public class EditEntiController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        enti.loadEnti();
-        entiChoice.setItems(enti.getEnti());
-        entiView.setItems(conferenza.getEnti());
+        setEntiTable();
     }
+
+    private void setEntiTable() {
+        entiTable.setEditable(false);
+        nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
+        entiTable.getItems().addAll(conferenza.getEnti());
+    }
+
     @FXML
     void aggiungiOnAction(ActionEvent event){
         Ente e = entiChoice.getSelectionModel().getSelectedItem();
@@ -73,7 +82,7 @@ public class EditEntiController implements Initializable {
     }
     @FXML
     void deleteOnAction(ActionEvent event) {
-        Ente e = (Ente) entiView.getSelectionModel().getSelectedItem();
+        Ente e = (Ente) entiTable.getSelectionModel().getSelectedItem();
         try {
             conferenza.removeEnte(e);
         } catch (SQLException ex) {

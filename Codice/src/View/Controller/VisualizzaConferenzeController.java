@@ -40,17 +40,6 @@ public class VisualizzaConferenzeController implements Initializable {
     private ChoiceBox<Sede> sedeChoice;
 
     @FXML
-    private Button viewDetailsButton;
-
-    @FXML
-    private Button viewEntiButton;
-
-    @FXML
-    private Button viewSessionButton;
-
-    @FXML
-    private Button viewSponsorsButton;
-    @FXML
     private TableColumn<Conferenza,String> sedeColumn;
 
     @FXML
@@ -66,8 +55,6 @@ public class VisualizzaConferenzeController implements Initializable {
 
     @FXML
     private TableColumn<Conferenza, String> nomeConferenzaColumn;
-    @FXML
-    private TableColumn<Conferenza, Float> budgetColumn;
     @FXML
     private Button visualizzaButton;
 
@@ -106,10 +93,7 @@ public class VisualizzaConferenzeController implements Initializable {
             alert.showAndWait();
         }else{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
-            VisualizzaConferenzaController controller = new VisualizzaConferenzaController();
-            controller.setConferenza(c);
-            controller.setViewConferencesController(this);
-            controller.setSubScene(subScene);
+            VisualizzaConferenzaController controller = new VisualizzaConferenzaController(c,subScene,this);
             loader.setController(controller);
             subScene.setRoot(loader.load());
         }
@@ -149,12 +133,11 @@ public class VisualizzaConferenzeController implements Initializable {
 
     private void setTable(ObservableList<Conferenza> c) {
         tableConferenza.setEditable(false);
-        nomeConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        inizioConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("dataInizio"));
-        fineConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("dataFine"));
+        nomeConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+        inizioConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+        fineConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
         descrizioneColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
         sedeColumn.setCellValueFactory(new PropertyValueFactory<>("sede"));
-        budgetColumn.setCellValueFactory(new PropertyValueFactory<>("budget"));
         tableConferenza.setItems(c);
     }
 }

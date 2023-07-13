@@ -43,7 +43,11 @@ public class Conferenza {
         sessioni = FXCollections.observableArrayList();
     }
 
-    public Conferenza() {}
+    public Conferenza() {
+        sponsorizzazioni = FXCollections.observableArrayList();
+        enti = FXCollections.observableArrayList();
+        sessioni = FXCollections.observableArrayList();
+    }
 
     public Conferenza(String nome, Timestamp dataI, Timestamp dataF, String descrizione, Sede sede, Utente user) {
         this.titolo=nome;
