@@ -7,6 +7,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
+import Exceptions.SediNonDisponibiliException;
 import Persistence.Entities.organizzazione.Organizzatore;
 import Utilities.MembriComitato;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import org.postgresql.util.PSQLException;
 import tornadofx.control.DateTimePicker;
 
@@ -115,15 +117,6 @@ public class InserisciSessioneController implements Initializable,FormChecker {
         alert.getButtonTypes().remove(ButtonType.CANCEL);
         alert.showAndWait();
     }
-    private void loadSaleChoiceBox(){
-        try{
-            sale = new Sale(conferenza.getSede());
-            sale.loadSale();
-            saleChoiceBox.setItems(sale.getSale());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
     private void loadCoordinatoreChoiceBox() throws SQLException {
         MembriComitato membriComitato = new MembriComitato(conferenza);
 
@@ -133,8 +126,31 @@ public class InserisciSessioneController implements Initializable,FormChecker {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
-
+    @FXML
+    void showSale(MouseEvent event)  {
+        try {
+            Timestamp inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
+            Timestamp fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
+            sale.loadSaleDisponibili(inizio, fine);
+            if (sale.getSale().isEmpty())
+                throw new SediNonDisponibiliException();
+            else
+                saleChoiceBox.setItems(sale.getSale());
+        }catch (SediNonDisponibiliException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Inserire delle date per visualizzare le sale libere");
+            alert.showAndWait();
+        } catch(SQLException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
     //Overrides
     @Override
@@ -145,7 +161,6 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            loadSaleChoiceBox();
         try {
             loadCoordinatoreChoiceBox();
         } catch (SQLException e) {

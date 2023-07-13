@@ -31,9 +31,9 @@
          <rowConstraints>
             <RowConstraints maxHeight="115.0" minHeight="8.0" prefHeight="95.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="312.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="312.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="172.0" minHeight="0.0" prefHeight="75.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="312.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Pane prefHeight="103.0" prefWidth="290.0">
@@ -46,7 +46,7 @@
                </children>
             </Pane>
             <TextField fx:id="titoloSessioneTextField" prefHeight="24.0" prefWidth="509.0" promptText="Aggiungi il titolo della sessione" GridPane.columnIndex="1" />
-            <Pane prefHeight="42.0" prefWidth="279.0" GridPane.rowIndex="3">
+            <Pane prefHeight="42.0" prefWidth="279.0" GridPane.rowIndex="2">
                <children>
                   <Label layoutX="14.0" layoutY="27.0" text="Inizio" textFill="WHITE">
                      <font>
@@ -55,7 +55,7 @@
                   </Label>
                </children>
             </Pane>
-            <Pane prefHeight="41.0" prefWidth="283.0" GridPane.rowIndex="4">
+            <Pane prefHeight="41.0" prefWidth="283.0" GridPane.rowIndex="3">
                <children>
                   <Label layoutX="14.0" layoutY="38.0" text="Fine" textFill="WHITE">
                      <font>
@@ -64,7 +64,7 @@
                   </Label>
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                <children>
                   <Label layoutX="14.0" layoutY="39.0" text="Sala" textFill="WHITE">
                      <font>
@@ -73,10 +73,10 @@
                   </Label>
                </children>
             </Pane>
-            <ChoiceBox fx:id="saleChoiceBox" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/ChoiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DateTimePicker fx:id="fineDateTimePicker" promptText="Inserisci la data e l'orario di Fine" stylesheets="@../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DateTimePicker fx:id="inizioDateTimePicker" promptText="Inserisci la data e l'orario di Inizio" stylesheets="@../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+            <ChoiceBox fx:id="saleChoiceBox" onMouseClicked="#showSale" prefHeight="25.0" prefWidth="326.0" stylesheets="@../CSS/ChoiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DateTimePicker fx:id="fineDateTimePicker" promptText="Inserisci la data e l'orario di Fine" stylesheets="@../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DateTimePicker fx:id="inizioDateTimePicker" promptText="Inserisci la data e l'orario di Inizio" stylesheets="@../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
                   <Label layoutX="14.0" layoutY="41.0" text="Coordinatore:" textFill="WHITE">
                      <font>
@@ -85,7 +85,7 @@
                   </Label>
                </children>
             </Pane>
-            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <ChoiceBox fx:id="coordinatoreChoiceBox" layoutY="37.0" prefHeight="24.0" prefWidth="326.0" stylesheets="@../CSS/ChoiceBox.css" />
                </children>
