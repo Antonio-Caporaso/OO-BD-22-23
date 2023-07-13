@@ -7,6 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class Sale {
     private ObservableList<Sala> sale;
@@ -19,6 +21,12 @@ public class Sale {
         SalaDao dao = new SalaDao();
         sale.clear();
         sale.addAll(dao.retrieveSaleBySede(sede));
+    }
+
+    public void loadSaleDisponibili(Timestamp inizio, Timestamp fine) throws SQLException {
+        SalaDao dao = new SalaDao();
+        sale.clear();
+        sale.addAll(dao.retrieveSaleLibere(sede,inizio,fine));
     }
 
     public ObservableList<Sala> getSale() {

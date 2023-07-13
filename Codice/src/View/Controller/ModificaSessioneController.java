@@ -163,7 +163,6 @@ public class ModificaSessioneController implements Initializable {
     }
     private void setProgrammaTableView(){
         try{
-
             programma.loadProgramaSessione();
             appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("appuntamento"));
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));

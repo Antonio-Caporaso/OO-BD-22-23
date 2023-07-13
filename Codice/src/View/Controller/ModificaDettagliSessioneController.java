@@ -136,7 +136,7 @@ public class ModificaDettagliSessioneController implements Initializable {
 
     private void setSale() throws SQLException {
         sale = new Sale(sessione.getConferenza().getSede());
-        sale.loadSale();
+        sale.loadSaleDisponibili(sessione.getInizio(),sessione.getFine());
         saleChoice.setItems(sale.getSale());
         saleChoice.setValue(sessione.getLocazione());
     }

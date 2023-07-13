@@ -1,6 +1,7 @@
 package View.Controller;
 
 import Exceptions.BlankFieldException;
+import Exceptions.SediNonDisponibiliException;
 import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Programma;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import tornadofx.control.DateTimePicker;
 
@@ -117,10 +119,34 @@ public class AddSessioneController implements Initializable,FormChecker {
         inizioConferenzaLabel.setTextFill(Color.WHITE);
         fineConferenzaLabel.setTextFill(Color.WHITE);
         fineConferenzaLabel.setText(conferenza.getFine().toString());
-        setSale();
         try {
             setCoordinatoreChoiceBox();
         } catch (SQLException e) {
+        }
+    }
+
+    @FXML
+    void showSale(MouseEvent event)  {
+        try {
+            Timestamp inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
+            Timestamp fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
+            sale.loadSaleDisponibili(inizio, fine);
+            if (sale.getSale().isEmpty())
+                throw new SediNonDisponibiliException();
+            else
+                saleChoice.setItems(sale.getSale());
+        }catch (SediNonDisponibiliException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Inserire delle date per visualizzare le sale libere");
+            alert.showAndWait();
+        } catch(SQLException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
@@ -130,15 +156,7 @@ public class AddSessioneController implements Initializable,FormChecker {
         coordinatoreChoiceBox.setItems(membriComitatoScientifico.getMembriComitatoScientifico());
     }
 
-    private void setSale() {
-        try{
-            sale = new Sale(conferenza.getSede());
-            sale.loadSale();
-            saleChoice.setItems(sale.getSale());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
