@@ -86,8 +86,8 @@ public class ModificaProgrammaSessioneController implements Initializable {
 
     @FXML
     void addPuntoOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddPunto.fxml"));
-        AddPuntoController controller = new AddPuntoController(programma);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddPuntoScena.fxml"));
+        AddPuntoScenaController controller = new AddPuntoScenaController(programma);
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);

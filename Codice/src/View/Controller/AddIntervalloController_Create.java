@@ -69,10 +69,10 @@ public class AddIntervalloController_Create implements Initializable {
         try{
             PGInterval durata = new PGInterval(0,0,0,oreSpinner.getValue(), minutiSpinner.getValue(),0);
             programma.addNewIntervallo(intervallo,durata);
+            programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         }catch (SQLException e){
-            e.printStackTrace();
             loadExceptionWindow(e.getMessage());
         }
     }

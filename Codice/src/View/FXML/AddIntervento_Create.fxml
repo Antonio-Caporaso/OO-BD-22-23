@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="523.0" stylesheets="@../CSS/PopUpWindow.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.AddInterventoController_Create">
+<AnchorPane prefHeight="627.0" prefWidth="523.0" stylesheets="@../CSS/PopUpWindow.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox fx:id="HBox" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="527.0">
          <children>

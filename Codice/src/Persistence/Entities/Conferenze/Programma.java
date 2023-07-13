@@ -159,7 +159,7 @@ public class Programma {
             dao.updateIntervento(i);
         }
     }
-    public ObservableList loadProgramaSessione() throws SQLException{
+    public void loadProgramaSessione() throws SQLException{
         ProgrammaDao programmaDao=new ProgrammaDao();
         programmaSessione.clear();
         retreiveProgrammaID(sessione);
@@ -191,7 +191,6 @@ public class Programma {
             ActivityModel activity=new ActivityModel(id,"Evento",inizio,fine,descrizione,this);
             programmaSessione.add(activity);
         }programmaSessione.sort(Comparator.comparing(ActivityModel::getInizio));
-        return programmaSessione;
     }
     private void retreiveProgrammaID(Sessione sessione) throws SQLException{
         ProgrammaDao programmaDao = new ProgrammaDao();

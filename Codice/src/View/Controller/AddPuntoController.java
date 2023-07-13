@@ -74,8 +74,8 @@ public class AddPuntoController implements Initializable{
     }
 
     private void openAddEventoWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEvento.fxml"));
-        AddEventoController control = new AddEventoController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEventoSociale_Create.fxml"));
+        AddEventoSocialeController_Create control = new AddEventoSocialeController_Create();
         control.setProgramma(programma);
         loader.setController(control);
         Parent root = loader.load();

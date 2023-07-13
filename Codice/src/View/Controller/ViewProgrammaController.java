@@ -112,8 +112,8 @@ public class ViewProgrammaController implements Initializable
     private void loadAddIntervallo(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo_Create.fxml"));
-            Parent root = loader.load();
             AddIntervalloController_Create controller = loader.getController();
+            Parent root = loader.load();
             controller.setProgramma(programma);
             Stage stage = new Stage();
             Scene scene = new Scene(root, 608, 400);
@@ -125,7 +125,6 @@ public class ViewProgrammaController implements Initializable
             stage.setX(860);
             stage.setY(360);
             stage.showAndWait();
-
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -133,8 +132,8 @@ public class ViewProgrammaController implements Initializable
     private void loadAddIntervento(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento_Create.fxml"));
-            Parent root = loader.load();
             AddInterventoController_Create controller = loader.getController();
+            Parent root = loader.load();
             controller.setProgramma(programma);
             Stage stage = new Stage();
             Scene scene = new Scene(root, 523, 627);
@@ -154,8 +153,8 @@ public class ViewProgrammaController implements Initializable
     private void loadAddEventoSociale(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEventoSociale_Create.fxml"));
-            Parent root = loader.load();
             AddEventoSocialeController_Create controller = loader.getController();
+            Parent root = loader.load();
             controller.setProgramma(programma);
             Stage stage = new Stage();
             Scene scene = new Scene(root, 608, 400);
