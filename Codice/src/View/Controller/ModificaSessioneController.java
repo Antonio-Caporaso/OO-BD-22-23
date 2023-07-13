@@ -128,10 +128,10 @@ public class ModificaSessioneController implements Initializable {
     private void goToEditDettagliSessione() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaDettagliSessione.fxml"));
         ModificaDettagliSessioneController controllerS = new ModificaDettagliSessioneController();
-        loader.setController(controllerS);
         controllerS.setSessione(sessione);
         controllerS.setConferenza(conferenza);
         controllerS.setSubscene(subScene);
+        loader.setController(controllerS);
         controllerS.setEditSessioneController(this);
         Parent root = loader.load();
         subScene.setRoot(root);
