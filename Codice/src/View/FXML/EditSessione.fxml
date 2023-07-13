@@ -48,8 +48,6 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Pane prefHeight="57.0" prefWidth="258.0">
@@ -63,23 +61,14 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                  <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Data di inizio:">
+                                    <Label layoutX="14.0" layoutY="24.0" text="Inizio:">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Data di fine:">
-                                       <font>
-                                          <Font name="System Bold" size="13.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                  <children>
                                     <Label layoutX="14.0" layoutY="24.0" text="Sala:">
                                        <font>
@@ -95,48 +84,29 @@
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <children>
-                                    <Label fx:id="dataInizioLabel" layoutX="14.0" layoutY="24.0" text="Label" />
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <children>
-                                    <Label fx:id="dataFineLabel" layoutX="14.0" layoutY="24.0" text="Label" />
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                 <children>
-                                    <Label fx:id="salaLabel" layoutX="14.0" layoutY="24.0" text="Label" />
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Ora di inizio:">
-                                       <font>
-                                          <Font name="System Bold" size="13.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
-                                 <children>
-                                    <Label layoutX="14.0" layoutY="24.0" text="Orario di fine:">
-                                       <font>
-                                          <Font name="System Bold" size="13.0" />
-                                       </font>
-                                    </Label>
+                                    <Label fx:id="inizioLabel" layoutX="14.0" layoutY="24.0" text="Label" />
                                  </children>
                               </Pane>
                               <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                  <children>
-                                    <Label fx:id="oraInizioLabel" layoutX="14.0" layoutY="24.0" text="Label" />
+                                    <Label fx:id="salaLabel" layoutX="14.0" layoutY="24.0" text="Label" />
                                  </children>
                               </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                  <children>
-                                    <Label fx:id="oraFineLabel" layoutX="14.0" layoutY="24.0" text="Label" />
+                                    <Label layoutX="14.0" layoutY="24.0" text="Fine:">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="6">
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="fineLabel" layoutX="14.0" layoutY="24.0" text="Label" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                                  <children>
                                     <Label layoutX="14.0" layoutY="24.0" text="Coordinatore:">
                                        <font>
@@ -145,7 +115,7 @@
                                     </Label>
                                  </children>
                               </Pane>
-                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <children>
                                     <Label fx:id="coordinatoreLabel" layoutX="14.0" layoutY="24.0" text="Label" />
                                  </children>
@@ -161,11 +131,7 @@
           </TitledPane>
             <TitledPane animated="false" text="Programma">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Accordion layoutX="2.0" layoutY="10.0" prefHeight="549.0" prefWidth="681.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
                <font>
                   <Font name="System Bold" size="13.0" />
