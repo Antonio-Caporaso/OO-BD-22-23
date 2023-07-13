@@ -112,10 +112,16 @@ public class Programma {
 
     public void addIntervallo(Intervallo intervallo,PGInterval durata) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
-        int id = dao.createIntervallo(intervallo,durata);
+        int id= dao.createIntervallo(intervallo,durata);
         intervallo.setId_intervallo(id);
         intervalli.add(intervallo);
     }
+    public void addNewIntervallo(Intervallo intervallo,PGInterval durata) throws SQLException {
+        IntervalloDao dao = new IntervalloDao();
+        dao.createNewIntervallo(intervallo,durata);
+        intervalli.add(intervallo);
+    }
+
     public void removeIntervallo(Intervallo intervallo) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
         dao.deleteIntervallo(intervallo);

@@ -1,4 +1,5 @@
 package View.Controller;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -10,10 +11,17 @@ import Persistence.Entities.Utente;
 import Persistence.Entities.partecipanti.Speaker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class ViewProgrammaController implements Initializable
 {
@@ -74,6 +82,7 @@ public class ViewProgrammaController implements Initializable
     @FXML
     void addIntervalloOnAction(ActionEvent event){
         loadAddIntervallo();
+        setProgrammaTableView();
     }
     @FXML
     void addInterventoOnAction(ActionEvent event){
@@ -99,7 +108,28 @@ public class ViewProgrammaController implements Initializable
 
     //Private Methods
     private void loadAddIntervallo(){
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo_Create.fxml"));
+            Parent root = loader.load();
+            AddIntervalloController_Create controller = loader.getController();
+            controller.setProgramma(programma);
+            Stage stage = new Stage();
+            stage.setTitle("Errore");
+            Scene scene = new Scene(root, 608, 400);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+//            stage.setOnCloseRequest(event -> {
+//                setProgrammaTableView();
+//            });
+            stage.showAndWait();
+            stage.setX(760);
+            stage.setY(360);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
     private void loadAddIntervento(){
 
@@ -117,7 +147,6 @@ public class ViewProgrammaController implements Initializable
     }
     private void setProgrammaTableView(){
         try{
-
             programma.loadProgramaSessione();
             appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("appuntamento"));
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
