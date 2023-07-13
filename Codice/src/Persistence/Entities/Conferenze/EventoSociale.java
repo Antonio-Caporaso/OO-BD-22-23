@@ -3,7 +3,7 @@ package Persistence.Entities.Conferenze;
 
 import java.sql.Timestamp;
 
-public class EventoSociale  {
+public class EventoSociale {
     private int id_evento;
     private Timestamp inizio;
     private Timestamp fine;
