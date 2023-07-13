@@ -40,7 +40,7 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     private Label dataInizioLabel;
     @FXML
-    private Label descrizioneLabel;
+    private TextArea descrizioneArea;
     private GestioneConferenzeController gestioneConferenzeController;
     @FXML
     private Button editDetailsButton;
@@ -86,7 +86,7 @@ public class ModificaConferenzaController implements Initializable {
     }
     @FXML
     public void editDetailsOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditDettagliConferenza.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaDettagliConferenza.fxml"));
         EditDettagliConferenzaController controller = new EditDettagliConferenzaController();
         loader.setController(controller);
         controller.setEditConferenceController(this);
@@ -144,7 +144,7 @@ public class ModificaConferenzaController implements Initializable {
     public void setDetails() {
         this.setTitleLabel();
         nomeLabel.setText(conferenza.getTitolo());
-        descrizioneLabel.setText(conferenza.getDescrizione());
+        descrizioneArea.setText(conferenza.getDescrizione());
         dataInizioLabel.setText(conferenza.getInizio().toString());
         dataFineLabel.setText(conferenza.getFine().toString());
         sedeLabel.setText(conferenza.getSede().toString());
