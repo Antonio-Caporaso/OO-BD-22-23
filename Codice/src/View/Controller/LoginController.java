@@ -3,12 +3,15 @@ import Persistence.DAO.UtenteDAO;
 import Exceptions.BlankFieldException;
 import Persistence.Entities.Utente;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
@@ -23,6 +26,8 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable, FormChecker {
     @FXML
     private Label errorLabel;
+    @FXML
+    private AnchorPane anchorPanel;
     @FXML
     private Button loginButton;
     @FXML
@@ -45,6 +50,7 @@ public class LoginController implements Initializable, FormChecker {
             errorLabel.setText("Inserire nome utente e password");
         }
     }
+
     @FXML
     void registratiButtonOnAction(ActionEvent event){
         try{
@@ -88,7 +94,21 @@ public class LoginController implements Initializable, FormChecker {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //setMediaPlayer();
+        defineEventHandlerForAnchorPane();
+    }
+
+    private void defineEventHandlerForAnchorPane() {
+        anchorPanel.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                try{
+                    checkFieldsAreBlank();
+                    validateLogin();
+                }catch (BlankFieldException e){
+                    errorLabel.setText("Inserire nome utente e password");
+                }
+            }
+        });
     }
 
     public Utente getUser() {
