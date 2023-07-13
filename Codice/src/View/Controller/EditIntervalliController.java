@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditIntervalliController implements Initializable {
-    private EditProgrammaController editProgrammaController;
+    private ModificaProgrammaSessioneController editProgrammaController;
     private Programma programma;
     private SubScene subScene;
     private Sessione sessione;
@@ -48,12 +48,12 @@ public class EditIntervalliController implements Initializable {
 
     @FXML
     private TableColumn<Intervallo, String> tipologiaIntervalloColumn;
-    public EditProgrammaController getEditProgrammaController() {
+    public ModificaProgrammaSessioneController getEditProgrammaController() {
         return editProgrammaController;
     }
 
-    public void setEditProgrammaController(EditProgrammaController editProgrammaController) {
-        this.editProgrammaController = editProgrammaController;
+    public void setEditProgrammaController(ModificaProgrammaSessioneController modificaProgrammaSessioneController) {
+        this.editProgrammaController = modificaProgrammaSessioneController;
     }
 
     public Programma getProgramma() {
@@ -159,7 +159,7 @@ public class EditIntervalliController implements Initializable {
 
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaProgrammaSessione.fxml"));
         loader.setController(editProgrammaController);
         Parent root = loader.load();
         subScene.setRoot(root);

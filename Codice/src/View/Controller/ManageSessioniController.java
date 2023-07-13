@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -79,7 +78,7 @@ public class ManageSessioniController implements Initializable {
     public void editSessionsOnAction(ActionEvent event) throws IOException {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
-            EditSessioneController controller = new EditSessioneController();
+            ModificaSessioneController controller = new ModificaSessioneController();
             loader.setController(controller);
             Sessione s = table.getSelectionModel().getSelectedItem();
             if(s == null)

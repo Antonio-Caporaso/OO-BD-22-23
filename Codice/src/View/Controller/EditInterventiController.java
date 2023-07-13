@@ -28,7 +28,7 @@ public class EditInterventiController implements Initializable {
     private SubScene subScene;
     private Sessione sessione;
     private ManageSessioniController manageSessioniController;
-    private EditProgrammaController editProgrammaController;
+    private ModificaProgrammaSessioneController editProgrammaController;
     @FXML
     private TableColumn<Intervento, String> abstractColumn;
     @FXML
@@ -54,11 +54,11 @@ public class EditInterventiController implements Initializable {
     @FXML
     private TableColumn<Intervento, Speaker> speakerColumn;
 
-    public EditProgrammaController getEditProgrammaController() {
+    public ModificaProgrammaSessioneController getEditProgrammaController() {
         return editProgrammaController;
     }
 
-    public void setEditProgrammaController(EditProgrammaController editProgrammaController) {
+    public void setEditProgrammaController(ModificaProgrammaSessioneController editProgrammaController) {
         this.editProgrammaController = editProgrammaController;
     }
 
@@ -146,7 +146,7 @@ public class EditInterventiController implements Initializable {
 
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaProgrammaSessione.fxml"));
         loader.setController(editProgrammaController);
         Parent root = loader.load();
         subScene.setRoot(root);

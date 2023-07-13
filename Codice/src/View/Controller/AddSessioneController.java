@@ -21,9 +21,7 @@ import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
@@ -86,8 +84,8 @@ public class AddSessioneController implements Initializable,FormChecker {
     }
 
     private void goToAddProgrammaWindow(Sessione s) throws SQLException, IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
-        EditProgrammaController controller = new EditProgrammaController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaProgrammaSessione.fxml"));
+        ModificaProgrammaSessioneController controller = new ModificaProgrammaSessioneController();
         controller.setManageSessioniController(manageSessioniController);
         controller.setSessione(s);
         controller.setSubscene(subscene);

@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class EditSessioneController implements Initializable {
+public class ModificaSessioneController implements Initializable {
     private Sessione sessione;
     private Conferenza conferenza;
     private ManageSessioniController manageSessioniController;
@@ -111,8 +111,8 @@ public class EditSessioneController implements Initializable {
         goToEditProgrammaWindow();
     }
     private void goToEditProgrammaWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditProgramma.fxml"));
-        EditProgrammaController controller = new EditProgrammaController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaProgrammaSessione.fxml"));
+        ModificaProgrammaSessioneController controller = new ModificaProgrammaSessioneController();
         controller.setSubscene(subScene);
         controller.setManageSessioniController(manageSessioniController);
         controller.setSessione(sessione);

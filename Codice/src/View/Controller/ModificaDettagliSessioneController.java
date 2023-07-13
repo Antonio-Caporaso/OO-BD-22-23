@@ -14,14 +14,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
-import jfxtras.scene.control.LocalTimeTextField;
 import tornadofx.control.DateTimePicker;
-
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -31,7 +27,7 @@ public class ModificaDettagliSessioneController implements Initializable {
     private Sessione sessione;
     private SubScene subscene;
     private Sale sale;
-    private EditSessioneController editSessioneController;
+    private ModificaSessioneController modificaSessioneController;
     @FXML
     private Label inizioConferenzaLabel;
     @FXML
@@ -59,7 +55,7 @@ public class ModificaDettagliSessioneController implements Initializable {
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
-        loader.setController(editSessioneController);
+        loader.setController(modificaSessioneController);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -82,9 +78,9 @@ public class ModificaDettagliSessioneController implements Initializable {
 
     private void goToEditWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
-        loader.setController(editSessioneController);
-        editSessioneController.setSessione(sessione);
-        editSessioneController.setDettagliSessione();
+        loader.setController(modificaSessioneController);
+        modificaSessioneController.setSessione(sessione);
+        modificaSessioneController.setDettagliSessione();
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -161,11 +157,11 @@ public class ModificaDettagliSessioneController implements Initializable {
         this.subscene = subscene;
     }
 
-    public EditSessioneController getEditSessioneController() {
-        return editSessioneController;
+    public ModificaSessioneController getEditSessioneController() {
+        return modificaSessioneController;
     }
 
-    public void setEditSessioneController(EditSessioneController editSessioneController) {
-        this.editSessioneController = editSessioneController;
+    public void setEditSessioneController(ModificaSessioneController modificaSessioneController) {
+        this.modificaSessioneController = modificaSessioneController;
     }
 }
