@@ -800,9 +800,10 @@ language plpgsql;
 --Funzione che mostra le sedi con sale libere nel periodo indicato
 create or replace function show_sedi_libere(inizio_c timestamp, fine_c timestamp)
 returns table(
-    id_sede integer,
-    nome text
-) as $$
+id_sede integer,
+nome text
+)
+ as $$
 begin
     return query
     select s.id_sede, s.nome
@@ -825,13 +826,11 @@ $$ language plpgsql;
 
 -- Funzione che mostra le sale libere in una sede nel periodo indicato
 create or replace function show_sale_libere(sede_id integer, inizio_c timestamp, fine_c timestamp)
-returns table(
-    id_sala integer,
-    nome text
-) as $$
+returns setof sala
+as $$
 begin
     return query
-    select s.id_sala, s.nome
+    select *
     from sala s
     where s.id_sede = sede_id and
     not exists
