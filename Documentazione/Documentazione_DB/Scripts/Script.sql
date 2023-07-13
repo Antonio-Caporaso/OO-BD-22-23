@@ -11,3 +11,4 @@ drop schema conference cascade;
 \i Speaker.sql
 \i Sponsors.sql
 \i Valute.sql
+\i PGConfNPL.sql
