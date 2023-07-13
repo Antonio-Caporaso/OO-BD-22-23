@@ -2,10 +2,8 @@ package Persistence.DAO;
 
 import Persistence.DbConfig.DBConnection;
 import Persistence.Entities.partecipanti.Speaker;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.LinkedList;
 
 public class SpeakerDao {
@@ -54,17 +52,17 @@ public class SpeakerDao {
     public int createSpeaker(Speaker s) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "select * from save_speaker(?,?,?,?,?)";
+        String query = "INSERT INTO speaker (nome, cognome, titolo, email, id_ente) VALUES (?, ?, ?, ?, ?) RETURNING id_speaker";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setString(1,s.getNome());
         stm.setString(2,s.getCognome());
-        stm.setString(3,s.getTitolo());
-        stm.setInt(4,s.getIstituzione().getId_ente());
-        stm.setString(5,s.getEmail());
+        stm.setObject(3,s.getTitolo(), Types.OTHER);
+        stm.setString(4,s.getEmail());
+        stm.setInt(5,s.getIstituzione().getId_ente());
         ResultSet rs = stm.executeQuery();
         int result = 0;
         while(rs.next()){
-            result = rs.getInt(1);
+            result = rs.getInt("id_speaker");
         }
         return result;
     }
