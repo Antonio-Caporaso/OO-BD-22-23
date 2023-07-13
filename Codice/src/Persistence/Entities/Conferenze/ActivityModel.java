@@ -5,32 +5,40 @@ import Persistence.Entities.partecipanti.Speaker;
 import java.sql.Timestamp;
 
 public class ActivityModel {
-    private String appuntamento;
+    private int id_entry;
+    private String type;
     private Timestamp inizio;
     private Timestamp fine;
     private String descrizione;
+    private Programma programma;
     private Speaker speaker;
     //Contructor senza Speaker e descrizione
-    public ActivityModel(String appuntamento, Timestamp inizio, Timestamp fine) {
-        this.appuntamento = appuntamento;
+    public ActivityModel(){}
+    public ActivityModel(int id,String type, Timestamp inizio, Timestamp fine,String descrizione,Programma programma) {
+        this.id_entry = id;
+        this.type = type;
         this.inizio = inizio;
+        this.descrizione=descrizione;
         this.fine = fine;
+        this.programma = programma;
     }
     //Contructor completo
-    public ActivityModel(String appuntamento, Timestamp inizio, Timestamp fine, String descrizione, Speaker speaker) {
-        this.appuntamento = appuntamento;
+    public ActivityModel(int id,String type, Timestamp inizio, Timestamp fine, String descrizione, Speaker speaker, Programma programma) {
+        this.id_entry = id;
+        this.type = type;
         this.inizio = inizio;
         this.fine = fine;
         this.descrizione = descrizione;
         this.speaker = speaker;
+        this.programma = programma;
     }
 
     //Getter and Setters
-    public String getAppuntamento() {
-        return appuntamento;
+    public String getType() {
+        return type;
     }
-    public void setAppuntamento(String appuntamento) {
-        this.appuntamento = appuntamento;
+    public void setType(String type) {
+        this.type = type;
     }
     public Timestamp getInizio() {
         return inizio;

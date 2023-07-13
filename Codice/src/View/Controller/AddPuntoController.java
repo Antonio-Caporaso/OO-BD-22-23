@@ -88,8 +88,8 @@ public class AddPuntoController implements Initializable{
     }
 
     private void openAddInterventoWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento.fxml"));
-        AddInterventoController control = new AddInterventoController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento_Create.fxml"));
+        AddInterventoController_Create control = new AddInterventoController_Create();
         control.setProgramma(programma);
         loader.setController(control);
         Parent root = loader.load();

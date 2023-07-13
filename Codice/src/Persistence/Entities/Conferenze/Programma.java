@@ -167,26 +167,28 @@ public class Programma {
         loadIntervalli();
         loadEventiSociali();
         for (Intervento intervento: interventi){
-            String tipologia= intervento.getTitolo();
+            int id = intervento.getId_intervento();
             Timestamp inizio=intervento.getInizio();
             Timestamp fine=intervento.getFine();
             String descrizione= intervento.getEstratto();
             Speaker speaker= intervento.getSpeaker();
-            ActivityModel activity=new ActivityModel(tipologia,inizio,fine,descrizione,speaker);
+            ActivityModel activity=new ActivityModel(id,"Intervento",inizio,fine,descrizione,speaker,this);
             programmaSessione.add(activity);
         }
         for (Intervallo intervallo: intervalli){
-            String tipologia= intervallo.getTipologia();
+            int id = intervallo.getId_intervallo();
+            String descrizione= intervallo.getTipologia();
             Timestamp inizio=intervallo.getInizio();
             Timestamp fine=intervallo.getFine();
-            ActivityModel activity=new ActivityModel(tipologia,inizio,fine);
+            ActivityModel activity=new ActivityModel(id,"Intervallo",inizio,fine,descrizione,this);
             programmaSessione.add(activity);
         }
         for (EventoSociale eventoSociale: eventi){
-            String tipologia= eventoSociale.getTipologia();
+            int id = eventoSociale.getId_evento();
+            String descrizione = eventoSociale.getTipologia();
             Timestamp inizio=eventoSociale.getInizio();
             Timestamp fine=eventoSociale.getFine();
-            ActivityModel activity=new ActivityModel(tipologia,inizio,fine);
+            ActivityModel activity=new ActivityModel(id,"Evento",inizio,fine,descrizione,this);
             programmaSessione.add(activity);
         }programmaSessione.sort(Comparator.comparing(ActivityModel::getInizio));
         return programmaSessione;
