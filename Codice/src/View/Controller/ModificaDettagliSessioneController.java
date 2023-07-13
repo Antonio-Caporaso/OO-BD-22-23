@@ -45,9 +45,9 @@ public class ModificaDettagliSessioneController implements Initializable {
     @FXML
     private ChoiceBox<Sala> saleChoice;
     @FXML
-    private DateTimePicker inizioDT;
+    private DateTimePicker inizioDateTimePicker;
     @FXML
-    private DateTimePicker fineDT;
+    private DateTimePicker fineDateTimePicker;
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
     private MembriComitato membriComitatoScientifico;
@@ -95,8 +95,8 @@ public class ModificaDettagliSessioneController implements Initializable {
         s.setId_sessione(sessione.getId_sessione());
         s.setTitolo(nomeTF.getText());
         s.setLocazione(saleChoice.getValue());
-        s.setInizio(Timestamp.valueOf(inizioDT.getDateTimeValue()));
-        s.setFine(Timestamp.valueOf(fineDT.getDateTimeValue()));
+        s.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
+        s.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
         s.setCoordinatore(coordinatoreChoiceBox.getValue());
         try {
             dao.updateSessione(s);
@@ -134,8 +134,8 @@ public class ModificaDettagliSessioneController implements Initializable {
     }
 
     private void setDate() throws SQLException {
-       inizioDT.setDateTimeValue(sessione.getInizio().toLocalDateTime());
-       fineDT.setDateTimeValue(sessione.getFine().toLocalDateTime());
+       inizioDateTimePicker.setDateTimeValue(sessione.getInizio().toLocalDateTime());
+       fineDateTimePicker.setDateTimeValue(sessione.getFine().toLocalDateTime());
     }
 
     private void setSale() throws SQLException {

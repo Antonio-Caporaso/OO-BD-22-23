@@ -1,7 +1,6 @@
 package View.Controller;
 
 import Persistence.DAO.ProgrammaDao;
-import Persistence.DAO.SpeakerDao;
 import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.partecipanti.Speaker;
 import javafx.event.ActionEvent;
@@ -127,7 +126,7 @@ public class EditSessioneController implements Initializable {
         goToEditDettagliSessione();
     }
     private void goToEditDettagliSessione() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditDettagliSessione.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaDettagliSessione.fxml"));
         ModificaDettagliSessioneController controllerS = new ModificaDettagliSessioneController();
         loader.setController(controllerS);
         controllerS.setSessione(sessione);
