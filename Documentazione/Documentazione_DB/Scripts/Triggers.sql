@@ -355,12 +355,12 @@ declare
     ente_id integer;
 begin
 
-    select id_ente into ente_id
+    select o.id_ente into ente_id
     from organizzatore o
     where o.id_organizzatore = new.id_organizzatore;
     
     IF ente_id IS NULL THEN
-        RAISE EXCEPTION 'L''organizzatore non esiste';
+        return new;
     END IF;
     
     IF ente_id NOT IN (
@@ -436,3 +436,32 @@ create trigger check_capienza_sala
 before insert on partecipazione
 for each row
 execute function check_capienza_sala();
+
+--Ogni volta che viene modificata la sede di una conferenza bisogna mettere a NULL la sala di ogni sessione della conferenza
+create or replace function delete_sala_sessione() returns trigger as $$
+declare
+    sessioni_cur cursor for 
+    select id_sessione 
+    from sessione 
+    where id_conferenza = new.id_conferenza;
+    sessione_id integer;
+begin
+    if (new.id_sede<>old.id_sede) then
+    open sessioni_cur;
+    loop
+        fetch sessioni_cur into sessione_id;
+        exit when not found;
+        update sessione set id_sala = null where id_sessione = sessione_id;
+    end loop;
+    close sessioni_cur;
+    return new;
+    else 
+        return old;
+    end if;
+end;
+$$ language plpgsql;
+
+create trigger delete_sala_sessione
+before update on conferenza
+for each row
+execute function delete_sala_sessione();

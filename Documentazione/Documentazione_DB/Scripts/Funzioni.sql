@@ -27,11 +27,11 @@ begin
     select * from conferenza
     where id_sede = sede_id and inizio >= dataI and fine <= dataF;
 end;
+$$ language plpgsql;
 
 --Funzione che mostra tutti gli organizzatori appartenenti al comitato scientifico di una conferenza
 CREATE OR REPLACE FUNCTION show_comitato_scientifico(conferenza_id integer)
 RETURNS SETOF organizzatore
-LANGUAGE plpgsql
 AS $$
 BEGIN
     RETURN QUERY
@@ -47,8 +47,7 @@ BEGIN
         )
     );
 END;
-$$;
-
+$$ LANGUAGE plpgsql;
 
 --Funzione che mostra tutti gli organizzatori appartenenti al comitato locale di una conferenza
 create or replace function show_comitato_locale(conferenza_id int)
