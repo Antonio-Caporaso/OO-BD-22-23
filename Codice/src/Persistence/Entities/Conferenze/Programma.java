@@ -10,6 +10,7 @@ import org.postgresql.util.PGInterval;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Programma {
@@ -177,21 +178,44 @@ public class Programma {
         }
         for (Intervallo intervallo: intervalli){
             int id = intervallo.getId_intervallo();
-            String descrizione= intervallo.getTipologia();
             Timestamp inizio=intervallo.getInizio();
             Timestamp fine=intervallo.getFine();
+            String descrizione=intervallo.getTipologia();
             ActivityModel activity=new ActivityModel(id,"Intervallo",inizio,fine,descrizione,this);
             programmaSessione.add(activity);
         }
         for (EventoSociale eventoSociale: eventi){
             int id = eventoSociale.getId_evento();
-            String descrizione = eventoSociale.getTipologia();
             Timestamp inizio=eventoSociale.getInizio();
             Timestamp fine=eventoSociale.getFine();
+            String descrizione= eventoSociale.getTipologia();
             ActivityModel activity=new ActivityModel(id,"Evento",inizio,fine,descrizione,this);
             programmaSessione.add(activity);
         }programmaSessione.sort(Comparator.comparing(ActivityModel::getInizio));
     }
+    public void removeActivity(ActivityModel activityModel) {
+        try {
+            for (Intervento intervento : new ArrayList<>(interventi)) {
+                if (intervento.getTitolo().equals(activityModel.getDescrizione()) && intervento.getInizio().equals(activityModel.getInizio())) {
+                    removeIntervento(intervento);
+                }
+            }
+            for (Intervallo intervallo : new ArrayList<>(intervalli)) {
+                if (intervallo.getTipologia().equals(activityModel.getDescrizione()) && intervallo.getInizio().equals(activityModel.getInizio())) {
+                    removeIntervallo(intervallo);
+                }
+            }
+            for (EventoSociale eventoSociale : new ArrayList<>(eventi)) {
+                if (eventoSociale.getTipologia().equals(activityModel.getDescrizione()) && eventoSociale.getInizio().equals(activityModel.getInizio())) {
+                    removeEvento(eventoSociale);
+                }
+            }
+            programmaSessione.remove(activityModel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void retreiveProgrammaID(Sessione sessione) throws SQLException{
         ProgrammaDao programmaDao = new ProgrammaDao();
         setProgrammaID(programmaDao.retrieveIDProgramma(sessione));

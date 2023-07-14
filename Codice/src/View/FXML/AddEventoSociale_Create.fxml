@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="608.0" stylesheets="@../CSS/PopUpWindow.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="608.0" stylesheets="@../CSS/PopUpWindow.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.AddEventoSocialeController_Create">
    <children>
       <HBox fx:id="HBox" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="616.0">
          <children>
