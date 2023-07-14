@@ -97,6 +97,7 @@ public class ViewProgrammaController implements Initializable
     @FXML
     void removeButtonOnAction(ActionEvent event){
         removePuntoProgramma(programmaTableView.getSelectionModel().getSelectedItem());
+        setProgrammaTableView();
     }
     @FXML
     void riepilogoButtonOnAction(ActionEvent event){
@@ -112,8 +113,8 @@ public class ViewProgrammaController implements Initializable
     private void loadAddIntervallo(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo_Create.fxml"));
-            AddIntervalloController_Create controller = loader.getController();
             Parent root = loader.load();
+            AddIntervalloController_Create controller = loader.getController();
             controller.setProgramma(programma);
             Stage stage = new Stage();
             Scene scene = new Scene(root, 608, 400);
@@ -132,8 +133,8 @@ public class ViewProgrammaController implements Initializable
     private void loadAddIntervento(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento_Create.fxml"));
-            AddInterventoController_Create controller = loader.getController();
             Parent root = loader.load();
+            AddInterventoController_Create controller = loader.getController();
             controller.setProgramma(programma);
             Stage stage = new Stage();
             Scene scene = new Scene(root, 523, 627);
@@ -153,8 +154,8 @@ public class ViewProgrammaController implements Initializable
     private void loadAddEventoSociale(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEventoSociale_Create.fxml"));
-            AddEventoSocialeController_Create controller = loader.getController();
             Parent root = loader.load();
+            AddEventoSocialeController_Create controller = loader.getController();
             controller.setProgramma(programma);
             Stage stage = new Stage();
             Scene scene = new Scene(root, 608, 400);
@@ -172,7 +173,7 @@ public class ViewProgrammaController implements Initializable
         }
     }
     private void removePuntoProgramma(ActivityModel activityModel){
-
+        programma.removeActivity(activityModel);
     }
     private void loadRiepilogo(){
 
@@ -182,7 +183,7 @@ public class ViewProgrammaController implements Initializable
     private void setProgrammaTableView(){
         try{
             programma.loadProgramaSessione();
-            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("appuntamento"));
+            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
             fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
             speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
