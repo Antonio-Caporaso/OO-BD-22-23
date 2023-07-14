@@ -173,6 +173,35 @@ public class ConferenzaDao {
         return conferenze;
     }
 
+    public LinkedList<Conferenza> retrieveByDateIntervalAndSede(Date inizio,Date fine,Sede sede) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select * from show_conferences_by_sede_and_date(?,?,?)";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setDate(2,inizio);
+        stm.setDate(3,fine);
+        stm.setInt(1,sede.getSedeID());
+        SedeDao sededao = new SedeDao();
+        UtenteDAO utentedao = new UtenteDAO();
+        LinkedList<Conferenza> conferenze = new LinkedList<>();
+        ResultSet rs = stm.executeQuery();
+        ComitatoDao comitatodao = new ComitatoDao();
+        Conferenza c = new Conferenza();
+        while(rs.next()){
+            c.setId_conferenza(rs.getInt("id_conferenza"));
+            c.setTitolo(rs.getString("titolo"));
+            c.setInizio(rs.getTimestamp("inizio"));
+            c.setFine(rs.getTimestamp("fine"));
+            c.setDescrizione(rs.getString("descrizione"));
+            c.setProprietario(utentedao.retrieveUtentebyID(rs.getInt("id_utente")));
+            c.setComitato_s(comitatodao.retrieveComitatobyId(rs.getInt("comitato_s")));
+            c.setComitato_l(comitatodao.retrieveComitatobyId(rs.getInt("comitato_l")));
+            c.setSede(sededao.retrieveSedeByID(rs.getInt("id_sede")));
+            conferenze.add(c);
+        }
+        return conferenze;
+    }
+
     public Conferenza retrieveConferenzaByID(int idConferenza) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();

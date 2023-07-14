@@ -65,6 +65,11 @@ public class Conferenze {
         conferenze.clear();
         conferenze.addAll(conferenzaDao.retrieveByDateInterval(inizio,fine));
     }
+    public void loadByDateAndSede(Date inizio, Date fine, Sede sede) throws SQLException {
+        ConferenzaDao conferenzaDao = new ConferenzaDao();
+        conferenze.clear();
+        conferenze.addAll(conferenzaDao.retrieveByDateIntervalAndSede(inizio,fine,sede));
+    }
     public ObservableList<Conferenza> getConferenze() {
         return conferenze;
     }

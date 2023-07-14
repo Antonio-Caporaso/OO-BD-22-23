@@ -1,194 +1,112 @@
 package View.Controller;
 
-import java.net.URL;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.util.Optional;
-import java.util.ResourceBundle;
-
+import Persistence.DAO.ProgrammaDao;
+import Persistence.Entities.Conferenze.ActivityModel;
+import Persistence.Entities.Conferenze.Programma;
+import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.partecipanti.Speaker;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.*;
-import javafx.event.ActionEvent;
-
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Sessione;
-import Persistence.Entities.Utente;
-import Persistence.Entities.Conferenze.Sala;
-import Persistence.Entities.organizzazione.Organizzatore;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ResourceBundle;
+
 public class VisualizzaSessioneController implements Initializable {
+    private Sessione sessione;
+    private SubScene subScene;
+    private VisualizzaConferenzaController visualizzaConferenzaController;
+    private Programma programma;
     @FXML
-    private Button backButton;
+    private Label inizioLabel;
     @FXML
-    private Button inserisciButton;
+    private Label fineLabel;
     @FXML
-    private Button riepilogoButton;
+    private Button confermaButton;
     @FXML
-    private Button aggiungiProgrammaButton;
+    private Label coordinatoreLabel;
     @FXML
-    private Button rimuoviButton;
+    private Button editDetailsButton;
     @FXML
-    private TableView<Sessione> sessioniTableView;
+    private Button editProgrammaButton;
     @FXML
-    private TableColumn<Sessione,String> titoloTableColumn;
+    private Label keynoteSpeakerLabel;
     @FXML
-    private TableColumn<Sessione, Time > inizioTableColumn;
+    private Label nomeLabel;
     @FXML
-    private TableColumn<Sessione, Time> fineTableColumn;
+    private Label salaLabel;
     @FXML
-    private TableColumn<Sessione, Sala> salaTableColumn;
+    private Label titleLabel;
     @FXML
-    private TableColumn<Sessione, Organizzatore> chairTableColumn;
+    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
     @FXML
-    private SubScene subscene;
-    private Conferenza conferenza;
-    private Utente user;
-    //Public Setters
-    public void setConferenza(Conferenza c){
-        this.conferenza=c;
-    }
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-    public void setUser(Utente utente){
-        this.user=utente;
-    }
-    //Button Methods
+    private TableColumn<ActivityModel, String> descrizioneTableColumn;
     @FXML
-    void inserisciButtonOnAction(ActionEvent event) {
-        loadInserisciSessione();
-    }
+    private TableColumn<ActivityModel, String> appuntamentoTableColumn;
     @FXML
-    void riepilogoButtonOnAction(ActionEvent event) {
-        loadEditConferenza();
-    }
+    private TableColumn<ActivityModel, Timestamp> fineTableColumn;
     @FXML
-    void aggiungiProgrammaButtonOnAction(ActionEvent event){
-        try{
-            Sessione selected =sessioniTableView.getSelectionModel().getSelectedItem();
-            if (selected == null){
-                throw new NullPointerException();
-            }else{
-                loadViewProgramma();
-            }
-        }catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Seleziona una sessione prima di procedere");
-            alert.showAndWait();
-        }
-    }
+    private TableColumn<ActivityModel, Timestamp> inizioTableColumn;
     @FXML
-    void backButtonOnAction(ActionEvent event){
-        loadAggiungiSponsor();
-    }
-    @FXML
-    void rimuoviButtonOnAction(ActionEvent event) {
-        try{
-            Sessione selected =sessioniTableView.getSelectionModel().getSelectedItem();
-            if (selected == null){
-                throw new NullPointerException();
-            }
-            Optional<ButtonType> result = showDeleteDialog();
-            if(result.get() == ButtonType.OK) {
-                try {
-                    conferenza.removeSessione(selected);
-                    setSessioni();
-                }catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Nessuna sessione è stata selezionata");
-            alert.showAndWait();
-        }
-    }
-    private void loadInserisciSessione(){
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
-            InserisciSessioneController controller = new InserisciSessioneController();
-            loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUtente(user);
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private void loadAggiungiSponsor(){
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
-            AddSponsorController controller = new AddSponsorController();
-            loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUtente(user);
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private void loadViewProgramma(){
-        try{
-            Sessione s = sessioniTableView.getSelectionModel().getSelectedItem();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ViewProgrammaSessione.fxml"));
-            ViewProgrammaController controller = new ViewProgrammaController();
-            loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUser(user);
-            controller.setSessione(s);
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private void loadEditConferenza(){
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-            ModificaConferenzaController controller = new ModificaConferenzaController();
-            loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUser(user);
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private void setSessioni() {
-    try {
-        conferenza.loadSessioni();
-        titoloTableColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
-        inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
-        fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
-        salaTableColumn.setCellValueFactory(new PropertyValueFactory<>("locazione"));
-        chairTableColumn.setCellValueFactory(new PropertyValueFactory<>("coordinatore"));
-        sessioniTableView.setItems(conferenza.getSessioni());
-    }catch(SQLException e){
-        e.printStackTrace();
-    }
-}
-    private Optional<ButtonType> showDeleteDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler eliminare la seguente sessione?");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
-    }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setSessioni();
+    private TableView<ActivityModel> programmaTableView;
+
+    public VisualizzaSessioneController(Sessione sessione, SubScene subScene, VisualizzaConferenzaController visualizzaConferenzaController) {
+        this.sessione = sessione;
+        this.subScene = subScene;
+        this.visualizzaConferenzaController = visualizzaConferenzaController;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        retrieveProgrammaSessione();
+        setDettagliSessione();
+        setProgrammaTableView();
+    }
+    private void retrieveProgrammaSessione() {
+        ProgrammaDao programmaDao = new ProgrammaDao();
+        try {
+            programma = programmaDao.retrieveProgrammaBySessione(sessione);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void setDettagliSessione() {
+        titleLabel.setText(sessione.getTitolo());
+        nomeLabel.setText(sessione.getTitolo());
+        inizioLabel.setText(sessione.getInizio().toString());
+        fineLabel.setText(sessione.getFine().toString());
+        salaLabel.setText(sessione.getLocazione().getNomeSala());
+        coordinatoreLabel.setText(sessione.getCoordinatore().toString());
+        keynoteSpeakerLabel.setText(programma.getKeynote().toString());
+    }
+    private void setProgrammaTableView(){
+        try{
+            programma.loadProgramaSessione();
+            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
+            descrizioneTableColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
+            programmaTableView.setItems(programma.getProgrammaSessione());
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    void fineButtonOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
+        loader.setController(visualizzaConferenzaController);
+        subScene.setRoot(loader.load());
+    }
 }

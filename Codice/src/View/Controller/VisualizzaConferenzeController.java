@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -57,6 +58,8 @@ public class VisualizzaConferenzeController implements Initializable {
     private TableColumn<Conferenza, String> nomeConferenzaColumn;
     @FXML
     private Button visualizzaButton;
+    @FXML
+    private RadioButton filterBySedeRadioButton;
 
     public SubScene getSubScene() {
         return subScene;
@@ -67,25 +70,43 @@ public class VisualizzaConferenzeController implements Initializable {
     }
 
     @FXML
-    void cercaPerDataOnAction(ActionEvent event) throws SQLException {
+    void findButtonOnAction(ActionEvent event) {
         tableConferenza.setItems(null);
         sedeChoice.setValue(null);
         try{
-            Date dataInizio = Date.valueOf(dataInizioDP.getValue());
-            Date dataFine   = Date.valueOf(dataFineDP.getValue());
-            conferenze.loadByDateInterval(dataInizio,dataFine);
-            setTable(conferenze.getConferenze());
-        }catch (NullPointerException e){
+            if(sedeChoice.isDisabled()) {
+                try {
+                    Date dataInizio = Date.valueOf(dataInizioDP.getValue());
+                    Date dataFine = Date.valueOf(dataFineDP.getValue());
+                    conferenze.loadByDateInterval(dataInizio, dataFine);
+                    setTable(conferenze.getConferenze());
+                }catch (NullPointerException e){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Assicurati di aver inserito tutti i campi");
+                    alert.showAndWait();
+                }
+            }else{
+                try {
+                    Date dataInizio = Date.valueOf(dataInizioDP.getValue());
+                    Date dataFine = Date.valueOf(dataFineDP.getValue());
+                    Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
+                    conferenze.loadByDateAndSede(dataInizio, dataFine, sede);
+                    setTable(conferenze.getConferenze());
+                }catch (NullPointerException e){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Assicurati di aver inserito tutti i campi");
+                    alert.showAndWait();
+                }
+            }
+        }catch (SQLException e){
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Nessuna data selezionata");
-            alert.setContentText("Seleziona una data per procedere");
+            alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
-
     }
 
     @FXML
-    void visualizzaButtonOnAction(ActionEvent event) throws IOException {
+    void visualizzaConferenzaOnAction(MouseEvent event) throws IOException {
         Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
         if(c.equals(null)){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -98,32 +119,7 @@ public class VisualizzaConferenzeController implements Initializable {
             subScene.setRoot(loader.load());
         }
     }
-    @FXML
-    void cercaPerSedeOnAction(ActionEvent event) throws SQLException {
-        tableConferenza.setItems(null);
-        dataInizioDP.setValue(null);
-        dataFineDP.setValue(null);
-        try {
-            Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
-            conferenze = new Conferenze();
-            conferenze.loadBySede(sede);
-            if(conferenze.getConferenze().isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Non risultano conferenze per questa sede");
-                alert.showAndWait();
-            }
-            setTable(conferenze.getConferenze());
-        }catch (NullPointerException e){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Nessuna sede selezionata");
-            alert.setContentText("Seleziona una sede per procedere");
-            alert.showAndWait();
-        }catch (SQLException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        }
-    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -139,5 +135,12 @@ public class VisualizzaConferenzeController implements Initializable {
         descrizioneColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
         sedeColumn.setCellValueFactory(new PropertyValueFactory<>("sede"));
         tableConferenza.setItems(c);
+    }
+    @FXML
+    void activateSediChoiceBox(ActionEvent event) {
+        if(sedeChoice.isDisabled())
+            sedeChoice.setDisable(false);
+        else
+            sedeChoice.setDisable(true);
     }
 }

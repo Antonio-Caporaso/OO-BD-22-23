@@ -12,12 +12,11 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
@@ -62,7 +61,7 @@ public class VisualizzaConferenzaController implements Initializable {
     @FXML
     private TableColumn<Sessione, String> salaSessioneColumn;
     @FXML
-    private TableView<Sessione> table;
+    private TableView<Sessione> sessioniTable;
     @FXML
     private TableView<Sponsorizzazione> sponsorTable;
     @FXML
@@ -106,7 +105,7 @@ public class VisualizzaConferenzaController implements Initializable {
 
     @FXML
     void viewSessioniButtonOnAction(ActionEvent event) throws IOException {
-        Sessione s = table.getSelectionModel().getSelectedItem();
+        Sessione s = sessioniTable.getSelectionModel().getSelectedItem();
         if(s.equals(null)){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Selezionare una sessione");
@@ -136,7 +135,7 @@ public class VisualizzaConferenzaController implements Initializable {
         setDetails();
         setOrganizzatori();
         setSponsorizzazioni();
-        setTable();
+        setSessioniTable();
     }
     public void setDetails() {
         this.setTitleLabel();
@@ -174,16 +173,33 @@ public class VisualizzaConferenzaController implements Initializable {
             titleLabel.setText("Conferenza: "+ conferenza.getTitolo());
     }
 
-    private void setTable(){
-        table.setEditable(false);
+    private void setSessioniTable(){
+        sessioniTable.setEditable(false);
         try{
             conferenza.loadSessioni();
             nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
             inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
             fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
             salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
-            table.getItems().addAll(conferenza.getSessioni());
+            sessioniTable.getItems().addAll(conferenza.getSessioni());
         }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    void viewSessione(MouseEvent event) {
+        try {
+            Sessione s = sessioniTable.getSelectionModel().getSelectedItem();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessione.fxml"));
+            VisualizzaSessioneController controller = new VisualizzaSessioneController(s,subScene,this);
+            loader.setController(controller);
+            Parent root = loader.load();
+            subScene.setRoot(root);
+        }catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nessuna sessione selezionata");
+            alert.showAndWait();
+        }catch (IOException e){
             e.printStackTrace();
         }
     }

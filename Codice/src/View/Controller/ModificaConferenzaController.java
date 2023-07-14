@@ -109,8 +109,8 @@ public class ModificaConferenzaController implements Initializable {
     }
     @FXML
     public void editEntiOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditEnti.fxml"));
-        EditEntiController controller = new EditEntiController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaEntiOrganizzatori.fxml"));
+        ModificaEntiOrganizzatoriController controller = new ModificaEntiOrganizzatoriController();
         loader.setController(controller);
         controller.setConferenza(conferenza);
         controller.setSubScene(subscene);
@@ -120,8 +120,8 @@ public class ModificaConferenzaController implements Initializable {
     }
     @FXML
     public void editSponsorshipOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSponsor.fxml"));
-        EditSponsorController controller = new EditSponsorController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSponsorizzazioni.fxml"));
+        ModificaSponsorizzazioniController controller = new ModificaSponsorizzazioniController();
         loader.setController(controller);
         controller.setConferenza(conferenza);
         controller.setsubscene(subscene);

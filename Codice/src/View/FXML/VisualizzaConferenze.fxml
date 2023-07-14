@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,45 +22,19 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <HBox layoutX="14.0" layoutY="81.0" prefHeight="99.0" prefWidth="913.0">
+      <HBox layoutX="14.0" layoutY="90.0" prefHeight="47.0" prefWidth="913.0">
          <children>
-            <VBox prefHeight="99.0" prefWidth="852.0">
+            <VBox prefHeight="99.0" prefWidth="503.0">
                <children>
-                  <Label text="Cerca per sede">
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <ChoiceBox fx:id="sedeChoice" prefHeight="24.0" prefWidth="717.0">
+                  <Label text="Inserisci date">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
-                  </ChoiceBox>
-               </children>
-            </VBox>
-            <Button fx:id="cercaPerSedeButton" mnemonicParsing="false" onAction="#cercaPerSedeOnAction" prefHeight="24.0" prefWidth="275.0" text="Cerca">
-               <HBox.margin>
-                  <Insets right="20.0" top="50.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-      <HBox layoutX="14.0" layoutY="142.0" prefHeight="99.0" prefWidth="913.0">
-         <children>
-            <VBox prefHeight="37.0" prefWidth="688.0">
-               <children>
-                  <Label text="Cerca per data">
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
                      <font>
-                        <Font name="System Bold" size="15.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="27.0" prefWidth="497.0">
                      <children>
                         <DatePicker fx:id="dataInizioDP" promptText="Da">
                            <HBox.margin>
@@ -75,14 +50,32 @@
                   </HBox>
                </children>
             </VBox>
-            <Button fx:id="cercaPerDataButton" mnemonicParsing="false" onAction="#cercaPerDataOnAction" prefHeight="24.0" prefWidth="161.0" text="Cerca">
+            <VBox prefHeight="75.0" prefWidth="396.0">
+               <children>
+                  <RadioButton fx:id="filterBySedeRadioButton" mnemonicParsing="false" onAction="#activateSediChoiceBox" text="Filtra per sede">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <ChoiceBox fx:id="sedeChoice" disable="true" prefHeight="24.0" prefWidth="256.0">
+                     <VBox.margin>
+                        <Insets top="9.0" />
+                     </VBox.margin>
+                  </ChoiceBox>
+               </children>
                <HBox.margin>
-                  <Insets left="50.0" right="20.0" top="50.0" />
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </VBox>
+            <Button mnemonicParsing="false" onAction="#findButtonOnAction" prefHeight="24.0" prefWidth="275.0" text="Cerca">
+               <HBox.margin>
+                  <Insets right="20.0" top="37.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <TableView fx:id="tableConferenza" layoutX="14.0" layoutY="241.0" prefHeight="468.0" prefWidth="717.0">
+      <HBox layoutX="14.0" layoutY="166.0" prefHeight="75.0" prefWidth="438.0" />
+      <TableView fx:id="tableConferenza" layoutX="14.0" layoutY="176.0" onMouseClicked="#visualizzaConferenzaOnAction" prefHeight="533.0" prefWidth="896.0">
         <columns>
           <TableColumn fx:id="nomeConferenzaColumn" editable="false" prefWidth="75.0" text="Nome" />
           <TableColumn fx:id="inizioConferenzaColumn" editable="false" prefWidth="75.0" text="Inizio" />
@@ -94,6 +87,5 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="visualizzaButton" layoutX="750.0" layoutY="241.0" mnemonicParsing="false" onAction="#visualizzaButtonOnAction" prefHeight="51.0" prefWidth="158.0" text="Visualizza dettagli conferenza" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class EditSponsorController implements Initializable, FormChecker {
+public class ModificaSponsorizzazioniController implements Initializable, FormChecker {
     @FXML
     private TableView<Sponsorizzazione> sponsorTable;
     @FXML

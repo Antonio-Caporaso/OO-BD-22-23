@@ -77,7 +77,7 @@ public class ManageSessioniController implements Initializable {
     @FXML
     public void editSessionsOnAction(ActionEvent event) throws IOException {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/EditSessione.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessione.fxml"));
             ModificaSessioneController controller = new ModificaSessioneController();
             loader.setController(controller);
             Sessione s = table.getSelectionModel().getSelectedItem();

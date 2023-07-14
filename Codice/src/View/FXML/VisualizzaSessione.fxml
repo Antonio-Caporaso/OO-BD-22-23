@@ -1,47 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="932.0" style="-fx-background-color: #33749D;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="75.0" stroke="#00416a" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="47.0" prefWidth="417.0" style="-fx-background-color: #00416A;" text="Elenco Sessioni Presenti" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Label fx:id="titleLabel" layoutX="14.0" layoutY="27.0" text="Visualizzazione sessione" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="22.0" />
-         </font>
-      </Label>
-      <ButtonBar layoutX="703.0" layoutY="655.0" prefHeight="31.0" prefWidth="215.0">
-         <buttons>
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="31.0" prefWidth="92.0" stylesheets="@../CSS/DefaultButton.css" text="Back" textFill="WHITE">
+            <Font name="System Bold" size="30.0" />
+         </font></Label>
+      <VBox layoutX="714.0" layoutY="99.0" prefHeight="121.0" prefWidth="204.0" />
+      <Accordion layoutX="14.0" layoutY="99.0" prefHeight="570.0" prefWidth="912.0">
+        <panes>
+          <TitledPane animated="false" prefHeight="461.0" prefWidth="683.0" text="Dettagli">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="502.0" prefWidth="674.0">
+                     <children>
+                        <GridPane layoutX="14.0" layoutY="14.0" prefHeight="452.0" prefWidth="653.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="319.0" minWidth="10.0" prefWidth="165.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="551.0" minWidth="10.0" prefWidth="488.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Pane prefHeight="57.0" prefWidth="258.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="21.0" text="Nome:">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="24.0" text="Inizio:">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="24.0" text="Sala:">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Label fx:id="nomeLabel" layoutX="14.0" layoutY="24.0" text="Label" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label fx:id="inizioLabel" layoutX="14.0" layoutY="24.0" text="Label" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label fx:id="salaLabel" layoutX="14.0" layoutY="24.0" text="Label" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="24.0" text="Fine:">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <Label fx:id="fineLabel" layoutX="14.0" layoutY="24.0" text="Label" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="24.0" text="Coordinatore:">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <children>
+                                    <Label fx:id="coordinatoreLabel" layoutX="14.0" layoutY="24.0" text="Label" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="30.0" text="Keynote Speaker:">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <children>
+                                    <Label fx:id="keynoteSpeakerLabel" layoutX="14.0" layoutY="30.0" text="Label" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+            </content>
                <font>
-                  <Font size="15.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
-            </Button>
-            <Button fx:id="riepilogoButton" mnemonicParsing="false" onAction="#riepilogoButtonOnAction" prefHeight="31.0" prefWidth="92.0" stylesheets="@../CSS/DefaultButton.css" text="Riepilogo" textFill="WHITE">
+          </TitledPane>
+            <TitledPane animated="false" text="Programma">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="programmaTableView" prefHeight="549.0" prefWidth="910.0" stylesheets="@../CSS/TableView.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <columns>
+                              <TableColumn fx:id="appuntamentoTableColumn" maxWidth="256.0" prefWidth="135.0" resizable="false" text="Appuntamento" />
+                              <TableColumn fx:id="inizioTableColumn" maxWidth="209.0" minWidth="0.0" prefWidth="112.0" resizable="false" text="Inizio" />
+                              <TableColumn fx:id="fineTableColumn" maxWidth="210.0" minWidth="0.0" prefWidth="143.0" resizable="false" text="Fine" />
+                              <TableColumn fx:id="speakerTableColumn" maxWidth="409.0" prefWidth="124.0" resizable="false" text="Speaker" />
+                              <TableColumn fx:id="descrizioneTableColumn" maxWidth="500.0" prefWidth="167.0" text="Descrizione" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
                <font>
-                  <Font size="15.0" />
+                  <Font name="System Bold" size="13.0" />
                </font>
-            </Button>
-         </buttons>
-      </ButtonBar>
-      <TableView fx:id="sessioniTableView" layoutX="14.0" layoutY="124.0" prefHeight="500.0" prefWidth="725.0" stylesheets="@../CSS/TableView.css">
-        <columns>
-          <TableColumn fx:id="titoloTableColumn" editable="false" maxWidth="256.0" prefWidth="135.0" resizable="false" text="Titolo" />
-            <TableColumn fx:id="inizioTableColumn" editable="false" maxWidth="209.0" minWidth="0.0" prefWidth="160.0" resizable="false" text="Inizio" />
-            <TableColumn fx:id="fineTableColumn" editable="false" maxWidth="209.0" minWidth="0.0" prefWidth="160.0" resizable="false" text="Fine" />
-            <TableColumn fx:id="salaTableColumn" editable="false" maxWidth="409.0" prefWidth="110.0" resizable="false" sortable="false" text="Sala" />
-            <TableColumn fx:id="chairTableColumn" editable="false" maxWidth="500.0" prefWidth="146.0" resizable="false" sortable="false" text="Chair" />
-        </columns>
-      </TableView>
-      <Button fx:id="inserisciButton" layoutX="752.0" layoutY="269.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/DefaultButton.css" text="Inserisci Sessione" />
-      <Button fx:id="rimuoviButton" layoutX="752.0" layoutY="494.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/DefaultButton.css" text="Rimuovi Sessione" />
-      <Button fx:id="aggiungiProgrammaButton" layoutX="752.0" layoutY="309.0" mnemonicParsing="false" onAction="#aggiungiProgrammaButtonOnAction" prefHeight="31.0" prefWidth="173.0" stylesheets="@../CSS/DefaultButton.css" text="Aggiungi Programma" />
+            </TitledPane>
+        </panes>
+      </Accordion>
+      <Button layoutX="724.0" layoutY="682.0" mnemonicParsing="false" onAction="#fineButtonOnAction" prefHeight="24.0" prefWidth="194.0" text="Fine" />
    </children>
 </AnchorPane>

@@ -1,9 +1,7 @@
 package View.Controller;
 
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
@@ -98,8 +96,8 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     }
     private void loadViewSessioni(Conferenza c){
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessione.fxml"));
-            VisualizzaSessioneController controller = new VisualizzaSessioneController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessioniConferenza.fxml"));
+            VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza();
             controller.setSubscene(subscene);
             loader.setController(controller);
             controller.setConferenza(c);
