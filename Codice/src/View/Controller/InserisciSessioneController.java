@@ -131,6 +131,7 @@ public class InserisciSessioneController implements Initializable,FormChecker {
     @FXML
     void showSale(MouseEvent event)  {
         try {
+            sale=new Sale(conferenza.getSede());
             Timestamp inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
             Timestamp fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
             sale.loadSaleDisponibili(inizio, fine);
