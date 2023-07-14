@@ -6,7 +6,7 @@ import Persistence.Entities.partecipanti.Speaker;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-    public class Intervento {
+    public class Intervento extends ActivityModel {
         private int id_intervento;
         private String titolo;
         private String estratto;

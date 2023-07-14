@@ -26,11 +26,6 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="editPuntoOnAction" mnemonicParsing="false" onAction="#editPuntoOnAction" prefHeight="65.0" prefWidth="232.0" text="Modifica punto">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
          </children></VBox>
       <TableView fx:id="programmaTableView" layoutX="13.0" layoutY="99.0" prefHeight="603.0" prefWidth="688.0" stylesheets="@../CSS/TableView.css">
          <columns>

@@ -3,6 +3,7 @@ package Persistence.Entities.Conferenze;
 import Persistence.Entities.partecipanti.Speaker;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class ActivityModel {
     private int id_entry;
@@ -63,5 +64,23 @@ public class ActivityModel {
     }
     public void setSpeaker(Speaker speaker) {
         this.speaker = speaker;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ActivityModel that = (ActivityModel) o;
+
+        if (id_entry != that.id_entry) return false;
+        return Objects.equals(type, that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id_entry;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
     }
 }

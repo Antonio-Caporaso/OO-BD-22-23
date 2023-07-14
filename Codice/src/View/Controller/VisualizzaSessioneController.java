@@ -2,6 +2,7 @@ package View.Controller;
 
 import Persistence.DAO.ProgrammaDao;
 import Persistence.Entities.Conferenze.ActivityModel;
+import Persistence.Entities.Conferenze.Intervento;
 import Persistence.Entities.Conferenze.Programma;
 import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.partecipanti.Speaker;
@@ -9,12 +10,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -108,5 +111,26 @@ public class VisualizzaSessioneController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
         loader.setController(visualizzaConferenzaController);
         subScene.setRoot(loader.load());
+    }
+    @FXML
+    void showDetails(MouseEvent event) throws IOException {
+        ActivityModel activityModel = programmaTableView.getSelectionModel().getSelectedItem();
+        if(activityModel instanceof Intervento){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaIntervento.fxml"));
+            VisualizzaInterventoController controller = new VisualizzaInterventoController((Intervento) activityModel);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Dettagli intervento");
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Non ci sono ulteriori informazioni da visualizzare");
+            alert.showAndWait();
+        }
     }
 }

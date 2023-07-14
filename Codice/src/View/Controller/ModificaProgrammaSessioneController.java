@@ -71,7 +71,6 @@ public class ModificaProgrammaSessioneController implements Initializable {
     public void setManageSessioniController(ManageSessioniController manageSessioniController) {
         this.manageSessioniController = manageSessioniController;
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setProgrammaTableView();
@@ -100,12 +99,11 @@ public class ModificaProgrammaSessioneController implements Initializable {
 
     @FXML
     void deletePuntoOnAction(ActionEvent event) {
-
+        removePuntoProgramma(programmaTableView.getSelectionModel().getSelectedItem());
+        setProgrammaTableView();
     }
-
-    @FXML
-    void editPuntoOnAction(ActionEvent event) {
-
+    private void removePuntoProgramma(ActivityModel activityModel){
+        programma.removeActivity(activityModel);
     }
     private void setProgrammaTableView(){
         try{

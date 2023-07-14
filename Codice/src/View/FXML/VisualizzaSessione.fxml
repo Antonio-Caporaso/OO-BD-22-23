@@ -140,7 +140,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="programmaTableView" prefHeight="549.0" prefWidth="910.0" stylesheets="@../CSS/TableView.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="programmaTableView" onMouseClicked="#showDetails" prefHeight="549.0" prefWidth="910.0" stylesheets="@../CSS/TableView.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
                               <TableColumn fx:id="appuntamentoTableColumn" maxWidth="256.0" prefWidth="135.0" resizable="false" text="Appuntamento" />
                               <TableColumn fx:id="inizioTableColumn" maxWidth="209.0" minWidth="0.0" prefWidth="112.0" resizable="false" text="Inizio" />

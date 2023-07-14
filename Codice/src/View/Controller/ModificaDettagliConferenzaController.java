@@ -1,5 +1,6 @@
 package View.Controller;
 
+import Exceptions.SediNonDisponibiliException;
 import Persistence.DAO.ConferenzaDao;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sede;
@@ -11,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
@@ -20,10 +22,18 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class EditDettagliConferenzaController implements Initializable {
+public class ModificaDettagliConferenzaController implements Initializable {
     private Conferenza conferenza;
     private ModificaConferenzaController modificaConferenzaController;
     private SubScene subScene;
+    @FXML
+    private ChoiceBox<Sede> sedeChoiceBox;
+    @FXML
+    private TextArea descrizioneTextArea;
+    @FXML
+    private DateTimePicker fineDateTimePicker;
+    @FXML
+    private DateTimePicker inizioDateTimePicker;
     private Sedi sedi = new Sedi();
     @FXML
     private Button annullaButton;
@@ -56,6 +66,9 @@ public class EditDettagliConferenzaController implements Initializable {
             loader.setController(modificaConferenzaController);
             conferenza.setTitolo(nomeTF.getText());
             conferenza.setDescrizione(descrizioneTF.getText());
+            conferenza.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
+            conferenza.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
+            conferenza.setSede(sedeChoiceBox.getSelectionModel().getSelectedItem());
             ConferenzaDao dao = new ConferenzaDao();
             dao.updateDettagliConferenza(conferenza);
             modificaConferenzaController.setConferenza(conferenza);
@@ -82,4 +95,28 @@ public class EditDettagliConferenzaController implements Initializable {
         this.subScene = subScene;
     }
 
+    @FXML
+    void showSedi(MouseEvent event)  {
+        try {
+            Timestamp inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
+            Timestamp fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
+            sedi.loadSediLibere(inizio, fine);
+            if (sedi.getSedi().isEmpty())
+                throw new SediNonDisponibiliException();
+            else
+                sedeChoiceBox.setItems(sedi.getSedi());
+        }catch (SediNonDisponibiliException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Inserire delle date per visualizzare le sedi libere");
+            alert.showAndWait();
+        } catch(SQLException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
 }

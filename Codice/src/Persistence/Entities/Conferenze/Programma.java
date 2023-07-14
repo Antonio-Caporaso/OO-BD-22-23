@@ -168,49 +168,63 @@ public class Programma {
         loadIntervalli();
         loadEventiSociali();
         for (Intervento intervento: interventi){
-            int id = intervento.getId_intervento();
-            Timestamp inizio=intervento.getInizio();
-            Timestamp fine=intervento.getFine();
-            String descrizione= intervento.getEstratto();
-            Speaker speaker= intervento.getSpeaker();
-            ActivityModel activity=new ActivityModel(id,"Intervento",inizio,fine,descrizione,speaker,this);
+//            int id = intervento.getId_intervento();
+//            Timestamp inizio=intervento.getInizio();
+//            Timestamp fine=intervento.getFine();
+//            String descrizione= intervento.getEstratto();
+//            Speaker speaker= intervento.getSpeaker();
+//            ActivityModel activity=new ActivityModel(id,"Intervento",inizio,fine,descrizione,speaker,this);
+            ActivityModel activity = intervento;
+            activity.setType("Intervento");
             programmaSessione.add(activity);
         }
         for (Intervallo intervallo: intervalli){
-            int id = intervallo.getId_intervallo();
-            Timestamp inizio=intervallo.getInizio();
-            Timestamp fine=intervallo.getFine();
-            String descrizione=intervallo.getTipologia();
-            ActivityModel activity=new ActivityModel(id,"Intervallo",inizio,fine,descrizione,this);
+//            int id = intervallo.getId_intervallo();
+//            Timestamp inizio=intervallo.getInizio();
+//            Timestamp fine=intervallo.getFine();
+//            String descrizione=intervallo.getTipologia();
+//            ActivityModel activity=new ActivityModel(id,"Intervallo",inizio,fine,descrizione,this);
+            ActivityModel activity = intervallo;
+            activity.setType("Intervallo");
             programmaSessione.add(activity);
         }
         for (EventoSociale eventoSociale: eventi){
-            int id = eventoSociale.getId_evento();
-            Timestamp inizio=eventoSociale.getInizio();
-            Timestamp fine=eventoSociale.getFine();
-            String descrizione= eventoSociale.getTipologia();
-            ActivityModel activity=new ActivityModel(id,"Evento",inizio,fine,descrizione,this);
+//            int id = eventoSociale.getId_evento();
+//            Timestamp inizio=eventoSociale.getInizio();
+//            Timestamp fine=eventoSociale.getFine();
+//            String descrizione= eventoSociale.getTipologia();
+//            ActivityModel activity=new ActivityModel(id,"Evento",inizio,fine,descrizione,this);
+            ActivityModel activity = eventoSociale;
+            activity.setType("Evento");
             programmaSessione.add(activity);
         }programmaSessione.sort(Comparator.comparing(ActivityModel::getInizio));
     }
     public void removeActivity(ActivityModel activityModel) {
         try {
-            for (Intervento intervento : new ArrayList<>(interventi)) {
-                if (intervento.getTitolo().equals(activityModel.getDescrizione()) && intervento.getInizio().equals(activityModel.getInizio())) {
-                    removeIntervento(intervento);
-                }
+//            for (Intervento intervento : new ArrayList<>(interventi)) {
+//                if (intervento.getTitolo().equals(activityModel.getDescrizione()) && intervento.getInizio().equals(activityModel.getInizio())) {
+//                    removeIntervento(intervento);
+//                }
+//            }
+//            for (Intervallo intervallo : new ArrayList<>(intervalli)) {
+//                if (intervallo.getTipologia().equals(activityModel.getDescrizione()) && intervallo.getInizio().equals(activityModel.getInizio())) {
+//                    removeIntervallo(intervallo);
+//                }
+//            }
+//            for (EventoSociale eventoSociale : new ArrayList<>(eventi)) {
+//                if (eventoSociale.getTipologia().equals(activityModel.getDescrizione()) && eventoSociale.getInizio().equals(activityModel.getInizio())) {
+//                    removeEvento(eventoSociale);
+//                }
+//            }
+            if(programmaSessione.contains(activityModel)) {
+                programmaSessione.remove(activityModel);
+                if(activityModel instanceof Intervento)
+                    removeIntervento((Intervento) activityModel);
+                if(activityModel instanceof  EventoSociale)
+                    removeEvento((EventoSociale) activityModel);
+                else if(activityModel instanceof Intervallo)
+                    removeIntervallo((Intervallo) activityModel);
             }
-            for (Intervallo intervallo : new ArrayList<>(intervalli)) {
-                if (intervallo.getTipologia().equals(activityModel.getDescrizione()) && intervallo.getInizio().equals(activityModel.getInizio())) {
-                    removeIntervallo(intervallo);
-                }
-            }
-            for (EventoSociale eventoSociale : new ArrayList<>(eventi)) {
-                if (eventoSociale.getTipologia().equals(activityModel.getDescrizione()) && eventoSociale.getInizio().equals(activityModel.getInizio())) {
-                    removeEvento(eventoSociale);
-                }
-            }
-            programmaSessione.remove(activityModel);
         } catch (SQLException e) {
             e.printStackTrace();
         }

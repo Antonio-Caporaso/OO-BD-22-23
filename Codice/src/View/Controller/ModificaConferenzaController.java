@@ -99,7 +99,7 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     public void editDetailsOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaDettagliConferenza.fxml"));
-        EditDettagliConferenzaController controller = new EditDettagliConferenzaController();
+        ModificaDettagliConferenzaController controller = new ModificaDettagliConferenzaController();
         loader.setController(controller);
         controller.setEditConferenceController(this);
         controller.setConferenza(conferenza);
