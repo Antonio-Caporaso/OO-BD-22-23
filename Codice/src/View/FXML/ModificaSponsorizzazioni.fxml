@@ -35,7 +35,7 @@
       <Button fx:id="confermaButton" layoutX="722.0" layoutY="672.0" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="196.0" text="Fine" />
       <TableView fx:id="sponsorTable" layoutX="14.0" layoutY="192.0" prefHeight="504.0" prefWidth="691.0">
         <columns>
-          <TableColumn fx:id="sponsorNameColumn" prefWidth="75.0" text="Sponsor" />
+          <TableColumn fx:id="sponsorColumn" prefWidth="75.0" text="Sponsor" />
           <TableColumn fx:id="contributoColumn" prefWidth="128.0" text="Contributo" />
             <TableColumn fx:id="valutaColumn" minWidth="0.0" prefWidth="173.0" text="Valuta" />
         </columns>
