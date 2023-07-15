@@ -30,5 +30,6 @@
 \contentsline {lstlisting}{\numberline {4.30}{\ignorespaces \texttt {Check\_sala\_sessione\_unica}}}{35}{lstlisting.4.30}%
 \contentsline {lstlisting}{\numberline {4.31}{\ignorespaces \texttt {Check\_organizzatori\_comitato}}}{36}{lstlisting.4.31}%
 \contentsline {lstlisting}{\numberline {4.32}{\ignorespaces \texttt {Delete\_sessioni\_conferenza}}}{36}{lstlisting.4.32}%
-\contentsline {lstlisting}{\numberline {4.33}{\ignorespaces {\texttt {Check\_Capienza}} style}}{37}{lstlisting.4.33}%
-\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Conferenza PGConf NPL}}{56}{lstlisting.5.1}%
+\contentsline {lstlisting}{\numberline {4.33}{\ignorespaces \texttt {Check\_Capienza}}}{37}{lstlisting.4.33}%
+\contentsline {lstlisting}{\numberline {4.34}{\ignorespaces \texttt {Set\_Sale\_Null}}}{37}{lstlisting.4.34}%
+\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Conferenza PGConf NPL}}{57}{lstlisting.5.1}%

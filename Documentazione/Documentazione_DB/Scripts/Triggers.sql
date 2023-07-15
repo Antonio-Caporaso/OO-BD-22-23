@@ -127,25 +127,25 @@ execute function create_programma_sessione();
  -- La sala deve appartenere alla sede della conferenza
 create or replace function check_sala_sessione() returns trigger as $$
 declare
-    sede integer;
-    sala integer;
+    sede_id integer;
+    sala_id integer;
 begin
-    select id_sede into sede
+    select id_sede into sede_id
     from conferenza
     where id_conferenza = new.id_conferenza;
     
-    select id_sala into sala
-    from sala
-    where id_sala = new.id_sala;
+    select id_sala into sala_id
+    from sessione
+    where id_sessione = new.id_sessione;
     
-    IF sala IS NULL THEN
+    IF sala_id IS NULL THEN
         Return new;
     END IF;
     
-    IF sala NOT IN (
+    IF sala_id NOT IN (
         SELECT id_sala
         FROM sala
-        WHERE id_sede = sede
+        WHERE id_sede = sede_id
     ) THEN
         RAISE exception 'La sala selezionata non appartiene alla sede della conferenza';
     END IF;
@@ -155,10 +155,8 @@ end;
 $$ language plpgsql;
 
 
-create trigger check_sala_sessione
-before insert or update on sessione
-for each row
-execute function check_sala_sessione();
+
+
 
 /*  La data e l'orario della sessione devono essere compresi 
  *  tra la data e l'orario di inizio e fine della conferenza */
@@ -298,6 +296,7 @@ create trigger verifica_disponibilita_sede
 before insert or update on conferenza
 for each row
 execute function check_sede_libera();
+
 /* --------------------------------------------------------------------------------------------*
  |                          Vincoli per la tabella SALA                                        |
  *---------------------------------------------------------------------------------------------*/
@@ -306,14 +305,6 @@ execute function check_sede_libera();
 create or replace function check_sala_sessione_unica() returns trigger as $$
 begin
     if (new.id_sala is null) then
-        return new;
-    end if;
-
-    if (new.inizio is null) then
-        return new;
-    end if;
-
-    if (new.fine is null) then
         return new;
     end if;
 
@@ -404,11 +395,16 @@ execute function delete_sessioni_conferenza();
 create or replace function check_capienza_sala() returns trigger as $$
 declare
     capienza_s integer;
-    partecipanti integer;
+    numero_partecipanti integer;
+    sala_id integer;
 begin
+    select id_sala into sala_id
+    from sessione
+    where id_sessione = new.id_sessione;
+
     select capienza into capienza_s
     from sala
-    where id_sala = new.id_sala;
+    where id_sala = sala_id;
     
     select count(*) into partecipanti
     from partecipazione
@@ -453,3 +449,44 @@ CREATE TRIGGER reset_sale_sessioni_trigger
 BEFORE UPDATE ON conferenza
 FOR EACH ROW
 EXECUTE FUNCTION reset_sale_sessioni();
+
+-- Ogni volta che si aggiunge uno speaker questo è anche partecipante della sessione
+CREATE OR REPLACE FUNCTION aggiungi_speaker_partecipante()
+RETURNS TRIGGER AS $$
+DECLARE
+    id_speaker_inserted INT;
+    id_programma_inserted INT;
+    id_sessione_inserted INT;
+    id_partecipante_inserted INT;
+BEGIN
+    -- Ottieni l'ID dello speaker e del programma del nuovo intervallo
+    SELECT id_speaker, id_programma
+    INTO id_speaker_inserted, id_programma_inserted
+    FROM Intervento
+    WHERE id_intervento = NEW.id_intervento;
+
+    -- Ottieni l'ID della sessione dal programma
+    SELECT id_sessione
+    INTO id_sessione_inserted
+    FROM Programma
+    WHERE id_programma = id_programma_inserted;
+
+    -- Copia i dati dello speaker nella tabella Partecipante
+    INSERT INTO Partecipante (nome, cognome, titolo, email, id_ente)
+    SELECT s.nome, s.cognome, s.titolo, s.email, s.id_ente
+    FROM Speaker s
+    WHERE s.id_speaker = id_speaker_inserted
+    RETURNING id_partecipante INTO id_partecipante_inserted;
+
+    -- Inserisci lo speaker come partecipante della sessione
+    INSERT INTO partecipazione (id_sessione, id_partecipante)
+    VALUES (id_sessione_inserted, id_partecipante_inserted);
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_aggiungi_speaker_partecipante
+AFTER INSERT ON Intervento
+FOR EACH ROW
+EXECUTE FUNCTION aggiungi_speaker_partecipante();

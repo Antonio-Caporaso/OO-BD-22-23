@@ -58,11 +58,11 @@ call add_intervento('Ottimizzazione delle query in PostgreSQL',
 programma1_id,
 '30 minutes');
 call add_intervento(
-    'Gestione delle transazioni in PostgreSQL',
-    'Questo intervento fornirà consigli e best practice per la gestione delle transazioni in PostgreSQL, comprese le strategie di commit e rollback, il controllo della concorrenza e l''utilizzo di blocchi di transazioni.',
-    2,
-    programma1_id,
-    '30 minutes');
+    'Gestione delle transazioni in PostgreSQL', --Titolo intervento
+    'Questo intervento fornirà consigli e best practice per la gestione delle transazioni in PostgreSQL, comprese le strategie di commit e rollback, il controllo della concorrenza e l''utilizzo di blocchi di transazioni.', --Descrizione intervento
+    2, --Id speaker
+    programma1_id, --Id programma
+    '30 minutes'); --Durata intervento
 call add_intervallo('coffee break', programma1_id, '20 minutes');
 call add_intervento('Monitoraggio e tuning delle prestazioni in PostgreSQL',
 'Questo intervento si concentrerà sul monitoraggio e tuning delle prestazioni in PostgreSQL, presentando strumenti e tecniche per l''identificazione e risoluzione dei problemi di performance.',
