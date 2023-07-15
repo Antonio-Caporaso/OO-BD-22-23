@@ -41,7 +41,6 @@ public class Programma {
         for (Intervallo intervallo : intervalli) {
             ActivityModel activity = intervallo;
             activity.setType("Intervallo");
-            activity.setDescrizione(intervallo.getTipologia());
             programmaSessione.add(activity);
         }
     }
@@ -50,8 +49,7 @@ public class Programma {
         loadInterventi();
         for (Intervento intervento : interventi) {
             ActivityModel activity = intervento;
-            activity.setType("Intervento");
-            activity.setDescrizione(intervento.getEstratto());
+            activity.setType(intervento.getTitolo());
             programmaSessione.add(activity);
         }
     }

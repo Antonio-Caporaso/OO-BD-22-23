@@ -1,9 +1,6 @@
 package View.Controller;
 
-import Persistence.Entities.Conferenze.ActivityModel;
-import Persistence.Entities.Conferenze.Conferenza;
-import Persistence.Entities.Conferenze.Programma;
-import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.Conferenze.*;
 import Persistence.Entities.Utente;
 import Persistence.Entities.partecipanti.Speaker;
 import javafx.event.ActionEvent;
@@ -18,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -172,6 +170,72 @@ public class ViewProgrammaController implements Initializable {
 
     private void loadVisualizzaSessione() {
     }
+    private void loadInfoIntervento(Intervento intervento){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervento_Create.fxml"));
+            Parent root = loader.load();
+            ShowInfoInterventoController_Create controller = loader.getController();
+            controller.initializeData(intervento);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, 523, 627);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadInfoIntervallo(Intervallo intervallo){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervallo_Create.fxml"));
+            Parent root = loader.load();
+            ShowInfoIntervalloController_Create controller = loader.getController();
+            controller.initializeData(intervallo);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, 616, 400);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadInfoEventoSociale(EventoSociale eventoSociale){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoEventoSociale_Create.fxml"));
+            Parent root = loader.load();
+            ShowInfoEventoSocialeController_Create controller = loader.getController();
+            controller.initializeData(eventoSociale);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, 616, 400);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void removePuntoProgramma(ActivityModel activityModel) {
         programma.removeActivity(activityModel);
@@ -187,8 +251,6 @@ public class ViewProgrammaController implements Initializable {
             appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
             fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
-            speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
-            descrizioneTableColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
             programmaTableView.setItems(programma.getProgrammaSessione());
 
         } catch (SQLException e) {
@@ -219,6 +281,18 @@ public class ViewProgrammaController implements Initializable {
     void removeButtonOnAction(ActionEvent event) {
         removePuntoProgramma(programmaTableView.getSelectionModel().getSelectedItem());
         setProgrammaTableView();
+    }
+    @FXML
+    void showInfoScreen(MouseEvent event) {
+        ActivityModel selected=programmaTableView.getSelectionModel().getSelectedItem();
+        if (programma.getProgrammaSessione().contains(selected)) {
+            if (selected instanceof Intervento)
+                loadInfoIntervento((Intervento) selected);
+            if (selected instanceof EventoSociale)
+                loadInfoEventoSociale((EventoSociale) selected);
+            else if (selected instanceof Intervallo)
+                loadInfoIntervallo((Intervallo) selected);
+        }
     }
 
     @FXML
