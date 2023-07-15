@@ -1,4 +1,4 @@
-\section{Dizionario dei vincoli}
+\section{Dizionario dei vincoli}\label{sez:costraints}
 \begin{longtable}{|p{0.32\textwidth}|p{0.2\textwidth}|p{0.3\textwidth}|p{0.1\textwidth}|}
 	\hline
 	\textbf{Vincolo} & \textbf{Tipo} & \textbf{Descrizione} & \textbf{Vedi} \\
@@ -30,7 +30,8 @@
 	\textsc{Check\_Sede\_Disponibile} & Interrelazionale & Quando si inserisce una nuova conferenza bisogna controllare che la sede sia disponibile. Una sede è considerata disponibile se ha almeno una sala non occupata nel periodo di tempo indicato per la conferenza. & \ref{trigger:check_sede_disponibile} \\ \hline
 	\textsc{Check\_Sala\_Disponibile} & Interrelazionale & Quando si inserisce una nuova sessione bisogna controllare che la sala indicata sia effettivamente disponibile e non occupata nei giorni indicati. & \ref{trigger:saladisponibile}\\ \hline
 	\textsc{Check\_Organizzatori} & Interrelazionale & Gli organizzatori appartenenti ai comitati di una conferenza devono appartenere agli enti che organizzano quella conferenza. & \ref{trigger:check_organizzatore_comitato} \\ \hline
-	\textsc{Check\_Capienza} & Interrelazionale & Ogni volta che si aggiunge un nuovo partecipante di una sessione bisogna controllare che non sia stata raggiunta la capienza della sala in cui si svolge la sessione. & \ref{trigger:check_capienza} \\
+	\textsc{Check\_Capienza} & Interrelazionale & Ogni volta che si aggiunge un nuovo partecipante di una sessione bisogna controllare che non sia stata raggiunta la capienza della sala in cui si svolge la sessione. & \ref{trigger:check_capienza} \\ \hline
+	\textsc{Set\_Sale\_Null} & Interrelazionale & Ogni volta che viene modificata la sede di una conferenza bisogna mettere a \textsc{NULL} le sale di ogni sessione presente nella conferenza per rispettare il vincolo \textsc{Check\_Sala\_Sede} & \ref{trigger:setsalenull} \\
 	 
 	
 \end{longtable}

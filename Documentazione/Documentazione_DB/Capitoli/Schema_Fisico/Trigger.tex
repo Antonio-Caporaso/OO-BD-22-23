@@ -414,12 +414,12 @@ begin
     from sala
     where id_sala = sala_id;
     
-    select count(*) into partecipanti
+    select count(*) into numero_partecipanti
     from partecipazione
     where id_sessione = new.id_sessione;
     
-    if (partecipanti >= capienza_s) then
-        raise exception 'La capienza della sala è stata raggiunta';
+    if (numero_partecipanti = capienza_s) then
+        raise exception 'La capienza della sala e'' stata raggiunta';
     end if;
     return new;
 end;
@@ -430,7 +430,7 @@ before insert on partecipazione
 for each row
 execute function check_capienza_sala();
 \end{lstlisting}
-\subsection{\texttt{Set\_Sale\_Null}}
+\subsection{\texttt{Set\_Sale\_Null}}\label{trigger:setsalenull}
 Quando si modifica la sede di una conferenza bisogna mettere a \textsc{NULL} gli id delle sale per ogni sessione presente nella conferenza:
 \begin{lstlisting}[language=SQL,style=mystyle,caption={\texttt{Set\_Sale\_Null}}]
 CREATE OR REPLACE FUNCTION reset_sale_sessioni()
