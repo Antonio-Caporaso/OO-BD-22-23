@@ -406,11 +406,11 @@ begin
     from sala
     where id_sala = sala_id;
     
-    select count(*) into partecipanti
+    select count(*) into numero_partecipanti
     from partecipazione
     where id_sessione = new.id_sessione;
     
-    if (partecipanti >= capienza_s) then
+    if (numero_partecipanti >= capienza_s) then
         raise exception 'La capienza della sala è stata raggiunta';
     end if;
     return new;
