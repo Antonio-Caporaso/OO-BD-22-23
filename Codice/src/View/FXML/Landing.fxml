@@ -21,7 +21,7 @@
       </SubScene>
       <VBox prefHeight="720.0" prefWidth="348.0" style="-fx-background-color: #00416a;">
          <children>
-            <Pane prefHeight="200.0" prefWidth="348.0">
+            <Pane prefHeight="217.0" prefWidth="348.0">
                <children>
                   <Label fx:id="welcomeLabel" layoutX="22.0" layoutY="108.0" prefHeight="39.0" prefWidth="305.0" text="Welcome" textFill="#55a1d0">
                      <font>
@@ -29,6 +29,11 @@
                      </font>
                   </Label>
                   <Button fx:id="backToLandingButton" layoutX="22.0" layoutY="24.0" mnemonicParsing="false" onAction="#backToLandingButtonOnAction" prefHeight="73.0" prefWidth="305.0" stylesheets="@../CSS/BacktToLandingButton.css" />
+                  <ImageView fitHeight="58.0" fitWidth="61.0" layoutX="145.0" layoutY="157.0" preserveRatio="true">
+                     <image>
+                        <Image url="@../Resources/IconAtom.png" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
             <Button fx:id="creaConferenzaButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#creaConferenzaOnAction" prefHeight="58.0" prefWidth="348.0" stylesheets="@../CSS/Landing.css" text="Crea Conferenza" textAlignment="CENTER" textFill="WHITE">
@@ -66,9 +71,9 @@
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <Button fx:id="LogoutButton" layoutX="115.0" layoutY="39.0" mnemonicParsing="false" onAction="#logoutButtonOnAction" prefHeight="39.0" prefWidth="118.0" stylesheets="@../CSS/Landing.css" text="Logout" />
-                  <ImageView fitHeight="97.0" fitWidth="97.0" layoutX="126.0" layoutY="100.0">
+                  <ImageView fitHeight="97.0" fitWidth="97.0" layoutX="132.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
-                        <Image url="@../Resources/IconAtom.png" />
+                        <Image url="@../Resources/Scudetto.png" />
                      </image>
                   </ImageView>
                </children>
