@@ -215,22 +215,23 @@ execute function check_coordinatore_sessione();
 /* 1. Quando si crea una nuova conferenza si deve creare anche 
 un comitato scientifico e un comitato locale e associarli alla conferenza*/
 
-create or replace function create_comitati_conferenza() returns trigger as $$
-declare 
-    id_comitatoscientifico integer;
-    id_comitatolocale integer;
-begin
-    insert into comitato(tipologia) values ('scientifico') returning id_comitato into id_comitatoscientifico;
-    insert into comitato(tipologia) values ('locale') returning id_comitato into id_comitatolocale;
-    update conferenza set comitato_s = id_comitatoscientifico, comitato_l = id_comitatolocale where id_conferenza = new.id_conferenza;
-    return new;
-end;
-$$ language plpgsql;
+CREATE OR REPLACE FUNCTION create_comitati_conferenza()
+  RETURNS TRIGGER AS $$
+DECLARE
+  id_comitatoscientifico INTEGER;
+  id_comitatolocale INTEGER;
+BEGIN
+  INSERT INTO comitato(tipologia) VALUES ('scientifico') RETURNING id_comitato INTO id_comitatoscientifico;
+  INSERT INTO comitato(tipologia) VALUES ('locale') RETURNING id_comitato INTO id_comitatolocale;
+  update conferenza set comitato_s = id_comitatoscientifico, comitato_l = id_comitatolocale where id_conferenza = new.id_conferenza;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
-create trigger create_comitati_conferenza
-after insert on conferenza
-for each row
-execute function create_comitati_conferenza();
+CREATE TRIGGER create_comitati_conferenza
+AFTER INSERT ON conferenza
+FOR EACH ROW
+EXECUTE FUNCTION create_comitati_conferenza();
 
 /* 2. In fase di aggiornamento l'id del comitato scientifico deve riferirsi
    ad un comitato scientifico e l'id del comitato locale deve riferirsi ad un comitato locale*/
@@ -273,33 +274,21 @@ before update on conferenza
 for each row
 execute function check_comitati_conferenza();
  
--- 3. La sede di una conferenza deve essere libera nel periodo indicato. Una sede è libera
--- se ha almeno una sala libera nel periodo indicato
+-- 3. La sede di una conferenza deve essere libera nel periodo indicato.
 create or replace function check_sede_libera() returns trigger as $$
+declare 
+    sale_occupate integer;
 begin
-    if (new.id_sede is null) then
-        return new;
-    end if;
-
-    if (new.inizio is null) then
-        return new;
-    end if;
-
-    if (new.fine is null) then
-        return new;
-    end if;
-
-    if ( select count(*) 
-         from sala 
-         where id_sede = new.id_sede 
-            and id_sala not in 
-                (select id_sala 
-                from sessione 
-                where id_conferenza = new.id_conferenza 
-                and (inizio < new.fine and fine > new.inizio)
-                )
-        ) = 0 then
-        raise exception 'La sede non ha sale libere';
+    select count(*) into sale_occupate
+    from sala s1
+    where s1.id_sede = new.id_sede
+    and s1.id_sala in (
+        select id_sala
+        from sessione s2
+        where (s2.inizio, s2.fine) overlaps (new.inizio, new.fine)
+    );
+    if (sale_occupate > 0) then
+        raise exception 'La sede non è disponibile';
     end if;
     return new;
 end;
@@ -437,31 +426,30 @@ before insert on partecipazione
 for each row
 execute function check_capienza_sala();
 
---Ogni volta che viene modificata la sede di una conferenza bisogna mettere a NULL la sala di ogni sessione della conferenza
-create or replace function delete_sala_sessione() returns trigger as $$
-declare
-    sessioni_cur cursor for 
-    select id_sessione 
-    from sessione 
+-- Ogni volta che modifico la sede di una conferenza devo mettere a null le sale delle sessioni della conferenza
+CREATE OR REPLACE FUNCTION reset_sale_sessioni()
+  RETURNS TRIGGER AS $$
+  declare
+   sessione_id integer;
+   sessioni_cur cursor for
+    select id_sessione
+    from sessione
     where id_conferenza = new.id_conferenza;
-    sessione_id integer;
-begin
-    if (new.id_sede<>old.id_sede) then
+BEGIN
+  IF OLD.id_sede <> NEW.id_sede THEN
     open sessioni_cur;
     loop
         fetch sessioni_cur into sessione_id;
         exit when not found;
-        update sessione set id_sala = null where id_sessione = sessione_id;
+        update sessione set id_sala = NULL where id_sessione = sessione_id;
     end loop;
     close sessioni_cur;
-    return new;
-    else 
-        return old;
-    end if;
-end;
-$$ language plpgsql;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
-create trigger delete_sala_sessione
-before update on conferenza
-for each row
-execute function delete_sala_sessione();
+CREATE TRIGGER reset_sale_sessioni_trigger
+BEFORE UPDATE ON conferenza
+FOR EACH ROW
+EXECUTE FUNCTION reset_sale_sessioni();

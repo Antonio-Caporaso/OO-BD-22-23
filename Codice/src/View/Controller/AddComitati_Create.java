@@ -22,26 +22,20 @@ import java.util.ResourceBundle;
 public class AddComitati_Create implements Initializable {
     @FXML
     private Button backButton;
-
     @FXML
     private ChoiceBox<Organizzatore> comitatoLocaleChoiceBox;
-
     @FXML
     private ChoiceBox<Organizzatore> comitatoScientificoChoiceBox;
-
     @FXML
     private ListView<Organizzatore> comitatoScientificoListView;
     @FXML
     private ListView<Organizzatore> comitatoLocaleListView;
-
     @FXML
     private Button inserisciComitatoScientificoButton;
     @FXML
     private Button inserisciComitatoLocaleButton;
-
     @FXML
     private Button nextButton;
-
     @FXML
     private Button rimuovicomitatoLocaleButton;
     @FXML

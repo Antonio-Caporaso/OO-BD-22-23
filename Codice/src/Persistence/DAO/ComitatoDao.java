@@ -15,7 +15,7 @@ public class ComitatoDao {
     public Comitato retrieveComitatobyId(int id) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT * from comitato where id_comitato=(?)";
+        String query = "SELECT * from comitato where id_comitato=?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,id);
         ResultSet rs = stm.executeQuery();
@@ -60,5 +60,4 @@ public class ComitatoDao {
         }
         return c;
     }
-
 }
