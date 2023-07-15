@@ -176,6 +176,7 @@ public class Programma {
 //            ActivityModel activity=new ActivityModel(id,"Intervento",inizio,fine,descrizione,speaker,this);
             ActivityModel activity = intervento;
             activity.setType("Intervento");
+            activity.setDescrizione(intervento.getEstratto());
             programmaSessione.add(activity);
         }
         for (Intervallo intervallo: intervalli){
@@ -186,6 +187,7 @@ public class Programma {
 //            ActivityModel activity=new ActivityModel(id,"Intervallo",inizio,fine,descrizione,this);
             ActivityModel activity = intervallo;
             activity.setType("Intervallo");
+            activity.setDescrizione(intervallo.getTipologia());
             programmaSessione.add(activity);
         }
         for (EventoSociale eventoSociale: eventi){
@@ -196,6 +198,7 @@ public class Programma {
 //            ActivityModel activity=new ActivityModel(id,"Evento",inizio,fine,descrizione,this);
             ActivityModel activity = eventoSociale;
             activity.setType("Evento");
+            activity.setDescrizione(eventoSociale.getTipologia());
             programmaSessione.add(activity);
         }programmaSessione.sort(Comparator.comparing(ActivityModel::getInizio));
     }
