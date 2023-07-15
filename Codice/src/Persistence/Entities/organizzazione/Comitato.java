@@ -1,30 +1,12 @@
 package Persistence.Entities.organizzazione;
 
-import Exceptions.ExistingMemberException;
-import Persistence.DAO.ComitatoDao;
-
-import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.Objects;
 
 public class Comitato {
     private int id_comitato;
     private String tipologia;
-    public Comitato() {}
-    public void setTipologia(String tipologia) {
-        this.tipologia=tipologia;
-    }
 
-    public String getTipologia() {
-        return tipologia;
-    }
-
-    public int getId_comitato() {
-        return id_comitato;
-    }
-
-    public void setId_comitato(int id_comitato) {
-        this.id_comitato = id_comitato;
+    public Comitato() {
     }
 
     @Override
@@ -36,6 +18,22 @@ public class Comitato {
 
         if (id_comitato != comitato.id_comitato) return false;
         return Objects.equals(tipologia, comitato.tipologia);
+    }
+
+    public int getId_comitato() {
+        return id_comitato;
+    }
+
+    public void setId_comitato(int id_comitato) {
+        this.id_comitato = id_comitato;
+    }
+
+    public String getTipologia() {
+        return tipologia;
+    }
+
+    public void setTipologia(String tipologia) {
+        this.tipologia = tipologia;
     }
 
     @Override

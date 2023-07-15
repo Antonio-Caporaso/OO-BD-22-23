@@ -1,13 +1,14 @@
 package Persistence.Entities.organizzazione;
+
 import java.util.Objects;
 
 public class Organizzatore {
-    private int id_organizzatore;
-    private String titolo;
     private String cognome;
-    private String nome;
-    private Ente istituzione;
     private String email;
+    private int id_organizzatore;
+    private Ente istituzione;
+    private String nome;
+    private String titolo;
 
     public Organizzatore() {
     }
@@ -18,59 +19,6 @@ public class Organizzatore {
         this.nome = nome;
         this.istituzione = istituzione;
         this.email = email;
-    }
-
-    public int getId_organizzatore() {
-        return id_organizzatore;
-    }
-
-    public void setId_organizzatore(int id_organizzatore) {
-        this.id_organizzatore = id_organizzatore;
-    }
-
-    public String getTitolo() {
-        return titolo;
-    }
-
-    public void setTitolo(String titolo) {
-        this.titolo = titolo;
-    }
-
-    public String getCognome() {
-        return cognome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Ente getIstituzione() {
-        return istituzione;
-    }
-
-    public void setIstituzione(Ente istituzione) {
-        this.istituzione = istituzione;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return cognome + " " + nome + " (" + istituzione + ")";
     }
 
     @Override
@@ -88,6 +36,54 @@ public class Organizzatore {
         return Objects.equals(email, that.email);
     }
 
+    public String getCognome() {
+        return cognome;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getId_organizzatore() {
+        return id_organizzatore;
+    }
+
+    public void setId_organizzatore(int id_organizzatore) {
+        this.id_organizzatore = id_organizzatore;
+    }
+
+    public Ente getIstituzione() {
+        return istituzione;
+    }
+
+    public void setIstituzione(Ente istituzione) {
+        this.istituzione = istituzione;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
+    }
+
     @Override
     public int hashCode() {
         int result = id_organizzatore;
@@ -97,6 +93,11 @@ public class Organizzatore {
         result = 31 * result + (istituzione != null ? istituzione.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return cognome + " " + nome + " (" + istituzione + ")";
     }
 }
 

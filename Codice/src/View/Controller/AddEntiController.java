@@ -26,93 +26,54 @@ import java.util.ResourceBundle;
 
 public class AddEntiController implements Initializable {
     private AddConferenceController addConferenceController;
+    private Conferenza conferenza;
+    private Enti enti = new Enti();
     @FXML
     private ChoiceBox<Ente> entiChoiceBox;
     @FXML
     private ListView<Ente> entiListView;
     @FXML
-    private SubScene subscene;
-    @FXML
     private Button nextButton;
-    private Conferenza conferenza;
+    @FXML
+    private SubScene subscene;
     private Utente user;
-    private Enti enti = new Enti();
-    //Public Setters
-    public void setConferenza(Conferenza c){
-        this.conferenza=c;
+
+    public AddConferenceController getAddConferenceController() {
+        return addConferenceController;
     }
+
+    public void setAddConferenceController(AddConferenceController addConferenceController) {
+        this.addConferenceController = addConferenceController;
+    }
+
+    //Overrides
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setOrganizzatoriListView();
+        setOrganizzatoriChoiceBox();
+        checkAlmenoUnEnte();
+    }
+
+    //Public Setters
+    public void setConferenza(Conferenza c) {
+        this.conferenza = c;
+    }
+
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;
     }
-    public void setUtente(Utente utente){
-        this.user=utente;
+
+    public void setUtente(Utente utente) {
+        this.user = utente;
     }
-    //Button methods
-    @FXML
-    void backButtonOnAction(ActionEvent event) {
-        loadEditConferenza();
+
+    private void checkAlmenoUnEnte() {
+        nextButton.setDisable(entiListView.getItems().isEmpty());
     }
-    @FXML
-    void inserisciButtonOnAction(ActionEvent event) {
-        Ente enteSelezionato = entiChoiceBox.getSelectionModel().getSelectedItem();
-        try{
-            if(enteSelezionato==null)
-                throw new NullPointerException();
-            conferenza.addEnte(enteSelezionato);
-            checkAlmenoUnEnte();
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Questo organizzatore è già presente!");
-            alert.showAndWait();
-        } catch (EntePresenteException e){
-            String messaggio= "Questo organizzatore è già presente!";
-            try{
-                loadErrorWindow(messaggio);
-            } catch (IOException ex){
-                e.printStackTrace();
-            }
-        }
-        catch(NullPointerException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Nessun ente selezionato");
-            alert.showAndWait();
-        }
-    }
-    @FXML
-    void nextOnAction(ActionEvent event) {
-        loadAggiungiComitati();
-    }
-    @FXML
-    void rimuoviButtonOnAction(ActionEvent event) {
-        Ente enteSelezionato = entiListView.getSelectionModel().getSelectedItem();
-        try{
-            if (enteSelezionato == null){
-                throw new NullPointerException();
-            }
-            Optional<ButtonType> result = showDeleteDialog();
-            if(result.get() == ButtonType.OK) {
-                try{
-                    conferenza.removeEnte(enteSelezionato);
-                    checkAlmenoUnEnte();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Nessun ente selezionato");
-            alert.showAndWait();
-        }
-    }
-    private Optional<ButtonType> showDeleteDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler eliminare il seguente ente?");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
-    }
+
     //Private Methods
-    private void loadAggiungiComitati(){
-        try{
+    private void loadAggiungiComitati() {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddComitati_Create.fxml"));
             AddComitati_Create controller = new AddComitati_Create();
             loader.setController(controller);
@@ -125,8 +86,9 @@ public class AddEntiController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void loadEditConferenza(){
-        try{
+
+    private void loadEditConferenza() {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
             ModificaConferenzaController controller = new ModificaConferenzaController();
             loader.setController(controller);
@@ -139,30 +101,7 @@ public class AddEntiController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void setOrganizzatoriListView() {
-        try{
-            conferenza.loadOrganizzatori();
-            entiListView.setItems(conferenza.getEnti());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
-    private void setOrganizzatoriChoiceBox() {
-        try {
-            enti.loadEnti();
-            entiChoiceBox.setItems(enti.getEnti());
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    private void checkAlmenoUnEnte(){
-        if(entiListView.getItems().isEmpty()){
-            nextButton.setDisable(true);
-        }else{
-            nextButton.setDisable(false);
-        }
-    }
     private void loadErrorWindow(String messaggio) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ExceptionWindow.fxml"));
         Parent root = loader.load();
@@ -180,19 +119,88 @@ public class AddEntiController implements Initializable {
         stage.show();
     }
 
-    //Overrides
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setOrganizzatoriListView();
-        setOrganizzatoriChoiceBox();
-        checkAlmenoUnEnte();
+    private void setOrganizzatoriChoiceBox() {
+        try {
+            enti.loadEnti();
+            entiChoiceBox.setItems(enti.getEnti());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public AddConferenceController getAddConferenceController() {
-        return addConferenceController;
+    private void setOrganizzatoriListView() {
+        try {
+            conferenza.loadOrganizzatori();
+            entiListView.setItems(conferenza.getEnti());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setAddConferenceController(AddConferenceController addConferenceController) {
-        this.addConferenceController = addConferenceController;
+    private Optional<ButtonType> showDeleteDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Sicuro di voler eliminare il seguente ente?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
+    }
+
+    //Button methods
+    @FXML
+    void backButtonOnAction(ActionEvent event) {
+        loadEditConferenza();
+    }
+
+    @FXML
+    void inserisciButtonOnAction(ActionEvent event) {
+        Ente enteSelezionato = entiChoiceBox.getSelectionModel().getSelectedItem();
+        try {
+            if (enteSelezionato == null)
+                throw new NullPointerException();
+            conferenza.addEnte(enteSelezionato);
+            checkAlmenoUnEnte();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Questo organizzatore è già presente!");
+            alert.showAndWait();
+        } catch (EntePresenteException e) {
+            String messaggio = "Questo organizzatore è già presente!";
+            try {
+                loadErrorWindow(messaggio);
+            } catch (IOException ex) {
+                e.printStackTrace();
+            }
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nessun ente selezionato");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void nextOnAction(ActionEvent event) {
+        loadAggiungiComitati();
+    }
+
+    @FXML
+    void rimuoviButtonOnAction(ActionEvent event) {
+        Ente enteSelezionato = entiListView.getSelectionModel().getSelectedItem();
+        try {
+            if (enteSelezionato == null) {
+                throw new NullPointerException();
+            }
+            Optional<ButtonType> result = showDeleteDialog();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    conferenza.removeEnte(enteSelezionato);
+                    checkAlmenoUnEnte();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nessun ente selezionato");
+            alert.showAndWait();
+        }
     }
 }

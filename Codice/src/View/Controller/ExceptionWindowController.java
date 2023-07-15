@@ -21,30 +21,34 @@ public class ExceptionWindowController implements Initializable {
     private Button closeButton;
     @FXML
     private Label errorMessageLabel;
-    private double x,y;
+    private double x, y;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        errorMessageLabel.setText("");
+    }
+
+    public void setErrorMessageLabel(String message) {
+        errorMessageLabel.setText(message);
+    }
+
     @FXML
     void closeButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
+
     @FXML
-    void dragged (MouseEvent event){
+    void dragged(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setX(event.getScreenX() - x);
         stage.setY(event.getScreenY() - y);
 
     }
-    @FXML
-    void pressed(MouseEvent event){
-        x= event.getSceneX();
-        y= event.getSceneY();
-    }
-    public void setErrorMessageLabel(String message){
-        errorMessageLabel.setText(message);
-    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        errorMessageLabel.setText("");
+    @FXML
+    void pressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
     }
 }

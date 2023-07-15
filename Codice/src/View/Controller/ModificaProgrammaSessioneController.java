@@ -1,7 +1,8 @@
 package View.Controller;
 
-import Persistence.DAO.ProgrammaDao;
-import Persistence.Entities.Conferenze.*;
+import Persistence.Entities.Conferenze.ActivityModel;
+import Persistence.Entities.Conferenze.Programma;
+import Persistence.Entities.Conferenze.Sessione;
 import Persistence.Entities.partecipanti.Speaker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,29 +21,28 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class ModificaProgrammaSessioneController implements Initializable {
-    private Programma programma;
-    private SubScene subscene;
-    private ManageSessioniController manageSessioniController;
-    private Sessione sessione;
     @FXML
-    private Button fineButton;
-    @FXML
-    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
+    private TableColumn<ActivityModel, String> appuntamentoTableColumn;
     @FXML
     private TableColumn<ActivityModel, String> descrizioneTableColumn;
     @FXML
-    private TableColumn<ActivityModel, String> appuntamentoTableColumn;
+    private Button fineButton;
     @FXML
     private TableColumn<ActivityModel, Timestamp> fineTableColumn;
     @FXML
     private TableColumn<ActivityModel, Timestamp> inizioTableColumn;
+    private ManageSessioniController manageSessioniController;
+    private Programma programma;
     @FXML
     private TableView<ActivityModel> programmaTableView;
+    private Sessione sessione;
+    @FXML
+    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
+    private SubScene subscene;
 
     public Programma getProgramma() {
         return programma;
@@ -68,19 +68,41 @@ public class ModificaProgrammaSessioneController implements Initializable {
         this.subscene = subscene;
     }
 
-    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
-        this.manageSessioniController = manageSessioniController;
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setProgrammaTableView();
     }
+
+    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+        this.manageSessioniController = manageSessioniController;
+    }
+
     @FXML
     private void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
         loader.setController(manageSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
+    }
+
+    private void removePuntoProgramma(ActivityModel activityModel) {
+        programma.removeActivity(activityModel);
+    }
+
+    private void setProgrammaTableView() {
+        try {
+
+            programma.loadProgramaSessione();
+            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
+            descrizioneTableColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
+            programmaTableView.setItems(programma.getProgrammaSessione());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -101,24 +123,6 @@ public class ModificaProgrammaSessioneController implements Initializable {
     void deletePuntoOnAction(ActionEvent event) {
         removePuntoProgramma(programmaTableView.getSelectionModel().getSelectedItem());
         setProgrammaTableView();
-    }
-    private void removePuntoProgramma(ActivityModel activityModel){
-        programma.removeActivity(activityModel);
-    }
-    private void setProgrammaTableView(){
-        try{
-
-            programma.loadProgramaSessione();
-            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-            inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
-            fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
-            speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
-            descrizioneTableColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
-            programmaTableView.setItems(programma.getProgrammaSessione());
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 
 }

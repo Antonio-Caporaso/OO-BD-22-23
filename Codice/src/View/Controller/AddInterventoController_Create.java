@@ -29,113 +29,43 @@ import java.util.ResourceBundle;
 
 public class AddInterventoController_Create implements Initializable {
     @FXML
-    private Button cancelButton;
-
+    private HBox HBox;
     @FXML
-    private Button confirmaButton;
+    private TextArea abstractTextArea;
     @FXML
     private Button addSpeakerButton;
     @FXML
-    private HBox HBox;
+    private Button cancelButton;
+    @FXML
+    private Button confirmaButton;
     @FXML
     private Spinner<Integer> minutiSpinner;
     @FXML
     private Spinner<Integer> oreSpinner;
+    private Programma programma;
     @FXML
     private ChoiceBox<Speaker> speakerChoiceBox;
     @FXML
     private TextField titoloTextField;
-    @FXML
-    private TextArea abstractTextArea;
-    private Programma programma;
-    private double x,y;
+    private double x, y;
+
     //Public Setters
     public Programma getProgramma() {
         return programma;
     }
+
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
-    //ActionEvent Methods
-    @FXML
-    void cancelButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
-    }
-    @FXML
-    void confirmButtonOnAction(ActionEvent event) {
-        Intervento intervento=new Intervento();
-        intervento.setSpeaker(speakerChoiceBox.getSelectionModel().getSelectedItem());
-        intervento.setProgramma(programma);
-        intervento.setEstratto(abstractTextArea.getText());
-        intervento.setTitolo(titoloTextField.getText());
-        try{
-            PGInterval durata = new PGInterval(0,0,0,oreSpinner.getValue(), minutiSpinner.getValue(),0);
-            programma.addIntervento(intervento,durata);
-            programma.loadProgramaSessione();
-            Stage stage = (Stage) cancelButton.getScene().getWindow();
-            stage.close();
-        }catch (SQLException e){
-            loadExceptionWindow(e.getMessage());
-        }
-    }
-    @FXML
-    void addSpeakerButtonOnAction(ActionEvent event){
-        loadAddSpeaker();
+
+    //Overrides
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         setSpeakerChoiceBox();
+        loadSpinners();
     }
-    @FXML
-    void dragged (MouseEvent event){
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setX(event.getScreenX() - x);
-        stage.setY(event.getScreenY() - y);
 
-    }
-    @FXML
-    void pressed(MouseEvent event){
-        x= event.getSceneX();
-        y= event.getSceneY();
-    }
-    //Private Methods
-    private void setSpeakerChoiceBox(){
-        SpeakerDao speaker=new SpeakerDao();
-        try{
-            ObservableList<Speaker> speakers= FXCollections.observableArrayList();
-            speakers.setAll(speaker.retreiveAllSpeakers());
-            speakerChoiceBox.setItems(speakers);
-        }catch (SQLException e){
-            loadExceptionWindow(e.getMessage());
-        }
-    }
-    private void loadExceptionWindow(String message){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ExceptionWindow.fxml"));
-            Parent root = loader.load();
-            ExceptionWindowController controller = loader.getController();
-            controller.setErrorMessageLabel(message);
-            Stage stage = new Stage();
-            stage.setTitle("Errore");
-            Scene scene = new Scene(root, 400, 200);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-    private void loadSpinners(){
-        // Configurazione oreSpinner
-        SpinnerValueFactory<Integer> oreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24, 0);
-        oreSpinner.setValueFactory(oreValueFactory);
-
-        // Configurazione minutiSpinner
-        SpinnerValueFactory<Integer> minutiValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
-        minutiSpinner.setValueFactory(minutiValueFactory);
-    }
-    private void loadAddSpeaker(){
+    private void loadAddSpeaker() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSpeaker_Create.fxml"));
             Parent root = loader.load();
@@ -150,14 +80,95 @@ public class AddInterventoController_Create implements Initializable {
             stage.setX(860);
             stage.setY(360);
             stage.showAndWait();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    //Overrides
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    private void loadExceptionWindow(String message) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ExceptionWindow.fxml"));
+            Parent root = loader.load();
+            ExceptionWindowController controller = loader.getController();
+            controller.setErrorMessageLabel(message);
+            Stage stage = new Stage();
+            stage.setTitle("Errore");
+            Scene scene = new Scene(root, 400, 200);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadSpinners() {
+        // Configurazione oreSpinner
+        SpinnerValueFactory<Integer> oreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24, 0);
+        oreSpinner.setValueFactory(oreValueFactory);
+
+        // Configurazione minutiSpinner
+        SpinnerValueFactory<Integer> minutiValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
+        minutiSpinner.setValueFactory(minutiValueFactory);
+    }
+
+    //Private Methods
+    private void setSpeakerChoiceBox() {
+        SpeakerDao speaker = new SpeakerDao();
+        try {
+            ObservableList<Speaker> speakers = FXCollections.observableArrayList();
+            speakers.setAll(speaker.retreiveAllSpeakers());
+            speakerChoiceBox.setItems(speakers);
+        } catch (SQLException e) {
+            loadExceptionWindow(e.getMessage());
+        }
+    }
+
+    //ActionEvent Methods
+    @FXML
+    void cancelButtonOnAction(ActionEvent event) {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    void confirmButtonOnAction(ActionEvent event) {
+        Intervento intervento = new Intervento();
+        intervento.setSpeaker(speakerChoiceBox.getSelectionModel().getSelectedItem());
+        intervento.setProgramma(programma);
+        intervento.setEstratto(abstractTextArea.getText());
+        intervento.setTitolo(titoloTextField.getText());
+        try {
+            PGInterval durata = new PGInterval(0, 0, 0, oreSpinner.getValue(), minutiSpinner.getValue(), 0);
+            programma.addIntervento(intervento, durata);
+            programma.loadProgramaSessione();
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+        } catch (SQLException e) {
+            loadExceptionWindow(e.getMessage());
+        }
+    }
+
+    @FXML
+    void addSpeakerButtonOnAction(ActionEvent event) {
+        loadAddSpeaker();
         setSpeakerChoiceBox();
-        loadSpinners();
+    }
+
+    @FXML
+    void dragged(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+
+    }
+
+    @FXML
+    void pressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
     }
 }

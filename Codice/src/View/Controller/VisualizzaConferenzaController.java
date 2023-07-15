@@ -21,13 +21,13 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class VisualizzaConferenzaController implements Initializable {
-    private Conferenza conferenza;
-    private SubScene subScene;
-    private VisualizzaConferenzeController visualizzaConferenzeController;
     @FXML
     private Label budgetLabel;
+    private Conferenza conferenza;
     @FXML
     private Button confermaButton;
+    @FXML
+    private TableColumn<Sponsorizzazione, Float> contributoColumn;
     @FXML
     private Label dataFineLabel;
     @FXML
@@ -37,62 +37,46 @@ public class VisualizzaConferenzaController implements Initializable {
     @FXML
     private Button editSessioniButton;
     @FXML
-    private TextArea entiView;
-    @FXML
-    private Label nomeLabel;
-    @FXML
-    private Label sedeLabel;
-    @FXML
     private TableView<Ente> entiTable;
     @FXML
-    private TableColumn<Ente, String> siglaEnte;
-    @FXML
-    private TableColumn<Ente, String> nomeEnte;
-    @FXML
-    private TextArea sponsorizzazioniView;
-    @FXML
-    private Label indirizzoLabel;
-    @FXML
-    private TableColumn<Sessione,String> nomeSessioneColumn;
-    @FXML
-    private TableColumn<Sessione, Timestamp> inizioSessioneColumn;
+    private TextArea entiView;
     @FXML
     private TableColumn<Sessione, Timestamp> fineSessioneColumn;
     @FXML
+    private Label indirizzoLabel;
+    @FXML
+    private TableColumn<Sessione, Timestamp> inizioSessioneColumn;
+    @FXML
+    private TableColumn<Ente, String> nomeEnte;
+    @FXML
+    private Label nomeLabel;
+    @FXML
+    private TableColumn<Sessione, String> nomeSessioneColumn;
+    @FXML
     private TableColumn<Sessione, String> salaSessioneColumn;
+    @FXML
+    private Label sedeLabel;
     @FXML
     private TableView<Sessione> sessioniTable;
     @FXML
-    private TableView<Sponsorizzazione> sponsorTable;
+    private TableColumn<Ente, String> siglaEnte;
     @FXML
     private TableColumn<Sponsorizzazione, String> sponsorColumn;
     @FXML
-    private TableColumn<Sponsorizzazione, Float> contributoColumn;
+    private TableView<Sponsorizzazione> sponsorTable;
     @FXML
-    private TableColumn<Sponsorizzazione,String> valutaColumn;
-
+    private TextArea sponsorizzazioniView;
+    private SubScene subScene;
     @FXML
     private Label titleLabel;
-    public VisualizzaConferenzaController(Conferenza conferenza,SubScene subScene, VisualizzaConferenzeController controller){
+    @FXML
+    private TableColumn<Sponsorizzazione, String> valutaColumn;
+    private VisualizzaConferenzeController visualizzaConferenzeController;
+
+    public VisualizzaConferenzaController(Conferenza conferenza, SubScene subScene, VisualizzaConferenzeController controller) {
         this.conferenza = conferenza;
         this.subScene = subScene;
         this.visualizzaConferenzeController = controller;
-    }
-
-    public VisualizzaConferenzeController getViewConferencesController() {
-        return visualizzaConferenzeController;
-    }
-
-    public void setViewConferencesController(VisualizzaConferenzeController visualizzaConferenzeController) {
-        this.visualizzaConferenzeController = visualizzaConferenzeController;
-    }
-
-    public SubScene getSubScene() {
-        return subScene;
-    }
-
-    public void setSubScene(SubScene subScene) {
-        this.subScene = subScene;
     }
 
     public Conferenza getConferenza() {
@@ -103,15 +87,84 @@ public class VisualizzaConferenzaController implements Initializable {
         this.conferenza = conferenza;
     }
 
+    public SubScene getSubScene() {
+        return subScene;
+    }
+
+    public void setSubScene(SubScene subScene) {
+        this.subScene = subScene;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setDetails();
+        setOrganizzatori();
+        setSponsorizzazioni();
+        setSessioniTable();
+    }
+
+    public void setDetails() {
+        this.setTitleLabel();
+        nomeLabel.setText(conferenza.getTitolo());
+        descrizioneArea.setText(conferenza.getDescrizione());
+        dataInizioLabel.setText(conferenza.getInizio().toString());
+        dataFineLabel.setText(conferenza.getFine().toString());
+        sedeLabel.setText(conferenza.getSede().toString());
+        indirizzoLabel.setText(conferenza.getSede().getIndirizzo().toString());
+    }
+
+    public void setOrganizzatori() {
+        try {
+            conferenza.loadOrganizzatori();
+            entiTable.setEditable(false);
+            nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
+            entiTable.getItems().addAll(conferenza.getEnti());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setTitleLabel() {
+        if (conferenza != null)
+            titleLabel.setText("Conferenza: " + conferenza.getTitolo());
+    }
+
+    private void setSessioniTable() {
+        sessioniTable.setEditable(false);
+        try {
+            conferenza.loadSessioni();
+            nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+            inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, String>("locazione"));
+            sessioniTable.getItems().addAll(conferenza.getSessioni());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setSponsorizzazioni() {
+        try {
+            conferenza.loadSponsorizzazioni();
+            sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
+            contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
+            valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
+            sponsorTable.setItems(conferenza.getSponsorizzazioni());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @FXML
     void viewSessioniButtonOnAction(ActionEvent event) throws IOException {
         Sessione s = sessioniTable.getSelectionModel().getSelectedItem();
-        if(s.equals(null)){
+        if (s.equals(null)) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Selezionare una sessione");
             alert.setContentText("Nessuna sessione selezionata");
             alert.showAndWait();
-        }else{
+        } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ViewSessione.fxml"));
             ViewSessioneController controller = new ViewSessioneController();
             controller.setSessione(s);
@@ -130,76 +183,21 @@ public class VisualizzaConferenzaController implements Initializable {
         Parent root = loader.load();
         subScene.setRoot(root);
     }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setDetails();
-        setOrganizzatori();
-        setSponsorizzazioni();
-        setSessioniTable();
-    }
-    public void setDetails() {
-        this.setTitleLabel();
-        nomeLabel.setText(conferenza.getTitolo());
-        descrizioneArea.setText(conferenza.getDescrizione());
-        dataInizioLabel.setText(conferenza.getInizio().toString());
-        dataFineLabel.setText(conferenza.getFine().toString());
-        sedeLabel.setText(conferenza.getSede().toString());
-        indirizzoLabel.setText(conferenza.getSede().getIndirizzo().toString());
-    }
-    public void setOrganizzatori() {
-        try {
-            conferenza.loadOrganizzatori();
-            entiTable.setEditable(false);
-            nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
-            entiTable.getItems().addAll(conferenza.getEnti());
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-    private void setSponsorizzazioni() {
-        try {
-            conferenza.loadSponsorizzazioni();
-            sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("sponsor"));
-            contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,Float>("contributo"));
-            valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("valuta"));
-            sponsorTable.setItems(conferenza.getSponsorizzazioni());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void setTitleLabel(){
-        if(conferenza!=null)
-            titleLabel.setText("Conferenza: "+ conferenza.getTitolo());
-    }
 
-    private void setSessioniTable(){
-        sessioniTable.setEditable(false);
-        try{
-            conferenza.loadSessioni();
-            nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
-            inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
-            fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
-            salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione,String>("locazione"));
-            sessioniTable.getItems().addAll(conferenza.getSessioni());
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
     @FXML
     void viewSessione(MouseEvent event) {
         try {
             Sessione s = sessioniTable.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessione.fxml"));
-            VisualizzaSessioneController controller = new VisualizzaSessioneController(s,subScene,this);
+            VisualizzaSessioneController controller = new VisualizzaSessioneController(s, subScene, this);
             loader.setController(controller);
             Parent root = loader.load();
             subScene.setRoot(root);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Nessuna sessione selezionata");
             alert.showAndWait();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

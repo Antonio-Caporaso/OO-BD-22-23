@@ -12,12 +12,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddPuntoScenaController implements Initializable {
+    private Programma programma;
     @FXML
     private SubScene subScene;
-    private Programma programma;
-    public AddPuntoScenaController(Programma programma){
+
+    public AddPuntoScenaController(Programma programma) {
         this.programma = programma;
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

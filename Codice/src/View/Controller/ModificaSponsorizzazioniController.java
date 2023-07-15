@@ -26,23 +26,15 @@ import java.util.ResourceBundle;
 
 public class ModificaSponsorizzazioniController implements Initializable, FormChecker {
     @FXML
-    private TableView<Sponsorizzazione> sponsorTable;
-    @FXML
-    private TableColumn<Sponsorizzazione, String> sponsorColumn;
-    @FXML
-    private TableColumn<Sponsorizzazione, Float> contributoColumn;
-    @FXML
-    private TableColumn<Sponsorizzazione,String> valutaColumn;
-    private Sponsors sponsors = new Sponsors();
-    private Conferenza conferenza;
-    private ModificaConferenzaController controller;
-    private SubScene subscene;
-    @FXML
     private Button annullaButton;
+    private Conferenza conferenza;
     @FXML
     private Button confermaButton;
     @FXML
+    private TableColumn<Sponsorizzazione, Float> contributoColumn;
+    @FXML
     private TextField contributoTextField;
+    private ModificaConferenzaController controller;
     @FXML
     private Button deleteButton;
     @FXML
@@ -52,9 +44,17 @@ public class ModificaSponsorizzazioniController implements Initializable, FormCh
     @FXML
     private ChoiceBox<Sponsor> sponsorChoice;
     @FXML
+    private TableColumn<Sponsorizzazione, String> sponsorColumn;
+    @FXML
+    private TableView<Sponsorizzazione> sponsorTable;
+    private Sponsors sponsors = new Sponsors();
+    private SubScene subscene;
+    @FXML
     private Label titleLabel;
     @FXML
     private ChoiceBox<String> valutaChoice;
+    @FXML
+    private TableColumn<Sponsorizzazione, String> valutaColumn;
 
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
@@ -64,24 +64,51 @@ public class ModificaSponsorizzazioniController implements Initializable, FormCh
             throw new BlankFieldException();
     }
 
-    @FXML
-    void deleteOnAction(ActionEvent event) {
-        try{
-            Sponsorizzazione sp = sponsorTable.getSelectionModel().getSelectedItem();
-            if (sp == null)
-                throw new NullPointerException();
-            Optional<ButtonType> result = showDeleteDialog();
-            if(result.get() == ButtonType.OK) {
-                try{
-                    conferenza.removeSponsorizzazione(sp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Nessuna sponsorizzazione selezionata");
-            alert.showAndWait();
+    public SubScene getsubscene() {
+        return subscene;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        sponsors.loadSponsor();
+        sponsorChoice.setItems(sponsors.getSponsors());
+        setTable();
+        setValute();
+    }
+
+    public void setConferenza(Conferenza conferenza) {
+        this.conferenza = conferenza;
+    }
+
+    public void setEditConferenceController(ModificaConferenzaController controller) {
+        this.controller = controller;
+    }
+
+    public void setsubscene(SubScene subScene) {
+        this.subscene = subScene;
+    }
+
+    private void setTable() {
+        sponsorTable.setEditable(true);
+        try {
+            conferenza.loadSponsorizzazioni();
+            sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
+            contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
+            valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
+            sponsorTable.setItems(conferenza.getSponsorizzazioni());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setValute() {
+        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+        ObservableList<String> valute = FXCollections.observableArrayList();
+        try {
+            valute.addAll(dao.retrieveSimboloValute());
+            valutaChoice.setItems(valute);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -93,28 +120,50 @@ public class ModificaSponsorizzazioniController implements Initializable, FormCh
     }
 
     @FXML
+    void deleteOnAction(ActionEvent event) {
+        try {
+            Sponsorizzazione sp = sponsorTable.getSelectionModel().getSelectedItem();
+            if (sp == null)
+                throw new NullPointerException();
+            Optional<ButtonType> result = showDeleteDialog();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    conferenza.removeSponsorizzazione(sp);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Nessuna sponsorizzazione selezionata");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
     void inserisciSponsorOnAction(ActionEvent event) {
-        try{
+        try {
             Sponsor sponsorSelezionato = sponsorChoice.getSelectionModel().getSelectedItem();
-            if(sponsorSelezionato ==null || contributoTextField.getText().isEmpty()){
+            if (sponsorSelezionato == null || contributoTextField.getText().isEmpty()) {
                 throw new NullPointerException();
             }
             double contributo = Double.parseDouble(contributoTextField.getText());
             String valuta = valutaChoice.getValue();
-            Sponsorizzazione sponsorizzazione=new Sponsorizzazione(sponsorSelezionato,conferenza,contributo,valuta);
+            Sponsorizzazione sponsorizzazione = new Sponsorizzazione(sponsorSelezionato, conferenza, contributo, valuta);
             conferenza.addSponsorizzazione(sponsorizzazione);
-        }catch(PSQLException e){
+        } catch (PSQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Questo sponsor è già presente!");
             alert.showAndWait();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Seleziona tutti i campi prima di procedere");
             alert.showAndWait();
         }
     }
+
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
@@ -123,52 +172,5 @@ public class ModificaSponsorizzazioniController implements Initializable, FormCh
         controller.setSponsorizzazioni();
         Parent root = loader.load();
         subscene.setRoot(root);
-    }
-
-    public void setConferenza(Conferenza conferenza) {
-        this.conferenza = conferenza;
-    }
-    public void setEditConferenceController(ModificaConferenzaController controller) {
-        this.controller = controller;
-    }
-
-    public SubScene getsubscene() {
-        return subscene;
-    }
-
-    public void setsubscene(SubScene subScene) {
-        this.subscene = subScene;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        sponsors.loadSponsor();
-        sponsorChoice.setItems(sponsors.getSponsors());
-        setTable();
-        setValute();
-    }
-
-    private void setTable() {
-        sponsorTable.setEditable(true);
-        try {
-            conferenza.loadSponsorizzazioni();
-            sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("sponsor"));
-            contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,Float>("contributo"));
-            valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione,String>("valuta"));
-            sponsorTable.setItems(conferenza.getSponsorizzazioni());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void setValute() {
-        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-        ObservableList<String> valute = FXCollections.observableArrayList();
-        try{
-            valute.addAll(dao.retrieveSimboloValute());
-            valutaChoice.setItems(valute);
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 }

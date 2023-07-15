@@ -19,58 +19,25 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddPuntoController implements Initializable{
+public class AddPuntoController implements Initializable {
     @FXML
     private Button annullaButton;
-
+    @FXML
+    private ComboBox<String> opzioniComboBox;
     private Programma programma;
     @FXML
     private ProgressBar progressBar;
     @FXML
-    private ComboBox<String> opzioniComboBox;
-    @FXML
     private SubScene subScene;
-    public AddPuntoController(Programma programma){
+
+    public AddPuntoController(Programma programma) {
         this.programma = programma;
     }
 
-    @FXML
-    void annullaOnAction(ActionEvent event) {
-        Stage stage = (Stage) annullaButton.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    void avantiOnAction(ActionEvent event) {
-        try{
-            String tipologia = opzioniComboBox.getSelectionModel().getSelectedItem();
-            if(tipologia.equals("Intervento")){
-                openAddInterventoWindow();
-            }else if(tipologia.equals("Evento")){
-                openAddEventoWindow();
-            }else if(tipologia.equals("Intervallo")){
-                openAddIntervalloWindow();
-            }
-        }catch (NullPointerException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Selezionare una tipologia per proseguire");
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void openAddIntervalloWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo_Create.fxml"));
-        AddIntervalloController_Create control = new AddIntervalloController_Create();
-        control.setProgramma(programma);
-        loader.setController(control);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setTitle("Aggiunta nuovo intervallo");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(scene);
-        stage.show();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        String[] opzioni = {"Evento", "Intervento", "Intervallo"};
+        opzioniComboBox.getItems().addAll(opzioni);
     }
 
     private void openAddEventoWindow() throws IOException {
@@ -82,6 +49,20 @@ public class AddPuntoController implements Initializable{
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setTitle("Aggiunta nuovo evento");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void openAddIntervalloWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo_Create.fxml"));
+        AddIntervalloController_Create control = new AddIntervalloController_Create();
+        control.setProgramma(programma);
+        loader.setController(control);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Aggiunta nuovo intervallo");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
@@ -101,9 +82,28 @@ public class AddPuntoController implements Initializable{
         stage.show();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        String opzioni[] = {"Evento", "Intervento","Intervallo"};
-        opzioniComboBox.getItems().addAll(opzioni);
+    @FXML
+    void annullaOnAction(ActionEvent event) {
+        Stage stage = (Stage) annullaButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    void avantiOnAction(ActionEvent event) {
+        try {
+            String tipologia = opzioniComboBox.getSelectionModel().getSelectedItem();
+            if (tipologia.equals("Intervento")) {
+                openAddInterventoWindow();
+            } else if (tipologia.equals("Evento")) {
+                openAddEventoWindow();
+            } else if (tipologia.equals("Intervallo")) {
+                openAddIntervalloWindow();
+            }
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Selezionare una tipologia per proseguire");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

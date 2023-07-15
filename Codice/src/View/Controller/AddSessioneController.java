@@ -27,34 +27,34 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class AddSessioneController implements Initializable,FormChecker {
-    private Conferenza conferenza;
-    private Sale sale;
-    private ManageSessioniController manageSessioniController;
-    private ModificaConferenzaController modificaConferenzaController;
-    private SubScene subscene;
-    @FXML
-    private Label inizioConferenzaLabel;
-    @FXML
-    private Label fineConferenzaLabel;
+public class AddSessioneController implements Initializable, FormChecker {
     @FXML
     private Button annullaButton;
     @FXML
-    private DateTimePicker fineDateTimePicker;
-    @FXML
-    private DateTimePicker inizioDateTimePicker;
-    @FXML
     private Button avantiButton;
-    @FXML
-    private TextField nomeTF;
-    @FXML
-    private ChoiceBox<Sala> saleChoice;
+    private Conferenza conferenza;
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
+    @FXML
+    private Label fineConferenzaLabel;
+    @FXML
+    private DateTimePicker fineDateTimePicker;
+    @FXML
+    private Label inizioConferenzaLabel;
+    @FXML
+    private DateTimePicker inizioDateTimePicker;
+    private ManageSessioniController manageSessioniController;
+    private ModificaConferenzaController modificaConferenzaController;
+    @FXML
+    private TextField nomeTF;
+    private Sale sale;
+    @FXML
+    private ChoiceBox<Sala> saleChoice;
+    private SubScene subscene;
 
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
-        if(nomeTF.getText().isBlank() || saleChoice.getValue().equals(null)
+        if (nomeTF.getText().isBlank() || saleChoice.getValue().equals(null)
                 || inizioDateTimePicker.getDateTimeValue().equals(null)
                 || fineDateTimePicker.getDateTimeValue().equals(null))
             throw new BlankFieldException();
@@ -68,21 +68,24 @@ public class AddSessioneController implements Initializable,FormChecker {
         this.manageSessioniController = manageSessioniController;
     }
 
-    @FXML
-    void avantiButtonOnAction(ActionEvent event) throws IOException {
-        try{
-            checkFieldsAreBlank();
-            Sessione s = setSessione();
-            goToAddProgrammaWindow(s);
-        }catch (BlankFieldException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Compilare prima tutti i campi");
-            alert.showAndWait();
-        }catch (SQLException exception){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(exception.getMessage());
-            alert.showAndWait();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        inizioConferenzaLabel.setText(conferenza.getInizio().toString());
+        inizioConferenzaLabel.setTextFill(Color.WHITE);
+        fineConferenzaLabel.setTextFill(Color.WHITE);
+        fineConferenzaLabel.setText(conferenza.getFine().toString());
+        try {
+            setCoordinatoreChoiceBox();
+        } catch (SQLException e) {
         }
+    }
+
+    public void setConferenza(Conferenza conferenza) {
+        this.conferenza = conferenza;
+    }
+
+    public void setSubscene(SubScene subscene) {
+        this.subscene = subscene;
     }
 
     private void goToAddProgrammaWindow(Sessione s) throws SQLException, IOException {
@@ -101,6 +104,11 @@ public class AddSessioneController implements Initializable,FormChecker {
         return dao.retrieveProgrammaBySessione(s);
     }
 
+    private void setCoordinatoreChoiceBox() throws SQLException {
+        MembriComitato membriComitatoScientifico = new MembriComitato(conferenza);
+        membriComitatoScientifico.loadMembriComitatoScientifico();
+        coordinatoreChoiceBox.setItems(membriComitatoScientifico.getMembriComitatoScientifico());
+    }
 
     private Sessione setSessione() {
         Sessione s = new Sessione();
@@ -111,22 +119,28 @@ public class AddSessioneController implements Initializable,FormChecker {
         s.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
         s.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
 
-        return  s;
+        return s;
     }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        inizioConferenzaLabel.setText(conferenza.getInizio().toString());
-        inizioConferenzaLabel.setTextFill(Color.WHITE);
-        fineConferenzaLabel.setTextFill(Color.WHITE);
-        fineConferenzaLabel.setText(conferenza.getFine().toString());
+
+    @FXML
+    void avantiButtonOnAction(ActionEvent event) throws IOException {
         try {
-            setCoordinatoreChoiceBox();
-        } catch (SQLException e) {
+            checkFieldsAreBlank();
+            Sessione s = setSessione();
+            goToAddProgrammaWindow(s);
+        } catch (BlankFieldException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Compilare prima tutti i campi");
+            alert.showAndWait();
+        } catch (SQLException exception) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(exception.getMessage());
+            alert.showAndWait();
         }
     }
 
     @FXML
-    void showSale(MouseEvent event)  {
+    void showSale(MouseEvent event) {
         try {
             Timestamp inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
             Timestamp fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
@@ -135,27 +149,20 @@ public class AddSessioneController implements Initializable,FormChecker {
                 throw new SediNonDisponibiliException();
             else
                 saleChoice.setItems(sale.getSale());
-        }catch (SediNonDisponibiliException e){
+        } catch (SediNonDisponibiliException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Inserire delle date per visualizzare le sale libere");
             alert.showAndWait();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
     }
-
-    private void setCoordinatoreChoiceBox() throws SQLException {
-        MembriComitato membriComitatoScientifico = new MembriComitato(conferenza);
-        membriComitatoScientifico.loadMembriComitatoScientifico();
-        coordinatoreChoiceBox.setItems(membriComitatoScientifico.getMembriComitatoScientifico());
-    }
-
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
@@ -163,11 +170,5 @@ public class AddSessioneController implements Initializable,FormChecker {
         loader.setController(manageSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
-    }
-    public void setConferenza(Conferenza conferenza) {
-        this.conferenza = conferenza;
-    }
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
     }
 }

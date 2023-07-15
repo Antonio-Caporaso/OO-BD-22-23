@@ -52,47 +52,22 @@ public class AddSpeakerController_Create implements Initializable {
 
     @FXML
     private ChoiceBox<String> titoloChoiceBox;
-    double x,y;
 
-    @FXML
-    void cancelButtonOnAction(ActionEvent event) {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadChoiceBoxes();
     }
 
-    @FXML
-    void confirmButtonOnAction(ActionEvent event) {
-        Speaker speaker= new Speaker();
-        SpeakerDao speakerDao=new SpeakerDao();
-        speaker.setNome(nomeTextField.getText());
-        speaker.setCognome(cognomeTextField.getText());
-        speaker.setIstituzione(enteChoiceBox.getSelectionModel().getSelectedItem());
-        speaker.setTitolo(titoloChoiceBox.getSelectionModel().getSelectedItem());
-        speaker.setEmail(emailtextField.getText());
-        try {
-            int id = speakerDao.createSpeaker(speaker);
-            Stage stage = (Stage) cancelButton.getScene().getWindow();
-            stage.close();
-        }catch (SQLException e){
-            e.printStackTrace();
-            loadExceptionWindow(e.getMessage());
-        }
-
+    private void loadChoiceBoxes() {
+        Enti enti = new Enti();
+        String[] titoli = {"Dottore", "Dottoressa", "Professore", "Professoressa", "Assistente", "Ricercatore", "Ricercatrice", "Ingegnere"};
+        enti.loadEnti();
+        enteChoiceBox.setItems(enti.getEnti());
+        Conferenza conferenza = new Conferenza();
+        titoloChoiceBox.getItems().setAll(titoli);
     }
 
-    @FXML
-    void dragged (MouseEvent event){
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setX(event.getScreenX() - x);
-        stage.setY(event.getScreenY() - y);
-
-    }
-    @FXML
-    void pressed(MouseEvent event){
-        x= event.getSceneX();
-        y= event.getSceneY();
-    }
-    private void loadExceptionWindow(String message){
+    private void loadExceptionWindow(String message) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ExceptionWindow.fxml"));
             Parent root = loader.load();
@@ -107,21 +82,49 @@ public class AddSpeakerController_Create implements Initializable {
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private void loadChoiceBoxes(){
-        Enti enti = new Enti();
-        String[]titoli={"Dottore","Dottoressa","Professore","Professoressa","Assistente","Ricercatore","Ricercatrice","Ingegnere"};
-        enti.loadEnti();
-        enteChoiceBox.setItems(enti.getEnti());
-        Conferenza conferenza= new Conferenza();
-        titoloChoiceBox.getItems().setAll(titoli);
+    double x, y;
+
+    @FXML
+    void cancelButtonOnAction(ActionEvent event) {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadChoiceBoxes();
+    @FXML
+    void confirmButtonOnAction(ActionEvent event) {
+        Speaker speaker = new Speaker();
+        SpeakerDao speakerDao = new SpeakerDao();
+        speaker.setNome(nomeTextField.getText());
+        speaker.setCognome(cognomeTextField.getText());
+        speaker.setIstituzione(enteChoiceBox.getSelectionModel().getSelectedItem());
+        speaker.setTitolo(titoloChoiceBox.getSelectionModel().getSelectedItem());
+        speaker.setEmail(emailtextField.getText());
+        try {
+            int id = speakerDao.createSpeaker(speaker);
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            loadExceptionWindow(e.getMessage());
+        }
+
+    }
+
+    @FXML
+    void dragged(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+
+    }
+
+    @FXML
+    void pressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
     }
 }

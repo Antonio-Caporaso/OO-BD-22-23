@@ -9,15 +9,45 @@ import Persistence.Entities.organizzazione.Ente;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.sql.Date;
 import java.sql.SQLException;
 
 public class Conferenze {
-    private ObservableList<Conferenza> conferenze;
+    private final ObservableList<Conferenza> conferenze;
 
     public Conferenze() {
         this.conferenze = FXCollections.observableArrayList();
 
+    }
+
+    public void addConferenza(Conferenza conferenza) throws SQLException {
+        ConferenzaDao d = new ConferenzaDao();
+        int id = d.saveConferenza(conferenza);
+        conferenza.setId_conferenza(id);
+        conferenze.add(conferenza);
+    }
+
+    public ObservableList<Conferenza> getConferenze() {
+        return conferenze;
+    }
+
+    public void loadByDateAndSede(Date inizio, Date fine, Sede sede) throws SQLException {
+        ConferenzaDao conferenzaDao = new ConferenzaDao();
+        conferenze.clear();
+        conferenze.addAll(conferenzaDao.retrieveByDateIntervalAndSede(inizio, fine, sede));
+    }
+
+    public void loadByDateInterval(Date inizio, Date fine) throws SQLException {
+        ConferenzaDao conferenzaDao = new ConferenzaDao();
+        conferenze.clear();
+        conferenze.addAll(conferenzaDao.retrieveByDateInterval(inizio, fine));
+    }
+
+    public void loadBySede(Sede sede) throws SQLException {
+        ConferenzaDao conferenzaDao = new ConferenzaDao();
+        conferenze.clear();
+        conferenze.addAll(conferenzaDao.retrieveBySede(sede));
     }
 
     public void loadConferenze() throws SQLException {
@@ -42,35 +72,9 @@ public class Conferenze {
         }
     }
 
-    public void addConferenza(Conferenza conferenza) throws SQLException {
-        ConferenzaDao d = new ConferenzaDao();
-        int id = d.saveConferenza(conferenza);
-        conferenza.setId_conferenza(id);
-        conferenze.add(conferenza);
-    }
-
     public void removeConferenza(Conferenza conferenza) throws SQLException {
         ConferenzaDao d = new ConferenzaDao();
         d.deleteConferenza(conferenza);
         conferenze.remove(conferenza);
-    }
-
-    public void loadBySede(Sede sede) throws SQLException {
-        ConferenzaDao conferenzaDao = new ConferenzaDao();
-        conferenze.clear();
-        conferenze.addAll(conferenzaDao.retrieveBySede(sede));
-    }
-    public void loadByDateInterval(Date inizio, Date fine) throws SQLException {
-        ConferenzaDao conferenzaDao = new ConferenzaDao();
-        conferenze.clear();
-        conferenze.addAll(conferenzaDao.retrieveByDateInterval(inizio,fine));
-    }
-    public void loadByDateAndSede(Date inizio, Date fine, Sede sede) throws SQLException {
-        ConferenzaDao conferenzaDao = new ConferenzaDao();
-        conferenze.clear();
-        conferenze.addAll(conferenzaDao.retrieveByDateIntervalAndSede(inizio,fine,sede));
-    }
-    public ObservableList<Conferenza> getConferenze() {
-        return conferenze;
     }
 }

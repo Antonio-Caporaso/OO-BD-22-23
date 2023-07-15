@@ -19,13 +19,11 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ChooseKeynoteController implements Initializable {
-    private Programma programma;
     @FXML
     private Button annullaButton;
-
     @FXML
     private Button confermaButton;
-
+    private Programma programma;
     @FXML
     private ChoiceBox<Speaker> speakerChoice;
 
@@ -44,7 +42,7 @@ public class ChooseKeynoteController implements Initializable {
 
     private void setSpeakersChoiceBox() {
         ObservableList<Speaker> speakers = FXCollections.observableArrayList();
-        for (Intervento i : programma.getInterventi()){
+        for (Intervento i : programma.getInterventi()) {
             speakers.add(i.getSpeaker());
         }
         speakerChoice.setItems(speakers);

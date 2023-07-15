@@ -22,7 +22,7 @@ public class Stats {
 
     @Override
     public String toString() {
-        return  "istituzione='" + istituzione + '\'' +
+        return "istituzione='" + istituzione + '\'' +
                 ", percentuale=" + percentuale;
     }
 }

@@ -7,19 +7,22 @@ import javafx.collections.ObservableList;
 
 public class Enti {
     private ObservableList<Ente> enti;
-    public Enti(){
+
+    public Enti() {
         this.enti = FXCollections.observableArrayList();
     }
-    public void loadEnti(){
-        EnteDao dao = new EnteDao();
-        enti.clear();
-        enti.addAll(dao.retrieveEnti());
-    }
+
     public ObservableList<Ente> getEnti() {
         return enti;
     }
 
     public void setEnti(ObservableList<Ente> enti) {
         this.enti = enti;
+    }
+
+    public void loadEnti() {
+        EnteDao dao = new EnteDao();
+        enti.clear();
+        enti.addAll(dao.retrieveEnti());
     }
 }

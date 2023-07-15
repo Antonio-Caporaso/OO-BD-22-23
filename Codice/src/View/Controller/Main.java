@@ -7,9 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import java.sql.*;
+
+import java.sql.Connection;
+
 public class Main extends Application {
-    public static void main(String[]args){
+    public static void main(String[] args) {
 
         Connection conn = null;
         DBConnection dbConnection;
@@ -19,14 +21,14 @@ public class Main extends Application {
         if (conn == null) {
             System.out.println("Connessione NON riuscita!");
             System.exit(0);
-        }else{
-        System.out.println("Connessione OK!");
-        launch(args);
+        } else {
+            System.out.println("Connessione OK!");
+            launch(args);
         }
     }
+
     @Override
     public void start(Stage stage) throws Exception {
-        //Definiamo oggetti delle classi modello da passare ai vari controller
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Login.fxml"));
             Parent root = loader.load();
@@ -36,7 +38,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

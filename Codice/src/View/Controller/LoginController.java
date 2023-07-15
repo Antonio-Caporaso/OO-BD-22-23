@@ -1,6 +1,7 @@
 package View.Controller;
-import Persistence.DAO.UtenteDAO;
+
 import Exceptions.BlankFieldException;
+import Persistence.DAO.UtenteDAO;
 import Persistence.Entities.Utente;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,10 +14,10 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -25,60 +26,39 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable, FormChecker {
     @FXML
-    private Label errorLabel;
-    @FXML
     private AnchorPane anchorPanel;
     @FXML
+    private Label errorLabel;
+    private File file;
+    @FXML
     private Button loginButton;
-    @FXML
-    private TextField usernameTextField;
-    @FXML
-    private PasswordField passwordTextField;
+    private Media media;
+    private MediaPlayer mediaPlayer;
     @FXML
     private MediaView mediaView;
-    private Media media;
-    private File file;
-    private MediaPlayer mediaPlayer;
+    @FXML
+    private PasswordField passwordTextField;
     private Utente user;
-
     @FXML
-    void loginButtonOnAction(ActionEvent event) {
-        try{
-        checkFieldsAreBlank();
-        validateLogin();
-        }catch (BlankFieldException e){
-            errorLabel.setText("Inserire nome utente e password");
-        }
+    private TextField usernameTextField;
+
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if (usernameTextField.getText().isBlank() || passwordTextField.getText().isBlank())
+            throw new BlankFieldException();
     }
 
-    @FXML
-    void registratiButtonOnAction(ActionEvent event){
-        try{
-            NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
-            NavigationController.getInstance().loadScene("../FXML/Registrazione.fxml");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    public Utente getUser() {
+        return user;
     }
-    private void validateLogin() {
-        String username = usernameTextField.getText();
-        String pwd = passwordTextField.getText();
-        UtenteDAO userdao = new UtenteDAO();
-        try{
-            user = userdao.retrieveUtentebyUsername(username);
-            if(pwd.equals(user.getPassword()))
-                changeToLandingWindow();
-            else
-                errorLabel.setText("Password errata");
-        }catch (SQLException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        }catch (NullPointerException e){
-            errorLabel.setText("Utente non presente");
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+
+    public void setUser(Utente user) {
+        this.user = user;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        defineEventHandlerForAnchorPane();
     }
 
     private void changeToLandingWindow() throws IOException {
@@ -92,36 +72,58 @@ public class LoginController implements Initializable, FormChecker {
         stage.setScene(landingScene);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        defineEventHandlerForAnchorPane();
-    }
-
     private void defineEventHandlerForAnchorPane() {
         anchorPanel.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                try{
+                try {
                     checkFieldsAreBlank();
                     validateLogin();
-                }catch (BlankFieldException e){
+                } catch (BlankFieldException e) {
                     errorLabel.setText("Inserire nome utente e password");
                 }
             }
         });
     }
 
-    public Utente getUser() {
-        return user;
+    private void validateLogin() {
+        String username = usernameTextField.getText();
+        String pwd = passwordTextField.getText();
+        UtenteDAO userdao = new UtenteDAO();
+        try {
+            user = userdao.retrieveUtentebyUsername(username);
+            if (pwd.equals(user.getPassword()))
+                changeToLandingWindow();
+            else
+                errorLabel.setText("Password errata");
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        } catch (NullPointerException e) {
+            errorLabel.setText("Utente non presente");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setUser(Utente user) {
-        this.user = user;
+    @FXML
+    void loginButtonOnAction(ActionEvent event) {
+        try {
+            checkFieldsAreBlank();
+            validateLogin();
+        } catch (BlankFieldException e) {
+            errorLabel.setText("Inserire nome utente e password");
+        }
     }
 
-    @Override
-    public void checkFieldsAreBlank() throws BlankFieldException {
-        if(usernameTextField.getText().isBlank() || passwordTextField.getText().isBlank())
-            throw new BlankFieldException();
+    @FXML
+    void registratiButtonOnAction(ActionEvent event) {
+        try {
+            NavigationController.getInstance().setStage((Stage) loginButton.getScene().getWindow());
+            NavigationController.getInstance().loadScene("../FXML/Registrazione.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

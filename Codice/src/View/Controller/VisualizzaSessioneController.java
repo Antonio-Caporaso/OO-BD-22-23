@@ -26,42 +26,42 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class VisualizzaSessioneController implements Initializable {
-    private Sessione sessione;
-    private SubScene subScene;
-    private VisualizzaConferenzaController visualizzaConferenzaController;
-    private Programma programma;
     @FXML
-    private Label inizioLabel;
-    @FXML
-    private Label fineLabel;
+    private TableColumn<ActivityModel, String> appuntamentoTableColumn;
     @FXML
     private Button confermaButton;
     @FXML
     private Label coordinatoreLabel;
     @FXML
+    private TableColumn<ActivityModel, String> descrizioneTableColumn;
+    @FXML
     private Button editDetailsButton;
     @FXML
     private Button editProgrammaButton;
     @FXML
-    private Label keynoteSpeakerLabel;
-    @FXML
-    private Label nomeLabel;
-    @FXML
-    private Label salaLabel;
-    @FXML
-    private Label titleLabel;
-    @FXML
-    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
-    @FXML
-    private TableColumn<ActivityModel, String> descrizioneTableColumn;
-    @FXML
-    private TableColumn<ActivityModel, String> appuntamentoTableColumn;
+    private Label fineLabel;
     @FXML
     private TableColumn<ActivityModel, Timestamp> fineTableColumn;
     @FXML
+    private Label inizioLabel;
+    @FXML
     private TableColumn<ActivityModel, Timestamp> inizioTableColumn;
     @FXML
+    private Label keynoteSpeakerLabel;
+    @FXML
+    private Label nomeLabel;
+    private Programma programma;
+    @FXML
     private TableView<ActivityModel> programmaTableView;
+    @FXML
+    private Label salaLabel;
+    @FXML
+    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
+    @FXML
+    private Label titleLabel;
+    private Sessione sessione;
+    private SubScene subScene;
+    private VisualizzaConferenzaController visualizzaConferenzaController;
 
     public VisualizzaSessioneController(Sessione sessione, SubScene subScene, VisualizzaConferenzaController visualizzaConferenzaController) {
         this.sessione = sessione;
@@ -75,14 +75,7 @@ public class VisualizzaSessioneController implements Initializable {
         setDettagliSessione();
         setProgrammaTableView();
     }
-    private void retrieveProgrammaSessione() {
-        ProgrammaDao programmaDao = new ProgrammaDao();
-        try {
-            programma = programmaDao.retrieveProgrammaBySessione(sessione);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     public void setDettagliSessione() {
         titleLabel.setText(sessione.getTitolo());
         nomeLabel.setText(sessione.getTitolo());
@@ -92,8 +85,18 @@ public class VisualizzaSessioneController implements Initializable {
         coordinatoreLabel.setText(sessione.getCoordinatore().toString());
         keynoteSpeakerLabel.setText(programma.getKeynote().toString());
     }
-    private void setProgrammaTableView(){
-        try{
+
+    private void retrieveProgrammaSessione() {
+        ProgrammaDao programmaDao = new ProgrammaDao();
+        try {
+            programma = programmaDao.retrieveProgrammaBySessione(sessione);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setProgrammaTableView() {
+        try {
             programma.loadProgramaSessione();
             appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
@@ -102,20 +105,22 @@ public class VisualizzaSessioneController implements Initializable {
             descrizioneTableColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
             programmaTableView.setItems(programma.getProgrammaSessione());
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
         loader.setController(visualizzaConferenzaController);
         subScene.setRoot(loader.load());
     }
+
     @FXML
     void showDetails(MouseEvent event) throws IOException {
         ActivityModel activityModel = programmaTableView.getSelectionModel().getSelectedItem();
-        if(activityModel instanceof Intervento){
+        if (activityModel instanceof Intervento) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaIntervento.fxml"));
             VisualizzaInterventoController controller = new VisualizzaInterventoController((Intervento) activityModel);
             loader.setController(controller);
@@ -127,7 +132,7 @@ public class VisualizzaSessioneController implements Initializable {
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Non ci sono ulteriori informazioni da visualizzare");
             alert.showAndWait();

@@ -22,44 +22,35 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class VisualizzaConferenzeController implements Initializable {
-    private Conferenze conferenze = new Conferenze();
-    private Sedi sedi = new Sedi();
-    private SubScene subScene;
     @FXML
     private Button cercaPerDataButton;
-
     @FXML
     private Button cercaPerSedeButton;
-
+    private Conferenze conferenze = new Conferenze();
     @FXML
     private DatePicker dataFineDP;
-
     @FXML
     private DatePicker dataInizioDP;
-
-    @FXML
-    private ChoiceBox<Sede> sedeChoice;
-
-    @FXML
-    private TableColumn<Conferenza,String> sedeColumn;
-
-    @FXML
-    private TableView<Conferenza> tableConferenza;
     @FXML
     private TableColumn<Conferenza, String> descrizioneColumn;
-
+    @FXML
+    private RadioButton filterBySedeRadioButton;
     @FXML
     private TableColumn<Conferenza, Timestamp> fineConferenzaColumn;
-
     @FXML
     private TableColumn<Conferenza, Timestamp> inizioConferenzaColumn;
-
     @FXML
     private TableColumn<Conferenza, String> nomeConferenzaColumn;
     @FXML
-    private Button visualizzaButton;
+    private ChoiceBox<Sede> sedeChoice;
     @FXML
-    private RadioButton filterBySedeRadioButton;
+    private TableColumn<Conferenza, String> sedeColumn;
+    private Sedi sedi = new Sedi();
+    private SubScene subScene;
+    @FXML
+    private TableView<Conferenza> tableConferenza;
+    @FXML
+    private Button visualizzaButton;
 
     public SubScene getSubScene() {
         return subScene;
@@ -68,58 +59,6 @@ public class VisualizzaConferenzeController implements Initializable {
     public void setSubScene(SubScene subScene) {
         this.subScene = subScene;
     }
-
-    @FXML
-    void findButtonOnAction(ActionEvent event) {
-        tableConferenza.setItems(null);
-        sedeChoice.setValue(null);
-        try{
-            if(sedeChoice.isDisabled()) {
-                try {
-                    Date dataInizio = Date.valueOf(dataInizioDP.getValue());
-                    Date dataFine = Date.valueOf(dataFineDP.getValue());
-                    conferenze.loadByDateInterval(dataInizio, dataFine);
-                    setTable(conferenze.getConferenze());
-                }catch (NullPointerException e){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Assicurati di aver inserito tutti i campi");
-                    alert.showAndWait();
-                }
-            }else{
-                try {
-                    Date dataInizio = Date.valueOf(dataInizioDP.getValue());
-                    Date dataFine = Date.valueOf(dataFineDP.getValue());
-                    Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
-                    conferenze.loadByDateAndSede(dataInizio, dataFine, sede);
-                    setTable(conferenze.getConferenze());
-                }catch (NullPointerException e){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Assicurati di aver inserito tutti i campi");
-                    alert.showAndWait();
-                }
-            }
-        }catch (SQLException e){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        }
-    }
-
-    @FXML
-    void visualizzaConferenzaOnAction(MouseEvent event) throws IOException {
-        Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
-        if(c.equals(null)){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Selezionare una conferenza");
-            alert.showAndWait();
-        }else{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
-            VisualizzaConferenzaController controller = new VisualizzaConferenzaController(c,subScene,this);
-            loader.setController(controller);
-            subScene.setRoot(loader.load());
-        }
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -136,11 +75,60 @@ public class VisualizzaConferenzeController implements Initializable {
         sedeColumn.setCellValueFactory(new PropertyValueFactory<>("sede"));
         tableConferenza.setItems(c);
     }
+
+    @FXML
+    void findButtonOnAction(ActionEvent event) {
+        tableConferenza.setItems(null);
+        sedeChoice.setValue(null);
+        try {
+            if (sedeChoice.isDisabled()) {
+                try {
+                    Date dataInizio = Date.valueOf(dataInizioDP.getValue());
+                    Date dataFine = Date.valueOf(dataFineDP.getValue());
+                    conferenze.loadByDateInterval(dataInizio, dataFine);
+                    setTable(conferenze.getConferenze());
+                } catch (NullPointerException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Assicurati di aver inserito tutti i campi");
+                    alert.showAndWait();
+                }
+            } else {
+                try {
+                    Date dataInizio = Date.valueOf(dataInizioDP.getValue());
+                    Date dataFine = Date.valueOf(dataFineDP.getValue());
+                    Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
+                    conferenze.loadByDateAndSede(dataInizio, dataFine, sede);
+                    setTable(conferenze.getConferenze());
+                } catch (NullPointerException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Assicurati di aver inserito tutti i campi");
+                    alert.showAndWait();
+                }
+            }
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void visualizzaConferenzaOnAction(MouseEvent event) throws IOException {
+        Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
+        if (c.equals(null)) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText("Selezionare una conferenza");
+            alert.showAndWait();
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenza.fxml"));
+            VisualizzaConferenzaController controller = new VisualizzaConferenzaController(c, subScene, this);
+            loader.setController(controller);
+            subScene.setRoot(loader.load());
+        }
+    }
+
     @FXML
     void activateSediChoiceBox(ActionEvent event) {
-        if(sedeChoice.isDisabled())
-            sedeChoice.setDisable(false);
-        else
-            sedeChoice.setDisable(true);
+        sedeChoice.setDisable(!sedeChoice.isDisabled());
     }
 }

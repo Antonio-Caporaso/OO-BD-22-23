@@ -7,28 +7,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.postgresql.util.PGInterval;
+
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 
 public class SlittaConferenzaController implements Initializable {
-    private Conferenza conferenza;
-    private ModificaConferenzaController modificaConferenzaController;
-
     @FXML
     private Button annullaButton;
-
+    private Conferenza conferenza;
     @FXML
     private TextField giorniTF;
-
+    private ModificaConferenzaController modificaConferenzaController;
     @FXML
     private Button okButton;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
 
     public void setConferenza(Conferenza conferenza) {
         this.conferenza = conferenza;
@@ -38,11 +37,17 @@ public class SlittaConferenzaController implements Initializable {
         this.modificaConferenzaController = modificaConferenzaController;
     }
 
+    private void slittaConferenza(PGInterval durata) throws SQLException {
+        ConferenzaDao conferenzaDao = new ConferenzaDao();
+        conferenzaDao.slittaConferenza(conferenza, durata);
+    }
+
     @FXML
     void annullaButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) annullaButton.getScene().getWindow();
         stage.close();
     }
+
     @FXML
     void okButtonOnAction(ActionEvent event) throws SQLException {
         try {
@@ -52,20 +57,11 @@ public class SlittaConferenzaController implements Initializable {
             modificaConferenzaController.reloadConferenza();
             Stage stage = (Stage) annullaButton.getScene().getWindow();
             stage.close();
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Input non valido");
             alert.setContentText("Inserire un numero!");
             alert.showAndWait();
         }
-    }
-
-    private void slittaConferenza(PGInterval durata) throws SQLException {
-        ConferenzaDao conferenzaDao = new ConferenzaDao();
-        conferenzaDao.slittaConferenza(conferenza,durata);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 }

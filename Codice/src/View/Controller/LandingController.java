@@ -11,12 +11,12 @@ import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LandingController implements Initializable{
-    public Utente user;
+public class LandingController implements Initializable {
     @FXML
     private Button LogoutButton;
     @FXML
@@ -25,6 +25,7 @@ public class LandingController implements Initializable{
     private SubScene subscene;
     @FXML
     private Label welcomeLabel;
+    public Utente user;
 
     public Utente getUser() {
         return user;
@@ -33,6 +34,23 @@ public class LandingController implements Initializable{
     public void setUser(Utente user) {
         this.user = user;
         setWelcomeLabel();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Welcome.fxml"));
+        try {
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void setWelcomeLabel() {
+        if (user != null)
+            welcomeLabel.setText("Welcome " + user.getUsername() + "!");
     }
 
     @FXML
@@ -63,6 +81,7 @@ public class LandingController implements Initializable{
             e.printStackTrace();
         }
     }
+
     @FXML
     void visualizzaConferenzaOnAction(ActionEvent event) {
         try {
@@ -77,18 +96,20 @@ public class LandingController implements Initializable{
         }
 
     }
+
     @FXML
-    void visualizzaStatisticheOnAction(ActionEvent event){
-        try{
+    void visualizzaStatisticheOnAction(ActionEvent event) {
+        try {
             Parent loader = FXMLLoader.load(getClass().getResource("../FXML/VisualizzaStatistiche.fxml"));
             subscene.setRoot(loader);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @FXML
-    void logoutButtonOnAction(ActionEvent event){
-        try{
+    void logoutButtonOnAction(ActionEvent event) {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Login.fxml"));
             Parent root = loader.load();
             Scene login = new Scene(root);
@@ -96,12 +117,13 @@ public class LandingController implements Initializable{
             controller.setUser(null);
             Stage stage = (Stage) LogoutButton.getScene().getWindow();
             stage.setScene(login);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @FXML
-    void backToLandingButtonOnAction(ActionEvent event){
+    void backToLandingButtonOnAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Landing.fxml"));
             LandingController controller = new LandingController();
@@ -111,23 +133,8 @@ public class LandingController implements Initializable{
             Scene landingScene = new Scene(root);
             Stage stage = (Stage) backToLandingButton.getScene().getWindow();
             stage.setScene(landingScene);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    public void setWelcomeLabel() {
-        if(user != null)
-            welcomeLabel.setText("Welcome " + user.getUsername() + "!");
-    }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Welcome.fxml"));
-        try {
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 }

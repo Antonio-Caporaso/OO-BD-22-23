@@ -22,32 +22,43 @@ public class ViewStatsController implements Initializable {
     @FXML
     private Button annoButton;
     @FXML
-    private Button pulisciButton;
-    @FXML
     private TextField annoTextField;
+    @FXML
+    private TextField meseTextField;
+    @FXML
+    private Button monthlyButton;
     @FXML
     private Pane pane;
     @FXML
     private Pane pane2;
     @FXML
-    private TextField meseTextField;
-    @FXML
-    private Button monthlyButton;
+    private Button pulisciButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
+
+    private LinkedList<Stats> retrieveIstituzioniByMonth(int m, int y) throws SQLException {
+        InterventoDao dao = new InterventoDao();
+        return dao.retrieveInterventiStatsByMonth(m, y);
+    }
+
+    private LinkedList<Stats> retrieveIstituzioniByYear(int i) throws SQLException {
+        InterventoDao dao = new InterventoDao();
+        return dao.retrieveInterventiStatsByYear(i);
+    }
+
     @FXML
     void monthlyButtonOnAction(ActionEvent event) {
         ObservableList<Stats> stats = FXCollections.observableArrayList();
         try {
-            stats.addAll(retrieveIstituzioniByMonth(Integer.parseInt(meseTextField.getText()),Integer.parseInt(annoTextField.getText())));
+            stats.addAll(retrieveIstituzioniByMonth(Integer.parseInt(meseTextField.getText()), Integer.parseInt(annoTextField.getText())));
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            if(stats.isEmpty()){
+            if (stats.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Non risultano interventi nel mese cercato");
                 alert.showAndWait();
-            }else{
+            } else {
                 for (Stats dataPoint : stats) {
                     PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
                     pieChartData.add(data);
@@ -61,7 +72,7 @@ public class ViewStatsController implements Initializable {
                 pieChart.setLabelsVisible(true);
                 pieChart.setStartAngle(180);
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("La stringa inserita non corrisponde ad un numero, riprovare.");
             alert.showAndWait();
@@ -71,14 +82,6 @@ public class ViewStatsController implements Initializable {
 
     }
 
-    private LinkedList<Stats> retrieveIstituzioniByYear(int i) throws SQLException {
-        InterventoDao dao = new InterventoDao();
-        return dao.retrieveInterventiStatsByYear(i);
-    }
-    private LinkedList<Stats> retrieveIstituzioniByMonth(int m,int y) throws SQLException {
-        InterventoDao dao = new InterventoDao();
-        return dao.retrieveInterventiStatsByMonth(m,y);
-    }
     @FXML
     void pulisciButtonOnAction(ActionEvent event) {
         meseTextField.setText("");
@@ -90,14 +93,14 @@ public class ViewStatsController implements Initializable {
         try {
             stats.addAll(retrieveIstituzioniByYear(Integer.parseInt(annoTextField.getText())));
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            for(Stats s: stats){
+            for (Stats s : stats) {
                 System.out.println(s);
             }
-            if(stats.isEmpty()){
+            if (stats.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Non risultano interventi nell'anno cercato");
                 alert.showAndWait();
-            }else{
+            } else {
                 for (Stats dataPoint : stats) {
                     PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
                     pieChartData.add(data);
@@ -111,11 +114,11 @@ public class ViewStatsController implements Initializable {
                 pieChart.setLabelsVisible(true);
                 pieChart.setStartAngle(180);
             }
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("La stringa inserita non corrisponde ad un numero, riprovare.");
             alert.showAndWait();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

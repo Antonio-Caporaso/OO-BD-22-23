@@ -7,7 +7,8 @@ public class Ente {
     private String nome;
     private String sigla;
 
-    public Ente() {}
+    public Ente() {
+    }
 
     public Ente(String nome) {
         this.nome = nome;
@@ -17,6 +18,16 @@ public class Ente {
         this.id_ente = id;
         this.nome = nome;
         this.sigla = sigla;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ente ente = (Ente) o;
+
+        return Objects.equals(nome, ente.nome);
     }
 
     public int getId_ente() {
@@ -30,6 +41,7 @@ public class Ente {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -40,16 +52,6 @@ public class Ente {
 
     public void setSigla(String sigla) {
         this.sigla = sigla;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Ente ente = (Ente) o;
-
-        return Objects.equals(nome, ente.nome);
     }
 
     @Override

@@ -14,6 +14,7 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -22,24 +23,49 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModificaDettagliConferenzaController implements Initializable {
-    private Conferenza conferenza;
-    private ModificaConferenzaController modificaConferenzaController;
-    private SubScene subScene;
     @FXML
-    private ChoiceBox<Sede> sedeChoiceBox;
+    private Button annullaButton;
+    private Conferenza conferenza;
     @FXML
     private TextArea descrizioneTextArea;
     @FXML
     private DateTimePicker fineDateTimePicker;
     @FXML
     private DateTimePicker inizioDateTimePicker;
-    private Sedi sedi = new Sedi();
-    @FXML
-    private Button annullaButton;
+    private ModificaConferenzaController modificaConferenzaController;
     @FXML
     private TextField nomeTF;
     @FXML
     private Button okButton;
+    @FXML
+    private ChoiceBox<Sede> sedeChoiceBox;
+    private Sedi sedi = new Sedi();
+    private SubScene subScene;
+
+    public Conferenza getConferenza() {
+        return conferenza;
+    }
+
+    public void setConferenza(Conferenza conferenza) {
+        this.conferenza = conferenza;
+    }
+
+    public SubScene getSubScene() {
+        return subScene;
+    }
+
+    public void setSubScene(SubScene subScene) {
+        this.subScene = subScene;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        nomeTF.setText(conferenza.getTitolo());
+        descrizioneTextArea.setText(conferenza.getDescrizione());
+        inizioDateTimePicker.setDateTimeValue(conferenza.getInizio().toLocalDateTime());
+        fineDateTimePicker.setDateTimeValue(conferenza.getFine().toLocalDateTime());
+        sedeChoiceBox.setValue(conferenza.getSede());
+    }
 
     public void setEditConferenceController(ModificaConferenzaController modificaConferenzaController) {
         this.modificaConferenzaController = modificaConferenzaController;
@@ -58,7 +84,7 @@ public class ModificaDettagliConferenzaController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Sicuro di voler modificare i dettagli della conferenza?");
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
             loader.setController(modificaConferenzaController);
             conferenza.setTitolo(nomeTF.getText());
@@ -74,29 +100,9 @@ public class ModificaDettagliConferenzaController implements Initializable {
             subScene.setRoot(root);
         }
     }
-    public Conferenza getConferenza() {
-        return conferenza;
-    }
-    public void setConferenza(Conferenza conferenza) {
-        this.conferenza = conferenza;
-    }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        nomeTF.setText(conferenza.getTitolo());
-        descrizioneTextArea.setText(conferenza.getDescrizione());
-        inizioDateTimePicker.setDateTimeValue(conferenza.getInizio().toLocalDateTime());
-        fineDateTimePicker.setDateTimeValue(conferenza.getFine().toLocalDateTime());
-        sedeChoiceBox.setValue(conferenza.getSede());
-    }
-    public SubScene getSubScene() {
-        return subScene;
-    }
-    public void setSubScene(SubScene subScene) {
-        this.subScene = subScene;
-    }
 
     @FXML
-    void showSediDisponibili(MouseEvent event)  {
+    void showSediDisponibili(MouseEvent event) {
         try {
             Timestamp inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
             Timestamp fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
@@ -105,15 +111,15 @@ public class ModificaDettagliConferenzaController implements Initializable {
                 throw new SediNonDisponibiliException();
             else
                 sedeChoiceBox.setItems(sedi.getSedi());
-        }catch (SediNonDisponibiliException e){
+        } catch (SediNonDisponibiliException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Inserire delle date per visualizzare le sedi libere");
             alert.showAndWait();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText(e.getMessage());
             alert.showAndWait();

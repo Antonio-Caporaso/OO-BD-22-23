@@ -22,26 +22,26 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditKeynoteController implements Initializable {
-    private ModificaProgrammaSessioneController editProgrammaController;
-    private Speaker keynote;
-    private Programma programma;
-    private SubScene subScene;
     @FXML
     private Button addKeynoteButton;
     @FXML
     private TableColumn<Speaker, String> cognomeKeynoteColumn;
     @FXML
     private Button deleteEventoButton;
+    private ModificaProgrammaSessioneController editProgrammaController;
     @FXML
     private TableColumn<Speaker, String> emailKeynoteColumn;
     @FXML
     private Button fineButton;
     @FXML
     private TableColumn<Speaker, String> istituzioneKeynoteColumn;
+    private Speaker keynote;
     @FXML
     private TableView<Speaker> keynoteSpeakerTable;
     @FXML
     private TableColumn<Speaker, String> nomeKeynoteColumn;
+    private Programma programma;
+    private SubScene subScene;
 
     public ModificaProgrammaSessioneController getEditProgrammaController() {
         return editProgrammaController;
@@ -81,11 +81,11 @@ public class EditKeynoteController implements Initializable {
     }
 
     private void setKeynoteTable() {
-            nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            cognomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
-            emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-            istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
-            keynoteSpeakerTable.getItems().add(keynote);
+        nomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        cognomeKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+        emailKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        istituzioneKeynoteColumn.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
+        keynoteSpeakerTable.getItems().add(keynote);
     }
 
     @FXML
@@ -95,7 +95,7 @@ public class EditKeynoteController implements Initializable {
         controller.setProgramma(programma);
         loader.setController(controller);
         Parent root = loader.load();
-        Scene scene  = new Scene(root);
+        Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -107,7 +107,7 @@ public class EditKeynoteController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Sicuro di voler eliminare il keynote speaker dal programma?");
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.get()== ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             programma.setKeynote(null);
             ProgrammaDao dao = new ProgrammaDao();
             try {

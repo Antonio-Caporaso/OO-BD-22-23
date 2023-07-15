@@ -1,12 +1,12 @@
 package Persistence.Entities.organizzazione;
 
 public class Indirizzo {
-    private String via;
-    private String civico;
     private String cap;
     private String city;
-    private String stato;
+    private String civico;
     private String provincia;
+    private String stato;
+    private String via;
 
     public Indirizzo(String via, String civico, String cap, String city, String stato, String provincia) {
         this.via = via;
@@ -19,22 +19,6 @@ public class Indirizzo {
 
     public Indirizzo() {
 
-    }
-
-    public String getVia() {
-        return via;
-    }
-
-    public void setVia(String via) {
-        this.via = via;
-    }
-
-    public String getCivico() {
-        return civico;
-    }
-
-    public void setCivico(String civico) {
-        this.civico = civico;
     }
 
     public String getCap() {
@@ -53,12 +37,12 @@ public class Indirizzo {
         this.city = city;
     }
 
-    public String getStato() {
-        return stato;
+    public String getCivico() {
+        return civico;
     }
 
-    public void setStato(String stato) {
-        this.stato = stato;
+    public void setCivico(String civico) {
+        this.civico = civico;
     }
 
     public String getProvincia() {
@@ -69,8 +53,24 @@ public class Indirizzo {
         this.provincia = provincia;
     }
 
+    public String getStato() {
+        return stato;
+    }
+
+    public void setStato(String stato) {
+        this.stato = stato;
+    }
+
+    public String getVia() {
+        return via;
+    }
+
+    public void setVia(String via) {
+        this.via = via;
+    }
+
     @Override
     public String toString() {
-        return  via + " "+  civico+ ", "+ city + " (" + provincia + "), " + cap;
+        return via + " " + civico + ", " + city + " (" + provincia + "), " + cap;
     }
 }
