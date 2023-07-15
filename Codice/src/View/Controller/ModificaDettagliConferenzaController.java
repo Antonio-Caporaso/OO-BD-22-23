@@ -14,7 +14,6 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -37,8 +36,6 @@ public class ModificaDettagliConferenzaController implements Initializable {
     private Sedi sedi = new Sedi();
     @FXML
     private Button annullaButton;
-    @FXML
-    private TextField descrizioneTF;
     @FXML
     private TextField nomeTF;
     @FXML
@@ -65,7 +62,7 @@ public class ModificaDettagliConferenzaController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
             loader.setController(modificaConferenzaController);
             conferenza.setTitolo(nomeTF.getText());
-            conferenza.setDescrizione(descrizioneTF.getText());
+            conferenza.setDescrizione(descrizioneTextArea.getText());
             conferenza.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
             conferenza.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
             conferenza.setSede(sedeChoiceBox.getSelectionModel().getSelectedItem());
@@ -86,7 +83,10 @@ public class ModificaDettagliConferenzaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         nomeTF.setText(conferenza.getTitolo());
-        descrizioneTF.setText(conferenza.getDescrizione());
+        descrizioneTextArea.setText(conferenza.getDescrizione());
+        inizioDateTimePicker.setDateTimeValue(conferenza.getInizio().toLocalDateTime());
+        fineDateTimePicker.setDateTimeValue(conferenza.getFine().toLocalDateTime());
+        sedeChoiceBox.setValue(conferenza.getSede());
     }
     public SubScene getSubScene() {
         return subScene;
@@ -96,7 +96,7 @@ public class ModificaDettagliConferenzaController implements Initializable {
     }
 
     @FXML
-    void showSedi(MouseEvent event)  {
+    void showSediDisponibili(MouseEvent event)  {
         try {
             Timestamp inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
             Timestamp fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
