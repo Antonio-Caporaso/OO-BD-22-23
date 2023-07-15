@@ -28,6 +28,6 @@ public class Speaker extends Partecipante{
     }
 @Override
     public String toString(){
-        return nome + cognome;
+        return nome + " " + cognome;
 }
 }
