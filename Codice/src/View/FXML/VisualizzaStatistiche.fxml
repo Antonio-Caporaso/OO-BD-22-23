@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.ViewStatsController">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.ViewStatsController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="27.0" text="Visualizza statistiche" textFill="WHITE">
@@ -26,16 +26,22 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="40.0" layoutY="123.0" prefHeight="36.0" prefWidth="146.0" text="Inserisci il mese:">
+                        <Label layoutX="41.0" layoutY="287.0" prefHeight="36.0" prefWidth="146.0" text="Inserisci il mese:">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="meseTextField" layoutX="40.0" layoutY="159.0" prefHeight="24.0" prefWidth="222.0" promptText="inserisci un numero da 1 a 12" />
+                        <TextField fx:id="meseTextField" layoutX="41.0" layoutY="323.0" prefHeight="24.0" prefWidth="222.0" promptText="inserisci un numero da 1 a 12" />
                         <Label layoutX="194.0" layoutY="133.0" />
-                        <Button fx:id="monthlyButton" layoutX="40.0" layoutY="226.0" mnemonicParsing="false" onAction="#monthlyButtonOnAction" prefHeight="24.0" prefWidth="173.0" text="Calcola" />
-                        <Button fx:id="pulisciButton" layoutX="41.0" layoutY="258.0" mnemonicParsing="false" onAction="#pulisciButtonOnAction" prefHeight="24.0" prefWidth="171.0" text="Pulisci" />
-                        <Pane fx:id="pane" layoutX="392.0" layoutY="63.0" prefHeight="439.0" prefWidth="474.0" />
+                        <Button fx:id="monthlyButton" layoutX="219.0" layoutY="478.0" mnemonicParsing="false" onAction="#monthlyButtonOnAction" prefHeight="24.0" prefWidth="173.0" text="Calcola" />
+                        <Button fx:id="pulisciButton" layoutX="41.0" layoutY="478.0" mnemonicParsing="false" onAction="#pulisciButtonOnAction" prefHeight="24.0" prefWidth="171.0" text="Pulisci" />
+                        <Pane fx:id="pane" layoutX="421.0" layoutY="68.0" prefHeight="439.0" prefWidth="474.0" />
+                        <Label layoutX="41.0" layoutY="219.0" prefHeight="36.0" prefWidth="146.0" text="Inserisci l'anno:">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="meseTextField1" layoutX="41.0" layoutY="255.0" onAction="#annoTextField" prefHeight="24.0" prefWidth="222.0" promptText="Inserisci un numero" />
                      </children>
                   </AnchorPane>
             </content>
@@ -44,14 +50,15 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="45.0" layoutY="134.0" text="Inserisci anno:">
+                        <Label layoutX="35.0" layoutY="272.0" text="Inserisci anno:">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="annoTextField" layoutX="45.0" layoutY="165.0" prefHeight="24.0" prefWidth="215.0" promptText="inserire un numero di 4 cifre" />
-                        <Button fx:id="annoButton" layoutX="45.0" layoutY="226.0" mnemonicParsing="false" onAction="#yearlyButtonOnAction" prefHeight="24.0" prefWidth="164.0" text="Calcola" />
-                        <Pane fx:id="pane2" layoutX="388.0" layoutY="53.0" prefHeight="394.0" prefWidth="395.0" />
+                        <TextField fx:id="annoTextField" layoutX="35.0" layoutY="303.0" prefHeight="24.0" prefWidth="215.0" promptText="inserire un numero di 4 cifre" />
+                        <Button fx:id="annoButton" layoutX="218.0" layoutY="447.0" mnemonicParsing="false" onAction="#yearlyButtonOnAction" prefHeight="24.0" prefWidth="164.0" text="Calcola" />
+                        <Pane fx:id="pane2" layoutX="446.0" layoutY="76.0" prefHeight="448.0" prefWidth="449.0" />
+                        <Button layoutX="35.0" layoutY="447.0" mnemonicParsing="false" onAction="#pulisciButtonOnAction" prefHeight="24.0" prefWidth="171.0" text="Pulisci" />
                      </children>
                   </AnchorPane>
             </content>

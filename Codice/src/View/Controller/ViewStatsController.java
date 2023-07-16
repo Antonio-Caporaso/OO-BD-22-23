@@ -55,31 +55,36 @@ public class ViewStatsController implements Initializable {
             stats.addAll(retrieveIstituzioniByMonth(Integer.parseInt(meseTextField.getText()), Integer.parseInt(annoTextField.getText())));
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
             if (stats.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Non risultano interventi nel mese cercato");
-                alert.showAndWait();
+                showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nel mese cercato");
             } else {
-                for (Stats dataPoint : stats) {
-                    PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
-                    pieChartData.add(data);
-                }
-                PieChart pieChart = new PieChart(pieChartData);
-                pane.getChildren().add(pieChart);
-
-                pieChart.setTitle("Statistica mensile");
-                pieChart.setClockwise(true);
-                pieChart.setLabelLineLength(50);
-                pieChart.setLabelsVisible(true);
-                pieChart.setStartAngle(180);
+                createPieChart(stats, pieChartData, pane, "Statistica mensile");
             }
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("La stringa inserita non corrisponde ad un numero, riprovare.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "La stringa inserita non corrisponde ad un numero, riprovare.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void createPieChart(ObservableList<Stats> stats, ObservableList<PieChart.Data> pieChartData, Pane pane, String title) {
+        for (Stats dataPoint : stats) {
+            PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
+            pieChartData.add(data);
+        }
+        PieChart pieChart = new PieChart(pieChartData);
+        pane.getChildren().add(pieChart);
+        pieChart.setTitle(title);
+        pieChart.setClockwise(true);
+        pieChart.setLabelLineLength(50);
+        pieChart.setLabelsVisible(true);
+        pieChart.setStartAngle(180);
+    }
+
+    private static void showAlert(Alert.AlertType information, String s) {
+        Alert alert = new Alert(information);
+        alert.setContentText(s);
+        alert.showAndWait();
     }
 
     @FXML
@@ -97,27 +102,12 @@ public class ViewStatsController implements Initializable {
                 System.out.println(s);
             }
             if (stats.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Non risultano interventi nell'anno cercato");
-                alert.showAndWait();
+                showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nell'anno cercato");
             } else {
-                for (Stats dataPoint : stats) {
-                    PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
-                    pieChartData.add(data);
-                }
-                PieChart pieChart = new PieChart(pieChartData);
-                pane2.getChildren().add(pieChart);
-
-                pieChart.setTitle("Statistica annuale");
-                pieChart.setClockwise(true);
-                pieChart.setLabelLineLength(50);
-                pieChart.setLabelsVisible(true);
-                pieChart.setStartAngle(180);
+                createPieChart(stats, pieChartData, pane2, "Statistica annuale");
             }
         } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("La stringa inserita non corrisponde ad un numero, riprovare.");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "La stringa inserita non corrisponde ad un numero, riprovare.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
