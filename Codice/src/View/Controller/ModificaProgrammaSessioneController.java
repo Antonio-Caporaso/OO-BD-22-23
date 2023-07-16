@@ -125,4 +125,18 @@ public class ModificaProgrammaSessioneController implements Initializable {
         setProgrammaTableView();
     }
 
+    @FXML
+    void choiceKeynoteOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ChoiceKeynote.fxml"));
+        ChooseKeynoteController controller = new ChooseKeynoteController();
+        controller.setProgramma(programma);
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Selezione Keynote Speaker");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

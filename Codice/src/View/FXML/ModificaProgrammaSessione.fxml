@@ -26,6 +26,11 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
+            <Button mnemonicParsing="false" onAction="#choiceKeynoteOnAction" prefHeight="65.0" prefWidth="224.0" text="Seleziona Keynote Speaker">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
          </children></VBox>
       <TableView fx:id="programmaTableView" layoutX="13.0" layoutY="99.0" prefHeight="603.0" prefWidth="688.0" stylesheets="@../CSS/TableView.css">
          <columns>
