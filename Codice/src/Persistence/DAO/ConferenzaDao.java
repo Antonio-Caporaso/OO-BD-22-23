@@ -226,5 +226,16 @@ public class ConferenzaDao {
         }
         return  c;
     }
-
+    public int getConferenceNumber() throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select count(*) from conferenza";
+        PreparedStatement stm = conn.prepareStatement(query);
+        int result = 0;
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            result = rs.getInt(1);
+        }
+        return result;
+    }
 }

@@ -88,7 +88,7 @@ public class InterventoDao {
         while(rs.next()){
             Stats s = new Stats();
             s.setIstituzione(rs.getString(1));
-            s.setPercentuale(rs.getInt(2));
+            s.setPercentuale(rs.getDouble(2));
             stats.add(s);
         }
         return stats;
@@ -96,7 +96,7 @@ public class InterventoDao {
     public LinkedList<Stats> retrieveInterventiStatsByYear(Integer i) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "select * from calcola_percentuale_interventi_by_anno(?)";
+        String query = "select * from show_percentage_interventi(?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,i);
         ResultSet rs = stm.executeQuery();
@@ -104,7 +104,7 @@ public class InterventoDao {
         while(rs.next()){
             Stats s = new Stats();
             s.setIstituzione(rs.getString(1));
-            s.setPercentuale(rs.getInt(2));
+            s.setPercentuale(rs.getDouble(2));
             stats.add(s);
         }
         return stats;

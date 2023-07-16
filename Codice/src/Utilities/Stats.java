@@ -2,7 +2,7 @@ package Utilities;
 
 public class Stats {
     private String istituzione;
-    private int percentuale;
+    private double percentuale;
 
     public String getIstituzione() {
         return istituzione;
@@ -12,11 +12,11 @@ public class Stats {
         this.istituzione = istituzione;
     }
 
-    public int getPercentuale() {
+    public double getPercentuale() {
         return percentuale;
     }
 
-    public void setPercentuale(int percentuale) {
+    public void setPercentuale(double percentuale) {
         this.percentuale = percentuale;
     }
 

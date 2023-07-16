@@ -126,4 +126,16 @@ public class SessioneDao {
         }
         return  sessioni;
     }
+    public int getNumeroPartecipanti() throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "SELECT COUNT(*) from partecipazione";
+        PreparedStatement stm = conn.prepareStatement(query);
+        int result = 0;
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            result = rs.getInt(1);
+        }
+        return result;
+    }
 }

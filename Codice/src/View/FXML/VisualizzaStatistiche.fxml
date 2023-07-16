@@ -1,69 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.ViewStatsController">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.VisualizzaStatisticheController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Rectangle fill="DODGERBLUE" height="90.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="27.0" text="Visualizza statistiche" textFill="WHITE">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <VBox layoutX="603.0" layoutY="260.0" prefHeight="200.0" prefWidth="279.0" />
-      <TabPane layoutY="90.0" prefHeight="630.0" prefWidth="932.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Visualizza statistiche mensili">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="41.0" layoutY="287.0" prefHeight="36.0" prefWidth="146.0" text="Inserisci il mese:">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="meseTextField" layoutX="41.0" layoutY="323.0" prefHeight="24.0" prefWidth="222.0" promptText="inserisci un numero da 1 a 12" />
-                        <Label layoutX="194.0" layoutY="133.0" />
-                        <Button fx:id="monthlyButton" layoutX="219.0" layoutY="478.0" mnemonicParsing="false" onAction="#monthlyButtonOnAction" prefHeight="24.0" prefWidth="173.0" text="Calcola" />
-                        <Button fx:id="pulisciButton" layoutX="41.0" layoutY="478.0" mnemonicParsing="false" onAction="#pulisciButtonOnAction" prefHeight="24.0" prefWidth="171.0" text="Pulisci" />
-                        <Pane fx:id="pane" layoutX="421.0" layoutY="68.0" prefHeight="439.0" prefWidth="474.0" />
-                        <Label layoutX="41.0" layoutY="219.0" prefHeight="36.0" prefWidth="146.0" text="Inserisci l'anno:">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="meseTextField1" layoutX="41.0" layoutY="255.0" onAction="#annoTextField" prefHeight="24.0" prefWidth="222.0" promptText="Inserisci un numero" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Visualizza statistiche annuali">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="35.0" layoutY="272.0" text="Inserisci anno:">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="annoTextField" layoutX="35.0" layoutY="303.0" prefHeight="24.0" prefWidth="215.0" promptText="inserire un numero di 4 cifre" />
-                        <Button fx:id="annoButton" layoutX="218.0" layoutY="447.0" mnemonicParsing="false" onAction="#yearlyButtonOnAction" prefHeight="24.0" prefWidth="164.0" text="Calcola" />
-                        <Pane fx:id="pane2" layoutX="446.0" layoutY="76.0" prefHeight="448.0" prefWidth="449.0" />
-                        <Button layoutX="35.0" layoutY="447.0" mnemonicParsing="false" onAction="#pulisciButtonOnAction" prefHeight="24.0" prefWidth="171.0" text="Pulisci" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d6d9dd" height="632.0" layoutY="90.0" stroke="#d3cccc" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Rectangle fill="WHITE" height="247.0" layoutX="42.0" layoutY="147.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Rectangle fill="WHITE" height="247.0" layoutX="338.0" layoutY="147.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Rectangle fill="WHITE" height="247.0" layoutX="631.0" layoutY="147.0" stroke="#a4a4a4" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Rectangle fill="WHITE" height="247.0" layoutX="42.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Pane fx:id="currentMonthPieChartPanel" layoutX="42.0" layoutY="447.0" prefHeight="247.0" prefWidth="247.0" />
+      <Rectangle fill="WHITE" height="247.0" layoutX="343.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Rectangle fill="WHITE" height="247.0" layoutX="631.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Label layoutX="42.0" layoutY="120.0" text="Conferenze">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="422.0" text="Istituzioni">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="88.0" layoutY="242.0" text="Conferenze organizzate" />
+      <Label fx:id="totalConferenzeLabel" layoutX="155.0" layoutY="190.0" text="2" textFill="#0dbaff">
+         <font>
+            <Font name="Cantarell Regular" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="444.0" layoutY="190.0" />
+      <ImageView fitHeight="112.0" fitWidth="138.0" layoutX="110.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/calendar.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="444.0" layoutY="190.0" />
+      <Label fx:id="totalPartecipantiLabel" layoutX="451.0" layoutY="190.0" text="3" textFill="#0fff1f">
+         <font>
+            <Font name="Cantarell Regular" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="402.0" layoutY="242.0" text="Nuovi partecipanti" />
+      <ImageView fitHeight="112.0" fitWidth="138.0" layoutX="411.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/man.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="totalSponsorizzazioniLabel" layoutX="744.0" layoutY="190.0" text="5" textFill="#ff750f">
+         <font>
+            <Font name="Cantarell Regular" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="697.0" layoutY="242.0" text="Aziende coinvolte" />
+      <ImageView fitHeight="112.0" fitWidth="138.0" layoutX="699.0" layoutY="271.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/office-building.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="currentYearPieChartPane" layoutX="342.0" layoutY="446.0" prefHeight="247.0" prefWidth="247.0" />
    </children>
 </AnchorPane>

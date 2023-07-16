@@ -62,4 +62,16 @@ public class SponsorDao {
         stm.close();
         return s;
     }
+    public int getSponsorNumber() throws SQLException {
+        dbConnection = DBConnection.getDBconnection();
+        connection = dbConnection.getConnection();
+        String query = "select count(distinct id_sponsor) from sponsor_conferenza";
+        PreparedStatement stm = connection.prepareStatement(query);
+        int result = 0;
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            result = rs.getInt(1);
+        }
+        return result;
+    }
 }
