@@ -84,14 +84,14 @@ public class AddSponsorController implements Initializable {
         }
     }
 
-    private void loadInserisciSessione() {
+    private void loadVisualizzaSessione() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/InserisciSessione.fxml"));
-            InserisciSessioneController controller = new InserisciSessioneController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessioniConferenza.fxml"));
+            VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza();
             loader.setController(controller);
             controller.setSubscene(subscene);
             controller.setConferenza(conferenza);
-            controller.setUtente(user);
+            controller.setUser(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -161,7 +161,7 @@ public class AddSponsorController implements Initializable {
 
     @FXML
     void nextOnAction(ActionEvent event) {
-        loadInserisciSessione();
+        loadVisualizzaSessione();
     }
 
     @FXML

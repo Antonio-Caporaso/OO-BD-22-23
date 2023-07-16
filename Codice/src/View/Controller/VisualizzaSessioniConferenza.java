@@ -51,6 +51,7 @@ public class VisualizzaSessioniConferenza implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setSessioni();
+        checkAlmenoUnaSessione();
     }
 
     //Public Setters
@@ -148,6 +149,9 @@ public class VisualizzaSessioniConferenza implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
+    private void checkAlmenoUnaSessione(){
+        aggiungiProgrammaButton.setDisable(sessioniTableView.getItems().isEmpty());
+    }
 
     //Button Methods
     @FXML
@@ -193,6 +197,7 @@ public class VisualizzaSessioniConferenza implements Initializable {
                 try {
                     conferenza.removeSessione(selected);
                     setSessioni();
+                    checkAlmenoUnaSessione();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

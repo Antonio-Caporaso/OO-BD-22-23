@@ -161,7 +161,18 @@ public class ViewProgrammaController implements Initializable {
     }
 
     private void loadRiepilogo() {
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
+            ModificaConferenzaController controller = new ModificaConferenzaController();
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(conferenza);
+            controller.setUser(user);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadSessioneLabel() {
@@ -169,6 +180,18 @@ public class ViewProgrammaController implements Initializable {
     }
 
     private void loadVisualizzaSessione() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessioniConferenza.fxml"));
+            VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza();
+            loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(conferenza);
+            controller.setUser(user);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     private void loadInfoIntervento(Intervento intervento){
         try {
