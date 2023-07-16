@@ -154,6 +154,53 @@
                   <Font name="System Bold" size="13.0" />
                </font>
           </TitledPane>
+            <TitledPane prefHeight="119.0" prefWidth="909.0" text="Comitati">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Accordion layoutX="6.0" layoutY="7.0" prefHeight="445.0" prefWidth="907.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <panes>
+                            <TitledPane animated="false" text="Comitato locale">
+                                 <content>
+                                    <TableView fx:id="comitatoLocaleTable" prefHeight="200.0" prefWidth="200.0">
+                                      <columns>
+                                        <TableColumn fx:id="nomeOrganizzatoreColumn1" prefWidth="75.0" text="Nome" />
+                                        <TableColumn fx:id="cognomeOrganizzatoreColumn1" prefWidth="75.0" text="Cognome" />
+                                          <TableColumn fx:id="titoloOrganizzatoreColumn1" prefWidth="75.0" text="Titolo" />
+                                          <TableColumn fx:id="emailOrganizzatoreColumn1" prefWidth="75.0" text="Email" />
+                                          <TableColumn fx:id="istituzioneOrganizzatoreColumn1" prefWidth="263.9999694824219" text="Istituzione" />
+                                      </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </content>
+                              </TitledPane>
+                            <TitledPane animated="false" text="Comitato scientifico">
+                                 <content>
+                                    <TableView fx:id="comitatoScientificoTable" prefHeight="200.0" prefWidth="200.0">
+                                       <columns>
+                                          <TableColumn fx:id="nomeOrganizzatoreColumn2" prefWidth="75.0" text="Nome" />
+                                          <TableColumn fx:id="cognomeOrganizzatoreColumn2" prefWidth="75.0" text="Cognome" />
+                                          <TableColumn fx:id="titoloOrganizzatoreColumn2" prefWidth="75.0" text="Titolo" />
+                                          <TableColumn fx:id="emailOrganizzatoreColumn2" prefWidth="75.0" text="Email" />
+                                          <TableColumn fx:id="istituzioneOrganizzatoreColumn2" prefWidth="263.9999694824219" text="Istituzione" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </content>
+                              </TitledPane>
+                          </panes>
+                        </Accordion>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
           <TitledPane animated="false" text="Sponsorizzazioni">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -198,7 +245,6 @@
             </TitledPane>
         </panes>
       </Accordion>
-      <Accordion layoutX="14.0" layoutY="172.0" />
       <Button fx:id="confermaButton" layoutX="719.0" layoutY="682.0" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="204.0" text="Indietro" />
    </children>
 </AnchorPane>

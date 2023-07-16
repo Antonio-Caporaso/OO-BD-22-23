@@ -2,7 +2,9 @@ package View.Controller;
 
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Conferenze.Sessione;
+import Persistence.Entities.organizzazione.Comitato;
 import Persistence.Entities.organizzazione.Ente;
+import Persistence.Entities.organizzazione.Organizzatore;
 import Persistence.Entities.organizzazione.Sponsorizzazione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,10 +21,21 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
+import java.util.ServiceLoader;
 
 public class VisualizzaConferenzaController implements Initializable {
     @FXML
     private Label budgetLabel;
+    @FXML
+    private TableColumn<Organizzatore, String> cognomeOrganizzatoreColumn1;
+    @FXML
+    private TableColumn<Organizzatore, String> cognomeOrganizzatoreColumn2;
+    @FXML
+    private TableColumn<Organizzatore, String> comeOrganizzatoreColumn2;
+    @FXML
+    private TableView<Organizzatore> comitatoLocaleTable;
+    @FXML
+    private TableView<Organizzatore> comitatoScientificoTable;
     private Conferenza conferenza;
     @FXML
     private Button confermaButton;
@@ -37,6 +50,10 @@ public class VisualizzaConferenzaController implements Initializable {
     @FXML
     private Button editSessioniButton;
     @FXML
+    private TableColumn<Organizzatore, String> emailOrganizzatoreColumn1;
+    @FXML
+    private TableColumn<Organizzatore, String> emailOrganizzatoreColumn2;
+    @FXML
     private TableView<Ente> entiTable;
     @FXML
     private TextArea entiView;
@@ -47,9 +64,17 @@ public class VisualizzaConferenzaController implements Initializable {
     @FXML
     private TableColumn<Sessione, Timestamp> inizioSessioneColumn;
     @FXML
+    private TableColumn<Organizzatore, Ente> istituzioneOrganizzatoreColumn1;
+    @FXML
+    private TableColumn<Organizzatore, Ente> istituzioneOrganizzatoreColumn2;
+    @FXML
     private TableColumn<Ente, String> nomeEnte;
     @FXML
     private Label nomeLabel;
+    @FXML
+    private TableColumn<Organizzatore, String> nomeOrganizzatoreColumn1;
+    @FXML
+    private TableColumn<Organizzatore, String> nomeOrganizzatoreColumn2;
     @FXML
     private TableColumn<Sessione, String> nomeSessioneColumn;
     @FXML
@@ -70,8 +95,12 @@ public class VisualizzaConferenzaController implements Initializable {
     @FXML
     private Label titleLabel;
     @FXML
+    private TableColumn<Organizzatore, String> titoloOrganizzatoreColumn1;
+    @FXML
+    private TableColumn<Organizzatore, String> titoloOrganizzatoreColumn2;
+    @FXML
     private TableColumn<Sponsorizzazione, String> valutaColumn;
-    private VisualizzaConferenzeController visualizzaConferenzeController;
+    private final VisualizzaConferenzeController visualizzaConferenzeController;
 
     public VisualizzaConferenzaController(Conferenza conferenza, SubScene subScene, VisualizzaConferenzeController controller) {
         this.conferenza = conferenza;
@@ -101,6 +130,46 @@ public class VisualizzaConferenzaController implements Initializable {
         setOrganizzatori();
         setSponsorizzazioni();
         setSessioniTable();
+        setComitatoScientiticoTable();
+        setComitatoLocaleTable();
+    }
+
+    private void setComitatoLocaleTable() {
+        Comitato comitato_L = conferenza.getComitato_l();
+        try {
+            comitato_L.loadMembri();
+            nomeOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            cognomeOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+            titoloOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+            emailOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("email"));
+            istituzioneOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
+            comitatoLocaleTable.setItems(comitato_L.getMembri());
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void setComitatoScientiticoTable() {
+        Comitato comitato_S = conferenza.getComitato_s();
+        try {
+            comitato_S.loadMembri();
+            nomeOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            cognomeOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+            titoloOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+            emailOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("email"));
+            istituzioneOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
+            comitatoScientificoTable.setItems(comitato_S.getMembri());
+        }catch (NullPointerException e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     public void setDetails() {
