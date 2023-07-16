@@ -1,12 +1,19 @@
 package Persistence.Entities.organizzazione;
+import Persistence.DAO.ComitatoDao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class Comitato {
     private int id_comitato;
     private String tipologia;
+    private ObservableList<Organizzatore> membri;
 
     public Comitato() {
+        membri = FXCollections.observableArrayList();
     }
 
     @Override
@@ -18,6 +25,24 @@ public class Comitato {
 
         if (id_comitato != comitato.id_comitato) return false;
         return Objects.equals(tipologia, comitato.tipologia);
+    }
+    public void loadMembri() throws SQLException {
+        ComitatoDao comitatoDao = new ComitatoDao();
+        membri.clear();
+        membri.addAll(comitatoDao.retreiveMembryComitato(this));
+    }
+    public void addMembro(Organizzatore o){
+        if(!(membri.contains(o))){
+            membri.add(o);
+        }
+    }
+    public void removeMembro(Organizzatore o){
+        if(membri.contains(o))
+            membri.remove(o);
+    }
+
+    public ObservableList<Organizzatore> getMembri() {
+        return membri;
     }
 
     public int getId_comitato() {

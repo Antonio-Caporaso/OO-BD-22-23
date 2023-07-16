@@ -60,4 +60,24 @@ public class ComitatoDao {
         }
         return c;
     }
+    public LinkedList<Organizzatore> retreiveMembryComitato(Comitato comitato) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select o.nome,o.cognome,o.email,o.titolo,o.id_ente from organizzatore o natural join organizzatore_comitato where id_comitato = ?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,comitato.getId_comitato());
+        ResultSet rs = stm.executeQuery();
+        LinkedList<Organizzatore> membri = new LinkedList<>();
+        EnteDao enteDao = new EnteDao();
+        while(rs.next()){
+            Organizzatore o = new Organizzatore();
+            o.setNome(rs.getString(1));
+            o.setCognome(rs.getString(2));
+            o.setEmail(rs.getString(3));
+            o.setTitolo(rs.getString(4));
+            o.setIstituzione(enteDao.retrieveEnte(rs.getInt(5)));
+            membri.add(o);
+        }
+        return membri;
+    }
 }
