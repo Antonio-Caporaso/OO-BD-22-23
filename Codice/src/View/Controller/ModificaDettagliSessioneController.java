@@ -78,8 +78,8 @@ public class ModificaDettagliSessioneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        toolTipInizioConferenza.setText(conferenza.getInizio().toString());
-        toolTipFineConferenza.setText(conferenza.getFine().toString());
+        toolTipInizioConferenza.setText("La conferenza inizia il giorno "+conferenza.getInizio().getDate()+" alle "+conferenza.getInizio().getTime());
+        toolTipFineConferenza.setText("La conferenza finisce il giorno "+conferenza.getFine().getDate()+" alle "+conferenza.getFine().getTime());
         saleChoice.setValue(sessione.getLocazione());
         try {
             setTitoloSessione();
