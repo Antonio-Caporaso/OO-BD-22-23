@@ -718,7 +718,7 @@ create or replace function show_percentage_interventi(mese int, anno int)
 returns table
 (
     ente text,
-    percentuale text
+    percentuale bigint
 ) as $$
 declare
     totale int;
@@ -728,7 +728,7 @@ begin
     where date_part('month',inizio) = mese and date_part('year',inizio) = anno;
 
     return query
-    select e.nome, (count(*)*100/totale)::text || '%'
+    select e.nome, (count(*)*100/totale)
     from intervento i join speaker s 
     on i.id_speaker = s.id_speaker join ente e 
     on s.id_ente = e.id_ente
@@ -741,8 +741,8 @@ $$ language plpgsql;
 create or replace function show_percentage_interventi(anno int)
 returns table
 (
-    nome varchar(7),
-    percentuale text
+    nome text,
+    percentuale bigint
 ) as $$
 declare
     totale int;
@@ -752,7 +752,7 @@ begin
     where date_part('year',inizio) = anno;
 
     return query
-    select e.nome, (count(*)*100/totale)::text || '%'
+    select e.nome, (count(*)*100/totale)
     from intervento i join speaker s 
     on i.id_speaker = s.id_speaker join ente e 
     on s.id_ente = e.id_ente
