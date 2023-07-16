@@ -30,17 +30,17 @@
 	\textbf{Comitato\_Conferenza} & Ogni conferenza è legata ai comitati che ne gestiscono l'organizzazione. & \textbf{Comitati [2..2]}: indica i due comitati nominati per la conferenza. \\
 	& & \textbf{Conferenza [1..1]} ruolo \textbf{di}: ogni comitato appartiene ad una sola conferenza. \\
 	\hline
-	\textbf{Sponsorizzazione\_Conferenza} & Ogni conferenza ha varie sponsorizzazioni da parte degli Sponsor che contribuiscono alle spese generali. & \textbf{Sponsor [0..*]} \\
-	& & \textbf{Conferenza [0..*]}\\
+	\textbf{Sponsorizzazione\_Conferenza} & Ogni conferenza ha varie sponsorizzazioni da parte degli Sponsor che contribuiscono alle spese generali. & \textbf{Sponsor [0..*]}: indica lo sponsor che ha fatto la sponsorizzazione\\
+	& & \textbf{Conferenza [0..*]}: conferenza beneficiaria della sponsorizzazione\\
 	\hline
-	\textbf{Svolta\_In} & Specifica l'ubicazione di una conferenza in una sede. & \textbf{Conferenza [0..*]} \\
-	& & \textbf{Sede [1..1]} \\
+	\textbf{Svolta\_In} & Specifica l'ubicazione di una conferenza in una sede. & \textbf{Conferenza [0..*]}:  \\
+	& & \textbf{Sede [1..1]}: sede della conferenza \\
 	\hline
 	\textbf{Svolta\_In} & Specifica l'ubicazione di una sessione in una sala. & \textbf{Sessione [0..*]} \\
-	& & \textbf{Sala [1..1]} \\
+	& & \textbf{Sala [1..1]}: sala della sessione\\
 	\hline
 	\textbf{Coordina} & Ogni sessione ha un coordinatore. & \textbf{Sessione [0..1]} \\
-	& & \textbf{Organizzatore [1..1]} \\
+	& & \textbf{Organizzatore [1..1]}: coordinatore della sessione \\
 	\hline
 	\textbf{Sessioni\_Conferenza} & Ogni conferenza è composta da una o più sessioni. & \textbf{Conferenza [1..1]} \\
 	& & \textbf{Sessioni [0..*]} \\ \hline
