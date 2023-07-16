@@ -59,7 +59,7 @@ public class ProgrammaDao {
     public void saveKeynote(Programma programma) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "update programma set id_keynote = ? where idprogramma=?";
+        String query = "update programma set id_keynote = ? where id_programma=?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,programma.getKeynote().getIdSpeaker());
         stm.setInt(2,programma.getProgrammaID());
