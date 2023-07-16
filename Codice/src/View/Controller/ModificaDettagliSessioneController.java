@@ -33,11 +33,13 @@ public class ModificaDettagliSessioneController implements Initializable {
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
     @FXML
-    private Label fineConferenzaLabel;
-    @FXML
     private DateTimePicker fineDateTimePicker;
     @FXML
-    private Label inizioConferenzaLabel;
+    private Tooltip toolTipFineConferenza;
+
+    @FXML
+    private Tooltip toolTipInizioConferenza;
+
     @FXML
     private DateTimePicker inizioDateTimePicker;
     private MembriComitato membriComitatoScientifico;
@@ -76,8 +78,8 @@ public class ModificaDettagliSessioneController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        inizioConferenzaLabel.setText(conferenza.getInizio().toString());
-        fineConferenzaLabel.setText(conferenza.getFine().toString());
+        toolTipInizioConferenza.setText(conferenza.getInizio().toString());
+        toolTipFineConferenza.setText(conferenza.getFine().toString());
         saleChoice.setValue(sessione.getLocazione());
         try {
             setTitoloSessione();
