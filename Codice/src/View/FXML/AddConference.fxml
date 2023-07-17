@@ -16,10 +16,10 @@
 <?import javafx.scene.text.Font?>
 <?import tornadofx.control.DateTimePicker?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" style="-fx-background-color: #33749D;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" style="-fx-background-color: #2e3440;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="75.0" layoutY="-5.0" stroke="#00416a" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
-        <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #00416A;" text="Crea una nuova conferenza" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="75.0" layoutY="-5.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+        <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #232730;" text="Crea una nuova conferenza" textAlignment="RIGHT" textFill="#eceff4" wrapText="true">
             <font>
                 <Font name="System Bold" size="22.0" />
             </font>
@@ -39,17 +39,17 @@
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="14.0" layoutY="20.0" text="Nome della conferenza" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="20.0" text="Nome della conferenza" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <TextField fx:id="nomeConferenzaTF" prefHeight="24.0" prefWidth="509.0" promptText="Aggiungi un nome completo e chiaro" GridPane.columnIndex="1" />
+            <TextField fx:id="nomeConferenzaTF" prefHeight="24.0" prefWidth="509.0" promptText="Aggiungi un nome completo e chiaro" stylesheets="@../CSS/NewStyle.css" GridPane.columnIndex="1" />
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label layoutX="14.0" layoutY="16.0" text="Inizio" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="16.0" text="Inizio" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -58,7 +58,7 @@
             </Pane>
             <Pane prefHeight="157.0" prefWidth="279.0" GridPane.rowIndex="2">
                <children>
-                  <Label layoutX="14.0" layoutY="15.0" text="Fine" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="15.0" text="Fine" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -67,7 +67,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <Label layoutX="14.0" layoutY="14.0" text="Descrizione" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="14.0" text="Descrizione" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -77,35 +77,38 @@
                   </Label>
                </children>
             </Pane>
-            <TextArea fx:id="descrizioneTextArea" prefHeight="48.0" prefWidth="509.0" promptText="Aggiungi una breve descrizione della tua conferenza" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextArea fx:id="descrizioneTextArea" prefHeight="48.0" prefWidth="509.0" promptText="Aggiungi una breve descrizione della tua conferenza" stylesheets="@../CSS/NewStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets top="20.0" />
                </GridPane.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
             </TextArea>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                <children>
-                  <Label layoutX="14.0" layoutY="37.0" text="Sede" textFill="WHITE">
+                  <Label layoutX="14.0" layoutY="37.0" text="Sede" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <ChoiceBox fx:id="sedeChoice" onMouseClicked="#showSedi" prefHeight="24.0" prefWidth="642.0" stylesheets="@../CSS/ChoiceBox.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DateTimePicker fx:id="dataInizioDP" prefHeight="25.0" prefWidth="175.0" promptText="Data di Inizio" stylesheets="@../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <DateTimePicker fx:id="dataFineDP" prefHeight="25.0" prefWidth="175.0" promptText="Data di Fine" stylesheets="@../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="sedeChoice" onMouseClicked="#showSedi" prefHeight="24.0" prefWidth="642.0" stylesheets="@../CSS/NewStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DateTimePicker fx:id="dataInizioDP" prefHeight="25.0" prefWidth="175.0" promptText="Data di Inizio" stylesheets="@../CSS/NewStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DateTimePicker fx:id="dataFineDP" prefHeight="25.0" prefWidth="175.0" promptText="Data di Fine" stylesheets="@../CSS/NewStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <ButtonBar layoutX="718.0" layoutY="675.0" prefHeight="24.0" prefWidth="200.0">
         <buttons>
-          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" stylesheets="@../CSS/DefaultButton.css" text="Annulla" textFill="WHITE">
+          <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" style="-fx-background-color: #5e81ac;" text="Annulla" textFill="#eceff4">
                <font>
                   <Font size="15.0" />
                </font>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></Button>
-            <Button fx:id="avantiButton" mnemonicParsing="false" onAction="#avantiButtonOnAction" stylesheets="@../CSS/DefaultButton.css" text="Avanti" textFill="WHITE">
+            <Button fx:id="avantiButton" mnemonicParsing="false" onAction="#avantiButtonOnAction" style="-fx-background-color: #5e81ac;" text="Avanti" textFill="#eceff4">
                <font>
                   <Font size="15.0" />
                </font></Button>

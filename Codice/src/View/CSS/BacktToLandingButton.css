@@ -1,6 +1,7 @@
 .button{
-    -fx-background-image: url('../Resources/Logo.png');
-    -fx-background-position: center;
-    -fx-background-size: 305px;
+    -fx-background-image: url('../Resources/Logo(2).png');
+    -fx-background-position: left;
+    -fx-background-size: 250px;
     -fx-border-radius: 10;
+    -fx-background-color: #232730;
 }
