@@ -82,7 +82,7 @@ create table partecipante(
     nome text not null,
     cognome text not null,
     titolo titolo_st,
-    email text not null unique, 
+    email text not null, 
     id_ente integer references ente(id_ente) on delete set null
 );
 

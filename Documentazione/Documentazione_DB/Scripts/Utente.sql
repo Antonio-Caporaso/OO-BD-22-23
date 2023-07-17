@@ -1,5 +1,6 @@
 insert into utente (username, nome, cognome, titolo, email, password, id_ente) values 
 ('Giordi9902','Giorgio','Di Fusco',null,'giorgio99difusco@gmail.com','giorgio',31),
+('SuoXender','Antonio', 'Caporaso', null, 'anto.caporaso00@gmail.com','mandarino',31),
 ('Robbin', 'Vail', 'Bourtoumieux', 'Professore', 'vbourtoumieux0@imageshack,us', 'wA8%''\dB\59Z', 2),
 ('Rakel', 'Penrod', 'Gurnee', 'Ingegnere', 'pgurnee1@cocolog-nifty,com', 'wY9}eZP&CE1KwjxL', 11),
 ('Enrico', 'Geordie', 'Grollmann', 'Assistente', 'ggrollmann2@alibaba,com', 'fH1&97avP!MQ', 26),

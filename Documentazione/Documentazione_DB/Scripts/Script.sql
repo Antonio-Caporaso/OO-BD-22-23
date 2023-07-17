@@ -12,3 +12,4 @@ drop schema conference cascade;
 \i Sponsors.sql
 \i Valute.sql
 \i PGConfNPL.sql
+\i SpaceExpo.sql
