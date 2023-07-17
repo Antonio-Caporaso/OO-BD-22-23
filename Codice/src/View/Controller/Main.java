@@ -1,6 +1,7 @@
 package View.Controller;
 
 import Persistence.DbConfig.DBConnection;
+import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,6 +31,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try {
+            //Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Login.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);

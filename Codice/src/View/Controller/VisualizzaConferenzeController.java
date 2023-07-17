@@ -78,8 +78,7 @@ public class VisualizzaConferenzeController implements Initializable {
 
     @FXML
     void findButtonOnAction(ActionEvent event) {
-        tableConferenza.setItems(null);
-        sedeChoice.setValue(null);
+        tableConferenza.getItems().clear();
         try {
             if (sedeChoice.isDisabled()) {
                 try {

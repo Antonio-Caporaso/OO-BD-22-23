@@ -157,8 +157,8 @@ public class ConferenzaDao {
         LinkedList<Conferenza> conferenze = new LinkedList<>();
         ResultSet rs = stm.executeQuery();
         ComitatoDao comitatodao = new ComitatoDao();
-        Conferenza c = new Conferenza();
         while(rs.next()){
+            Conferenza c = new Conferenza();
             c.setId_conferenza(rs.getInt("id_conferenza"));
             c.setTitolo(rs.getString("titolo"));
             c.setInizio(rs.getTimestamp("inizio"));
