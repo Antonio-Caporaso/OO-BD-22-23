@@ -185,7 +185,7 @@ call add_evento('Sessione di domande e risposte',programma5_id,'20 minutes');
 call add_intervallo('pranzo', programma5_id, '30 minutes');
 exception
     when others then
-        raise notice 'Errore inserimento conferenza';
+        raise notice 'Errore inserimento conferenza: %',sqlerrm;
         rollback;
 end $$;
 \end{lstlisting}

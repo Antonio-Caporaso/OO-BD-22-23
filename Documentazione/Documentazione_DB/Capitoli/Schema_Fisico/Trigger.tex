@@ -460,3 +460,46 @@ BEFORE UPDATE ON conferenza
 FOR EACH ROW
 EXECUTE FUNCTION reset_sale_sessioni();
 \end{lstlisting}
+\subsection{Aggiungi\_Speaker\_Partecipanti}
+Ogni volta che si aggiunge un intervento aggiungiamo lo speaker tra i partecipanti della sessione e aggiornare il conto della capienza della sala.
+\begin{lstlisting}[language=SQL,style=mystyle,caption={\texttt{Aggiungi\_Speaker\_Partecipanti}}]
+	CREATE OR REPLACE FUNCTION aggiungi_speaker_partecipante()
+	RETURNS TRIGGER AS $$
+	DECLARE
+	id_speaker_inserted INT;
+	id_programma_inserted INT;
+	id_sessione_inserted INT;
+	id_partecipante_inserted INT;
+	BEGIN
+	-- Ottieni l'ID dello speaker e del programma del nuovo intervallo
+	SELECT id_speaker, id_programma
+	INTO id_speaker_inserted, id_programma_inserted
+	FROM Intervento
+	WHERE id_intervento = NEW.id_intervento;
+	
+	-- Ottieni l'ID della sessione dal programma
+	SELECT id_sessione
+	INTO id_sessione_inserted
+	FROM Programma
+	WHERE id_programma = id_programma_inserted;
+	
+	-- Copia i dati dello speaker nella tabella Partecipante
+	INSERT INTO Partecipante (nome, cognome, titolo, email, id_ente)
+	SELECT s.nome, s.cognome, s.titolo, s.email, s.id_ente
+	FROM Speaker s
+	WHERE s.id_speaker = id_speaker_inserted
+	RETURNING id_partecipante INTO id_partecipante_inserted;
+	
+	-- Inserisci lo speaker come partecipante della sessione
+	INSERT INTO partecipazione (id_sessione, id_partecipante)
+	VALUES (id_sessione_inserted, id_partecipante_inserted);
+	
+	RETURN NEW;
+	END;
+	$$ LANGUAGE plpgsql;
+	
+	CREATE TRIGGER trg_aggiungi_speaker_partecipante
+	AFTER INSERT ON Intervento
+	FOR EACH ROW
+	EXECUTE FUNCTION aggiungi_speaker_partecipante();
+\end{lstlisting}

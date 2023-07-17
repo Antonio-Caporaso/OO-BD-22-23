@@ -32,4 +32,5 @@
 \contentsline {lstlisting}{\numberline {4.32}{\ignorespaces \texttt {Delete\_sessioni\_conferenza}}}{36}{lstlisting.4.32}%
 \contentsline {lstlisting}{\numberline {4.33}{\ignorespaces \texttt {Check\_Capienza}}}{37}{lstlisting.4.33}%
 \contentsline {lstlisting}{\numberline {4.34}{\ignorespaces \texttt {Set\_Sale\_Null}}}{37}{lstlisting.4.34}%
-\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Conferenza PGConf NPL}}{57}{lstlisting.5.1}%
+\contentsline {lstlisting}{\numberline {4.35}{\ignorespaces \texttt {Aggiungi\_Speaker\_Partecipanti}}}{38}{lstlisting.4.35}%
+\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Conferenza PGConf NPL}}{58}{lstlisting.5.1}%
