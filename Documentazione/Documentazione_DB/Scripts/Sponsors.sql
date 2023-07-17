@@ -53,4 +53,7 @@ VALUES
 ('BMW AG'),
 ('Ford Motor Company'),
 ('SSC Napoli'),
-('Tesla Inc.');
+('Tesla Inc.'),
+('Space X'),
+('Blue Origin LLC'),
+('Virgin Galactic');
