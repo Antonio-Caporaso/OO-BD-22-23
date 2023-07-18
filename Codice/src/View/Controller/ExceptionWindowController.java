@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -16,7 +17,9 @@ import java.util.ResourceBundle;
 public class ExceptionWindowController implements Initializable {
 
     @FXML
-    private Pane HBox;
+    private Pane hBox;
+    @FXML
+    private BorderPane borderPane;
     @FXML
     private Button closeButton;
     @FXML

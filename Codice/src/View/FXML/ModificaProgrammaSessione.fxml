@@ -10,10 +10,10 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" scaleShape="false" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" scaleShape="false" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
-      <Label layoutX="14.0" layoutY="27.0" text="Gestione del programma" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Label layoutX="14.0" layoutY="27.0" text="Gestione del programma" textFill="#eceff4">
          <font>
             <Font name="System Bold" size="30.0" />
          </font></Label>
@@ -32,7 +32,7 @@
                </VBox.margin>
             </Button>
          </children></VBox>
-      <TableView fx:id="programmaTableView" layoutX="13.0" layoutY="99.0" prefHeight="603.0" prefWidth="688.0" stylesheets="@../CSS/TableView.css">
+      <TableView fx:id="programmaTableView" layoutX="13.0" layoutY="99.0" prefHeight="603.0" prefWidth="688.0">
          <columns>
             <TableColumn fx:id="appuntamentoTableColumn" editable="false" maxWidth="256.0" prefWidth="135.0" resizable="false" text="Appuntamento" />
             <TableColumn fx:id="inizioTableColumn" editable="false" maxWidth="209.0" minWidth="0.0" prefWidth="148.0" resizable="false" text="Inizio" />

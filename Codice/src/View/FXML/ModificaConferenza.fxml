@@ -17,9 +17,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="90.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label fx:id="titleLabel" layoutX="14.0" layoutY="27.0" text="Label" textFill="WHITE">
          <font>
             <Font name="System Bold" size="30.0" />
@@ -185,7 +185,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="sponsorTable" prefHeight="502.0" prefWidth="681.0" stylesheets="@../CSS/TableView.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="sponsorTable" prefHeight="502.0" prefWidth="681.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
                               <TableColumn fx:id="sponsorColumn" editable="false" prefWidth="262.0" resizable="false" sortable="false" text="Sponsor" />
                               <TableColumn fx:id="contributoColumn" editable="false" prefWidth="195.0" resizable="false" sortable="false" text="Contributo" />

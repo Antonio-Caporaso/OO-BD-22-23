@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
 
 public class AddIntervalloController_Create implements Initializable {
     @FXML
-    private HBox HBox;
+    private HBox hBox;
     @FXML
     private AnchorPane popUpWindowAnchor;
     @FXML
