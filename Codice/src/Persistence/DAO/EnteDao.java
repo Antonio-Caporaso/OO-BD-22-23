@@ -10,6 +10,20 @@ import java.util.LinkedList;
 public class EnteDao {
     private DBConnection dbConnection;
     private Connection connection;
+
+    public int getTotalEnti() throws SQLException {
+        dbConnection = DBConnection.getDBconnection();
+        connection = dbConnection.getConnection();
+        String query = "select count(distinct id_ente) from ente_conferenza";
+        PreparedStatement stm = connection.prepareStatement(query);
+        int result = 0;
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            result = rs.getInt(1);
+        }
+        return result;
+    }
+
     public void saveEnteOrganizzatore(Ente ente, Conferenza conferenza) throws SQLException {
         dbConnection = DBConnection.getDBconnection();
         connection = dbConnection.getConnection();

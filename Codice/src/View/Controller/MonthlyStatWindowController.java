@@ -1,6 +1,7 @@
 package View.Controller;
 import Persistence.DAO.InterventoDao;
 import Utilities.Stats;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,7 +12,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -47,24 +53,27 @@ public class MonthlyStatWindowController implements Initializable {
         alert.setContentText(s);
         alert.showAndWait();
     }
-    private void createPieChart(ObservableList<Stats> stats, ObservableList<PieChart.Data> pieChartData, BorderPane pane, String title) {
+    private void createPieChart(ObservableList<Stats> stats, ObservableList<PieChart.Data> pieChartData, BorderPane pane) {
         for (Stats dataPoint : stats) {
             PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
             pieChartData.add(data);
         }
         PieChart pieChart = new PieChart(pieChartData);
         pane.setCenter(pieChart);
-        pieChart.setMaxHeight(260);
-        pieChart.setMaxWidth(260);
+        pieChart.setMaxHeight(400);
+        pieChart.setMaxWidth(400);
         pieChart.setLabelsVisible(true);
-        pieChart.setLabelLineLength(10);
-        for (PieChart.Data data : pieChart.getData()) {
-            data.setName(data.getName() + " (" + Math.round(data.getPieValue()) + "%)");
-        }
-        pieChart.setTitle(title);
+        pieChart.setLabelLineLength(40);
         pieChart.setClockwise(true);
         pieChart.setLabelsVisible(true);
         pieChart.setStartAngle(180);
+        pieChartData.forEach(data ->
+                data.nameProperty().bind(
+                        Bindings.concat(
+                                data.getName(), " ", data.pieValueProperty(), " %"
+                        )
+                )
+        );
     }
 
 
@@ -83,7 +92,7 @@ public class MonthlyStatWindowController implements Initializable {
                 if (stats.isEmpty()) {
                     showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nel mese cercato");
                 } else {
-                    createPieChart(stats, pieChartData, pieChartPane, "Statistica mensile");
+                    createPieChart(stats, pieChartData, pieChartPane);
                 }
             } catch (InputMismatchException e) {
                 showAlert(Alert.AlertType.ERROR, "Inserire un input valido");

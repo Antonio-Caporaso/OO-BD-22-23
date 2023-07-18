@@ -1,10 +1,8 @@
 package View.Controller;
 
-import Persistence.DAO.ConferenzaDao;
-import Persistence.DAO.InterventoDao;
-import Persistence.DAO.SessioneDao;
-import Persistence.DAO.SponsorDao;
+import Persistence.DAO.*;
 import Utilities.Stats;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,10 +15,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -43,83 +39,24 @@ public class VisualizzaStatisticheController implements Initializable {
 
     @FXML
     private Label totalSponsorizzazioniLabel;
+    @FXML
+    private Label totalEntiCounter;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setCurrentMonthPieChart();
-        setCurrentYearPieChart();
         setLabels();
-    }
-
-    private void createPieChart(ObservableList<Stats> stats, ObservableList<PieChart.Data> pieChartData, BorderPane pane, String title) {
-        for (Stats dataPoint : stats) {
-            PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
-            pieChartData.add(data);
-        }
-        PieChart pieChart = new PieChart(pieChartData);
-        pane.setCenter(pieChart);
-        pieChart.setMaxHeight(247);
-        pieChart.setMaxWidth(247);
-        pieChart.setLabelsVisible(true);
-        pieChart.setTitle(title);
-        pieChart.setClockwise(true);
-        pieChart.setLabelLineLength(10); // Adjust the length of the label lines as needed
-        for (PieChart.Data data : pieChart.getData()) {
-            data.setName(data.getName() + " (" + Math.round(data.getPieValue()) + "%)");
-        }
-        pieChart.setLabelsVisible(true);
-        pieChart.setStartAngle(180);
-    }
-
-    private LinkedList<Stats> retrieveIstituzioniByMonth(int m, int y) throws SQLException {
-        InterventoDao dao = new InterventoDao();
-        return dao.retrieveInterventiStatsByMonth(m, y);
-    }
-
-    private LinkedList<Stats> retrieveIstituzioniByYear(int i) throws SQLException {
-        InterventoDao dao = new InterventoDao();
-        return dao.retrieveInterventiStatsByYear(i);
-    }
-
-    private void setCurrentMonthPieChart() {
-        Month mese = LocalDate.now().getMonth();
-        int anno = LocalDate.now().getYear();
-        try {
-            ObservableList<Stats> stats = FXCollections.observableArrayList();
-            stats.addAll(retrieveIstituzioniByMonth(mese.getValue(), anno));
-            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            if (stats.isEmpty()) {
-                showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nel mese cercato");
-            } else {
-                createPieChart(stats, pieChartData, currentMonthPieChartPanel, "Statistica mensile");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setCurrentYearPieChart() {
-        int anno = LocalDate.now().getYear();
-        try {
-            ObservableList<Stats> stats = FXCollections.observableArrayList();
-            stats.addAll(retrieveIstituzioniByYear(anno));
-            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-            if (!(stats.isEmpty())) {
-                createPieChart(stats, pieChartData, currentYearPieChartPane, "Statistica annuale");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void setLabels() {
         ConferenzaDao conferenzaDao = new ConferenzaDao();
         SessioneDao sessioneDao = new SessioneDao();
         SponsorDao sponsorDao = new SponsorDao();
+        EnteDao enteDao = new EnteDao();
         try {
             totalConferenzeLabel.setText(String.valueOf(conferenzaDao.getConferenceNumber()));
             totalPartecipantiLabel.setText(String.valueOf(sessioneDao.getNumeroPartecipanti()));
             totalSponsorizzazioniLabel.setText(String.valueOf(sponsorDao.getSponsorNumber()));
+            totalEntiCounter.setText(String.valueOf(enteDao.getTotalEnti()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -132,8 +69,18 @@ public class VisualizzaStatisticheController implements Initializable {
     }
 
     @FXML
-    void openStatisticheAnnualiButton(ActionEvent event) {
-
+    void openStatisticheAnnualiButton(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/StatisticheAnnuali.fxml"));
+        MonthlyStatWindowController controller = new MonthlyStatWindowController();
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Calcola statistiche mensili");
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

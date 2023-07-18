@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -26,16 +23,6 @@
       <Rectangle fill="WHITE" height="247.0" layoutX="42.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
       <Rectangle fill="WHITE" height="247.0" layoutX="343.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
       <Rectangle fill="WHITE" height="247.0" layoutX="631.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
-      <Label layoutX="42.0" layoutY="120.0" text="Conferenze">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="42.0" layoutY="422.0" text="Istituzioni">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
       <Label layoutX="88.0" layoutY="242.0" text="Conferenze organizzate" />
       <Label fx:id="totalConferenzeLabel" layoutX="155.0" layoutY="190.0" text="2" textFill="#0dbaff">
          <font>
@@ -71,17 +58,18 @@
             <Image url="@../Resources/office-building.png" />
          </image>
       </ImageView>
-      <VBox layoutX="671.0" layoutY="490.0" prefHeight="160.0" prefWidth="168.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#openStatisticheMensiliWindow" prefHeight="65.0" prefWidth="177.0" text="Visualizza statistiche per un mese specifico" textAlignment="CENTER" wrapText="true" />
-            <Button mnemonicParsing="false" onAction="#openStatisticheAnnualiButton" prefHeight="65.0" prefWidth="203.0" text="Visualizza statistiche per un anno specifico" textAlignment="CENTER" wrapText="true">
-               <VBox.margin>
-                  <Insets top="30.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-      <BorderPane fx:id="currentYearPieChartPane" layoutX="363.0" layoutY="470.0" prefHeight="200.0" prefWidth="200.0" />
-      <BorderPane fx:id="currentMonthPieChartPanel" layoutX="66.0" layoutY="470.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="67.0" layoutY="535.0" mnemonicParsing="false" onAction="#openStatisticheMensiliWindow" prefHeight="65.0" prefWidth="177.0" text="Visualizza statistiche per un mese specifico" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="654.0" layoutY="535.0" mnemonicParsing="false" onAction="#openStatisticheAnnualiButton" prefHeight="65.0" prefWidth="203.0" text="Visualizza statistiche per un anno specifico" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="totalEntiCounter" layoutX="457.0" layoutY="483.0" text="2" textFill="#ff0ff0">
+         <font>
+            <Font name="Cantarell Regular" size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="398.0" layoutY="535.0" text="Istituzioni coinvolte" />
+      <ImageView fitHeight="112.0" fitWidth="155.0" layoutX="412.0" layoutY="568.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/education.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
