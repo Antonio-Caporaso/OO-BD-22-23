@@ -7,12 +7,15 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class ShowInfoIntervalloController_Create {
     @FXML
-    private HBox HBox;
+    private HBox hBox;
+    @FXML
+    private AnchorPane popUpWindowAnchor;
     @FXML
     private Button closeButton;
     @FXML

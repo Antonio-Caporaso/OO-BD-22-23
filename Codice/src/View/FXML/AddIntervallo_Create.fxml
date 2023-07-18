@@ -10,7 +10,7 @@
 
 <AnchorPane fx:id="popUpWindowAnchor" prefHeight="400.0" prefWidth="608.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.AddIntervalloController_Create">
    <children>
-      <HBox fx:id="HBox" layoutX="7.0" layoutY="8.0" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="595.0" stylesheets="@../CSS/NewStyle.css" />
+      <HBox fx:id="hBox" layoutX="7.0" layoutY="8.0" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="595.0" stylesheets="@../CSS/NewStyle.css" />
 
       <Label layoutX="28.0" layoutY="27.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci intervallo" textFill="WHITE">
          <font>

@@ -12,20 +12,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.ExceptionWindowController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.ExceptionWindowController">
    <top>
-      <HBox prefHeight="30.0" prefWidth="447.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="39.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="HBox" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="29.0" prefWidth="447.0" stylesheets="@../CSS/ApllicationHeaderPane.css">
+            <Pane fx:id="hBox" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="44.0" prefWidth="400.0" stylesheets="@../CSS/ApllicationHeaderPane.css">
                <children>
-                  <Button fx:id="closeButton" layoutX="372.0" layoutY="4.0" mnemonicParsing="false" onAction="#closeButtonOnAction" prefWidth="19.0" stylesheets="@../CSS/ApllicationHeaderPane.css" text="x" textFill="WHITE">
+                  <Button fx:id="closeButton" layoutX="357.0" layoutY="4.0" mnemonicParsing="false" onAction="#closeButtonOnAction" prefWidth="19.0" stylesheets="@../CSS/ApllicationHeaderPane.css" text="x" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="10.0" />
                      </font>
                   </Button>
-                  <Label layoutX="185.0" layoutY="9.0" prefHeight="15.0" prefWidth="30.0" text="Errore" textFill="WHITE">
+                  <Label layoutX="180.0" layoutY="11.0" prefHeight="17.0" prefWidth="40.0" text="Errore" textFill="#eceff4">
                      <font>
-                        <Font name="System Bold" size="10.0" />
+                        <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
                </children>
@@ -34,7 +34,7 @@
       </HBox>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #00416a;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" stylesheets="@../CSS/NewStyle.css" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="135.0" prefWidth="400.0">
                <children>
@@ -46,7 +46,7 @@
                         <Insets left="42.0" top="22.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label text="Error" textFill="WHITE">
+                  <Label text="Error" textFill="#eceff4">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -62,7 +62,7 @@
             <Separator prefWidth="200.0" style="-fx-background-color: #00416a;" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="errorMessageLabel" text="TESTO MOLTO LUNGO DI PROVA HAI ROTTO TUTTO" textFill="WHITE">
+                  <Label fx:id="errorMessageLabel" text="TESTO MOLTO LUNGO DI PROVA HAI ROTTO TUTTO" textFill="#eceff4">
                      <HBox.margin>
                         <Insets left="42.0" top="22.0" />
                      </HBox.margin>

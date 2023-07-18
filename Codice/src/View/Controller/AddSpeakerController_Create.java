@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -30,8 +31,9 @@ import java.util.ResourceBundle;
 public class AddSpeakerController_Create implements Initializable {
 
     @FXML
-    private HBox HBox;
-
+    private HBox hBox;
+    @FXML
+    private AnchorPane popUpWindowAnchor;
     @FXML
     private Button cancelButton;
 

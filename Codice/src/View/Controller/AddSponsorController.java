@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import org.postgresql.util.PSQLException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -24,6 +25,8 @@ import java.util.ResourceBundle;
 
 public class AddSponsorController implements Initializable {
     private Conferenza conferenza;
+    @FXML
+    private HBox hBox;
     @FXML
     private TableColumn<Sponsorizzazione, Float> contributoColumn;
     @FXML

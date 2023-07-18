@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="144.0" prefWidth="364.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="144.0" prefWidth="364.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="giorniTextField" layoutX="14.0" prefHeight="47.0" prefWidth="369.0" text="Di quanti giorni bisogna slittare la conferenza?">
+      <Label fx:id="giorniTextField" layoutX="14.0" prefHeight="47.0" prefWidth="369.0" text="Di quanti giorni bisogna slittare la conferenza?" textFill="#eceff4">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

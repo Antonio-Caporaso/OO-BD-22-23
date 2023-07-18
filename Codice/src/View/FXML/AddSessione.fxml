@@ -14,10 +14,10 @@
 <?import javafx.scene.text.Font?>
 <?import tornadofx.control.DateTimePicker?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
-      <Label layoutX="14.0" layoutY="27.0" text="Aggiungi sessione" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="90.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Label layoutX="14.0" layoutY="27.0" stylesheets="@../CSS/NewStyle.css" text="Aggiungi sessione" textFill="#eceff4">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -37,7 +37,7 @@
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="14.0" layoutY="39.0" text="Titolo della sessione:">
+                  <Label layoutX="14.0" layoutY="39.0" text="Titolo della sessione:" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -46,7 +46,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
                <children>
-                  <Label layoutX="14.0" layoutY="39.0" text="Sala:">
+                  <Label layoutX="14.0" layoutY="39.0" text="Sala:" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -55,7 +55,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                <children>
-                  <Label layoutX="14.0" layoutY="39.0" text="Inizio:">
+                  <Label layoutX="14.0" layoutY="39.0" text="Inizio:" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -64,7 +64,7 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                <children>
-                  <Label layoutX="14.0" layoutY="38.0" text="Fine:">
+                  <Label layoutX="14.0" layoutY="38.0" text="Fine:" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -77,7 +77,7 @@
             <DateTimePicker fx:id="fineDateTimePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <Label layoutX="14.0" layoutY="40.0" text="Coordinatore:">
+                  <Label layoutX="14.0" layoutY="40.0" text="Coordinatore:" textFill="#eceff4">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -97,17 +97,17 @@
             <Button fx:id="avantiButton" mnemonicParsing="false" onAction="#avantiButtonOnAction" prefHeight="24.0" prefWidth="191.0" text="Avanti" />
         </buttons>
       </ButtonBar>
-      <Label layoutX="14.0" layoutY="71.0" text="Inizio conferenza:" textFill="WHITE">
+      <Label layoutX="14.0" layoutY="71.0" text="Inizio conferenza:" textFill="#eceff4">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="405.0" layoutY="71.0" text="Fine conferenza:" textFill="WHITE">
+      <Label layoutX="405.0" layoutY="71.0" text="Fine conferenza:" textFill="#eceff4">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="inizioConferenzaLabel" layoutX="150.0" layoutY="71.0" text="Label" />
-      <Label fx:id="fineConferenzaLabel" layoutX="544.0" layoutY="71.0" text="Label" />
+      <Label fx:id="inizioConferenzaLabel" layoutX="150.0" layoutY="71.0" text="Label" textFill="#eceff4" />
+      <Label fx:id="fineConferenzaLabel" layoutX="544.0" layoutY="71.0" text="Label" textFill="#eceff4" />
    </children>
 </AnchorPane>

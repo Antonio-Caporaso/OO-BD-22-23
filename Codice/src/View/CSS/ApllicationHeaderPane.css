@@ -1,10 +1,14 @@
-#HBox{
+#hBox{
     -fx-border-width: 3;
-    -fx-border-color: linear-gradient(#00416a,#33749D);
-    -fx-background-color: #00416a;
+    -fx-border-color: #5e6675;
+    -fx-background-color: #232730;
 }
 .button{
     -fx-background-radius: 30;
-    -fx-background-color: #33749D;
-
+    -fx-background-color: #5e81ac;
+}
+#borderPane{
+    -fx-background-color: #2e3440;
+    -fx-border-width: 3;
+    -fx-border-color: #5e6675;
 }
