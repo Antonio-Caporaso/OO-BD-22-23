@@ -187,9 +187,9 @@ border width: 3
     -fx-border-width: 3;
     -fx-border-color: #5e6675;
 }
-.label{
-    -fx-text-fill: #eceff4;
-}
+/*.label{*/
+/*    -fx-text-fill: #eceff4;*/
+/*}*/
 .combo-box{
     -fx-background-color: #2e3440;
     -fx-border-radius: 3;
