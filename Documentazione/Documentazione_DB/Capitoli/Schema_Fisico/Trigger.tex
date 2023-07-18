@@ -503,7 +503,7 @@ Ogni volta che si aggiunge un intervento aggiungiamo lo speaker tra i partecipan
 	FOR EACH ROW
 	EXECUTE FUNCTION aggiungi_speaker_partecipante();
 \end{lstlisting}
-\subsection{\texttt{Check\_Keynote\_Speaker}}
+\subsection{\texttt{Check\_Keynote\_Speaker}}\label{trig:check_keynote}
 Ogni volta che si specifica il keynote di una sessione bisogna controllare che questi sia effettivamente uno degli speaker che effettua un intervento durante la sessione:
 \begin{lstlisting}[language=SQL, caption={\texttt{Check\_Keynote\_Speaker}},style=mystyle]
 CREATE OR REPLACE FUNCTION check_keynote_speaker()

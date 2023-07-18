@@ -33,4 +33,5 @@
 \contentsline {lstlisting}{\numberline {4.33}{\ignorespaces \texttt {Check\_Capienza}}}{37}{lstlisting.4.33}%
 \contentsline {lstlisting}{\numberline {4.34}{\ignorespaces \texttt {Set\_Sale\_Null}}}{37}{lstlisting.4.34}%
 \contentsline {lstlisting}{\numberline {4.35}{\ignorespaces \texttt {Aggiungi\_Speaker\_Partecipanti}}}{38}{lstlisting.4.35}%
-\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Conferenza PGConf NPL}}{58}{lstlisting.5.1}%
+\contentsline {lstlisting}{\numberline {4.36}{\ignorespaces \texttt {Check\_Keynote\_Speaker}}}{39}{lstlisting.4.36}%
+\contentsline {lstlisting}{\numberline {5.1}{\ignorespaces Conferenza PGConf NPL}}{59}{lstlisting.5.1}%
