@@ -44,12 +44,14 @@ public class YearlyStatWindowController implements Initializable {
             PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
             pieChartData.add(data);
         }
-        PieChart pieChart = new PieChart(pieChartData);
+        PieChart pieChart = new PieChart();
         pane.setCenter(pieChart);
-        pieChart.setMaxHeight(400);
-        pieChart.setMaxWidth(400);
+        pieChart.setMaxHeight(250);
+        pieChart.setMaxWidth(250);
+        pieChart.setClockwise(true);
+        pieChart.setStartAngle(180);
+        pieChart.setLabelLineLength(50);
         pieChart.setLabelsVisible(true);
-        pieChart.setLabelLineLength(10);
         pieChartData.forEach(data ->
                 data.nameProperty().bind(
                         Bindings.concat(
@@ -57,9 +59,7 @@ public class YearlyStatWindowController implements Initializable {
                         )
                 )
         );
-        pieChart.setClockwise(true);
-        pieChart.setLabelsVisible(true);
-        pieChart.setStartAngle(180);
+        pieChart.setData(pieChartData);
     }
     private LinkedList<Stats> retrieveIstituzioniByYear(int i) throws SQLException {
         InterventoDao dao = new InterventoDao();
@@ -70,10 +70,11 @@ public class YearlyStatWindowController implements Initializable {
         try {
             int anno = annoSpinner.getValue();
             ObservableList<Stats> stats = FXCollections.observableArrayList();
+            stats.clear();
             stats.addAll(retrieveIstituzioniByYear(anno));
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
             if (stats.isEmpty()) {
-                showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nel mese cercato");
+                showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nell'anno cercato");
             } else {
                 createPieChart(stats, pieChartData, pieChartPane);
             }

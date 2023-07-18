@@ -71,12 +71,12 @@ public class VisualizzaStatisticheController implements Initializable {
     @FXML
     void openStatisticheAnnualiButton(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/StatisticheAnnuali.fxml"));
-        MonthlyStatWindowController controller = new MonthlyStatWindowController();
+        YearlyStatWindowController controller = new YearlyStatWindowController();
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
-        stage.setTitle("Calcola statistiche mensili");
+        stage.setTitle("Calcola statistiche annuali");
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);

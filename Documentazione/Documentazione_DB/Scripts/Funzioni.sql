@@ -766,52 +766,50 @@ end;
 $$ language plpgsql;
 
 --Funzione che calcola la percentuale di enti sulla base degli interventi in un preciso mese
-create or replace function show_percentage_interventi(mese int, anno int)
-returns table
-(
+CREATE OR REPLACE FUNCTION show_percentage_interventi(mese int, anno int)
+RETURNS TABLE (
     ente text,
-    percentuale bigint
-) as $$
-declare
+    percentuale numeric
+) AS $$
+DECLARE
     totale int;
-begin
-    select count(*) into totale
-    from intervento
-    where date_part('month',inizio) = mese and date_part('year',inizio) = anno;
+BEGIN
+    SELECT COUNT(*) INTO totale
+    FROM intervento
+    WHERE date_part('month', inizio) = mese AND date_part('year', inizio) = anno;
 
-    return query
-    select e.nome, (count(*)*100/totale)
-    from intervento i join speaker s 
-    on i.id_speaker = s.id_speaker join ente e 
-    on s.id_ente = e.id_ente
-    where date_part('month',inizio) = mese and date_part('year',inizio) = anno
-    group by e.nome;
-end;
-$$ language plpgsql;
+    RETURN QUERY
+    SELECT e.nome, (COUNT(*) * 100.0 / NULLIF(totale, 0))
+    FROM intervento i
+    JOIN speaker s ON i.id_speaker = s.id_speaker
+    JOIN ente e ON s.id_ente = e.id_ente
+    WHERE date_part('month', inizio) = mese AND date_part('year', inizio) = anno
+    GROUP BY e.nome;
+END;
+$$ LANGUAGE plpgsql;
 
 --Funzione che calcola la percentuale di enti sulla base degli interventi in un preciso anno
-create or replace function show_percentage_interventi(anno int)
-returns table
-(
+CREATE OR REPLACE FUNCTION show_percentage_interventi(anno int)
+RETURNS TABLE (
     nome text,
-    percentuale bigint
-) as $$
-declare
+    percentuale numeric
+) AS $$
+DECLARE
     totale int;
-begin
-    select count(*) into totale
-    from intervento
-    where date_part('year',inizio) = anno;
+BEGIN
+    SELECT COUNT(*) INTO totale
+    FROM intervento
+    WHERE date_part('year', inizio) = anno;
 
-    return query
-    select e.nome, (count(*)*100/totale)
-    from intervento i join speaker s 
-    on i.id_speaker = s.id_speaker join ente e 
-    on s.id_ente = e.id_ente
-    where date_part('year',inizio) = anno
-    group by e.nome;
-end;
-$$ language plpgsql;
+    RETURN QUERY
+    SELECT e.nome, (COUNT(*) * 100.0 / totale)
+    FROM intervento i
+    JOIN speaker s ON i.id_speaker = s.id_speaker
+    JOIN ente e ON s.id_ente = e.id_ente
+    WHERE date_part('year', inizio) = anno
+    GROUP BY e.nome;
+END;
+$$ LANGUAGE plpgsql;
 
 --Aggiungere un organizzatore ad un comitato
 create or replace procedure 

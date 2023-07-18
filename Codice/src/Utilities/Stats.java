@@ -1,5 +1,7 @@
 package Utilities;
 
+import java.math.BigDecimal;
+
 public class Stats {
     private String istituzione;
     private double percentuale;

@@ -58,15 +58,14 @@ public class MonthlyStatWindowController implements Initializable {
             PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
             pieChartData.add(data);
         }
-        PieChart pieChart = new PieChart(pieChartData);
+        PieChart pieChart = new PieChart();
         pane.setCenter(pieChart);
-        pieChart.setMaxHeight(400);
-        pieChart.setMaxWidth(400);
-        pieChart.setLabelsVisible(true);
-        pieChart.setLabelLineLength(40);
+        pieChart.setMaxHeight(350);
+        pieChart.setMaxWidth(350);
         pieChart.setClockwise(true);
-        pieChart.setLabelsVisible(true);
         pieChart.setStartAngle(180);
+        pieChart.setLabelLineLength(50);
+        pieChart.setLabelsVisible(true);
         pieChartData.forEach(data ->
                 data.nameProperty().bind(
                         Bindings.concat(
@@ -74,6 +73,7 @@ public class MonthlyStatWindowController implements Initializable {
                         )
                 )
         );
+        pieChart.setData(pieChartData);
     }
 
 
@@ -87,6 +87,7 @@ public class MonthlyStatWindowController implements Initializable {
                 int mese = meseSpinner.getValue();
                 int anno = annoSpinner.getValue();
                 ObservableList<Stats> stats = FXCollections.observableArrayList();
+                stats.clear();
                 stats.addAll(retrieveIstituzioniByMonth(mese, anno));
                 ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
                 if (stats.isEmpty()) {
