@@ -138,25 +138,24 @@ begin
     from sessione
     where id_sessione = new.id_sessione;
     
-    IF sala_id IS NULL THEN
-        Return new;
-    END IF;
-    
-    IF sala_id NOT IN (
-        SELECT id_sala
-        FROM sala
-        WHERE id_sede = sede_id
-    ) THEN
-        RAISE exception 'La sala selezionata non appartiene alla sede della conferenza';
+    IF sala_id IS NOT NULL THEN
+        IF sala_id NOT IN (
+            SELECT id_sala
+            FROM sala
+            WHERE id_sede = sede_id
+        ) THEN
+            RAISE exception 'La sala selezionata non appartiene alla sede della conferenza';
+        END IF;
     END IF;
     
     return new;
 end;
 $$ language plpgsql;
 
-
-
-
+create trigger check_sala_sessione
+before insert or update on sessione
+for each row
+execute function check_sala_sessione();
 
 /*  La data e l'orario della sessione devono essere compresi 
  *  tra la data e l'orario di inizio e fine della conferenza */
@@ -247,20 +246,16 @@ begin
     from comitato
     where id_comitato = new.comitato_l;
     
-    IF id_comitato_scientifico IS NULL THEN
-        return new;
+    IF id_comitato_scientifico IS NOT NULL THEN
+        IF (select tipologia from comitato where id_comitato = id_comitato_scientifico) <> 'scientifico' THEN
+            RAISE EXCEPTION 'Il comitato scientifico deve essere scientifico';
+        END IF;
     END IF;
-    
-    IF id_comitato_locale IS NULL THEN
-        return new;
-    END IF;
-    
-    IF (select tipologia from comitato where id_comitato = id_comitato_scientifico) <> 'scientifico' THEN
-        RAISE EXCEPTION 'Il comitato scientifico deve essere scientifico';
-    END IF;
-    
-    IF (select tipologia from comitato where id_comitato = id_comitato_locale) <> 'locale' THEN
-        RAISE EXCEPTION 'Il comitato locale deve essere locale';
+
+    IF id_comitato_locale IS NOT NULL THEN
+        IF (select tipologia from comitato where id_comitato = id_comitato_locale) <> 'locale' THEN
+            RAISE EXCEPTION 'Il comitato locale deve essere locale';
+        END IF;
     END IF;
     
     return new;
@@ -304,17 +299,15 @@ execute function check_sede_libera();
 -- 1. Una sala non può ospitare più di una sessione contemporaneamente
 create or replace function check_sala_sessione_unica() returns trigger as $$
 begin
-    if (new.id_sala is null) then
-        return new;
-    end if;
-
-    if ( select count(*) 
-         from sessione 
-         where id_sala = new.id_sala 
-            and id_sessione <> new.id_sessione
-            and (inizio, fine) overlaps (new.inizio, new.fine)
-        ) > 0 then
-        raise exception 'La sala non è disponibile';
+    if (new.id_sala is NOT null) then
+        if ( select count(*) 
+            from sessione 
+            where id_sala = new.id_sala 
+                and id_sessione <> new.id_sessione
+                and (inizio, fine) overlaps (new.inizio, new.fine)
+            ) > 0 then
+            raise exception 'La sala non è disponibile';
+        end if;
     end if;
     return new;
 end;
@@ -339,20 +332,19 @@ begin
     from organizzatore o
     where o.id_organizzatore = new.id_organizzatore;
     
-    IF ente_id IS NULL THEN
-        return new;
-    END IF;
-    
-    IF ente_id NOT IN (
-        SELECT id_ente
-        FROM ente_conferenza
-        WHERE id_conferenza IN (
-            SELECT id_conferenza
-            FROM conferenza
-            WHERE NEW.id_comitato IN (comitato_s, comitato_l)
-        )
-    ) THEN
-        RAISE EXCEPTION 'L''organizzatore deve appartenere ad un ente che ha organizzato la conferenza';
+    IF ente_id IS NOT NULL THEN
+
+        IF ente_id NOT IN (
+            SELECT id_ente
+            FROM ente_conferenza
+            WHERE id_conferenza IN (
+                SELECT id_conferenza
+                FROM conferenza
+                WHERE NEW.id_comitato IN (comitato_s, comitato_l)
+            )
+        ) THEN
+            RAISE EXCEPTION 'L''organizzatore deve appartenere ad un ente che ha organizzato la conferenza';
+        END IF;
     END IF;
     return new;
 end;
@@ -492,8 +484,6 @@ FOR EACH ROW
 EXECUTE FUNCTION aggiungi_speaker_partecipante();
 
 -- Il keynote speaker deve essere anche speaker della sessione
--- Il trigger recupera tutti gli id degli speaker presenti stando al programma
--- e poi controlla se new.id_keynote è tra questi valori
 CREATE OR REPLACE FUNCTION check_keynote_speaker()
 RETURNS TRIGGER AS $$
 DECLARE
