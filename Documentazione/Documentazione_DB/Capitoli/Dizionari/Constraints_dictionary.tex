@@ -31,7 +31,8 @@
 	\textsc{Check\_Sala\_Disponibile} & Interrelazionale & Quando si inserisce una nuova sessione bisogna controllare che la sala indicata sia effettivamente disponibile e non occupata nei giorni indicati. & \ref{trigger:saladisponibile}\\ \hline
 	\textsc{Check\_Organizzatori} & Interrelazionale & Gli organizzatori appartenenti ai comitati di una conferenza devono appartenere agli enti che organizzano quella conferenza. & \ref{trigger:check_organizzatore_comitato} \\ \hline
 	\textsc{Check\_Capienza} & Interrelazionale & Ogni volta che si aggiunge un nuovo partecipante di una sessione bisogna controllare che non sia stata raggiunta la capienza della sala in cui si svolge la sessione. & \ref{trigger:check_capienza} \\ \hline
-	\textsc{Set\_Sale\_Null} & Interrelazionale & Ogni volta che viene modificata la sede di una conferenza bisogna mettere a \textsc{NULL} le sale di ogni sessione presente nella conferenza per rispettare il vincolo \textsc{Check\_Sala\_Sede} & \ref{trigger:setsalenull} \\
+	\textsc{Set\_Sale\_Null} & Interrelazionale & Ogni volta che viene modificata la sede di una conferenza bisogna mettere a \textsc{NULL} le sale di ogni sessione presente nella conferenza per rispettare il vincolo \textsc{Check\_Sala\_Sede} & \ref{trigger:setsalenull} \\ \hline
+	\textsc{Check\_Keynote} & Interrelazionale & Ogni volta che viene specificato il keynote speaker per una sessione bisogna controllare che questi sia uno speaker previsto nel programma. & \ref{trig:check_keynote} \\ 
 	 
 	
 \end{longtable}
