@@ -6,43 +6,38 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="608.0" stylesheets="@../CSS/PopUpWindow.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.AddIntervalloController_Create">
+<AnchorPane fx:id="popUpWindowAnchor" prefHeight="400.0" prefWidth="608.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.AddIntervalloController_Create">
    <children>
-      <HBox fx:id="HBox" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="616.0">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="84.0" stroke="#00416a" strokeType="INSIDE" width="616.0" />
-         </children>
-      </HBox>
+      <HBox fx:id="HBox" layoutX="7.0" layoutY="8.0" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="595.0" stylesheets="@../CSS/NewStyle.css" />
 
-      <Label layoutX="28.0" layoutY="27.0" text="Inserisci intervallo" textFill="WHITE">
+      <Label layoutX="28.0" layoutY="27.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci intervallo" textFill="WHITE">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="tipologiaChoiceBox" layoutX="281.0" layoutY="131.0" prefHeight="25.0" prefWidth="211.0" />
-      <Label layoutX="28.0" layoutY="130.0" text="Seleziona la tipologia" textFill="WHITE">
+      <ChoiceBox fx:id="tipologiaChoiceBox" layoutX="281.0" layoutY="131.0" prefHeight="25.0" prefWidth="211.0" stylesheets="@../CSS/NewStyle.css" />
+      <Label layoutX="28.0" layoutY="130.0" stylesheets="@../CSS/NewStyle.css" text="Seleziona la tipologia" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="35.0" layoutY="223.0" text="Seleziona la durata" textFill="WHITE">
+      <Label layoutX="35.0" layoutY="223.0" stylesheets="@../CSS/NewStyle.css" text="Seleziona la durata" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Spinner fx:id="oreSpinner" editable="true" layoutX="281.0" layoutY="224.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../CSS/SpinnerDefault.css" />
-      <Spinner fx:id="minutiSpinner" editable="true" layoutX="394.0" layoutY="224.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../CSS/SpinnerDefault.css" />
-      <Button fx:id="confirmaButton" layoutX="432.0" layoutY="331.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Confirm" />
-      <Button fx:id="cancelButton" layoutX="35.0" layoutY="331.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Cancel" />
-      <Label layoutX="308.0" layoutY="200.0" text="Ore" textFill="WHITE">
+      <Spinner fx:id="oreSpinner" editable="true" layoutX="281.0" layoutY="224.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../CSS/NewStyle.css" />
+      <Spinner fx:id="minutiSpinner" editable="true" layoutX="394.0" layoutY="224.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../CSS/NewStyle.css" />
+      <Button fx:id="confirmaButton" layoutX="432.0" layoutY="331.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" prefHeight="31.0" prefWidth="120.0" stylesheets="@../CSS/NewStyle.css" text="Confirm" />
+      <Button fx:id="cancelButton" layoutX="35.0" layoutY="331.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="31.0" prefWidth="120.0" stylesheets="@../CSS/NewStyle.css" text="Cancel" />
+      <Label layoutX="308.0" layoutY="200.0" stylesheets="@../CSS/NewStyle.css" text="Ore" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="414.0" layoutY="200.0" text="Minuti" textFill="WHITE">
+      <Label layoutX="414.0" layoutY="200.0" stylesheets="@../CSS/NewStyle.css" text="Minuti" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>

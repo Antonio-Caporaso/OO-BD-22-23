@@ -16,6 +16,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -32,6 +33,8 @@ import java.util.ResourceBundle;
 public class AddIntervalloController_Create implements Initializable {
     @FXML
     private HBox HBox;
+    @FXML
+    private AnchorPane popUpWindowAnchor;
     @FXML
     private Button cancelButton;
     @FXML

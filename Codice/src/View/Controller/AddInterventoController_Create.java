@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -30,6 +31,8 @@ import java.util.ResourceBundle;
 public class AddInterventoController_Create implements Initializable {
     @FXML
     private HBox HBox;
+    @FXML
+    private AnchorPane popUpWindowAnchor;
     @FXML
     private TextArea abstractTextArea;
     @FXML
