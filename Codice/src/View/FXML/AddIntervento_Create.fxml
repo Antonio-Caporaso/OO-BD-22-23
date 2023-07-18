@@ -8,58 +8,61 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="627.0" prefWidth="523.0" stylesheets="@../CSS/PopUpWindow.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.AddInterventoController_Create">
+<AnchorPane fx:id="popUpWindowAnchor" prefHeight="627.0" prefWidth="523.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.AddInterventoController_Create">
    <children>
-      <HBox fx:id="HBox" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="527.0">
+      <HBox fx:id="HBox" layoutX="6.0" layoutY="6.0" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="511.0" stylesheets="@../CSS/NewStyle.css">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00416a" height="84.0" stroke="#00416a" strokeType="INSIDE" width="527.0" />
+            <Pane prefHeight="84.0" prefWidth="525.0">
+               <children>
+                  <Label layoutX="165.0" layoutY="27.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci Intervento" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
       </HBox>
-      <Label layoutX="28.0" layoutY="27.0" text="Inserisci Intervento" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <ChoiceBox fx:id="speakerChoiceBox" layoutX="281.0" layoutY="269.0" prefHeight="25.0" prefWidth="211.0" />
-      <Label layoutX="28.0" layoutY="268.0" text="Seleziona Speaker" textFill="WHITE">
+      <ChoiceBox fx:id="speakerChoiceBox" layoutX="281.0" layoutY="269.0" prefHeight="25.0" prefWidth="211.0" stylesheets="@../CSS/NewStyle.css" />
+      <Label layoutX="28.0" layoutY="268.0" stylesheets="@../CSS/NewStyle.css" text="Seleziona Speaker" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="28.0" layoutY="205.0" text="Seleziona la durata" textFill="WHITE">
+      <Label layoutX="28.0" layoutY="205.0" stylesheets="@../CSS/NewStyle.css" text="Seleziona la durata" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Spinner fx:id="oreSpinner" editable="true" layoutX="281.0" layoutY="206.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../CSS/SpinnerDefault.css" />
-      <Spinner fx:id="minutiSpinner" editable="true" layoutX="394.0" layoutY="206.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../CSS/SpinnerDefault.css" />
-      <Button fx:id="confirmaButton" layoutX="383.0" layoutY="543.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Confirm" />
-      <Button fx:id="cancelButton" layoutX="28.0" layoutY="543.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Cancel" />
-      <Label layoutX="308.0" layoutY="182.0" text="Ore" textFill="WHITE">
+      <Spinner fx:id="oreSpinner" editable="true" layoutX="281.0" layoutY="206.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../CSS/NewStyle.css" />
+      <Spinner fx:id="minutiSpinner" editable="true" layoutX="394.0" layoutY="206.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../CSS/NewStyle.css" />
+      <Button fx:id="confirmaButton" layoutX="383.0" layoutY="543.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" prefHeight="31.0" prefWidth="120.0" stylesheets="@../CSS/NewStyle.css" text="Confirm" />
+      <Button fx:id="cancelButton" layoutX="28.0" layoutY="543.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="31.0" prefWidth="120.0" stylesheets="@../CSS/NewStyle.css" text="Cancel" />
+      <Label layoutX="308.0" layoutY="182.0" stylesheets="@../CSS/NewStyle.css" text="Ore" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="414.0" layoutY="182.0" text="Minuti" textFill="WHITE">
+      <Label layoutX="414.0" layoutY="182.0" stylesheets="@../CSS/NewStyle.css" text="Minuti" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="28.0" layoutY="137.0" text="Inserisci Titolo" textFill="WHITE">
+      <Label layoutX="28.0" layoutY="137.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci Titolo" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="titoloTextField" layoutX="281.0" layoutY="138.0" prefHeight="25.0" prefWidth="211.0" />
-      <Label layoutX="28.0" layoutY="321.0" text="Inserisci Abstract" textFill="WHITE">
+      <TextField fx:id="titoloTextField" layoutX="281.0" layoutY="138.0" prefHeight="25.0" prefWidth="211.0" stylesheets="@../CSS/NewStyle.css" />
+      <Label layoutX="28.0" layoutY="321.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci Abstract" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="abstractTextArea" layoutX="28.0" layoutY="357.0" prefHeight="126.0" prefWidth="469.0" />
-      <Button fx:id="addSpeakerButton" layoutX="237.0" layoutY="265.0" mnemonicParsing="false" onAction="#addSpeakerButtonOnAction" prefHeight="25.0" prefWidth="33.0" text="+" />
+      <TextArea fx:id="abstractTextArea" layoutX="28.0" layoutY="357.0" prefHeight="126.0" prefWidth="469.0" stylesheets="@../CSS/NewStyle.css" />
+      <Button fx:id="addSpeakerButton" layoutX="237.0" layoutY="265.0" mnemonicParsing="false" onAction="#addSpeakerButtonOnAction" prefHeight="25.0" prefWidth="33.0" stylesheets="@../CSS/NewStyle.css" text="+" />
    </children>
 </AnchorPane>

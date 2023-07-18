@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
@@ -12,8 +13,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,12 +28,13 @@ public class AddPuntoController implements Initializable {
     @FXML
     private Button annullaButton;
     @FXML
+    private AnchorPane popUpWindowAnchor;
+    @FXML
     private ComboBox<String> opzioniComboBox;
     private Programma programma;
     @FXML
     private ProgressBar progressBar;
-    @FXML
-    private SubScene subScene;
+    private double x,y;
 
     public AddPuntoController(Programma programma) {
         this.programma = programma;
@@ -42,44 +48,53 @@ public class AddPuntoController implements Initializable {
 
     private void openAddEventoWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEventoSociale_Create.fxml"));
-        AddEventoSocialeController_Create control = new AddEventoSocialeController_Create();
-        control.setProgramma(programma);
-        loader.setController(control);
         Parent root = loader.load();
-        Scene scene = new Scene(root);
+        AddEventoSocialeController_Create controller = loader.getController();
+        controller.setProgramma(programma);
         Stage stage = new Stage();
-        stage.setTitle("Aggiunta nuovo evento");
+        Scene scene = new Scene(root);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setResizable(false);
         stage.setScene(scene);
-        stage.show();
+        stage.setX(860);
+        stage.setY(360);
+        stage.showAndWait();
     }
 
     private void openAddIntervalloWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo_Create.fxml"));
-        AddIntervalloController_Create control = new AddIntervalloController_Create();
-        control.setProgramma(programma);
-        loader.setController(control);
         Parent root = loader.load();
-        Scene scene = new Scene(root);
+        AddIntervalloController_Create controller = loader.getController();
+        controller.setProgramma(programma);
         Stage stage = new Stage();
-        stage.setTitle("Aggiunta nuovo intervallo");
+        Scene scene = new Scene(root);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setResizable(false);
         stage.setScene(scene);
-        stage.show();
+        stage.setX(860);
+        stage.setY(360);
+        stage.showAndWait();
     }
 
     private void openAddInterventoWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento_Create.fxml"));
-        AddInterventoController_Create control = new AddInterventoController_Create();
-        control.setProgramma(programma);
-        loader.setController(control);
         Parent root = loader.load();
-        Scene scene = new Scene(root);
+        AddInterventoController_Create controller = loader.getController();
+        controller.setProgramma(programma);
         Stage stage = new Stage();
-        stage.setTitle("Aggiunta nuovo intervento");
+        Scene scene = new Scene(root);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setResizable(false);
         stage.setScene(scene);
-        stage.show();
+        stage.setX(860);
+        stage.setY(360);
+        stage.showAndWait();
     }
 
     @FXML
@@ -105,5 +120,18 @@ public class AddPuntoController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    void dragged(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+
+    }
+
+    @FXML
+    void pressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
     }
 }

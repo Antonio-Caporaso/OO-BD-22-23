@@ -1,17 +1,29 @@
+/* colors used
+Headers and Menu and contrast: #232730
+backgrounds: #2e3440
+White: #eceff4
+Border color: #5e6675
+border radius: 3
+border width: 3
+*/
+
+/*Default Buttons*/
 .button {
     -fx-background-color:#5e81ac ;
     /*-fx-background-color:#457b7a;*/
     /*-fx-background-color:#994e55;*/
-    -fx-background-radius: 30;
+    -fx-background-radius: 3;
     -fx-background-insets: 0;
-    -fx-text-fill: white;
+    -fx-text-fill: #eceff4;
     -fx-font-weight: bold;
     -fx-font-size: 15;
 }
+/*Background*/
 .root{
     -fx-background-color:#2e3440;
-    /*-fx-background-color: #232730;*/
 }
+
+/*Text Field*/
 .text-field{
     -fx-background-color: #2e3440;
     -fx-border-radius: 3;
@@ -20,6 +32,7 @@
     -fx-text-fill: #eceff4;
     -fx-font-size: 15;
 }
+/*Text Area*/
 .text-area .content{
     /*-fx-background-color: transparent;*/
     -fx-background-color: #2e3440;
@@ -32,6 +45,8 @@
     -fx-border-width: 3;
     -fx-border-color: #5e6675;
 }
+
+/*Date picker/ DateTime picker*/
 .date-picker{
     -fx-background-color: #2e3440;
     -fx-primary-color: #5e81ac;
@@ -80,10 +95,105 @@
 .date-picker-popup .spinner .button .right-arrow {
     -fx-background-color: #eceff4;
 }
+/*Choice Box*/
 .choice-box{
     -fx-background-color: #2e3440;
     -fx-border-radius: 3;
     -fx-border-width: 3;
     -fx-border-color: #5e6675;
 }
-.choice-box > .label { -fx-text-fill: white; }
+.choice-box > .label { -fx-text-fill:#eceff4; }
+
+
+/*List View*/
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color:#2e3440 ;
+    -fx-text-fill: #eceff4;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+
+}
+
+.list-cell:even {
+    -fx-background-color: #2e3440;
+    -fx-text-fill: #eceff4;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+}
+.list-cell:odd {
+    -fx-background-color: #2e3440;
+    -fx-text-fill:#eceff4;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #232730;
+    -fx-text-fill: #eceff4;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+}
+.list-view{
+    -fx-background-color: #2e3440;
+    -fx-text-fill: #eceff4;
+    -fx-font-weight: bold;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+    -fx-border-color: #5e6675;
+    -fx-border-width: 3;
+    -fx-border-radius: 3;
+}
+.scroll-bar{
+    -fx-background-color: #232730;
+}
+* {
+    -fx-primary-color: #232730;
+    -fx-secondary-color: #2e3440;
+
+    -fx-focus-color: -fx-secondary-color;
+}
+
+.spinner .increment-arrow-button,
+.spinner .decrement-arrow-button {
+    -fx-background-color: -fx-primary-color;
+    -fx-background-radius: 0;
+}
+.spinner .increment-arrow-button:hover,
+.spinner .decrement-arrow-button:hover {
+    -fx-background-color: -fx-secondary-color;
+}
+.spinner .increment-arrow-button:hover:pressed,
+.spinner .decrement-arrow-button:hover:pressed,
+.spinner .increment-arrow-button:pressed,
+.spinner .decrement-arrow-button:pressed {
+    -fx-background-color: -fx-secondary-color;
+}
+.spinner .increment-arrow-button .increment-arrow,
+.spinner .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: #eceff4;
+}
+#HBox{
+    -fx-background-color: #232730;
+    /*-fx-border-width: 3;*/
+    /*-fx-border-color: #5e6675;*/
+
+}
+#popUpWindowAnchor{
+    -fx-background-color:#2e3440;
+    -fx-border-width: 3;
+    -fx-border-color: #5e6675;
+}
+/*.label{*/
+/*    -fx-text-fill: #eceff4;*/
+/*}*/
+.combo-box{
+    -fx-background-color: #2e3440;
+    -fx-border-radius: 3;
+    -fx-border-width: 3;
+    -fx-border-color: #5e6675;
+}
+.combo-box > .label { -fx-text-fill:#eceff4; }
