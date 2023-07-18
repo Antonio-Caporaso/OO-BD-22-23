@@ -766,54 +766,52 @@ $$ language plpgsql;
 \subsection{\texttt{Show\_percentage\_interventi(INTEGER,INTEGER)}}
 Questa funzione restituisce una tabella contenente le percentuali di istituzioni di appartenenza di tutti gli speaker che hanno tenuto un discorso nel mese indicato:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_percentage_interventi(mese int, anno int)
-returns table
-(
+CREATE OR REPLACE FUNCTION show_percentage_interventi(mese int, anno int)
+RETURNS TABLE (
     ente text,
-    percentuale biging
-) as $$
-declare
+    percentuale numeric
+) AS $$
+DECLARE
     totale int;
-begin
-    select count(*) into totale
-    from intervento
-    where date_part('month',inizio) = mese and date_part('year',inizio) = anno;
+BEGIN
+    SELECT COUNT(*) INTO totale
+    FROM intervento
+    WHERE date_part('month', inizio) = mese AND date_part('year', inizio) = anno;
 
-    return query
-    select e.nome, (count(*)*100/totale)
-    from intervento i join speaker s 
-    on i.id_speaker = s.id_speaker join ente e 
-    on s.id_ente = e.id_ente
-    where date_part('month',inizio) = mese and date_part('year',inizio) = anno
-    group by e.nome;
-end;
-$$ language plpgsql;
+    RETURN QUERY
+    SELECT e.nome, (COUNT(*) * 100.0 / NULLIF(totale, 0))
+    FROM intervento i
+    JOIN speaker s ON i.id_speaker = s.id_speaker
+    JOIN ente e ON s.id_ente = e.id_ente
+    WHERE date_part('month', inizio) = mese AND date_part('year', inizio) = anno
+    GROUP BY e.nome;
+END;
+$$ LANGUAGE plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Show\_percentage(INTEGER)}}
 Questa funzione restituisce una tabella contenente le percentuali di istituzioni di appartenenza di tutti gli speaker che hanno tenuto un discorso nell'anno indicato:
 \begin{lstlisting}[language=SQL,style=mystyle]
-create or replace function show_percentage_interventi(anno int)
-returns table
-(
-    nome varchar(7),
-    percentuale bigint
-) as $$
-declare
+CREATE OR REPLACE FUNCTION show_percentage_interventi(anno int)
+RETURNS TABLE (
+    nome text,
+    percentuale numeric
+) AS $$
+DECLARE
     totale int;
-begin
-    select count(*) into totale
-    from intervento
-    where date_part('year',inizio) = anno;
+BEGIN
+    SELECT COUNT(*) INTO totale
+    FROM intervento
+    WHERE date_part('year', inizio) = anno;
 
-    return query
-    select e.nome, (count(*)*100/totale)
-    from intervento i join speaker s 
-    on i.id_speaker = s.id_speaker join ente e 
-    on s.id_ente = e.id_ente
-    where date_part('year',inizio) = anno
-    group by e.nome;
-end;
-$$ language plpgsql;
+    RETURN QUERY
+    SELECT e.nome, (COUNT(*) * 100.0 / totale)
+    FROM intervento i
+    JOIN speaker s ON i.id_speaker = s.id_speaker
+    JOIN ente e ON s.id_ente = e.id_ente
+    WHERE date_part('year', inizio) = anno
+    GROUP BY e.nome;
+END;
+$$ LANGUAGE plpgsql;
 \end{lstlisting}
 \subsection{\texttt{Add\_Membro\_Comitato(integer,integer)}}
 La procedura aggiunge un nuovo membro all'interno di un comitato di una conferenza;
