@@ -15,8 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -107,16 +109,20 @@ public class ModificaProgrammaSessioneController implements Initializable {
 
     @FXML
     void addPuntoOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddPuntoScena.fxml"));
-        AddPuntoScenaController controller = new AddPuntoScenaController(programma);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddPunto.fxml"));
+        AddPuntoController controller = new AddPuntoController(programma);
         loader.setController(controller);
         Parent root = loader.load();
-        Scene scene = new Scene(root);
         Stage stage = new Stage();
-        stage.setTitle("Aggiunta nuovo punto");
+        Scene scene = new Scene(root);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setResizable(false);
         stage.setScene(scene);
-        stage.show();
+        stage.setX(860);
+        stage.setY(360);
+        stage.showAndWait();
     }
 
     @FXML

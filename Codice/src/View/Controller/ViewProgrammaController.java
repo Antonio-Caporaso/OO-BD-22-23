@@ -94,6 +94,7 @@ public class ViewProgrammaController implements Initializable {
         this.user = utente;
     }
 
+    //Private Methods
     private void loadAddEventoSociale() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEventoSociale_Create.fxml"));
@@ -101,7 +102,7 @@ public class ViewProgrammaController implements Initializable {
             AddEventoSocialeController_Create controller = loader.getController();
             controller.setProgramma(programma);
             Stage stage = new Stage();
-            Scene scene = new Scene(root, 608, 400);
+            Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
@@ -115,8 +116,6 @@ public class ViewProgrammaController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    //Private Methods
     private void loadAddIntervallo() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo_Create.fxml"));
@@ -124,7 +123,7 @@ public class ViewProgrammaController implements Initializable {
             AddIntervalloController_Create controller = loader.getController();
             controller.setProgramma(programma);
             Stage stage = new Stage();
-            Scene scene = new Scene(root, 608, 400);
+            Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
@@ -145,7 +144,7 @@ public class ViewProgrammaController implements Initializable {
             AddInterventoController_Create controller = loader.getController();
             controller.setProgramma(programma);
             Stage stage = new Stage();
-            Scene scene = new Scene(root, 523, 627);
+            Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
@@ -201,7 +200,7 @@ public class ViewProgrammaController implements Initializable {
             controller.initializeData(intervento);
 
             Stage stage = new Stage();
-            Scene scene = new Scene(root, 523, 627);
+            Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
@@ -223,7 +222,7 @@ public class ViewProgrammaController implements Initializable {
             controller.initializeData(intervallo);
 
             Stage stage = new Stage();
-            Scene scene = new Scene(root, 616, 400);
+            Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
@@ -245,7 +244,7 @@ public class ViewProgrammaController implements Initializable {
             controller.initializeData(eventoSociale);
 
             Stage stage = new Stage();
-            Scene scene = new Scene(root, 616, 400);
+            Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
