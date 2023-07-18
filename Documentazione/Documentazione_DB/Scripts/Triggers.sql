@@ -490,3 +490,35 @@ CREATE TRIGGER trg_aggiungi_speaker_partecipante
 AFTER INSERT ON Intervento
 FOR EACH ROW
 EXECUTE FUNCTION aggiungi_speaker_partecipante();
+
+-- Il keynote speaker deve essere anche speaker della sessione
+-- Il trigger recupera tutti gli id degli speaker presenti stando al programma
+-- e poi controlla se new.id_keynote è tra questi valori
+CREATE OR REPLACE FUNCTION check_keynote_speaker()
+RETURNS TRIGGER AS $$
+DECLARE
+    id_speaker_cur CURSOR FOR
+        SELECT id_speaker
+        FROM Intervento
+        WHERE id_programma = NEW.id_programma;
+    id_speaker INT;
+BEGIN
+    OPEN id_speaker_cur;
+    LOOP
+        FETCH id_speaker_cur INTO id_speaker;
+        EXIT WHEN NOT FOUND;
+        IF id_speaker = NEW.id_keynote THEN
+            RETURN NEW;
+        END IF;
+    END LOOP;
+    CLOSE id_speaker_cur;
+    RAISE EXCEPTION 'Il keynote speaker deve essere anche speaker della sessione';
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_check_keynote_speaker
+before update on programma
+for each row
+execute function check_keynote_speaker();
+
+    

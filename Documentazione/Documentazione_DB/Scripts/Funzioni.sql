@@ -61,7 +61,7 @@ begin
         select id_organizzatore from organizzatore_comitato
         where id_comitato = (
             -- Select dell'id del comitato locale della conferenza
-            select id_comitato_locale from conferenza
+            select comitato_l from conferenza
             where id_conferenza = conferenza_id
         )
     );
@@ -115,7 +115,8 @@ begin
     from programma
     where id_sessione = sessione_id;
 
-    select titolo,inizio,fine,abstract, s.nome || ' ' || s.cognome as speaker
+    return query
+    select i.titolo,i.inizio,i.fine,i.abstract, s.nome || ' ' || s.cognome as speaker
     from intervento i join speaker s on i.id_speaker = s.id_speaker
     where i.id_programma = programma
     order by inizio;
@@ -140,10 +141,59 @@ begin
     from programma
     where id_sessione = sessione_id;
 
-    select id_intervallo,tipologia,inizio,fine
+    return query
+    select i.id_intervallo,i.tipologia,i.inizio,i.fine
     from intervallo i
     where id_programma = programma_id
     order by inizio;
+end;
+$$ language plpgsql;
+
+-- Funzione che mostra gli speaker di una sessione
+create or replace function show_speaker_sessione(sessione_id int)
+returns table
+(
+id_speaker integer,
+nome text,
+cognome text,
+titolo text,
+email text,
+ente text
+)
+as $$
+declare
+    programma_id integer;
+begin
+    select id_programma into programma_id
+    from programma
+    where id_sessione = sessione_id;
+
+    return query
+    select s.id_speaker,s.nome,s.cognome,s.titolo::text,s.email,e.nome
+    from speaker s join ente e on s.id_ente = e.id_ente
+    where s.id_speaker in (
+        select i.id_speaker
+        from intervento i
+        where i.id_programma = programma_id
+    );
+end;
+$$ language plpgsql;
+
+-- Funzione che aggiunge uno speaker al programma di una sessione
+create or replace procedure add_keynote_speaker(speaker_id integer, sessione_id integer)
+as $$
+declare
+    progamma_id integer;
+begin
+    select id_programma into progamma_id
+    from programma
+    where id_sessione = sessione_id;
+
+    update programma set id_keynote = speaker_id
+    where id_programma = progamma_id;
+    exception
+        when others then
+            raise notice '%', sqlerrm;
 end;
 $$ language plpgsql;
 
@@ -163,9 +213,10 @@ begin
     from programma
     where id_sessione = sessione_id;
 
-    select id_evento,tipologia,inizio,fine
-    from evento
-    where id_programma = programma_id
+    return query
+    select e.id_evento,e.tipologia,e.inizio,e.fine
+    from evento e
+    where e.id_programma = programma_id
     order by inizio;
 end;
 $$ language plpgsql;
@@ -183,16 +234,17 @@ ente text)
 declare
     programma_id integer;
 begin
-    select id_programma into programma_id
-    from programma
-    where id_sessione = sessione_id;
+    select p.id_programma into programma_id
+    from programma p
+    where p.id_sessione = sessione_id;
 
-    select s.id_speaker,s.nome,s.cognome,s.titolo,s.email,e.nome
+    return query
+    select s.id_speaker,s.nome,s.cognome,s.titolo::text,s.email,e.nome
     from speaker s join ente e on s.id_ente = e.id_ente
     where s.id_speaker = (
-        select id_keynote
-        from programma
-        where id_programma = programma_id
+        select p.id_keynote
+        from programma p
+        where p.id_programma = programma_id
     );
 end;
 $$ language plpgsql;

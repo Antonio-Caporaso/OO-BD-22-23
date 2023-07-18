@@ -503,3 +503,33 @@ Ogni volta che si aggiunge un intervento aggiungiamo lo speaker tra i partecipan
 	FOR EACH ROW
 	EXECUTE FUNCTION aggiungi_speaker_partecipante();
 \end{lstlisting}
+\subsection{\texttt{Check\_Keynote\_Speaker}}
+Ogni volta che si specifica il keynote di una sessione bisogna controllare che questi sia effettivamente uno degli speaker che effettua un intervento durante la sessione:
+\begin{lstlisting}[language=SQL, caption={\texttt{Check\_Keynote\_Speaker}},style=mystyle]
+CREATE OR REPLACE FUNCTION check_keynote_speaker()
+RETURNS TRIGGER AS $$
+DECLARE
+    id_speaker_cur CURSOR FOR
+        SELECT id_speaker
+        FROM Intervento
+        WHERE id_programma = NEW.id_programma;
+    id_speaker INT;
+BEGIN
+    OPEN id_speaker_cur;
+    LOOP
+        FETCH id_speaker_cur INTO id_speaker;
+        EXIT WHEN NOT FOUND;
+        IF id_speaker = NEW.id_keynote THEN
+            RETURN NEW;
+        END IF;
+    END LOOP;
+    CLOSE id_speaker_cur;
+    RAISE EXCEPTION 'Il keynote speaker deve essere anche speaker della sessione';
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_check_keynote_speaker
+before update on programma
+for each row
+execute function check_keynote_speaker();
+\end{lstlisting}
