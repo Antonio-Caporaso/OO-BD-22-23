@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -53,27 +53,17 @@ public class MonthlyStatWindowController implements Initializable {
         alert.setContentText(s);
         alert.showAndWait();
     }
-    private void createPieChart(ObservableList<Stats> stats, ObservableList<PieChart.Data> pieChartData, BorderPane pane) {
-        for (Stats dataPoint : stats) {
-            PieChart.Data data = new PieChart.Data(dataPoint.getIstituzione(), dataPoint.getPercentuale());
-            pieChartData.add(data);
+    private void createPieChart(ObservableList<Stats> stats, BorderPane pane) {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+        barChart.setLegendVisible(false);
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        for (Stats stat : stats) {
+            series.getData().add(new XYChart.Data<>(stat.getIstituzione(), stat.getPercentuale()));
         }
-        PieChart pieChart = new PieChart();
-        pane.setCenter(pieChart);
-        pieChart.setMaxHeight(350);
-        pieChart.setMaxWidth(350);
-        pieChart.setClockwise(true);
-        pieChart.setStartAngle(180);
-        pieChart.setLabelLineLength(50);
-        pieChart.setLabelsVisible(true);
-        pieChartData.forEach(data ->
-                data.nameProperty().bind(
-                        Bindings.concat(
-                                data.getName(), " ", data.pieValueProperty(), " %"
-                        )
-                )
-        );
-        pieChart.setData(pieChartData);
+        barChart.getData().add(series);
+        pane.setCenter(barChart);
     }
 
 
@@ -93,7 +83,7 @@ public class MonthlyStatWindowController implements Initializable {
                 if (stats.isEmpty()) {
                     showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nel mese cercato");
                 } else {
-                    createPieChart(stats, pieChartData, pieChartPane);
+                    createPieChart(stats, pieChartPane);
                 }
             } catch (InputMismatchException e) {
                 showAlert(Alert.AlertType.ERROR, "Inserire un input valido");

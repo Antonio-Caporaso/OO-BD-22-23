@@ -6,11 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane prefHeight="550.0" prefWidth="555.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="717.0" prefWidth="911.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Spinner fx:id="annoSpinner" layoutX="99.0" layoutY="497.0" prefHeight="39.0" prefWidth="184.0" />
-      <Button layoutX="297.0" layoutY="497.0" mnemonicParsing="false" onAction="#calcolaGrafico" prefHeight="39.0" prefWidth="159.0" text="Calcola" />
-      <Label layoutX="105.0" layoutY="481.0" text="Anno" />
-      <BorderPane fx:id="pieChartPane" layoutX="-2.0" prefHeight="464.0" prefWidth="555.0" />
+      <Spinner fx:id="annoSpinner" layoutX="540.0" layoutY="664.0" prefHeight="39.0" prefWidth="184.0" />
+      <Button layoutX="738.0" layoutY="664.0" mnemonicParsing="false" onAction="#calcolaGrafico" prefHeight="39.0" prefWidth="159.0" text="Calcola" />
+      <Label layoutX="546.0" layoutY="648.0" text="Anno" />
+      <BorderPane fx:id="pieChartPane" layoutX="-2.0" prefHeight="635.0" prefWidth="911.0" />
    </children>
 </AnchorPane>
