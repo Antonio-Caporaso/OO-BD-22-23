@@ -493,6 +493,8 @@ BEGIN
         WHERE id_programma = new.id_programma
     ) THEN
     RAISE EXCEPTION 'Il keynote speaker deve essere anche speaker della sessione';
+    end if;
+    return new;
 END;
 $$ LANGUAGE plpgsql;
 

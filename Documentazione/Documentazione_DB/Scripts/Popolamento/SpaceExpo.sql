@@ -15,7 +15,7 @@ programma4_id integer;
 programma5_id integer;
 begin
 
-select * add_conferenza(
+select * from add_conferenza(
 'International Space Expo', --Titolo conferenza
 '2023-08-03 8:00', --Inizio
 '2023-08-05 20:00',--Fine
@@ -25,10 +25,6 @@ select * add_conferenza(
 2 --Utente che inserisce la conferenza 
 ) into conferenza_id;
 
-select c.id_conferenza FROM conferenza c where titolo ='International Space Expo' and inizio='2023-08-03 8:00' and fine='2023-08-05 20:00' and id_sede=2 into conferenza_id;
-if (not found) then
-    rollback;
-end if;
 --Aggiungo sponsorizzazioni
 call add_sponsorizzazione(50,50000.00,'USD',conferenza_id); --Space X
 call add_sponsorizzazione(51,10000.00,'USD',conferenza_id); --Blue Origins LLC
