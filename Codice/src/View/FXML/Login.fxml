@@ -13,7 +13,7 @@
 
 <AnchorPane fx:id="anchorPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.LoginController">
    <children>
-      <VBox fillWidth="false" maxWidth="348.0" minWidth="348.0" prefHeight="720.0" prefWidth="348.0" style="-fx-background-color: #232730;">
+      <VBox fillWidth="false" maxWidth="348.0" minWidth="348.0" prefHeight="720.0" prefWidth="348.0" style="-fx-background-color: #232730; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);">
          <children>
             <Pane prefHeight="720.0" prefWidth="348.0">
                <children>

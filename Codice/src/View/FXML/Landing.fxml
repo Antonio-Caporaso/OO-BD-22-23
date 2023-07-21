@@ -17,7 +17,7 @@
           <Region />
         </root>
       </SubScene>
-      <VBox prefHeight="720.0" prefWidth="348.0" style="-fx-background-color: #232730;">
+      <VBox prefHeight="720.0" prefWidth="348.0" style="-fx-background-color: #232730; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);">
          <children>
             <Pane prefHeight="217.0" prefWidth="348.0">
                <children>
