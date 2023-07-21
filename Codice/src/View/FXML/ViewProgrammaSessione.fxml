@@ -7,10 +7,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="75.0" layoutY="-5.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="512.0" text="Programma Sessione:" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
@@ -18,7 +19,7 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <ButtonBar layoutX="713.0" layoutY="675.0" prefHeight="31.0" prefWidth="205.0">
+      <ButtonBar layoutX="604.0" layoutY="675.0" prefHeight="31.0" prefWidth="314.0">
          <buttons>
             <Button fx:id="backButton" minWidth="54.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="31.0" text="Back" textFill="WHITE">
                <font>
@@ -28,14 +29,14 @@
                   <Insets />
                </opaqueInsets>
             </Button>
-            <Button fx:id="riepilogoButton" mnemonicParsing="false" onAction="#riepilogoButtonOnAction" text="Riepilogo" textFill="WHITE">
+            <Button fx:id="riepilogoButton" mnemonicParsing="false" onAction="#riepilogoButtonOnAction" prefHeight="29.0" prefWidth="124.0" text="Riepilogo" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
          </buttons>
       </ButtonBar>
-      <TableView fx:id="programmaTableView" layoutX="14.0" layoutY="117.0" onMouseClicked="#showInfoScreen" prefHeight="500.0" prefWidth="725.0">
+      <TableView fx:id="programmaTableView" layoutX="14.0" layoutY="117.0" onMouseClicked="#showInfoScreen" prefHeight="552.0" prefWidth="725.0">
         <columns>
           <TableColumn fx:id="appuntamentoTableColumn" maxWidth="377.0" prefWidth="361.0" resizable="false" text="Appuntamento" />
           <TableColumn fx:id="inizioTableColumn" maxWidth="420.0" minWidth="0.0" prefWidth="171.0" resizable="false" text="Inizio" />
@@ -50,9 +51,25 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="addIntervalloButton" layoutX="745.0" layoutY="271.0" mnemonicParsing="false" onAction="#addIntervalloOnAction" prefHeight="31.0" prefWidth="173.0" text="Aggiungi Intervallo" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="addInterventoButton" layoutX="745.0" layoutY="221.0" mnemonicParsing="false" onAction="#addInterventoOnAction" prefHeight="31.0" prefWidth="173.0" text="Aggiungi Intervento" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="addEventoSocialeButton" layoutX="745.0" layoutY="321.0" mnemonicParsing="false" onAction="#addEventoSocialeOnAction" prefHeight="31.0" prefWidth="173.0" text="Aggiungi Evento" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="removePuntoButton" layoutX="745.0" layoutY="419.0" mnemonicParsing="false" onAction="#removeButtonOnAction" prefHeight="31.0" prefWidth="173.0" text="Rimuovi punto" />
+      <VBox layoutX="745.0" layoutY="117.0" prefHeight="493.0" prefWidth="173.0">
+         <children>
+            <Button fx:id="addInterventoButton" mnemonicParsing="false" onAction="#addInterventoOnAction" prefHeight="57.0" prefWidth="173.0" text="Aggiungi Intervento" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="addIntervalloButton" mnemonicParsing="false" onAction="#addIntervalloOnAction" prefHeight="57.0" prefWidth="173.0" text="Aggiungi Intervallo" textAlignment="CENTER" wrapText="true">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="addEventoSocialeButton" mnemonicParsing="false" onAction="#addEventoSocialeOnAction" prefHeight="57.0" prefWidth="173.0" text="Aggiungi Evento" textAlignment="CENTER" wrapText="true">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="removePuntoButton" mnemonicParsing="false" onAction="#removeButtonOnAction" prefHeight="57.0" prefWidth="173.0" text="Rimuovi punto" textAlignment="CENTER" wrapText="true">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

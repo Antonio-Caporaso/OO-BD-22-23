@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" scaleShape="false" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" scaleShape="false" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="27.0" text="Gestione del programma" textFill="#eceff4">
@@ -26,19 +26,17 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#choiceKeynoteOnAction" prefHeight="65.0" prefWidth="224.0" text="Seleziona Keynote Speaker">
+            <Button mnemonicParsing="false" onAction="#choiceKeynoteOnAction" prefHeight="65.0" prefWidth="224.0" text="Seleziona Keynote Speaker" textAlignment="CENTER" wrapText="true">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
          </children></VBox>
-      <TableView fx:id="programmaTableView" layoutX="13.0" layoutY="99.0" prefHeight="603.0" prefWidth="688.0">
+      <TableView fx:id="programmaTableView" layoutX="8.0" layoutY="100.0" onMouseClicked="#showInfoScreen" prefHeight="604.0" prefWidth="691.0">
          <columns>
-            <TableColumn fx:id="appuntamentoTableColumn" editable="false" maxWidth="256.0" prefWidth="135.0" resizable="false" text="Appuntamento" />
-            <TableColumn fx:id="inizioTableColumn" editable="false" maxWidth="209.0" minWidth="0.0" prefWidth="148.0" resizable="false" text="Inizio" />
-            <TableColumn fx:id="fineTableColumn" editable="false" maxWidth="209.0" minWidth="0.0" prefWidth="123.0" resizable="false" text="Fine" />
-            <TableColumn fx:id="speakerTableColumn" editable="false" maxWidth="409.0" prefWidth="159.0" resizable="false" text="Speaker" />
-            <TableColumn fx:id="descrizioneTableColumn" editable="false" maxWidth="500.0" prefWidth="146.0" text="Descrizione" />
+            <TableColumn fx:id="appuntamentoTableColumn" maxWidth="377.0" prefWidth="285.0" resizable="false" text="Appuntamento" />
+            <TableColumn fx:id="inizioTableColumn" maxWidth="420.0" minWidth="0.0" prefWidth="193.0" resizable="false" text="Inizio" />
+            <TableColumn fx:id="fineTableColumn" maxWidth="420.0" minWidth="0.0" prefWidth="236.0" resizable="false" text="Fine" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
