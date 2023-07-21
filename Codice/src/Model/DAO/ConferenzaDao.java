@@ -29,6 +29,7 @@ public class ConferenzaDao {
         while(rs.next())
         {
             Conferenza c = new Conferenza();
+            c.setProprietario(user);
             c.setId_conferenza(rs.getInt("id_conferenza"));
             c.setTitolo(rs.getString("titolo"));
             c.setInizio(rs.getTimestamp("inizio"));
