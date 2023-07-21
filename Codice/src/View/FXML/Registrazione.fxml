@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Controller.RegisterController">
    <children>
-      <VBox prefHeight="720.0" prefWidth="348.0">
+      <VBox prefHeight="720.0" prefWidth="348.0" style="-fx-background-color: #232730;">
          <children>
             <Pane prefHeight="720.0" prefWidth="348.0">
                <children>
@@ -23,48 +23,48 @@
                         <Font name="Times New Roman" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="titoloLabel" layoutX="63.0" layoutY="170.0" prefHeight="21.0" prefWidth="48.0" text="Titolo" textFill="WHITE">
+                  <Label fx:id="titoloLabel" layoutX="63.0" layoutY="170.0" prefHeight="21.0" prefWidth="48.0" text="Titolo" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
                   <ChoiceBox fx:id="titoloChoiceBox" layoutX="17.0" layoutY="206.0" prefHeight="31.0" prefWidth="139.0" />
-                  <Label fx:id="istituzioneLabel" layoutX="227.0" layoutY="170.0" text="Istituzione" textFill="WHITE">
+                  <Label fx:id="istituzioneLabel" layoutX="227.0" layoutY="170.0" text="Istituzione" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
                   <ChoiceBox fx:id="istituzioneChoice" layoutX="198.0" layoutY="206.0" prefHeight="31.0" prefWidth="139.0" />
-                  <Label fx:id="nomeLabel" layoutX="62.0" layoutY="263.0" text="Nome" textFill="WHITE">
+                  <Label fx:id="nomeLabel" layoutX="62.0" layoutY="263.0" text="Nome" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
                   <TextField fx:id="nomeTextField" layoutX="17.0" layoutY="300.0" prefHeight="37.0" prefWidth="139.0" />
-                  <Label fx:id="cognomeLabel" layoutX="228.0" layoutY="263.0" text="Cognome" textFill="WHITE">
+                  <Label fx:id="cognomeLabel" layoutX="228.0" layoutY="263.0" text="Cognome" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="emailLabel" layoutX="245.0" layoutY="357.0" text="Email" textFill="WHITE">
+                  <Label fx:id="emailLabel" layoutX="245.0" layoutY="357.0" text="Email" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
                   <TextField fx:id="emailTextField" layoutX="198.0" layoutY="400.0" prefHeight="37.0" prefWidth="139.0" />
-                  <Label fx:id="usernameLabel" layoutX="45.0" layoutY="357.0" text="Username" textFill="WHITE">
+                  <Label fx:id="usernameLabel" layoutX="45.0" layoutY="357.0" text="Username" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
                   <TextField fx:id="usernameTextField" layoutX="17.0" layoutY="400.0" maxWidth="170.0" prefHeight="37.0" prefWidth="139.0" />
-                  <Label fx:id="passwordLabel" layoutX="46.0" layoutY="473.0" text="Password" textFill="WHITE">
+                  <Label fx:id="passwordLabel" layoutX="46.0" layoutY="473.0" text="Password" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
                   <PasswordField fx:id="passwordTextField" layoutX="17.0" layoutY="505.0" prefHeight="37.0" prefWidth="139.0" />
-                  <Label fx:id="confermaPasswordLabel" layoutX="170.0" layoutY="473.0" text="Conferma Password" textFill="WHITE">
+                  <Label fx:id="confermaPasswordLabel" layoutX="170.0" layoutY="473.0" text="Conferma Password" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
