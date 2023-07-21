@@ -63,6 +63,13 @@ public class ModificaSessioneController implements Initializable {
     @FXML
     private Label titleLabel;
 
+    public ModificaSessioneController(Sessione s, Conferenza conferenza, ModificaSessioniController modificaSessioniController, SubScene subscene) {
+        this.sessione = s;
+        this.conferenza = conferenza;
+        this.manageSessioniController = modificaSessioniController;
+        this.subScene = subscene;
+    }
+
     public Conferenza getConferenza() {
         return conferenza;
     }
@@ -134,10 +141,7 @@ public class ModificaSessioneController implements Initializable {
 
     private void goToEditProgrammaWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaProgrammaSessione.fxml"));
-        ModificaProgrammaSessioneController controller = new ModificaProgrammaSessioneController();
-        controller.setSubscene(subScene);
-        controller.setManageSessioniController(manageSessioniController);
-        controller.setSessione(sessione);
+        ModificaProgrammaSessioneController controller = new ModificaProgrammaSessioneController(sessione,subScene,manageSessioniController);
         controller.setProgramma(programma);
         loader.setController(controller);
         Parent root = loader.load();

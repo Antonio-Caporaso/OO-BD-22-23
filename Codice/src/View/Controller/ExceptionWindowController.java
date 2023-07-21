@@ -26,6 +26,10 @@ public class ExceptionWindowController implements Initializable {
     private Label errorMessageLabel;
     private double x, y;
 
+    public ExceptionWindowController(String messaggio) {
+        errorMessageLabel.setText(messaggio);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         errorMessageLabel.setText("");

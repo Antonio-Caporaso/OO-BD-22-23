@@ -47,9 +47,9 @@ public class AddPuntoController implements Initializable {
 
     private void openAddEventoWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEventoSociale_Create.fxml"));
+        AddEventoSocialeController_Create controller = new AddEventoSocialeController_Create(programma);
+        loader.setController(controller);
         Parent root = loader.load();
-        AddEventoSocialeController_Create controller = loader.getController();
-        controller.setProgramma(programma);
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -64,9 +64,9 @@ public class AddPuntoController implements Initializable {
 
     private void openAddIntervalloWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo_Create.fxml"));
+        AddIntervalloController_Create controller = new AddIntervalloController_Create(programma);
+        loader.setController(controller);
         Parent root = loader.load();
-        AddIntervalloController_Create controller = loader.getController();
-        controller.setProgramma(programma);
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -81,9 +81,9 @@ public class AddPuntoController implements Initializable {
 
     private void openAddInterventoWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento_Create.fxml"));
+        AddInterventoController_Create controller = new AddInterventoController_Create(programma);
+        loader.setController(controller);
         Parent root = loader.load();
-        AddInterventoController_Create controller = loader.getController();
-        controller.setProgramma(programma);
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.initModality(Modality.APPLICATION_MODAL);

@@ -53,6 +53,12 @@ public class AddSponsorController implements Initializable {
     @FXML
     private TableColumn<Sponsorizzazione, String> valutaColumn;
 
+    public AddSponsorController(SubScene subscene, Conferenza conferenza, Utente user) {
+        this.subscene = subscene;
+        this.conferenza = conferenza;
+        this.user = user;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sponsors.loadSponsor();
@@ -61,26 +67,11 @@ public class AddSponsorController implements Initializable {
         setSponsorizzazioniTable();
     }
 
-    public void setConferenza(Conferenza c) {
-        this.conferenza = c;
-    }
-
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-
-    public void setUtente(Utente utente) {
-        this.user = utente;
-    }
-
     private void loadAddEnti() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEnti.fxml"));
-            AddEntiController controller = new AddEntiController();
+            AddEntiController controller = new AddEntiController(subscene,conferenza,user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUtente(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -91,11 +82,8 @@ public class AddSponsorController implements Initializable {
     private void loadVisualizzaSessione() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessioniConferenza.fxml"));
-            VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza();
+            VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza(subscene,conferenza,user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUser(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {

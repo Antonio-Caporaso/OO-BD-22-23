@@ -45,12 +45,7 @@ public class AddEventoSocialeController_Create implements Initializable {
     private TextField titoloTextField;
     private double x, y;
 
-    //Public Setters
-    public Programma getProgramma() {
-        return programma;
-    }
-
-    public void setProgramma(Programma programma) {
+    public AddEventoSocialeController_Create(Programma programma) {
         this.programma = programma;
     }
 
@@ -64,9 +59,9 @@ public class AddEventoSocialeController_Create implements Initializable {
     private void loadExceptionWindow(String message) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ExceptionWindow.fxml"));
+            ExceptionWindowController controller = new ExceptionWindowController(message);
+            loader.setController(controller);
             Parent root = loader.load();
-            ExceptionWindowController controller = loader.getController();
-            controller.setErrorMessageLabel(message);
             Stage stage = new Stage();
             stage.setTitle("Errore");
             Scene scene = new Scene(root, 400, 200);

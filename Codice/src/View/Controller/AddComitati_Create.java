@@ -72,11 +72,8 @@ public class AddComitati_Create implements Initializable {
     private void loadAggiungiSponsor() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
-            AddSponsorController controller = new AddSponsorController();
+            AddSponsorController controller = new AddSponsorController(subscene,conferenza,user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUtente(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -100,7 +97,6 @@ public class AddComitati_Create implements Initializable {
         try {
             membriComitato.loadMembriComitatoScientifico();
             membriComitato.loadMembriComitatoLocale();
-
             comitatoScientificoListView.setItems(membriComitato.getMembriComitatoScientifico());
             comitatoLocaleListView.setItems(membriComitato.getMembriComitatoLocale());
         } catch (SQLException e) {
@@ -111,11 +107,8 @@ public class AddComitati_Create implements Initializable {
     private void loadSelezionaEnti() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEnti.fxml"));
-            AddEntiController controller = new AddEntiController();
+            AddEntiController controller = new AddEntiController(subscene,conferenza,user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUtente(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {

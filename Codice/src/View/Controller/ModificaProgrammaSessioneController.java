@@ -46,6 +46,12 @@ public class ModificaProgrammaSessioneController implements Initializable {
     private TableColumn<ActivityModel, Speaker> speakerTableColumn;
     private SubScene subscene;
 
+    public ModificaProgrammaSessioneController(Sessione s, SubScene subscene, ModificaSessioniController modificaSessioniController) {
+        this.sessione = s;
+        this.subscene = subscene;
+        this.manageSessioniController = modificaSessioniController;
+    }
+
     public Programma getProgramma() {
         return programma;
     }
@@ -93,7 +99,6 @@ public class ModificaProgrammaSessioneController implements Initializable {
 
     private void setProgrammaTableView() {
         try {
-
             programma.loadProgramaSessione();
             appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
@@ -134,8 +139,7 @@ public class ModificaProgrammaSessioneController implements Initializable {
     @FXML
     void choiceKeynoteOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ChoiceKeynote.fxml"));
-        ChooseKeynoteController controller = new ChooseKeynoteController();
-        controller.setProgramma(programma);
+        ChooseKeynoteController controller = new ChooseKeynoteController(programma);
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);

@@ -74,12 +74,12 @@ public class ModificaConferenzeController implements Initializable {
     public void editOnAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-            ModificaConferenzaController controller = new ModificaConferenzaController();
-            loader.setController(controller);
             try {
                 Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
                 if (c == null)
                     throw new NullPointerException();
+                ModificaConferenzaController controller = new ModificaConferenzaController(c,subscene,user);
+                loader.setController(controller);
                 controller.setConferenza(c);
                 controller.setSubscene(subscene);
                 controller.setGestioneConferenzeController(this);

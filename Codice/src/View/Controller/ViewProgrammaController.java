@@ -98,9 +98,9 @@ public class ViewProgrammaController implements Initializable {
     private void loadAddEventoSociale() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEventoSociale_Create.fxml"));
+            AddEventoSocialeController_Create controller = new AddEventoSocialeController_Create(programma);
+            loader.setController(controller);
             Parent root = loader.load();
-            AddEventoSocialeController_Create controller = loader.getController();
-            controller.setProgramma(programma);
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -119,9 +119,9 @@ public class ViewProgrammaController implements Initializable {
     private void loadAddIntervallo() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervallo_Create.fxml"));
+            AddIntervalloController_Create controller = new AddIntervalloController_Create(programma);
+            loader.setController(controller);
             Parent root = loader.load();
-            AddIntervalloController_Create controller = loader.getController();
-            controller.setProgramma(programma);
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -140,9 +140,9 @@ public class ViewProgrammaController implements Initializable {
     private void loadAddIntervento() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddIntervento_Create.fxml"));
+            AddInterventoController_Create controller = new AddInterventoController_Create(programma);
+            loader.setController(controller);
             Parent root = loader.load();
-            AddInterventoController_Create controller = loader.getController();
-            controller.setProgramma(programma);
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -162,11 +162,8 @@ public class ViewProgrammaController implements Initializable {
     private void loadRiepilogo() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-            ModificaConferenzaController controller = new ModificaConferenzaController();
+            ModificaConferenzaController controller = new ModificaConferenzaController(conferenza,subscene,user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUser(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -181,11 +178,8 @@ public class ViewProgrammaController implements Initializable {
     private void loadVisualizzaSessione() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaSessioniConferenza.fxml"));
-            VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza();
+            VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza(subscene,conferenza,user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUser(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -195,10 +189,10 @@ public class ViewProgrammaController implements Initializable {
     private void loadInfoIntervento(Intervento intervento){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervento_Create.fxml"));
-            Parent root = loader.load();
-            ShowInfoInterventoController_Create controller = loader.getController();
+            ShowInfoInterventoController_Create controller = new ShowInfoInterventoController_Create();
             controller.initializeData(intervento);
-
+            loader.setController(controller);
+            Parent root = loader.load();
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -217,10 +211,10 @@ public class ViewProgrammaController implements Initializable {
     private void loadInfoIntervallo(Intervallo intervallo){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervallo_Create.fxml"));
-            Parent root = loader.load();
-            ShowInfoIntervalloController_Create controller = loader.getController();
+            ShowInfoIntervalloController_Create controller = new ShowInfoIntervalloController_Create();
             controller.initializeData(intervallo);
-
+            loader.setController(controller);
+            Parent root = loader.load();
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -239,10 +233,10 @@ public class ViewProgrammaController implements Initializable {
     private void loadInfoEventoSociale(EventoSociale eventoSociale){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoEventoSociale_Create.fxml"));
-            Parent root = loader.load();
-            ShowInfoEventoSocialeController_Create controller = loader.getController();
+            ShowInfoEventoSocialeController_Create controller = new ShowInfoEventoSocialeController_Create();
             controller.initializeData(eventoSociale);
-
+            loader.setController(controller);
+            Parent root = loader.load();
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -306,7 +300,7 @@ public class ViewProgrammaController implements Initializable {
     }
     @FXML
     void showInfoScreen(MouseEvent event) {
-        ActivityModel selected=programmaTableView.getSelectionModel().getSelectedItem();
+        ActivityModel selected = programmaTableView.getSelectionModel().getSelectedItem();
         if (programma.getProgrammaSessione().contains(selected)) {
             if (selected instanceof Intervento)
                 loadInfoIntervento((Intervento) selected);

@@ -27,6 +27,10 @@ public class ChooseKeynoteController implements Initializable {
     @FXML
     private ChoiceBox<Speaker> speakerChoice;
 
+    public ChooseKeynoteController(Programma programma) {
+        this.programma = programma;
+    }
+
     public Programma getProgramma() {
         return programma;
     }

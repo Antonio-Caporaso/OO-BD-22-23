@@ -85,6 +85,12 @@ public class ModificaConferenzaController implements Initializable {
     @FXML
     private TableColumn<Sponsorizzazione, String> valutaColumn;
 
+    public ModificaConferenzaController(Conferenza c, SubScene subscene, Utente user) {
+        this.conferenza = c;
+        this.subscene = subscene;
+        this.user = user;
+    }
+
     @FXML
     public void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenze.fxml"));

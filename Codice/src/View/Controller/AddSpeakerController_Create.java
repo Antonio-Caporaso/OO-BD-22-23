@@ -65,16 +65,15 @@ public class AddSpeakerController_Create implements Initializable {
         String[] titoli = {"Dottore", "Dottoressa", "Professore", "Professoressa", "Assistente", "Ricercatore", "Ricercatrice", "Ingegnere"};
         enti.loadEnti();
         enteChoiceBox.setItems(enti.getEnti());
-        Conferenza conferenza = new Conferenza();
         titoloChoiceBox.getItems().setAll(titoli);
     }
 
     private void loadExceptionWindow(String message) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ExceptionWindow.fxml"));
+            ExceptionWindowController controller = new ExceptionWindowController(message);
+            loader.setController(controller);
             Parent root = loader.load();
-            ExceptionWindowController controller = loader.getController();
-            controller.setErrorMessageLabel(message);
             Stage stage = new Stage();
             stage.setTitle("Errore");
             Scene scene = new Scene(root, 400, 200);
@@ -107,6 +106,7 @@ public class AddSpeakerController_Create implements Initializable {
         speaker.setEmail(emailtextField.getText());
         try {
             int id = speakerDao.createSpeaker(speaker);
+            speaker.setIdSpeaker(id);
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         } catch (SQLException e) {

@@ -53,11 +53,8 @@ public class ModificaSessioniController implements Initializable {
     @FXML
     public void addSessioneOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSessione.fxml"));
-        AddSessioneController controller = new AddSessioneController();
+        AddSessioneController controller = new AddSessioneController(conferenza,subscene,this);
         loader.setController(controller);
-        controller.setConferenza(conferenza);
-        controller.setManageSessioniController(this);
-        controller.setSubscene(subscene);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -66,15 +63,11 @@ public class ModificaSessioniController implements Initializable {
     public void editSessionsOnAction(ActionEvent event) throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessione.fxml"));
-            ModificaSessioneController controller = new ModificaSessioneController();
-            loader.setController(controller);
             Sessione s = table.getSelectionModel().getSelectedItem();
             if (s == null)
                 throw new SessioneNotSelectedException();
-            controller.setSessione(s);
-            controller.setConferenza(conferenza);
-            controller.setManageSessioniController(this);
-            controller.setSubScene(subscene);
+            ModificaSessioneController controller = new ModificaSessioneController(s,conferenza,this,subscene);
+            loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (SessioneNotSelectedException e) {
@@ -107,9 +100,6 @@ public class ModificaSessioniController implements Initializable {
         this.conferenza = conferenza;
     }
 
-    public void setEditConferenceController(ModificaConferenzaController modificaConferenzaController) {
-        this.modificaConferenzaController = modificaConferenzaController;
-    }
 
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;

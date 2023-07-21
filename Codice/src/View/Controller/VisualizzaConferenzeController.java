@@ -52,6 +52,10 @@ public class VisualizzaConferenzeController implements Initializable {
     @FXML
     private Button visualizzaButton;
 
+    public VisualizzaConferenzeController(SubScene subscene) {
+        this.subScene = subscene;
+    }
+
     public SubScene getSubScene() {
         return subScene;
     }

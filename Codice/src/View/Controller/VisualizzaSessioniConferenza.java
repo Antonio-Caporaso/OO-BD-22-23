@@ -48,33 +48,23 @@ public class VisualizzaSessioniConferenza implements Initializable {
     private TableColumn<Sessione, String> titoloTableColumn;
     private Utente user;
 
+    public VisualizzaSessioniConferenza(SubScene subscene, Conferenza conferenza, Utente user) {
+        this.subscene = subscene;
+        this.conferenza = conferenza;
+        this.user = user;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setSessioni();
         checkAlmenoUnaSessione();
     }
 
-    //Public Setters
-    public void setConferenza(Conferenza c) {
-        this.conferenza = c;
-    }
-
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-
-    public void setUser(Utente utente) {
-        this.user = utente;
-    }
-
     private void loadAggiungiSponsor() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddSponsor.fxml"));
-            AddSponsorController controller = new AddSponsorController();
+            AddSponsorController controller = new AddSponsorController(subscene,conferenza,user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUtente(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -85,11 +75,8 @@ public class VisualizzaSessioniConferenza implements Initializable {
     private void loadEditConferenza() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-            ModificaConferenzaController controller = new ModificaConferenzaController();
+            ModificaConferenzaController controller = new ModificaConferenzaController(conferenza,subscene,user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUser(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {

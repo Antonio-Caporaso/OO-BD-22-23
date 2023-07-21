@@ -52,6 +52,12 @@ public class AddSessioneController implements Initializable, FormChecker {
     private ChoiceBox<Sala> saleChoice;
     private SubScene subscene;
 
+    public AddSessioneController(Conferenza conferenza, SubScene subscene, ModificaSessioniController modificaSessioniController) {
+        this.conferenza = conferenza;
+        this.subscene = subscene;
+        this.modificaSessioniController = modificaSessioniController;
+    }
+
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
         if (nomeTF.getText().isBlank() || saleChoice.getValue().equals(null)
@@ -90,10 +96,7 @@ public class AddSessioneController implements Initializable, FormChecker {
 
     private void goToAddProgrammaWindow(Sessione s) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaProgrammaSessione.fxml"));
-        ModificaProgrammaSessioneController controller = new ModificaProgrammaSessioneController();
-        controller.setManageSessioniController(modificaSessioniController);
-        controller.setSessione(s);
-        controller.setSubscene(subscene);
+        ModificaProgrammaSessioneController controller = new ModificaProgrammaSessioneController(s,subscene,modificaSessioniController);
         loader.setController(controller);
         Parent root = loader.load();
         subscene.setRoot(root);

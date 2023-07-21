@@ -234,7 +234,7 @@ public class VisualizzaConferenzaController implements Initializable {
             alert.showAndWait();
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ViewSessione.fxml"));
-            ViewSessioneController controller = new ViewSessioneController();
+            ViewSessioneController controller = new ViewSessioneController(s,this,subScene);
             controller.setSessione(s);
             controller.setVisualizzaConferenzaController(this);
             controller.setSubScene(subScene);

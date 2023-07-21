@@ -49,6 +49,11 @@ public class AddConferenceController implements Initializable, FormChecker {
     private SubScene subscene;
     private Utente user;
 
+    public AddConferenceController(SubScene subscene, Utente user) {
+        this.subscene = subscene;
+        this.user = user;
+    }
+
     @FXML
     public void avantiButtonOnAction(ActionEvent event) {
         try {
@@ -102,11 +107,7 @@ public class AddConferenceController implements Initializable, FormChecker {
 
     private void goToAddEntiWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddEnti.fxml"));
-        AddEntiController controller = new AddEntiController();
-        controller.setAddConferenceController(this);
-        controller.setSubscene(subscene);
-        controller.setConferenza(conferenza);
-        controller.setUtente(user);
+        AddEntiController controller = new AddEntiController(subscene,conferenza,user);
         loader.setController(controller);
         Parent root = loader.load();
         subscene.setRoot(root);
@@ -114,10 +115,9 @@ public class AddConferenceController implements Initializable, FormChecker {
 
     private void goToLandingWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Landing.fxml"));
-        LandingController controller = new LandingController();
+        LandingController controller = new LandingController(user);
         loader.setController(controller);
         Parent root = loader.load();
-        controller.setUser(user);
         Scene landingScene = new Scene(root);
         Stage stage = (Stage) avantiButton.getScene().getWindow();
         stage.setScene(landingScene);

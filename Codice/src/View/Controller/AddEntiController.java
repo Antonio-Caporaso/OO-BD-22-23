@@ -25,7 +25,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddEntiController implements Initializable {
-    private AddConferenceController addConferenceController;
     private Conferenza conferenza;
     private Enti enti = new Enti();
     @FXML
@@ -38,12 +37,10 @@ public class AddEntiController implements Initializable {
     private SubScene subscene;
     private Utente user;
 
-    public AddConferenceController getAddConferenceController() {
-        return addConferenceController;
-    }
-
-    public void setAddConferenceController(AddConferenceController addConferenceController) {
-        this.addConferenceController = addConferenceController;
+    public AddEntiController(SubScene subscene, Conferenza conferenza, Utente user) {
+        this.subscene = subscene;
+        this.conferenza = conferenza;
+        this.user = user;
     }
 
     //Overrides
@@ -90,11 +87,8 @@ public class AddEntiController implements Initializable {
     private void loadEditConferenza() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaConferenza.fxml"));
-            ModificaConferenzaController controller = new ModificaConferenzaController();
+            ModificaConferenzaController controller = new ModificaConferenzaController(conferenza,subscene,user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUser(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -104,10 +98,9 @@ public class AddEntiController implements Initializable {
 
     private void loadErrorWindow(String messaggio) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ExceptionWindow.fxml"));
+        ExceptionWindowController controller = new ExceptionWindowController(messaggio);
+        loader.setController(controller);
         Parent root = loader.load();
-        ExceptionWindowController controller = loader.getController();
-        controller.setErrorMessageLabel(messaggio);
-
         Stage stage = new Stage();
         stage.setTitle("Errore");
         Scene scene = new Scene(root, 400, 200);

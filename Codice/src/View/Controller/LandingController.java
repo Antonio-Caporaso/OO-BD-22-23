@@ -27,17 +27,13 @@ public class LandingController implements Initializable {
     private Label welcomeLabel;
     public Utente user;
 
-    public Utente getUser() {
-        return user;
-    }
-
-    public void setUser(Utente user) {
+    public LandingController(Utente user){
         this.user = user;
-        setWelcomeLabel();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setWelcomeLabel();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Welcome.fxml"));
         try {
             Parent root = loader.load();
@@ -49,7 +45,6 @@ public class LandingController implements Initializable {
     }
 
     public void setWelcomeLabel() {
-        if (user != null)
             welcomeLabel.setText("Welcome " + user.getUsername() + "!");
     }
 
@@ -57,9 +52,7 @@ public class LandingController implements Initializable {
     void creaConferenzaOnAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/AddConference.fxml"));
-            AddConferenceController controller = new AddConferenceController();
-            controller.setUser(user);
-            controller.setSubscene(subscene);
+            AddConferenceController controller = new AddConferenceController(subscene,user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -85,8 +78,7 @@ public class LandingController implements Initializable {
     void visualizzaConferenzaOnAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaConferenze.fxml"));
-            VisualizzaConferenzeController controller = new VisualizzaConferenzeController();
-            controller.setSubScene(subscene);
+            VisualizzaConferenzeController controller = new VisualizzaConferenzeController(subscene);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -99,8 +91,11 @@ public class LandingController implements Initializable {
     @FXML
     void visualizzaStatisticheOnAction(ActionEvent event) {
         try {
-            Parent loader = FXMLLoader.load(getClass().getResource("../FXML/VisualizzaStatistiche.fxml"));
-            subscene.setRoot(loader);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/VisualizzaStatistiche.fxml"));
+            VisualizzaStatisticheController controller = new VisualizzaStatisticheController();
+            loader.setController(controller);
+            Parent root = loader.load();
+            subscene.setRoot(root);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,10 +120,9 @@ public class LandingController implements Initializable {
     void backToLandingButtonOnAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Landing.fxml"));
-            LandingController controller = new LandingController();
+            LandingController controller = new LandingController(user);
             loader.setController(controller);
             Parent root = loader.load();
-            controller.setUser(user);
             Scene landingScene = new Scene(root);
             Stage stage = (Stage) backToLandingButton.getScene().getWindow();
             stage.setScene(landingScene);

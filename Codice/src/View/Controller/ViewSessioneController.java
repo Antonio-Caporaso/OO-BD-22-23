@@ -76,6 +76,12 @@ public class ViewSessioneController implements Initializable {
     private Label titleLabel;
     private VisualizzaConferenzaController visualizzaConferenzaController;
 
+    public ViewSessioneController(Sessione s, VisualizzaConferenzaController visualizzaConferenzaController, SubScene subScene) {
+        this.sessione = s;
+        this.visualizzaConferenzaController = visualizzaConferenzaController;
+        this.subScene = subScene;
+    }
+
     public Conferenza getConferenza() {
         return conferenza;
     }
