@@ -97,19 +97,23 @@ public class AddEntiController implements Initializable {
     }
 
     private void loadErrorWindow(String messaggio) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ExceptionWindow.fxml"));
-        ExceptionWindowController controller = new ExceptionWindowController(messaggio);
-        loader.setController(controller);
-        Parent root = loader.load();
-        Stage stage = new Stage();
-        stage.setTitle("Errore");
-        Scene scene = new Scene(root, 400, 200);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ExceptionWindow.fxml"));
+            Parent root = loader.load();
+            ExceptionWindowController controller = loader.getController();
+            controller.setErrorMessageLabel(messaggio);
+            Stage stage = new Stage();
+            stage.setTitle("Errore");
+            Scene scene = new Scene(root, 400, 200);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setOrganizzatoriChoiceBox() {

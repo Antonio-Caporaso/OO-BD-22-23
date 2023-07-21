@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ExceptionWindowController">
    <top>
       <HBox prefHeight="39.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
@@ -36,7 +36,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" stylesheets="@../CSS/NewStyle.css" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="135.0" prefWidth="400.0">
+            <HBox fx:id="errorHBox" alignment="CENTER_LEFT" prefHeight="135.0" prefWidth="400.0">
                <children>
                   <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -60,7 +60,7 @@
                </VBox.margin>
             </HBox>
             <Separator prefWidth="200.0" style="-fx-background-color: #00416a;" />
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="errorHboxBottom" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label fx:id="errorMessageLabel" text="TESTO MOLTO LUNGO DI PROVA HAI ROTTO TUTTO" textFill="#eceff4">
                      <HBox.margin>
