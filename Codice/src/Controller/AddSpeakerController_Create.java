@@ -68,11 +68,11 @@ public class AddSpeakerController_Create implements Initializable {
     }
 
     private void loadExceptionWindow(String message) {
-        try {
+        try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ExceptionWindow.fxml"));
-            ExceptionWindowController controller = new ExceptionWindowController(message);
-            loader.setController(controller);
             Parent root = loader.load();
+            ExceptionWindowController controller = loader.getController();
+            controller.setErrorMessageLabel(message);
             Stage stage = new Stage();
             stage.setTitle("Errore");
             Scene scene = new Scene(root, 400, 200);

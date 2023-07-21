@@ -107,6 +107,9 @@ border width: 3
     -fx-border-color: #5e6675;
 }
 .choice-box > .label { -fx-text-fill:#eceff4; }
+.choice-box .menu-item:focused{
+    -fx-background-color:#eceff4 ;
+}
 
 
 /*List View*/
@@ -202,6 +205,9 @@ border width: 3
     -fx-border-color: #5e6675;
 }
 .combo-box > .label { -fx-text-fill:#eceff4; }
+.combo-box .menu-item:focused{
+    -fx-background-color:#eceff4 ;
+}
 
 /*Table View*/
 .table-view {
@@ -311,6 +317,11 @@ border width: 3
 }
 .menu-item:focused .label, .menu-item:focused .label {
     -fx-text-fill: #5e81ac;
+}
+#errorHBox,#errorHboxBottom{
+    -fx-border-width: 3;
+    -fx-border-color: #5e6675;
+    -fx-text-fill: #eceff4;
 }
 
 
