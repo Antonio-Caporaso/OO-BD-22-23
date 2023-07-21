@@ -2,8 +2,6 @@ package Controller;
 
 import Model.DAO.ProgrammaDao;
 import Model.Entities.Conferenze.*;
-import Model.Entities.partecipanti.Speaker;
-import Model.Utilities.PuntoProgramma;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
