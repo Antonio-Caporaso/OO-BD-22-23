@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="popUpWindowAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="547.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="popUpWindowAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="547.0" stylesheets="@../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ComboBox fx:id="opzioniComboBox" layoutX="62.0" layoutY="141.0" prefHeight="31.0" prefWidth="424.0" stylesheets="@../CSS/NewStyle.css" />
       <HBox fx:id="hBox" layoutX="3.0" layoutY="3.0" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="541.0" stylesheets="@../CSS/NewStyle.css">
          <children>
             <Pane prefHeight="84.0" prefWidth="541.0">
                <children>
-                  <Label layoutX="75.0" layoutY="27.0" text="Seleziona la tipologia di punto da inserire" textFill="WHITE">
+                  <Label layoutX="34.0" layoutY="30.0" text="Seleziona la tipologia di punto da inserire" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
