@@ -110,6 +110,7 @@ public class ViewProgrammaController implements Initializable {
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
+            stage.setAlwaysOnTop(true);
             stage.showAndWait();
 
         } catch (IOException e) {
@@ -131,6 +132,7 @@ public class ViewProgrammaController implements Initializable {
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
+            stage.setAlwaysOnTop(true);
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -152,6 +154,7 @@ public class ViewProgrammaController implements Initializable {
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
+            stage.setAlwaysOnTop(true);
             stage.showAndWait();
 
         } catch (IOException e) {

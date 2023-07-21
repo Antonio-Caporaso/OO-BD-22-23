@@ -138,8 +138,8 @@ public class VisualizzaSessioneController implements Initializable {
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
-            stage.showAndWait();
-
+            stage.setAlwaysOnTop(true);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,6 +160,7 @@ public class VisualizzaSessioneController implements Initializable {
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
+            stage.setAlwaysOnTop(true);
             stage.showAndWait();
 
         } catch (IOException e) {
@@ -182,8 +183,8 @@ public class VisualizzaSessioneController implements Initializable {
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
+            stage.setAlwaysOnTop(true);
             stage.showAndWait();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
