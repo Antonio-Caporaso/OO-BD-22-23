@@ -147,64 +147,62 @@ public class ModificaProgrammaSessioneController implements Initializable {
         ActivityModel selected = programmaTableView.getSelectionModel().getSelectedItem();
         if (programma.getProgrammaSessione().contains(selected)) {
             if (selected instanceof Intervento)
-                loadInfoIntervento((Intervento) selected);
+                loadInfoIntervento(selected);
             if (selected instanceof EventoSociale)
-                loadInfoEventoSociale((EventoSociale) selected);
+                loadInfoEventoSociale( selected);
             else if (selected instanceof Intervallo)
-                loadInfoIntervallo((Intervallo) selected);
+                loadInfoIntervallo( selected);
         }
     }
-    private void loadInfoEventoSociale(EventoSociale eventoSociale){
+    private void loadInfoIntervento(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoEventoSociale_Create.fxml"));
-            ShowInfoEventoSocialeController_Create controller = new ShowInfoEventoSocialeController_Create();
-            controller.initializeData(eventoSociale);
-            loader.setController(controller);
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setX(860);
-            stage.setY(360);
-            stage.showAndWait();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void loadInfoIntervallo(Intervallo intervallo){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervallo_Create.fxml"));
-            ShowInfoIntervalloController_Create controller = new ShowInfoIntervalloController_Create();
-            controller.initializeData(intervallo);
-            loader.setController(controller);
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setX(860);
-            stage.setY(360);
-            stage.showAndWait();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void loadInfoIntervento(Intervento intervento){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervento_Create.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ShowInfoIntervento_Create.fxml"));
             ShowInfoInterventoController_Create controller = new ShowInfoInterventoController_Create();
-            controller.initializeData(intervento);
+            controller.setActivityModel(activityModel);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadInfoIntervallo(ActivityModel activityModel){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ShowInfoIntervallo_Create.fxml"));
+            ShowInfoIntervalloController_Create controller = new ShowInfoIntervalloController_Create();
+            controller.setActivityModel(activityModel);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadInfoEventoSociale(ActivityModel activityModel){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ShowInfoEventoSociale_Create.fxml"));
+            ShowInfoEventoSocialeController_Create controller = new ShowInfoEventoSocialeController_Create();
+            controller.setActivityModel(activityModel);
             loader.setController(controller);
             Parent root = loader.load();
             Stage stage = new Stage();

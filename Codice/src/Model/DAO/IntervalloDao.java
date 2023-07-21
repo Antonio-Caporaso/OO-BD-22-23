@@ -21,7 +21,7 @@ public class IntervalloDao {
         ResultSet rs = stm.executeQuery();
         while(rs.next()){
             Intervallo i = new Intervallo();
-            i.setId_intervallo(rs.getInt(1));
+            i.setId_entry(rs.getInt(1));
             i.setProgramma(programma);
             i.setTipologia(rs.getString("tipologia"));
             i.setInizio(rs.getTimestamp("inizio"));
@@ -65,8 +65,26 @@ public class IntervalloDao {
         conn = dbcon.getConnection();
         String query = "DELETE FROM intervallo where id_intervallo=?";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(1,intervallo.getId_intervallo());
+        stm.setInt(1,intervallo.getId_entry());
         stm.executeUpdate();
+    }
+
+    public Intervallo retrieveIntervalloByID(int idEntry) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select * from intervallo where id_intervallo=?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1,idEntry);
+        Intervallo i = new Intervallo();
+        ResultSet rs = stm.executeQuery();
+        while(rs.next()){
+            i.setId_entry(rs.getInt(1));
+            i.setTipologia(rs.getString("tipologia"));
+            i.setInizio(rs.getTimestamp("inizio"));
+            i.setFine(rs.getTimestamp("fine"));
+            i.setType(i.getTipologia());
+        }
+        return i;
     }
 
     public void updateIntervallo(Intervallo intervallo) throws SQLException {
@@ -77,7 +95,7 @@ public class IntervalloDao {
         stm.setString(1,intervallo.getTipologia());
         stm.setTimestamp(2,intervallo.getInizio());
         stm.setTimestamp(3,intervallo.getFine());
-        stm.setInt(4,intervallo.getId_intervallo());
+        stm.setInt(4,intervallo.getId_entry());
         stm.executeUpdate();
     }
 }

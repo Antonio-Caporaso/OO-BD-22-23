@@ -1,8 +1,11 @@
 package Controller;
 
+import Model.DAO.InterventoDao;
+import Model.Entities.Conferenze.ActivityModel;
 import Model.Entities.Conferenze.Intervento;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,9 +15,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class ShowInfoInterventoController_Create{
-    @FXML
-    private HBox hBox;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+public class ShowInfoInterventoController_Create implements Initializable {
+    private ActivityModel activityModel;
     @FXML
     private AnchorPane popUpWindowAnchor;
     @FXML
@@ -33,9 +39,23 @@ public class ShowInfoInterventoController_Create{
     private Intervento intervento;
     private double x, y;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            initializeData();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setActivityModel(ActivityModel activityModel) {
+        this.activityModel = activityModel;
+    }
+
     //Public methods
-    public void initializeData(Intervento intervento){
-        this.intervento=intervento;
+    private void initializeData() throws SQLException {
+        InterventoDao interventoDao = new InterventoDao();
+        intervento = interventoDao.retrieveInterventoByID(activityModel.getId_entry());
         loadLabels();
     }
     //Private Methods

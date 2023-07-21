@@ -29,28 +29,31 @@ public class Programma {
     private void setEventiActivities() throws SQLException {
         loadEventiSociali();
         for (EventoSociale eventoSociale : eventi) {
-            ActivityModel activity = eventoSociale;
-            activity.setType("Evento");
-            activity.setDescrizione(eventoSociale.getTipologia());
-            programmaSessione.add(activity);
+//            ActivityModel activity = eventoSociale;
+//            activity.setType("Evento");
+//            activity.setDescrizione(eventoSociale.getTipologia());
+//            programmaSessione.add(activity);
+            programmaSessione.add(eventoSociale);
         }
     }
 
     private void setIntervalliActivities() throws SQLException {
         loadIntervalli();
         for (Intervallo intervallo : intervalli) {
-            ActivityModel activity = intervallo;
-            activity.setType("Intervallo");
-            programmaSessione.add(activity);
+//            ActivityModel activity = intervallo;
+//            activity.setType("Intervallo");
+//            programmaSessione.add(activity);
+            programmaSessione.add(intervallo);
         }
     }
 
     private void setInterventiActivities() throws SQLException {
         loadInterventi();
         for (Intervento intervento : interventi) {
-            ActivityModel activity = intervento;
-            activity.setType(intervento.getTitolo());
-            programmaSessione.add(activity);
+//            ActivityModel activity = intervento;
+//            activity.setType(intervento.getTitolo());
+//            programmaSessione.add(activity);
+            programmaSessione.add(intervento);
         }
     }
 
@@ -72,21 +75,21 @@ public class Programma {
     public void addEvento(EventoSociale e, PGInterval durata) throws SQLException {
         EventoSocialeDao dao = new EventoSocialeDao();
         int id = dao.saveEvento(e, durata);
-        e.setId_evento(id);
+        e.setId_entry(id);
         eventi.add(e);
     }
 
     public void addIntervallo(Intervallo intervallo, PGInterval durata) throws SQLException {
         IntervalloDao dao = new IntervalloDao();
         int id = dao.createIntervallo(intervallo, durata);
-        intervallo.setId_intervallo(id);
+        intervallo.setId_entry(id);
         intervalli.add(intervallo);
     }
 
     public void addIntervento(Intervento intervento, PGInterval durata) throws SQLException {
         InterventoDao dao = new InterventoDao();
         int id = dao.createIntervento(intervento, durata);
-        intervento.setId_intervento(id);
+        intervento.setId_entry(id);
         interventi.add(intervento);
     }
 

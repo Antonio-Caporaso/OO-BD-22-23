@@ -1,8 +1,11 @@
 package Controller;
 
+import Model.DAO.IntervalloDao;
+import Model.Entities.Conferenze.ActivityModel;
 import Model.Entities.Conferenze.Intervallo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,9 +14,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class ShowInfoIntervalloController_Create {
-    @FXML
-    private HBox hBox;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+public class ShowInfoIntervalloController_Create implements Initializable {
+
+    private ActivityModel activityModel;
     @FXML
     private AnchorPane popUpWindowAnchor;
     @FXML
@@ -28,11 +35,26 @@ public class ShowInfoIntervalloController_Create {
     private Intervallo intervallo;
     private double x, y;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            initializeData();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //Public methods
-    public void initializeData(Intervallo intervallo){
-        this.intervallo=intervallo;
+    private void initializeData() throws SQLException {
+        IntervalloDao intervalloDao = new IntervalloDao();
+        intervallo = intervalloDao.retrieveIntervalloByID(activityModel.getId_entry());
         loadLabels();
     }
+
+    public void setActivityModel(ActivityModel activityModel) {
+        this.activityModel = activityModel;
+    }
+
     //Private Methods
     private void loadLabels() {
         descrizioneLabel.setText(intervallo.getTipologia());

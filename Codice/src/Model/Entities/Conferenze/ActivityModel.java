@@ -1,61 +1,14 @@
 package Model.Entities.Conferenze;
 
-import Model.Entities.partecipanti.Speaker;
-
 import java.sql.Timestamp;
-import java.util.Objects;
 
-public class ActivityModel {
-    private String descrizione;
-    private Timestamp fine;
-    private int id_entry;
-    private Timestamp inizio;
-    private Programma programma;
-    private Speaker speaker;
-    private String type;
+public abstract class ActivityModel {
 
-    //Contructor senza Speaker e descrizione
-    public ActivityModel() {
-    }
-
-    public ActivityModel(int id, String type, Timestamp inizio, Timestamp fine, String descrizione, Programma programma) {
-        this.id_entry = id;
-        this.type = type;
-        this.inizio = inizio;
-        this.descrizione = descrizione;
-        this.fine = fine;
-        this.programma = programma;
-    }
-
-    //Contructor completo
-    public ActivityModel(int id, String type, Timestamp inizio, Timestamp fine, String descrizione, Speaker speaker, Programma programma) {
-        this.id_entry = id;
-        this.type = type;
-        this.inizio = inizio;
-        this.fine = fine;
-        this.descrizione = descrizione;
-        this.speaker = speaker;
-        this.programma = programma;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ActivityModel that = (ActivityModel) o;
-
-        if (id_entry != that.id_entry) return false;
-        return Objects.equals(type, that.type);
-    }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
+    protected Timestamp fine;
+    protected int id_entry;
+    protected Timestamp inizio;
+    protected Programma programma;
+    protected String type;
 
     public Timestamp getFine() {
         return fine;
@@ -73,27 +26,24 @@ public class ActivityModel {
         this.inizio = inizio;
     }
 
-    public Speaker getSpeaker() {
-        return speaker;
+    public int getId_entry() {
+        return id_entry;
     }
 
-    public void setSpeaker(Speaker speaker) {
-        this.speaker = speaker;
+    public void setId_entry(int id_entry) {
+        this.id_entry = id_entry;
     }
 
-    //Getter and Setters
-    public String getType() {
-        return type;
+    public Programma getProgramma() {
+        return programma;
+    }
+
+    public void setProgramma(Programma programma) {
+        this.programma = programma;
     }
 
     public void setType(String type) {
         this.type = type;
     }
-
-    @Override
-    public int hashCode() {
-        int result = id_entry;
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        return result;
-    }
+    public abstract String getType();
 }

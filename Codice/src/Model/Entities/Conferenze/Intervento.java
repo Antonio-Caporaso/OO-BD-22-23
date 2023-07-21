@@ -7,15 +7,10 @@ import java.util.Objects;
 
 public class Intervento extends ActivityModel {
     private String estratto;
-    private Timestamp fine;
-    private int id_intervento;
-    private Timestamp inizio;
-    private Programma programma;
     private Speaker speaker;
     private String titolo;
 
-    public Intervento(int id, Timestamp inizio, Timestamp fine, String estratto, Speaker speaker, Programma programma) {
-        this.id_intervento = id;
+    public Intervento(Timestamp inizio, Timestamp fine, String estratto, Speaker speaker, Programma programma) {
         this.inizio = inizio;
         this.fine = fine;
         this.estratto = estratto;
@@ -45,38 +40,6 @@ public class Intervento extends ActivityModel {
         this.estratto = estratto;
     }
 
-    public Timestamp getFine() {
-        return fine;
-    }
-
-    public void setFine(Timestamp fine) {
-        this.fine = fine;
-    }
-
-    public int getId_intervento() {
-        return id_intervento;
-    }
-
-    public void setId_intervento(int id_intervento) {
-        this.id_intervento = id_intervento;
-    }
-
-    public Timestamp getInizio() {
-        return inizio;
-    }
-
-    public void setInizio(Timestamp inizio) {
-        this.inizio = inizio;
-    }
-
-    public Programma getProgramma() {
-        return programma;
-    }
-
-    public void setProgramma(Programma programma) {
-        this.programma = programma;
-    }
-
     public Speaker getSpeaker() {
         return speaker;
     }
@@ -91,6 +54,9 @@ public class Intervento extends ActivityModel {
 
     public void setTitolo(String titolo) {
         this.titolo = titolo;
+    }
+    public String getType(){
+        return titolo;
     }
 
     @Override

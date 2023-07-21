@@ -97,7 +97,7 @@ public class ViewProgrammaController implements Initializable {
     //Private Methods
     private void loadAddEventoSociale() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddEventoSociale_Create.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/AddEventoSociale_Create.fxml"));
             AddEventoSocialeController_Create controller = new AddEventoSocialeController_Create(programma);
             loader.setController(controller);
             Parent root = loader.load();
@@ -118,7 +118,7 @@ public class ViewProgrammaController implements Initializable {
     }
     private void loadAddIntervallo() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddIntervallo_Create.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/AddIntervallo_Create.fxml"));
             AddIntervalloController_Create controller = new AddIntervalloController_Create(programma);
             loader.setController(controller);
             Parent root = loader.load();
@@ -139,7 +139,7 @@ public class ViewProgrammaController implements Initializable {
 
     private void loadAddIntervento() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddIntervento_Create.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/AddIntervento_Create.fxml"));
             AddInterventoController_Create controller = new AddInterventoController_Create(programma);
             loader.setController(controller);
             Parent root = loader.load();
@@ -177,7 +177,7 @@ public class ViewProgrammaController implements Initializable {
 
     private void loadVisualizzaSessione() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/VisualizzaSessioniConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/VisualizzaSessioniConferenza.fxml"));
             VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza(subscene,conferenza,user);
             loader.setController(controller);
             Parent root = loader.load();
@@ -186,11 +186,11 @@ public class ViewProgrammaController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void loadInfoIntervento(Intervento intervento){
+    private void loadInfoIntervento(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervento_Create.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/ShowInfoIntervento_Create.fxml"));
             ShowInfoInterventoController_Create controller = new ShowInfoInterventoController_Create();
-            controller.initializeData(intervento);
+            controller.setActivityModel(activityModel);
             loader.setController(controller);
             Parent root = loader.load();
             Stage stage = new Stage();
@@ -208,11 +208,11 @@ public class ViewProgrammaController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void loadInfoIntervallo(Intervallo intervallo){
+    private void loadInfoIntervallo(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervallo_Create.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/ShowInfoIntervallo_Create.fxml"));
             ShowInfoIntervalloController_Create controller = new ShowInfoIntervalloController_Create();
-            controller.initializeData(intervallo);
+            controller.setActivityModel(activityModel);
             loader.setController(controller);
             Parent root = loader.load();
             Stage stage = new Stage();
@@ -230,11 +230,11 @@ public class ViewProgrammaController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void loadInfoEventoSociale(EventoSociale eventoSociale){
+    private void loadInfoEventoSociale(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoEventoSociale_Create.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/ShowInfoEventoSociale_Create.fxml"));
             ShowInfoEventoSocialeController_Create controller = new ShowInfoEventoSocialeController_Create();
-            controller.initializeData(eventoSociale);
+            controller.setActivityModel(activityModel);
             loader.setController(controller);
             Parent root = loader.load();
             Stage stage = new Stage();
@@ -303,11 +303,11 @@ public class ViewProgrammaController implements Initializable {
         ActivityModel selected = programmaTableView.getSelectionModel().getSelectedItem();
         if (programma.getProgrammaSessione().contains(selected)) {
             if (selected instanceof Intervento)
-                loadInfoIntervento((Intervento) selected);
+                loadInfoIntervento(selected);
             if (selected instanceof EventoSociale)
-                loadInfoEventoSociale((EventoSociale) selected);
+                loadInfoEventoSociale(selected);
             else if (selected instanceof Intervallo)
-                loadInfoIntervallo((Intervallo) selected);
+                loadInfoIntervallo(selected);
         }
     }
 
