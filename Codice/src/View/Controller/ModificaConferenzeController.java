@@ -3,27 +3,38 @@ package View.Controller;
 import Persistence.Entities.Conferenze.Conferenza;
 import Persistence.Entities.Utente;
 import Utilities.ConferenzeUtente;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.LinkedList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class GestioneConferenzeController implements Initializable {
+public class ModificaConferenzeController implements Initializable {
     private ConferenzeUtente conferenze = new ConferenzeUtente();
     @FXML
-    private ListView<Conferenza> conferenzeView;
+    private TableView<Conferenza> tableConferenza;
+    @FXML
+    private TableColumn<Conferenza, String> descrizioneColumn;
+    @FXML
+    private TableColumn<Conferenza, Timestamp> fineConferenzaColumn;
+    @FXML
+    private TableColumn<Conferenza, Timestamp> inizioConferenzaColumn;
+    @FXML
+    private TableColumn<Conferenza, String> nomeConferenzaColumn;
+    @FXML
+    private TableColumn<Conferenza, String> sedeColumn;
     @FXML
     private Button deleteConferenzaButton;
     @FXML
@@ -31,13 +42,15 @@ public class GestioneConferenzeController implements Initializable {
     private SubScene subscene;
     private Utente user;
 
-    public GestioneConferenzeController(Utente user) {
+    public ModificaConferenzeController(Utente user,SubScene subScene) {
         this.user = user;
+        this.subscene = subScene;
     }
 
+    @FXML
     public void deleteOnAction(ActionEvent event) {
         try {
-            Conferenza c = conferenzeView.getSelectionModel().getSelectedItem();
+            Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Eliminare conferenza");
             alert.setHeaderText("Sicuro di voler eliminare la conferenza " + c.getTitolo() + "?");
@@ -64,7 +77,7 @@ public class GestioneConferenzeController implements Initializable {
             ModificaConferenzaController controller = new ModificaConferenzaController();
             loader.setController(controller);
             try {
-                Conferenza c = conferenzeView.getSelectionModel().getSelectedItem();
+                Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
                 if (c == null)
                     throw new NullPointerException();
                 controller.setConferenza(c);
@@ -107,10 +120,20 @@ public class GestioneConferenzeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             conferenze.loadConferenzeUtente(user);
-            conferenzeView.setItems(conferenze.getConferenzeUtente());
+            setTableConferenze(conferenze.getConferenzeUtente());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void setTableConferenze(ObservableList<Conferenza> c) throws SQLException {
+        tableConferenza.setEditable(false);
+        nomeConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+        inizioConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+        fineConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+        descrizioneColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
+        sedeColumn.setCellValueFactory(new PropertyValueFactory<>("sede"));
+        tableConferenza.setItems(c);
     }
 
     public void showErrorAlert(SQLException e) {
