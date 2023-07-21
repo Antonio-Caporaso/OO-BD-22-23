@@ -26,6 +26,7 @@ public class IntervalloDao {
             i.setTipologia(rs.getString("tipologia"));
             i.setInizio(rs.getTimestamp("inizio"));
             i.setFine(rs.getTimestamp("fine"));
+            i.setType(i.getTipologia());
             intervalli.add(i);
         }
         return intervalli;

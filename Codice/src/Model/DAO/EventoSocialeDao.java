@@ -40,6 +40,7 @@ public class EventoSocialeDao {
             e.setTipologia(rs.getString("tipologia"));
             e.setInizio(rs.getTimestamp("inizio"));
             e.setFine(rs.getTimestamp("fine"));
+            e.setType(e.getTipologia());
             eventi.add(e);
         }
         return  eventi;

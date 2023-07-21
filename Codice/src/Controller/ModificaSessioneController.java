@@ -1,22 +1,25 @@
 package Controller;
 
 import Model.DAO.ProgrammaDao;
-import Model.Entities.Conferenze.ActivityModel;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Conferenze.Programma;
-import Model.Entities.Conferenze.Sessione;
+import Model.Entities.Conferenze.*;
 import Model.Entities.partecipanti.Speaker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,8 +35,6 @@ public class ModificaSessioneController implements Initializable {
     private Button confermaButton;
     @FXML
     private Label coordinatoreLabel;
-    @FXML
-    private TableColumn<ActivityModel, String> descrizioneTableColumn;
     @FXML
     private Button editDetailsButton;
     @FXML
@@ -57,8 +58,6 @@ public class ModificaSessioneController implements Initializable {
     @FXML
     private Label salaLabel;
     private Sessione sessione;
-    @FXML
-    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
     private SubScene subScene;
     @FXML
     private Label titleLabel;
@@ -165,21 +164,6 @@ public class ModificaSessioneController implements Initializable {
         }
     }
 
-    private void setProgrammaTableView() {
-        try {
-            programma.loadProgramaSessione();
-            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-            inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
-            fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
-            speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
-            descrizioneTableColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
-            programmaTableView.setItems(programma.getProgrammaSessione());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         goToEditSessionsWindow();
@@ -193,5 +177,97 @@ public class ModificaSessioneController implements Initializable {
     @FXML
     void editDetailsOnAction(ActionEvent event) throws IOException {
         goToEditDettagliSessione();
+    }
+    private void setProgrammaTableView() {
+        try {
+            programma.loadProgramaSessione();
+            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            programmaTableView.setItems(programma.getProgrammaSessione());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    void showInfoScreen(MouseEvent event) {
+        ActivityModel selected = programmaTableView.getSelectionModel().getSelectedItem();
+        if (programma.getProgrammaSessione().contains(selected)) {
+            if (selected instanceof Intervento)
+                loadInfoIntervento((Intervento) selected);
+            if (selected instanceof EventoSociale)
+                loadInfoEventoSociale((EventoSociale) selected);
+            else if (selected instanceof Intervallo)
+                loadInfoIntervallo((Intervallo) selected);
+        }
+    }
+    private void loadInfoEventoSociale(EventoSociale eventoSociale){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoEventoSociale_Create.fxml"));
+            ShowInfoEventoSocialeController_Create controller = new ShowInfoEventoSocialeController_Create();
+            controller.initializeData(eventoSociale);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadInfoIntervallo(Intervallo intervallo){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervallo_Create.fxml"));
+            ShowInfoIntervalloController_Create controller = new ShowInfoIntervalloController_Create();
+            controller.initializeData(intervallo);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadInfoIntervento(Intervento intervento){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervento_Create.fxml"));
+            ShowInfoInterventoController_Create controller = new ShowInfoInterventoController_Create();
+            controller.initializeData(intervento);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

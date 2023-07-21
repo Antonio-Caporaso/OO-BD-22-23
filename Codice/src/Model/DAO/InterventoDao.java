@@ -33,6 +33,7 @@ public class InterventoDao {
             i.setInizio(rs.getTimestamp("inizio"));
             i.setFine(rs.getTimestamp("fine"));
             i.setEstratto(rs.getString("abstract"));
+            i.setType(i.getTitolo());
             interventi.add(i);
         }
         return interventi;

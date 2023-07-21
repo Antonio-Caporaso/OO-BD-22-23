@@ -1,11 +1,9 @@
 package Controller;
 
 import Model.DAO.ProgrammaDao;
-import Model.Entities.Conferenze.ActivityModel;
-import Model.Entities.Conferenze.Intervento;
-import Model.Entities.Conferenze.Programma;
-import Model.Entities.Conferenze.Sessione;
+import Model.Entities.Conferenze.*;
 import Model.Entities.partecipanti.Speaker;
+import Model.Utilities.PuntoProgramma;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +14,10 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,8 +32,6 @@ public class VisualizzaSessioneController implements Initializable {
     private Button confermaButton;
     @FXML
     private Label coordinatoreLabel;
-    @FXML
-    private TableColumn<ActivityModel, String> descrizioneTableColumn;
     @FXML
     private Button editDetailsButton;
     @FXML
@@ -55,8 +53,6 @@ public class VisualizzaSessioneController implements Initializable {
     private TableView<ActivityModel> programmaTableView;
     @FXML
     private Label salaLabel;
-    @FXML
-    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
     @FXML
     private Label titleLabel;
     private Sessione sessione;
@@ -101,8 +97,6 @@ public class VisualizzaSessioneController implements Initializable {
             appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
             fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
-            speakerTableColumn.setCellValueFactory(new PropertyValueFactory<>("speaker"));
-            descrizioneTableColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
             programmaTableView.setItems(programma.getProgrammaSessione());
 
         } catch (SQLException e) {
@@ -118,24 +112,84 @@ public class VisualizzaSessioneController implements Initializable {
     }
 
     @FXML
-    void showDetails(MouseEvent event) throws IOException {
-        ActivityModel activityModel = programmaTableView.getSelectionModel().getSelectedItem();
-        if (activityModel instanceof Intervento) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/VisualizzaIntervento.fxml"));
-            VisualizzaInterventoController controller = new VisualizzaInterventoController((Intervento) activityModel);
+    void showInfoScreen(MouseEvent event) {
+        ActivityModel selected = programmaTableView.getSelectionModel().getSelectedItem();
+        if (programma.getProgrammaSessione().contains(selected)) {
+            if (selected instanceof Intervento)
+                loadInfoIntervento((Intervento) selected);
+            if (selected instanceof EventoSociale)
+                loadInfoEventoSociale((EventoSociale) selected);
+            else if (selected instanceof Intervallo)
+                loadInfoIntervallo((Intervallo) selected);
+        }
+    }
+
+    private void loadInfoEventoSociale(EventoSociale eventoSociale){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoEventoSociale_Create.fxml"));
+            ShowInfoEventoSocialeController_Create controller = new ShowInfoEventoSocialeController_Create();
+            controller.initializeData(eventoSociale);
             loader.setController(controller);
             Parent root = loader.load();
-            Scene scene = new Scene(root);
             Stage stage = new Stage();
+            Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Dettagli intervento");
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
-            stage.show();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Non ci sono ulteriori informazioni da visualizzare");
-            alert.showAndWait();
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadInfoIntervallo(Intervallo intervallo){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervallo_Create.fxml"));
+            ShowInfoIntervalloController_Create controller = new ShowInfoIntervalloController_Create();
+            controller.initializeData(intervallo);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadInfoIntervento(Intervento intervento){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ShowInfoIntervento_Create.fxml"));
+            ShowInfoInterventoController_Create controller = new ShowInfoInterventoController_Create();
+            controller.initializeData(intervento);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
