@@ -41,6 +41,10 @@ public class ModificaDettagliConferenzaController implements Initializable {
     private ChoiceBox<Sede> sedeChoiceBox;
     private Sedi sedi = new Sedi();
     private SubScene subScene;
+    public ModificaDettagliConferenzaController(Conferenza conferenza, SubScene subScene){
+        this.conferenza = conferenza;
+        this.subScene = subScene;
+    }
 
     public Conferenza getConferenza() {
         return conferenza;

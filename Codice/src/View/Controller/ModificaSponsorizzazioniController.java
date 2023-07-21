@@ -56,6 +56,12 @@ public class ModificaSponsorizzazioniController implements Initializable, FormCh
     @FXML
     private TableColumn<Sponsorizzazione, String> valutaColumn;
 
+    public ModificaSponsorizzazioniController(Conferenza conferenza, SubScene subscene, ModificaConferenzaController modificaConferenzaController) {
+        this.conferenza = conferenza;
+        this.subscene = subscene;
+        this.controller = modificaConferenzaController;
+    }
+
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
         if (sponsorChoice.equals(null) ||

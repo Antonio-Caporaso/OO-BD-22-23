@@ -25,6 +25,11 @@ public class SlittaConferenzaController implements Initializable {
     @FXML
     private Button okButton;
 
+    public SlittaConferenzaController(Conferenza conferenza, ModificaConferenzaController modificaConferenzaController) {
+        this.conferenza = conferenza;
+        this.modificaConferenzaController = modificaConferenzaController;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }

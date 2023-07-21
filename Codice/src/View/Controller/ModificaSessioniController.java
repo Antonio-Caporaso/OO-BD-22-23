@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ManageSessioniController implements Initializable {
+public class ModificaSessioniController implements Initializable {
     @FXML
     private Button addSessioneButton;
     private Conferenza conferenza;
@@ -43,6 +43,12 @@ public class ManageSessioniController implements Initializable {
     @FXML
     private TableView<Sessione> table;
     private Utente user;
+
+    public ModificaSessioniController(Conferenza conferenza, SubScene subscene, ModificaConferenzaController modificaConferenzaController) {
+        this.conferenza = conferenza;
+        this.subscene = subscene;
+        this.modificaConferenzaController = modificaConferenzaController;
+    }
 
     @FXML
     public void addSessioneOnAction(ActionEvent event) throws IOException {

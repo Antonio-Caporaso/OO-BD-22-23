@@ -43,7 +43,7 @@ public class AddSessioneController implements Initializable, FormChecker {
     private Label inizioConferenzaLabel;
     @FXML
     private DateTimePicker inizioDateTimePicker;
-    private ManageSessioniController manageSessioniController;
+    private ModificaSessioniController modificaSessioniController;
     private ModificaConferenzaController modificaConferenzaController;
     @FXML
     private TextField nomeTF;
@@ -60,12 +60,12 @@ public class AddSessioneController implements Initializable, FormChecker {
             throw new BlankFieldException();
     }
 
-    public ManageSessioniController getManageSessioniController() {
-        return manageSessioniController;
+    public ModificaSessioniController getManageSessioniController() {
+        return modificaSessioniController;
     }
 
-    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
-        this.manageSessioniController = manageSessioniController;
+    public void setManageSessioniController(ModificaSessioniController modificaSessioniController) {
+        this.modificaSessioniController = modificaSessioniController;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class AddSessioneController implements Initializable, FormChecker {
     private void goToAddProgrammaWindow(Sessione s) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaProgrammaSessione.fxml"));
         ModificaProgrammaSessioneController controller = new ModificaProgrammaSessioneController();
-        controller.setManageSessioniController(manageSessioniController);
+        controller.setManageSessioniController(modificaSessioniController);
         controller.setSessione(s);
         controller.setSubscene(subscene);
         loader.setController(controller);
@@ -167,7 +167,7 @@ public class AddSessioneController implements Initializable, FormChecker {
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ModificaSessioni.fxml"));
-        loader.setController(manageSessioniController);
+        loader.setController(modificaSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
     }

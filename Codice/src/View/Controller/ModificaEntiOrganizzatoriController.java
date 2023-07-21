@@ -40,30 +40,11 @@ public class ModificaEntiOrganizzatoriController implements Initializable {
     private TableColumn<Ente, String> siglaEnte;
     private SubScene subScene;
 
-    public Conferenza getConferenza() {
-        return conferenza;
-    }
-
-    public void setConferenza(Conferenza conferenza) {
+    public ModificaEntiOrganizzatoriController(Conferenza conferenza, SubScene subscene, ModificaConferenzaController modificaConferenzaController) {
         this.conferenza = conferenza;
+        this.subScene = subscene;
+        this.editController = modificaConferenzaController;
     }
-
-    public ModificaConferenzaController getEditController() {
-        return editController;
-    }
-
-    public void setEditController(ModificaConferenzaController editController) {
-        this.editController = editController;
-    }
-
-    public SubScene getSubScene() {
-        return subScene;
-    }
-
-    public void setSubScene(SubScene subScene) {
-        this.subScene = subScene;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setEntiTable();

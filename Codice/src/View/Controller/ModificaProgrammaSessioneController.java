@@ -37,7 +37,7 @@ public class ModificaProgrammaSessioneController implements Initializable {
     private TableColumn<ActivityModel, Timestamp> fineTableColumn;
     @FXML
     private TableColumn<ActivityModel, Timestamp> inizioTableColumn;
-    private ManageSessioniController manageSessioniController;
+    private ModificaSessioniController manageSessioniController;
     private Programma programma;
     @FXML
     private TableView<ActivityModel> programmaTableView;
@@ -75,7 +75,7 @@ public class ModificaProgrammaSessioneController implements Initializable {
         setProgrammaTableView();
     }
 
-    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+    public void setManageSessioniController(ModificaSessioniController manageSessioniController) {
         this.manageSessioniController = manageSessioniController;
     }
 

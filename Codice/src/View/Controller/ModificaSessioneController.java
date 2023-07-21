@@ -48,7 +48,7 @@ public class ModificaSessioneController implements Initializable {
     private TableColumn<ActivityModel, Timestamp> inizioTableColumn;
     @FXML
     private Label keynoteSpeakerLabel;
-    private ManageSessioniController manageSessioniController;
+    private ModificaSessioniController manageSessioniController;
     @FXML
     private Label nomeLabel;
     private Programma programma;
@@ -71,11 +71,11 @@ public class ModificaSessioneController implements Initializable {
         this.conferenza = conferenza;
     }
 
-    public ManageSessioniController getManageSessioniController() {
+    public ModificaSessioniController getManageSessioniController() {
         return manageSessioniController;
     }
 
-    public void setManageSessioniController(ManageSessioniController manageSessioniController) {
+    public void setManageSessioniController(ModificaSessioniController manageSessioniController) {
         this.manageSessioniController = manageSessioniController;
     }
 
