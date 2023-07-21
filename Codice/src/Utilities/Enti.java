@@ -16,10 +16,6 @@ public class Enti {
         return enti;
     }
 
-    public void setEnti(ObservableList<Ente> enti) {
-        this.enti = enti;
-    }
-
     public void loadEnti() {
         EnteDao dao = new EnteDao();
         enti.clear();
