@@ -860,12 +860,13 @@ language plpgsql;
 create or replace function show_sedi_libere(inizio_c timestamp, fine_c timestamp)
 returns table(
 id_sede integer,
-nome text
+nome text,
+id_indirizzo integer
 )
  as $$
 begin
     return query
-    select s.id_sede, s.nome
+    select s.id_sede, s.nome, s.id_indirizzo
     from sede s
     where not exists
     (
