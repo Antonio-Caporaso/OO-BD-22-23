@@ -1,28 +1,24 @@
 package View.Controller;
 
-import Persistence.DAO.*;
-import Utilities.Stats;
-import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import Persistence.DAO.ConferenzaDao;
+import Persistence.DAO.EnteDao;
+import Persistence.DAO.SessioneDao;
+import Persistence.DAO.SponsorDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class VisualizzaStatisticheController implements Initializable {

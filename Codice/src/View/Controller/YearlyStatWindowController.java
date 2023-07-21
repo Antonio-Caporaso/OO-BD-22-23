@@ -2,18 +2,17 @@ package View.Controller;
 
 import Persistence.DAO.InterventoDao;
 import Utilities.Stats;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.BorderPane;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.InputMismatchException;

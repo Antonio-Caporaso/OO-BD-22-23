@@ -21,7 +21,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
-import java.util.ServiceLoader;
 
 public class VisualizzaConferenzaController implements Initializable {
     @FXML
