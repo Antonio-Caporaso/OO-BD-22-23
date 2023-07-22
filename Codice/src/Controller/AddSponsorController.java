@@ -67,10 +67,10 @@ public class AddSponsorController implements Initializable {
         setSponsorizzazioniTable();
     }
 
-    private void loadAddEnti() {
+    private void loadVisualizzaSessione() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddEnti.fxml"));
-            AddEntiController controller = new AddEntiController(subscene,conferenza,user);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/VisualizzaSessioniConferenza.fxml"));
+            VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza(subscene,conferenza,user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -78,12 +78,14 @@ public class AddSponsorController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    private void loadVisualizzaSessione() {
+    private  void loadMembriComitati(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/VisualizzaSessioniConferenza.fxml"));
-            VisualizzaSessioniConferenza controller = new VisualizzaSessioniConferenza(subscene,conferenza,user);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddComitati_Create.fxml"));
+            AddComitati_Create controller = new AddComitati_Create();
             loader.setController(controller);
+            controller.setSubscene(subscene);
+            controller.setConferenza(conferenza);
+            controller.setUtente(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -124,7 +126,7 @@ public class AddSponsorController implements Initializable {
 
     @FXML
     void backButtonOnAction(ActionEvent event) {
-        loadAddEnti();
+        loadMembriComitati();
     }
 
     @FXML
