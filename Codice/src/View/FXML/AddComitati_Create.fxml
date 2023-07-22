@@ -43,13 +43,13 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ListView fx:id="comitatoLocaleListView" layoutX="484.0" layoutY="214.0" prefHeight="455.0" prefWidth="324.0" stylesheets="@../CSS/NewStyle.css" />
-      <Button fx:id="inserisciComitatoLocaleButton" layoutX="709.0" layoutY="155.0" mnemonicParsing="false" onAction="#inserisciComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
+      <ListView fx:id="comitatoLocaleListView" layoutX="484.0" layoutY="192.0" prefHeight="418.0" prefWidth="409.0" stylesheets="@../CSS/NewStyle.css" />
+      <Button fx:id="inserisciComitatoLocaleButton" layoutX="794.0" layoutY="141.0" mnemonicParsing="false" onAction="#inserisciComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="rimuoviComitatoLocaleButton" layoutX="817.0" layoutY="378.0" mnemonicParsing="false" onAction="#rimuoviComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
+      <Button fx:id="rimuoviComitatoLocaleButton" layoutX="484.0" layoutY="621.0" mnemonicParsing="false" onAction="#rimuoviComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
@@ -59,15 +59,15 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ListView fx:id="comitatoScientificoListView" layoutX="31.0" layoutY="214.0" prefHeight="455.0" prefWidth="324.0" stylesheets="@../CSS/NewStyle.css" />
-      <Button fx:id="inserisciComitatoScientificoButton" layoutX="256.0" layoutY="152.0" mnemonicParsing="false" onAction="#inserisciComitatoScientificoButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
+      <ListView fx:id="comitatoScientificoListView" layoutX="29.0" layoutY="192.0" prefHeight="418.0" prefWidth="409.0" stylesheets="@../CSS/NewStyle.css" />
+      <Button fx:id="inserisciComitatoScientificoButton" layoutX="339.0" layoutY="141.0" mnemonicParsing="false" onAction="#inserisciComitatoScientificoButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="comitatoScientificoChoiceBox" layoutX="31.0" layoutY="155.0" prefHeight="25.0" prefWidth="202.0" stylesheets="@../CSS/NewStyle.css" />
-      <ChoiceBox fx:id="comitatoLocaleChoiceBox" layoutX="484.0" layoutY="155.0" prefHeight="25.0" prefWidth="202.0" stylesheets="@../CSS/NewStyle.css" />
-      <Button fx:id="rimuoviComitatoScientificoButton" layoutX="363.0" layoutY="378.0" mnemonicParsing="false" onAction="#rimuoviComitatoScientificoButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
+      <ChoiceBox fx:id="comitatoScientificoChoiceBox" layoutX="31.0" layoutY="141.0" prefHeight="31.0" prefWidth="285.0" stylesheets="@../CSS/NewStyle.css" />
+      <ChoiceBox fx:id="comitatoLocaleChoiceBox" layoutX="484.0" layoutY="141.0" prefHeight="31.0" prefWidth="285.0" stylesheets="@../CSS/NewStyle.css" />
+      <Button fx:id="rimuoviComitatoScientificoButton" layoutX="31.0" layoutY="621.0" mnemonicParsing="false" onAction="#rimuoviComitatoScientificoButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

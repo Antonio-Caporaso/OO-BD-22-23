@@ -106,21 +106,18 @@ public class ModificaProgrammaSessioneController implements Initializable {
     }
 
     @FXML
-    void addPuntoOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddPunto.fxml"));
-        AddPuntoController controller = new AddPuntoController(programma);
-        loader.setController(controller);
-        Parent root = loader.load();
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.setX(860);
-        stage.setY(360);
-        stage.showAndWait();
+    void addEventoOnAction(ActionEvent event) {
+        loadAddEventoSociale();
+    }
+
+    @FXML
+    void addIntervalloOnAction(ActionEvent event) {
+        loadAddIntervallo();
+    }
+
+    @FXML
+    void addInterventoOnAction(ActionEvent event) {
+        loadAddIntervento();
     }
 
     @FXML
@@ -205,6 +202,71 @@ public class ModificaProgrammaSessioneController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ShowInfoEventoSociale_Create.fxml"));
             ShowInfoEventoSocialeController_Create controller = new ShowInfoEventoSocialeController_Create();
             controller.setActivityModel(activityModel);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.setAlwaysOnTop(true);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadAddIntervento() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddIntervento_Create.fxml"));
+            AddInterventoController_Create controller = new AddInterventoController_Create(programma);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.setAlwaysOnTop(true);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadAddIntervallo() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddIntervallo_Create.fxml"));
+            AddIntervalloController_Create controller = new AddIntervalloController_Create(programma);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.setAlwaysOnTop(true);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadAddEventoSociale() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddEventoSociale_Create.fxml"));
+            AddEventoSocialeController_Create controller = new AddEventoSocialeController_Create(programma);
             loader.setController(controller);
             Parent root = loader.load();
             Stage stage = new Stage();

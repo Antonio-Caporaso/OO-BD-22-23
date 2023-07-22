@@ -44,12 +44,12 @@
       </Label>
       <ChoiceBox fx:id="entiChoiceBox" layoutX="279.0" layoutY="100.0" prefHeight="26.0" prefWidth="458.0" stylesheets="@../CSS/NewStyle.css" />
       <ListView fx:id="entiListView" layoutX="14.0" layoutY="159.0" prefHeight="510.0" prefWidth="724.0" stylesheets="@../CSS/NewStyle.css" />
-      <Button fx:id="inserisciButton" layoutX="769.0" layoutY="98.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="31.0" prefWidth="134.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
+      <Button fx:id="inserisciButton" layoutX="769.0" layoutY="100.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="40.0" prefWidth="134.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="159.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="134.0" stylesheets="@../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
+      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="374.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="40.0" prefWidth="134.0" stylesheets="@../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

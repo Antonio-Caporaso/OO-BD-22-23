@@ -34,30 +34,30 @@
             </Button>
         </buttons>
       </ButtonBar>
-      <Label layoutX="14.0" layoutY="102.0" stylesheets="@../CSS/NewStyle.css" text="Seleziona uno sponsor " textFill="WHITE">
+      <Label layoutX="14.0" layoutY="105.0" stylesheets="@../CSS/NewStyle.css" text="Seleziona uno sponsor " textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="14.0" layoutY="172.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci importo ricevuto" textFill="WHITE">
+      <Label layoutX="14.0" layoutY="162.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci importo ricevuto" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <ChoiceBox fx:id="selezionaSponsorChoiceBox" layoutX="279.0" layoutY="100.0" prefHeight="26.0" prefWidth="423.0" stylesheets="@../CSS/NewStyle.css" />
-      <ChoiceBox fx:id="valutaChoiceBox" layoutX="479.0" layoutY="173.0" prefHeight="26.0" prefWidth="54.0" stylesheets="@../CSS/NewStyle.css" />
-      <TextField fx:id="importoTextField" layoutX="279.0" layoutY="170.0" promptText="Inserisci importo" stylesheets="@../CSS/NewStyle.css" />
-      <Button fx:id="inserisciButton" layoutX="769.0" layoutY="98.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="25.0" prefWidth="134.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
+      <ChoiceBox fx:id="valutaChoiceBox" layoutX="482.0" layoutY="154.0" prefHeight="37.0" prefWidth="54.0" stylesheets="@../CSS/NewStyle.css" />
+      <TextField fx:id="importoTextField" layoutX="279.0" layoutY="154.0" promptText="Inserisci importo" stylesheets="@../CSS/NewStyle.css" />
+      <Button fx:id="inserisciButton" layoutX="769.0" layoutY="100.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="40.0" prefWidth="134.0" stylesheets="@../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="446.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="134.0" stylesheets="@../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
+      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="446.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="40.0" prefWidth="134.0" stylesheets="@../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <TableView fx:id="sponsorTable" layoutX="12.0" layoutY="221.0" prefHeight="481.0" prefWidth="703.0">
+      <TableView fx:id="sponsorTable" layoutX="14.0" layoutY="210.0" prefHeight="481.0" prefWidth="703.0">
         <columns>
           <TableColumn fx:id="sponsorColumn" editable="false" prefWidth="262.0" resizable="false" sortable="false" text="Sponsor" />
           <TableColumn fx:id="contributoColumn" editable="false" prefWidth="195.0" resizable="false" sortable="false" text="Contributo" />

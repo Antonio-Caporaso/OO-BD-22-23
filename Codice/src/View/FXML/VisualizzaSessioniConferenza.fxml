@@ -40,8 +40,8 @@
             <TableColumn fx:id="chairTableColumn" editable="false" maxWidth="500.0" prefWidth="152.0" resizable="false" sortable="false" text="Chair" />
         </columns>
       </TableView>
-      <Button fx:id="inserisciButton" layoutX="752.0" layoutY="269.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="31.0" prefWidth="173.0" text="Inserisci Sessione" />
-      <Button fx:id="rimuoviButton" layoutX="752.0" layoutY="494.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="31.0" prefWidth="173.0" text="Rimuovi Sessione" />
-      <Button fx:id="aggiungiProgrammaButton" layoutX="752.0" layoutY="309.0" mnemonicParsing="false" onAction="#aggiungiProgrammaButtonOnAction" prefHeight="31.0" prefWidth="173.0" text="Aggiungi Programma" />
+      <Button fx:id="inserisciButton" layoutX="752.0" layoutY="250.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="40.0" prefWidth="173.0" text="Inserisci Sessione" />
+      <Button fx:id="rimuoviButton" layoutX="752.0" layoutY="400.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="40.0" prefWidth="173.0" text="Rimuovi Sessione" />
+      <Button fx:id="aggiungiProgrammaButton" layoutX="752.0" layoutY="300.0" mnemonicParsing="false" onAction="#aggiungiProgrammaButtonOnAction" prefHeight="40.0" prefWidth="173.0" text="Aggiungi Programma" />
    </children>
 </AnchorPane>
