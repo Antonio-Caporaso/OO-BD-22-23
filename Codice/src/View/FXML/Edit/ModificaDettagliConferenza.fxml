@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import tornadofx.control.DateTimePicker?>
+
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="56.0" layoutY="153.0">
+         <children>
+            <GridPane prefHeight="511.0" prefWidth="834.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" prefWidth="253.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="633.0" minWidth="10.0" prefWidth="581.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="225.0" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="395.0" minHeight="7.0" prefHeight="104.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="395.0" minHeight="0.0" prefHeight="114.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="395.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="395.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Pane prefHeight="45.0" prefWidth="354.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="29.0" text="Nome:" textFill="#eceff4">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label layoutX="14.0" layoutY="5.0" text="Descrizione:" textFill="#eceff4">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="175.0" prefWidth="581.0" GridPane.columnIndex="1">
+                     <children>
+                        <TextField fx:id="nomeTF" layoutX="-1.0" layoutY="27.0" prefHeight="24.0" prefWidth="581.0" promptText="Inserisci nome conferenza" />
+                     </children>
+                  </Pane>
+                  <TextArea fx:id="descrizioneTextArea" promptText="Aggiungi una breve descrizione" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <Label layoutX="14.0" layoutY="53.0" text="Inizio:" textFill="#eceff4">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <DateTimePicker fx:id="inizioDateTimePicker" layoutY="45.0" prefHeight="37.0" prefWidth="222.0" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                     <children>
+                        <Label layoutX="14.0" layoutY="33.0" text="Sede:" textFill="#eceff4">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <ChoiceBox fx:id="sedeChoiceBox" layoutY="29.0" onMouseClicked="#showSediDisponibili" prefHeight="31.0" prefWidth="361.0" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+                     <children>
+                        <Label layoutX="14.0" layoutY="24.0" text="Fine:" textFill="#eceff4">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <DateTimePicker fx:id="fineDateTimePicker" layoutX="-2.0" layoutY="18.0" prefHeight="24.0" prefWidth="230.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <ButtonBar layoutX="603.0" layoutY="666.0" prefHeight="40.0" prefWidth="287.0">
+        <buttons>
+            <Button fx:id="annullaButton" mnemonicParsing="false" onAction="#annullaOnAction" text="Annulla" />
+          <Button fx:id="okButton" mnemonicParsing="false" onAction="#okOnAction" prefHeight="24.0" prefWidth="206.0" text="Salva" />
+        </buttons>
+      </ButtonBar>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="90.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Label layoutX="14.0" layoutY="27.0" text="Modifica dettagli conferenza" textFill="#eceff4">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
