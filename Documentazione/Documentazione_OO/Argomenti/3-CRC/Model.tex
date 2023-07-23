@@ -1,16 +1,231 @@
 \section{Il package \texttt{Model}}
-\subsection{Il subpackage \texttt{DAO}}
+\subsection{Il subpackage \texttt{Entities}}
+\subsubsection{\texttt{Conferenze}}
 \begin{table}[h!]
+\centering
 \begin{tabular}{|l|l|}
 \hline
-\textbf{Nome della classe} & \textbf{Superclasse} \\ \hline
+\textbf{Nome della classe:} Conferenza & \textbf{Superclasse}: nessuna \\ \hline
 \multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
-\multicolumn{2}{|l|}{Eventuali classi derivate} \\ \hline
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
 \multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
-\multicolumn{2}{|l|}{Responsabilità degli oggetti della classe: di quali informazioni sono depositari, quali azioni eseguono} \\ \hline
+\multicolumn{2}{|l|}{Descrittore per i dati di una conferenza} \\ \hline
 \multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
-\multicolumn{2}{|l|}{Relazioni con altre classi} \\ \hline
+\multicolumn{2}{|l|}{\texttt{Sessione,Comitato,Utente,Sede}} \\ \hline
 \end{tabular}
 \end{table}
-\subsection{Il subpackage \texttt{Entities}}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} EventoSociale & \textbf{Superclasse}: ActivityModel \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di un evento sociale} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Intervento & \textbf{Superclasse}: ActivityModel \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di un intervento} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Speaker}} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Intervallo & \textbf{Superclasse}: ActivityModel \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di un intervallo} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Programma & \textbf{Superclasse}: nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di un programma di una sessione} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Speaker, Sessione}} \\ \hline
+\end{tabular}
+\end{table}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Sede & \textbf{Superclasse}: nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di una sede} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Conferenza, Sala, Indirizzo}} \\ \hline
+\end{tabular}
+\end{table}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Sala & \textbf{Superclasse}: nessuno \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di una sala} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Sede, Sessione}} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Sessione & \textbf{Superclasse}: nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di una sessione} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Conferenza, Sala, Programma, Organizzatore}} \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+\subsubsection{\texttt{Organizzazione}}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Comitato & \textbf{Superclasse}: nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di un comitato} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Conferenza, Organizzatore}} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Ente & \textbf{Superclasse}: Nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di un ente} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Conferenza, Speaker, Organizzatore, Partecipante}} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Indirizzo & \textbf{Superclasse}: nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di un indirizzo} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Sede}} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Organizzatore & \textbf{Superclasse}: nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di un organizzatore} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Ente, Comitato, Sessione}} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Sponsor & \textbf{Superclasse}: Nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di uno sponsor} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Sponsorizzazione}} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Sponsorizzazione & \textbf{Superclasse}: Nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di una sponsorizzazione} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Conferenza, Sponsor}} \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+\subsubsection{\texttt{Partecipanti}}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Partecipante & \textbf{Superclasse}: Nessuna \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di un partecipante} \\ \hline
+\multicolumn{2}{|l|}{\textbf{\texttt{Collaborazioni}}}\\
+\multicolumn{2}{|l|}{\texttt{Sessione}} \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Nome della classe:} Speaker & \textbf{Superclasse}: ActivityModel \\ \hline
+\multicolumn{2}{|l|}{\textbf{Sottoclassi}}\\
+\multicolumn{2}{|l|}{Nessuna} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Responsabilità}}\\
+\multicolumn{2}{|l|}{Descrittore per i dati di uno speaker} \\ \hline
+\multicolumn{2}{|l|}{\textbf{Collaborazioni}}\\
+\multicolumn{2}{|l|}{\texttt{Intervento}} \\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+\subsection{Il subpackage \texttt{DAO}}
 \subsection{Il subpackage \texttt{Utilities}}
