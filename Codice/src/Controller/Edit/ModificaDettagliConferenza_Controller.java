@@ -78,7 +78,7 @@ public class ModificaDettagliConferenza_Controller implements Initializable {
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaConferenza.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
         loader.setController(modificaConferenzaController);
         Parent root = loader.load();
         subScene.setRoot(root);
@@ -90,7 +90,7 @@ public class ModificaDettagliConferenza_Controller implements Initializable {
         alert.setContentText("Sicuro di voler modificare i dettagli della conferenza?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
             loader.setController(modificaConferenzaController);
             conferenza.setTitolo(nomeTF.getText());
             conferenza.setDescrizione(descrizioneTextArea.getText());

@@ -109,7 +109,7 @@ public class ModificaDettagliSessione_Controller implements Initializable {
     }
 
     private void goToEditWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaSessione.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessione.fxml"));
         loader.setController(modificaSessioneController);
         modificaSessioneController.setSessione(sessione);
         modificaSessioneController.setDettagliSessione();
@@ -154,7 +154,7 @@ public class ModificaDettagliSessione_Controller implements Initializable {
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaSessione.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessione.fxml"));
         loader.setController(modificaSessioneController);
         Parent root = loader.load();
         subscene.setRoot(root);

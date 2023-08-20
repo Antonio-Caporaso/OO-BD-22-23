@@ -87,7 +87,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
 
     @FXML
     private void fineButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaSessioni.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessioni.fxml"));
         loader.setController(manageSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
@@ -133,7 +133,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
 
     @FXML
     void choiceKeynoteOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ChoiceKeynote.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ChoiceKeynote.fxml"));
         ChooseKeynote_Controller controller = new ChooseKeynote_Controller(programma);
         loader.setController(controller);
         Parent root = loader.load();
@@ -158,7 +158,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     }
     private void loadInfoIntervento(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/ShowInfoIntervento.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervento.fxml"));
             ShowInfoIntervento_Controller controller = new ShowInfoIntervento_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);
@@ -181,7 +181,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     }
     private void loadInfoIntervallo(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/ShowInfoIntervallo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervallo.fxml"));
             ShowInfoIntervallo_Controller controller = new ShowInfoIntervallo_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);
@@ -204,7 +204,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     }
     private void loadInfoEventoSociale(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/ShowInfoEventoSociale.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoEventoSociale.fxml"));
             ShowInfoEventoSociale_Controller controller = new ShowInfoEventoSociale_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);
@@ -227,7 +227,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     }
     private void loadAddIntervento() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/AddIntervento.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddIntervento.fxml"));
             AddIntervento_Controller controller = new AddIntervento_Controller(programma);
             loader.setController(controller);
             Parent root = loader.load();
@@ -249,7 +249,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     }
     private void loadAddIntervallo() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/AddIntervallo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddIntervallo.fxml"));
             AddIntervallo_Controller controller = new AddIntervallo_Controller(programma);
             loader.setController(controller);
             Parent root = loader.load();
@@ -270,7 +270,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     }
     private void loadAddEventoSociale() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/AddEventoSociale.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddEventoSociale.fxml"));
             AddEventoSociale_Controller controller = new AddEventoSociale_Controller(programma);
             loader.setController(controller);
             Parent root = loader.load();

@@ -77,7 +77,7 @@ public class AddComitati_Controller implements Initializable {
 
     private void loadAggiungiSponsor() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/AddSponsor.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddSponsor.fxml"));
             AddSponsor_Controller controller = new AddSponsor_Controller(subscene,conferenza,user);
             loader.setController(controller);
             Parent root = loader.load();
@@ -112,7 +112,7 @@ public class AddComitati_Controller implements Initializable {
 
     private void loadSelezionaEnti() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/AddEnti.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddEnti.fxml"));
             AddEnti_Controller controller = new AddEnti_Controller(subscene,conferenza,user);
             loader.setController(controller);
             Parent root = loader.load();

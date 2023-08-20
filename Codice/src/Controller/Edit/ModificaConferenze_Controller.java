@@ -72,7 +72,7 @@ public class ModificaConferenze_Controller implements Initializable {
     @FXML
     public void editOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
             try {
                 Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
                 if (c == null)

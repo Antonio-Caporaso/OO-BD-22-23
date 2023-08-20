@@ -82,7 +82,7 @@ public class Register_Controller implements Initializable, FormChecker {
 
     private void goToLoginWindow() {
         Navigation_Controller.getInstance().setStage((Stage) backButton.getScene().getWindow());
-        Navigation_Controller.getInstance().loadScene("../View/FXML/Login/Login.fxml");
+        Navigation_Controller.getInstance().loadScene("/View/FXML/Login/Login.fxml");
     }
 
     private void passwordMatcher() throws PasswordMismatchException {
@@ -102,7 +102,7 @@ public class Register_Controller implements Initializable, FormChecker {
     void backButtonOnAction(ActionEvent event) {
         try {
             Navigation_Controller.getInstance().setStage((Stage) backButton.getScene().getWindow());
-            Navigation_Controller.getInstance().loadScene("../View/FXML/Login/Login.fxml");
+            Navigation_Controller.getInstance().loadScene("/View/FXML/Login/Login.fxml");
         } catch (Exception e) {
             e.printStackTrace();
         }

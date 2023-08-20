@@ -97,7 +97,7 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
 
     private void loadViewSessioni(Conferenza c) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/VisualizzaSessioniConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/VisualizzaSessioniConferenza.fxml"));
             VisualizzaSessioniConferenza_Controller controller = new VisualizzaSessioniConferenza_Controller(subscene,c,user);
             loader.setController(controller);
             Parent root = loader.load();

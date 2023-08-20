@@ -123,7 +123,7 @@ public class Login_Controller implements Initializable, FormChecker {
     void registratiButtonOnAction(ActionEvent event) {
         try {
             Navigation_Controller.getInstance().setStage((Stage) loginButton.getScene().getWindow());
-            Navigation_Controller.getInstance().loadScene("../View/FXML/Login/Registrazione.fxml");
+            Navigation_Controller.getInstance().loadScene("/View/FXML/Login/Registrazione.fxml");
         } catch (Exception e) {
             e.printStackTrace();
         }

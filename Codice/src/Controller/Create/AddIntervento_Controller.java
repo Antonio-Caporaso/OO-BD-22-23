@@ -66,7 +66,7 @@ public class AddIntervento_Controller implements Initializable {
 
     private void loadAddSpeaker() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddSpeaker_Create.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/AddSpeaker_Create.fxml"));
             Parent root = loader.load();
             AddSpeaker_Controller controller = loader.getController();
             Stage stage = new Stage();
@@ -86,7 +86,7 @@ public class AddIntervento_Controller implements Initializable {
 
     private void loadExceptionWindow(String message) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ExceptionWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
             Parent root = loader.load();
             ExceptionWindow_Controller controller = loader.getController();
             controller.setErrorMessageLabel(message);

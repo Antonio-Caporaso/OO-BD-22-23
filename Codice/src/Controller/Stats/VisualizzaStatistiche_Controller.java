@@ -66,7 +66,7 @@ public class VisualizzaStatistiche_Controller implements Initializable {
 
     @FXML
     void openStatisticheAnnualiButton(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Stats/StatisticheAnnuali.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Stats/StatisticheAnnuali.fxml"));
         YearlyStatWindow_Controller controller = new YearlyStatWindow_Controller();
         loader.setController(controller);
         Parent root = loader.load();
@@ -81,7 +81,7 @@ public class VisualizzaStatistiche_Controller implements Initializable {
 
     @FXML
     void openStatisticheMensiliWindow(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Stats/StatisticheMensili.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Stats/StatisticheMensili.fxml"));
         MonthlyStatWindow_Controller controller = new MonthlyStatWindow_Controller();
         loader.setController(controller);
         Parent root = loader.load();

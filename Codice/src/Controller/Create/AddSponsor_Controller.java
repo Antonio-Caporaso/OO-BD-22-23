@@ -69,7 +69,7 @@ public class AddSponsor_Controller implements Initializable {
 
     private void loadVisualizzaSessione() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/VisualizzaSessioniConferenza_Controller.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/VisualizzaSessioniConferenza_Controller.fxml"));
             VisualizzaSessioniConferenza_Controller controller = new VisualizzaSessioniConferenza_Controller(subscene,conferenza,user);
             loader.setController(controller);
             Parent root = loader.load();

@@ -108,7 +108,7 @@ public class AddConference_Controller implements Initializable, FormChecker {
     }
 
     private void goToAddEntiWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/AddEnti.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddEnti.fxml"));
         AddEnti_Controller controller = new AddEnti_Controller(subscene,conferenza,user);
         loader.setController(controller);
         Parent root = loader.load();
@@ -116,7 +116,7 @@ public class AddConference_Controller implements Initializable, FormChecker {
     }
 
     private void goToLandingWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Landing.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Landing.fxml"));
         Landing_Controller controller = new Landing_Controller(user);
         loader.setController(controller);
         Parent root = loader.load();

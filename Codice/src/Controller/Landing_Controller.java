@@ -39,7 +39,7 @@ public class Landing_Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setWelcomeLabel();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Welcome.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Welcome.fxml"));
         try {
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -56,7 +56,7 @@ public class Landing_Controller implements Initializable {
     @FXML
     void creaConferenzaOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/AddConference.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddConference.fxml"));
             AddConference_Controller controller = new AddConference_Controller(subscene,user);
             loader.setController(controller);
             Parent root = loader.load();
@@ -69,7 +69,7 @@ public class Landing_Controller implements Initializable {
     @FXML
     void gestisciConferenzaOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaConferenze.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenze.fxml"));
             ModificaConferenze_Controller controller = new ModificaConferenze_Controller(user,subscene);
             loader.setController(controller);
             Parent root = loader.load();
@@ -82,7 +82,7 @@ public class Landing_Controller implements Initializable {
     @FXML
     void visualizzaConferenzaOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/VisualizzaConferenze.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/VisualizzaConferenze.fxml"));
             VisualizzaConferenze_Controller controller = new VisualizzaConferenze_Controller(subscene);
             loader.setController(controller);
             Parent root = loader.load();
@@ -96,7 +96,7 @@ public class Landing_Controller implements Initializable {
     @FXML
     void visualizzaStatisticheOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Stats/VisualizzaStatistiche.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Stats/VisualizzaStatistiche.fxml"));
             VisualizzaStatistiche_Controller controller = new VisualizzaStatistiche_Controller();
             loader.setController(controller);
             Parent root = loader.load();
@@ -109,7 +109,7 @@ public class Landing_Controller implements Initializable {
     @FXML
     void logoutButtonOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Login/Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Login/Login.fxml"));
             Parent root = loader.load();
             Scene login = new Scene(root);
             Login_Controller controller = loader.getController();
@@ -124,7 +124,7 @@ public class Landing_Controller implements Initializable {
     @FXML
     void backToLandingButtonOnAction(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Landing.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Landing.fxml"));
             Landing_Controller controller = new Landing_Controller(user);
             loader.setController(controller);
             Parent root = loader.load();

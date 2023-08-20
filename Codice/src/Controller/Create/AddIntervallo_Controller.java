@@ -72,7 +72,7 @@ public class AddIntervallo_Controller implements Initializable {
 
     private void loadExceptionWindow(String message) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ExceptionWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
             Parent root = loader.load();
             ExceptionWindow_Controller controller = loader.getController();
             controller.setErrorMessageLabel(message);

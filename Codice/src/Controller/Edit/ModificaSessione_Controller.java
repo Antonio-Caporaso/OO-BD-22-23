@@ -129,7 +129,7 @@ public class ModificaSessione_Controller implements Initializable {
     }
 
     private void goToEditDettagliSessione() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaDettagliSessione.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaDettagliSessione.fxml"));
         ModificaDettagliSessione_Controller controllerS = new ModificaDettagliSessione_Controller(sessione,conferenza,subScene,this);
         loader.setController(controllerS);
         Parent root = loader.load();
@@ -137,7 +137,7 @@ public class ModificaSessione_Controller implements Initializable {
     }
 
     private void goToEditProgrammaWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaProgrammaSessione.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaProgrammaSessione.fxml"));
         ModificaProgrammaSessione_Controller controller = new ModificaProgrammaSessione_Controller(sessione,subScene,manageSessioniController);
         controller.setProgramma(programma);
         loader.setController(controller);
@@ -146,7 +146,7 @@ public class ModificaSessione_Controller implements Initializable {
     }
 
     private void goToEditSessionsWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaSessioni.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessioni.fxml"));
         loader.setController(manageSessioniController);
         manageSessioniController.reloadSessioni();
         Parent root = loader.load();
@@ -202,7 +202,7 @@ public class ModificaSessione_Controller implements Initializable {
     }
     private void loadInfoIntervento(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/ShowInfoIntervento.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervento.fxml"));
             ShowInfoIntervento_Controller controller = new ShowInfoIntervento_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);
@@ -225,7 +225,7 @@ public class ModificaSessione_Controller implements Initializable {
     }
     private void loadInfoIntervallo(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/ShowInfoIntervallo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervallo.fxml"));
             ShowInfoIntervallo_Controller controller = new ShowInfoIntervallo_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);
@@ -248,7 +248,7 @@ public class ModificaSessione_Controller implements Initializable {
     }
     private void loadInfoEventoSociale(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/ShowInfoEventoSociale.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoEventoSociale.fxml"));
             ShowInfoEventoSociale_Controller controller = new ShowInfoEventoSociale_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);

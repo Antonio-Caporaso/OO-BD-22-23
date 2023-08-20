@@ -93,7 +93,7 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     public void confermaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaConferenze.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenze.fxml"));
         ModificaConferenze_Controller controller = new ModificaConferenze_Controller(user,subscene);
         loader.setController(controller);
         Parent root = loader.load();
@@ -102,7 +102,7 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     public void editDetailsOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaDettagliConferenza.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaDettagliConferenza.fxml"));
         ModificaDettagliConferenza_Controller controller = new ModificaDettagliConferenza_Controller(conferenza,subscene,this);
         loader.setController(controller);
         Parent root = loader.load();
@@ -111,7 +111,7 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     public void editEntiOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaEntiOrganizzatori.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaEntiOrganizzatori.fxml"));
         ModificaEntiOrganizzatori_Controller controller = new ModificaEntiOrganizzatori_Controller(conferenza,subscene,this);
         loader.setController(controller);
         Parent root = loader.load();
@@ -120,7 +120,7 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     public void editSessioniButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaSessioni.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessioni.fxml"));
         ModificaSessioni_Controller controller = new ModificaSessioni_Controller(conferenza,subscene,this);
         loader.setController(controller);
         Parent root = loader.load();
@@ -129,7 +129,7 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     public void editSponsorshipOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaSponsorizzazioni.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSponsorizzazioni.fxml"));
         ModificaSponsorizzazioni_Controller controller = new ModificaSponsorizzazioni_Controller(conferenza,subscene,this);
         loader.setController(controller);
         Parent root = loader.load();
@@ -210,7 +210,7 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     void SlittaConferenzaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/SlittaConferenza.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/SlittaConferenza.fxml"));
         SlittaConferenza_Controller controller = new SlittaConferenza_Controller(conferenza,this);
         loader.setController(controller);
         Parent root = loader.load();

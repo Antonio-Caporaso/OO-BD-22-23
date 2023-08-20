@@ -173,7 +173,7 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
 
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaConferenza.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
         loader.setController(controller);
         controller.setConferenza(conferenza);
         controller.setSponsorizzazioni();

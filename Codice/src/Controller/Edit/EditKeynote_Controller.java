@@ -90,7 +90,7 @@ public class EditKeynote_Controller implements Initializable {
 
     @FXML
     void addKeynoteButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ChoiceKeynote.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ChoiceKeynote.fxml"));
         ChooseKeynote_Controller controller = new ChooseKeynote_Controller(programma);
         loader.setController(controller);
         Parent root = loader.load();
@@ -119,7 +119,7 @@ public class EditKeynote_Controller implements Initializable {
 
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ModificaProgrammaSessione.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ModificaProgrammaSessione.fxml"));
         editProgrammaController.setProgramma(programma);
         loader.setController(editProgrammaController);
         Parent root = loader.load();

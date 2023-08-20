@@ -52,7 +52,7 @@ public class ModificaSessioni_Controller implements Initializable {
 
     @FXML
     public void addSessioneOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/AddSessione.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/AddSessione.fxml"));
         AddSessione_Controller controller = new AddSessione_Controller(conferenza,subscene,this);
         loader.setController(controller);
         Parent root = loader.load();
@@ -62,7 +62,7 @@ public class ModificaSessioni_Controller implements Initializable {
     @FXML
     public void editSessionsOnAction(ActionEvent event) throws IOException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaSessione.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessione.fxml"));
             Sessione s = table.getSelectionModel().getSelectedItem();
             if (s == null)
                 throw new SessioneNotSelectedException();
@@ -131,7 +131,7 @@ public class ModificaSessioni_Controller implements Initializable {
 
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaConferenza.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
         loader.setController(modificaConferenzaController);
         modificaConferenzaController.setSubscene(subscene);
         modificaConferenzaController.setConferenza(conferenza);

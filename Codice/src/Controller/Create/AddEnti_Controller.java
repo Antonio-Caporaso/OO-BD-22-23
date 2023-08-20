@@ -73,7 +73,7 @@ public class AddEnti_Controller implements Initializable {
     //Private Methods
     private void loadAggiungiComitati() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/AddComitati.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddComitati.fxml"));
             AddComitati_Controller controller = new AddComitati_Controller(subscene,conferenza,user);
             loader.setController(controller);
             Parent root = loader.load();
@@ -85,7 +85,7 @@ public class AddEnti_Controller implements Initializable {
 
     private void loadEditConferenza() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
             ModificaConferenza_Controller controller = new ModificaConferenza_Controller(conferenza,subscene,user);
             loader.setController(controller);
             Parent root = loader.load();
@@ -97,7 +97,7 @@ public class AddEnti_Controller implements Initializable {
 
     private void loadErrorWindow(String messaggio) throws IOException {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/ExceptionWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
             Parent root = loader.load();
             ExceptionWindow_Controller controller = loader.getController();
             controller.setErrorMessageLabel(messaggio);

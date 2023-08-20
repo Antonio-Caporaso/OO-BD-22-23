@@ -101,7 +101,7 @@ public class ViewProgramma_Controller implements Initializable {
     //Private Methods
     private void loadAddEventoSociale() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/AddEventoSociale.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/AddEventoSociale.fxml"));
             AddEventoSociale_Controller controller = new AddEventoSociale_Controller(programma);
             loader.setController(controller);
             Parent root = loader.load();

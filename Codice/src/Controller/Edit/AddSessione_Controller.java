@@ -96,7 +96,7 @@ public class AddSessione_Controller implements Initializable, FormChecker {
     }
 
     private void goToAddProgrammaWindow(Sessione s) throws SQLException, IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaProgrammaSessione.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaProgrammaSessione.fxml"));
         ModificaProgrammaSessione_Controller controller = new ModificaProgrammaSessione_Controller(s,subscene,modificaSessioniController);
         loader.setController(controller);
         Parent root = loader.load();
@@ -170,7 +170,7 @@ public class AddSessione_Controller implements Initializable, FormChecker {
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Edit/ModificaSessioni.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessioni.fxml"));
         loader.setController(modificaSessioniController);
         Parent root = loader.load();
         subscene.setRoot(root);
