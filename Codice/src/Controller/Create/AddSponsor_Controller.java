@@ -1,5 +1,7 @@
 package Controller.Create;
 
+import Exceptions.BlankFieldException;
+import Exceptions.SponsorizzazionPresenteException;
 import Model.DAO.SponsorizzazioneDAO;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
@@ -21,11 +23,16 @@ import org.postgresql.util.PSQLException;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddSponsor_Controller implements Initializable {
     private Conferenza conferenza;
+    private Sponsors sponsors = new Sponsors();
+    @FXML
+    private SubScene subscene;
+    private Utente user;
     @FXML
     private HBox hBox;
     @FXML
@@ -44,10 +51,6 @@ public class AddSponsor_Controller implements Initializable {
     private TableColumn<Sponsorizzazione, String> sponsorColumn;
     @FXML
     private TableView<Sponsorizzazione> sponsorTable;
-    private Sponsors sponsors = new Sponsors();
-    @FXML
-    private SubScene subscene;
-    private Utente user;
     @FXML
     private ChoiceBox<String> valutaChoiceBox;
     @FXML
@@ -67,10 +70,10 @@ public class AddSponsor_Controller implements Initializable {
         setSponsorizzazioniTable();
     }
 
-    private void loadVisualizzaSessione() {
+    private void loadVisualizzaSessioni() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/VisualizzaSessioniConferenza_Controller.fxml"));
-            VisualizzaSessioniConferenza_Controller controller = new VisualizzaSessioniConferenza_Controller(subscene,conferenza,user);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/VisualizzaSessioniConferenza.fxml"));
+            VisualizzaSessioniConferenza_Controller controller = new VisualizzaSessioniConferenza_Controller(subscene, conferenza, user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -78,10 +81,11 @@ public class AddSponsor_Controller implements Initializable {
             e.printStackTrace();
         }
     }
-    private  void loadMembriComitati(){
+
+    private void loadMembriComitati() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/AddComitati.fxml"));
-            AddComitati_Controller controller = new AddComitati_Controller(subscene,conferenza,user);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddComitati.fxml"));
+            AddComitati_Controller controller = new AddComitati_Controller(subscene, conferenza, user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -129,30 +133,56 @@ public class AddSponsor_Controller implements Initializable {
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
         try {
-            Sponsor sponsorSelezionato = selezionaSponsorChoiceBox.getSelectionModel().getSelectedItem();
-            if (sponsorSelezionato == null || importoTextField.getText().isEmpty()) {
-                throw new NullPointerException();
-            }
-            double contributo = Double.parseDouble(importoTextField.getText());
-            String valuta = valutaChoiceBox.getValue();
-            Sponsorizzazione sponsorizzazione = new Sponsorizzazione(sponsorSelezionato, conferenza, contributo, valuta);
+            Sponsorizzazione sponsorizzazione = getSponsorshipDetails();
             conferenza.addSponsorizzazione(sponsorizzazione);
-        } catch (PSQLException e) {
+        } catch (SponsorizzazionPresenteException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Questo sponsor è già presente!");
             alert.showAndWait();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+        } catch (NumberFormatException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Inserire un valore valido per il contributo della sponsorizzazione.");
+            alert.showAndWait();
+        } catch (BlankFieldException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Seleziona tutti i campi prima di procedere");
             alert.showAndWait();
         }
     }
 
+    private Sponsorizzazione getSponsorshipDetails() throws BlankFieldException, NumberFormatException {
+        Sponsor sponsorSelezionato = selezionaSponsorChoiceBox.getSelectionModel().getSelectedItem();
+
+        if (sponsorSelezionato == null || importoTextField.getText().isEmpty() || valutaChoiceBox.getSelectionModel().isEmpty())
+            throw new BlankFieldException();
+
+        double contributo = Double.parseDouble(importoTextField.getText());
+        String valuta = valutaChoiceBox.getValue();
+        return new Sponsorizzazione(sponsorSelezionato, conferenza, contributo, valuta);
+    }
+
     @FXML
     void nextOnAction(ActionEvent event) {
-        loadVisualizzaSessione();
+        try{
+            saveSponsorships();
+            showAddedSponsorshipsWindow();
+            loadVisualizzaSessioni();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void showAddedSponsorshipsWindow() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Sponsorizzazioni aggiunte correttamente");
+        alert.showAndWait();
+    }
+
+    private void saveSponsorships() throws SQLException {
+        for(Sponsorizzazione sp : conferenza.getSponsorizzazioni()){
+            SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+            dao.saveSponsorizzazione(sp);
+        }
     }
 
     @FXML
@@ -164,12 +194,8 @@ public class AddSponsor_Controller implements Initializable {
             }
             Optional<ButtonType> result = showDeleteDialog();
             if (result.get() == ButtonType.OK) {
-                try {
                     conferenza.removeSponsorizzazione(sp);
                     setSponsorizzazioniTable();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
