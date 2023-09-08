@@ -1,9 +1,8 @@
 package Controller.Create;
 
-import Interfaces.FormChecker;
 import Controller.Landing_Controller;
 import Exceptions.BlankFieldException;
-import Exceptions.SediNonDisponibiliException;
+import Interfaces.FormChecker;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sede;
 import Model.Entities.Utente;
@@ -29,11 +28,12 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AddConference_Controller implements Initializable, FormChecker {
+    private Conferenze conference = new Conferenze();
+    private Sedi sedi = new Sedi();
     @FXML
     private Button annullaButton;
     @FXML
     private Button avantiButton;
-    private final Conferenze conference = new Conferenze();
     private Conferenza conferenza;
     @FXML
     private DateTimePicker dataFineDP;
@@ -46,7 +46,6 @@ public class AddConference_Controller implements Initializable, FormChecker {
     private TextField nomeConferenzaTF;
     @FXML
     private ChoiceBox<Sede> sedeChoice;
-    private final Sedi sedi = new Sedi();
     @FXML
     private SubScene subscene;
     private Utente user;
@@ -93,13 +92,18 @@ public class AddConference_Controller implements Initializable, FormChecker {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            sedi.loadSedi();
+            sedeChoice.setItems(sedi.getSedi());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void openAddedConferenceDialogWindow() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Dialog");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Aggiunta conferenza");
         alert.setHeaderText("Conferenza aggiunta correttamente");
-        alert.getButtonTypes().remove(ButtonType.CANCEL);
         alert.showAndWait();
     }
 
@@ -109,7 +113,7 @@ public class AddConference_Controller implements Initializable, FormChecker {
 
     private void goToAddEntiWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddEnti.fxml"));
-        AddEnti_Controller controller = new AddEnti_Controller(subscene,conferenza,user);
+        AddEnti_Controller controller = new AddEnti_Controller(subscene, conferenza, user);
         loader.setController(controller);
         Parent root = loader.load();
         subscene.setRoot(root);
@@ -157,31 +161,6 @@ public class AddConference_Controller implements Initializable, FormChecker {
             goToLandingWindow();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    void showSedi(MouseEvent event) {
-        try {
-            Timestamp inizio = Timestamp.valueOf(dataInizioDP.getDateTimeValue());
-            Timestamp fine = Timestamp.valueOf(dataFineDP.getDateTimeValue());
-            sedi.loadSediLibere(inizio, fine);
-            if (sedi.getSedi().isEmpty())
-                throw new SediNonDisponibiliException();
-            else
-                sedeChoice.setItems(sedi.getSedi());
-        } catch (SediNonDisponibiliException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Inserire delle date per visualizzare le sedi libere");
-            alert.showAndWait();
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
         }
     }
 }
