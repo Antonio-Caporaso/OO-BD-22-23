@@ -97,7 +97,7 @@ public class Organizzatore {
 
     @Override
     public String toString() {
-        return cognome + " " + nome + " (" + istituzione + ")";
+        return cognome + " " + nome + " (" + istituzione.getSigla() + ")";
     }
 }
 
