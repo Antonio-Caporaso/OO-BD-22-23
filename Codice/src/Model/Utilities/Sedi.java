@@ -33,13 +33,7 @@ public class Sedi {
         this.sedi = sedi;
     }
 
-    public void loadNomiFromDB() {
-        SedeDao dao = new SedeDao();
-        this.nomi.clear();
-        this.nomi.addAll(dao.retrieveNomeSedi());
-    }
-
-    public void loadSedi() {
+    public void loadSedi() throws SQLException {
         SedeDao dao = new SedeDao();
         sedi.clear();
         sedi.addAll(dao.retrieveAllSedi());
