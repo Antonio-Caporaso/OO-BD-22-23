@@ -1,8 +1,11 @@
 package Controller.Create;
 
+import Exceptions.DateMismatchException;
+import Exceptions.SessionePresenteException;
 import Interfaces.FormChecker;
 import Exceptions.BlankFieldException;
 import Exceptions.SediNonDisponibiliException;
+import Model.DAO.SessioneDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sala;
 import Model.Entities.Conferenze.Sessione;
@@ -17,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import org.postgresql.util.PSQLException;
 import tornadofx.control.DateTimePicker;
@@ -36,6 +40,10 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
     private DateTimePicker fineDateTimePicker;
     @FXML
     private DateTimePicker inizioDateTimePicker;
+    @FXML
+    private ImageView fineSessioneAboutImage;
+    @FXML
+    private ImageView inizioSessioneAboutImage;
     @FXML
     private Button inserisciButton;
     private Sale sale;
@@ -58,6 +66,8 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             loadCoordinatoreChoiceBox();
+            Tooltip.install(inizioSessioneAboutImage,new Tooltip("L'inizio della conferenza è: "+conferenza.getInizio()));
+            Tooltip.install(fineSessioneAboutImage,new Tooltip("La fine della conferenza è: "+conferenza.getFine()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -130,21 +140,29 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
             checkFieldsAreBlank();
             Sessione s = setSessione();
             conferenza.addSessione(s);
+            saveSessione(s);
             openAddSessioneDialogWindow();
             loadViewSessioni(conferenza);
-        } catch (BlankFieldException e) {
+        }catch (DateMismatchException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        } catch (BlankFieldException | SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(e.getMessage());
             alert.showAndWait();
-        } catch (PSQLException e) {
+        } catch (SessionePresenteException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText("Sessione inserita al di fuori delle date previste");
+            alert.setHeaderText(e.getMessage());
             alert.showAndWait();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+    }
+
+    private void saveSessione(Sessione s) throws SQLException {
+        SessioneDao sessioneDao = new SessioneDao();
+        s.setId_sessione(sessioneDao.saveSessione(s));
     }
 
     @FXML

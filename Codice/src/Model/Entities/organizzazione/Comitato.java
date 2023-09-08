@@ -4,15 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class Comitato {
     private int id_comitato;
     private String tipologia;
-    private ObservableList<Organizzatore> membri;
+    private LinkedList<Organizzatore> membri;
 
     public Comitato() {
-        membri = FXCollections.observableArrayList();
+        membri = new LinkedList<>();
     }
 
     @Override
@@ -28,7 +29,7 @@ public class Comitato {
     public void loadMembri() throws SQLException {
         ComitatoDao comitatoDao = new ComitatoDao();
         membri.clear();
-        membri.addAll(comitatoDao.retreiveMembryComitato(this));
+        membri.addAll(comitatoDao.retreiveMembriComitato(this));
     }
     public void addMembro(Organizzatore o){
         if(!(membri.contains(o))){
@@ -40,7 +41,7 @@ public class Comitato {
             membri.remove(o);
     }
 
-    public ObservableList<Organizzatore> getMembri() {
+    public LinkedList<Organizzatore> getMembri() {
         return membri;
     }
 
@@ -65,5 +66,9 @@ public class Comitato {
         int result = id_comitato;
         result = 31 * result + (tipologia != null ? tipologia.hashCode() : 0);
         return result;
+    }
+
+    public void setMembri(LinkedList<Organizzatore> organizzatores) {
+        this.membri = organizzatores;
     }
 }

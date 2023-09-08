@@ -2,6 +2,7 @@ package Controller.Edit;
 
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
+import Model.Utilities.Conferenze;
 import Model.Utilities.ConferenzeUtente;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -119,7 +120,7 @@ public class ModificaConferenze_Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             conferenze.loadConferenzeUtente(user);
-            setTableConferenze(conferenze.getConferenzeUtente());
+            setTableConferenze(conferenze.getConferenze());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

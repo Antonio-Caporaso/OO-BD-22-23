@@ -148,12 +148,7 @@ public class ModificaSessioni_Controller implements Initializable {
             }
             Optional<ButtonType> result = showConfirmationAlert(s);
             if (result.get() == ButtonType.OK) {
-                try {
                     conferenza.removeSessione(s);
-                } catch (SQLException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText(e.getMessage());
-                }
             }
         } catch (SessioneNotSelectedException e) {
             showSessioneNotSelectedAlert(e);

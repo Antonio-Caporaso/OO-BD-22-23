@@ -1,6 +1,7 @@
 package Model.DAO;
 
 import Model.DbConfig.DBConnection;
+import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.organizzazione.Comitato;
 import Model.Entities.organizzazione.Organizzatore;
 
@@ -25,6 +26,36 @@ public class ComitatoDao {
         }
         return c;
     }
+    public Comitato retrieveComitatoScientificoByConferenza(Conferenza conferenza) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select comitato_s from conferenza where id_conferenza = ?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1, conferenza.getId_conferenza());
+        ResultSet rs = stm.executeQuery();
+        Comitato comitato_s = new Comitato();
+        OrganizzatoreDao organizzatoreDao = new OrganizzatoreDao();
+        while (rs.next()) {
+            comitato_s.setId_comitato(rs.getInt(1));
+            comitato_s.setMembri(organizzatoreDao.retrieveOrganizzatoriComitato(comitato_s.getId_comitato()));
+        }
+        return comitato_s;
+    }
+    public Comitato retrieveComitatoLocaleByConferenza(Conferenza conferenza) throws SQLException {
+        dbcon = DBConnection.getDBconnection();
+        conn = dbcon.getConnection();
+        String query = "select comitato_l from conferenza where id_conferenza = ?";
+        PreparedStatement stm = conn.prepareStatement(query);
+        stm.setInt(1, conferenza.getId_conferenza());
+        ResultSet rs = stm.executeQuery();
+        Comitato comitato_l = new Comitato();
+        OrganizzatoreDao organizzatoreDao = new OrganizzatoreDao();
+        while (rs.next()) {
+            comitato_l.setId_comitato(rs.getInt(1));
+            comitato_l.setMembri(organizzatoreDao.retrieveOrganizzatoriComitato(comitato_l.getId_comitato()));
+        }
+        return comitato_l;
+    }
     public void addMembroComitato(Organizzatore organizzatore, Comitato comitato) throws SQLException{
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
@@ -43,7 +74,7 @@ public class ComitatoDao {
         stm.setInt(2,comitato.getId_comitato());
         stm.executeUpdate();
     }
-    public LinkedList<Organizzatore> retreiveMembryComitato(Comitato comitato) throws SQLException {
+    public LinkedList<Organizzatore> retreiveMembriComitato(Comitato comitato) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         String query = "select o.nome,o.cognome,o.email,o.titolo,o.id_ente from organizzatore o natural join organizzatore_comitato where id_comitato = ?";

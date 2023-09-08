@@ -45,16 +45,6 @@ public class MembriComitato {
         return membriComitatoScientifico;
     }
 
-    public ObservableList<Organizzatore> getOrganizzatoriEnti() {
-        return organizzatoriEnti;
-    }
-
-    public void loadAllOrganizzatori() throws SQLException {
-        OrganizzatoreDao dao = new OrganizzatoreDao();
-        membriComitatoScientifico.clear();
-        membriComitatoScientifico.addAll(dao.retrieveAllOrganizzatori());
-    }
-
     public void loadMembriComitatoLocale() throws SQLException {
         OrganizzatoreDao dao = new OrganizzatoreDao();
         membriComitatoLocale.clear();

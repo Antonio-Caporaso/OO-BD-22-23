@@ -27,11 +27,11 @@ public class EnteDao {
     public void saveEnteOrganizzatore(Ente ente, Conferenza conferenza) throws SQLException {
         dbConnection = DBConnection.getDBconnection();
         connection = dbConnection.getConnection();
-        String query = "call add_ente(?,?)";
-        CallableStatement stm = connection.prepareCall(query);
+        String storedProcedureCall = "CALL add_ente(?,?)";
+        CallableStatement stm = connection.prepareCall(storedProcedureCall);
         stm.setInt(1,ente.getId_ente());
         stm.setInt(2,conferenza.getId_conferenza());
-        stm.executeUpdate();
+        stm.execute();
     }
     public void removeEnteOrganizzatore(Ente ente, Conferenza conferenza) throws SQLException {
         dbConnection = DBConnection.getDBconnection();

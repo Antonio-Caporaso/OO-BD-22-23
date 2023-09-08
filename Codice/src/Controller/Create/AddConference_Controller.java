@@ -3,10 +3,12 @@ package Controller.Create;
 import Controller.Landing_Controller;
 import Exceptions.BlankFieldException;
 import Interfaces.FormChecker;
+import Model.DAO.ConferenzaDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sede;
 import Model.Entities.Utente;
 import Model.Utilities.Conferenze;
+import Model.Utilities.ConferenzeUtente;
 import Model.Utilities.Sedi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,6 +63,7 @@ public class AddConference_Controller implements Initializable, FormChecker {
             checkFieldsAreBlank();
             conferenza = retrieveConferenza();
             conference.addConferenza(conferenza);
+            saveConferenza(conferenza);
             openAddedConferenceDialogWindow();
             loadAddEnti(conferenza);
         } catch (BlankFieldException e) {
@@ -70,6 +73,12 @@ public class AddConference_Controller implements Initializable, FormChecker {
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
+    }
+
+    private void saveConferenza(Conferenza conferenza) throws SQLException {
+        ConferenzaDao d = new ConferenzaDao();
+        int id = d.saveConferenza(conferenza);
+        conferenza.setId_conferenza(id);
     }
 
     @Override

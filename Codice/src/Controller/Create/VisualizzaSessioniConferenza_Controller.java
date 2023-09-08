@@ -1,6 +1,8 @@
 package Controller.Create;
 
 import Controller.Edit.ModificaConferenza_Controller;
+import Controller.Landing_Controller;
+import Model.DAO.ConferenzaDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sala;
 import Model.Entities.Conferenze.Sessione;
@@ -11,10 +13,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import jfxtras.scene.layout.HBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -87,7 +93,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
 
     private void loadInserisciSessione() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/InserisciSessione.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/InserisciSessione.fxml"));
             InserisciSessione_Controller controller = new InserisciSessione_Controller();
             loader.setController(controller);
             controller.setSubscene(subscene);
@@ -103,7 +109,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     private void loadViewProgramma() {
         try {
             Sessione s = sessioniTableView.getSelectionModel().getSelectedItem();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/Create/ViewProgrammaSessione.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/ViewProgrammaSessione.fxml"));
             ViewProgramma_Controller controller = new ViewProgramma_Controller();
             loader.setController(controller);
             controller.setSubscene(subscene);
@@ -148,8 +154,30 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     }
 
     @FXML
-    void riepilogoButtonOnAction(ActionEvent event) {
-        loadEditConferenza();
+    void saveButtonOnAction(ActionEvent event) throws SQLException, IOException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText("Confermare nuova conferenza");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == ButtonType.OK){
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+            alert1.setContentText("Conferenza aggiunta correttamente");
+            alert1.showAndWait();
+            loadEditConferenza();
+        }else {
+            ConferenzaDao dao = new ConferenzaDao();
+            dao.deleteConferenza(conferenza);
+            goToLandingWindow();
+        }
+    }
+
+    private void goToLandingWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Landing.fxml"));
+        Landing_Controller controller = new Landing_Controller(user);
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene landingScene = new Scene(root);
+        Stage stage = (Stage) riepilogoButton.getScene().getWindow();
+        stage.setScene(landingScene);
     }
 
     @FXML
@@ -182,13 +210,9 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
             }
             Optional<ButtonType> result = showDeleteDialog();
             if (result.get() == ButtonType.OK) {
-                try {
                     conferenza.removeSessione(selected);
                     setSessioni();
                     checkAlmenoUnaSessione();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="700.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="75.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="14.0" prefHeight="47.0" prefWidth="417.0" text="Elenco Sessioni Presenti" textAlignment="RIGHT" textFill="#eceff4" wrapText="true">
@@ -24,7 +24,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="riepilogoButton" mnemonicParsing="false" onAction="#riepilogoButtonOnAction" prefHeight="31.0" prefWidth="92.0" text="Riepilogo" textFill="WHITE">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonOnAction" prefHeight="31.0" prefWidth="92.0" text="Salva" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>

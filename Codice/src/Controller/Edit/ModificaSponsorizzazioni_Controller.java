@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Exceptions.SponsorizzazionPresenteException;
 import Interfaces.FormChecker;
 import Exceptions.BlankFieldException;
 import Model.DAO.SponsorizzazioneDAO;
@@ -133,13 +134,8 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
             if (sp == null)
                 throw new NullPointerException();
             Optional<ButtonType> result = showDeleteDialog();
-            if (result.get() == ButtonType.OK) {
-                try {
+            if (result.get() == ButtonType.OK)
                     conferenza.removeSponsorizzazione(sp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Nessuna sponsorizzazione selezionata");
@@ -158,12 +154,10 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
             String valuta = valutaChoice.getValue();
             Sponsorizzazione sponsorizzazione = new Sponsorizzazione(sponsorSelezionato, conferenza, contributo, valuta);
             conferenza.addSponsorizzazione(sponsorizzazione);
-        } catch (PSQLException e) {
+        } catch (SponsorizzazionPresenteException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Questo sponsor è già presente!");
             alert.showAndWait();
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Seleziona tutti i campi prima di procedere");
@@ -173,6 +167,22 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
 
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
+        updateSponsorships();
+        goToEditConferenceWindow();
+    }
+
+    private void updateSponsorships() {
+        try{
+            for(Sponsorizzazione sp: conferenza.getSponsorizzazioni()){
+                SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+                dao.saveSponsorizzazione(sp);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void goToEditConferenceWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
         loader.setController(controller);
         controller.setConferenza(conferenza);

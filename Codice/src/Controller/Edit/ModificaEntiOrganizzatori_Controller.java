@@ -62,11 +62,6 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
         Ente e = entiChoice.getSelectionModel().getSelectedItem();
         try {
             conferenza.addEnte(e);
-        } catch (SQLException exp) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Ente non aggiunto");
-            alert.setContentText("Ente già presente");
-            alert.showAndWait();
         } catch (EntePresenteException exp) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("EntePresenteException");
@@ -78,14 +73,7 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
     @FXML
     void deleteOnAction(ActionEvent event) {
         Ente e = entiTable.getSelectionModel().getSelectedItem();
-        try {
-            conferenza.removeEnte(e);
-        } catch (SQLException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ente non rimosso");
-            alert.setContentText(ex.getMessage());
-            alert.showAndWait();
-        }
+        conferenza.removeEnte(e);
     }
 
     @FXML

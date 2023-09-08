@@ -142,7 +142,7 @@ public class VisualizzaConferenza_Controller implements Initializable {
             titoloOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("titolo"));
             emailOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("email"));
             istituzioneOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
-            comitatoLocaleTable.setItems(comitato_L.getMembri());
+            comitatoLocaleTable.getItems().addAll(comitato_L.getMembri());
         }catch (SQLException e){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText(e.getMessage());
@@ -159,7 +159,7 @@ public class VisualizzaConferenza_Controller implements Initializable {
             titoloOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("titolo"));
             emailOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("email"));
             istituzioneOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
-            comitatoScientificoTable.setItems(comitato_S.getMembri());
+            comitatoScientificoTable.getItems().addAll(comitato_S.getMembri());
         }catch (NullPointerException e){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText(e.getMessage());

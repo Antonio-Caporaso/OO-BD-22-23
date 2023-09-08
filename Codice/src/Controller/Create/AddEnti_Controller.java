@@ -3,11 +3,14 @@ package Controller.Create;
 import Controller.Edit.ModificaConferenza_Controller;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.EntePresenteException;
+import Model.DAO.ConferenzaDao;
 import Model.DAO.EnteDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
 import Model.Entities.organizzazione.Ente;
 import Model.Utilities.Enti;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,7 +75,7 @@ public class AddEnti_Controller implements Initializable {
     }
 
     //Private Methods
-    private void loadAggiungiComitati() {
+    private void goToAddComitatiWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddComitati.fxml"));
             AddComitati_Controller controller = new AddComitati_Controller(subscene, conferenza, user);
@@ -84,7 +87,7 @@ public class AddEnti_Controller implements Initializable {
         }
     }
 
-    private void loadEditConferenza() {
+    private void goBackToEditConferenza() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
             ModificaConferenza_Controller controller = new ModificaConferenza_Controller(conferenza, subscene, user);
@@ -127,8 +130,10 @@ public class AddEnti_Controller implements Initializable {
 
     private void setOrganizzatoriListView() {
         try {
-            conferenza.loadOrganizzatori();
-            entiListView.setItems(conferenza.getEnti());
+            EnteDao enteDao = new EnteDao();
+            ObservableList<Ente> enti = FXCollections.observableArrayList();
+            enti.addAll(enteDao.retrieveEntiOrganizzatori(conferenza));
+            entiListView.setItems(enti);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -141,10 +146,9 @@ public class AddEnti_Controller implements Initializable {
         return result;
     }
 
-    //Button methods
     @FXML
     void backButtonOnAction(ActionEvent event) {
-        loadEditConferenza();
+        goBackToEditConferenza();
     }
 
     @FXML
@@ -154,6 +158,7 @@ public class AddEnti_Controller implements Initializable {
             if (enteSelezionato == null)
                 throw new NullPointerException();
             conferenza.addEnte(enteSelezionato);
+            entiListView.getItems().add(enteSelezionato);
             checkAlmenoUnEnte();
         } catch (EntePresenteException e) {
             try {
@@ -172,7 +177,7 @@ public class AddEnti_Controller implements Initializable {
     void nextOnAction(ActionEvent event) {
         try {
             saveEnti();
-            loadAggiungiComitati();
+            goToAddComitatiWindow();
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -181,6 +186,7 @@ public class AddEnti_Controller implements Initializable {
     private void saveEnti() throws SQLException {
         EnteDao dao = new EnteDao();
         for(Ente ente : conferenza.getEnti()){
+            System.out.println("ente:"+ente.getId_ente()+" conference: "+conferenza.getId_conferenza());
             dao.saveEnteOrganizzatore(ente,conferenza);
         }
     }
