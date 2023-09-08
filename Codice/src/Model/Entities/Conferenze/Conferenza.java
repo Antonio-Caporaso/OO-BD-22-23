@@ -1,6 +1,9 @@
 package Model.Entities.Conferenze;
 
+import Exceptions.DateMismatchException;
 import Exceptions.EntePresenteException;
+import Exceptions.SessionePresenteException;
+import Exceptions.SponsorizzazionPresenteException;
 import Model.DAO.EnteDao;
 import Model.DAO.SessioneDao;
 import Model.DAO.SponsorizzazioneDAO;
@@ -61,26 +64,31 @@ public class Conferenza {
         sessioni = FXCollections.observableArrayList();
     }
 
-    public void addEnte(Ente e) throws SQLException, EntePresenteException {
-        EnteDao dao = new EnteDao();
-        if (!enti.contains(e)) {
-            dao.saveEnteOrganizzatore(e, this);
+    public void addEnte(Ente e) throws EntePresenteException {
+        if (!enti.contains(e))
             enti.add(e);
-        } else {
+        else
             throw new EntePresenteException();
+    }
+
+    public void addSessione(Sessione sessione) throws SessionePresenteException,DateMismatchException {
+       /* SessioneDao sessioneDao = new SessioneDao();
+        sessione.setId_sessione(sessioneDao.saveSessione(sessione));*/
+
+        if(!(sessioni.contains(sessione))) {
+            if(!(sessione.getInizio().before(inizio) || sessione.getFine().after(fine)))
+                sessioni.add(sessione);
+            else throw new DateMismatchException();
         }
+        else throw new SessionePresenteException();
     }
 
-    public void addSessione(Sessione sessione) throws SQLException {
-        SessioneDao sessioneDao = new SessioneDao();
-        sessione.setId_sessione(sessioneDao.saveSessione(sessione));
-        sessioni.add(sessione);
-    }
-
-    public void addSponsorizzazione(Sponsorizzazione s) throws SQLException {
-        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-        dao.saveSponsorizzazione(s);
-        sponsorizzazioni.add(s);
+    public void addSponsorizzazione(Sponsorizzazione s) throws SponsorizzazionPresenteException {
+        /*SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+        dao.saveSponsorizzazione(s);*/
+        if(!(sponsorizzazioni.contains(s)))
+            sponsorizzazioni.add(s);
+        else throw new SponsorizzazionPresenteException();
     }
 
     public Comitato getComitato_l() {
@@ -197,22 +205,19 @@ public class Conferenza {
         sponsorizzazioni.addAll(dao.retrieveSponsorizzazioni(this));
     }
 
-    public void removeEnte(Ente e) throws SQLException {
-        EnteDao dao = new EnteDao();
-        dao.removeEnteOrganizzatore(e, this);
-        enti.remove(e);
+    public void removeEnte(Ente e) {
+        if(enti.contains(e))
+            enti.remove(e);
     }
 
-    public void removeSessione(Sessione sessione) throws SQLException {
-        SessioneDao dao = new SessioneDao();
-        dao.removeSessione(sessione);
-        sessioni.remove(sessione);
+    public void removeSessione(Sessione sessione) {
+        if(sessioni.contains(sessione))
+            sessioni.remove(sessione);
     }
 
-    public void removeSponsorizzazione(Sponsorizzazione s) throws SQLException {
-        SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-        dao.removeSponsorizzazione(s);
-        sponsorizzazioni.remove(s);
+    public void removeSponsorizzazione(Sponsorizzazione s) {
+        if(sponsorizzazioni.contains(s))
+            sponsorizzazioni.remove(s);
     }
 
     @Override
