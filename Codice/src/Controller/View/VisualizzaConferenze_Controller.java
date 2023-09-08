@@ -66,8 +66,12 @@ public class VisualizzaConferenze_Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        sedi.loadSedi();
-        sedeChoice.setItems(sedi.getSedi());
+        try {
+            sedi.loadSedi();
+            sedeChoice.setItems(sedi.getSedi());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setTable(ObservableList<Conferenza> c) {
