@@ -71,24 +71,17 @@ public class Conferenza {
             throw new EntePresenteException();
     }
 
-    public void addSessione(Sessione sessione) throws SessionePresenteException, DateMismatchException, SQLException {
-       /* */
-
+    public void addSessione(Sessione sessione) throws SessionePresenteException, DateMismatchException{
         if(!(sessioni.contains(sessione))) {
             if(!(sessione.getInizio().before(inizio) || sessione.getFine().after(fine))){
                 sessioni.add(sessione);
-                SessioneDao sessioneDao = new SessioneDao();
-                sessione.setId_sessione(sessioneDao.saveSessione(sessione));
             }
-
             else throw new DateMismatchException();
         }
         else throw new SessionePresenteException();
     }
 
     public void addSponsorizzazione(Sponsorizzazione s) throws SponsorizzazionPresenteException {
-        /*SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-        dao.saveSponsorizzazione(s);*/
         if(!(sponsorizzazioni.contains(s)))
             sponsorizzazioni.add(s);
         else throw new SponsorizzazionPresenteException();

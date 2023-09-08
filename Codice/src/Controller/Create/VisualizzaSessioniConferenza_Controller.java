@@ -3,11 +3,13 @@ package Controller.Create;
 import Controller.Edit.ModificaConferenza_Controller;
 import Controller.Landing_Controller;
 import Model.DAO.ConferenzaDao;
+import Model.DAO.SponsorizzazioneDAO;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sala;
 import Model.Entities.Conferenze.Sessione;
 import Model.Entities.Utente;
 import Model.Entities.organizzazione.Organizzatore;
+import Model.Entities.organizzazione.Sponsorizzazione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +44,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     @FXML
     private Button inserisciButton;
     @FXML
-    private Button riepilogoButton;
+    private Button saveButton;
     @FXML
     private Button rimuoviButton;
     @FXML
@@ -53,6 +55,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     private SubScene subscene;
     @FXML
     private TableColumn<Sessione, String> titoloTableColumn;
+    private AddSponsor_Controller addSponsorController;
     private Utente user;
 
     public VisualizzaSessioniConferenza_Controller(SubScene subscene, Conferenza conferenza, Utente user) {
@@ -70,8 +73,8 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     private void loadAggiungiSponsor() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddSponsor.fxml"));
-            AddSponsor_Controller controller = new AddSponsor_Controller(subscene,conferenza,user);
-            loader.setController(controller);
+            loader.setController(addSponsorController);
+            addSponsorController.setSponsorizzazioniTable();
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -156,17 +159,32 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     @FXML
     void saveButtonOnAction(ActionEvent event) throws SQLException, IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Confermare nuova conferenza");
+        alert.setContentText("Sicuro di voler salvare la conferenza ?");
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.get() == ButtonType.OK){
-            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-            alert1.setContentText("Conferenza aggiunta correttamente");
-            alert1.showAndWait();
-            loadEditConferenza();
-        }else {
-            ConferenzaDao dao = new ConferenzaDao();
-            dao.deleteConferenza(conferenza);
-            goToLandingWindow();
+        if(result.get() == ButtonType.OK)
+            saveConference();
+        else
+            deleteConference();
+        goToLandingWindow();
+    }
+
+    private void deleteConference() throws SQLException {
+        ConferenzaDao dao = new ConferenzaDao();
+        dao.deleteConferenza(conferenza);
+    }
+
+    private void saveConference() throws SQLException {
+        saveSponsorships();
+        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+        alert1.setContentText("Conferenza aggiunta correttamente");
+        alert1.showAndWait();
+        loadEditConferenza();
+    }
+
+    private void saveSponsorships() throws SQLException {
+        for(Sponsorizzazione sp : conferenza.getSponsorizzazioni()){
+            SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+            dao.saveSponsorizzazione(sp);
         }
     }
 
@@ -176,7 +194,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         loader.setController(controller);
         Parent root = loader.load();
         Scene landingScene = new Scene(root);
-        Stage stage = (Stage) riepilogoButton.getScene().getWindow();
+        Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.setScene(landingScene);
     }
 
@@ -221,4 +239,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         }
     }
 
+    public void setAddSponsorController(AddSponsor_Controller addSponsorController) {
+        this.addSponsorController = addSponsorController;
+    }
 }

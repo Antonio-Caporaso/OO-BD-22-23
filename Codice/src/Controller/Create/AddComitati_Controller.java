@@ -144,13 +144,10 @@ public class AddComitati_Controller implements Initializable {
         try {
             saveComitati();
             goToAddSponsorshipsWindow();
-        /*}catch (SQLException e){
+        }catch (SQLException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-        }*/
-        } catch (SQLException e){
-            e.printStackTrace();
         }
     }
 

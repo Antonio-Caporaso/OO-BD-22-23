@@ -74,6 +74,7 @@ public class AddSponsor_Controller implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/VisualizzaSessioniConferenza.fxml"));
             VisualizzaSessioniConferenza_Controller controller = new VisualizzaSessioniConferenza_Controller(subscene, conferenza, user);
+            controller.setAddSponsorController(this);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -94,17 +95,13 @@ public class AddSponsor_Controller implements Initializable {
         }
     }
 
-    private void setSponsorizzazioniTable() {
+    protected void setSponsorizzazioniTable() {
         sponsorTable.setEditable(false);
-        try {
-            conferenza.loadSponsorizzazioni();
-            sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
-            contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
-            valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
-            sponsorTable.setItems(conferenza.getSponsorizzazioni());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        //conferenza.loadSponsorizzazioni();
+        sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
+        contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
+        valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
+        sponsorTable.setItems(conferenza.getSponsorizzazioni());
     }
 
     private void setValute() {
@@ -163,28 +160,8 @@ public class AddSponsor_Controller implements Initializable {
 
     @FXML
     void nextOnAction(ActionEvent event) {
-        try{
-            saveSponsorships();
-            showAddedSponsorshipsWindow();
-            loadVisualizzaSessioni();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+        loadVisualizzaSessioni();
     }
-
-    private void showAddedSponsorshipsWindow() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Sponsorizzazioni aggiunte correttamente");
-        alert.showAndWait();
-    }
-
-    private void saveSponsorships() throws SQLException {
-        for(Sponsorizzazione sp : conferenza.getSponsorizzazioni()){
-            SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-            dao.saveSponsorizzazione(sp);
-        }
-    }
-
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
         try {

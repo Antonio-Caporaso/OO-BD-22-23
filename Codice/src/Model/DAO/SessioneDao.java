@@ -60,7 +60,7 @@ public class SessioneDao {
         }
         return sessioni;
     }
-    public int saveSessione(Sessione sessione)throws SQLException, PSQLException {
+    public int saveSessione(Sessione sessione) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         String query = "SELECT add_new_sessione(?,?,?,?,?,?)";

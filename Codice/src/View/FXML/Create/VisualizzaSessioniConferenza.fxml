@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -31,7 +33,7 @@
             </Button>
          </buttons>
       </ButtonBar>
-      <TableView fx:id="sessioniTableView" layoutX="14.0" layoutY="124.0" prefHeight="500.0" prefWidth="725.0">
+      <TableView fx:id="sessioniTableView" layoutX="14.0" layoutY="94.0" prefHeight="545.0" prefWidth="725.0">
         <columns>
           <TableColumn fx:id="titoloTableColumn" editable="false" maxWidth="256.0" prefWidth="135.0" resizable="false" text="Titolo" />
             <TableColumn fx:id="inizioTableColumn" editable="false" maxWidth="209.0" minWidth="0.0" prefWidth="160.0" resizable="false" text="Inizio" />
@@ -40,8 +42,20 @@
             <TableColumn fx:id="chairTableColumn" editable="false" maxWidth="500.0" prefWidth="152.0" resizable="false" sortable="false" text="Chair" />
         </columns>
       </TableView>
-      <Button fx:id="inserisciButton" layoutX="752.0" layoutY="250.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="40.0" prefWidth="173.0" text="Inserisci Sessione" />
-      <Button fx:id="rimuoviButton" layoutX="752.0" layoutY="400.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="40.0" prefWidth="173.0" text="Rimuovi Sessione" />
-      <Button fx:id="aggiungiProgrammaButton" layoutX="752.0" layoutY="300.0" mnemonicParsing="false" onAction="#aggiungiProgrammaButtonOnAction" prefHeight="40.0" prefWidth="173.0" text="Aggiungi Programma" />
+      <VBox layoutX="745.0" layoutY="94.0" prefHeight="178.0" prefWidth="173.0">
+         <children>
+            <Button fx:id="aggiungiProgrammaButton" mnemonicParsing="false" onAction="#aggiungiProgrammaButtonOnAction" prefHeight="50.0" prefWidth="173.0" text="Aggiungi Programma" textAlignment="CENTER" wrapText="true" />
+            <Button fx:id="rimuoviButton" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="50.0" prefWidth="173.0" text="Rimuovi Sessione" wrapText="true">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="inserisciButton" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="50.0" prefWidth="173.0" text="Inserisci Sessione">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
