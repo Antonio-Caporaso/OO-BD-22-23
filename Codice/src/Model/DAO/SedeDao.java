@@ -29,25 +29,19 @@ public class SedeDao {
         }
         return sedi;
     }
-    public LinkedList<Sede> retrieveAllSedi(){
+    public LinkedList<Sede> retrieveAllSedi() throws SQLException {
         dbCon = DBConnection.getDBconnection();
         conn = dbCon.getConnection();
         LinkedList<Sede> sedi = new LinkedList<Sede>();
-        try {
-            PreparedStatement stm=conn.prepareStatement("SELECT * FROM sede");
-            ResultSet rs = stm.executeQuery();
-            IndirizzoDAO dao = new IndirizzoDAO();
-            while(rs.next()){
-                Sede s = new Sede();
-                s.setSedeID(rs.getInt(1));
-                s.setNomeSede(rs.getString(2));
-                //La s.setIndirizzo è il problema del ritardo nei caricamenti delle sedi nelle choice box
-                //Da considerare la possibilità di modificarla per ridurre le tempistiche, ora si aggira intorno ad 1.7 secondi rispetto ai 0.68 della V.1
-                s.setIndirizzo(dao.retrieveIndirizzoByID(rs.getInt("id_indirizzo")));
-                sedi.add(s);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
+        PreparedStatement stm=conn.prepareStatement("SELECT * FROM sede");
+        ResultSet rs = stm.executeQuery();
+        IndirizzoDAO dao = new IndirizzoDAO();
+        while(rs.next()){
+            Sede s = new Sede();
+            s.setSedeID(rs.getInt(1));
+            s.setNomeSede(rs.getString(2));
+            s.setIndirizzo(dao.retrieveIndirizzoByID(rs.getInt("id_indirizzo")));
+            sedi.add(s);
         }
         return sedi;
     }
