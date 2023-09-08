@@ -1,8 +1,9 @@
 package Controller.Create;
 
-import Controller.ExceptionWindow_Controller;
 import Controller.Edit.ModificaConferenza_Controller;
+import Controller.ExceptionWindow_Controller;
 import Exceptions.EntePresenteException;
+import Model.DAO.EnteDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
 import Model.Entities.organizzazione.Ente;
@@ -27,8 +28,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddEnti_Controller implements Initializable {
-    private Conferenza conferenza;
     private Enti enti = new Enti();
+    private Conferenza conferenza;
     @FXML
     private ChoiceBox<Ente> entiChoiceBox;
     @FXML
@@ -74,7 +75,7 @@ public class AddEnti_Controller implements Initializable {
     private void loadAggiungiComitati() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddComitati.fxml"));
-            AddComitati_Controller controller = new AddComitati_Controller(subscene,conferenza,user);
+            AddComitati_Controller controller = new AddComitati_Controller(subscene, conferenza, user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -86,7 +87,7 @@ public class AddEnti_Controller implements Initializable {
     private void loadEditConferenza() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
-            ModificaConferenza_Controller controller = new ModificaConferenza_Controller(conferenza,subscene,user);
+            ModificaConferenza_Controller controller = new ModificaConferenza_Controller(conferenza, subscene, user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -96,7 +97,7 @@ public class AddEnti_Controller implements Initializable {
     }
 
     private void loadErrorWindow(String messaggio) throws IOException {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
             Parent root = loader.load();
             ExceptionWindow_Controller controller = loader.getController();
@@ -154,14 +155,9 @@ public class AddEnti_Controller implements Initializable {
                 throw new NullPointerException();
             conferenza.addEnte(enteSelezionato);
             checkAlmenoUnEnte();
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Questo organizzatore è già presente!");
-            alert.showAndWait();
         } catch (EntePresenteException e) {
-            String messaggio = "Questo organizzatore è già presente!";
             try {
-                loadErrorWindow(messaggio);
+                loadErrorWindow(e.getMessage());
             } catch (IOException ex) {
                 e.printStackTrace();
             }
@@ -174,24 +170,31 @@ public class AddEnti_Controller implements Initializable {
 
     @FXML
     void nextOnAction(ActionEvent event) {
-        loadAggiungiComitati();
+        try {
+            saveEnti();
+            loadAggiungiComitati();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void saveEnti() throws SQLException {
+        EnteDao dao = new EnteDao();
+        for(Ente ente : conferenza.getEnti()){
+            dao.saveEnteOrganizzatore(ente,conferenza);
+        }
     }
 
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
         Ente enteSelezionato = entiListView.getSelectionModel().getSelectedItem();
         try {
-            if (enteSelezionato == null) {
+            if (enteSelezionato == null)
                 throw new NullPointerException();
-            }
             Optional<ButtonType> result = showDeleteDialog();
             if (result.get() == ButtonType.OK) {
-                try {
-                    conferenza.removeEnte(enteSelezionato);
-                    checkAlmenoUnEnte();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                conferenza.removeEnte(enteSelezionato);
+                checkAlmenoUnEnte();
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
