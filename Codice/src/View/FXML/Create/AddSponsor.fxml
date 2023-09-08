@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <ButtonBar layoutX="716.0" layoutY="675.0" prefHeight="31.0" prefWidth="202.0" stylesheets="@../../CSS/NewStyle.css">
         <buttons>
@@ -45,19 +45,19 @@
          </font>
       </Label>
       <ChoiceBox fx:id="selezionaSponsorChoiceBox" layoutX="279.0" layoutY="100.0" prefHeight="26.0" prefWidth="423.0" stylesheets="@../../CSS/NewStyle.css" />
-      <ChoiceBox fx:id="valutaChoiceBox" layoutX="482.0" layoutY="154.0" prefHeight="37.0" prefWidth="54.0" stylesheets="@../../CSS/NewStyle.css" />
+      <ChoiceBox fx:id="valutaChoiceBox" layoutX="482.0" layoutY="154.0" prefHeight="35.0" prefWidth="54.0" stylesheets="@../../CSS/NewStyle.css" />
       <TextField fx:id="importoTextField" layoutX="279.0" layoutY="154.0" promptText="Inserisci importo" stylesheets="@../../CSS/NewStyle.css" />
       <Button fx:id="inserisciButton" layoutX="769.0" layoutY="100.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="40.0" prefWidth="134.0" stylesheets="@../../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="446.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="40.0" prefWidth="134.0" stylesheets="@../../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
+      <Button fx:id="rimuoviButton" layoutX="769.0" layoutY="210.0" mnemonicParsing="false" onAction="#rimuoviButtonOnAction" prefHeight="40.0" prefWidth="134.0" stylesheets="@../../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <TableView fx:id="sponsorTable" layoutX="14.0" layoutY="210.0" prefHeight="481.0" prefWidth="703.0">
+      <TableView fx:id="sponsorTable" layoutX="14.0" layoutY="210.0" prefHeight="465.0" prefWidth="703.0">
         <columns>
           <TableColumn fx:id="sponsorColumn" editable="false" prefWidth="262.0" resizable="false" sortable="false" text="Sponsor" />
           <TableColumn fx:id="contributoColumn" editable="false" prefWidth="195.0" resizable="false" sortable="false" text="Contributo" />
