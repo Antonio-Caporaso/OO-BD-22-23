@@ -2,6 +2,7 @@ package Model.DAO;
 
 import Model.DbConfig.DBConnection;
 import Model.Entities.partecipanti.Speaker;
+import Model.Utilities.Speakers;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -16,21 +17,23 @@ public class SpeakerDao {
         String query = "SELECT * FROM Speaker where id_speaker = ?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,id);
-        EnteDao dao = new EnteDao();
         ResultSet rs = stm.executeQuery();
+        Speaker speaker = new Speaker();
         while(rs.next()){
-            setSpeaker(sp, dao, rs);
+            speaker = getSpeaker(rs);
         }
-        return sp;
+        return speaker;
     }
-
-    private static void setSpeaker(Speaker sp, EnteDao dao, ResultSet rs) throws SQLException {
+    private Speaker getSpeaker(ResultSet rs) throws SQLException {
+        EnteDao dao = new EnteDao();
+        Speaker sp = new Speaker();
         sp.setIdSpeaker(rs.getInt("id_speaker"));
         sp.setNome(rs.getString("nome"));
         sp.setCognome(rs.getString("cognome"));
         sp.setTitolo(rs.getString("titolo"));
         sp.setIstituzione(dao.retrieveEnte(rs.getInt("id_ente")));
         sp.setEmail(rs.getString("email"));
+        return sp;
     }
 
     public LinkedList<Speaker> retreiveAllSpeakers() throws SQLException{
@@ -40,10 +43,9 @@ public class SpeakerDao {
         PreparedStatement stm = conn.prepareStatement(query);
         LinkedList<Speaker> speakers = new LinkedList<>();
         ResultSet rs  = stm.executeQuery();
-        EnteDao dao = new EnteDao();
         while(rs.next()){
-            Speaker speaker = new Speaker();
-            setSpeaker(speaker,dao,rs);
+            Speaker speaker = getSpeaker(rs);
+            speakers.add(speaker);
         }
         return speakers;
     }

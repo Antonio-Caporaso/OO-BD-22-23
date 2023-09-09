@@ -46,6 +46,15 @@ public class ModificaConferenze_Controller implements Initializable {
         this.user = user;
         this.subscene = subScene;
     }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            conferenze.loadConferenzeUtente(user);
+            setTableConferenze(conferenze.getConferenzeUtente());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FXML
     public void deleteOnAction(ActionEvent event) {
@@ -116,15 +125,7 @@ public class ModificaConferenze_Controller implements Initializable {
         this.user = user;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            conferenze.loadConferenzeUtente(user);
-            setTableConferenze(conferenze.getConferenze());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     private void setTableConferenze(ObservableList<Conferenza> c) throws SQLException {
         tableConferenza.setEditable(false);

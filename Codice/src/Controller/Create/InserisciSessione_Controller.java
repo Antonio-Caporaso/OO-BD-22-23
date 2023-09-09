@@ -1,10 +1,10 @@
 package Controller.Create;
 
+import Exceptions.BlankFieldException;
 import Exceptions.DateMismatchException;
+import Exceptions.SediNonDisponibiliException;
 import Exceptions.SessionePresenteException;
 import Interfaces.FormChecker;
-import Exceptions.BlankFieldException;
-import Exceptions.SediNonDisponibiliException;
 import Model.DAO.SessioneDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sala;
@@ -22,7 +22,6 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import org.postgresql.util.PSQLException;
 import tornadofx.control.DateTimePicker;
 
 import java.net.URL;
@@ -39,9 +38,9 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
     @FXML
     private DateTimePicker fineDateTimePicker;
     @FXML
-    private DateTimePicker inizioDateTimePicker;
-    @FXML
     private ImageView fineSessioneAboutImage;
+    @FXML
+    private DateTimePicker inizioDateTimePicker;
     @FXML
     private ImageView inizioSessioneAboutImage;
     @FXML
@@ -66,8 +65,8 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             loadCoordinatoreChoiceBox();
-            Tooltip.install(inizioSessioneAboutImage,new Tooltip("L'inizio della conferenza è: "+conferenza.getInizio()));
-            Tooltip.install(fineSessioneAboutImage,new Tooltip("La fine della conferenza è: "+conferenza.getFine()));
+            Tooltip.install(inizioSessioneAboutImage, new Tooltip("L'inizio della conferenza è: " + conferenza.getInizio()));
+            Tooltip.install(fineSessioneAboutImage, new Tooltip("La fine della conferenza è: " + conferenza.getFine()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -108,13 +107,18 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
     private void loadViewSessioni(Conferenza c) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/VisualizzaSessioniConferenza.fxml"));
-            VisualizzaSessioniConferenza_Controller controller = new VisualizzaSessioniConferenza_Controller(subscene,c,user);
+            VisualizzaSessioniConferenza_Controller controller = new VisualizzaSessioniConferenza_Controller(subscene, c, user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveSessione(Sessione s) throws SQLException {
+        SessioneDao sessioneDao = new SessioneDao();
+        s.setId_sessione(sessioneDao.saveSessione(s));
     }
 
     private Sessione setSessione() {
@@ -143,7 +147,7 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
             saveSessione(s);
             openAddSessioneDialogWindow();
             loadViewSessioni(conferenza);
-        }catch (DateMismatchException e){
+        } catch (DateMismatchException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
@@ -158,11 +162,6 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
             alert.setHeaderText(e.getMessage());
             alert.showAndWait();
         }
-    }
-
-    private void saveSessione(Sessione s) throws SQLException {
-        SessioneDao sessioneDao = new SessioneDao();
-        s.setId_sessione(sessioneDao.saveSessione(s));
     }
 
     @FXML

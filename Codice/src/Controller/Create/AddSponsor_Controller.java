@@ -19,24 +19,18 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import org.postgresql.util.PSQLException;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddSponsor_Controller implements Initializable {
     private Conferenza conferenza;
-    private Sponsors sponsors = new Sponsors();
-    @FXML
-    private SubScene subscene;
-    private Utente user;
-    @FXML
-    private HBox hBox;
     @FXML
     private TableColumn<Sponsorizzazione, Float> contributoColumn;
+    @FXML
+    private HBox hBox;
     @FXML
     private TextField importoTextField;
     @FXML
@@ -51,6 +45,10 @@ public class AddSponsor_Controller implements Initializable {
     private TableColumn<Sponsorizzazione, String> sponsorColumn;
     @FXML
     private TableView<Sponsorizzazione> sponsorTable;
+    private Sponsors sponsors = new Sponsors();
+    @FXML
+    private SubScene subscene;
+    private Utente user;
     @FXML
     private ChoiceBox<String> valutaChoiceBox;
     @FXML
@@ -70,17 +68,15 @@ public class AddSponsor_Controller implements Initializable {
         setSponsorizzazioniTable();
     }
 
-    private void loadVisualizzaSessioni() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/VisualizzaSessioniConferenza.fxml"));
-            VisualizzaSessioniConferenza_Controller controller = new VisualizzaSessioniConferenza_Controller(subscene, conferenza, user);
-            controller.setAddSponsorController(this);
-            loader.setController(controller);
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private Sponsorizzazione getSponsorshipDetails() throws BlankFieldException, NumberFormatException {
+        Sponsor sponsorSelezionato = selezionaSponsorChoiceBox.getSelectionModel().getSelectedItem();
+
+        if (sponsorSelezionato == null || importoTextField.getText().isEmpty() || valutaChoiceBox.getSelectionModel().isEmpty())
+            throw new BlankFieldException();
+
+        double contributo = Double.parseDouble(importoTextField.getText());
+        String valuta = valutaChoiceBox.getValue();
+        return new Sponsorizzazione(sponsorSelezionato, conferenza, contributo, valuta);
     }
 
     private void loadMembriComitati() {
@@ -95,13 +91,17 @@ public class AddSponsor_Controller implements Initializable {
         }
     }
 
-    protected void setSponsorizzazioniTable() {
-        sponsorTable.setEditable(false);
-        //conferenza.loadSponsorizzazioni();
-        sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
-        contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
-        valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
-        sponsorTable.setItems(conferenza.getSponsorizzazioni());
+    private void loadVisualizzaSessioni() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/VisualizzaSessioniConferenza.fxml"));
+            VisualizzaSessioniConferenza_Controller controller = new VisualizzaSessioniConferenza_Controller(subscene, conferenza, user);
+            controller.setAddSponsorController(this);
+            loader.setController(controller);
+            Parent root = loader.load();
+            subscene.setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setValute() {
@@ -122,6 +122,15 @@ public class AddSponsor_Controller implements Initializable {
         return result;
     }
 
+    protected void setSponsorizzazioniTable() {
+        sponsorTable.setEditable(false);
+        //conferenza.loadSponsorizzazioni();
+        sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
+        contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
+        valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
+        sponsorTable.setItems(conferenza.getSponsorizzazioni());
+    }
+
     @FXML
     void backButtonOnAction(ActionEvent event) {
         loadMembriComitati();
@@ -136,7 +145,7 @@ public class AddSponsor_Controller implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Questo sponsor è già presente!");
             alert.showAndWait();
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Inserire un valore valido per il contributo della sponsorizzazione.");
             alert.showAndWait();
@@ -147,21 +156,11 @@ public class AddSponsor_Controller implements Initializable {
         }
     }
 
-    private Sponsorizzazione getSponsorshipDetails() throws BlankFieldException, NumberFormatException {
-        Sponsor sponsorSelezionato = selezionaSponsorChoiceBox.getSelectionModel().getSelectedItem();
-
-        if (sponsorSelezionato == null || importoTextField.getText().isEmpty() || valutaChoiceBox.getSelectionModel().isEmpty())
-            throw new BlankFieldException();
-
-        double contributo = Double.parseDouble(importoTextField.getText());
-        String valuta = valutaChoiceBox.getValue();
-        return new Sponsorizzazione(sponsorSelezionato, conferenza, contributo, valuta);
-    }
-
     @FXML
     void nextOnAction(ActionEvent event) {
         loadVisualizzaSessioni();
     }
+
     @FXML
     void rimuoviButtonOnAction(ActionEvent event) {
         try {
@@ -171,8 +170,8 @@ public class AddSponsor_Controller implements Initializable {
             }
             Optional<ButtonType> result = showDeleteDialog();
             if (result.get() == ButtonType.OK) {
-                    conferenza.removeSponsorizzazione(sp);
-                    setSponsorizzazioniTable();
+                conferenza.removeSponsorizzazione(sp);
+                setSponsorizzazioniTable();
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

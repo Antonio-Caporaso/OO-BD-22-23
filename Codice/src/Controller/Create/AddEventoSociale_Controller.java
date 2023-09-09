@@ -30,17 +30,17 @@ import java.util.ResourceBundle;
 
 public class AddEventoSociale_Controller implements Initializable {
     @FXML
-    private HBox hBox;
-    @FXML
-    private AnchorPane popUpWindowAnchor;
-    @FXML
     private Button cancelButton;
     @FXML
     private Button confirmaButton;
     @FXML
+    private HBox hBox;
+    @FXML
     private Spinner<Integer> minutiSpinner;
     @FXML
     private Spinner<Integer> oreSpinner;
+    @FXML
+    private AnchorPane popUpWindowAnchor;
     private Programma programma;
     @FXML
     private TextField titoloTextField;
@@ -58,7 +58,7 @@ public class AddEventoSociale_Controller implements Initializable {
 
     //Private Methods
     private void loadExceptionWindow(String message) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
             Parent root = loader.load();
             ExceptionWindow_Controller controller = loader.getController();

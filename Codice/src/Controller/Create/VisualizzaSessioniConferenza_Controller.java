@@ -20,7 +20,6 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import jfxtras.scene.layout.HBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +29,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class VisualizzaSessioniConferenza_Controller implements Initializable {
+    private AddSponsor_Controller addSponsorController;
     @FXML
     private Button aggiungiProgrammaButton;
     @FXML
@@ -44,18 +44,17 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     @FXML
     private Button inserisciButton;
     @FXML
-    private Button saveButton;
-    @FXML
     private Button rimuoviButton;
     @FXML
     private TableColumn<Sessione, Sala> salaTableColumn;
+    @FXML
+    private Button saveButton;
     @FXML
     private TableView<Sessione> sessioniTableView;
     @FXML
     private SubScene subscene;
     @FXML
     private TableColumn<Sessione, String> titoloTableColumn;
-    private AddSponsor_Controller addSponsorController;
     private Utente user;
 
     public VisualizzaSessioniConferenza_Controller(SubScene subscene, Conferenza conferenza, Utente user) {
@@ -68,6 +67,29 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setSessioni();
         checkAlmenoUnaSessione();
+    }
+
+    public void setAddSponsorController(AddSponsor_Controller addSponsorController) {
+        this.addSponsorController = addSponsorController;
+    }
+
+    private void checkAlmenoUnaSessione() {
+        aggiungiProgrammaButton.setDisable(sessioniTableView.getItems().isEmpty());
+    }
+
+    private void deleteConference() throws SQLException {
+        ConferenzaDao dao = new ConferenzaDao();
+        dao.deleteConferenza(conferenza);
+    }
+
+    private void goToLandingWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Landing.fxml"));
+        Landing_Controller controller = new Landing_Controller(user);
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene landingScene = new Scene(root);
+        Stage stage = (Stage) saveButton.getScene().getWindow();
+        stage.setScene(landingScene);
     }
 
     private void loadAggiungiSponsor() {
@@ -85,7 +107,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     private void loadEditConferenza() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
-            ModificaConferenza_Controller controller = new ModificaConferenza_Controller(conferenza,subscene,user);
+            ModificaConferenza_Controller controller = new ModificaConferenza_Controller(conferenza, subscene, user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -126,6 +148,21 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         }
     }
 
+    private void saveConference() throws SQLException {
+        saveSponsorships();
+        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+        alert1.setContentText("Conferenza aggiunta correttamente");
+        alert1.showAndWait();
+        loadEditConferenza();
+    }
+
+    private void saveSponsorships() throws SQLException {
+        for (Sponsorizzazione sp : conferenza.getSponsorizzazioni()) {
+            SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+            dao.saveSponsorizzazione(sp);
+        }
+    }
+
     private void setSessioni() {
         try {
             conferenza.loadSessioni();
@@ -146,9 +183,6 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
-    private void checkAlmenoUnaSessione(){
-        aggiungiProgrammaButton.setDisable(sessioniTableView.getItems().isEmpty());
-    }
 
     //Button Methods
     @FXML
@@ -161,41 +195,11 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Sicuro di voler salvare la conferenza ?");
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.get() == ButtonType.OK)
+        if (result.get() == ButtonType.OK)
             saveConference();
         else
             deleteConference();
         goToLandingWindow();
-    }
-
-    private void deleteConference() throws SQLException {
-        ConferenzaDao dao = new ConferenzaDao();
-        dao.deleteConferenza(conferenza);
-    }
-
-    private void saveConference() throws SQLException {
-        saveSponsorships();
-        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-        alert1.setContentText("Conferenza aggiunta correttamente");
-        alert1.showAndWait();
-        loadEditConferenza();
-    }
-
-    private void saveSponsorships() throws SQLException {
-        for(Sponsorizzazione sp : conferenza.getSponsorizzazioni()){
-            SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-            dao.saveSponsorizzazione(sp);
-        }
-    }
-
-    private void goToLandingWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Landing.fxml"));
-        Landing_Controller controller = new Landing_Controller(user);
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene landingScene = new Scene(root);
-        Stage stage = (Stage) saveButton.getScene().getWindow();
-        stage.setScene(landingScene);
     }
 
     @FXML
@@ -228,18 +232,14 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
             }
             Optional<ButtonType> result = showDeleteDialog();
             if (result.get() == ButtonType.OK) {
-                    conferenza.removeSessione(selected);
-                    setSessioni();
-                    checkAlmenoUnaSessione();
+                conferenza.removeSessione(selected);
+                setSessioni();
+                checkAlmenoUnaSessione();
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Nessuna sessione è stata selezionata");
             alert.showAndWait();
         }
-    }
-
-    public void setAddSponsorController(AddSponsor_Controller addSponsorController) {
-        this.addSponsorController = addSponsorController;
     }
 }

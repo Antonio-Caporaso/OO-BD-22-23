@@ -8,7 +8,6 @@ import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sede;
 import Model.Entities.Utente;
 import Model.Utilities.Conferenze;
-import Model.Utilities.ConferenzeUtente;
 import Model.Utilities.Sedi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +17,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tornadofx.control.DateTimePicker;
 
@@ -30,12 +28,11 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AddConference_Controller implements Initializable, FormChecker {
-    private Conferenze conference = new Conferenze();
-    private Sedi sedi = new Sedi();
     @FXML
     private Button annullaButton;
     @FXML
     private Button avantiButton;
+    private Conferenze conference = new Conferenze();
     private Conferenza conferenza;
     @FXML
     private DateTimePicker dataFineDP;
@@ -43,11 +40,11 @@ public class AddConference_Controller implements Initializable, FormChecker {
     private DateTimePicker dataInizioDP;
     @FXML
     private TextArea descrizioneTextArea;
-    private String nome;
     @FXML
     private TextField nomeConferenzaTF;
     @FXML
     private ChoiceBox<Sede> sedeChoice;
+    private Sedi sedi = new Sedi();
     @FXML
     private SubScene subscene;
     private Utente user;
@@ -56,7 +53,15 @@ public class AddConference_Controller implements Initializable, FormChecker {
         this.subscene = subscene;
         this.user = user;
     }
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            sedi.loadSedi();
+            sedeChoice.setItems(sedi.getSedi());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @FXML
     public void avantiButtonOnAction(ActionEvent event) {
         try {
@@ -75,12 +80,6 @@ public class AddConference_Controller implements Initializable, FormChecker {
         }
     }
 
-    private void saveConferenza(Conferenza conferenza) throws SQLException {
-        ConferenzaDao d = new ConferenzaDao();
-        int id = d.saveConferenza(conferenza);
-        conferenza.setId_conferenza(id);
-    }
-
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
         if (nomeConferenzaTF.getText().isBlank()
@@ -97,16 +96,6 @@ public class AddConference_Controller implements Initializable, FormChecker {
 
     public void setUser(Utente user) {
         this.user = user;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            sedi.loadSedi();
-            sedeChoice.setItems(sedi.getSedi());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void openAddedConferenceDialogWindow() {
@@ -155,6 +144,12 @@ public class AddConference_Controller implements Initializable, FormChecker {
         Timestamp dataF = Timestamp.valueOf(dataFselected);
         Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
         return new Conferenza(nome, dataI, dataF, descrizione, sede, user);
+    }
+
+    private void saveConferenza(Conferenza conferenza) throws SQLException {
+        ConferenzaDao d = new ConferenzaDao();
+        int id = d.saveConferenza(conferenza);
+        conferenza.setId_conferenza(id);
     }
 
     private void showAlert(Exception e) {

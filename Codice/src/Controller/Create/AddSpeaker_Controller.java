@@ -5,6 +5,7 @@ import Model.DAO.SpeakerDao;
 import Model.Entities.organizzazione.Ente;
 import Model.Entities.partecipanti.Speaker;
 import Model.Utilities.Enti;
+import Model.Utilities.Speakers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,29 +32,25 @@ import java.util.ResourceBundle;
 public class AddSpeaker_Controller implements Initializable {
 
     @FXML
+    private Button cancelButton;
+    private Speakers speakers;
+    @FXML
+    private TextField cognomeTextField;
+    @FXML
+    private Button confirmaButton;
+    @FXML
+    private TextField emailtextField;
+    @FXML
+    private ChoiceBox<Ente> enteChoiceBox;
+    @FXML
     private HBox hBox;
+    @FXML
+    private TextField nomeTextField;
     @FXML
     private AnchorPane popUpWindowAnchor;
     @FXML
-    private Button cancelButton;
-
-    @FXML
-    private TextField cognomeTextField;
-
-    @FXML
-    private Button confirmaButton;
-
-    @FXML
-    private TextField emailtextField;
-
-    @FXML
-    private ChoiceBox<Ente> enteChoiceBox;
-
-    @FXML
-    private TextField nomeTextField;
-
-    @FXML
     private ChoiceBox<String> titoloChoiceBox;
+    double x, y;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,7 +66,7 @@ public class AddSpeaker_Controller implements Initializable {
     }
 
     private void loadExceptionWindow(String message) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
             Parent root = loader.load();
             ExceptionWindow_Controller controller = loader.getController();
@@ -87,7 +84,6 @@ public class AddSpeaker_Controller implements Initializable {
             e.printStackTrace();
         }
     }
-    double x, y;
 
     @FXML
     void cancelButtonOnAction(ActionEvent event) {
@@ -97,25 +93,33 @@ public class AddSpeaker_Controller implements Initializable {
 
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
-        Speaker speaker = new Speaker();
         SpeakerDao speakerDao = new SpeakerDao();
-        speaker.setNome(nomeTextField.getText());
-        speaker.setCognome(cognomeTextField.getText());
-        speaker.setIstituzione(enteChoiceBox.getSelectionModel().getSelectedItem());
-        speaker.setTitolo(titoloChoiceBox.getSelectionModel().getSelectedItem());
-        speaker.setEmail(emailtextField.getText());
+        Speaker speaker = getSpeaker();
         try {
             int id = speakerDao.createSpeaker(speaker);
             speaker.setIdSpeaker(id);
+            speakers.addSpeaker(speaker);
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         } catch (SQLException e) {
             e.printStackTrace();
             loadExceptionWindow(e.getMessage());
         }
-
     }
 
+    private Speaker getSpeaker() {
+        Speaker speaker = new Speaker();
+        speaker.setNome(nomeTextField.getText());
+        speaker.setCognome(cognomeTextField.getText());
+        speaker.setIstituzione(enteChoiceBox.getSelectionModel().getSelectedItem());
+        speaker.setTitolo(titoloChoiceBox.getSelectionModel().getSelectedItem());
+        speaker.setEmail(emailtextField.getText());
+        return speaker;
+    }
+
+    protected void setSpeakers(Speakers speakers){
+        this.speakers = speakers;
+    }
     @FXML
     void dragged(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

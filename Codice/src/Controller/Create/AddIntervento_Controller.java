@@ -1,10 +1,12 @@
 package Controller.Create;
 
 import Controller.ExceptionWindow_Controller;
+import Exceptions.BlankFieldException;
 import Model.DAO.SpeakerDao;
 import Model.Entities.Conferenze.Intervento;
 import Model.Entities.Conferenze.Programma;
 import Model.Entities.partecipanti.Speaker;
+import Model.Utilities.Speakers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,26 +33,23 @@ import java.util.ResourceBundle;
 
 public class AddIntervento_Controller implements Initializable {
     @FXML
-    private HBox hBox;
-    @FXML
-    private AnchorPane popUpWindowAnchor;
-    @FXML
     private TextArea abstractTextArea;
     @FXML
     private Button addSpeakerButton;
     @FXML
     private Button cancelButton;
     @FXML
-    private Button confirmaButton;
-    @FXML
     private Spinner<Integer> minutiSpinner;
     @FXML
     private Spinner<Integer> oreSpinner;
+    @FXML
+    private AnchorPane popUpWindowAnchor;
     private Programma programma;
     @FXML
     private ChoiceBox<Speaker> speakerChoiceBox;
     @FXML
     private TextField titoloTextField;
+    private Speakers speakers = new Speakers();
     private double x, y;
 
     public AddIntervento_Controller(Programma programma) {
@@ -66,14 +65,16 @@ public class AddIntervento_Controller implements Initializable {
 
     private void loadAddSpeaker() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/AddSpeaker_Create.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddSpeaker.fxml"));
+            AddSpeaker_Controller controller = new AddSpeaker_Controller();
+            controller.setSpeakers(speakers);
             Parent root = loader.load();
-            AddSpeaker_Controller controller = loader.getController();
             Stage stage = new Stage();
             Scene scene = new Scene(root, 527, 498);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
+            /*stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);*/
+            stage.setTitle("Aggiunta nuovo speaker");
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
@@ -85,7 +86,7 @@ public class AddIntervento_Controller implements Initializable {
     }
 
     private void loadExceptionWindow(String message) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
             Parent root = loader.load();
             ExceptionWindow_Controller controller = loader.getController();
@@ -116,13 +117,13 @@ public class AddIntervento_Controller implements Initializable {
 
     //Private Methods
     private void setSpeakerChoiceBox() {
-        SpeakerDao speaker = new SpeakerDao();
         try {
-            ObservableList<Speaker> speakers = FXCollections.observableArrayList();
-            speakers.setAll(speaker.retreiveAllSpeakers());
-            speakerChoiceBox.setItems(speakers);
-        } catch (SQLException e) {
-            loadExceptionWindow(e.getMessage());
+            speakers.loadSpeakers();
+            speakerChoiceBox.setItems(speakers.getSpeakers());
+        }catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
@@ -135,20 +136,31 @@ public class AddIntervento_Controller implements Initializable {
 
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
-        Intervento intervento = new Intervento();
-        intervento.setSpeaker(speakerChoiceBox.getSelectionModel().getSelectedItem());
-        intervento.setProgramma(programma);
-        intervento.setEstratto(abstractTextArea.getText());
-        intervento.setTitolo(titoloTextField.getText());
         try {
+            Intervento intervento = getIntervento();
             PGInterval durata = new PGInterval(0, 0, 0, oreSpinner.getValue(), minutiSpinner.getValue(), 0);
             programma.addIntervento(intervento, durata);
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
+        } catch (BlankFieldException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         } catch (SQLException e) {
             loadExceptionWindow(e.getMessage());
         }
+    }
+
+    private Intervento getIntervento() throws BlankFieldException {
+        Intervento intervento = new Intervento();
+        if( speakerChoiceBox.getSelectionModel().isEmpty() || abstractTextArea.getText().isEmpty() || titoloTextField.getText().isEmpty())
+            throw new BlankFieldException();
+        intervento.setSpeaker(speakerChoiceBox.getSelectionModel().getSelectedItem());
+        intervento.setProgramma(programma);
+        intervento.setEstratto(abstractTextArea.getText());
+        intervento.setTitolo(titoloTextField.getText());
+        return intervento;
     }
 
     @FXML

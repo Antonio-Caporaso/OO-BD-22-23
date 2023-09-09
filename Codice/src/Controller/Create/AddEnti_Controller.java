@@ -3,7 +3,6 @@ package Controller.Create;
 import Controller.Edit.ModificaConferenza_Controller;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.EntePresenteException;
-import Model.DAO.ConferenzaDao;
 import Model.DAO.EnteDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
@@ -31,8 +30,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddEnti_Controller implements Initializable {
-    private Enti enti = new Enti();
     private Conferenza conferenza;
+    private Enti enti = new Enti();
     @FXML
     private ChoiceBox<Ente> entiChoiceBox;
     @FXML
@@ -74,11 +73,10 @@ public class AddEnti_Controller implements Initializable {
         nextButton.setDisable(entiListView.getItems().isEmpty());
     }
 
-    //Private Methods
-    private void goToAddComitatiWindow() {
+    private void goBackToEditConferenza() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddComitati.fxml"));
-            AddComitati_Controller controller = new AddComitati_Controller(subscene, conferenza, user);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
+            ModificaConferenza_Controller controller = new ModificaConferenza_Controller(conferenza, subscene, user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -87,10 +85,11 @@ public class AddEnti_Controller implements Initializable {
         }
     }
 
-    private void goBackToEditConferenza() {
+    //Private Methods
+    private void goToAddComitatiWindow() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
-            ModificaConferenza_Controller controller = new ModificaConferenza_Controller(conferenza, subscene, user);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddComitati.fxml"));
+            AddComitati_Controller controller = new AddComitati_Controller(subscene, conferenza, user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -116,6 +115,14 @@ public class AddEnti_Controller implements Initializable {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void saveEnti() throws SQLException {
+        EnteDao dao = new EnteDao();
+        for (Ente ente : conferenza.getEnti()) {
+            System.out.println("ente:" + ente.getId_ente() + " conference: " + conferenza.getId_conferenza());
+            dao.saveEnteOrganizzatore(ente, conferenza);
         }
     }
 
@@ -178,16 +185,8 @@ public class AddEnti_Controller implements Initializable {
         try {
             saveEnti();
             goToAddComitatiWindow();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void saveEnti() throws SQLException {
-        EnteDao dao = new EnteDao();
-        for(Ente ente : conferenza.getEnti()){
-            System.out.println("ente:"+ente.getId_ente()+" conference: "+conferenza.getId_conferenza());
-            dao.saveEnteOrganizzatore(ente,conferenza);
         }
     }
 

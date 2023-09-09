@@ -33,39 +33,44 @@ import java.util.ResourceBundle;
 
 public class AddIntervallo_Controller implements Initializable {
     @FXML
-    private HBox hBox;
-    @FXML
-    private AnchorPane popUpWindowAnchor;
-    @FXML
     private Button cancelButton;
     @FXML
     private Button confirmaButton;
     @FXML
+    private HBox hBox;
+    @FXML
     private Spinner<Integer> minutiSpinner;
     @FXML
     private Spinner<Integer> oreSpinner;
+    @FXML
+    private AnchorPane popUpWindowAnchor;
     private Programma programma;
     @FXML
     private ChoiceBox<String> tipologiaChoiceBox;
     private double x, y;
+
     public AddIntervallo_Controller(Programma programma) {
         this.programma = programma;
     }
+
     //Public Setters
     public Programma getProgramma() {
         return programma;
     }
+
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
+
     //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setTipologiaChoiceBox();
         loadSpinners();
     }
+
     private void loadExceptionWindow(String message) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
             Parent root = loader.load();
             ExceptionWindow_Controller controller = loader.getController();
@@ -83,6 +88,7 @@ public class AddIntervallo_Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
     private void loadSpinners() {
         // Configurazione oreSpinner
         SpinnerValueFactory<Integer> oreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24, 0);
@@ -92,6 +98,7 @@ public class AddIntervallo_Controller implements Initializable {
         SpinnerValueFactory<Integer> minutiValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0);
         minutiSpinner.setValueFactory(minutiValueFactory);
     }
+
     //Private Methods
     private void setTipologiaChoiceBox() {
         LinkedList<String> tipologieLinkedList = new LinkedList<>();
@@ -101,12 +108,14 @@ public class AddIntervallo_Controller implements Initializable {
         tipologieObservableList.setAll(tipologieLinkedList);
         tipologiaChoiceBox.setItems(tipologieObservableList);
     }
+
     //ActionEvent Methods
     @FXML
     void cancelButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
         Intervallo intervallo = new Intervallo();

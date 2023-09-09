@@ -13,32 +13,22 @@ public class Speakers {
     public Speakers() {
         speakers = FXCollections.observableArrayList();
     }
-
-    public void getSpeakerById(int id) {
-        SpeakerDao dao = new SpeakerDao();
-        try {
-            dao.retrieveSpeakerByID(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public ObservableList<Speaker> getSpeakers() {
         return speakers;
     }
-
     public void setSpeakers(ObservableList<Speaker> speakers) {
         this.speakers = speakers;
     }
-
-    public void loadSpeakers() {
+    public void loadSpeakers() throws SQLException {
         SpeakerDao dao = new SpeakerDao();
-        try {
-            speakers.clear();
-            speakers.addAll(dao.retreiveAllSpeakers());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        speakers.clear();
+        speakers.addAll(dao.retreiveAllSpeakers());
+    }
+    public void addSpeaker(Speaker speaker) throws SQLException {
+        SpeakerDao dao = new SpeakerDao();
+        if(!speakers.contains(speaker)){
+            dao.createSpeaker(speaker);
+            speakers.add(speaker);
         }
     }
 }
