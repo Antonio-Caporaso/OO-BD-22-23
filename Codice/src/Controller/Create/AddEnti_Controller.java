@@ -121,7 +121,6 @@ public class AddEnti_Controller implements Initializable {
     private void saveEnti() throws SQLException {
         EnteDao dao = new EnteDao();
         for (Ente ente : conferenza.getEnti()) {
-            System.out.println("ente:" + ente.getId_ente() + " conference: " + conferenza.getId_conferenza());
             dao.saveEnteOrganizzatore(ente, conferenza);
         }
     }
