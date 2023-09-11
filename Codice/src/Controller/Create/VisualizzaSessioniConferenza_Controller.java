@@ -149,19 +149,12 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     }
 
     private void saveConference() throws SQLException {
-        saveSponsorships();
         Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
         alert1.setContentText("Conferenza aggiunta correttamente");
         alert1.showAndWait();
         loadEditConferenza();
     }
 
-    private void saveSponsorships() throws SQLException {
-        for (Sponsorizzazione sp : conferenza.getSponsorizzazioni()) {
-            SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-            dao.saveSponsorizzazione(sp);
-        }
-    }
 
     private void setSessioni() {
         try {
