@@ -104,7 +104,7 @@ public class VisualizzaSessione_Controller implements Initializable {
 
     @FXML
     void fineButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/VisualizzaConferenza.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/VisualizzaConferenza.fxml"));
         loader.setController(visualizzaConferenzaController);
         subScene.setRoot(loader.load());
     }
@@ -124,7 +124,7 @@ public class VisualizzaSessione_Controller implements Initializable {
 
     private void loadInfoIntervento(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/View/ShowInfoIntervento.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervento.fxml"));
             ShowInfoIntervento_Controller controller = new ShowInfoIntervento_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);
@@ -146,7 +146,7 @@ public class VisualizzaSessione_Controller implements Initializable {
     }
     private void loadInfoIntervallo(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/View/ShowInfoIntervallo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervallo.fxml"));
             ShowInfoIntervallo_Controller controller = new ShowInfoIntervallo_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);
@@ -169,7 +169,7 @@ public class VisualizzaSessione_Controller implements Initializable {
     }
     private void loadInfoEventoSociale(ActivityModel activityModel){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/View/ShowInfoEventoSociale.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoEventoSociale.fxml"));
             ShowInfoEventoSociale_Controller controller = new ShowInfoEventoSociale_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);

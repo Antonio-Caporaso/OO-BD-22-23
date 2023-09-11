@@ -49,11 +49,15 @@ public class ModificaConferenze_Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            conferenze.loadConferenzeUtente(user);
-            setTableConferenze(conferenze.getConferenzeUtente());
+            loadConferenzeUtente();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void loadConferenzeUtente() throws SQLException {
+        conferenze.loadConferenzeUtente(user);
+        setTableConferenze(conferenze.getConferenzeUtente());
     }
 
     @FXML
@@ -87,14 +91,7 @@ public class ModificaConferenze_Controller implements Initializable {
                 Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
                 if (c == null)
                     throw new NullPointerException();
-                ModificaConferenza_Controller controller = new ModificaConferenza_Controller(c,subscene,user);
-                loader.setController(controller);
-                controller.setConferenza(c);
-                controller.setSubscene(subscene);
-                controller.setGestioneConferenzeController(this);
-                controller.setUser(user);
-                Parent root = loader.load();
-                subscene.setRoot(root);
+                goToEditConferenceWindow(c, loader);
             } catch (NullPointerException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Nessuna conferenza selezionata");
@@ -103,6 +100,17 @@ public class ModificaConferenze_Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void goToEditConferenceWindow(Conferenza c, FXMLLoader loader) throws IOException {
+        ModificaConferenza_Controller controller = new ModificaConferenza_Controller(c,subscene,user);
+        loader.setController(controller);
+        controller.setConferenza(c);
+        controller.setSubscene(subscene);
+        controller.setGestioneConferenzeController(this);
+        controller.setUser(user);
+        Parent root = loader.load();
+        subscene.setRoot(root);
     }
 
     public void eliminaConferenza(Conferenza c) throws SQLException {

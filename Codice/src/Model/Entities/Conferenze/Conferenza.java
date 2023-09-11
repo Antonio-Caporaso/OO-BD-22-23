@@ -64,9 +64,16 @@ public class Conferenza {
         sessioni = FXCollections.observableArrayList();
     }
 
-    public void addEnte(Ente e) throws EntePresenteException {
-        if (!enti.contains(e))
-            enti.add(e);
+    public void addEnte(Ente ente) throws EntePresenteException {
+        if (!enti.contains(ente)){
+            try{
+                EnteDao enteDao = new EnteDao();
+                ente.setID(enteDao.saveEnteOrganizzatore(ente,this));
+                enti.add(ente);
+            } catch (SQLException exception){
+                exception.printStackTrace();
+            }
+        }
         else
             throw new EntePresenteException();
     }
@@ -74,16 +81,29 @@ public class Conferenza {
     public void addSessione(Sessione sessione) throws SessionePresenteException, DateMismatchException{
         if(!(sessioni.contains(sessione))) {
             if(!(sessione.getInizio().before(inizio) || sessione.getFine().after(fine))){
-                sessioni.add(sessione);
+                try{
+                    SessioneDao sessioneDao = new SessioneDao();
+                    sessione.setId_sessione(sessioneDao.saveSessione(sessione));
+                    sessioni.add(sessione);
+                } catch (SQLException exception){
+                    exception.printStackTrace();
+                }
             }
             else throw new DateMismatchException();
         }
         else throw new SessionePresenteException();
     }
 
-    public void addSponsorizzazione(Sponsorizzazione s) throws SponsorizzazionPresenteException {
-        if(!(sponsorizzazioni.contains(s)))
-            sponsorizzazioni.add(s);
+    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione) throws SponsorizzazionPresenteException {
+        if(!(sponsorizzazioni.contains(sponsorizzazione))) {
+            try {
+                SponsorizzazioneDAO sponsorizzazioneDAO = new SponsorizzazioneDAO();
+                sponsorizzazione.setId(sponsorizzazioneDAO.saveSponsorizzazione(sponsorizzazione));
+                sponsorizzazioni.add(sponsorizzazione);
+            }catch (SQLException exception){
+                exception.printStackTrace();
+            }
+        }
         else throw new SponsorizzazionPresenteException();
     }
 
@@ -154,7 +174,6 @@ public class Conferenza {
     public Sede getSede() {
         return sede;
     }
-
     public void setSede(Sede sede) {
         this.sede = sede;
     }
@@ -202,18 +221,38 @@ public class Conferenza {
     }
 
     public void removeEnte(Ente e) {
-        if(enti.contains(e))
-            enti.remove(e);
+        if(enti.contains(e)) {
+            try {
+                EnteDao dao = new EnteDao();
+                dao.removeEnteOrganizzatore(e,this);
+                enti.remove(e);
+            }catch (SQLException exception){
+                exception.printStackTrace();
+            }
+        }
     }
 
     public void removeSessione(Sessione sessione) {
-        if(sessioni.contains(sessione))
-            sessioni.remove(sessione);
+        if(sessioni.contains(sessione)) {
+            try {
+                SessioneDao sessioneDao = new SessioneDao();
+                sessioneDao.removeSessione(sessione);
+                sessioni.remove(sessione);
+            }catch (SQLException exception){
+                exception.printStackTrace();
+            }
+        }
     }
-
     public void removeSponsorizzazione(Sponsorizzazione s) {
-        if(sponsorizzazioni.contains(s))
-            sponsorizzazioni.remove(s);
+        if(sponsorizzazioni.contains(s)) {
+            try {
+                SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
+                dao.removeSponsorizzazione(s);
+                sponsorizzazioni.remove(s);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

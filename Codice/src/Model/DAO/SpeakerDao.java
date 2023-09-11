@@ -2,7 +2,6 @@ package Model.DAO;
 
 import Model.DbConfig.DBConnection;
 import Model.Entities.partecipanti.Speaker;
-import Model.Utilities.Speakers;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -59,7 +58,7 @@ public class SpeakerDao {
         stm.setString(2,s.getCognome());
         stm.setObject(3,s.getTitolo(), Types.OTHER);
         stm.setString(4,s.getEmail());
-        stm.setInt(5,s.getIstituzione().getId_ente());
+        stm.setInt(5,s.getIstituzione().getID());
         ResultSet rs = stm.executeQuery();
         int result = 0;
         while(rs.next()){

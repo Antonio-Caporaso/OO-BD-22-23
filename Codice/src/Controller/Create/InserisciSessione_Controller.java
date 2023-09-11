@@ -116,11 +116,6 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
         }
     }
 
-    private void saveSessione(Sessione s) throws SQLException {
-        SessioneDao sessioneDao = new SessioneDao();
-        s.setId_sessione(sessioneDao.saveSessione(s));
-    }
-
     private Sessione setSessione() {
         Sessione s = new Sessione();
         s.setConferenza(conferenza);
@@ -144,14 +139,13 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
             checkFieldsAreBlank();
             Sessione s = setSessione();
             conferenza.addSessione(s);
-            saveSessione(s);
             openAddSessioneDialogWindow();
             loadViewSessioni(conferenza);
         } catch (DateMismatchException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-        } catch (BlankFieldException | SQLException e) {
+        } catch (BlankFieldException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(e.getMessage());

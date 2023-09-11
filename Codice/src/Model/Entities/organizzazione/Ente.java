@@ -3,7 +3,7 @@ package Model.Entities.organizzazione;
 import java.util.Objects;
 
 public class Ente {
-    private int id_ente;
+    private int ID;
     private String nome;
     private String sigla;
 
@@ -15,7 +15,7 @@ public class Ente {
     }
 
     public Ente(int id, String nome, String sigla) {
-        this.id_ente = id;
+        this.ID = id;
         this.nome = nome;
         this.sigla = sigla;
     }
@@ -30,12 +30,12 @@ public class Ente {
         return Objects.equals(nome, ente.nome);
     }
 
-    public int getId_ente() {
-        return id_ente;
+    public int getID() {
+        return ID;
     }
 
-    public void setId_ente(int id_ente) {
-        this.id_ente = id_ente;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getNome() {

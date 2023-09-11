@@ -19,8 +19,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -118,8 +120,8 @@ public class ViewProgramma_Controller implements Initializable {
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Informazioni");
-            //stage.initStyle(StageStyle.TRANSPARENT);
-            //scene.setFill(Color.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
@@ -142,8 +144,8 @@ public class ViewProgramma_Controller implements Initializable {
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Aggiunta evento");
-            //stage.initStyle(StageStyle.TRANSPARENT);
-            //scene.setFill(Color.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
@@ -166,8 +168,8 @@ public class ViewProgramma_Controller implements Initializable {
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Aggiunta intervallo");
-            //stage.initStyle(StageStyle.TRANSPARENT);
-            //scene.setFill(Color.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
@@ -189,8 +191,6 @@ public class ViewProgramma_Controller implements Initializable {
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Aggiunta intervento");
-            //stage.initStyle(StageStyle.TRANSPARENT);
-            //scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
@@ -214,8 +214,6 @@ public class ViewProgramma_Controller implements Initializable {
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Informazioni");
-            //stage.initStyle(StageStyle.TRANSPARENT);
-            //scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
@@ -238,8 +236,6 @@ public class ViewProgramma_Controller implements Initializable {
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Informazioni");
-            //stage.initStyle(StageStyle.TRANSPARENT);
-            //scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);

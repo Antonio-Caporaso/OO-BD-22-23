@@ -1,6 +1,7 @@
 package Controller.Edit;
 
 import Exceptions.EntePresenteException;
+import Model.DAO.EnteDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.organizzazione.Ente;
 import Model.Utilities.Enti;
@@ -27,7 +28,7 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
     @FXML
     private Button deleteButton;
     private ModificaConferenza_Controller editController;
-    private final Enti enti = new Enti();
+    private Enti enti = new Enti();
     @FXML
     private ChoiceBox<Ente> entiChoice;
     @FXML
@@ -47,7 +48,13 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadEntiChoiceBox();
         setEntiTable();
+    }
+
+    private void loadEntiChoiceBox() {
+        enti.loadEnti();
+        entiChoice.setItems(enti.getEnti());
     }
 
     private void setEntiTable() {
@@ -85,5 +92,4 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
         Parent root = loader.load();
         subScene.setRoot(root);
     }
-
 }

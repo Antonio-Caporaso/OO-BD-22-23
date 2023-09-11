@@ -226,7 +226,7 @@ public class VisualizzaConferenza_Controller implements Initializable {
 
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/VisualizzaConferenze.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/VisualizzaConferenze.fxml"));
         loader.setController(visualizzaConferenzeController);
         Parent root = loader.load();
         subScene.setRoot(root);
@@ -236,7 +236,7 @@ public class VisualizzaConferenza_Controller implements Initializable {
     void viewSessione(MouseEvent event) {
         try {
             Sessione s = sessioniTable.getSelectionModel().getSelectedItem();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/VisualizzaSessione.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/VisualizzaSessione.fxml"));
             VisualizzaSessione_Controller controller = new VisualizzaSessione_Controller(s, subScene, this);
             loader.setController(controller);
             Parent root = loader.load();

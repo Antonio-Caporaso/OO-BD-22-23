@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import tornadofx.control.DateTimePicker;
@@ -29,19 +30,15 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class AddSessione_Controller implements Initializable, FormChecker {
-    @FXML
-    private Button annullaButton;
-    @FXML
-    private Button avantiButton;
     private Conferenza conferenza;
+    @FXML
+    private ImageView inizioSessioneAboutImage;
+    @FXML
+    private ImageView fineSessioneAboutImage;
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
     @FXML
-    private Label fineConferenzaLabel;
-    @FXML
     private DateTimePicker fineDateTimePicker;
-    @FXML
-    private Label inizioConferenzaLabel;
     @FXML
     private DateTimePicker inizioDateTimePicker;
     private ModificaSessioni_Controller modificaSessioniController;
@@ -77,13 +74,12 @@ public class AddSessione_Controller implements Initializable, FormChecker {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        inizioConferenzaLabel.setText(conferenza.getInizio().toString());
-        inizioConferenzaLabel.setTextFill(Color.WHITE);
-        fineConferenzaLabel.setTextFill(Color.WHITE);
-        fineConferenzaLabel.setText(conferenza.getFine().toString());
         try {
             setCoordinatoreChoiceBox();
+            Tooltip.install(inizioSessioneAboutImage, new Tooltip("L'inizio della conferenza è: " + conferenza.getInizio()));
+            Tooltip.install(fineSessioneAboutImage, new Tooltip("La fine della conferenza è: " + conferenza.getFine()));
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

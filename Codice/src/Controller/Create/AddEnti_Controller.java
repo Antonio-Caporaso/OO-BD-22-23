@@ -118,13 +118,6 @@ public class AddEnti_Controller implements Initializable {
         }
     }
 
-    private void saveEnti() throws SQLException {
-        EnteDao dao = new EnteDao();
-        for (Ente ente : conferenza.getEnti()) {
-            dao.saveEnteOrganizzatore(ente, conferenza);
-        }
-    }
-
     private void setOrganizzatoriChoiceBox() {
         try {
             enti.loadEnti();
@@ -136,10 +129,8 @@ public class AddEnti_Controller implements Initializable {
 
     private void setOrganizzatoriListView() {
         try {
-            EnteDao enteDao = new EnteDao();
-            ObservableList<Ente> enti = FXCollections.observableArrayList();
-            enti.addAll(enteDao.retrieveEntiOrganizzatori(conferenza));
-            entiListView.setItems(enti);
+            conferenza.loadOrganizzatori();
+            entiListView.setItems(conferenza.getEnti());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -164,7 +155,6 @@ public class AddEnti_Controller implements Initializable {
             if (enteSelezionato == null)
                 throw new NullPointerException();
             conferenza.addEnte(enteSelezionato);
-            entiListView.getItems().add(enteSelezionato);
             checkAlmenoUnEnte();
         } catch (EntePresenteException e) {
             try {
@@ -181,12 +171,7 @@ public class AddEnti_Controller implements Initializable {
 
     @FXML
     void nextOnAction(ActionEvent event) {
-        try {
-            saveEnti();
             goToAddComitatiWindow();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML

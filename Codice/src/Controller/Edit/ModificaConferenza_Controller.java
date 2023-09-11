@@ -90,9 +90,19 @@ public class ModificaConferenza_Controller implements Initializable {
         this.subscene = subscene;
         this.user = user;
     }
-
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setDetails();
+        setOrganizzatori();
+        setSponsorizzazioni();
+        setSessionsTable();
+    }
     @FXML
     public void confermaButtonOnAction(ActionEvent event) throws IOException {
+        goBackToEditConferencesWindow();
+    }
+
+    private void goBackToEditConferencesWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenze.fxml"));
         ModificaConferenze_Controller controller = new ModificaConferenze_Controller(user,subscene);
         loader.setController(controller);
@@ -102,6 +112,10 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     public void editDetailsOnAction(ActionEvent event) throws IOException {
+        goToEditDetailsWindow();
+    }
+
+    private void goToEditDetailsWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaDettagliConferenza.fxml"));
         ModificaDettagliConferenza_Controller controller = new ModificaDettagliConferenza_Controller(conferenza,subscene,this);
         loader.setController(controller);
@@ -111,6 +125,10 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     public void editEntiOnAction(ActionEvent event) throws IOException {
+        goToEditEntiWindow();
+    }
+
+    private void goToEditEntiWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaEntiOrganizzatori.fxml"));
         ModificaEntiOrganizzatori_Controller controller = new ModificaEntiOrganizzatori_Controller(conferenza,subscene,this);
         loader.setController(controller);
@@ -120,6 +138,10 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     public void editSessioniButtonOnAction(ActionEvent event) throws IOException {
+        goToEditSessionsWindow();
+    }
+
+    private void goToEditSessionsWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessioni.fxml"));
         ModificaSessioni_Controller controller = new ModificaSessioni_Controller(conferenza,subscene,this);
         loader.setController(controller);
@@ -129,6 +151,10 @@ public class ModificaConferenza_Controller implements Initializable {
 
     @FXML
     public void editSponsorshipOnAction(ActionEvent event) throws IOException {
+        goToEditSponsorshipsWindow();
+    }
+
+    private void goToEditSponsorshipsWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSponsorizzazioni.fxml"));
         ModificaSponsorizzazioni_Controller controller = new ModificaSponsorizzazioni_Controller(conferenza,subscene,this);
         loader.setController(controller);
@@ -139,15 +165,6 @@ public class ModificaConferenza_Controller implements Initializable {
     public SubScene getsubscene() {
         return subscene;
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        setDetails();
-        setOrganizzatori();
-        setSponsorizzazioni();
-        setTable();
-    }
-
     public void setConferenza(Conferenza c) {
         this.conferenza = c;
     }
@@ -193,7 +210,7 @@ public class ModificaConferenza_Controller implements Initializable {
         this.user = user;
     }
 
-    protected void setTable() {
+    protected void setSessionsTable() {
         table.setEditable(false);
         try {
             conferenza.loadSessioni();
@@ -209,7 +226,11 @@ public class ModificaConferenza_Controller implements Initializable {
     }
 
     @FXML
-    void SlittaConferenzaButtonOnAction(ActionEvent event) throws IOException {
+    void slittaConferenzaButtonOnAction(ActionEvent event) throws IOException {
+        openSlittaConferenzaWindow();
+    }
+
+    private void openSlittaConferenzaWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/SlittaConferenza.fxml"));
         SlittaConferenza_Controller controller = new SlittaConferenza_Controller(conferenza,this);
         loader.setController(controller);
@@ -225,6 +246,6 @@ public class ModificaConferenza_Controller implements Initializable {
         ConferenzaDao dao = new ConferenzaDao();
         conferenza = dao.retrieveConferenzaByID(conferenza.getId_conferenza());
         setDetails();
-        setTable();
+        setSessionsTable();
     }
 }

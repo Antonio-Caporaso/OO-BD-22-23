@@ -542,6 +542,21 @@ begin
 end;
 $$ language plpgsql;
 
+create or replace function add_new_ente(ente_id integer, conferenza_id integer)
+returns integer
+as $$
+declare
+    ente_id integer;
+begin
+    insert into ente_conferenza(id_ente,id_conferenza)
+    values (ente_id,conferenza_id) returning id into ente_id;
+    return ente_id;
+    exception
+        when others then
+            raise notice '%', sqlerrm;
+end;
+$$ language plpgsql;
+
 -- Funzione per l'aggiunta di una sponsorizzazione di una conferenza
 create or replace procedure add_sponsorizzazione(sponsor_id integer, contributo numeric(1000,2), valuta char(3), conferenza_id integer)
 as $$
@@ -902,3 +917,17 @@ begin
     );
 end;
 $$ language plpgsql;
+
+-- Funzione che inserisce una nuova sponsorizzazione e restituisce l'id della sponsorizzazione
+create or replace function add_new_sponsorizzazione(sponsor_id integer, contributo numeric, valuta text, conferenza_id integer)
+returns integer
+as $$
+begin
+    insert into sponsor_conferenza(id_sponsor,contributo,valuta,id_conferenza)
+    values (sponsor_id,contributo,valuta,conferenza_id) returning id_sponsor;
+    exception
+        when others then
+            raise notice '%', sqlerrm;
+end;
+$$ language plpgsql;
+

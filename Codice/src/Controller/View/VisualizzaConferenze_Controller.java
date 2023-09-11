@@ -127,7 +127,7 @@ public class VisualizzaConferenze_Controller implements Initializable {
             alert.setContentText("Selezionare una conferenza");
             alert.showAndWait();
         } else {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/FXML/View/VisualizzaConferenza.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/VisualizzaConferenza.fxml"));
             VisualizzaConferenza_Controller controller = new VisualizzaConferenza_Controller(c, subScene, this);
             loader.setController(controller);
             subScene.setRoot(loader.load());

@@ -99,7 +99,7 @@ public class AddComitati_Controller implements Initializable {
         ObservableList<Organizzatore> organizzatori = FXCollections.observableArrayList();
         OrganizzatoreDao organizzatoreDao = new OrganizzatoreDao();
         for (Ente e : conferenza.getEnti()) {
-            organizzatori.addAll(organizzatoreDao.retrieveOrganizzatoreByEnte(e.getId_ente()));
+            organizzatori.addAll(organizzatoreDao.retrieveOrganizzatoreByEnte(e.getID()));
         }
         membroComitatoScientificoChoiceBox.setItems(organizzatori);
         membroComitatoLocaleChoiceBox.setItems(organizzatori);

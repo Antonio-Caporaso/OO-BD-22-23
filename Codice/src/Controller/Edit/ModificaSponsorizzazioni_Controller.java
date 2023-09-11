@@ -167,19 +167,7 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
 
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
-        updateSponsorships();
         goToEditConferenceWindow();
-    }
-
-    private void updateSponsorships() {
-        try{
-            for(Sponsorizzazione sp: conferenza.getSponsorizzazioni()){
-                SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
-                dao.saveSponsorizzazione(sp);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void goToEditConferenceWindow() throws IOException {

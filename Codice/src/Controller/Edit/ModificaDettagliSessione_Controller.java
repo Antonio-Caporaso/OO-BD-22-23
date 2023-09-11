@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
 
@@ -25,21 +26,15 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModificaDettagliSessione_Controller implements Initializable {
-    @FXML
-    private Button annullaButton;
     private Conferenza conferenza;
     @FXML
-    private Button confermaButton;
+    private ImageView inizioSessioneAboutImage;
+    @FXML
+    private ImageView fineSessioneAboutImage;
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
     @FXML
     private DateTimePicker fineDateTimePicker;
-    @FXML
-    private Tooltip toolTipFineConferenza;
-
-    @FXML
-    private Tooltip toolTipInizioConferenza;
-
     @FXML
     private DateTimePicker inizioDateTimePicker;
     private MembriComitato membriComitatoScientifico;
@@ -85,8 +80,8 @@ public class ModificaDettagliSessione_Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        toolTipInizioConferenza.setText("Inizio conferenza: " +conferenza.getInizio().toString());
-        toolTipFineConferenza.setText("Fine conferenza: "+conferenza.getFine().toString());
+        Tooltip.install(inizioSessioneAboutImage, new Tooltip("L'inizio della conferenza è: " + conferenza.getInizio()));
+        Tooltip.install(fineSessioneAboutImage, new Tooltip("La fine della conferenza è: " + conferenza.getFine()));
         saleChoice.setValue(sessione.getLocazione());
         try {
             setTitoloSessione();

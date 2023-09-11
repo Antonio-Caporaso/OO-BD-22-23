@@ -49,7 +49,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="slittaConferenzaButton" mnemonicParsing="false" onAction="#SlittaConferenzaButtonOnAction" prefHeight="40.0" prefWidth="204.0" text="Slitta conferenza">
+            <Button fx:id="slittaConferenzaButton" mnemonicParsing="false" onAction="#slittaConferenzaButtonOnAction" prefHeight="40.0" prefWidth="204.0" text="Slitta conferenza">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
