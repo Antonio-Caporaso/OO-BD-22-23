@@ -28,10 +28,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("./View/FXML/Login/Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Login/Login.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            stage.getIcons().add(new Image("./View/Resources/IconAtom.png"));
+            stage.getIcons().add(new Image("/View/Resources/IconAtom.png"));
             stage.setTitle("Symposium");
             stage.setScene(scene);
             stage.setResizable(false);
