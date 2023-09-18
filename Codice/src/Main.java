@@ -6,15 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 public class Main extends Application {
     public static void main(String[] args) {
 
-        Connection conn = null;
-        DBConnection dbConnection;
-        dbConnection = DBConnection.getDBconnection();
-        conn = dbConnection.getConnection();
+        DBConnection dbConnection = DBConnection.getDBconnection();
+        Connection conn = dbConnection.getConnection();
 
         if (conn == null) {
             System.out.println("Connessione NON riuscita!");
@@ -26,18 +25,18 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Login/Login.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.getIcons().add(new Image("/View/Resources/IconAtom.png"));
-            stage.setTitle("Symposium");
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void start(Stage stage) throws IOException {
+        loadMainWindow(stage);
+    }
+
+    private void loadMainWindow(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Login/Login.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.getIcons().add(new Image("/View/Resources/IconAtom.png"));
+        stage.setTitle("Symposium");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 }
