@@ -6,6 +6,7 @@ import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
 import Model.Entities.organizzazione.Ente;
 import Model.Entities.organizzazione.Organizzatore;
+import Model.Utilities.MembriComitato;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -106,8 +107,16 @@ public class AddComitati_Controller implements Initializable {
     }
 
     private void loadListView() {
-        membriComitatoLocaleListView.getItems().addAll(conferenza.getComitato_l().getMembri());
-        membriComitatoScientificoListView.getItems().addAll(conferenza.getComitato_s().getMembri());
+        MembriComitato membriComitato=new MembriComitato(conferenza);
+        try{
+            membriComitato.loadMembriComitatoScientifico();
+            membriComitato.loadMembriComitatoLocale();
+            membriComitatoLocaleListView.setItems(membriComitato.getMembriComitatoLocale());
+            membriComitatoScientificoListView.setItems(membriComitato.getMembriComitatoScientifico());
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 
     private void retreiveComitati() throws SQLException {
@@ -116,28 +125,33 @@ public class AddComitati_Controller implements Initializable {
         conferenza.setComitato_l(dao.retrieveComitatoLocaleByConferenza(conferenza));
     }
 
-    private void saveComitati() throws SQLException {
-        saveMembriComitatoLocale();
-        saveMembriComitatoScientifico();
+    private void saveMembriComitatoLocale(Organizzatore org) throws SQLException {
+        ComitatoDao comitatoDao = new ComitatoDao();
+        comitatoDao.addMembroComitato(org, conferenza.getComitato_l());
+    }
+    private void removeMembriComitatoLocale(Organizzatore org) throws SQLException{
+        ComitatoDao comitatoDao = new ComitatoDao();
+        comitatoDao.removeMembroComitato(org, conferenza.getComitato_l());
     }
 
-    private void saveMembriComitatoLocale() throws SQLException {
+    private void saveMembriComitatoScientifico(Organizzatore org) throws SQLException {
         ComitatoDao comitatoDao = new ComitatoDao();
-        for (Organizzatore org : conferenza.getComitato_l().getMembri()) {
-            comitatoDao.addMembroComitato(org, conferenza.getComitato_l());
-        }
+        comitatoDao.addMembroComitato(org, conferenza.getComitato_s());
     }
-
-    private void saveMembriComitatoScientifico() throws SQLException {
+    private void removeMembriComitatoScientifico(Organizzatore org) throws SQLException{
         ComitatoDao comitatoDao = new ComitatoDao();
-        for (Organizzatore org : conferenza.getComitato_s().getMembri()) {
-            comitatoDao.addMembroComitato(org, conferenza.getComitato_s());
-        }
+        comitatoDao.removeMembroComitato(org, conferenza.getComitato_s());
     }
 
     private Optional<ButtonType> showDeleteDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setContentText("Sicuro di voler eliminare il seguente organizzatore?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
+    }
+    private Optional<ButtonType> showNoSelectionDialog() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText("Non hai selezionato alcun organizzatore");
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
@@ -150,9 +164,9 @@ public class AddComitati_Controller implements Initializable {
     @FXML
     void nextOnAction(ActionEvent event) {
         try {
-            saveComitati();
+//            saveComitati();
             goToAddSponsorshipsWindow();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
@@ -162,34 +176,66 @@ public class AddComitati_Controller implements Initializable {
     @FXML
     void inserisciMembroComitatoScientificoButtonOnAction(ActionEvent event) {
         Organizzatore org = membroComitatoScientificoChoiceBox.getSelectionModel().getSelectedItem();
-        conferenza.getComitato_l().addMembro(org);
-        membriComitatoScientificoListView.getItems().add(org);
-        checkAlmenoUnMembro();
+        try {
+            conferenza.getComitato_s().addMembro(org);
+            saveMembriComitatoScientifico(org);
+            loadListView();
+            checkAlmenoUnMembro();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void inserisciMembroComitatoLocaleButtonOnAction(ActionEvent event) {
         Organizzatore org = membroComitatoLocaleChoiceBox.getSelectionModel().getSelectedItem();
-        conferenza.getComitato_s().addMembro(org);
-        membriComitatoLocaleListView.getItems().add(org);
-        checkAlmenoUnMembro();
+        try {
+            conferenza.getComitato_l().addMembro(org);
+            saveMembriComitatoLocale(org);
+            loadListView();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void rimuoviMembroComitatoScientificoButtonOnAction(ActionEvent event) {
         Organizzatore org = membriComitatoScientificoListView.getSelectionModel().getSelectedItem();
-        Optional<ButtonType> result = showDeleteDialog();
-        if (result.get() == ButtonType.OK) {
-            conferenza.getComitato_s().removeMembro(org);
+        if(org==null){
+            showNoSelectionDialog();
+        }
+        else {
+            Optional<ButtonType> result = showDeleteDialog();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    removeMembriComitatoScientifico(org);
+                    conferenza.getComitato_s().removeMembro(org);
+                    loadListView();
+                    checkAlmenoUnMembro();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     @FXML
     void rimuoviMembroComitatoLocaleButtonOnAction(ActionEvent event) {
         Organizzatore org = membriComitatoLocaleListView.getSelectionModel().getSelectedItem();
-        Optional<ButtonType> result = showDeleteDialog();
-        if (result.get() == ButtonType.OK) {
-            conferenza.getComitato_l().removeMembro(org);
+        if(org==null){
+            showNoSelectionDialog();
+        }
+        else {
+            Optional<ButtonType> result = showDeleteDialog();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    removeMembriComitatoLocale(org);
+                    conferenza.getComitato_l().removeMembro(org);
+                    loadListView();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }
