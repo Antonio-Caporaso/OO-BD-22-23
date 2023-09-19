@@ -18,8 +18,8 @@ public class DBConnection {
         try{
             if(conn == null || conn.isClosed()){
                 Class.forName("org.postgresql.Driver");
-                //conn = DriverManager.getConnection("jdbc:postgresql://database-oobd.ct0ckvilfzkl.eu-central-1.rds.amazonaws.com:5432/OO_DB?currentSchema=conference","Master_User",pwd);
-                conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres?currentSchema=conference","postgres","acerx193w");
+                conn = DriverManager.getConnection("jdbc:postgresql://database-oobd.ct0ckvilfzkl.eu-central-1.rds.amazonaws.com:5432/OO_DB?currentSchema=conference","Master_User",pwd);
+//                conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres?currentSchema=conference","postgres","acerx193w");
             }
         }catch (SQLException | ClassNotFoundException throwables){
             throwables.printStackTrace();
