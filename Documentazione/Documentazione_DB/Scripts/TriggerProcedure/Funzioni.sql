@@ -546,11 +546,11 @@ create or replace function add_new_ente(ente_id integer, conferenza_id integer)
 returns integer
 as $$
 declare
-    ente_id integer;
+    ente_id_result integer;
 begin
     insert into ente_conferenza(id_ente,id_conferenza)
-    values (ente_id,conferenza_id) returning id into ente_id;
-    return ente_id;
+    values (ente_id,conferenza_id) returning id_ente into ente_id_result;
+    return ente_id_result;
     exception
         when others then
             raise notice '%', sqlerrm;
