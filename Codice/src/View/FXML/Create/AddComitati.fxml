@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="75.0" layoutY="-5.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #232730;" stylesheets="@../../CSS/NewStyle.css" text="Aggiungi Membri Comitati" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
@@ -67,7 +67,7 @@
       </Button>
       <ChoiceBox fx:id="membroComitatoScientificoChoiceBox" layoutX="31.0" layoutY="141.0" prefHeight="31.0" prefWidth="285.0" stylesheets="@../../CSS/NewStyle.css" />
       <ChoiceBox fx:id="membroComitatoLocaleChoiceBox" layoutX="484.0" layoutY="141.0" prefHeight="31.0" prefWidth="285.0" stylesheets="@../../CSS/NewStyle.css" />
-      <Button fx:id="rimuoviComitatoScientificoButton" layoutX="31.0" layoutY="621.0" mnemonicParsing="false" onAction="#inserisciMembroComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
+      <Button fx:id="rimuoviComitatoScientificoButton" layoutX="31.0" layoutY="621.0" mnemonicParsing="false" onAction="#rimuoviMembroComitatoScientificoButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
