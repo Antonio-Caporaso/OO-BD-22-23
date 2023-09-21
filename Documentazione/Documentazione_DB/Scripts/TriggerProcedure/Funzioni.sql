@@ -917,17 +917,3 @@ begin
     );
 end;
 $$ language plpgsql;
-
--- Funzione che inserisce una nuova sponsorizzazione e restituisce l'id della sponsorizzazione
-create or replace function add_new_sponsorizzazione(sponsor_id integer, contributo numeric, valuta text, conferenza_id integer)
-returns integer
-as $$
-begin
-    insert into sponsor_conferenza(id_sponsor,contributo,valuta,id_conferenza)
-    values (sponsor_id,contributo,valuta,conferenza_id) returning id_sponsor;
-    exception
-        when others then
-            raise notice '%', sqlerrm;
-end;
-$$ language plpgsql;
-
