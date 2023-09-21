@@ -45,22 +45,18 @@ public class SponsorizzazioneDAO {
         return sponsorizzazioni;
     }
 
-    public int saveSponsorizzazione(Sponsorizzazione s) throws SQLException {
+    public void saveSponsorizzazione(Sponsorizzazione s) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "select * from add_new_sponsorizzazione(?,?,?,?)";
+        String query = "insert into sponsor_conferenza(id_sponsor,contributo,valuta,id_conferenza) values (?,?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
-        stm.setInt(4,s.getConferenza().getId_conferenza());
         stm.setInt(1,s.getSponsor().getId_sponsor());
         stm.setDouble(2,s.getContributo());
         stm.setString(3,s.getCodiceValuta());
-        ResultSet rs = stm.executeQuery();
-        int result = 0;
-        while(rs.next()){
-            result = rs.getInt(1);
-        }
-        return result;
+        stm.setInt(4,s.getConferenza().getId_conferenza());
+        stm.executeUpdate();
     }
+
     public LinkedList<String> retrieveSimboloValute() throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
