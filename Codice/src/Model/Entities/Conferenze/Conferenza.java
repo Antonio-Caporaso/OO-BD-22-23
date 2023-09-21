@@ -98,7 +98,7 @@ public class Conferenza {
         if(!(sponsorizzazioni.contains(sponsorizzazione))) {
             try {
                 SponsorizzazioneDAO sponsorizzazioneDAO = new SponsorizzazioneDAO();
-                sponsorizzazione.setId(sponsorizzazioneDAO.saveSponsorizzazione(sponsorizzazione));
+                sponsorizzazioneDAO.saveSponsorizzazione(sponsorizzazione);
                 sponsorizzazioni.add(sponsorizzazione);
             }catch (SQLException exception){
                 exception.printStackTrace();
