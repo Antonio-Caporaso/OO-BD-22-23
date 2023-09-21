@@ -7,7 +7,6 @@ public class Sponsorizzazione {
     private double contributo;
     private Sponsor sponsor;
     private String valuta;
-    private int id;
 
     public Sponsorizzazione(Sponsor s, Conferenza conferenza, double contributo, String valuta) {
         this.sponsor = s;
@@ -30,15 +29,6 @@ public class Sponsorizzazione {
             return "JPY";
         else return null;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Conferenza getConferenza() {
         return conferenza;
     }
