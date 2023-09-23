@@ -119,7 +119,7 @@ public class ViewProgramma_Controller implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Informazioni");
+//            stage.setTitle("Informazioni");
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
@@ -143,7 +143,7 @@ public class ViewProgramma_Controller implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Aggiunta evento");
+//            stage.setTitle("Aggiunta evento");
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
@@ -167,7 +167,7 @@ public class ViewProgramma_Controller implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Aggiunta intervallo");
+//            stage.setTitle("Aggiunta intervallo");
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
@@ -190,7 +190,9 @@ public class ViewProgramma_Controller implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Aggiunta intervento");
+//            stage.setTitle("Aggiunta intervento");
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
@@ -213,7 +215,9 @@ public class ViewProgramma_Controller implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Informazioni");
+//            stage.setTitle("Informazioni");
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
@@ -235,7 +239,9 @@ public class ViewProgramma_Controller implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Informazioni");
+//            stage.setTitle("Informazioni");
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
