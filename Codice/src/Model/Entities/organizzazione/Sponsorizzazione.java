@@ -27,6 +27,8 @@ public class Sponsorizzazione {
             return "GBP";
         else if (valuta.equals("¥"))
             return "JPY";
+        else if (valuta.equals("CA$"))
+            return "CAD";
         else return null;
     }
     public Conferenza getConferenza() {
