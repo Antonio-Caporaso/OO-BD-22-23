@@ -72,13 +72,14 @@ public class AddIntervento_Controller implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(root, 527, 498);
             stage.initModality(Modality.APPLICATION_MODAL);
-            /*stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);*/
-            stage.setTitle("Aggiunta nuovo speaker");
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+//            stage.setTitle("Aggiunta nuovo speaker");
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
+            stage.setAlwaysOnTop(true);
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();

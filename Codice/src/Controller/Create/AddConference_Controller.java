@@ -85,7 +85,8 @@ public class AddConference_Controller implements Initializable, FormChecker {
         if (nomeConferenzaTF.getText().isBlank()
                 || descrizioneTextArea.getText().isBlank()
                 || dataInizioDP.getValue() == null
-                || dataFineDP.getValue() == null) {
+                || dataFineDP.getValue() == null
+                || sedeChoice.getValue()==null) {
             throw new BlankFieldException();
         }
     }

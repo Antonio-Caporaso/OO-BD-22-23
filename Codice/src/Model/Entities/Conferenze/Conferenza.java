@@ -94,7 +94,7 @@ public class Conferenza {
         else throw new SessionePresenteException();
     }
 
-    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione) throws SponsorizzazionPresenteException {
+    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione) throws SponsorizzazionPresenteException {/* Poiché è stata rimossa la funzione, non viene più lanciata l'eccezione*/
         if(!(sponsorizzazioni.contains(sponsorizzazione))) {
             try {
                 SponsorizzazioneDAO sponsorizzazioneDAO = new SponsorizzazioneDAO();
