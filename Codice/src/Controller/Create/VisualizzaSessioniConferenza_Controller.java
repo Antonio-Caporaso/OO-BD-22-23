@@ -152,7 +152,10 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
         alert1.setContentText("Conferenza aggiunta correttamente");
         alert1.showAndWait();
-        loadEditConferenza();
+//      loadEditConferenza();
+        /* Al rigo 196 si invoca il metodo goToLandingWindow()
+        * Meglio non far andare direttamente alla finestra di modifica della conferenza quanto piuttosto far decidere
+        * all'utente cosa fare dalla finestra principale. */
     }
 
 
