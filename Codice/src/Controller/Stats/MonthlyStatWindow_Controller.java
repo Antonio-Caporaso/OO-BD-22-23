@@ -45,7 +45,7 @@ public class MonthlyStatWindow_Controller implements Initializable {
         alert.setContentText(s);
         alert.showAndWait();
     }
-    private void createPieChart(ObservableList<Stats> stats, BorderPane pane) {
+    private void createBarChart(ObservableList<Stats> stats, BorderPane pane) {
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("Istituzioni");
         NumberAxis yAxis = new NumberAxis();
@@ -73,11 +73,10 @@ public class MonthlyStatWindow_Controller implements Initializable {
                 ObservableList<Stats> stats = FXCollections.observableArrayList();
                 stats.clear();
                 stats.addAll(retrieveIstituzioniByMonth(mese, anno));
-                ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
                 if (stats.isEmpty()) {
                     showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nel mese cercato");
                 } else {
-                    createPieChart(stats, pieChartPane);
+                    createBarChart(stats, pieChartPane);
                 }
             } catch (InputMismatchException e) {
                 showAlert(Alert.AlertType.ERROR, "Inserire un input valido");

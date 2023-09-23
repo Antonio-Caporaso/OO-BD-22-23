@@ -39,12 +39,11 @@ public class YearlyStatWindow_Controller implements Initializable {
         alert.setContentText(s);
         alert.showAndWait();
     }
-    private void createPieChart(ObservableList<Stats> stats, BorderPane pane) {
+    private void createBarChart(ObservableList<Stats> stats, BorderPane pane) {
         CategoryAxis xAxis = new CategoryAxis();
         xAxis.setLabel("Istituzioni");
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Percentuale %");
-        yAxis.setTickUnit(2.5);
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
         barChart.setLegendVisible(false);
         XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -65,11 +64,10 @@ public class YearlyStatWindow_Controller implements Initializable {
             ObservableList<Stats> stats = FXCollections.observableArrayList();
             stats.clear();
             stats.addAll(retrieveIstituzioniByYear(anno));
-            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
             if (stats.isEmpty()) {
                 showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nell'anno cercato");
             } else {
-                createPieChart(stats, pieChartPane);
+                createBarChart(stats, pieChartPane);
             }
         } catch (InputMismatchException e) {
             showAlert(Alert.AlertType.ERROR, "Inserire un input valido");

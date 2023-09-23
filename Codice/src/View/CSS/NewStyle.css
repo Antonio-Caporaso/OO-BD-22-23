@@ -326,6 +326,9 @@ border width: 3
 .bar-chart .chart-content .chart-plot-background {
     -fx-background-color: transparent;
 }
+.axis-label {
+    -fx-text-fill: #eceff4;
+}
 .bar-chart .axis{
     -fx-tick-label-fill: #eceff4;
     -fx-tick-label-font-size: 13px;
