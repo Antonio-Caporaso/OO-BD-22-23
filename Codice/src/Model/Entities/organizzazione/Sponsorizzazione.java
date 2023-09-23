@@ -2,6 +2,8 @@ package Model.Entities.organizzazione;
 
 import Model.Entities.Conferenze.Conferenza;
 
+import java.util.Objects;
+
 public class Sponsorizzazione {
     private Conferenza conferenza;
     private double contributo;
@@ -66,5 +68,18 @@ public class Sponsorizzazione {
     @Override
     public String toString() {
         return sponsor + "(" + contributo + " " + valuta + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sponsorizzazione that = (Sponsorizzazione) o;
+        return Double.compare(contributo, that.contributo) == 0 && Objects.equals(conferenza, that.conferenza) && Objects.equals(sponsor, that.sponsor) && Objects.equals(valuta, that.valuta);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(conferenza, contributo, sponsor, valuta);
     }
 }

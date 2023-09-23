@@ -94,12 +94,13 @@ public class Conferenza {
         else throw new SessionePresenteException();
     }
 
-    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione) throws SponsorizzazionPresenteException {/* Poiché è stata rimossa la funzione, non viene più lanciata l'eccezione*/
+    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione) throws SponsorizzazionPresenteException {
+        /* Poiché è stata rimossa la funzione, non viene più lanciata l'eccezione*/
         if(!(sponsorizzazioni.contains(sponsorizzazione))) {
             try {
+                sponsorizzazioni.add(sponsorizzazione);
                 SponsorizzazioneDAO sponsorizzazioneDAO = new SponsorizzazioneDAO();
                 sponsorizzazioneDAO.saveSponsorizzazione(sponsorizzazione);
-                sponsorizzazioni.add(sponsorizzazione);
             }catch (SQLException exception){
                 exception.printStackTrace();
             }
