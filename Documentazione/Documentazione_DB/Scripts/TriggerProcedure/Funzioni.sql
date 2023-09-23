@@ -795,12 +795,12 @@ BEGIN
     WHERE date_part('month', inizio) = mese AND date_part('year', inizio) = anno;
 
     RETURN QUERY
-    SELECT e.nome, (COUNT(*) * 100.0 / NULLIF(totale, 0))
+    SELECT e.sigla::text, (COUNT(*) * 100.0 / NULLIF(totale, 0))
     FROM intervento i
     JOIN speaker s ON i.id_speaker = s.id_speaker
     JOIN ente e ON s.id_ente = e.id_ente
     WHERE date_part('month', inizio) = mese AND date_part('year', inizio) = anno
-    GROUP BY e.nome;
+    GROUP BY e.sigla;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -818,12 +818,12 @@ BEGIN
     WHERE date_part('year', inizio) = anno;
 
     RETURN QUERY
-    SELECT e.nome, (COUNT(*) * 100.0 / totale)
+    SELECT e.sigla::text, (COUNT(*) * 100.0 / totale)
     FROM intervento i
     JOIN speaker s ON i.id_speaker = s.id_speaker
     JOIN ente e ON s.id_ente = e.id_ente
     WHERE date_part('year', inizio) = anno
-    GROUP BY e.nome;
+    GROUP BY e.sigla;
 END;
 $$ LANGUAGE plpgsql;
 

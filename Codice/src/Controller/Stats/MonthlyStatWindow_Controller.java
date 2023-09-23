@@ -47,7 +47,9 @@ public class MonthlyStatWindow_Controller implements Initializable {
     }
     private void createPieChart(ObservableList<Stats> stats, BorderPane pane) {
         CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Istituzioni");
         NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Percentuale %");
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
         barChart.setLegendVisible(false);
         XYChart.Series<String, Number> series = new XYChart.Series<>();

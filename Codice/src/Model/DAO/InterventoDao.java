@@ -102,7 +102,7 @@ public class InterventoDao {
     public LinkedList<Stats> retrieveInterventiStatsByMonth(Integer month, Integer year) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "select * from show_percentage_interventi(?,?)"; //Da migliorare nella schermata in modo tale da far selezionare l'anno
+        String query = "select * from show_percentage_interventi(?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,month);
         stm.setInt(2,year);

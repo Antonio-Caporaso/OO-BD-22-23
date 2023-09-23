@@ -41,7 +41,10 @@ public class YearlyStatWindow_Controller implements Initializable {
     }
     private void createPieChart(ObservableList<Stats> stats, BorderPane pane) {
         CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Istituzioni");
         NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Percentuale %");
+        yAxis.setTickUnit(2.5);
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
         barChart.setLegendVisible(false);
         XYChart.Series<String, Number> series = new XYChart.Series<>();
