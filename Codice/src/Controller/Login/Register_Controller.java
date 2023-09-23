@@ -54,12 +54,12 @@ public class Register_Controller implements Initializable, FormChecker {
 
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
-        if (titoloChoiceBox.getItems().isEmpty()
-                || emailTextField.getText().isBlank()
+        if (emailTextField.getText().isBlank()
                 || nomeTextField.getText().isBlank()
                 || usernameTextField.getText().isBlank()
                 || cognomeTextField.getText().isBlank()
-                || passwordTextField.getText().isBlank())
+                || passwordTextField.getText().isBlank()
+                || istituzioneChoice.getValue()==null)
             throw new BlankFieldException();
     }
 
