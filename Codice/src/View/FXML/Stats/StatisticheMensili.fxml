@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane prefHeight="717.0" prefWidth="991.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="717.0" prefWidth="991.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Spinner fx:id="meseSpinner" layoutX="626.0" layoutY="664.0" prefHeight="39.0" prefWidth="85.0" />
       <Spinner fx:id="annoSpinner" layoutX="719.0" layoutY="664.0" prefHeight="39.0" prefWidth="85.0" />

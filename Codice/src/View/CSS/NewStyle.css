@@ -114,7 +114,7 @@ border width: 3
 
 /*List View*/
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color:#2e3440 ;
+    -fx-background-color:#5e81ac ;
     -fx-text-fill: #eceff4;
     -fx-font-weight: bold;
     -fx-font-size: 15;
@@ -243,7 +243,7 @@ border width: 3
     -fx-text-fill: #eceff4
 }
 .table-row-cell:filled:hover {
-    -fx-background-color: #2e3440;
+    -fx-background-color: #232730;
     -fx-text-background-color: #eceff4;
 
 }
@@ -322,5 +322,15 @@ border width: 3
     -fx-border-color: #5e6675;
     -fx-text-fill: #eceff4;
 }
-
+/*bar-chart*/
+.bar-chart .chart-content .chart-plot-background {
+    -fx-background-color: transparent;
+}
+.bar-chart .axis{
+    -fx-tick-label-fill: #eceff4;
+    -fx-tick-label-font-size: 13px;
+}
+.chart-bar{
+    -fx-bar-fill: #5e81ac;
+}
 
