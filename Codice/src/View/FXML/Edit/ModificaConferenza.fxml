@@ -49,11 +49,6 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="slittaConferenzaButton" mnemonicParsing="false" onAction="#slittaConferenzaButtonOnAction" prefHeight="40.0" prefWidth="204.0" text="Slitta conferenza">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
          </children>
       </VBox>
       <Accordion layoutX="14.0" layoutY="99.0" prefHeight="599.0" prefWidth="683.0">
