@@ -225,23 +225,6 @@ public class ModificaConferenza_Controller implements Initializable {
         nomeSessioneColumn.isSortable();
     }
 
-    @FXML
-    void slittaConferenzaButtonOnAction(ActionEvent event) throws IOException {
-        openSlittaConferenzaWindow();
-    }
-
-    private void openSlittaConferenzaWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/SlittaConferenza.fxml"));
-        SlittaConferenza_Controller controller = new SlittaConferenza_Controller(conferenza,this);
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-    }
-
     protected void reloadConferenza() throws SQLException {
         ConferenzaDao dao = new ConferenzaDao();
         conferenza = dao.retrieveConferenzaByID(conferenza.getId_conferenza());
