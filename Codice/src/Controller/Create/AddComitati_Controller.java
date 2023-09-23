@@ -182,7 +182,9 @@ public class AddComitati_Controller implements Initializable {
             loadListView();
             checkAlmenoUnMembro();
         }catch (SQLException e){
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
@@ -194,7 +196,9 @@ public class AddComitati_Controller implements Initializable {
             saveMembriComitatoLocale(org);
             loadListView();
         }catch (SQLException e){
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
@@ -213,7 +217,9 @@ public class AddComitati_Controller implements Initializable {
                     loadListView();
                     checkAlmenoUnMembro();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText(e.getMessage());
+                    alert.showAndWait();
                 }
             }
         }
@@ -233,7 +239,9 @@ public class AddComitati_Controller implements Initializable {
                     conferenza.getComitato_l().removeMembro(org);
                     loadListView();
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText(e.getMessage());
+                    alert.showAndWait();
                 }
             }
         }
