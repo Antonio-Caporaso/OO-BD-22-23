@@ -57,8 +57,8 @@
             <Image url="@../../Resources/office-building.png" />
          </image>
       </ImageView>
-      <Button layoutX="51.0" layoutY="535.0" mnemonicParsing="false" onAction="#openStatisticheMensiliWindow" prefHeight="58.0" prefWidth="226.0" text="Visualizza statistiche per un mese specifico" textAlignment="CENTER" wrapText="true" />
-      <Button layoutX="643.0" layoutY="535.0" mnemonicParsing="false" onAction="#openStatisticheAnnualiButton" prefHeight="58.0" prefWidth="226.0" text="Visualizza statistiche per un anno specifico" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="51.0" layoutY="535.0" mnemonicParsing="false" onAction="#openStatisticheMensiliWindow" prefHeight="58.0" prefWidth="226.0" text="Visualizza statistiche interventi per mese" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="643.0" layoutY="535.0" mnemonicParsing="false" onAction="#openStatisticheAnnualiButton" prefHeight="58.0" prefWidth="226.0" text="Visualizza statistiche interventi per anno" textAlignment="CENTER" wrapText="true" />
       <Label fx:id="totalEntiCounter" layoutX="446.0" layoutY="477.0" text="2" textFill="#ff0ff0">
          <font>
             <Font name="Cantarell Regular" size="40.0" />
