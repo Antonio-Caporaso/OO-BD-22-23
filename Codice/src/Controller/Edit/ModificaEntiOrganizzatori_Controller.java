@@ -69,6 +69,7 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
         Ente e = entiChoice.getSelectionModel().getSelectedItem();
         try {
             conferenza.addEnte(e);
+            entiTable.getItems().add(e);
         } catch (EntePresenteException exp) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("EntePresenteException");
