@@ -2,7 +2,7 @@ package Model.DAO;
 
 import Model.DbConfig.DBConnection;
 import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.organizzazione.Sponsorizzazione;
+import Model.Entities.Organizzazione.Sponsorizzazione;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,7 +1,7 @@
 package Model.Utilities;
 
 import Model.DAO.EnteDao;
-import Model.Entities.organizzazione.Ente;
+import Model.Entities.Organizzazione.Ente;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

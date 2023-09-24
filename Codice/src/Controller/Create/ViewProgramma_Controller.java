@@ -5,7 +5,7 @@ import Controller.View.ShowInfoIntervallo_Controller;
 import Controller.View.ShowInfoIntervento_Controller;
 import Model.Entities.Conferenze.*;
 import Model.Entities.Utente;
-import Model.Entities.partecipanti.Speaker;
+import Model.Entities.Partecipanti.Speaker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

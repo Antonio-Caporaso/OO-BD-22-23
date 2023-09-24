@@ -2,7 +2,7 @@ package Controller.Edit;
 
 import Model.DAO.ProgrammaDao;
 import Model.Entities.Conferenze.Programma;
-import Model.Entities.partecipanti.Speaker;
+import Model.Entities.Partecipanti.Speaker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

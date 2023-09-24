@@ -4,9 +4,8 @@ import Model.DAO.ComitatoDao;
 import Model.DAO.OrganizzatoreDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
-import Model.Entities.organizzazione.Ente;
-import Model.Entities.organizzazione.Organizzatore;
-import Model.Utilities.MembriComitato;
+import Model.Entities.Organizzazione.Ente;
+import Model.Entities.Organizzazione.Organizzatore;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -107,16 +106,16 @@ public class AddComitati_Controller implements Initializable {
     }
 
     private void loadListView() {
-        MembriComitato membriComitato=new MembriComitato(conferenza);
-        try{
-            membriComitato.loadMembriComitatoScientifico();
-            membriComitato.loadMembriComitatoLocale();
-            membriComitatoLocaleListView.setItems(membriComitato.getMembriComitatoLocale());
-            membriComitatoScientificoListView.setItems(membriComitato.getMembriComitatoScientifico());
-        }catch (SQLException e){
-            e.printStackTrace();
+        try {
+            conferenza.getComitato_l().loadMembri();
+            conferenza.getComitato_s().loadMembri();
+            membriComitatoLocaleListView.setItems(conferenza.getComitato_l().getMembri());
+            membriComitatoScientificoListView.setItems(conferenza.getComitato_s().getMembri());
+        } catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
-
     }
 
     private void retreiveComitati() throws SQLException {
@@ -164,7 +163,6 @@ public class AddComitati_Controller implements Initializable {
     @FXML
     void nextOnAction(ActionEvent event) {
         try {
-//            saveComitati();
             goToAddSponsorshipsWindow();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -178,7 +176,6 @@ public class AddComitati_Controller implements Initializable {
         Organizzatore org = membroComitatoScientificoChoiceBox.getSelectionModel().getSelectedItem();
         try {
             conferenza.getComitato_s().addMembro(org);
-            saveMembriComitatoScientifico(org);
             loadListView();
             checkAlmenoUnMembro();
         }catch (SQLException e){
@@ -193,7 +190,6 @@ public class AddComitati_Controller implements Initializable {
         Organizzatore org = membroComitatoLocaleChoiceBox.getSelectionModel().getSelectedItem();
         try {
             conferenza.getComitato_l().addMembro(org);
-            saveMembriComitatoLocale(org);
             loadListView();
         }catch (SQLException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);

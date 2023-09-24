@@ -6,8 +6,7 @@ import Model.DAO.SessioneDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sala;
 import Model.Entities.Conferenze.Sessione;
-import Model.Entities.organizzazione.Organizzatore;
-import Model.Utilities.MembriComitato;
+import Model.Entities.Organizzazione.Organizzatore;
 import Model.Utilities.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +38,6 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
     private DateTimePicker fineDateTimePicker;
     @FXML
     private DateTimePicker inizioDateTimePicker;
-    private MembriComitato membriComitatoScientifico;
     private ModificaSessione_Controller modificaSessioneController;
     @FXML
     private TextField nomeTF;
@@ -120,9 +118,8 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
     }
 
     private void setMembriComitatoScientifico() throws SQLException {
-        membriComitatoScientifico = new MembriComitato(conferenza);
-        membriComitatoScientifico.loadMembriComitatoScientifico();
-        coordinatoreChoiceBox.setItems(membriComitatoScientifico.getMembriComitatoScientifico());
+        conferenza.getComitato_s().loadMembri();
+        coordinatoreChoiceBox.setItems(conferenza.getComitato_s().getMembri());
         coordinatoreChoiceBox.setValue(sessione.getCoordinatore());
     }
 

@@ -1,7 +1,7 @@
 package Model.DAO;
 
 import Model.DbConfig.DBConnection;
-import Model.Entities.organizzazione.Sponsor;
+import Model.Entities.Organizzazione.Sponsor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -2,8 +2,8 @@ package Controller.Create;
 
 import Controller.ExceptionWindow_Controller;
 import Model.DAO.SpeakerDao;
-import Model.Entities.organizzazione.Ente;
-import Model.Entities.partecipanti.Speaker;
+import Model.Entities.Organizzazione.Ente;
+import Model.Entities.Partecipanti.Speaker;
 import Model.Utilities.Enti;
 import Model.Utilities.Speakers;
 import javafx.event.ActionEvent;

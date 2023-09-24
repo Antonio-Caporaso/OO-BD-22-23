@@ -1,7 +1,7 @@
 package Model.Utilities;
 
 import Model.DAO.SpeakerDao;
-import Model.Entities.partecipanti.Speaker;
+import Model.Entities.Partecipanti.Speaker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

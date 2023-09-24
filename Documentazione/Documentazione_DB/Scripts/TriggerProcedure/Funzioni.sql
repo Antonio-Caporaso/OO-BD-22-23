@@ -584,7 +584,12 @@ end;
 $$ language plpgsql;
 
 create or replace function add_new_sessione
-(titolo text, inizio timestamp, fine timestamp, sala_id integer, conferenza_id integer,coordinatore_id integer) 
+(titolo text,
+ inizio timestamp, 
+ fine timestamp,
+ sala_id integer, 
+ conferenza_id integer,
+ coordinatore_id integer) 
 returns integer
 as $$
 declare

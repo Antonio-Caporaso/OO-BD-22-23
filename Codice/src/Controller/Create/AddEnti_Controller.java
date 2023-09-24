@@ -3,13 +3,10 @@ package Controller.Create;
 import Controller.Edit.ModificaConferenza_Controller;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.EntePresenteException;
-import Model.DAO.EnteDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
-import Model.Entities.organizzazione.Ente;
+import Model.Entities.Organizzazione.Ente;
 import Model.Utilities.Enti;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +22,6 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 

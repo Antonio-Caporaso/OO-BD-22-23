@@ -2,10 +2,10 @@ package Controller.View;
 
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sessione;
-import Model.Entities.organizzazione.Comitato;
-import Model.Entities.organizzazione.Ente;
-import Model.Entities.organizzazione.Organizzatore;
-import Model.Entities.organizzazione.Sponsorizzazione;
+import Model.Entities.Organizzazione.Comitato;
+import Model.Entities.Organizzazione.Ente;
+import Model.Entities.Organizzazione.Organizzatore;
+import Model.Entities.Organizzazione.Sponsorizzazione;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

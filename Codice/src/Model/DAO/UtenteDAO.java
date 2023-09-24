@@ -3,7 +3,7 @@ package Model.DAO;
 import Model.DbConfig.DBConnection;
 import Exceptions.UtentePresenteException;
 import Model.Entities.Utente;
-import Model.Entities.organizzazione.Ente;
+import Model.Entities.Organizzazione.Ente;
 
 import java.sql.*;
 

@@ -1,6 +1,6 @@
 package Model.Entities.Conferenze;
 
-import Model.Entities.partecipanti.Speaker;
+import Model.Entities.Partecipanti.Speaker;
 
 import java.sql.Timestamp;
 import java.util.Objects;

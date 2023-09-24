@@ -5,8 +5,8 @@ import Interfaces.FormChecker;
 import Exceptions.BlankFieldException;
 import Model.DAO.SponsorizzazioneDAO;
 import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.organizzazione.Sponsor;
-import Model.Entities.organizzazione.Sponsorizzazione;
+import Model.Entities.Organizzazione.Sponsor;
+import Model.Entities.Organizzazione.Sponsorizzazione;
 import Model.Utilities.Sponsors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -161,6 +160,11 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Seleziona tutti i campi prima di procedere");
+            alert.showAndWait();
+        } catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Errore in fase di salvataggio");
+            alert.setContentText(e.getSQLState() + ": "+e.getMessage());
             alert.showAndWait();
         }
     }

@@ -2,8 +2,8 @@ package Model.DAO;
 
 import Model.DbConfig.DBConnection;
 import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.organizzazione.Comitato;
-import Model.Entities.organizzazione.Organizzatore;
+import Model.Entities.Organizzazione.Comitato;
+import Model.Entities.Organizzazione.Organizzatore;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -34,10 +34,9 @@ public class ComitatoDao {
         stm.setInt(1, conferenza.getId_conferenza());
         ResultSet rs = stm.executeQuery();
         Comitato comitato_s = new Comitato();
-        OrganizzatoreDao organizzatoreDao = new OrganizzatoreDao();
         while (rs.next()) {
-            comitato_s.setId_comitato(rs.getInt(1));
-            comitato_s.setMembri(organizzatoreDao.retrieveOrganizzatoriComitato(comitato_s.getId_comitato()));
+            int id = rs.getInt(1);
+            comitato_s.setId_comitato(id);
         }
         return comitato_s;
     }
@@ -49,10 +48,9 @@ public class ComitatoDao {
         stm.setInt(1, conferenza.getId_conferenza());
         ResultSet rs = stm.executeQuery();
         Comitato comitato_l = new Comitato();
-        OrganizzatoreDao organizzatoreDao = new OrganizzatoreDao();
         while (rs.next()) {
-            comitato_l.setId_comitato(rs.getInt(1));
-            comitato_l.setMembri(organizzatoreDao.retrieveOrganizzatoriComitato(comitato_l.getId_comitato()));
+            int id = rs.getInt(1);
+            comitato_l.setId_comitato(id);
         }
         return comitato_l;
     }
@@ -77,7 +75,7 @@ public class ComitatoDao {
     public LinkedList<Organizzatore> retreiveMembriComitato(Comitato comitato) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "select o.nome,o.cognome,o.email,o.titolo,o.id_ente from organizzatore o natural join organizzatore_comitato where id_comitato = ?";
+        String query = "select o.id_organizzatore,o.nome,o.cognome,o.email,o.titolo,o.id_ente from organizzatore o natural join organizzatore_comitato where id_comitato = ?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1,comitato.getId_comitato());
         ResultSet rs = stm.executeQuery();
@@ -85,11 +83,12 @@ public class ComitatoDao {
         EnteDao enteDao = new EnteDao();
         while(rs.next()){
             Organizzatore o = new Organizzatore();
-            o.setNome(rs.getString(1));
-            o.setCognome(rs.getString(2));
-            o.setEmail(rs.getString(3));
-            o.setTitolo(rs.getString(4));
-            o.setIstituzione(enteDao.retrieveEnte(rs.getInt(5)));
+            o.setId_organizzatore(rs.getInt(1));
+            o.setNome(rs.getString(2));
+            o.setCognome(rs.getString(3));
+            o.setEmail(rs.getString(4));
+            o.setTitolo(rs.getString(5));
+            o.setIstituzione(enteDao.retrieveEnte(rs.getInt(6)));
             membri.add(o);
         }
         return membri;

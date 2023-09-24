@@ -7,8 +7,8 @@ import Model.DAO.SponsorizzazioneDAO;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sessione;
 import Model.Entities.Utente;
-import Model.Entities.organizzazione.Ente;
-import Model.Entities.organizzazione.Sponsorizzazione;
+import Model.Entities.Organizzazione.Ente;
+import Model.Entities.Organizzazione.Sponsorizzazione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

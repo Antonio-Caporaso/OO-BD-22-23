@@ -63,7 +63,7 @@ public class SessioneDao {
     public int saveSessione(Sessione sessione) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "SELECT add_new_sessione(?,?,?,?,?,?)";
+        String query = "SELECT * from add_new_sessione(?,?,?,?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setString(1,sessione.getTitolo());
         stm.setTimestamp(2,sessione.getInizio());

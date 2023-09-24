@@ -1,7 +1,7 @@
 package Model.DAO;
 
 import Model.DbConfig.DBConnection;
-import Model.Entities.partecipanti.Speaker;
+import Model.Entities.Partecipanti.Speaker;
 
 import java.sql.*;
 import java.util.LinkedList;

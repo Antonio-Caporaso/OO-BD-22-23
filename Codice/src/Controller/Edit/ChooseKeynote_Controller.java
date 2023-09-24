@@ -3,7 +3,7 @@ package Controller.Edit;
 import Model.DAO.ProgrammaDao;
 import Model.Entities.Conferenze.Intervento;
 import Model.Entities.Conferenze.Programma;
-import Model.Entities.partecipanti.Speaker;
+import Model.Entities.Partecipanti.Speaker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

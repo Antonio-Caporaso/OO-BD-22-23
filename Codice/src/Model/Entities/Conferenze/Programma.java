@@ -4,7 +4,7 @@ import Model.DAO.EventoSocialeDao;
 import Model.DAO.IntervalloDao;
 import Model.DAO.InterventoDao;
 import Model.DAO.ProgrammaDao;
-import Model.Entities.partecipanti.Speaker;
+import Model.Entities.Partecipanti.Speaker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.postgresql.util.PGInterval;

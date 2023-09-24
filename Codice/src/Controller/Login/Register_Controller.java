@@ -7,7 +7,7 @@ import Exceptions.PasswordMismatchException;
 import Exceptions.UtentePresenteException;
 import Model.DAO.UtenteDAO;
 import Model.Entities.Utente;
-import Model.Entities.organizzazione.Ente;
+import Model.Entities.Organizzazione.Ente;
 import Model.Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

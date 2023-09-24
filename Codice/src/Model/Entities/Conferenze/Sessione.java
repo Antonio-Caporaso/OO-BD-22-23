@@ -1,6 +1,6 @@
 package Model.Entities.Conferenze;
 
-import Model.Entities.organizzazione.Organizzatore;
+import Model.Entities.Organizzazione.Organizzatore;
 
 import java.sql.Timestamp;
 import java.util.Objects;

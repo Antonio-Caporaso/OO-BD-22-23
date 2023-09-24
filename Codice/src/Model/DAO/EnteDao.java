@@ -2,7 +2,7 @@ package Model.DAO;
 
 import Model.DbConfig.DBConnection;
 import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.organizzazione.Ente;
+import Model.Entities.Organizzazione.Ente;
 
 import java.sql.*;
 import java.util.LinkedList;

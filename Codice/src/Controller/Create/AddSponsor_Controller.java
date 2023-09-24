@@ -5,8 +5,8 @@ import Exceptions.SponsorizzazionPresenteException;
 import Model.DAO.SponsorizzazioneDAO;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
-import Model.Entities.organizzazione.Sponsor;
-import Model.Entities.organizzazione.Sponsorizzazione;
+import Model.Entities.Organizzazione.Sponsor;
+import Model.Entities.Organizzazione.Sponsorizzazione;
 import Model.Utilities.Sponsors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -152,6 +152,11 @@ public class AddSponsor_Controller implements Initializable {
         } catch (BlankFieldException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Seleziona tutti i campi prima di procedere");
+            alert.showAndWait();
+        } catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Errore in fase di salvataggio");
+            alert.setContentText(e.getSQLState() + ": "+e.getMessage());
             alert.showAndWait();
         }
     }

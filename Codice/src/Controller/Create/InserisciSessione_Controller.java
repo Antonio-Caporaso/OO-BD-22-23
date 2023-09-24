@@ -5,13 +5,11 @@ import Exceptions.DateMismatchException;
 import Exceptions.SediNonDisponibiliException;
 import Exceptions.SessionePresenteException;
 import Interfaces.FormChecker;
-import Model.DAO.SessioneDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sala;
 import Model.Entities.Conferenze.Sessione;
 import Model.Entities.Utente;
-import Model.Entities.organizzazione.Organizzatore;
-import Model.Utilities.MembriComitato;
+import Model.Entities.Organizzazione.Organizzatore;
 import Model.Utilities.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -94,14 +92,8 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
     }
 
     private void loadCoordinatoreChoiceBox() throws SQLException {
-        MembriComitato membriComitato = new MembriComitato(conferenza);
-
-        try {
-            membriComitato.loadMembriComitatoScientifico();
-            coordinatoreChoiceBox.setItems(membriComitato.getMembriComitatoScientifico());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        conferenza.getComitato_s().loadMembri();
+        coordinatoreChoiceBox.setItems(conferenza.getComitato_s().getMembri());
     }
 
     private void loadViewSessioni(Conferenza c) {
@@ -154,6 +146,11 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(e.getMessage());
+            alert.showAndWait();
+        } catch (SQLException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Errore in fase di salvataggio");
+            alert.setContentText(e.getSQLState() + ": "+e.getMessage());
             alert.showAndWait();
         }
     }

@@ -1,7 +1,7 @@
 package Model.DAO;
 
 import Model.DbConfig.DBConnection;
-import Model.Entities.organizzazione.Indirizzo;
+import Model.Entities.Organizzazione.Indirizzo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

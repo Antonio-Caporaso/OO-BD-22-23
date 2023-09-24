@@ -1,9 +1,8 @@
 package Controller.Edit;
 
 import Exceptions.EntePresenteException;
-import Model.DAO.EnteDao;
 import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.organizzazione.Ente;
+import Model.Entities.Organizzazione.Ente;
 import Model.Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ModificaEntiOrganizzatori_Controller implements Initializable {

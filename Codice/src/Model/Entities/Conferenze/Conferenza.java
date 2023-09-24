@@ -8,9 +8,9 @@ import Model.DAO.EnteDao;
 import Model.DAO.SessioneDao;
 import Model.DAO.SponsorizzazioneDAO;
 import Model.Entities.Utente;
-import Model.Entities.organizzazione.Comitato;
-import Model.Entities.organizzazione.Ente;
-import Model.Entities.organizzazione.Sponsorizzazione;
+import Model.Entities.Organizzazione.Comitato;
+import Model.Entities.Organizzazione.Ente;
+import Model.Entities.Organizzazione.Sponsorizzazione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -78,32 +78,23 @@ public class Conferenza {
             throw new EntePresenteException();
     }
 
-    public void addSessione(Sessione sessione) throws SessionePresenteException, DateMismatchException{
+    public void addSessione(Sessione sessione) throws SessionePresenteException, DateMismatchException, SQLException {
         if(!(sessioni.contains(sessione))) {
             if(!(sessione.getInizio().before(inizio) || sessione.getFine().after(fine))){
-                try{
                     SessioneDao sessioneDao = new SessioneDao();
                     sessione.setId_sessione(sessioneDao.saveSessione(sessione));
                     sessioni.add(sessione);
-                } catch (SQLException exception){
-                    exception.printStackTrace();
-                }
             }
             else throw new DateMismatchException();
         }
         else throw new SessionePresenteException();
     }
 
-    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione) throws SponsorizzazionPresenteException {
-        /* Poiché è stata rimossa la funzione, non viene più lanciata l'eccezione*/
+    public void addSponsorizzazione(Sponsorizzazione sponsorizzazione) throws SponsorizzazionPresenteException, SQLException {
         if(!(sponsorizzazioni.contains(sponsorizzazione))) {
-            try {
                 sponsorizzazioni.add(sponsorizzazione);
                 SponsorizzazioneDAO sponsorizzazioneDAO = new SponsorizzazioneDAO();
                 sponsorizzazioneDAO.saveSponsorizzazione(sponsorizzazione);
-            }catch (SQLException exception){
-                exception.printStackTrace();
-            }
         }
         else throw new SponsorizzazionPresenteException();
     }
