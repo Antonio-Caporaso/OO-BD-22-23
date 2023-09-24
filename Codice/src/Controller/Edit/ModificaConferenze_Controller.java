@@ -2,7 +2,6 @@ package Controller.Edit;
 
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Utente;
-import Model.Utilities.Conferenze;
 import Model.Utilities.ConferenzeUtente;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -78,7 +77,8 @@ public class ModificaConferenze_Controller implements Initializable {
             }
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Nessuna conferenza selezionata");
+            alert.setHeaderText("Nessuna conferenza selezionata");
+            alert.setContentText("Assicurati di aver selezionato una conferenza");
             alert.showAndWait();
         }
     }
@@ -94,7 +94,8 @@ public class ModificaConferenze_Controller implements Initializable {
                 goToEditConferenceWindow(c, loader);
             } catch (NullPointerException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Nessuna conferenza selezionata");
+                alert.setHeaderText("Nessuna conferenza selezionata");
+                alert.setContentText("Assicurati di aver selezionato una conferenza");
                 alert.showAndWait();
             }
         } catch (IOException e) {
@@ -155,7 +156,7 @@ public class ModificaConferenze_Controller implements Initializable {
     private void showInformationAlert() {
         Alert noErrorOnDelete = new Alert(Alert.AlertType.INFORMATION);
         noErrorOnDelete.setTitle("Eliminazione conferenza");
-        noErrorOnDelete.setContentText("Eliminazione effettuata correttamente");
+        noErrorOnDelete.setHeaderText("Eliminazione effettuata correttamente");
         noErrorOnDelete.showAndWait();
     }
 }

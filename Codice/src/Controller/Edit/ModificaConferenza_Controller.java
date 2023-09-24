@@ -11,17 +11,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModificaConferenza_Controller implements Initializable {
@@ -230,5 +228,31 @@ public class ModificaConferenza_Controller implements Initializable {
         conferenza = dao.retrieveConferenzaByID(conferenza.getId_conferenza());
         setDetails();
         setSessionsTable();
+    }
+
+    @FXML
+    void deleteButtonOnAction(ActionEvent event) {
+        Optional<ButtonType> result = showConfirmationDialog();
+        if(result.get()==ButtonType.OK){
+            ConferenzaDao conferenzaDao = new ConferenzaDao();
+            try {
+                conferenzaDao.deleteConferenza(conferenza);
+                goBackToEditConferencesWindow();
+            }catch (SQLException e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
+            }catch (IOException exception){
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    private Optional<ButtonType> showConfirmationDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Eliminazione della conferenza");
+        alert.setContentText("Sicuro di voler eliminare la conferenza?");
+        Optional<ButtonType> result = alert.showAndWait();
+        return result;
     }
 }

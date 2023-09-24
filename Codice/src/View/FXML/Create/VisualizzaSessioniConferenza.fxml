@@ -26,7 +26,7 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonOnAction" prefHeight="31.0" prefWidth="92.0" text="Salva" textFill="WHITE">
+            <Button fx:id="fineButton" mnemonicParsing="false" onAction="#fineButtonOnAction" prefHeight="31.0" prefWidth="92.0" text="Fine" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>

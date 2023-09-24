@@ -33,8 +33,6 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     @FXML
     private Button aggiungiProgrammaButton;
     @FXML
-    private Button backButton;
-    @FXML
     private TableColumn<Sessione, Organizzatore> chairTableColumn;
     private Conferenza conferenza;
     @FXML
@@ -42,15 +40,11 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     @FXML
     private TableColumn<Sessione, Time> inizioTableColumn;
     @FXML
-    private Button inserisciButton;
-    @FXML
-    private Button rimuoviButton;
-    @FXML
     private TableColumn<Sessione, Sala> salaTableColumn;
     @FXML
-    private Button saveButton;
-    @FXML
     private TableView<Sessione> sessioniTableView;
+    @FXML
+    private Button fineButton;
     @FXML
     private SubScene subscene;
     @FXML
@@ -88,7 +82,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         loader.setController(controller);
         Parent root = loader.load();
         Scene landingScene = new Scene(root);
-        Stage stage = (Stage) saveButton.getScene().getWindow();
+        Stage stage = (Stage) fineButton.getScene().getWindow();
         stage.setScene(landingScene);
     }
 
@@ -150,12 +144,9 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
 
     private void saveConference() throws SQLException {
         Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-        alert1.setContentText("Conferenza aggiunta correttamente");
+        alert1.setHeaderText("Conferenza aggiunta correttamente");
+        alert1.setContentText("Verrai reindirizzato alla schermata di modifica della conferenza");
         alert1.showAndWait();
-//      loadEditConferenza();
-        /* Al rigo 196 si invoca il metodo goToLandingWindow()
-        * Meglio non far andare direttamente alla finestra di modifica della conferenza quanto piuttosto far decidere
-        * all'utente cosa fare dalla finestra principale. */
     }
 
 
@@ -175,7 +166,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
 
     private Optional<ButtonType> showDeleteDialog() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler eliminare la seguente sessione?");
+        alert.setHeaderText("Sicuro di voler eliminare la seguente sessione?");
         Optional<ButtonType> result = alert.showAndWait();
         return result;
     }
@@ -187,15 +178,18 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     }
 
     @FXML
-    void saveButtonOnAction(ActionEvent event) throws SQLException, IOException {
+    void fineButtonOnAction(ActionEvent event) throws SQLException, IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler salvare la conferenza ?");
+        alert.setHeaderText("Sicuro di voler salvare la conferenza ?");
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK)
+        if (result.get() == ButtonType.OK) {
             saveConference();
-        else
+            loadEditConferenza();
+        }
+        else {
             deleteConference();
-        goToLandingWindow();
+            goToLandingWindow();
+        }
     }
 
     @FXML
