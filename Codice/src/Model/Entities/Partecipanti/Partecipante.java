@@ -1,6 +1,6 @@
-package Model.Entities.partecipanti;
+package Model.Entities.Partecipanti;
 
-import Model.Entities.organizzazione.Ente;
+import Model.Entities.Organizzazione.Ente;
 
 import java.util.Objects;
 

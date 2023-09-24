@@ -1,4 +1,4 @@
-package Model.Entities.partecipanti;
+package Model.Entities.Partecipanti;
 
 public class Speaker extends Partecipante{
     private int idSpeaker;

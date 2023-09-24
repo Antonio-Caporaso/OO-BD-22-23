@@ -1,4 +1,4 @@
-package Model.Entities.organizzazione;
+package Model.Entities.Organizzazione;
 
 public class Indirizzo {
     private String cap;

@@ -1,7 +1,9 @@
-package Model.Entities.organizzazione;
+package Model.Entities.Organizzazione;
 import Model.DAO.ComitatoDao;
+import Model.DAO.OrganizzatoreDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import jfxtras.scene.layout.HBox;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -10,10 +12,10 @@ import java.util.Objects;
 public class Comitato {
     private int id_comitato;
     private String tipologia;
-    private LinkedList<Organizzatore> membri;
+    private ObservableList<Organizzatore> membri;
 
     public Comitato() {
-        membri = new LinkedList<>();
+        membri = FXCollections.observableArrayList();
     }
 
     @Override
@@ -31,18 +33,28 @@ public class Comitato {
         membri.clear();
         membri.addAll(comitatoDao.retreiveMembriComitato(this));
     }
-    public void addMembro(Organizzatore o){
+    public void addMembro(Organizzatore o) throws SQLException {
         if(!(membri.contains(o))){
-            membri.add(o);
+                ComitatoDao dao = new ComitatoDao();
+                dao.addMembroComitato(o, this);
+                membri.add(o);
         }
     }
-    public void removeMembro(Organizzatore o){
-        if(membri.contains(o))
+    public void removeMembro(Organizzatore o) throws SQLException {
+        if(membri.contains(o)) {
+            ComitatoDao dao = new ComitatoDao();
+            dao.removeMembroComitato(o,this);
             membri.remove(o);
+        }
     }
 
-    public LinkedList<Organizzatore> getMembri() {
+    public ObservableList<Organizzatore> getMembri() {
         return membri;
+    }
+
+    public void setMembri(ObservableList<Organizzatore> membri) {
+        membri.clear();
+        this.membri = membri;
     }
 
     public int getId_comitato() {
@@ -51,10 +63,6 @@ public class Comitato {
 
     public void setId_comitato(int id_comitato) {
         this.id_comitato = id_comitato;
-    }
-
-    public String getTipologia() {
-        return tipologia;
     }
 
     public void setTipologia(String tipologia) {
@@ -66,9 +74,5 @@ public class Comitato {
         int result = id_comitato;
         result = 31 * result + (tipologia != null ? tipologia.hashCode() : 0);
         return result;
-    }
-
-    public void setMembri(LinkedList<Organizzatore> organizzatores) {
-        this.membri = organizzatores;
     }
 }

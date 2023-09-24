@@ -1,4 +1,4 @@
-package Model.Entities.organizzazione;
+package Model.Entities.Organizzazione;
 
 import Model.Entities.Conferenze.Conferenza;
 
