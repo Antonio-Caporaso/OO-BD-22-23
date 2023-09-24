@@ -75,11 +75,11 @@ public class Sponsorizzazione {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sponsorizzazione that = (Sponsorizzazione) o;
-        return Double.compare(contributo, that.contributo) == 0 && Objects.equals(conferenza, that.conferenza) && Objects.equals(sponsor, that.sponsor) && Objects.equals(valuta, that.valuta);
+        return Objects.equals(conferenza, that.conferenza) && Objects.equals(sponsor, that.sponsor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(conferenza, contributo, sponsor, valuta);
+        return Objects.hash(conferenza, sponsor);
     }
 }
