@@ -21,7 +21,7 @@ begin
         '2023-10-12 18:00',--Fine
         1,
         'Global Tech Summit is a premier technology conference bringing together industry leaders, innovators, and experts to discuss the latest trends and advancements in the tech industry.', --Descrizione
-        'CNR,ASI,UNIROMA1', --Ente organizzatore
+        'CNR,ASI', --Ente organizzatore
         1 --Utente che inserisce la conferenza 
     ) into conferenza_id;
     
@@ -35,15 +35,15 @@ begin
     select comitato_l from conferenza where id_conferenza = conferenza_id into comitato_lc_id;
 
     --Aggiungo membri comitato
-    call add_membri_comitato('20,69,93', comitato_sc_id); -- Comitato scientifico
-    call add_membri_comitato('155,101,301', comitato_lc_id); -- Comitato locale
+    call add_membri_comitato('107,109,114', comitato_sc_id); -- Comitato scientifico
+    call add_membri_comitato('142,150,250', comitato_lc_id); -- Comitato locale
 
     -- Aggiunta sessioni
-    sessione1_id = add_new_sessione('Artificial Intelligence and Machine Learning', '2023-10-10 10:00', '2023-10-10 13:00', 1, conferenza_id, 20);
-    sessione2_id = add_new_sessione('Cybersecurity and Data Privacy', '2023-10-10 14:00', '2023-10-10 17:00', 2, conferenza_id, 69);
-    sessione3_id = add_new_sessione('Emerging Technologies: Blockchain and Internet of Things', '2023-10-11 10:30', '2023-10-11 12:30', 3, conferenza_id, 93);
-    sessione4_id = add_new_sessione('Future of Technology: Trends and Innovations', '2023-10-11 13:30', '2023-10-11 18:00', 2, conferenza_id, 20);
-    sessione5_id = add_new_sessione('Tech Startups and Entrepreneurship', '2023-10-12 9:30', '2023-10-12 17:00', 3, conferenza_id, 69);
+    sessione1_id = add_new_sessione('Artificial Intelligence and Machine Learning', '2023-10-10 10:00', '2023-10-10 13:00', 1, conferenza_id, 107);
+    sessione2_id = add_new_sessione('Cybersecurity and Data Privacy', '2023-10-10 14:00', '2023-10-10 17:00', 2, conferenza_id, 109);
+    sessione3_id = add_new_sessione('Emerging Technologies: Blockchain and Internet of Things', '2023-10-11 10:30', '2023-10-11 12:30', 3, conferenza_id, 114);
+    sessione4_id = add_new_sessione('Future of Technology: Trends and Innovations', '2023-10-11 13:30', '2023-10-11 18:00', 2, conferenza_id, 107);
+    sessione5_id = add_new_sessione('Tech Startups and Entrepreneurship', '2023-10-12 9:30', '2023-10-12 17:00', 3, conferenza_id, 109);
 
     -- Specifica programma sessione 1
     select id_programma from programma where id_sessione = sessione1_id into programma1_id;
@@ -70,7 +70,7 @@ begin
         '30 minutes'
     );
 
-    call add_intervallo('coffee break', programma1_id, '20 minutes');
+    call add_intervallo('coffee break', programma1_id, '107 minutes');
 
     call add_intervento(
         'Advancements in Natural Language Processing',
@@ -83,7 +83,7 @@ begin
     -- Specifica programma sessione 2
     select id_programma from programma where id_sessione = sessione2_id into programma2_id;
 
-    call add_evento('Introduction to Cybersecurity', programma2_id, '20 minutes');
+    call add_evento('Introduction to Cybersecurity', programma2_id, '107 minutes');
 
     call add_intervento(
         'Data Privacy in the Digital Age',
@@ -101,7 +101,7 @@ begin
         '30 minutes'
     );
 
-    call add_intervallo('coffee break', programma2_id, '20 minutes');
+    call add_intervallo('coffee break', programma2_id, '107 minutes');
 
     call add_intervento(
         'The Future of Cybersecurity',
@@ -114,7 +114,7 @@ begin
     -- Specifica programma sessione 3
     select id_programma from programma where id_sessione = sessione3_id into programma3_id;
 
-    call add_evento('Introduction to Blockchain', programma3_id, '20 minutes');
+    call add_evento('Introduction to Blockchain', programma3_id, '107 minutes');
 
     call add_intervento(
         'Blockchain Applications Beyond Cryptocurrency',
@@ -132,7 +132,7 @@ begin
         '30 minutes'
     );
 
-    call add_intervallo('coffee break', programma3_id, '20 minutes');
+    call add_intervallo('coffee break', programma3_id, '107 minutes');
 
     call add_intervento(
         'Securing Blockchain and IoT Ecosystems',
@@ -146,12 +146,12 @@ call add_keynote_speaker(734,sessione3_id);
     -- Specifica programma sessione 4
     select id_programma from programma where id_sessione = sessione4_id into programma4_id;
 
-    call add_evento('Future Technology Trends', programma4_id, '20 minutes');
+    call add_evento('Future Technology Trends', programma4_id, '107 minutes');
 
     call add_intervento(
         'Augmented Reality: Enhancing Human Experience',
         'This talk will explore the advancements in augmented reality (AR) technology and its potential to enhance human experiences in fields such as gaming, education, and industrial applications.',
-        101,
+        150,
         programma4_id,
         '30 minutes'
     );
@@ -175,7 +175,7 @@ call add_keynote_speaker(734,sessione3_id);
     -- Specifica programma sessione 5
     select id_programma from programma where id_sessione = sessione5_id into programma5_id;
 
-    call add_evento('Introduction to Tech Startups', programma5_id, '20 minutes');
+    call add_evento('Introduction to Tech Startups', programma5_id, '107 minutes');
 
     call add_intervento(
         'From Idea to Startup: Navigating the Entrepreneurial Journey',
@@ -193,7 +193,7 @@ call add_keynote_speaker(734,sessione3_id);
         '30 minutes'
     );
 
-    call add_intervallo('coffee break', programma5_id, '20 minutes');
+    call add_intervallo('coffee break', programma5_id, '107 minutes');
 
     call add_intervento(
         'Building a Culture of Innovation in Startups',

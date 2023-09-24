@@ -35,15 +35,15 @@ begin
     select comitato_l from conferenza where id_conferenza = conferenza_id into comitato_lc_id;
 
     --Aggiungo membri comitato
-    call add_membri_comitato('21,105,303', comitato_sc_id); -- Comitato scientifico
-    call add_membri_comitato('383,136', comitato_lc_id); -- Comitato locale
+    call add_membri_comitato('26,28,31', comitato_sc_id); -- Comitato scientifico
+    call add_membri_comitato('34,40', comitato_lc_id); -- Comitato locale
 
     -- Aggiunta sessioni
-    sessione1_id = add_new_sessione('Industrial Robotics and Automation', '2023-11-15 10:00', '2023-11-15 13:00', 19, conferenza_id, 21);
-    sessione2_id = add_new_sessione('Robotics in Healthcare: Innovations and Applications', '2023-11-15 14:00', '2023-11-15 17:00', 20, conferenza_id, 105);
-    sessione3_id = add_new_sessione('Exploring Space with Robotics', '2023-11-16 10:30', '2023-11-16 12:30', 21, conferenza_id, 21);
-    sessione4_id = add_new_sessione('Robotics and Artificial Intelligence Integration', '2023-11-16 13:30', '2023-11-16 18:00', 20, conferenza_id, 105);
-    sessione5_id = add_new_sessione('Social and Ethical Implications of Robotics', '2023-11-17 9:30', '2023-11-17 17:00', 21, conferenza_id, 303);
+    sessione1_id = add_new_sessione('Industrial Robotics and Automation', '2023-11-15 10:00', '2023-11-15 13:00', 19, conferenza_id, 26);
+    sessione2_id = add_new_sessione('Robotics in Healthcare: Innovations and Applications', '2023-11-15 14:00', '2023-11-15 17:00', 20, conferenza_id, 28);
+    sessione3_id = add_new_sessione('Exploring Space with Robotics', '2023-11-16 10:30', '2023-11-16 12:30', 26, conferenza_id, 26);
+    sessione4_id = add_new_sessione('Robotics and Artificial Intelligence Integration', '2023-11-16 13:30', '2023-11-16 18:00', 20, conferenza_id, 28);
+    sessione5_id = add_new_sessione('Social and Ethical Implications of Robotics', '2023-11-17 9:30', '2023-11-17 17:00', 26, conferenza_id, 31);
 
     -- Specifica programma sessione 1
     select id_programma from programma where id_sessione = sessione1_id into programma1_id;
