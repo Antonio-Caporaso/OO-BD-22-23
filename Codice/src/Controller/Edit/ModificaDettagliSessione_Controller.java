@@ -1,5 +1,7 @@
 package Controller.Edit;
 
+import Exceptions.BlankFieldException;
+import Interfaces.FormChecker;
 import Model.DAO.SessioneDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sala;
@@ -25,7 +27,7 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModificaDettagliSessione_Controller implements Initializable {
+public class ModificaDettagliSessione_Controller implements Initializable, FormChecker {
     private Conferenza conferenza;
     @FXML
     private ImageView inizioSessioneAboutImage;
@@ -129,7 +131,26 @@ public class ModificaDettagliSessione_Controller implements Initializable {
     }
 
     private void updateSessione() {
-        SessioneDao dao = new SessioneDao();
+        try {
+            checkFieldsAreBlank();
+            Sessione s = getDettagliSessione();
+            SessioneDao dao = new SessioneDao();
+            dao.updateSessione(s);
+            sessione = s;
+        }catch (BlankFieldException exception){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Attenzione! Ci sono dei campi non compilati");
+            alert.setContentText("Assicurati di aver compilato tutto prima di procedere");
+            alert.showAndWait();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Errore in fase di aggiornamento");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private Sessione getDettagliSessione() {
         Sessione s = new Sessione();
         s.setId_sessione(sessione.getId_sessione());
         s.setTitolo(nomeTF.getText());
@@ -137,14 +158,7 @@ public class ModificaDettagliSessione_Controller implements Initializable {
         s.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
         s.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
         s.setCoordinatore(coordinatoreChoiceBox.getValue());
-        try {
-            dao.updateSessione(s);
-            sessione = s;
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage() + "\n" + "Data inizio conferenza:" + conferenza.getInizio() + "\n" + "Data fine conferenza:" + conferenza.getFine());
-            alert.showAndWait();
-        }
+        return s;
     }
 
     @FXML
@@ -175,5 +189,15 @@ public class ModificaDettagliSessione_Controller implements Initializable {
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
+    }
+
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if( nomeTF.getText().isBlank()
+                || inizioDateTimePicker.getDateTimeValue() == null
+                || fineDateTimePicker.getDateTimeValue() == null
+                || saleChoice.getValue() == null
+                || coordinatoreChoiceBox.getValue() == null
+        ) throw new BlankFieldException();
     }
 }
