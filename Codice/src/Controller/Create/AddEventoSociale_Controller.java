@@ -1,6 +1,8 @@
 package Controller.Create;
 
 import Controller.ExceptionWindow_Controller;
+import Exceptions.BlankFieldException;
+import Interfaces.FormChecker;
 import Model.Entities.Conferenze.EventoSociale;
 import Model.Entities.Conferenze.Programma;
 import javafx.event.ActionEvent;
@@ -28,7 +30,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddEventoSociale_Controller implements Initializable {
+public class AddEventoSociale_Controller implements Initializable, FormChecker {
     @FXML
     private Button cancelButton;
     @FXML
@@ -55,6 +57,11 @@ public class AddEventoSociale_Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadSpinners();
     }
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if (titoloTextField.getText().isBlank()|| (oreSpinner.getValue()==0 & minutiSpinner.getValue()==0))
+            throw new BlankFieldException();
+    }
 
     //Private Methods
     private void loadExceptionWindow(String message) {
@@ -71,6 +78,7 @@ public class AddEventoSociale_Controller implements Initializable {
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
+            stage.setAlwaysOnTop(true);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -100,12 +108,15 @@ public class AddEventoSociale_Controller implements Initializable {
         eventoSociale.setTipologia(titoloTextField.getText());
         eventoSociale.setProgramma(programma);
         try {
+            checkFieldsAreBlank();
             PGInterval durata = new PGInterval(0, 0, 0, oreSpinner.getValue(), minutiSpinner.getValue(), 0);
             programma.addEvento(eventoSociale, durata);
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        } catch (SQLException e) {
+        }catch (BlankFieldException eb){
+            loadExceptionWindow(eb.getMessage());
+        }catch (SQLException e) {
             loadExceptionWindow(e.getMessage());
         }
     }

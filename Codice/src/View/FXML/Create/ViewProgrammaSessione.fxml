@@ -50,6 +50,11 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
+            <Button mnemonicParsing="false" onAction="#choiceKeynoteOnAction" prefHeight="50.0" prefWidth="173.0" text="Aggiungi Keynote" textAlignment="CENTER" wrapText="true">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
             <Button fx:id="removePuntoButton" mnemonicParsing="false" onAction="#removeButtonOnAction" prefHeight="50.0" prefWidth="173.0" text="Rimuovi punto" textAlignment="CENTER" wrapText="true">
                <VBox.margin>
                   <Insets top="10.0" />

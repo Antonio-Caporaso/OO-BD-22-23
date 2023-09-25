@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.Edit.ChooseKeynote_Controller;
 import Controller.View.ShowInfoEventoSociale_Controller;
 import Controller.View.ShowInfoIntervallo_Controller;
 import Controller.View.ShowInfoIntervento_Controller;
@@ -204,6 +205,29 @@ public class ViewProgramma_Controller implements Initializable {
             e.printStackTrace();
         }
     }
+    private void openAddKeynoteSpeaker() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ChoiceKeynote.fxml"));
+            ChooseKeynote_Controller controller = new ChooseKeynote_Controller(programma);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Selezione Keynote Speaker");
+//            stage.initStyle(StageStyle.TRANSPARENT);
+//            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.setAlwaysOnTop(true);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void openInfoIntervalloWindow(ActivityModel activityModel) {
         try {
@@ -314,6 +338,10 @@ public class ViewProgramma_Controller implements Initializable {
             else if (selected instanceof Intervallo)
                 openInfoIntervalloWindow(selected);
         }
+    }
+    @FXML
+    void choiceKeynoteOnAction(ActionEvent event) throws IOException{
+        openAddKeynoteSpeaker();
     }
 
     @FXML

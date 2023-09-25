@@ -1,6 +1,8 @@
 package Controller.Create;
 
 import Controller.ExceptionWindow_Controller;
+import Exceptions.BlankFieldException;
+import Interfaces.FormChecker;
 import Model.DAO.SpeakerDao;
 import Model.Entities.Organizzazione.Ente;
 import Model.Entities.Partecipanti.Speaker;
@@ -29,11 +31,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddSpeaker_Controller implements Initializable {
+public class AddSpeaker_Controller implements Initializable, FormChecker {
 
     @FXML
     private Button cancelButton;
-    private Speakers speakers;
     @FXML
     private TextField cognomeTextField;
     @FXML
@@ -51,10 +52,20 @@ public class AddSpeaker_Controller implements Initializable {
     @FXML
     private ChoiceBox<String> titoloChoiceBox;
     double x, y;
+    private Speakers speakers=new Speakers();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadChoiceBoxes();
+    }
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if (nomeTextField.getText().isBlank()
+                || cognomeTextField.getText().isBlank()
+                || emailtextField.getText().isBlank()
+                || enteChoiceBox.getValue()==null)
+            throw new BlankFieldException();
     }
 
     private void loadChoiceBoxes() {
@@ -79,6 +90,7 @@ public class AddSpeaker_Controller implements Initializable {
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
+            stage.setAlwaysOnTop(true);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,16 +105,16 @@ public class AddSpeaker_Controller implements Initializable {
 
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
-        SpeakerDao speakerDao = new SpeakerDao();
+
         Speaker speaker = getSpeaker();
         try {
-            int id = speakerDao.createSpeaker(speaker);
-            speaker.setIdSpeaker(id);
+            checkFieldsAreBlank();
             speakers.addSpeaker(speaker);
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
+        }catch (BlankFieldException eb){
+            loadExceptionWindow(eb.getMessage());
         } catch (SQLException e) {
-            e.printStackTrace();
             loadExceptionWindow(e.getMessage());
         }
     }
@@ -117,9 +129,6 @@ public class AddSpeaker_Controller implements Initializable {
         return speaker;
     }
 
-    protected void setSpeakers(Speakers speakers){
-        this.speakers = speakers;
-    }
     @FXML
     void dragged(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
