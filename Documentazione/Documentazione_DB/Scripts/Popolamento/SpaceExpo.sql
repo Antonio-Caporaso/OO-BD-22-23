@@ -35,15 +35,15 @@ select comitato_s from conferenza where id_conferenza=conferenza_id into comitat
 select comitato_l from conferenza where id_conferenza=conferenza_id into comitato_lc_id;
 
 --Aggiungo membri comitato
-call add_membri_comitato('137,144',comitato_sc_id); -- Comitato scientifico
+call add_membri_comitato('137,142',comitato_sc_id); -- Comitato scientifico
 call add_membri_comitato('161,250',comitato_lc_id); -- Comitato locale
 
 -- Aggiunta sessioni
 sessione1_id = add_new_sessione('Exploring Mars: The Future of Human Colonization','2023-08-03 10:00','2023-08-03 13:00',4,conferenza_id,137);
-sessione2_id = add_new_sessione('Space Tourism: A New Era of Extraterrestrial Travel','2023-08-03 13:30','2023-08-03 17:30',5,conferenza_id,144);
-sessione3_id = add_new_sessione('Satellite Constellations: Revolutionizing Global Connectivity','2023-08-04 10:30','2023-08-04 12:30',6,conferenza_id,144);
+sessione2_id = add_new_sessione('Space Tourism: A New Era of Extraterrestrial Travel','2023-08-03 13:30','2023-08-03 17:30',5,conferenza_id,142);
+sessione3_id = add_new_sessione('Satellite Constellations: Revolutionizing Global Connectivity','2023-08-04 10:30','2023-08-04 12:30',6,conferenza_id,142);
 sessione4_id = add_new_sessione('Sustainable Space Exploration: Protecting Celestial Bodies and Earth','2023-08-04 13:30','2023-08-04 19:30',4,conferenza_id,137);
-sessione5_id = add_new_sessione('Innovations in Space Research: From Astrophysics to Exoplanet Discoveries','2023-08-05 9:30','2023-08-05 20:00',5,conferenza_id,144);
+sessione5_id = add_new_sessione('Innovations in Space Research: From Astrophysics to Exoplanet Discoveries','2023-08-05 9:30','2023-08-05 20:00',5,conferenza_id,142);
 
 -- Specifica programma sessione 1
 select id_programma from programma where id_sessione = sessione1_id into programma1_id;

@@ -267,30 +267,41 @@ before update on conferenza
 for each row
 execute function check_comitati_conferenza();
  
--- 3. La sede di una conferenza deve essere libera nel periodo indicato.
-create or replace function check_sede_libera() returns trigger as $$
-declare 
-    sale_occupate integer;
-begin
-    select count(*) into sale_occupate
-    from sala s1
-    where s1.id_sede = new.id_sede
-    and s1.id_sala in (
-        select id_sala
-        from sessione s2
-        where (s2.inizio, s2.fine) overlaps (new.inizio, new.fine)
-    );
-    if (sale_occupate > 0) then
-        raise exception 'La sede non è disponibile';
-    end if;
-    return new;
-end;
-$$ language plpgsql;
+-- 3. La sede di una conferenza deve essere libera nel periodo indicato. In caso di aggiornamento sulla tabella non devo considerare la sede precedente
+CREATE OR REPLACE FUNCTION check_sede_libera()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF TG_OP = 'INSERT' OR
+    (TG_OP = 'UPDATE' AND (
+      NEW.inizio <> OLD.inizio OR
+      NEW.fine <> OLD.fine OR
+      NEW.id_sede <> OLD.id_sede
+    )) THEN
+    -- Controllo se la sede è occupata nelle date specificate
+    IF EXISTS (
+      SELECT 1
+      FROM conferenza
+      WHERE (
+        (NEW.inizio >= inizio AND NEW.inizio <= fine) OR
+        (NEW.fine >= inizio AND NEW.fine <= fine)
+      )
+      AND NEW.id_sede = id_sede
+    ) THEN
+      -- Se la sede è occupata, solleva un'eccezione
+      RAISE EXCEPTION 'La sede è occupata nelle date specificate.';
+    END IF;
+  END IF;
+  
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
-create trigger verifica_disponibilita_sede
-before insert or update on conferenza
-for each row
-execute function check_sede_libera();
+-- Creazione del trigger per controllare la sede libera prima dell'INSERT o dell'UPDATE
+CREATE TRIGGER check_sede_libera_before_insert_update
+BEFORE INSERT OR UPDATE ON conferenza
+FOR EACH ROW
+EXECUTE FUNCTION check_sede_libera();
+
 
 /* --------------------------------------------------------------------------------------------*
  |                          Vincoli per la tabella SALA                                        |
