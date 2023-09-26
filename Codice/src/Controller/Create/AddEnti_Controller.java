@@ -3,8 +3,8 @@ package Controller.Create;
 import Controller.Edit.ModificaConferenza_Controller;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.EntePresenteException;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Organizzazione.Ente;
+import Model.Entities.Conferenza;
+import Model.Entities.Ente;
 import Model.Entities.Utente;
 import Model.Utilities.Enti;
 import javafx.event.ActionEvent;
@@ -110,7 +110,7 @@ public class AddEnti_Controller implements Initializable {
 
     private void setOrganizzatoriListView() {
         try {
-            conferenza.loadOrganizzatori();
+            conferenza.loadEnti();
             entiListView.setItems(conferenza.getEnti());
         } catch (Exception e) {
             e.printStackTrace();

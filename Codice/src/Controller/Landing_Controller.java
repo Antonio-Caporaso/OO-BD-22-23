@@ -3,8 +3,8 @@ package Controller;
 import Controller.Create.AddConference_Controller;
 import Controller.Edit.ModificaConferenze_Controller;
 import Controller.Login.Login_Controller;
-import Controller.View.VisualizzaConferenze_Controller;
 import Controller.Stats.VisualizzaStatistiche_Controller;
+import Controller.View.VisualizzaConferenze_Controller;
 import Model.Entities.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Landing_Controller implements Initializable {
+    public Utente user;
     @FXML
     private Button LogoutButton;
     @FXML
@@ -30,9 +31,8 @@ public class Landing_Controller implements Initializable {
     private SubScene subscene;
     @FXML
     private Label welcomeLabel;
-    public Utente user;
 
-    public Landing_Controller(Utente user){
+    public Landing_Controller(Utente user) {
         this.user = user;
     }
 
@@ -50,14 +50,14 @@ public class Landing_Controller implements Initializable {
     }
 
     public void setWelcomeLabel() {
-            welcomeLabel.setText("Welcome " + user.getUsername() + "!");
+        welcomeLabel.setText("Welcome " + user.getUsername() + "!");
     }
 
     @FXML
     void creaConferenzaOnAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddConference.fxml"));
-            AddConference_Controller controller = new AddConference_Controller(subscene,user);
+            AddConference_Controller controller = new AddConference_Controller(subscene, user);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -70,7 +70,7 @@ public class Landing_Controller implements Initializable {
     void gestisciConferenzaOnAction(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenze.fxml"));
-            ModificaConferenze_Controller controller = new ModificaConferenze_Controller(user,subscene);
+            ModificaConferenze_Controller controller = new ModificaConferenze_Controller(user, subscene);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);

@@ -1,8 +1,8 @@
 package Controller.Edit;
 
 import Model.DAO.ProgrammaDao;
-import Model.Entities.Conferenze.Programma;
-import Model.Entities.Partecipanti.Speaker;
+import Model.Entities.Programma;
+import Model.Entities.Speaker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,16 +23,10 @@ import java.util.ResourceBundle;
 
 public class EditKeynote_Controller implements Initializable {
     @FXML
-    private Button addKeynoteButton;
-    @FXML
     private TableColumn<Speaker, String> cognomeKeynoteColumn;
-    @FXML
-    private Button deleteEventoButton;
     private ModificaProgrammaSessione_Controller editProgrammaController;
     @FXML
     private TableColumn<Speaker, String> emailKeynoteColumn;
-    @FXML
-    private Button fineButton;
     @FXML
     private TableColumn<Speaker, String> istituzioneKeynoteColumn;
     private Speaker keynote;
@@ -42,31 +36,12 @@ public class EditKeynote_Controller implements Initializable {
     private TableColumn<Speaker, String> nomeKeynoteColumn;
     private Programma programma;
     private SubScene subScene;
-
-    public ModificaProgrammaSessione_Controller getEditProgrammaController() {
-        return editProgrammaController;
-    }
-
-    public void setEditProgrammaController(ModificaProgrammaSessione_Controller modificaProgrammaSessioneController) {
-        this.editProgrammaController = modificaProgrammaSessioneController;
-    }
-
-    public Speaker getKeynote() {
-        return keynote;
-    }
-
-    public void setKeynote(Speaker keynote) {
-        this.keynote = keynote;
-    }
-
     public Programma getProgramma() {
         return programma;
     }
-
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
-
     public SubScene getSubScene() {
         return subScene;
     }

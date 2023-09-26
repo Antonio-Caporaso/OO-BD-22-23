@@ -1,8 +1,8 @@
 package Controller.View;
 
 import Model.DAO.EventoSocialeDao;
-import Model.Entities.Conferenze.ActivityModel;
-import Model.Entities.Conferenze.EventoSociale;
+import Model.Utilities.ActivityModel;
+import Model.Entities.EventoSociale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,22 +20,17 @@ import java.util.ResourceBundle;
 public class ShowInfoEventoSociale_Controller implements Initializable {
     private ActivityModel activityModel;
     @FXML
-    private AnchorPane popUpWindowAnchor;
-    @FXML
     private Button closeButton;
+    private EventoSociale eventoSociale;
     @FXML
-    private Label titoloLabel;
+    private Label fineLabel;
     @FXML
     private Label inizioLabel;
     @FXML
-    private Label fineLabel;
-
-    private EventoSociale eventoSociale;
+    private AnchorPane popUpWindowAnchor;
+    @FXML
+    private Label titoloLabel;
     private double x, y;
-
-    public void setActivityModel(ActivityModel activityModel) {
-        this.activityModel = activityModel;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,24 +41,28 @@ public class ShowInfoEventoSociale_Controller implements Initializable {
         }
     }
 
-    //Public methods
+    public void setActivityModel(ActivityModel activityModel) {
+        this.activityModel = activityModel;
+    }
+
     private void initializeData() throws SQLException {
         EventoSocialeDao eventoSocialeDao = new EventoSocialeDao();
         eventoSociale = eventoSocialeDao.retrieveEventoByID(activityModel.getId_entry());
         loadLabels();
     }
-    //Private Methods
+
     private void loadLabels() {
         titoloLabel.setText(eventoSociale.getTipologia());
         inizioLabel.setText(eventoSociale.getInizio().toString());
         fineLabel.setText(eventoSociale.getFine().toString());
     }
-    //ActionEvent Methods
+
     @FXML
     void closeButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
+
     @FXML
     void dragged(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

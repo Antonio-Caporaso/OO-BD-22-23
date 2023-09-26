@@ -1,12 +1,12 @@
 package Controller.Edit;
 
+import Exceptions.BlankFieldException;
 import Exceptions.SponsorizzazionPresenteException;
 import Interfaces.FormChecker;
-import Exceptions.BlankFieldException;
 import Model.DAO.SponsorizzazioneDAO;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Organizzazione.Sponsor;
-import Model.Entities.Organizzazione.Sponsorizzazione;
+import Model.Entities.Conferenza;
+import Model.Entities.Sponsor;
+import Model.Entities.Sponsorizzazione;
 import Model.Utilities.Sponsors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,12 +37,6 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
     private TextField contributoTextField;
     private ModificaConferenza_Controller controller;
     @FXML
-    private Button deleteButton;
-    @FXML
-    private Button editContributoButton;
-    @FXML
-    private Button inserisciButton;
-    @FXML
     private ChoiceBox<Sponsor> sponsorChoice;
     @FXML
     private TableColumn<Sponsorizzazione, String> sponsorColumn;
@@ -50,8 +44,6 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
     private TableView<Sponsorizzazione> sponsorTable;
     private Sponsors sponsors = new Sponsors();
     private SubScene subscene;
-    @FXML
-    private Label titleLabel;
     @FXML
     private ChoiceBox<String> valutaChoice;
     @FXML
@@ -95,6 +87,15 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
         this.subscene = subScene;
     }
 
+    private void goToEditConferenceWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
+        loader.setController(controller);
+        controller.setConferenza(conferenza);
+        controller.setSponsorizzazioni();
+        Parent root = loader.load();
+        subscene.setRoot(root);
+    }
+
     private void setTable() {
         sponsorTable.setEditable(true);
         try {
@@ -134,7 +135,7 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
                 throw new NullPointerException();
             Optional<ButtonType> result = showDeleteDialog();
             if (result.get() == ButtonType.OK)
-                    conferenza.removeSponsorizzazione(sp);
+                conferenza.removeSponsorizzazione(sp);
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Nessuna sponsorizzazione selezionata");
@@ -161,10 +162,10 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Seleziona tutti i campi prima di procedere");
             alert.showAndWait();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Errore in fase di salvataggio");
-            alert.setContentText(e.getSQLState() + ": "+e.getMessage());
+            alert.setContentText(e.getSQLState() + ": " + e.getMessage());
             alert.showAndWait();
         }
     }
@@ -172,14 +173,5 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         goToEditConferenceWindow();
-    }
-
-    private void goToEditConferenceWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
-        loader.setController(controller);
-        controller.setConferenza(conferenza);
-        controller.setSponsorizzazioni();
-        Parent root = loader.load();
-        subscene.setRoot(root);
     }
 }

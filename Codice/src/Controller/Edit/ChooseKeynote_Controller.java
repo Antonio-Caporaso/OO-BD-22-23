@@ -1,9 +1,9 @@
 package Controller.Edit;
 
 import Model.DAO.ProgrammaDao;
-import Model.Entities.Conferenze.Intervento;
-import Model.Entities.Conferenze.Programma;
-import Model.Entities.Partecipanti.Speaker;
+import Model.Entities.Intervento;
+import Model.Entities.Programma;
+import Model.Entities.Speaker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,8 +21,6 @@ import java.util.ResourceBundle;
 public class ChooseKeynote_Controller implements Initializable {
     @FXML
     private Button annullaButton;
-    @FXML
-    private Button confermaButton;
     private Programma programma;
     @FXML
     private ChoiceBox<Speaker> speakerChoice;

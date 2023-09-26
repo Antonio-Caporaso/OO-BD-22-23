@@ -1,8 +1,8 @@
 package Controller.Edit;
 
 import Exceptions.SessioneNotSelectedException;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Conferenze.Sessione;
+import Model.Entities.Conferenza;
+import Model.Entities.Sessione;
 import Model.Entities.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,28 +21,19 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModificaSessioni_Controller implements Initializable {
-    @FXML
-    private Button addSessioneButton;
     private Conferenza conferenza;
-    @FXML
-    private Button confermaButton;
-    @FXML
-    private Button editSessionsButton;
     @FXML
     private TableColumn<Sessione, Date> fineSessioneColumn;
     @FXML
     private TableColumn<Sessione, Date> inizioSessioneColumn;
-    private ModificaConferenza_Controller modificaConferenzaController;
+    private final ModificaConferenza_Controller modificaConferenzaController;
     @FXML
     private TableColumn<Sessione, String> nomeSessioneColumn;
-    @FXML
-    private Button rimuoviSessioneButton;
     @FXML
     private TableColumn<Sessione, String> salaSessioneColumn;
     private SubScene subscene;
     @FXML
     private TableView<Sessione> table;
-    private Utente user;
 
     public ModificaSessioni_Controller(Conferenza conferenza, SubScene subscene, ModificaConferenza_Controller modificaConferenzaController) {
         this.conferenza = conferenza;
@@ -50,10 +41,16 @@ public class ModificaSessioni_Controller implements Initializable {
         this.modificaConferenzaController = modificaConferenzaController;
     }
 
+    private static void showSessioneNotSelectedAlert(SessioneNotSelectedException e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(e.getMessage());
+        alert.showAndWait();
+    }
+
     @FXML
     public void addSessioneOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/AddSessione.fxml"));
-        AddSessione_Controller controller = new AddSessione_Controller(conferenza,subscene,this);
+        AddSessione_Controller controller = new AddSessione_Controller(conferenza, subscene, this);
         loader.setController(controller);
         Parent root = loader.load();
         subscene.setRoot(root);
@@ -66,7 +63,7 @@ public class ModificaSessioni_Controller implements Initializable {
             Sessione s = table.getSelectionModel().getSelectedItem();
             if (s == null)
                 throw new SessioneNotSelectedException();
-            ModificaSessione_Controller controller = new ModificaSessione_Controller(s,conferenza,this,subscene);
+            ModificaSessione_Controller controller = new ModificaSessione_Controller(s, conferenza, this, subscene);
             loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
@@ -100,7 +97,6 @@ public class ModificaSessioni_Controller implements Initializable {
         this.conferenza = conferenza;
     }
 
-
     public void setSubscene(SubScene subscene) {
         this.subscene = subscene;
     }
@@ -123,12 +119,6 @@ public class ModificaSessioni_Controller implements Initializable {
         return result;
     }
 
-    private static void showSessioneNotSelectedAlert(SessioneNotSelectedException e) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(e.getMessage());
-        alert.showAndWait();
-    }
-
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
@@ -148,7 +138,7 @@ public class ModificaSessioni_Controller implements Initializable {
             }
             Optional<ButtonType> result = showConfirmationAlert(s);
             if (result.get() == ButtonType.OK) {
-                    conferenza.removeSessione(s);
+                conferenza.removeSessione(s);
             }
         } catch (SessioneNotSelectedException e) {
             showSessioneNotSelectedAlert(e);

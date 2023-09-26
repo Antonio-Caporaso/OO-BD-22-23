@@ -1,8 +1,8 @@
 package Controller.View;
 
 import Model.DAO.IntervalloDao;
-import Model.Entities.Conferenze.ActivityModel;
-import Model.Entities.Conferenze.Intervallo;
+import Model.Utilities.ActivityModel;
+import Model.Entities.Intervallo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,17 +21,16 @@ public class ShowInfoIntervallo_Controller implements Initializable {
 
     private ActivityModel activityModel;
     @FXML
-    private AnchorPane popUpWindowAnchor;
-    @FXML
     private Button closeButton;
     @FXML
     private Label descrizioneLabel;
     @FXML
-    private Label inizioLabel;
-    @FXML
     private Label fineLabel;
-
+    @FXML
+    private Label inizioLabel;
     private Intervallo intervallo;
+    @FXML
+    private AnchorPane popUpWindowAnchor;
     private double x, y;
 
     @Override
@@ -43,29 +42,27 @@ public class ShowInfoIntervallo_Controller implements Initializable {
         }
     }
 
-    //Public methods
+    public void setActivityModel(ActivityModel activityModel) {
+        this.activityModel = activityModel;
+    }
+
     private void initializeData() throws SQLException {
         IntervalloDao intervalloDao = new IntervalloDao();
         intervallo = intervalloDao.retrieveIntervalloByID(activityModel.getId_entry());
         loadLabels();
     }
-
-    public void setActivityModel(ActivityModel activityModel) {
-        this.activityModel = activityModel;
-    }
-
-    //Private Methods
     private void loadLabels() {
         descrizioneLabel.setText(intervallo.getTipologia());
         inizioLabel.setText(intervallo.getInizio().toString());
         fineLabel.setText(intervallo.getFine().toString());
     }
-    //ActionEvent Methods
+
     @FXML
     void closeButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
+
     @FXML
     void dragged(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -1,7 +1,7 @@
 package Controller.View;
 
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Conferenze.Sede;
+import Model.Entities.Conferenza;
+import Model.Entities.Sede;
 import Model.Utilities.Conferenze;
 import Model.Utilities.Sedi;
 import javafx.collections.ObservableList;
@@ -22,19 +22,13 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class VisualizzaConferenze_Controller implements Initializable {
-    @FXML
-    private Button cercaPerDataButton;
-    @FXML
-    private Button cercaPerSedeButton;
-    private Conferenze conferenze = new Conferenze();
+    private final Conferenze conferenze = new Conferenze();
     @FXML
     private DatePicker dataFineDP;
     @FXML
     private DatePicker dataInizioDP;
     @FXML
     private TableColumn<Conferenza, String> descrizioneColumn;
-    @FXML
-    private RadioButton filterBySedeRadioButton;
     @FXML
     private TableColumn<Conferenza, Timestamp> fineConferenzaColumn;
     @FXML
@@ -45,12 +39,10 @@ public class VisualizzaConferenze_Controller implements Initializable {
     private ChoiceBox<Sede> sedeChoice;
     @FXML
     private TableColumn<Conferenza, String> sedeColumn;
-    private Sedi sedi = new Sedi();
+    private final Sedi sedi = new Sedi();
     private SubScene subScene;
     @FXML
     private TableView<Conferenza> tableConferenza;
-    @FXML
-    private Button visualizzaButton;
 
     public VisualizzaConferenze_Controller(SubScene subscene) {
         this.subScene = subscene;

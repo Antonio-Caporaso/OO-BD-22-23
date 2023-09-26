@@ -1,14 +1,10 @@
 package Controller.Edit;
 
-import Interfaces.FormChecker;
 import Exceptions.BlankFieldException;
 import Exceptions.SediNonDisponibiliException;
+import Interfaces.FormChecker;
 import Model.DAO.ProgrammaDao;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Conferenze.Programma;
-import Model.Entities.Conferenze.Sala;
-import Model.Entities.Conferenze.Sessione;
-import Model.Entities.Organizzazione.Organizzatore;
+import Model.Entities.*;
 import Model.Utilities.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +12,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
@@ -30,17 +29,16 @@ import java.util.ResourceBundle;
 public class AddSessione_Controller implements Initializable, FormChecker {
     private Conferenza conferenza;
     @FXML
-    private ImageView inizioSessioneAboutImage;
-    @FXML
-    private ImageView fineSessioneAboutImage;
-    @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
     @FXML
     private DateTimePicker fineDateTimePicker;
     @FXML
+    private ImageView fineSessioneAboutImage;
+    @FXML
     private DateTimePicker inizioDateTimePicker;
+    @FXML
+    private ImageView inizioSessioneAboutImage;
     private ModificaSessioni_Controller modificaSessioniController;
-    private ModificaConferenza_Controller modificaConferenzaController;
     @FXML
     private TextField nomeTF;
     private Sale sale;
@@ -91,7 +89,7 @@ public class AddSessione_Controller implements Initializable, FormChecker {
 
     private void goToAddProgrammaWindow(Sessione s) throws SQLException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaProgrammaSessione.fxml"));
-        ModificaProgrammaSessione_Controller controller = new ModificaProgrammaSessione_Controller(s,subscene,modificaSessioniController);
+        ModificaProgrammaSessione_Controller controller = new ModificaProgrammaSessione_Controller(s, subscene, modificaSessioniController);
         loader.setController(controller);
         Parent root = loader.load();
         subscene.setRoot(root);

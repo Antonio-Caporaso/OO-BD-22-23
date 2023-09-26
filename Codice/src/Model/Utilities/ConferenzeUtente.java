@@ -4,11 +4,11 @@ import Model.DAO.ConferenzaDao;
 import Model.DAO.EnteDao;
 import Model.DAO.SessioneDao;
 import Model.DAO.SponsorizzazioneDAO;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Conferenze.Sessione;
+import Model.Entities.Conferenza;
+import Model.Entities.Sessione;
 import Model.Entities.Utente;
-import Model.Entities.Organizzazione.Ente;
-import Model.Entities.Organizzazione.Sponsorizzazione;
+import Model.Entities.Ente;
+import Model.Entities.Sponsorizzazione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -31,10 +31,6 @@ public class ConferenzeUtente extends Conferenze {
 
     public ObservableList<Conferenza> getConferenzeUtente() {
         return conferenzeUtente;
-    }
-
-    public void setConferenzeUtente(ObservableList<Conferenza> conferenzeUtente) {
-        this.conferenzeUtente = conferenzeUtente;
     }
 
     public void loadConferenzeUtente(Utente user) throws SQLException {

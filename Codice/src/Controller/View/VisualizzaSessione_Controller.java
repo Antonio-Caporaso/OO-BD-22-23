@@ -1,7 +1,8 @@
 package Controller.View;
 
 import Model.DAO.ProgrammaDao;
-import Model.Entities.Conferenze.*;
+import Model.Entities.*;
+import Model.Utilities.ActivityModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +10,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -27,13 +30,7 @@ public class VisualizzaSessione_Controller implements Initializable {
     @FXML
     private TableColumn<ActivityModel, String> appuntamentoTableColumn;
     @FXML
-    private Button confermaButton;
-    @FXML
     private Label coordinatoreLabel;
-    @FXML
-    private Button editDetailsButton;
-    @FXML
-    private Button editProgrammaButton;
     @FXML
     private Label fineLabel;
     @FXML
@@ -51,11 +48,11 @@ public class VisualizzaSessione_Controller implements Initializable {
     private TableView<ActivityModel> programmaTableView;
     @FXML
     private Label salaLabel;
+    private final Sessione sessione;
+    private final SubScene subScene;
     @FXML
     private Label titleLabel;
-    private Sessione sessione;
-    private SubScene subScene;
-    private VisualizzaConferenza_Controller visualizzaConferenzaController;
+    private final VisualizzaConferenza_Controller visualizzaConferenzaController;
 
     public VisualizzaSessione_Controller(Sessione sessione, SubScene subScene, VisualizzaConferenza_Controller visualizzaConferenzaController) {
         this.sessione = sessione;
@@ -78,6 +75,76 @@ public class VisualizzaSessione_Controller implements Initializable {
         salaLabel.setText(sessione.getLocazione().getNomeSala());
         coordinatoreLabel.setText(sessione.getCoordinatore().toString());
         keynoteSpeakerLabel.setText(programma.getKeynote().toString());
+    }
+
+    private void loadInfoEventoSociale(ActivityModel activityModel) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoEventoSociale.fxml"));
+            ShowInfoEventoSociale_Controller controller = new ShowInfoEventoSociale_Controller();
+            controller.setActivityModel(activityModel);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.setAlwaysOnTop(true);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadInfoIntervallo(ActivityModel activityModel) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervallo.fxml"));
+            ShowInfoIntervallo_Controller controller = new ShowInfoIntervallo_Controller();
+            controller.setActivityModel(activityModel);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.setAlwaysOnTop(true);
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadInfoIntervento(ActivityModel activityModel) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervento.fxml"));
+            ShowInfoIntervento_Controller controller = new ShowInfoIntervento_Controller();
+            controller.setActivityModel(activityModel);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setX(860);
+            stage.setY(360);
+            stage.setAlwaysOnTop(true);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void retrieveProgrammaSessione() {
@@ -119,74 +186,6 @@ public class VisualizzaSessione_Controller implements Initializable {
                 loadInfoEventoSociale(selected);
             else if (selected instanceof Intervallo)
                 loadInfoIntervallo(selected);
-        }
-    }
-
-    private void loadInfoIntervento(ActivityModel activityModel){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervento.fxml"));
-            ShowInfoIntervento_Controller controller = new ShowInfoIntervento_Controller();
-            controller.setActivityModel(activityModel);
-            loader.setController(controller);
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setX(860);
-            stage.setY(360);
-            stage.setAlwaysOnTop(true);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void loadInfoIntervallo(ActivityModel activityModel){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervallo.fxml"));
-            ShowInfoIntervallo_Controller controller = new ShowInfoIntervallo_Controller();
-            controller.setActivityModel(activityModel);
-            loader.setController(controller);
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setX(860);
-            stage.setY(360);
-            stage.setAlwaysOnTop(true);
-            stage.showAndWait();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void loadInfoEventoSociale(ActivityModel activityModel){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoEventoSociale.fxml"));
-            ShowInfoEventoSociale_Controller controller = new ShowInfoEventoSociale_Controller();
-            controller.setActivityModel(activityModel);
-            loader.setController(controller);
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setX(860);
-            stage.setY(360);
-            stage.setAlwaysOnTop(true);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

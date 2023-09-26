@@ -7,7 +7,7 @@ import Exceptions.PasswordMismatchException;
 import Exceptions.UtentePresenteException;
 import Model.DAO.UtenteDAO;
 import Model.Entities.Utente;
-import Model.Entities.Organizzazione.Ente;
+import Model.Entities.Ente;
 import Model.Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,13 +35,8 @@ public class Register_Controller implements Initializable, FormChecker {
     private Enti enti = new Enti();
     @FXML
     private Label errorLabel;
-    private File file;
     @FXML
     private ChoiceBox<Ente> istituzioneChoice;
-    private Media media;
-    private MediaPlayer mediaPlayer;
-    @FXML
-    private MediaView mediaView;
     @FXML
     private TextField nomeTextField;
     @FXML

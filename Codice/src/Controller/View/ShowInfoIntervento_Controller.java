@@ -1,8 +1,8 @@
 package Controller.View;
 
 import Model.DAO.InterventoDao;
-import Model.Entities.Conferenze.ActivityModel;
-import Model.Entities.Conferenze.Intervento;
+import Model.Utilities.ActivityModel;
+import Model.Entities.Intervento;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,23 +19,22 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ShowInfoIntervento_Controller implements Initializable {
-    private ActivityModel activityModel;
     @FXML
-    private AnchorPane popUpWindowAnchor;
+    private TextArea abstractTextArea;
+    private ActivityModel activityModel;
     @FXML
     private Button closeButton;
     @FXML
-    private Label titoloLabel;
+    private Label fineLabel;
     @FXML
     private Label inizioLabel;
+    private Intervento intervento;
     @FXML
-    private Label fineLabel;
+    private AnchorPane popUpWindowAnchor;
     @FXML
     private Label speakerLabel;
     @FXML
-    private TextArea abstractTextArea;
-
-    private Intervento intervento;
+    private Label titoloLabel;
     private double x, y;
 
     @Override
@@ -51,15 +50,14 @@ public class ShowInfoIntervento_Controller implements Initializable {
         this.activityModel = activityModel;
     }
 
-    //Public methods
     private void initializeData() throws SQLException {
         InterventoDao interventoDao = new InterventoDao();
         intervento = interventoDao.retrieveInterventoByID(activityModel.getId_entry());
         loadLabels();
     }
-    //Private Methods
+
     private void loadLabels() {
-        String speaker=intervento.getSpeaker().getNome()+" "+intervento.getSpeaker().getCognome();
+        String speaker = intervento.getSpeaker().getNome() + " " + intervento.getSpeaker().getCognome();
         titoloLabel.setText(intervento.getTitolo());
         inizioLabel.setText(intervento.getInizio().toString());
         fineLabel.setText(intervento.getFine().toString());
@@ -67,12 +65,13 @@ public class ShowInfoIntervento_Controller implements Initializable {
         speakerLabel.setText(speaker);
 
     }
-    //ActionEvent Methods
+
     @FXML
     void closeButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
+
     @FXML
     void dragged(MouseEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

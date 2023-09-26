@@ -4,7 +4,8 @@ import Controller.View.ShowInfoEventoSociale_Controller;
 import Controller.View.ShowInfoIntervallo_Controller;
 import Controller.View.ShowInfoIntervento_Controller;
 import Model.DAO.ProgrammaDao;
-import Model.Entities.Conferenze.*;
+import Model.Entities.*;
+import Model.Utilities.ActivityModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,13 +34,7 @@ public class ModificaSessione_Controller implements Initializable {
     private TableColumn<ActivityModel, String> appuntamentoTableColumn;
     private Conferenza conferenza;
     @FXML
-    private Button confermaButton;
-    @FXML
     private Label coordinatoreLabel;
-    @FXML
-    private Button editDetailsButton;
-    @FXML
-    private Button editProgrammaButton;
     @FXML
     private Label fineLabel;
     @FXML
@@ -130,7 +124,7 @@ public class ModificaSessione_Controller implements Initializable {
 
     private void goToEditDettagliSessione() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaDettagliSessione.fxml"));
-        ModificaDettagliSessione_Controller controllerS = new ModificaDettagliSessione_Controller(sessione,conferenza,subScene,this);
+        ModificaDettagliSessione_Controller controllerS = new ModificaDettagliSessione_Controller(sessione, conferenza, subScene, this);
         loader.setController(controllerS);
         Parent root = loader.load();
         subScene.setRoot(root);
@@ -138,7 +132,7 @@ public class ModificaSessione_Controller implements Initializable {
 
     private void goToEditProgrammaWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaProgrammaSessione.fxml"));
-        ModificaProgrammaSessione_Controller controller = new ModificaProgrammaSessione_Controller(sessione,subScene,manageSessioniController);
+        ModificaProgrammaSessione_Controller controller = new ModificaProgrammaSessione_Controller(sessione, subScene, manageSessioniController);
         controller.setProgramma(programma);
         loader.setController(controller);
         Parent root = loader.load();
@@ -153,57 +147,10 @@ public class ModificaSessione_Controller implements Initializable {
         subScene.setRoot(root);
     }
 
-    private void retrieveProgrammaSessione() {
-        ProgrammaDao programmaDao = new ProgrammaDao();
+    private void loadInfoEventoSociale(ActivityModel activityModel) {
         try {
-            programma = programmaDao.retrieveProgrammaBySessione(sessione);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    void confermaButtonOnAction(ActionEvent event) throws IOException {
-        goToEditSessionsWindow();
-    }
-
-    @FXML
-    void editProgrammaOnAction(ActionEvent event) throws IOException {
-        goToEditProgrammaWindow();
-    }
-
-    @FXML
-    void editDetailsOnAction(ActionEvent event) throws IOException {
-        goToEditDettagliSessione();
-    }
-    private void setProgrammaTableView() {
-        try {
-            programma.loadProgramaSessione();
-            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-            inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
-            fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
-            programmaTableView.setItems(programma.getProgrammaSessione());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    void showInfoScreen(MouseEvent event) {
-        ActivityModel selected = programmaTableView.getSelectionModel().getSelectedItem();
-        if (programma.getProgrammaSessione().contains(selected)) {
-            if (selected instanceof Intervento)
-                loadInfoIntervento(selected);
-            if (selected instanceof EventoSociale)
-                loadInfoEventoSociale( selected);
-            else if (selected instanceof Intervallo)
-                loadInfoIntervallo(selected);
-        }
-    }
-    private void loadInfoIntervento(ActivityModel activityModel){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervento.fxml"));
-            ShowInfoIntervento_Controller controller = new ShowInfoIntervento_Controller();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoEventoSociale.fxml"));
+            ShowInfoEventoSociale_Controller controller = new ShowInfoEventoSociale_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);
             Parent root = loader.load();
@@ -223,7 +170,8 @@ public class ModificaSessione_Controller implements Initializable {
             e.printStackTrace();
         }
     }
-    private void loadInfoIntervallo(ActivityModel activityModel){
+
+    private void loadInfoIntervallo(ActivityModel activityModel) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervallo.fxml"));
             ShowInfoIntervallo_Controller controller = new ShowInfoIntervallo_Controller();
@@ -246,10 +194,11 @@ public class ModificaSessione_Controller implements Initializable {
             e.printStackTrace();
         }
     }
-    private void loadInfoEventoSociale(ActivityModel activityModel){
+
+    private void loadInfoIntervento(ActivityModel activityModel) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoEventoSociale.fxml"));
-            ShowInfoEventoSociale_Controller controller = new ShowInfoEventoSociale_Controller();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/ShowInfoIntervento.fxml"));
+            ShowInfoIntervento_Controller controller = new ShowInfoIntervento_Controller();
             controller.setActivityModel(activityModel);
             loader.setController(controller);
             Parent root = loader.load();
@@ -267,6 +216,56 @@ public class ModificaSessione_Controller implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void retrieveProgrammaSessione() {
+        ProgrammaDao programmaDao = new ProgrammaDao();
+        try {
+            programma = programmaDao.retrieveProgrammaBySessione(sessione);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setProgrammaTableView() {
+        try {
+            programma.loadProgramaSessione();
+            appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            programmaTableView.setItems(programma.getProgrammaSessione());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void confermaButtonOnAction(ActionEvent event) throws IOException {
+        goToEditSessionsWindow();
+    }
+
+    @FXML
+    void editProgrammaOnAction(ActionEvent event) throws IOException {
+        goToEditProgrammaWindow();
+    }
+
+    @FXML
+    void editDetailsOnAction(ActionEvent event) throws IOException {
+        goToEditDettagliSessione();
+    }
+
+    @FXML
+    void showInfoScreen(MouseEvent event) {
+        ActivityModel selected = programmaTableView.getSelectionModel().getSelectedItem();
+        if (programma.getProgrammaSessione().contains(selected)) {
+            if (selected instanceof Intervento)
+                loadInfoIntervento(selected);
+            if (selected instanceof EventoSociale)
+                loadInfoEventoSociale(selected);
+            else if (selected instanceof Intervallo)
+                loadInfoIntervallo(selected);
         }
     }
 }

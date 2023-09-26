@@ -1,4 +1,6 @@
-package Model.Entities;
+package Model.Utilities;
+
+import Model.Entities.Programma;
 
 import java.sql.Timestamp;
 

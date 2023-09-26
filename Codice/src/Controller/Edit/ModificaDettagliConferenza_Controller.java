@@ -1,10 +1,9 @@
 package Controller.Edit;
 
-import Exceptions.SediNonDisponibiliException;
 import Model.DAO.ConferenzaDao;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Conferenze.Sede;
-import Model.Entities.Conferenze.Sessione;
+import Model.Entities.Conferenza;
+import Model.Entities.Sede;
+import Model.Entities.Sessione;
 import Model.Utilities.Sedi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,9 +14,6 @@ import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
 import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
@@ -25,17 +21,16 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModificaDettagliConferenza_Controller implements Initializable {
     @FXML
-    private Button annullaButton;
-    @FXML
     private ImageView alert_1;
     @FXML
     private ImageView alert_2;
+    @FXML
+    private Button annullaButton;
     private Conferenza conferenza;
     @FXML
     private TextArea descrizioneTextArea;
@@ -47,12 +42,11 @@ public class ModificaDettagliConferenza_Controller implements Initializable {
     @FXML
     private TextField nomeTF;
     @FXML
-    private Button okButton;
-    @FXML
     private ChoiceBox<Sede> sedeChoiceBox;
     private Sedi sedi = new Sedi();
     private SubScene subScene;
-    public ModificaDettagliConferenza_Controller(Conferenza conferenza, SubScene subScene,ModificaConferenza_Controller modificaConferenzaController){
+
+    public ModificaDettagliConferenza_Controller(Conferenza conferenza, SubScene subScene, ModificaConferenza_Controller modificaConferenzaController) {
         this.conferenza = conferenza;
         this.subScene = subScene;
         this.modificaConferenzaController = modificaConferenzaController;
@@ -81,9 +75,9 @@ public class ModificaDettagliConferenza_Controller implements Initializable {
         inizioDateTimePicker.valueProperty().addListener(observable -> {
             Timestamp data_inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
             conferenza.getSessioni().sort(Comparator.comparing(Sessione::getInizio));
-            if(data_inizio.after(conferenza.getSessioni().get(0).getInizio())){
+            if (data_inizio.after(conferenza.getSessioni().get(0).getInizio())) {
                 alert_1.setImage(new Image("/View/Resources/danger.png"));
-                Tooltip.install(alert_1,new Tooltip("La data appena selezionata comporterà l'eliminazione di alcune sessioni"));
+                Tooltip.install(alert_1, new Tooltip("La data appena selezionata comporterà l'eliminazione di alcune sessioni"));
             } else {
                 alert_1.setImage(null);
             }
@@ -91,19 +85,39 @@ public class ModificaDettagliConferenza_Controller implements Initializable {
         fineDateTimePicker.valueProperty().addListener(observable -> {
             Timestamp data_fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
             conferenza.getSessioni().sort(Comparator.comparing(Sessione::getInizio));
-            if(data_fine.before(conferenza.getSessioni().get(conferenza.getSessioni().toArray().length-1).getFine())){
+            if (data_fine.before(conferenza.getSessioni().get(conferenza.getSessioni().toArray().length - 1).getFine())) {
                 alert_2.setImage(new Image("/View/Resources/danger.png"));
-                Tooltip.install(alert_2,new Tooltip("La data appena selezionata comporterà l'eliminazione di alcune sessioni"));
-            }else
+                Tooltip.install(alert_2, new Tooltip("La data appena selezionata comporterà l'eliminazione di alcune sessioni"));
+            } else
                 alert_2.setImage(null);
         });
+    }
+
+    public void setEditConferenceController(ModificaConferenza_Controller modificaConferenzaController) {
+        this.modificaConferenzaController = modificaConferenzaController;
+    }
+
+    private void goBackToEditConferenceMainWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
+        loader.setController(modificaConferenzaController);
+        modificaConferenzaController.setConferenza(conferenza);
+        modificaConferenzaController.setDetails();
+        Parent root = loader.load();
+        subScene.setRoot(root);
+    }
+
+    private void goBackToEditConferenceWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
+        loader.setController(modificaConferenzaController);
+        Parent root = loader.load();
+        subScene.setRoot(root);
     }
 
     private void loadSedi() {
         try {
             sedi.loadSedi();
             sedeChoiceBox.setItems(sedi.getSedi());
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -116,20 +130,19 @@ public class ModificaDettagliConferenza_Controller implements Initializable {
         sedeChoiceBox.setValue(conferenza.getSede());
     }
 
-    public void setEditConferenceController(ModificaConferenza_Controller modificaConferenzaController) {
-        this.modificaConferenzaController = modificaConferenzaController;
+    private void updateConferenza() throws SQLException {
+        conferenza.setTitolo(nomeTF.getText());
+        conferenza.setDescrizione(descrizioneTextArea.getText());
+        conferenza.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
+        conferenza.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
+        conferenza.setSede(sedeChoiceBox.getSelectionModel().getSelectedItem());
+        ConferenzaDao dao = new ConferenzaDao();
+        dao.updateDettagliConferenza(conferenza);
     }
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {
         goBackToEditConferenceWindow();
-    }
-
-    private void goBackToEditConferenceWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
-        loader.setController(modificaConferenzaController);
-        Parent root = loader.load();
-        subScene.setRoot(root);
     }
 
     @FXML
@@ -141,29 +154,11 @@ public class ModificaDettagliConferenza_Controller implements Initializable {
             try {
                 updateConferenza();
                 goBackToEditConferenceMainWindow();
-            } catch (SQLException exception){
+            } catch (SQLException exception) {
                 Alert alert1 = new Alert(Alert.AlertType.ERROR);
                 alert1.setContentText(exception.getMessage());
                 alert1.showAndWait();
             }
         }
-    }
-    private void goBackToEditConferenceMainWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
-        loader.setController(modificaConferenzaController);
-        modificaConferenzaController.setConferenza(conferenza);
-        modificaConferenzaController.setDetails();
-        Parent root = loader.load();
-        subScene.setRoot(root);
-    }
-
-    private void updateConferenza() throws SQLException {
-        conferenza.setTitolo(nomeTF.getText());
-        conferenza.setDescrizione(descrizioneTextArea.getText());
-        conferenza.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
-        conferenza.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
-        conferenza.setSede(sedeChoiceBox.getSelectionModel().getSelectedItem());
-        ConferenzaDao dao = new ConferenzaDao();
-        dao.updateDettagliConferenza(conferenza);
     }
 }

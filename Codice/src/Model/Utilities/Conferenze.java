@@ -3,10 +3,10 @@ package Model.Utilities;
 import Model.DAO.ConferenzaDao;
 import Model.DAO.EnteDao;
 import Model.DAO.SponsorizzazioneDAO;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Conferenze.Sede;
-import Model.Entities.Organizzazione.Ente;
-import Model.Entities.Organizzazione.Sponsorizzazione;
+import Model.Entities.Conferenza;
+import Model.Entities.Sede;
+import Model.Entities.Ente;
+import Model.Entities.Sponsorizzazione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 public class Conferenze {
-    private final ObservableList<Conferenza> conferenze;
+    private ObservableList<Conferenza> conferenze;
 
     public Conferenze() {
         this.conferenze = FXCollections.observableArrayList();

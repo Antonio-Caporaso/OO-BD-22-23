@@ -1,11 +1,6 @@
 package Controller.View;
 
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Conferenze.Sessione;
-import Model.Entities.Organizzazione.Comitato;
-import Model.Entities.Organizzazione.Ente;
-import Model.Entities.Organizzazione.Organizzatore;
-import Model.Entities.Organizzazione.Sponsorizzazione;
+import Model.Entities.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,20 +19,14 @@ import java.util.ResourceBundle;
 
 public class VisualizzaConferenza_Controller implements Initializable {
     @FXML
-    private Label budgetLabel;
-    @FXML
     private TableColumn<Organizzatore, String> cognomeOrganizzatoreColumn1;
     @FXML
     private TableColumn<Organizzatore, String> cognomeOrganizzatoreColumn2;
-    @FXML
-    private TableColumn<Organizzatore, String> comeOrganizzatoreColumn2;
     @FXML
     private TableView<Organizzatore> comitatoLocaleTable;
     @FXML
     private TableView<Organizzatore> comitatoScientificoTable;
     private Conferenza conferenza;
-    @FXML
-    private Button confermaButton;
     @FXML
     private TableColumn<Sponsorizzazione, Float> contributoColumn;
     @FXML
@@ -47,15 +36,11 @@ public class VisualizzaConferenza_Controller implements Initializable {
     @FXML
     private TextArea descrizioneArea;
     @FXML
-    private Button editSessioniButton;
-    @FXML
     private TableColumn<Organizzatore, String> emailOrganizzatoreColumn1;
     @FXML
     private TableColumn<Organizzatore, String> emailOrganizzatoreColumn2;
     @FXML
     private TableView<Ente> entiTable;
-    @FXML
-    private TextArea entiView;
     @FXML
     private TableColumn<Sessione, Timestamp> fineSessioneColumn;
     @FXML
@@ -88,8 +73,6 @@ public class VisualizzaConferenza_Controller implements Initializable {
     private TableColumn<Sponsorizzazione, String> sponsorColumn;
     @FXML
     private TableView<Sponsorizzazione> sponsorTable;
-    @FXML
-    private TextArea sponsorizzazioniView;
     private SubScene subScene;
     @FXML
     private Label titleLabel;
@@ -133,6 +116,33 @@ public class VisualizzaConferenza_Controller implements Initializable {
         setComitatoLocaleTable();
     }
 
+    public void setDetails() {
+        this.setTitleLabel();
+        nomeLabel.setText(conferenza.getTitolo());
+        descrizioneArea.setText(conferenza.getDescrizione());
+        dataInizioLabel.setText(conferenza.getInizio().toString());
+        dataFineLabel.setText(conferenza.getFine().toString());
+        sedeLabel.setText(conferenza.getSede().toString());
+        indirizzoLabel.setText(conferenza.getSede().getIndirizzo().toString());
+    }
+
+    public void setOrganizzatori() {
+        try {
+            conferenza.loadEnti();
+            entiTable.setEditable(false);
+            nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
+            entiTable.getItems().addAll(conferenza.getEnti());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setTitleLabel() {
+        if (conferenza != null)
+            titleLabel.setText("Conferenza: " + conferenza.getTitolo());
+    }
+
     private void setComitatoLocaleTable() {
         Comitato comitato_L = conferenza.getComitato_l();
         try {
@@ -143,7 +153,7 @@ public class VisualizzaConferenza_Controller implements Initializable {
             emailOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("email"));
             istituzioneOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
             comitatoLocaleTable.getItems().addAll(comitato_L.getMembri());
-        }catch (SQLException e){
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
@@ -160,42 +170,15 @@ public class VisualizzaConferenza_Controller implements Initializable {
             emailOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("email"));
             istituzioneOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
             comitatoScientificoTable.getItems().addAll(comitato_S.getMembri());
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-        }catch (SQLException e){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        }
-    }
-
-    public void setDetails() {
-        this.setTitleLabel();
-        nomeLabel.setText(conferenza.getTitolo());
-        descrizioneArea.setText(conferenza.getDescrizione());
-        dataInizioLabel.setText(conferenza.getInizio().toString());
-        dataFineLabel.setText(conferenza.getFine().toString());
-        sedeLabel.setText(conferenza.getSede().toString());
-        indirizzoLabel.setText(conferenza.getSede().getIndirizzo().toString());
-    }
-
-    public void setOrganizzatori() {
-        try {
-            conferenza.loadOrganizzatori();
-            entiTable.setEditable(false);
-            nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
-            entiTable.getItems().addAll(conferenza.getEnti());
         } catch (SQLException e) {
-            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
-    }
-
-    public void setTitleLabel() {
-        if (conferenza != null)
-            titleLabel.setText("Conferenza: " + conferenza.getTitolo());
     }
 
     private void setSessioniTable() {

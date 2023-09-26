@@ -3,10 +3,10 @@ package Controller.Edit;
 import Exceptions.BlankFieldException;
 import Interfaces.FormChecker;
 import Model.DAO.SessioneDao;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Conferenze.Sala;
-import Model.Entities.Conferenze.Sessione;
-import Model.Entities.Organizzazione.Organizzatore;
+import Model.Entities.Conferenza;
+import Model.Entities.Organizzatore;
+import Model.Entities.Sala;
+import Model.Entities.Sessione;
 import Model.Utilities.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,15 +29,15 @@ import java.util.ResourceBundle;
 public class ModificaDettagliSessione_Controller implements Initializable, FormChecker {
     private Conferenza conferenza;
     @FXML
-    private ImageView inizioSessioneAboutImage;
-    @FXML
-    private ImageView fineSessioneAboutImage;
-    @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
     @FXML
     private DateTimePicker fineDateTimePicker;
     @FXML
+    private ImageView fineSessioneAboutImage;
+    @FXML
     private DateTimePicker inizioDateTimePicker;
+    @FXML
+    private ImageView inizioSessioneAboutImage;
     private ModificaSessione_Controller modificaSessioneController;
     @FXML
     private TextField nomeTF;
@@ -52,6 +52,16 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
         this.conferenza = conferenza;
         this.subscene = subScene;
         this.modificaSessioneController = modificaSessioneController;
+    }
+
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if (nomeTF.getText().isBlank()
+                || inizioDateTimePicker.getDateTimeValue() == null
+                || fineDateTimePicker.getDateTimeValue() == null
+                || saleChoice.getValue() == null
+                || coordinatoreChoiceBox.getValue() == null
+        ) throw new BlankFieldException();
     }
 
     public ModificaSessione_Controller getEditSessioneController() {
@@ -103,6 +113,17 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
         return result;
     }
 
+    private Sessione getDettagliSessione() {
+        Sessione s = new Sessione();
+        s.setId_sessione(sessione.getId_sessione());
+        s.setTitolo(nomeTF.getText());
+        s.setLocazione(saleChoice.getValue());
+        s.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
+        s.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
+        s.setCoordinatore(coordinatoreChoiceBox.getValue());
+        return s;
+    }
+
     private void goToEditWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessione.fxml"));
         loader.setController(modificaSessioneController);
@@ -134,7 +155,7 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
             SessioneDao dao = new SessioneDao();
             dao.updateSessione(s);
             sessione = s;
-        }catch (BlankFieldException exception){
+        } catch (BlankFieldException exception) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Attenzione! Ci sono dei campi non compilati");
             alert.setContentText("Assicurati di aver compilato tutto prima di procedere");
@@ -145,17 +166,6 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
-    }
-
-    private Sessione getDettagliSessione() {
-        Sessione s = new Sessione();
-        s.setId_sessione(sessione.getId_sessione());
-        s.setTitolo(nomeTF.getText());
-        s.setLocazione(saleChoice.getValue());
-        s.setInizio(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()));
-        s.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
-        s.setCoordinatore(coordinatoreChoiceBox.getValue());
-        return s;
     }
 
     @FXML
@@ -186,15 +196,5 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
-    }
-
-    @Override
-    public void checkFieldsAreBlank() throws BlankFieldException {
-        if( nomeTF.getText().isBlank()
-                || inizioDateTimePicker.getDateTimeValue() == null
-                || fineDateTimePicker.getDateTimeValue() == null
-                || saleChoice.getValue() == null
-                || coordinatoreChoiceBox.getValue() == null
-        ) throw new BlankFieldException();
     }
 }

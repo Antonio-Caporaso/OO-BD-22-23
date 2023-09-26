@@ -1,4 +1,4 @@
-package Model.Entities.Conferenze;
+package Model.Entities;
 
 public class Sala {
     private int capacity;

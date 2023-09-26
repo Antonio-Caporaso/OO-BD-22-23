@@ -2,10 +2,10 @@ package Controller.Create;
 
 import Model.DAO.ComitatoDao;
 import Model.DAO.OrganizzatoreDao;
-import Model.Entities.Conferenze.Conferenza;
+import Model.Entities.Conferenza;
 import Model.Entities.Utente;
-import Model.Entities.Organizzazione.Ente;
-import Model.Entities.Organizzazione.Organizzatore;
+import Model.Entities.Ente;
+import Model.Entities.Organizzatore;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -146,7 +146,6 @@ public class AddComitati_Controller implements Initializable {
         Organizzatore org = membroComitatoScientificoChoiceBox.getSelectionModel().getSelectedItem();
         try {
             conferenza.getComitato_s().addMembro(org);
-            loadListView();
             checkAlmenoUnMembro();
         }catch (SQLException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -160,7 +159,6 @@ public class AddComitati_Controller implements Initializable {
         Organizzatore org = membroComitatoLocaleChoiceBox.getSelectionModel().getSelectedItem();
         try {
             conferenza.getComitato_l().addMembro(org);
-            loadListView();
         }catch (SQLException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
@@ -179,7 +177,6 @@ public class AddComitati_Controller implements Initializable {
             if (result.get() == ButtonType.OK) {
                 try {
                     conferenza.getComitato_s().removeMembro(org);
-                    loadListView();
                     checkAlmenoUnMembro();
                 } catch (SQLException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -201,7 +198,6 @@ public class AddComitati_Controller implements Initializable {
             if (result.get() == ButtonType.OK) {
                 try {
                     conferenza.getComitato_l().removeMembro(org);
-                    loadListView();
                 } catch (SQLException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(e.getMessage());

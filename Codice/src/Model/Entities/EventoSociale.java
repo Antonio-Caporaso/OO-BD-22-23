@@ -1,7 +1,7 @@
-package Model.Entities.Conferenze;
+package Model.Entities;
 
 
-import java.sql.Timestamp;
+import Model.Utilities.ActivityModel;
 
 public class EventoSociale extends ActivityModel {
     private String tipologia;
@@ -13,7 +13,8 @@ public class EventoSociale extends ActivityModel {
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
     }
-    public String getType(){
+
+    public String getType() {
         return tipologia;
     }
 }

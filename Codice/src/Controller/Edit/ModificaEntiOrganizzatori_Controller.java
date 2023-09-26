@@ -1,8 +1,8 @@
 package Controller.Edit;
 
 import Exceptions.EntePresenteException;
-import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Organizzazione.Ente;
+import Model.Entities.Conferenza;
+import Model.Entities.Ente;
 import Model.Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,10 +18,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ModificaEntiOrganizzatori_Controller implements Initializable {
-    @FXML
-    private Button addButton;
-    @FXML
-    private Button annullaButton;
     private Conferenza conferenza;
     @FXML
     private Button deleteButton;
@@ -34,8 +30,6 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
     @FXML
     private TableColumn<Ente, String> nomeEnte;
     @FXML
-    private Button okButton;
-    @FXML
     private TableColumn<Ente, String> siglaEnte;
     private SubScene subScene;
 
@@ -44,6 +38,7 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
         this.subScene = subscene;
         this.editController = modificaConferenzaController;
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadEntiChoiceBox();

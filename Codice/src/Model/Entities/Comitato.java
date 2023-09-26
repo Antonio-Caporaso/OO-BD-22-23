@@ -1,21 +1,27 @@
-package Model.Entities.Organizzazione;
+package Model.Entities;
+
 import Model.DAO.ComitatoDao;
-import Model.DAO.OrganizzatoreDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import jfxtras.scene.layout.HBox;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class Comitato {
     private int id_comitato;
-    private String tipologia;
     private ObservableList<Organizzatore> membri;
+    private String tipologia;
 
     public Comitato() {
         membri = FXCollections.observableArrayList();
+    }
+
+    public void addMembro(Organizzatore o) throws SQLException {
+        if (!(membri.contains(o))) {
+            ComitatoDao dao = new ComitatoDao();
+            dao.addMembroComitato(o, this);
+            membri.add(o);
+        }
     }
 
     @Override
@@ -28,24 +34,13 @@ public class Comitato {
         if (id_comitato != comitato.id_comitato) return false;
         return Objects.equals(tipologia, comitato.tipologia);
     }
-    public void loadMembri() throws SQLException {
-        ComitatoDao comitatoDao = new ComitatoDao();
-        membri.clear();
-        membri.addAll(comitatoDao.retreiveMembriComitato(this));
+
+    public int getId_comitato() {
+        return id_comitato;
     }
-    public void addMembro(Organizzatore o) throws SQLException {
-        if(!(membri.contains(o))){
-                ComitatoDao dao = new ComitatoDao();
-                dao.addMembroComitato(o, this);
-                membri.add(o);
-        }
-    }
-    public void removeMembro(Organizzatore o) throws SQLException {
-        if(membri.contains(o)) {
-            ComitatoDao dao = new ComitatoDao();
-            dao.removeMembroComitato(o,this);
-            membri.remove(o);
-        }
+
+    public void setId_comitato(int id_comitato) {
+        this.id_comitato = id_comitato;
     }
 
     public ObservableList<Organizzatore> getMembri() {
@@ -57,22 +52,28 @@ public class Comitato {
         this.membri = membri;
     }
 
-    public int getId_comitato() {
-        return id_comitato;
-    }
-
-    public void setId_comitato(int id_comitato) {
-        this.id_comitato = id_comitato;
-    }
-
-    public void setTipologia(String tipologia) {
-        this.tipologia = tipologia;
-    }
-
     @Override
     public int hashCode() {
         int result = id_comitato;
         result = 31 * result + (tipologia != null ? tipologia.hashCode() : 0);
         return result;
+    }
+
+    public void loadMembri() throws SQLException {
+        ComitatoDao comitatoDao = new ComitatoDao();
+        membri.clear();
+        membri.addAll(comitatoDao.retreiveMembriComitato(this));
+    }
+
+    public void removeMembro(Organizzatore o) throws SQLException {
+        if (membri.contains(o)) {
+            ComitatoDao dao = new ComitatoDao();
+            dao.removeMembroComitato(o, this);
+            membri.remove(o);
+        }
+    }
+
+    public void setTipologia(String tipologia) {
+        this.tipologia = tipologia;
     }
 }

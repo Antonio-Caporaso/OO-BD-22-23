@@ -1,6 +1,4 @@
-package Model.Entities.Conferenze;
-
-import Model.Entities.Organizzazione.Indirizzo;
+package Model.Entities;
 
 public class Sede {
     private int id_sede;

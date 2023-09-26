@@ -1,6 +1,6 @@
 package Controller.Edit;
 
-import Model.Entities.Conferenze.Conferenza;
+import Model.Entities.Conferenza;
 import Model.Entities.Utente;
 import Model.Utilities.ConferenzeUtente;
 import javafx.collections.ObservableList;
@@ -23,8 +23,6 @@ import java.util.ResourceBundle;
 public class ModificaConferenze_Controller implements Initializable {
     private ConferenzeUtente conferenze = new ConferenzeUtente();
     @FXML
-    private TableView<Conferenza> tableConferenza;
-    @FXML
     private TableColumn<Conferenza, String> descrizioneColumn;
     @FXML
     private TableColumn<Conferenza, Timestamp> fineConferenzaColumn;
@@ -34,29 +32,14 @@ public class ModificaConferenze_Controller implements Initializable {
     private TableColumn<Conferenza, String> nomeConferenzaColumn;
     @FXML
     private TableColumn<Conferenza, String> sedeColumn;
-    @FXML
-    private Button deleteConferenzaButton;
-    @FXML
-    private Button modificaButton;
     private SubScene subscene;
+    @FXML
+    private TableView<Conferenza> tableConferenza;
     private Utente user;
 
     public ModificaConferenze_Controller(Utente user, SubScene subScene) {
         this.user = user;
         this.subscene = subScene;
-    }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            loadConferenzeUtente();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void loadConferenzeUtente() throws SQLException {
-        conferenze.loadConferenzeUtente(user);
-        setTableConferenze(conferenze.getConferenzeUtente());
     }
 
     @FXML
@@ -103,17 +86,6 @@ public class ModificaConferenze_Controller implements Initializable {
         }
     }
 
-    private void goToEditConferenceWindow(Conferenza c, FXMLLoader loader) throws IOException {
-        ModificaConferenza_Controller controller = new ModificaConferenza_Controller(c,subscene,user);
-        loader.setController(controller);
-        controller.setConferenza(c);
-        controller.setSubscene(subscene);
-        controller.setGestioneConferenzeController(this);
-        controller.setUser(user);
-        Parent root = loader.load();
-        subscene.setRoot(root);
-    }
-
     public void eliminaConferenza(Conferenza c) throws SQLException {
         conferenze.removeConferenza(c);
     }
@@ -134,7 +106,37 @@ public class ModificaConferenze_Controller implements Initializable {
         this.user = user;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            loadConferenzeUtente();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public void showErrorAlert(SQLException e) {
+        Alert errorOnDelete = new Alert(Alert.AlertType.ERROR);
+        errorOnDelete.setTitle("Eliminazione conferenza");
+        errorOnDelete.setContentText(e.getMessage());
+        errorOnDelete.showAndWait();
+    }
+
+    private void goToEditConferenceWindow(Conferenza c, FXMLLoader loader) throws IOException {
+        ModificaConferenza_Controller controller = new ModificaConferenza_Controller(c, subscene, user);
+        loader.setController(controller);
+        controller.setConferenza(c);
+        controller.setSubscene(subscene);
+        controller.setGestioneConferenzeController(this);
+        controller.setUser(user);
+        Parent root = loader.load();
+        subscene.setRoot(root);
+    }
+
+    private void loadConferenzeUtente() throws SQLException {
+        conferenze.loadConferenzeUtente(user);
+        setTableConferenze(conferenze.getConferenzeUtente());
+    }
 
     private void setTableConferenze(ObservableList<Conferenza> c) throws SQLException {
         tableConferenza.setEditable(false);
@@ -144,13 +146,6 @@ public class ModificaConferenze_Controller implements Initializable {
         descrizioneColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
         sedeColumn.setCellValueFactory(new PropertyValueFactory<>("sede"));
         tableConferenza.setItems(c);
-    }
-
-    public void showErrorAlert(SQLException e) {
-        Alert errorOnDelete = new Alert(Alert.AlertType.ERROR);
-        errorOnDelete.setTitle("Eliminazione conferenza");
-        errorOnDelete.setContentText(e.getMessage());
-        errorOnDelete.showAndWait();
     }
 
     private void showInformationAlert() {

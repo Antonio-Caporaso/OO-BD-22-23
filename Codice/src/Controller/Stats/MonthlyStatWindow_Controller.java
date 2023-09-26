@@ -22,10 +22,8 @@ import java.util.ResourceBundle;
 public class MonthlyStatWindow_Controller implements Initializable {
         @FXML
         private Spinner<Integer> annoSpinner;
-
         @FXML
         private Spinner<Integer> meseSpinner;
-
         @FXML
         private BorderPane pieChartPane;
 

@@ -1,7 +1,7 @@
 package Model.Utilities;
 
 import Model.DAO.SponsorDao;
-import Model.Entities.Organizzazione.Sponsor;
+import Model.Entities.Sponsor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

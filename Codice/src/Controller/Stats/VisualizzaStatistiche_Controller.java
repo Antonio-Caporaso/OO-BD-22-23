@@ -23,21 +23,14 @@ import java.util.ResourceBundle;
 
 public class VisualizzaStatistiche_Controller implements Initializable {
     @FXML
-    private BorderPane currentMonthPieChartPanel;
-    @FXML
-    private BorderPane currentYearPieChartPane;
-
-    @FXML
     private Label totalConferenzeLabel;
-
     @FXML
     private Label totalPartecipantiLabel;
-
     @FXML
     private Label totalSponsorizzazioniLabel;
     @FXML
     private Label totalEntiCounter;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLabels();

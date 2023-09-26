@@ -1,10 +1,10 @@
-package Model.Entities.Conferenze;
+package Model.Entities;
 
 import Model.DAO.EventoSocialeDao;
 import Model.DAO.IntervalloDao;
 import Model.DAO.InterventoDao;
 import Model.DAO.ProgrammaDao;
-import Model.Entities.Partecipanti.Speaker;
+import Model.Utilities.ActivityModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.postgresql.util.PGInterval;
@@ -20,42 +20,6 @@ public class Programma {
     private int programmaID;
     private Sessione sessione;
     private final ObservableList<ActivityModel> programmaSessione;
-
-    private void retreiveProgrammaID(Sessione sessione) throws SQLException {
-        ProgrammaDao programmaDao = new ProgrammaDao();
-        setProgrammaID(programmaDao.retrieveIDProgramma(sessione));
-    }
-
-    private void setEventiActivities() throws SQLException {
-        loadEventiSociali();
-        for (EventoSociale eventoSociale : eventi) {
-//            ActivityModel activity = eventoSociale;
-//            activity.setType("Evento");
-//            activity.setDescrizione(eventoSociale.getTipologia());
-//            programmaSessione.add(activity);
-            programmaSessione.add(eventoSociale);
-        }
-    }
-
-    private void setIntervalliActivities() throws SQLException {
-        loadIntervalli();
-        for (Intervallo intervallo : intervalli) {
-//            ActivityModel activity = intervallo;
-//            activity.setType("Intervallo");
-//            programmaSessione.add(activity);
-            programmaSessione.add(intervallo);
-        }
-    }
-
-    private void setInterventiActivities() throws SQLException {
-        loadInterventi();
-        for (Intervento intervento : interventi) {
-//            ActivityModel activity = intervento;
-//            activity.setType(intervento.getTitolo());
-//            programmaSessione.add(activity);
-            programmaSessione.add(intervento);
-        }
-    }
 
     public Programma(Sessione sessione) {
         this.sessione = sessione;
@@ -103,20 +67,40 @@ public class Programma {
         return eventi;
     }
 
+    public void setEventi(ObservableList<EventoSociale> eventi) {
+        this.eventi = eventi;
+    }
+
     public ObservableList<Intervallo> getIntervalli() {
         return intervalli;
+    }
+
+    public void setIntervalli(ObservableList<Intervallo> intervalli) {
+        this.intervalli = intervalli;
     }
 
     public ObservableList<Intervento> getInterventi() {
         return interventi;
     }
 
+    public void setInterventi(ObservableList<Intervento> interventi) {
+        this.interventi = interventi;
+    }
+
     public Speaker getKeynote() {
         return keynote;
     }
 
+    public void setKeynote(Speaker keynote) {
+        this.keynote = keynote;
+    }
+
     public int getProgrammaID() {
         return programmaID;
+    }
+
+    public void setProgrammaID(int programmaID) {
+        this.programmaID = programmaID;
     }
 
     public ObservableList<ActivityModel> getProgrammaSessione() {
@@ -125,6 +109,10 @@ public class Programma {
 
     public Sessione getSessione() {
         return sessione;
+    }
+
+    public void setSessione(Sessione sessione) {
+        this.sessione = sessione;
     }
 
     public void loadEventiSociali() throws SQLException {
@@ -188,30 +176,6 @@ public class Programma {
         interventi.remove(intervento);
     }
 
-    public void setEventi(ObservableList<EventoSociale> eventi) {
-        this.eventi = eventi;
-    }
-
-    public void setIntervalli(ObservableList<Intervallo> intervalli) {
-        this.intervalli = intervalli;
-    }
-
-    public void setInterventi(ObservableList<Intervento> interventi) {
-        this.interventi = interventi;
-    }
-
-    public void setKeynote(Speaker keynote) {
-        this.keynote = keynote;
-    }
-
-    public void setProgrammaID(int programmaID) {
-        this.programmaID = programmaID;
-    }
-
-    public void setSessione(Sessione sessione) {
-        this.sessione = sessione;
-    }
-
     public void updateEvento(EventoSociale e) throws SQLException {
         if (eventi.contains(e)) {
             eventi.remove(e);
@@ -236,6 +200,42 @@ public class Programma {
             interventi.add(i);
             InterventoDao dao = new InterventoDao();
             dao.updateIntervento(i);
+        }
+    }
+
+    private void retreiveProgrammaID(Sessione sessione) throws SQLException {
+        ProgrammaDao programmaDao = new ProgrammaDao();
+        setProgrammaID(programmaDao.retrieveIDProgramma(sessione));
+    }
+
+    private void setEventiActivities() throws SQLException {
+        loadEventiSociali();
+        for (EventoSociale eventoSociale : eventi) {
+//            ActivityModel activity = eventoSociale;
+//            activity.setType("Evento");
+//            activity.setDescrizione(eventoSociale.getTipologia());
+//            programmaSessione.add(activity);
+            programmaSessione.add(eventoSociale);
+        }
+    }
+
+    private void setIntervalliActivities() throws SQLException {
+        loadIntervalli();
+        for (Intervallo intervallo : intervalli) {
+//            ActivityModel activity = intervallo;
+//            activity.setType("Intervallo");
+//            programmaSessione.add(activity);
+            programmaSessione.add(intervallo);
+        }
+    }
+
+    private void setInterventiActivities() throws SQLException {
+        loadInterventi();
+        for (Intervento intervento : interventi) {
+//            ActivityModel activity = intervento;
+//            activity.setType(intervento.getTitolo());
+//            programmaSessione.add(activity);
+            programmaSessione.add(intervento);
         }
     }
 }

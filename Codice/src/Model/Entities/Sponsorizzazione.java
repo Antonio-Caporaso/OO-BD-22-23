@@ -1,6 +1,4 @@
-package Model.Entities.Organizzazione;
-
-import Model.Entities.Conferenze.Conferenza;
+package Model.Entities;
 
 import java.util.Objects;
 
@@ -20,6 +18,14 @@ public class Sponsorizzazione {
     public Sponsorizzazione() {
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sponsorizzazione that = (Sponsorizzazione) o;
+        return Objects.equals(conferenza, that.conferenza) && Objects.equals(sponsor, that.sponsor);
+    }
+
     public String getCodiceValuta() {
         if (valuta.equals("$"))
             return "USD";
@@ -33,6 +39,7 @@ public class Sponsorizzazione {
             return "CAD";
         else return null;
     }
+
     public Conferenza getConferenza() {
         return conferenza;
     }
@@ -66,20 +73,12 @@ public class Sponsorizzazione {
     }
 
     @Override
-    public String toString() {
-        return sponsor + "(" + contributo + " " + valuta + ")";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sponsorizzazione that = (Sponsorizzazione) o;
-        return Objects.equals(conferenza, that.conferenza) && Objects.equals(sponsor, that.sponsor);
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(conferenza, sponsor);
+    }
+
+    @Override
+    public String toString() {
+        return sponsor + "(" + contributo + " " + valuta + ")";
     }
 }

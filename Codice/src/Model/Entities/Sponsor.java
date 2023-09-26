@@ -1,4 +1,4 @@
-package Model.Entities.Organizzazione;
+package Model.Entities;
 
 import java.util.LinkedList;
 

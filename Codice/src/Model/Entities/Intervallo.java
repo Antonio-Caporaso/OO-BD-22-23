@@ -1,12 +1,13 @@
-package Model.Entities.Conferenze;
+package Model.Entities;
 
-import java.sql.Timestamp;
+import Model.Utilities.ActivityModel;
 
 public class Intervallo extends ActivityModel {
     private String tipologia;
 
     public Intervallo() {
     }
+
     public String getTipologia() {
         return tipologia;
     }
@@ -14,7 +15,8 @@ public class Intervallo extends ActivityModel {
     public void setTipologia(String tipologia) {
         this.tipologia = tipologia;
     }
-    public String getType(){
+
+    public String getType() {
         return tipologia;
     }
 }

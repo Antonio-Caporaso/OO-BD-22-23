@@ -1,6 +1,6 @@
-package Model.Entities.Conferenze;
+package Model.Entities;
 
-import Model.Entities.Partecipanti.Speaker;
+import Model.Utilities.ActivityModel;
 
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -55,7 +55,8 @@ public class Intervento extends ActivityModel {
     public void setTitolo(String titolo) {
         this.titolo = titolo;
     }
-    public String getType(){
+
+    public String getType() {
         return titolo;
     }
 

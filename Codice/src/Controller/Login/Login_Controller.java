@@ -1,9 +1,9 @@
 package Controller.Login;
 
-import Interfaces.FormChecker;
 import Controller.Landing_Controller;
 import Controller.Navigation_Controller;
 import Exceptions.BlankFieldException;
+import Interfaces.FormChecker;
 import Model.DAO.UtenteDAO;
 import Model.Entities.Utente;
 import javafx.event.ActionEvent;
@@ -32,13 +32,8 @@ public class Login_Controller implements Initializable, FormChecker {
     private AnchorPane anchorPanel;
     @FXML
     private Label errorLabel;
-    private File file;
     @FXML
     private Button loginButton;
-    private Media media;
-    private MediaPlayer mediaPlayer;
-    @FXML
-    private MediaView mediaView;
     @FXML
     private PasswordField passwordTextField;
     private Utente user;

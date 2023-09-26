@@ -1,4 +1,4 @@
-package Model.Entities.Conferenze;
+package Model.Entities;
 
 import Exceptions.DateMismatchException;
 import Exceptions.EntePresenteException;
@@ -7,10 +7,6 @@ import Exceptions.SponsorizzazionPresenteException;
 import Model.DAO.EnteDao;
 import Model.DAO.SessioneDao;
 import Model.DAO.SponsorizzazioneDAO;
-import Model.Entities.Utente;
-import Model.Entities.Organizzazione.Comitato;
-import Model.Entities.Organizzazione.Ente;
-import Model.Entities.Organizzazione.Sponsorizzazione;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -65,38 +61,34 @@ public class Conferenza {
     }
 
     public void addEnte(Ente ente) throws EntePresenteException {
-        if (!enti.contains(ente)){
-            try{
+        if (!enti.contains(ente)) {
+            try {
                 EnteDao enteDao = new EnteDao();
-                ente.setID(enteDao.saveEnteOrganizzatore(ente,this));
+                ente.setID(enteDao.saveEnteOrganizzatore(ente, this));
                 enti.add(ente);
-            } catch (SQLException exception){
+            } catch (SQLException exception) {
                 exception.printStackTrace();
             }
-        }
-        else
+        } else
             throw new EntePresenteException();
     }
 
     public void addSessione(Sessione sessione) throws SessionePresenteException, DateMismatchException, SQLException {
-        if(!(sessioni.contains(sessione))) {
-            if(!(sessione.getInizio().before(inizio) || sessione.getFine().after(fine))){
-                    SessioneDao sessioneDao = new SessioneDao();
-                    sessione.setId_sessione(sessioneDao.saveSessione(sessione));
-                    sessioni.add(sessione);
-            }
-            else throw new DateMismatchException();
-        }
-        else throw new SessionePresenteException();
+        if (!(sessioni.contains(sessione))) {
+            if (!(sessione.getInizio().before(inizio) || sessione.getFine().after(fine))) {
+                SessioneDao sessioneDao = new SessioneDao();
+                sessione.setId_sessione(sessioneDao.saveSessione(sessione));
+                sessioni.add(sessione);
+            } else throw new DateMismatchException();
+        } else throw new SessionePresenteException();
     }
 
     public void addSponsorizzazione(Sponsorizzazione sponsorizzazione) throws SponsorizzazionPresenteException, SQLException {
-        if(!(sponsorizzazioni.contains(sponsorizzazione))) {
-                sponsorizzazioni.add(sponsorizzazione);
-                SponsorizzazioneDAO sponsorizzazioneDAO = new SponsorizzazioneDAO();
-                sponsorizzazioneDAO.saveSponsorizzazione(sponsorizzazione);
-        }
-        else throw new SponsorizzazionPresenteException();
+        if (!(sponsorizzazioni.contains(sponsorizzazione))) {
+            sponsorizzazioni.add(sponsorizzazione);
+            SponsorizzazioneDAO sponsorizzazioneDAO = new SponsorizzazioneDAO();
+            sponsorizzazioneDAO.saveSponsorizzazione(sponsorizzazione);
+        } else throw new SponsorizzazionPresenteException();
     }
 
     public Comitato getComitato_l() {
@@ -166,6 +158,7 @@ public class Conferenza {
     public Sede getSede() {
         return sede;
     }
+
     public void setSede(Sede sede) {
         this.sede = sede;
     }
@@ -213,30 +206,31 @@ public class Conferenza {
     }
 
     public void removeEnte(Ente e) {
-        if(enti.contains(e)) {
+        if (enti.contains(e)) {
             try {
                 EnteDao dao = new EnteDao();
-                dao.removeEnteOrganizzatore(e,this);
+                dao.removeEnteOrganizzatore(e, this);
                 enti.remove(e);
-            }catch (SQLException exception){
+            } catch (SQLException exception) {
                 exception.printStackTrace();
             }
         }
     }
 
     public void removeSessione(Sessione sessione) {
-        if(sessioni.contains(sessione)) {
+        if (sessioni.contains(sessione)) {
             try {
                 SessioneDao sessioneDao = new SessioneDao();
                 sessioneDao.removeSessione(sessione);
                 sessioni.remove(sessione);
-            }catch (SQLException exception){
+            } catch (SQLException exception) {
                 exception.printStackTrace();
             }
         }
     }
+
     public void removeSponsorizzazione(Sponsorizzazione s) {
-        if(sponsorizzazioni.contains(s)) {
+        if (sponsorizzazioni.contains(s)) {
             try {
                 SponsorizzazioneDAO dao = new SponsorizzazioneDAO();
                 dao.removeSponsorizzazione(s);

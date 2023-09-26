@@ -1,7 +1,5 @@
 package Model.Entities;
 
-import Model.Entities.Organizzazione.Ente;
-
 import java.util.Objects;
 
 public class Utente {

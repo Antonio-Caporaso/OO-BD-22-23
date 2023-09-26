@@ -17,13 +17,13 @@ import java.util.ResourceBundle;
 public class ExceptionWindow_Controller implements Initializable {
 
     @FXML
-    private Pane hBox;
-    @FXML
     private BorderPane borderPane;
     @FXML
     private Button closeButton;
     @FXML
     private Label errorMessageLabel;
+    @FXML
+    private Pane hBox;
     private double x, y;
 
     @Override
