@@ -1,4 +1,4 @@
-package Model.Entities.Conferenze;
+package Model.Entities;
 
 import java.sql.Timestamp;
 
@@ -18,20 +18,20 @@ public abstract class ActivityModel {
         this.fine = fine;
     }
 
-    public Timestamp getInizio() {
-        return inizio;
-    }
-
-    public void setInizio(Timestamp inizio) {
-        this.inizio = inizio;
-    }
-
     public int getId_entry() {
         return id_entry;
     }
 
     public void setId_entry(int id_entry) {
         this.id_entry = id_entry;
+    }
+
+    public Timestamp getInizio() {
+        return inizio;
+    }
+
+    public void setInizio(Timestamp inizio) {
+        this.inizio = inizio;
     }
 
     public Programma getProgramma() {
@@ -42,8 +42,9 @@ public abstract class ActivityModel {
         this.programma = programma;
     }
 
+    public abstract String getType();
+
     public void setType(String type) {
         this.type = type;
     }
-    public abstract String getType();
 }

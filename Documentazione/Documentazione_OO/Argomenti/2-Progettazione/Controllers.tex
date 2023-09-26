@@ -1,0 +1,264 @@
+\newpage
+\subsection{Il package \texttt{Controller}}
+Nel contesto dello sviluppo di applicazioni JavaFX come Symposium, i controller svolgono un ruolo centrale nell'architettura dell'applicazione. I controller fungono da punto di collegamento tra l'interfaccia utente (View) e dati sottostante (Model), ma anche con le classi di utilities e le classi DAO. Questa relazione ben strutturata tra controller e altre componenti è essenziale per la realizzazione di applicazioni robuste ed estensibili.
+\bigskip
+
+I controller, infatti, gestiscono la business logic dell'intera applicazione essendo responsabili di:
+\begin{enumerate}
+	\item \textbf{Gestire l'interfaccia utente}: i controller gestiscono gli elementi dell'interfaccia utente, come finestre, pulsanti, campi di testo e altro ancora. Rispondono agli eventi generati dagli utenti, come clic del mouse o pressione dei tasti, e reagiscono modificando la vista o invocando operazioni sul Model.
+	\item \textbf{Comunicare con il modello:} i controller accedono alle classi di modello per ottenere o modificare dati. Ad esempio, quando un utente inserisce dati in un campo di input, il controller può recuperare questi dati dal Model e inviarli per l'elaborazione.
+	\item \textbf{Gestire la logica di business:} i controller implementano la logica di business dell'applicazione. Questa logica può includere la validazione dei dati, il calcolo di risultati o qualsiasi altra elaborazione necessaria.
+\end{enumerate}
+
+\subsubsection{Controller.Edit}
+I controller presenti nel package \texttt{Controller.Edit} si occupano della gestione e modifica di tutto ciò che riguarda una conferenza. Dalla gestione della durata, alla gestione delle singole sessioni previste.
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & AddSessione\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Finestra per l'inserimento di una sessione
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Sessione \\
+		& Sale \\
+		& Conferenza \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ChooseKeynote\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Finestra di selezione del keynote
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Programma
+		\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & EditKeynote\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Finestra per la modifica del keynote di una sessione
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Sessione \\
+		& Programma \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ModificaConferenza\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Visualizzazione dettagli conferenza
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Conferenza
+		\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ModificaConferenze\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Visualizzazioni conferenze dell'utente
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & ConferenzeUtente
+		\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ModificaDettagliConferenza\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Gestione informazioni conferenza
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Conferenza \\
+		& Sedi 
+		\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ModificaDettagliSessione\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Modifica della durata, locazione e coordinatore di una sessione
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Sessione \\
+		& Sala \\
+		& Conferenza
+		\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ModificaEntiOrganizzatori\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Gestione delle istituzioni organizzatrici
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Enti \\
+		& Conferenza		\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ModificaProgrammaSessione\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Gestione dei punti presenti nel programma
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Programma \\
+		& Sessione 		\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ModificaSessione\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Gestione dei dettagli e del programma della sessione
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Conferenza \\
+		& Programma \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ModificaSessioni\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Finestra per aggiunta, rimozione e modifica delle sessioni presenti in una conferenza
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Conferenza
+		\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ModificaSponsorizzazioni\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Aggiunta e rimozione di una sponsorizzazione
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Conferenza \\
+		& Sponsors		\\ \hline
+	\end{tabular}
+\end{table}
+
+\newpage
+\subsubsection{Controller.Create}
+
+\subsubsection{Controller.Login}
+
+\subsubsection{Controller.Stats}
+Una delle feature di Symposium è la visualizzazione delle statistiche. Il sistema infatti fornisce all'utente un resoconto delle conferenze organizzate, delle istituzioni ed aziende coinvolte nonché un calcolo su base mensile ed annuale del tasso di appartenenza dei vari speaker che partecipano alle varie conferenze.
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & MonthlyStatWindow\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Calcolo delle statistiche su base mensile
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Stats \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & YearlyStatWindow\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Calcolo delle statistiche su base annuale
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Stats \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & VisualizzaStatistiche\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Finestra principale per la visualizzazione delle statistiche di sistema
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Controller.View}

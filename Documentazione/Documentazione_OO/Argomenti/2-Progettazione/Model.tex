@@ -1,0 +1,354 @@
+\section{Le CRC Cards}
+\subsection{Il package Model}
+\subsubsection{Model.Entities}
+\begin{table}[h!]
+
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Class name} & Conferenza \\ \hline
+		\textbf{Superclass} & Nessuna \\ \hline
+		\textbf{Subclasses} & Nessuna\\ \hline
+		\textbf{Responsabilities} & Riunione tematica di rappresentanti di vari enti \\ \hline
+		\multirow{5}{*}{\textbf{Collaborations}} & Sessione \\ 
+		& Comitato \\
+		& Utente \\
+		& Sede \\
+		& Ente \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]	
+		\begin{tabular}{|l|l|}
+	\hline
+	\textbf{Class name} & EventoSociale \\ \hline
+	\textbf{Superclass} & ActivityModel \\ \hline
+	\textbf{Subclasses} & Nessuna\\ \hline
+	\textbf{Responsabilities} & Momento dedicato agli invitati della conferenza \\ \hline
+	\textbf{Collaborations} & Nessuna \\ \hline
+\end{tabular}
+\end{table} 
+\begin{table}[h!]
+\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Class name} & Intervento \\ \hline
+		\textbf{Superclass} & ActivityModel \\ \hline
+		\textbf{Subclasses} & Nessuna\\ \hline
+		\textbf{Responsabilities} & Momento in cui un partecipante prende la parola \\ \hline
+		\textbf{Collaborations} & Nessuna \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Class name} & Programma \\ \hline
+		\textbf{Superclass} & Nessuna \\ \hline
+		\textbf{Subclasses} & Nessuna  \\ \hline
+		\textbf{Responsabilità} & Specifica i punti di una sessione \\ \hline
+		\multirow{4}{*}{\textbf{Collaborations}} & Sessione \\ 
+		& Intervento \\
+		& Intervallo \\
+		& EventoSociale \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Class name} & Intervallo \\ \hline
+		\textbf{Superclass} & ActivityModel \\ \hline
+		\textbf{Subclasses} & Nessuna  \\ \hline
+		\textbf{Responsabilità} & Breve pausa all'interno di una sessione \\ \hline
+		\textbf{Collaborazioni} & Nessuna \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Class name} & Sede \\ \hline
+		\textbf{Superclass} & Nessuna \\ \hline
+		\textbf{Subclasses} & Nessuna  \\ \hline
+		\textbf{Responsabilità} & Luogo in cui si svolge una conferenza\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Conferenza \\ 
+		& Sala \\ 
+		& Indirizzo \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\begin{tabular}{|l|l|}
+			\hline
+	\textbf{Class name} & Sala \\ \hline
+	\textbf{Superclass} & Nessuna \\ \hline
+	\textbf{Subclasses} & Nessuna  \\ \hline
+	\textbf{Responsabilità} & Luogo in cui si svolge una sessione \\ \hline
+	\multirow{2}{*}{\textbf{Collaborations}} & Sessione \\ 
+	& Sede \\ \hline
+\end{tabular}
+\end{table}
+\begin{table}[h!]
+\begin{tabular}{|l|l|}
+			\hline
+	\textbf{Class name} & Sessione \\ \hline
+	\textbf{Superclass} & Nessuna \\ \hline
+	\textbf{Subclasses} & Nessuna  \\ \hline
+	\textbf{Responsabilità} & Parte di una conferenza \\ \hline
+	\multirow{4}{*}{\textbf{Collaborations}} & Conferenza \\ 
+	& Sala \\
+	& Programma \\
+	& Organizzatore \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\begin{tabular}{|l|l|}
+	\hline
+	\textbf{Class name} & Comitato \\ \hline
+	\textbf{Superclass} & Nessuna \\ \hline
+	\textbf{Subclasses} & Nessuna  \\ \hline
+	\textbf{Responsabilità} & Insieme di organizzatori che si occupa della logistica e dell'organizzazione \\ \hline
+	\multirow{2}{*}{\textbf{Collaborations}} & Conferenza \\ 
+	& Organizzatore \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Class name} & Ente \\ \hline
+		\textbf{Superclass} & Nessuna \\ \hline
+		\textbf{Subclasses} & Nessuna  \\ \hline
+		\textbf{Responsabilità} & Istituzione che organizza una conferenza \\ \hline
+		\multirow{4}{*}{\textbf{Collaborations}} & Conferenza \\ 
+		& Speaker \\
+		& Partecipante \\
+		& Organizzatore \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Class name} & Indirizzo \\ \hline
+		\textbf{Superclass} & Nessuna \\ \hline
+		\textbf{Subclasses} & Nessuna  \\ \hline
+		\textbf{Responsabilità} & Luogo dove è presente la conferenza \\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Sede \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Class name} & Organizzatore \\ \hline
+		\textbf{Superclass} & Nessuna \\ \hline
+		\textbf{Subclasses} & Nessuna  \\ \hline
+		\textbf{Responsabilità} & Membro di un ente \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Ente \\ 
+		& Sessione \\ 
+		& Comitato \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}
+\begin{tabular}{|l|l|}
+	\hline
+	\textbf{Class name} & Sponsor \\ \hline
+	\textbf{Superclass} & Nessuna \\ \hline
+	\textbf{Subclasses} & Nessuna  \\ \hline
+	\textbf{Responsabilità} & Azienda che sponsorizza una conferenza \\ \hline
+	\multirow{1}{*}{\textbf{Collaborations}} & Sponsorizzazione \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\begin{tabular}{|l|l|}
+	\hline
+	\textbf{Class name} & Sponsorizzazione \\ \hline
+	\textbf{Superclass} & Nessuna \\ \hline
+	\textbf{Subclasses} & Nessuna  \\ \hline
+	\textbf{Responsabilità} & Sponsorizzazione di uno sponsor \\ \hline
+	\multirow{2}{*}{\textbf{Collaborations}} & Conferenza \\ 
+	& Sponsor \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\begin{tabular}{|l|l|}
+	\hline
+	\textbf{Class name} & Speaker \\ \hline
+	\textbf{Superclass} & Nessuna \\ \hline
+	\textbf{Subclasses} & Nessuna  \\ \hline
+	\textbf{Responsabilità} & Specifica i punti di una sessione \\ \hline
+	\multirow{1}{*}{\textbf{Collaborations}} & Intervento \\ \hline
+\end{tabular}
+\end{table}
+
+Nella Figura \ref{uml:modellodominio} è presente il class diagram rappresentante il modello di dominio. 
+\subsubsection{Model.DAO}
+Nell'architettura dell'applicativo Symposium, le classi DAO (Data Access Object) svolgono un ruolo fondamentale nella gestione dell'accesso ai dati e nell'interazione con il sistema di archiviazione dei dati sottostante. Le classi DAO fungono da ponte tra il livello di business dell'applicativo e il database o qualsiasi altro meccanismo di persistenza utilizzato per memorizzare e recuperare i dati.
+\bigskip
+
+Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all'interno dell'applicativo Symposium:
+\begin{enumerate}
+	\item \textbf{Separazione delle responsabilità:} le classi DAO separano chiaramente la logica di accesso ai dati dalla logica di business dell'applicativo. 
+	\item \textbf{Astrazione dal dettaglio di archiviazione:} le classi DAO nascondono i dettagli tecnici legati al meccanismo di persistenza sottostante. Questo significa che le modifiche alla tecnologia di archiviazione dei dati, come il passaggio da un database SQL a un database NoSQL, possono essere gestite senza impattare significativamente il codice di business.
+\end{enumerate}
+\subsubsection{Model.DbConfig}
+\subsubsection{Model.Utilities}
+Le classi del dominio in Symposium rappresentano oggetti significativi all'interno del nostro sistema, ad esempio le conferenze, gli utenti e altri elementi chiave. Tuttavia, per garantire una gestione efficiente delle liste di questi oggetti e monitorare i cambiamenti in tempo reale, abbiamo introdotto le classi utilities.
+\bigskip
+
+Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
+\begin{enumerate}
+	\item \textbf{Monitoraggio delle modifiche:} attraverso queste classi abbiamo costruito liste dinamiche che possono essere osservate per rilevare automaticamente le modifiche apportate agli oggetti. Questo è particolarmente utile quando si gestiscono elenchi di oggetti che devono essere aggiornati in risposta a interazioni utente o modifiche nel sistema.
+	\item \textbf{Incapsulazione e modularità:} le classi utilities contribuiscono all'incapsulazione delle operazioni di gestione delle liste. Questo promuove una buona pratica di progettazione del software, consentendo di isolare la logica di gestione delle liste in classi dedicate, riducendo la complessità all'interno delle classi del dominio.
+	\item \textbf{Riutilizzo del codice:} la creazione di classi utilities per operazioni comuni di gestione delle liste consente il riutilizzo del codice in più parti dell'applicativo. Ciò porta a una maggiore coerenza e manutenibilità del codice.
+\end{enumerate}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ActivityModel
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{3}{*}{\textbf{Subclasses}} & Intervallo \\
+		& Intervento \\
+		& EventoSociale \\ \hline
+		\textbf{Responsability} & Classe astratta per la costruzione delle viste sul programma
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & Conferenze
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & ConferenzeUtente \\ \hline
+		\textbf{Responsability} & Insieme delle conferenze presente nel sistema
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ConferenzeUtente
+		\\ \hline
+		\textbf{Superclass} & Conferenze
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Insieme delle conferenze create da un utente
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & Enti
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Insieme delle istituzioni presenti nel sistema
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & Sale
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Insieme delle sale disponibili presenti in una sede
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Sede
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & Sedi
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Insieme delle sedi presenti nel sistema
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & Speakers
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Insieme degli speaker presenti nel sistema
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & Sponsors
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Insieme degli sponsor presenti nel sistema
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & Stats
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Classe per la costruzione dei grafici per le statistiche
+		\\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\\ \hline
+	\end{tabular}
+\end{table}

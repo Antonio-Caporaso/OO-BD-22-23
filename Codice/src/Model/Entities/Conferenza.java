@@ -194,7 +194,7 @@ public class Conferenza {
         this.titolo = titolo;
     }
 
-    public void loadOrganizzatori() throws SQLException {
+    public void loadEnti() throws SQLException {
         EnteDao dao = new EnteDao();
         enti.clear();
         enti.addAll(dao.retrieveEntiOrganizzatori(this));
