@@ -37,15 +37,9 @@ public class AddIntervallo_Controller implements Initializable, FormChecker {
     @FXML
     private Button cancelButton;
     @FXML
-    private Button confirmaButton;
-    @FXML
-    private HBox hBox;
-    @FXML
     private Spinner<Integer> minutiSpinner;
     @FXML
     private Spinner<Integer> oreSpinner;
-    @FXML
-    private AnchorPane popUpWindowAnchor;
     private Programma programma;
     @FXML
     private ChoiceBox<String> tipologiaChoiceBox;
@@ -55,25 +49,16 @@ public class AddIntervallo_Controller implements Initializable, FormChecker {
         this.programma = programma;
     }
 
-    //Public Setters
-    public Programma getProgramma() {
-        return programma;
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if (tipologiaChoiceBox.getValue() == null || (oreSpinner.getValue() == 0 & minutiSpinner.getValue() == 0))
+            throw new BlankFieldException();
     }
 
-    public void setProgramma(Programma programma) {
-        this.programma = programma;
-    }
-
-    //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setTipologiaChoiceBox();
         loadSpinners();
-    }
-    @Override
-    public void checkFieldsAreBlank() throws BlankFieldException {
-        if (tipologiaChoiceBox.getValue()==null|| (oreSpinner.getValue()==0 & minutiSpinner.getValue()==0))
-            throw new BlankFieldException();
     }
 
     private void loadExceptionWindow(String message) {
@@ -107,7 +92,6 @@ public class AddIntervallo_Controller implements Initializable, FormChecker {
         minutiSpinner.setValueFactory(minutiValueFactory);
     }
 
-    //Private Methods
     private void setTipologiaChoiceBox() {
         LinkedList<String> tipologieLinkedList = new LinkedList<>();
         tipologieLinkedList.add("pranzo");
@@ -136,9 +120,9 @@ public class AddIntervallo_Controller implements Initializable, FormChecker {
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        }catch (BlankFieldException eb){
+        } catch (BlankFieldException eb) {
             loadExceptionWindow(eb.getMessage());
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             loadExceptionWindow(e.getMessage());
         }
     }

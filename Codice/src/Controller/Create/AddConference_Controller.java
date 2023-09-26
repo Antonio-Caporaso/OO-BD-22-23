@@ -29,8 +29,6 @@ import java.util.ResourceBundle;
 
 public class AddConference_Controller implements Initializable, FormChecker {
     @FXML
-    private Button annullaButton;
-    @FXML
     private Button avantiButton;
     private Conferenze conference = new Conferenze();
     private Conferenza conferenza;
@@ -66,7 +64,7 @@ public class AddConference_Controller implements Initializable, FormChecker {
     public void avantiButtonOnAction(ActionEvent event) {
         try {
             checkFieldsAreBlank();
-            conferenza = retrieveConferenza();
+            conferenza = costruisciConferenza();
             conference.addConferenza(conferenza);
             saveConferenza(conferenza);
             openAddedConferenceDialogWindow();
@@ -91,23 +89,11 @@ public class AddConference_Controller implements Initializable, FormChecker {
         }
     }
 
-    public Utente getUser() {
-        return user;
-    }
-
-    public void setUser(Utente user) {
-        this.user = user;
-    }
-
     public void openAddedConferenceDialogWindow() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Aggiunta conferenza");
         alert.setHeaderText("Conferenza aggiunta correttamente");
         alert.showAndWait();
-    }
-
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
     }
 
     private void goToAddEntiWindow() throws IOException {
@@ -136,7 +122,7 @@ public class AddConference_Controller implements Initializable, FormChecker {
         }
     }
 
-    private Conferenza retrieveConferenza() {
+    private Conferenza costruisciConferenza() {
         String nome = nomeConferenzaTF.getText();
         String descrizione = descrizioneTextArea.getText();
         LocalDateTime dataIselected = dataInizioDP.getDateTimeValue();

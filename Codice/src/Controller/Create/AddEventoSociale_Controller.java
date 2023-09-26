@@ -17,8 +17,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -34,15 +32,9 @@ public class AddEventoSociale_Controller implements Initializable, FormChecker {
     @FXML
     private Button cancelButton;
     @FXML
-    private Button confirmaButton;
-    @FXML
-    private HBox hBox;
-    @FXML
     private Spinner<Integer> minutiSpinner;
     @FXML
     private Spinner<Integer> oreSpinner;
-    @FXML
-    private AnchorPane popUpWindowAnchor;
     private Programma programma;
     @FXML
     private TextField titoloTextField;
@@ -52,18 +44,17 @@ public class AddEventoSociale_Controller implements Initializable, FormChecker {
         this.programma = programma;
     }
 
-    //Overrides
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if (titoloTextField.getText().isBlank() || (oreSpinner.getValue() == 0 & minutiSpinner.getValue() == 0))
+            throw new BlankFieldException();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadSpinners();
     }
-    @Override
-    public void checkFieldsAreBlank() throws BlankFieldException {
-        if (titoloTextField.getText().isBlank()|| (oreSpinner.getValue()==0 & minutiSpinner.getValue()==0))
-            throw new BlankFieldException();
-    }
 
-    //Private Methods
     private void loadExceptionWindow(String message) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
@@ -95,7 +86,6 @@ public class AddEventoSociale_Controller implements Initializable, FormChecker {
         minutiSpinner.setValueFactory(minutiValueFactory);
     }
 
-    //ActionEvent Methods
     @FXML
     void cancelButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -114,9 +104,9 @@ public class AddEventoSociale_Controller implements Initializable, FormChecker {
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        }catch (BlankFieldException eb){
+        } catch (BlankFieldException eb) {
             loadExceptionWindow(eb.getMessage());
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             loadExceptionWindow(e.getMessage());
         }
     }

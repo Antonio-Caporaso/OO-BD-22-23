@@ -3,7 +3,6 @@ package Controller.Create;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.BlankFieldException;
 import Interfaces.FormChecker;
-import Model.DAO.SpeakerDao;
 import Model.Entities.Organizzazione.Ente;
 import Model.Entities.Partecipanti.Speaker;
 import Model.Utilities.Enti;
@@ -38,34 +37,38 @@ public class AddSpeaker_Controller implements Initializable, FormChecker {
     @FXML
     private TextField cognomeTextField;
     @FXML
-    private Button confirmaButton;
-    @FXML
     private TextField emailtextField;
     @FXML
     private ChoiceBox<Ente> enteChoiceBox;
     @FXML
-    private HBox hBox;
-    @FXML
     private TextField nomeTextField;
-    @FXML
-    private AnchorPane popUpWindowAnchor;
+    private Speakers speakers = new Speakers();
     @FXML
     private ChoiceBox<String> titoloChoiceBox;
     double x, y;
-    private Speakers speakers=new Speakers();
 
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadChoiceBoxes();
-    }
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
         if (nomeTextField.getText().isBlank()
                 || cognomeTextField.getText().isBlank()
                 || emailtextField.getText().isBlank()
-                || enteChoiceBox.getValue()==null)
+                || enteChoiceBox.getValue() == null)
             throw new BlankFieldException();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadChoiceBoxes();
+    }
+
+    private Speaker getSpeaker() {
+        Speaker speaker = new Speaker();
+        speaker.setNome(nomeTextField.getText());
+        speaker.setCognome(cognomeTextField.getText());
+        speaker.setIstituzione(enteChoiceBox.getSelectionModel().getSelectedItem());
+        speaker.setTitolo(titoloChoiceBox.getSelectionModel().getSelectedItem());
+        speaker.setEmail(emailtextField.getText());
+        return speaker;
     }
 
     private void loadChoiceBoxes() {
@@ -112,21 +115,11 @@ public class AddSpeaker_Controller implements Initializable, FormChecker {
             speakers.addSpeaker(speaker);
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        }catch (BlankFieldException eb){
+        } catch (BlankFieldException eb) {
             loadExceptionWindow(eb.getMessage());
         } catch (SQLException e) {
             loadExceptionWindow(e.getMessage());
         }
-    }
-
-    private Speaker getSpeaker() {
-        Speaker speaker = new Speaker();
-        speaker.setNome(nomeTextField.getText());
-        speaker.setCognome(cognomeTextField.getText());
-        speaker.setIstituzione(enteChoiceBox.getSelectionModel().getSelectedItem());
-        speaker.setTitolo(titoloChoiceBox.getSelectionModel().getSelectedItem());
-        speaker.setEmail(emailtextField.getText());
-        return speaker;
     }
 
     @FXML

@@ -74,6 +74,12 @@ public class ViewProgramma_Controller implements Initializable {
     @FXML
     private Button keynoteButton;
     private Utente user;
+    public ViewProgramma_Controller(SubScene subscene, Conferenza conferenza, Utente user, Sessione sessione){
+        this.subscene = subscene;
+        this.conferenza = conferenza;
+        this.user = user;
+        this.sessione = sessione;
+    }
 
     //Overrides
     @Override
@@ -82,23 +88,6 @@ public class ViewProgramma_Controller implements Initializable {
         setSessioneLabel();
         setProgrammaTableView();
         disableKeynote();
-    }
-
-    //Public setters
-    public void setConferenza(Conferenza c) {
-        this.conferenza = c;
-    }
-
-    public void setSessione(Sessione sessione) {
-        this.sessione = sessione;
-    }
-
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-
-    public void setUser(Utente utente) {
-        this.user = utente;
     }
 
     private void goBackToVisualizzaSessioniScene() {
@@ -218,8 +207,6 @@ public class ViewProgramma_Controller implements Initializable {
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Selezione Keynote Speaker");
-//            stage.initStyle(StageStyle.TRANSPARENT);
-//            scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
             stage.setScene(scene);
             stage.setX(860);

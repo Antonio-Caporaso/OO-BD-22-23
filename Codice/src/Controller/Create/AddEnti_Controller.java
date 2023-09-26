@@ -4,8 +4,8 @@ import Controller.Edit.ModificaConferenza_Controller;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.EntePresenteException;
 import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Utente;
 import Model.Entities.Organizzazione.Ente;
+import Model.Entities.Utente;
 import Model.Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,25 +44,11 @@ public class AddEnti_Controller implements Initializable {
         this.user = user;
     }
 
-    //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setOrganizzatoriListView();
         setOrganizzatoriChoiceBox();
         checkAlmenoUnEnte();
-    }
-
-    //Public Setters
-    public void setConferenza(Conferenza c) {
-        this.conferenza = c;
-    }
-
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-
-    public void setUtente(Utente utente) {
-        this.user = utente;
     }
 
     private void checkAlmenoUnEnte() {
@@ -81,7 +67,6 @@ public class AddEnti_Controller implements Initializable {
         }
     }
 
-    //Private Methods
     private void goToAddComitatiWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddComitati.fxml"));
@@ -167,7 +152,7 @@ public class AddEnti_Controller implements Initializable {
 
     @FXML
     void nextOnAction(ActionEvent event) {
-            goToAddComitatiWindow();
+        goToAddComitatiWindow();
     }
 
     @FXML

@@ -55,18 +55,6 @@ public class AddComitati_Controller implements Initializable {
         }
     }
 
-    public void setConferenza(Conferenza c) {
-        this.conferenza = c;
-    }
-
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-
-    public void setUtente(Utente utente) {
-        this.user = utente;
-    }
-
     private void checkAlmenoUnMembro() {
         nextButton.setDisable(membriComitatoScientificoListView.getItems().isEmpty());
     }
@@ -122,24 +110,6 @@ public class AddComitati_Controller implements Initializable {
         ComitatoDao dao = new ComitatoDao();
         conferenza.setComitato_s(dao.retrieveComitatoScientificoByConferenza(conferenza));
         conferenza.setComitato_l(dao.retrieveComitatoLocaleByConferenza(conferenza));
-    }
-
-    private void saveMembriComitatoLocale(Organizzatore org) throws SQLException {
-        ComitatoDao comitatoDao = new ComitatoDao();
-        comitatoDao.addMembroComitato(org, conferenza.getComitato_l());
-    }
-    private void removeMembriComitatoLocale(Organizzatore org) throws SQLException{
-        ComitatoDao comitatoDao = new ComitatoDao();
-        comitatoDao.removeMembroComitato(org, conferenza.getComitato_l());
-    }
-
-    private void saveMembriComitatoScientifico(Organizzatore org) throws SQLException {
-        ComitatoDao comitatoDao = new ComitatoDao();
-        comitatoDao.addMembroComitato(org, conferenza.getComitato_s());
-    }
-    private void removeMembriComitatoScientifico(Organizzatore org) throws SQLException{
-        ComitatoDao comitatoDao = new ComitatoDao();
-        comitatoDao.removeMembroComitato(org, conferenza.getComitato_s());
     }
 
     private Optional<ButtonType> showDeleteDialog() {
@@ -208,7 +178,6 @@ public class AddComitati_Controller implements Initializable {
             Optional<ButtonType> result = showDeleteDialog();
             if (result.get() == ButtonType.OK) {
                 try {
-                    removeMembriComitatoScientifico(org);
                     conferenza.getComitato_s().removeMembro(org);
                     loadListView();
                     checkAlmenoUnMembro();
@@ -231,7 +200,6 @@ public class AddComitati_Controller implements Initializable {
             Optional<ButtonType> result = showDeleteDialog();
             if (result.get() == ButtonType.OK) {
                 try {
-                    removeMembriComitatoLocale(org);
                     conferenza.getComitato_l().removeMembro(org);
                     loadListView();
                 } catch (SQLException e) {

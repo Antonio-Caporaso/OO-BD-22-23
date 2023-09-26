@@ -4,9 +4,9 @@ import Exceptions.BlankFieldException;
 import Exceptions.SponsorizzazionPresenteException;
 import Model.DAO.SponsorizzazioneDAO;
 import Model.Entities.Conferenze.Conferenza;
-import Model.Entities.Utente;
 import Model.Entities.Organizzazione.Sponsor;
 import Model.Entities.Organizzazione.Sponsorizzazione;
+import Model.Entities.Utente;
 import Model.Utilities.Sponsors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,19 +25,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddSponsor_Controller implements Initializable {
-    private Conferenza conferenza;
+    private final Conferenza conferenza;
     @FXML
     private TableColumn<Sponsorizzazione, Float> contributoColumn;
     @FXML
-    private HBox hBox;
-    @FXML
     private TextField importoTextField;
-    @FXML
-    private Button inserisciButton;
-    @FXML
-    private Button nextButton;
-    @FXML
-    private Button rimuoviButton;
     @FXML
     private ChoiceBox<Sponsor> selezionaSponsorChoiceBox;
     @FXML
@@ -153,10 +144,10 @@ public class AddSponsor_Controller implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Seleziona tutti i campi prima di procedere");
             alert.showAndWait();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Errore in fase di salvataggio");
-            alert.setContentText(e.getSQLState() + ": "+e.getMessage());
+            alert.setContentText(e.getSQLState() + ": " + e.getMessage());
             alert.showAndWait();
         }
     }

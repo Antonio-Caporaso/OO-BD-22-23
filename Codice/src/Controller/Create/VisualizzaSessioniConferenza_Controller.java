@@ -6,8 +6,8 @@ import Model.DAO.ConferenzaDao;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sala;
 import Model.Entities.Conferenze.Sessione;
-import Model.Entities.Utente;
 import Model.Entities.Organizzazione.Organizzatore;
+import Model.Entities.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +34,8 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     private TableColumn<Sessione, Organizzatore> chairTableColumn;
     private Conferenza conferenza;
     @FXML
+    private Button fineButton;
+    @FXML
     private TableColumn<Sessione, Time> fineTableColumn;
     @FXML
     private TableColumn<Sessione, Time> inizioTableColumn;
@@ -41,8 +43,6 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     private TableColumn<Sessione, Sala> salaTableColumn;
     @FXML
     private TableView<Sessione> sessioniTableView;
-    @FXML
-    private Button fineButton;
     @FXML
     private SubScene subscene;
     @FXML
@@ -111,11 +111,8 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
     private void loadInserisciSessione() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/InserisciSessione.fxml"));
-            InserisciSessione_Controller controller = new InserisciSessione_Controller();
+            InserisciSessione_Controller controller = new InserisciSessione_Controller(subscene, conferenza, user);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUtente(user);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -127,12 +124,8 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         try {
             Sessione s = sessioniTableView.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/ViewProgrammaSessione.fxml"));
-            ViewProgramma_Controller controller = new ViewProgramma_Controller();
+            ViewProgramma_Controller controller = new ViewProgramma_Controller(subscene, conferenza, user, s);
             loader.setController(controller);
-            controller.setSubscene(subscene);
-            controller.setConferenza(conferenza);
-            controller.setUser(user);
-            controller.setSessione(s);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
@@ -169,7 +162,6 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         return result;
     }
 
-    //Button Methods
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
         loadInserisciSessione();
@@ -183,8 +175,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         if (result.get() == ButtonType.OK) {
             saveConference();
             loadEditConferenza();
-        }
-        else {
+        } else {
             deleteConference();
             goToLandingWindow();
         }

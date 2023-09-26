@@ -32,40 +32,46 @@ public class AddIntervento_Controller implements Initializable, FormChecker {
     @FXML
     private TextArea abstractTextArea;
     @FXML
-    private Button addSpeakerButton;
-    @FXML
     private Button cancelButton;
     @FXML
     private Spinner<Integer> minutiSpinner;
     @FXML
     private Spinner<Integer> oreSpinner;
-    @FXML
-    private AnchorPane popUpWindowAnchor;
     private Programma programma;
     @FXML
     private ChoiceBox<Speaker> speakerChoiceBox;
+    private Speakers speakers = new Speakers();
     @FXML
     private TextField titoloTextField;
-    private Speakers speakers = new Speakers();
     private double x, y;
 
     public AddIntervento_Controller(Programma programma) {
         this.programma = programma;
     }
 
-    //Overrides
+    @Override
+    public void checkFieldsAreBlank() throws BlankFieldException {
+        if (titoloTextField.getText().isBlank()
+                || abstractTextArea.getText().isBlank()
+                || speakerChoiceBox.getValue() == null
+                || (oreSpinner.getValue() == 0 & minutiSpinner.getValue() == 0))
+            throw new BlankFieldException();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setSpeakerChoiceBox();
         loadSpinners();
     }
-    @Override
-    public void checkFieldsAreBlank() throws BlankFieldException {
-        if (titoloTextField.getText().isBlank()
-                || abstractTextArea.getText().isBlank()
-                || speakerChoiceBox.getValue()==null
-                || (oreSpinner.getValue()==0 & minutiSpinner.getValue()==0))
-            throw new BlankFieldException();
+
+    private Intervento getIntervento() throws BlankFieldException {
+        checkFieldsAreBlank();
+        Intervento intervento = new Intervento();
+        intervento.setSpeaker(speakerChoiceBox.getSelectionModel().getSelectedItem());
+        intervento.setProgramma(programma);
+        intervento.setEstratto(abstractTextArea.getText());
+        intervento.setTitolo(titoloTextField.getText());
+        return intervento;
     }
 
     private void loadAddSpeaker() {
@@ -120,20 +126,17 @@ public class AddIntervento_Controller implements Initializable, FormChecker {
         minutiSpinner.setValueFactory(minutiValueFactory);
 
     }
-
-    //Private Methods
     private void setSpeakerChoiceBox() {
         try {
             speakers.loadSpeakers();
             speakerChoiceBox.setItems(speakers.getSpeakers());
-        }catch (SQLException e){
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
     }
 
-    //ActionEvent Methods
     @FXML
     void cancelButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -149,21 +152,11 @@ public class AddIntervento_Controller implements Initializable, FormChecker {
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        } catch (BlankFieldException eb){
+        } catch (BlankFieldException eb) {
             loadExceptionWindow(eb.getMessage());
         } catch (SQLException e) {
             loadExceptionWindow(e.getMessage());
         }
-    }
-
-    private Intervento getIntervento() throws BlankFieldException {
-        checkFieldsAreBlank();
-        Intervento intervento = new Intervento();
-        intervento.setSpeaker(speakerChoiceBox.getSelectionModel().getSelectedItem());
-        intervento.setProgramma(programma);
-        intervento.setEstratto(abstractTextArea.getText());
-        intervento.setTitolo(titoloTextField.getText());
-        return intervento;
     }
 
     @FXML
@@ -179,7 +172,6 @@ public class AddIntervento_Controller implements Initializable, FormChecker {
         stage.setY(event.getScreenY() - y);
 
     }
-
     @FXML
     void pressed(MouseEvent event) {
         x = event.getSceneX();

@@ -8,8 +8,8 @@ import Interfaces.FormChecker;
 import Model.Entities.Conferenze.Conferenza;
 import Model.Entities.Conferenze.Sala;
 import Model.Entities.Conferenze.Sessione;
-import Model.Entities.Utente;
 import Model.Entities.Organizzazione.Organizzatore;
+import Model.Entities.Utente;
 import Model.Utilities.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,8 +28,6 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class InserisciSessione_Controller implements Initializable, FormChecker {
-    @FXML
-    private Button backButton;
     private Conferenza conferenza;
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
@@ -41,8 +39,6 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
     private DateTimePicker inizioDateTimePicker;
     @FXML
     private ImageView inizioSessioneAboutImage;
-    @FXML
-    private Button inserisciButton;
     private Sale sale;
     @FXML
     private ChoiceBox<Sala> saleChoiceBox;
@@ -51,7 +47,11 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
     private TextField titoloSessioneTextField;
     private Utente user;
 
-    //Overrides
+    public InserisciSessione_Controller(SubScene subscene, Conferenza conferenza, Utente user){
+        this.subscene = subscene;
+        this.conferenza = conferenza;
+        this.user = user;
+    }
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
         if (titoloSessioneTextField.getText().isBlank() || inizioDateTimePicker.getValue() == null ||
@@ -76,19 +76,6 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
         alert.setHeaderText("Sessione aggiunta correttamente");
         alert.getButtonTypes().remove(ButtonType.CANCEL);
         alert.showAndWait();
-    }
-
-    //Public Setters
-    public void setConferenza(Conferenza conferenza) {
-        this.conferenza = conferenza;
-    }
-
-    public void setSubscene(SubScene subscene) {
-        this.subscene = subscene;
-    }
-
-    public void setUtente(Utente utente) {
-        this.user = utente;
     }
 
     private void loadCoordinatoreChoiceBox() throws SQLException {
@@ -119,7 +106,6 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
         return s;
     }
 
-    //Button methods
     @FXML
     void backButtonOnAction(ActionEvent event) {
         loadViewSessioni(conferenza);
@@ -147,10 +133,10 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
             alert.setTitle("Error");
             alert.setHeaderText(e.getMessage());
             alert.showAndWait();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Errore in fase di salvataggio");
-            alert.setContentText(e.getSQLState() + ": "+e.getMessage());
+            alert.setContentText(e.getSQLState() + ": " + e.getMessage());
             alert.showAndWait();
         }
     }
