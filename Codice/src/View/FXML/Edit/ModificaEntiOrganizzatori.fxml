@@ -19,7 +19,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Button fx:id="deleteButton" layoutX="787.0" layoutY="418.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="40.0" prefWidth="128.0" text="Rimuovi" />
+      <Button fx:id="deleteButton" layoutX="787.0" layoutY="168.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="40.0" prefWidth="128.0" text="Rimuovi" />
       <Button fx:id="okButton" layoutX="787.0" layoutY="664.0" maxHeight="24.0" maxWidth="128.0" mnemonicParsing="false" onAction="#okOnAction" prefHeight="24.0" prefWidth="128.0" text="Fine" />
       <TableView fx:id="entiTable" layoutX="14.0" layoutY="168.0" prefHeight="526.0" prefWidth="762.0">
          <columns>

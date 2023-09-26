@@ -35,27 +35,27 @@
       </TableView>
       <VBox layoutX="745.0" layoutY="93.0" prefHeight="493.0" prefWidth="173.0">
          <children>
-            <Button fx:id="addInterventoButton" mnemonicParsing="false" onAction="#addInterventoOnAction" prefHeight="50.0" prefWidth="173.0" text="Aggiungi Intervento" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="addInterventoButton" mnemonicParsing="false" onAction="#addInterventoOnAction" prefHeight="40.0" prefWidth="173.0" text="Aggiungi Intervento" textAlignment="CENTER" wrapText="true">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="addIntervalloButton" mnemonicParsing="false" onAction="#addIntervalloOnAction" prefHeight="50.0" prefWidth="173.0" text="Aggiungi Intervallo" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="addIntervalloButton" mnemonicParsing="false" onAction="#addIntervalloOnAction" prefHeight="40.0" prefWidth="173.0" text="Aggiungi Intervallo" textAlignment="CENTER" wrapText="true">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="addEventoSocialeButton" mnemonicParsing="false" onAction="#addEventoSocialeOnAction" prefHeight="50.0" prefWidth="173.0" text="Aggiungi Evento" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="addEventoSocialeButton" mnemonicParsing="false" onAction="#addEventoSocialeOnAction" prefHeight="40.0" prefWidth="173.0" text="Aggiungi Evento" textAlignment="CENTER" wrapText="true">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#choiceKeynoteOnAction" prefHeight="50.0" prefWidth="173.0" text="Aggiungi Keynote" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="keynoteButton" mnemonicParsing="false" onAction="#choiceKeynoteOnAction" prefHeight="40.0" prefWidth="173.0" text="Aggiungi Keynote" textAlignment="CENTER" wrapText="true">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="removePuntoButton" mnemonicParsing="false" onAction="#removeButtonOnAction" prefHeight="50.0" prefWidth="173.0" text="Rimuovi punto" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="removePuntoButton" mnemonicParsing="false" onAction="#removeButtonOnAction" prefHeight="40.0" prefWidth="173.0" text="Rimuovi punto" textAlignment="CENTER" wrapText="true">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

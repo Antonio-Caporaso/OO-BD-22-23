@@ -22,7 +22,7 @@
          <children>
             <Pane prefHeight="387.0" prefWidth="216.0">
                <children>
-                  <Button layoutY="190.0" mnemonicParsing="false" onAction="#choiceKeynoteOnAction" prefHeight="40.0" prefWidth="216.0" text="Seleziona Keynote Speaker" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="keynoteButton" layoutY="190.0" mnemonicParsing="false" onAction="#choiceKeynoteOnAction" prefHeight="40.0" prefWidth="216.0" text="Seleziona Keynote Speaker" textAlignment="CENTER" wrapText="true" />
                   <Button fx:id="deletePuntoButton" layoutY="290.0" mnemonicParsing="false" onAction="#deletePuntoOnAction" prefHeight="40.0" prefWidth="216.0" text="Rimuovi punto" />
                   <Button layoutY="40.0" mnemonicParsing="false" onAction="#addInterventoOnAction" prefHeight="40.0" prefWidth="216.0" text="Aggiungi Intervento" />
                   <Button layoutY="90.0" mnemonicParsing="false" onAction="#addEventoOnAction" prefHeight="40.0" prefWidth="216.0" text="Aggiungi Evento" />

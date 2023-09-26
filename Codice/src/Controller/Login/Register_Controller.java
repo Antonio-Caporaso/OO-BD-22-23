@@ -92,7 +92,6 @@ public class Register_Controller implements Initializable, FormChecker {
             throw new PasswordMismatchException();
         }
     }
-
     private void setIstituzioni() {
         enti.loadEnti();
         istituzioneChoice.setItems(enti.getEnti());

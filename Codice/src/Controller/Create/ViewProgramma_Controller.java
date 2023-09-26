@@ -71,6 +71,8 @@ public class ViewProgramma_Controller implements Initializable {
     private TableColumn<ActivityModel, Speaker> speakerTableColumn;
     @FXML
     private SubScene subscene;
+    @FXML
+    private Button keynoteButton;
     private Utente user;
 
     //Overrides
@@ -79,6 +81,7 @@ public class ViewProgramma_Controller implements Initializable {
         setProgramma();
         setSessioneLabel();
         setProgrammaTableView();
+        disableKeynote();
     }
 
     //Public setters
@@ -279,6 +282,7 @@ public class ViewProgramma_Controller implements Initializable {
 
     private void removePuntoProgramma(ActivityModel activityModel) {
         programma.removeActivity(activityModel);
+        disableKeynote();
     }
 
     private void setProgramma() {
@@ -301,6 +305,12 @@ public class ViewProgramma_Controller implements Initializable {
     private void setSessioneLabel() {
         sessioneLabel.setText(sessione.getTitolo());
     }
+    private void disableKeynote(){
+        keynoteButton.setDisable(true);
+        for (ActivityModel activityModel: programmaTableView.getItems())
+            if (activityModel instanceof Intervento)
+                keynoteButton.setDisable(false);
+    }
 
     //Button Methods
     @FXML
@@ -313,6 +323,7 @@ public class ViewProgramma_Controller implements Initializable {
     void addInterventoOnAction(ActionEvent event) {
         openAddInterventoWindow();
         setProgrammaTableView();
+        disableKeynote();
     }
 
     @FXML

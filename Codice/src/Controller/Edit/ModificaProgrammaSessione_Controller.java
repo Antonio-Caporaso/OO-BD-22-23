@@ -45,6 +45,8 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     private TableView<ActivityModel> programmaTableView;
     private Sessione sessione;
     private SubScene subscene;
+    @FXML
+    private Button keynoteButton;
 
     public ModificaProgrammaSessione_Controller(Sessione s, SubScene subscene, ModificaSessioni_Controller modificaSessioniController) {
         this.sessione = s;
@@ -79,6 +81,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setProgrammaTableView();
+        disableKeynote();
     }
 
     public void setManageSessioniController(ModificaSessioni_Controller manageSessioniController) {
@@ -123,12 +126,14 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     @FXML
     void addInterventoOnAction(ActionEvent event) {
         loadAddIntervento();
+        disableKeynote();
     }
 
     @FXML
     void deletePuntoOnAction(ActionEvent event) {
         removePuntoProgramma(programmaTableView.getSelectionModel().getSelectedItem());
         setProgrammaTableView();
+        disableKeynote();
     }
 
     @FXML
@@ -141,6 +146,7 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Selezione Keynote Speaker");
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
@@ -289,5 +295,11 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private void disableKeynote(){
+        keynoteButton.setDisable(true);
+        for (ActivityModel activityModel: programmaTableView.getItems())
+            if (activityModel instanceof Intervento)
+                keynoteButton.setDisable(false);
     }
 }

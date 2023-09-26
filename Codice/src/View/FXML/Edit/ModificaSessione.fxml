@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="90.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label fx:id="titleLabel" layoutX="14.0" layoutY="27.0" text="Modifica sessione" textFill="#eceff4">
@@ -25,8 +25,8 @@
          </font></Label>
       <VBox layoutX="714.0" layoutY="99.0" prefHeight="121.0" prefWidth="204.0">
          <children>
-            <Button fx:id="editDetailsButton" mnemonicParsing="false" onAction="#editDetailsOnAction" prefHeight="50.0" prefWidth="204.0" text="Modifica dettagli" />
-            <Button fx:id="editProgrammaButton" mnemonicParsing="false" onAction="#editProgrammaOnAction" prefHeight="50.0" prefWidth="204.0" text="Modifica programma">
+            <Button fx:id="editDetailsButton" mnemonicParsing="false" onAction="#editDetailsOnAction" prefHeight="40.0" prefWidth="204.0" text="Modifica dettagli" />
+            <Button fx:id="editProgrammaButton" mnemonicParsing="false" onAction="#editProgrammaOnAction" prefHeight="40.0" prefWidth="204.0" text="Modifica programma">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

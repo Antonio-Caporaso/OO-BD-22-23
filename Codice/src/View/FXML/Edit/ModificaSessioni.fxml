@@ -19,17 +19,17 @@
          </font></Label>
       <VBox layoutX="714.0" layoutY="110.0" prefHeight="235.0" prefWidth="204.0">
          <children>
-            <Button fx:id="editSessionsButton" mnemonicParsing="false" onAction="#editSessionsOnAction" prefHeight="70.0" prefWidth="204.0" text="Modifica sessione">
+            <Button fx:id="editSessionsButton" mnemonicParsing="false" onAction="#editSessionsOnAction" prefHeight="40.0" prefWidth="204.0" text="Modifica sessione">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="addSessioneButton" mnemonicParsing="false" onAction="#addSessioneOnAction" prefHeight="70.0" prefWidth="224.0" text="Aggiungi sessione">
+            <Button fx:id="addSessioneButton" mnemonicParsing="false" onAction="#addSessioneOnAction" prefHeight="40.0" prefWidth="224.0" text="Aggiungi sessione">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="rimuoviSessioneButton" mnemonicParsing="false" onAction="#rimuoviSessioneOnAction" prefHeight="70.0" prefWidth="216.0" text="Rimuovi sessione">
+            <Button fx:id="rimuoviSessioneButton" mnemonicParsing="false" onAction="#rimuoviSessioneOnAction" prefHeight="40.0" prefWidth="216.0" text="Rimuovi sessione">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

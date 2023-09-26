@@ -18,7 +18,7 @@
          <children>
             <Pane prefHeight="720.0" prefWidth="348.0">
                <children>
-                  <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="56.0" layoutY="143.0" prefHeight="27.0" prefWidth="237.0" textFill="#5e81ac">
+                  <Label fx:id="errorLabel" contentDisplay="CENTER" layoutX="56.0" layoutY="135.0" prefHeight="27.0" prefWidth="237.0" textFill="#5e81ac">
                      <font>
                         <Font name="Times New Roman" size="18.0" />
                      </font>
