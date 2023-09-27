@@ -77,6 +77,7 @@ I controller presenti nel package \texttt{Controller.Edit} si occupano della ges
 		\\ \hline
 	\end{tabular}
 \end{table}
+\newpage
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
@@ -110,6 +111,7 @@ I controller presenti nel package \texttt{Controller.Edit} si occupano della ges
 		\\ \hline
 	\end{tabular}
 \end{table}
+
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
@@ -128,6 +130,7 @@ I controller presenti nel package \texttt{Controller.Edit} si occupano della ges
 		\\ \hline
 	\end{tabular}
 \end{table}
+
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
@@ -211,8 +214,292 @@ I controller presenti nel package \texttt{Controller.Edit} si occupano della ges
 
 \newpage
 \subsubsection{Controller.Create}
+I controller presenti nel package \texttt{Controller.Create} si occupano della creazione di una conferenza. In particolare gestiscono il caricamento delle varie finestre FXML, l'elaborazione dei dati forniti dall'utente e le chiamate ai metodi di salvataggio dei dati.
+\begin{table}[h!]
+    \begin{tabular}{|l|l|}
+        \hline 
+        \textbf{Class name} & AddConference\_Controller
+        \\ \hline
+        \textbf{Superclass} & Nessuna
+        \\ \hline
+        % Sostituire ad 1 il numero di classi figlie
+        \multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+        \\ \hline
+        \textbf{Responsability} & Aggiunta delle prime informazioni di una conferenza
+        \\ \hline
+        \multirow{5}{*}{\textbf{Collaborations}} & Conferenza \\
+		& Sedi \\
+		& ConferenzaDao \\
+		& AddEnti\_Controller \\
+		& Landing\_Controller
+        \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & AddEnti\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Aggiunta e rimozione degli enti organizzatori della conferenza
+		\\ \hline
+		\multirow{5}{*}{\textbf{Collaborations}} & Ente \\
+		& Conferenza\\
+		& Utente\\
+		& ModificaConferenza\_Controller\\
+		& AddComitati\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & AddComitati\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Aggiunta e rimozione dei membri del comitato Scientifico e Locale
+		\\ \hline
+		\multirow{6}{*}{\textbf{Collaborations}} & Conferenza \\
+		& Ente\\
+		& Organizzatore\\
+		& Utente\\
+		& AddEnti\_Controller\\
+		& AddSponsor\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}
+\newpage
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & AddSponsor\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Aggiunta e rimozione delle aziende che sponsorizzano la conferenza
+		\\ \hline
+		\multirow{6}{*}{\textbf{Collaborations}} & Conferenza \\
+		& Sponsor\\
+		& Sponsors\\
+		& Sponsorizzazione\\
+		& AddComitati\_Controller\\
+		& VisualizzaSessioniConferenza\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & VisualizzaSessioniConferenza\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Raggruppa tutte le sessioni della conferenza e varie funzionalità di navigazione
+		\\ \hline
+		\multirow{8}{*}{\textbf{Collaborations}} & Conferenza \\
+		& Sessione\\
+		& Utente\\
+		& Organizzatore\\
+		& AddSponsor\_Controller\\
+		& InserisciSessione\_Controller\\
+		& ViewProgramma\_Controller\\
+		& EditConferenza\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & InserisciSessione\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Aggiunta di una sessione alla conferenza
+		\\ \hline
+		\multirow{6}{*}{\textbf{Collaborations}} & Conferenza \\
+		& Sessione\\
+		& Utente\\
+		& Organizzatore\\
+		& Sala\\
+		& VisualizzaSessioniConferenza\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ViewProgrammaConferenza\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Raggruppa gli eventi che compongono il Programma e varie funzionalità di navigazione
+		\\ \hline
+		\multirow{17}{*}{\textbf{Collaborations}} & Conferenza \\
+		& Programma\\
+		& Utente\\
+		& Sessione\\
+		& ActivityModel\\
+		& Intervento \\
+		& Intervallo \\
+		& EventoSociale\\
+		& Speaker\\
+		& AddEventoSociale\_Controller\\
+		& ViewProgramma\_Controller\\
+		& AddIntervallo\_Controller\\
+		& AddIntervento\_Controller\\
+		& ChooseKeynote\_Controller\\
+		& ShowInfoEventoSociale\_Controller\\
+		& ShowInfoIntervallo\_Controller\\
+		& ShowInfoIntervento\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\newpage
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & AddIntervallo\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Aggiunta di un Intervallo al Prgogramma
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Programma \\
+		& Intervallo\\
+		& ViewProgrammaConferenza\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & AddEventoSociale\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Aggiunta di un EventoSociale al Prgogramma
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Programma \\
+		& EventoSociale\\
+		& ViewProgrammaConferenza\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & AddIntervento\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Aggiunta di un Intervento al Prgogramma
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Programma \\
+		& Intervento\\
+		& Speakers\\
+		& AddSpeaker\_Controller\\
+		& ViewProgrammaConferenza\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & AddSpeaker\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Aggiunta di uno Speaker alla lista degli Speaker disponibili
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Speaker \\
+		& Speakers\\
+		& Enti
+		\\ \hline
+	\end{tabular}
+\end{table}
 
 \subsubsection{Controller.Login}
+Symposium ha un sistema di Registrazione e di Login utente, in modo che ogni singolo utente possa modificare esclusivamente le conferenze di cui è proprietario.
+\newpage
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & Login\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Schermata di Login
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Utente \\
+		& Landing\_Controller\\
+		& Register\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}  
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & Register\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Schermata di registrazione Utente
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Utente \\
+		& Enti\\
+		& Register\_Controller
+		\\ \hline
+	\end{tabular}
+\end{table}  
 
 \subsubsection{Controller.Stats}
 Una delle feature di Symposium è la visualizzazione delle statistiche. Il sistema infatti fornisce all'utente un resoconto delle conferenze organizzate, delle istituzioni ed aziende coinvolte nonché un calcolo su base mensile ed annuale del tasso di appartenenza dei vari speaker che partecipano alle varie conferenze.
@@ -262,3 +549,115 @@ Una delle feature di Symposium è la visualizzazione delle statistiche. Il siste
 	\end{tabular}
 \end{table}
 \subsubsection{Controller.View}
+I controller presenti nel package \texttt{Controller.View} gestiscono il funzionamento delle classi il cui unico scopo è visualizzare i dettagli senza ricevere input dall'Utente.
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ShowInfoEventoSociale\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Visualizzare i dettagli di un Evento Sociale
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & EventoSociale\\
+		& ActivityModel
+		\\ \hline
+	\end{tabular}
+\end{table} 
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ShowInfoIntervento\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Visualizzare i dettagli di un Intervento
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Intervento\\
+		& ActivityModel
+		\\ \hline
+	\end{tabular}
+\end{table} 
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ShowInfoIntervallo\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Visualizzare i dettagli di un Intervallo
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Intervallo\\
+		& ActivityModel
+		\\ \hline
+	\end{tabular}
+\end{table} 
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & VisualizzaConferenza\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Visualizzare i dettagli di una conferenza
+		\\ \hline
+		\multirow{5}{*}{\textbf{Collaborations}} & Conferenza\\
+		& Comitato\\
+		& Ente \\
+		& Sessione \\
+		& Sponsorizzazione
+		\\ \hline
+	\end{tabular}
+\end{table} 
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & VisualizzaConferenze\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Visualizzare un elenco di conferenze in base a criteri specifici
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Conferenze\\
+		& Sedi\\
+		& Conferenza
+		\\ \hline
+	\end{tabular}
+\end{table} 
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & VisualizzaSessione\_Controller
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Visualizzare i dettagli di una sessione
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Sessione\\
+		& Programma
+		\\ \hline
+	\end{tabular}
+\end{table} 
