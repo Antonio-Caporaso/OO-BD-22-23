@@ -190,6 +190,311 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 	\item \textbf{Separazione delle responsabilità:} le classi DAO separano chiaramente la logica di accesso ai dati dalla logica di business dell'applicativo. 
 	\item \textbf{Astrazione dal dettaglio di archiviazione:} le classi DAO nascondono i dettagli tecnici legati al meccanismo di persistenza sottostante. Questo significa che le modifiche alla tecnologia di archiviazione dei dati, come il passaggio da un database SQL a un database NoSQL, possono essere gestite senza impattare significativamente il codice di business.
 \end{enumerate}
+\newpage
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ComitatoDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realative ai comitati.
+		\\ \hline
+		\multirow{4}{*}{\textbf{Collaborations}} & Comitato \\ 
+		& Utente \\
+		& EnteDao \\
+		& DbConnection \\
+	\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ConferenzaDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realative alle conferenze.
+		\\ \hline
+		\multirow{7}{*}{\textbf{Collaborations}} & Conferenza \\ 
+		& Utente \\
+		& Sede \\
+		& UtenteDao\\
+		& SedeDao \\
+		& ComitatoDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & EnteDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realative all'Ente.
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Conferenza \\ 
+		& Ente \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & IndirizzoDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi agli Indirizzi.
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Indirizzo \\ %Vorrei aggiungere anche DBConnection ma mi inserisce la classe in mezzo a utilities
+		& DbConnection \\
+	\hline
+	\end{tabular}
+\end{table}	
+
+\newpage
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & IntervalloDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi agli Intervalli.
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Intervallo \\ 
+		& Programma \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & EventoSocialeDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi agli Eventi Sociali.
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & EventoSociale \\ 
+		& ProgrammaDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & ProgrammaDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi ai Programmi.
+		\\ \hline
+		\multirow{4}{*}{\textbf{Collaborations}} & Programma \\ 
+		& Sessione \\
+		& SpeakerDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & InterventoDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi agli Interventi.
+		\\ \hline
+		\multirow{5}{*}{\textbf{Collaborations}} & Intervento \\ 
+		& Programma \\
+		& Stats \\
+		& SpeakerDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\newpage
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & OrganizzatoreDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi agli Organizzatori.
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Organizzatore \\ 
+		& EnteDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & SalaDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi alle Sale.
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Sala \\ 
+		& SedeDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & SedeDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi alle Sedi.
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Sede \\ 
+		& IndirizzoDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & SessioneDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi alle Sessioni.
+		\\ \hline
+		\multirow{6}{*}{\textbf{Collaborations}} & Sessione \\ 
+		& ConferenzaDao \\
+		& OrganizzatoreDao \\
+		& SalaDao \\
+		& ProgrammaDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+\newpage
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & SpeakerDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi agli Speaker.
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Speaker \\ 
+		& EnteDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & SponsorDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi agli Sponsor.
+		\\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & Sponsor \\ 
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & SponsorizzazioneDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi alle Sponsorizzazioni.
+		\\ \hline
+		\multirow{4}{*}{\textbf{Collaborations}} & Sponsorizzazione \\ 
+		& Conferenza \\
+		& SponsorDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+	\begin{tabular}{|l|l|}
+		\hline 
+		\textbf{Class name} & UtenteDao
+		\\ \hline
+		\textbf{Superclass} & Nessuna
+		\\ \hline
+		% Sostituire ad 1 il numero di classi figlie
+		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
+		\\ \hline
+		\textbf{Responsability} & Comunicare le oprazioni da eseguire al database realativi agli Utenti.
+		\\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & Utente \\ 
+		& UtenteDao \\
+		& DbConnection \\ \hline
+	\end{tabular}
+\end{table}
+
 \subsubsection{Model.DbConfig}
 \subsubsection{Model.Utilities}
 Le classi del dominio in Symposium rappresentano oggetti significativi all'interno del nostro sistema, ad esempio le conferenze, gli utenti e altri elementi chiave. Tuttavia, per garantire una gestione efficiente delle liste di questi oggetti e monitorare i cambiamenti in tempo reale, abbiamo introdotto le classi utilities.
