@@ -13,7 +13,6 @@
 *.dvi
 *.ilg
 *.ind
-*.classpath
 *.project
 *.out
 *.bbl
@@ -28,7 +27,6 @@ Codice/.classpath
 Codice/.gitignore
 Codice/.project
 Codice/Codice.iml
-Codice/.gitignore
 Codice/bin/*
 Codice/out/*
 /bin/
