@@ -64,4 +64,9 @@ public class Speaker {
     public void setIdSpeaker(int idSpeaker) {
         this.idSpeaker = idSpeaker;
     }
+
+    @Override
+    public String toString() {
+        return cognome + " " +nome + " ("+istituzione.getSigla()+")";
+    }
 }
