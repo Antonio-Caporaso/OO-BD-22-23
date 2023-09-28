@@ -1,0 +1,47 @@
+title Aggiunta membri comitato scientifico
+
+autonumber 
+actor Actor
+
+boundary AddComitati
+
+control addComitati_Controller
+
+participant "Conferenza : conferenza " as conferenza
+
+participant "Comitato : comitato_s" as comitato
+
+participant "ComitatoDAO : comitatodao" as dao
+
+loop preme Inserisci
+
+Actor->AddComitati:seleziona Organizzatore
+activate AddComitati
+Actor->AddComitati:preme Inserisci
+
+AddComitati->addComitati_Controller: inserisciMembroComitatoScientificoOnAction
+activate addComitati_Controller
+addComitati_Controller->conferenza : getComitato_s
+activate conferenza
+conferenza->comitato:addMembro
+activate comitato
+alt se il membro non appartiene alla conferenza
+comitato->dao:addMembroComitato
+activate dao
+comitato <--dao : 
+deactivateafter dao
+end 
+conferenza <--comitato :
+
+deactivate comitato
+
+addComitati_Controller <--conferenza :
+deactivate conferenza
+
+addComitati_Controller->addComitati_Controller: checkAlmenoUnMembro
+activate addComitati_Controller
+deactivateafter addComitati_Controller
+AddComitati<--addComitati_Controller :
+deactivate addComitati_Controller
+deactivate AddComitati
+end
