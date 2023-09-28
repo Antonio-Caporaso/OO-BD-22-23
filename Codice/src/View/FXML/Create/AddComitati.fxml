@@ -59,7 +59,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ListView fx:id="membriComitatoScientificoListView" layoutX="29.0" layoutY="192.0" prefHeight="418.0" prefWidth="409.0" stylesheets="@../../CSS/NewStyle.css" />
+      <ListView fx:id="membriComitatoScientificoListView" layoutX="31.0" layoutY="192.0" prefHeight="418.0" prefWidth="409.0" stylesheets="@../../CSS/NewStyle.css" />
       <Button fx:id="inserisciComitatoScientificoButton" layoutX="339.0" layoutY="141.0" mnemonicParsing="false" onAction="#inserisciMembroComitatoScientificoButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
          <font>
             <Font size="15.0" />

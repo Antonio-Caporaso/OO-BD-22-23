@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="75.0" layoutY="-5.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #232730;" width="932.0" />
         <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #232730;" stylesheets="@../../CSS/NewStyle.css" text="Aggiungi Organizzatori" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
@@ -37,12 +37,12 @@
             </Button>
         </buttons>
       </ButtonBar>
-      <Label layoutX="22.0" layoutY="110.0" stylesheets="@../../CSS/NewStyle.css" text="Seleziona un ente" textFill="WHITE">
+      <Label layoutX="14.0" layoutY="109.0" stylesheets="@../../CSS/NewStyle.css" text="Seleziona un ente" textFill="WHITE">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="entiChoiceBox" layoutX="200.0" layoutY="101.0" prefHeight="40.0" prefWidth="538.0" stylesheets="@../../CSS/NewStyle.css" />
+      <ChoiceBox fx:id="entiChoiceBox" layoutX="200.0" layoutY="100.0" prefHeight="40.0" prefWidth="538.0" stylesheets="@../../CSS/NewStyle.css" />
       <ListView fx:id="entiListView" layoutX="14.0" layoutY="159.0" prefHeight="510.0" prefWidth="724.0" stylesheets="@../../CSS/NewStyle.css" />
       <Button fx:id="inserisciButton" layoutX="769.0" layoutY="100.0" mnemonicParsing="false" onAction="#inserisciButtonOnAction" prefHeight="40.0" prefWidth="134.0" stylesheets="@../../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
          <font>

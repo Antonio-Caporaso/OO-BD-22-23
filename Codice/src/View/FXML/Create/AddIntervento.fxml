@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="popUpWindowAnchor" prefHeight="627.0" prefWidth="523.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="popUpWindowAnchor" prefHeight="627.0" prefWidth="523.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox fx:id="hBox" layoutX="6.0" layoutY="6.0" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="511.0" stylesheets="@../../CSS/NewStyle.css">
          <children>
@@ -37,7 +37,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Spinner fx:id="oreSpinner" editable="true" layoutX="281.0" layoutY="198.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../../CSS/NewStyle.css" />
+      <Spinner fx:id="oreSpinner" editable="true" layoutX="282.0" layoutY="198.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../../CSS/NewStyle.css" />
       <Spinner fx:id="minutiSpinner" editable="true" layoutX="387.0" layoutY="198.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../../CSS/NewStyle.css" />
       <Button fx:id="confirmaButton" layoutX="383.0" layoutY="543.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" prefHeight="31.0" prefWidth="120.0" stylesheets="@../../CSS/NewStyle.css" text="Confirm" />
       <Button fx:id="cancelButton" layoutX="28.0" layoutY="543.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="31.0" prefWidth="120.0" stylesheets="@../../CSS/NewStyle.css" text="Cancel" />
@@ -56,13 +56,13 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="titoloTextField" layoutX="281.0" layoutY="130.0" prefHeight="25.0" prefWidth="211.0" stylesheets="@../../CSS/NewStyle.css" />
+      <TextField fx:id="titoloTextField" layoutX="282.0" layoutY="130.0" prefHeight="25.0" prefWidth="211.0" stylesheets="@../../CSS/NewStyle.css" />
       <Label layoutX="28.0" layoutY="321.0" stylesheets="@../../CSS/NewStyle.css" text="Inserisci Abstract" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <TextArea fx:id="abstractTextArea" layoutX="28.0" layoutY="357.0" prefHeight="126.0" prefWidth="469.0" stylesheets="@../../CSS/NewStyle.css" />
-      <Button fx:id="addSpeakerButton" layoutX="237.0" layoutY="265.0" mnemonicParsing="false" onAction="#addSpeakerButtonOnAction" prefHeight="25.0" prefWidth="33.0" stylesheets="@../../CSS/NewStyle.css" text="+" />
+      <Button fx:id="addSpeakerButton" layoutX="237.0" layoutY="264.0" mnemonicParsing="false" onAction="#addSpeakerButtonOnAction" prefHeight="25.0" prefWidth="33.0" stylesheets="@../../CSS/NewStyle.css" text="+" />
    </children>
 </AnchorPane>
