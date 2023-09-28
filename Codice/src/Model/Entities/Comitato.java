@@ -1,5 +1,6 @@
 package Model.Entities;
 
+import Exceptions.ExistingMemberException;
 import Model.DAO.ComitatoDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,12 +17,12 @@ public class Comitato {
         membri = FXCollections.observableArrayList();
     }
 
-    public void addMembro(Organizzatore o) throws SQLException {
+    public void addMembro(Organizzatore o) throws SQLException, ExistingMemberException {
         if (!(membri.contains(o))) {
             ComitatoDao dao = new ComitatoDao();
             dao.addMembroComitato(o, this);
             membri.add(o);
-        }
+        } else throw new ExistingMemberException();
     }
 
     @Override

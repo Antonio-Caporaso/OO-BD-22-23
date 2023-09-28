@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Exceptions.ExistingMemberException;
 import Model.DAO.ComitatoDao;
 import Model.DAO.OrganizzatoreDao;
 import Model.Entities.Conferenza;
@@ -147,6 +148,10 @@ public class AddComitati_Controller implements Initializable {
         try {
             conferenza.getComitato_s().addMembro(org);
             checkAlmenoUnMembro();
+        } catch (ExistingMemberException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.toString());
+            alert.showAndWait();
         }catch (SQLException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
@@ -159,6 +164,10 @@ public class AddComitati_Controller implements Initializable {
         Organizzatore org = membroComitatoLocaleChoiceBox.getSelectionModel().getSelectedItem();
         try {
             conferenza.getComitato_l().addMembro(org);
+        } catch (ExistingMemberException e){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.toString());
+            alert.showAndWait();
         }catch (SQLException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
