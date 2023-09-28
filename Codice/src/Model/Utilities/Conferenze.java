@@ -1,5 +1,6 @@
 package Model.Utilities;
 
+import Exceptions.NoConferencesException;
 import Model.DAO.ConferenzaDao;
 import Model.DAO.EnteDao;
 import Model.DAO.SponsorizzazioneDAO;
@@ -29,16 +30,20 @@ public class Conferenze {
         return conferenze;
     }
 
-    public void loadByDateAndSede(Date inizio, Date fine, Sede sede) throws SQLException {
+    public void loadByDateAndSede(Date inizio, Date fine, Sede sede) throws SQLException, NoConferencesException {
         ConferenzaDao conferenzaDao = new ConferenzaDao();
         conferenze.clear();
         conferenze.addAll(conferenzaDao.retrieveByDateIntervalAndSede(inizio, fine, sede));
+        if(conferenze.isEmpty())
+            throw new NoConferencesException();
     }
 
-    public void loadByDateInterval(Date inizio, Date fine) throws SQLException {
+    public void loadByDateInterval(Date inizio, Date fine) throws SQLException, NoConferencesException {
         ConferenzaDao conferenzaDao = new ConferenzaDao();
         conferenze.clear();
         conferenze.addAll(conferenzaDao.retrieveByDateInterval(inizio, fine));
+        if(conferenze.isEmpty())
+            throw new NoConferencesException();
     }
 
     public void loadOrganizzatori() throws SQLException {
