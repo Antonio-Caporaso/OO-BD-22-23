@@ -1,5 +1,6 @@
 package Controller.View;
 
+import Exceptions.NoConferencesException;
 import Model.Entities.Conferenza;
 import Model.Entities.Sede;
 import Model.Utilities.Conferenze;
@@ -23,6 +24,7 @@ import java.util.ResourceBundle;
 
 public class VisualizzaConferenze_Controller implements Initializable {
     private final Conferenze conferenze = new Conferenze();
+    private final Sedi sedi = new Sedi();
     @FXML
     private DatePicker dataFineDP;
     @FXML
@@ -39,21 +41,12 @@ public class VisualizzaConferenze_Controller implements Initializable {
     private ChoiceBox<Sede> sedeChoice;
     @FXML
     private TableColumn<Conferenza, String> sedeColumn;
-    private final Sedi sedi = new Sedi();
-    private SubScene subScene;
+    private final SubScene subScene;
     @FXML
     private TableView<Conferenza> tableConferenza;
 
     public VisualizzaConferenze_Controller(SubScene subscene) {
         this.subScene = subscene;
-    }
-
-    public SubScene getSubScene() {
-        return subScene;
-    }
-
-    public void setSubScene(SubScene subScene) {
-        this.subScene = subScene;
     }
 
     @Override
@@ -76,39 +69,56 @@ public class VisualizzaConferenze_Controller implements Initializable {
         tableConferenza.setItems(c);
     }
 
-    @FXML
-    void findButtonOnAction(ActionEvent event) {
-        tableConferenza.getItems().clear();
+    private void findByDate() {
         try {
-            if (sedeChoice.isDisabled()) {
-                try {
-                    Date dataInizio = Date.valueOf(dataInizioDP.getValue());
-                    Date dataFine = Date.valueOf(dataFineDP.getValue());
-                    conferenze.loadByDateInterval(dataInizio, dataFine);
-                    setTable(conferenze.getConferenze());
-                } catch (NullPointerException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Assicurati di aver inserito tutti i campi");
-                    alert.showAndWait();
-                }
-            } else {
-                try {
-                    Date dataInizio = Date.valueOf(dataInizioDP.getValue());
-                    Date dataFine = Date.valueOf(dataFineDP.getValue());
-                    Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
-                    conferenze.loadByDateAndSede(dataInizio, dataFine, sede);
-                    setTable(conferenze.getConferenze());
-                } catch (NullPointerException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Assicurati di aver inserito tutti i campi");
-                    alert.showAndWait();
-                }
-            }
+            Date dataInizio = Date.valueOf(dataInizioDP.getValue());
+            Date dataFine = Date.valueOf(dataFineDP.getValue());
+            conferenze.loadByDateInterval(dataInizio, dataFine);
+            setTable(conferenze.getConferenze());
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Assicurati di aver inserito tutti i campi");
+            alert.showAndWait();
+        } catch (NoConferencesException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(e.toString());
+            alert.showAndWait();
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
+    }
+
+    private void findByDateAndSede() {
+        try {
+            Date dataInizio = Date.valueOf(dataInizioDP.getValue());
+            Date dataFine = Date.valueOf(dataFineDP.getValue());
+            Sede sede = sedeChoice.getSelectionModel().getSelectedItem();
+            conferenze.loadByDateAndSede(dataInizio, dataFine, sede);
+            setTable(conferenze.getConferenze());
+        } catch (NullPointerException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Assicurati di aver inserito tutti i campi");
+            alert.showAndWait();
+        } catch (NoConferencesException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(e.toString());
+            alert.showAndWait();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void findButtonOnAction(ActionEvent event) {
+        tableConferenza.getItems().clear();
+        if (sedeChoice.isDisabled())
+            findByDate();
+        else
+            findByDateAndSede();
     }
 
     @FXML
