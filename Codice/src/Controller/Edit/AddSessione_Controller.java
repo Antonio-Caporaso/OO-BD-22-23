@@ -2,7 +2,9 @@ package Controller.Edit;
 
 import Controller.AlertWindowController;
 import Exceptions.BlankFieldException;
+import Exceptions.DateMismatchException;
 import Exceptions.SediNonDisponibiliException;
+import Exceptions.SessionePresenteException;
 import Interfaces.FormChecker;
 import Model.DAO.ProgrammaDao;
 import Model.Entities.*;
@@ -46,6 +48,7 @@ public class AddSessione_Controller extends AlertWindowController implements Ini
     @FXML
     private ChoiceBox<Sala> saleChoice;
     private SubScene subscene;
+    private Programma programma;
 
     public AddSessione_Controller(Conferenza conferenza, SubScene subscene, ModificaSessioni_Controller modificaSessioniController) {
         this.conferenza = conferenza;
@@ -58,7 +61,8 @@ public class AddSessione_Controller extends AlertWindowController implements Ini
     public void checkFieldsAreBlank() throws BlankFieldException {
         if (nomeTF.getText().isBlank() || saleChoice.getValue() == null
                 || inizioDateTimePicker.getDateTimeValue() == null
-                || fineDateTimePicker.getDateTimeValue() == null)
+                || fineDateTimePicker.getDateTimeValue() == null
+                || coordinatoreChoiceBox.getValue()==null)
             throw new BlankFieldException();
     }
 
@@ -95,6 +99,7 @@ public class AddSessione_Controller extends AlertWindowController implements Ini
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaProgrammaSessione.fxml"));
         ModificaProgrammaSessione_Controller controller = new ModificaProgrammaSessione_Controller(s, subscene, modificaSessioniController);
         loader.setController(controller);
+        controller.setProgramma(programma);
         Parent root = loader.load();
         subscene.setRoot(root);
     }
@@ -114,12 +119,40 @@ public class AddSessione_Controller extends AlertWindowController implements Ini
         s.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
         return s;
     }
-
+    private void salvaSessione(Sessione sessione){
+        try {
+            conferenza.addSessione(sessione);
+        } catch (DateMismatchException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        } catch (SessionePresenteException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(e.getMessage());
+            alert.showAndWait();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Errore in fase di salvataggio");
+            alert.setContentText(e.getSQLState() + ": " + e.getMessage());
+            alert.showAndWait();
+        }
+    }
+    private void retrieveProgrammaSessione(Sessione sessione) {
+        ProgrammaDao programmaDao = new ProgrammaDao();
+        try {
+            programma = programmaDao.retrieveProgrammaBySessione(sessione);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @FXML
     void avantiButtonOnAction(ActionEvent event) throws IOException {
         try {
             checkFieldsAreBlank();
             Sessione s = setSessione();
+            salvaSessione(s);
+            retrieveProgrammaSessione(s);
             goToAddProgrammaWindow(s);
         } catch (BlankFieldException e) {
             showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Compila tutti i campi");
