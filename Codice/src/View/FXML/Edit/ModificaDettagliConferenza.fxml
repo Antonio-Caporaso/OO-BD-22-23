@@ -68,7 +68,7 @@
                   </Pane>
                   <Pane GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <DateTimePicker fx:id="inizioDateTimePicker" editable="false" layoutY="45.0" prefHeight="37.0" prefWidth="222.0" />
+                        <DateTimePicker fx:id="inizioDateTimePicker" layoutY="45.0" prefHeight="37.0" prefWidth="222.0" />
                         <ImageView fx:id="alert_1" fitHeight="37.0" fitWidth="43.0" layoutX="269.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </Pane>
@@ -97,7 +97,7 @@
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <DateTimePicker fx:id="fineDateTimePicker" editable="false" layoutX="-2.0" layoutY="18.0" prefHeight="24.0" prefWidth="230.0" />
+                        <DateTimePicker fx:id="fineDateTimePicker" layoutX="-2.0" layoutY="18.0" prefHeight="24.0" prefWidth="230.0" />
                         <ImageView fx:id="alert_2" fitHeight="37.0" fitWidth="43.0" layoutX="269.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </Pane>

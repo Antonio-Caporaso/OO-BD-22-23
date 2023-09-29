@@ -111,7 +111,7 @@
                <children>
                   <Pane prefHeight="96.0" prefWidth="512.0">
                      <children>
-                        <DateTimePicker fx:id="inizioDateTimePicker" editable="false" layoutY="36.0" prefHeight="37.0" prefWidth="220.0">
+                        <DateTimePicker fx:id="inizioDateTimePicker" layoutY="36.0" prefHeight="37.0" prefWidth="220.0">
                            <tooltip>
                               <Tooltip fx:id="toolTipInizioConferenza" text="Empty Tooltip" />
                            </tooltip></DateTimePicker>
@@ -123,7 +123,7 @@
                <children>
                   <Pane prefHeight="95.0" prefWidth="523.0">
                      <children>
-                        <DateTimePicker fx:id="fineDateTimePicker" editable="false" layoutX="1.0" layoutY="36.0" prefHeight="37.0" prefWidth="220.0">
+                        <DateTimePicker fx:id="fineDateTimePicker" layoutX="1.0" layoutY="36.0" prefHeight="37.0" prefWidth="220.0">
                            <tooltip>
                               <Tooltip fx:id="toolTipFineConferenza" text="Empty Tooltip" />
                            </tooltip></DateTimePicker>
