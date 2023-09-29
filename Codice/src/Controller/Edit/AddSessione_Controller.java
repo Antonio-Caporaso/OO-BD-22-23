@@ -57,7 +57,8 @@ public class AddSessione_Controller implements Initializable, FormChecker {
     public void checkFieldsAreBlank() throws BlankFieldException {
         if (nomeTF.getText().isBlank() || saleChoice.getValue() == null
                 || inizioDateTimePicker.getDateTimeValue() == null
-                || fineDateTimePicker.getDateTimeValue() == null)
+                || fineDateTimePicker.getDateTimeValue() == null
+                || coordinatoreChoiceBox.getValue()==null)
             throw new BlankFieldException();
     }
 
