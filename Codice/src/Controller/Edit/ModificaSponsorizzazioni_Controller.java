@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Controller.AlertWindowController;
 import Exceptions.BlankFieldException;
 import Exceptions.SponsorizzazionPresenteException;
 import Interfaces.FormChecker;
@@ -25,7 +26,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModificaSponsorizzazioni_Controller implements Initializable, FormChecker {
+public class ModificaSponsorizzazioni_Controller extends AlertWindowController implements Initializable, FormChecker {
     private Conferenza conferenza;
     @FXML
     private TableColumn<Sponsorizzazione, Float> contributoColumn;
@@ -75,14 +76,6 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
         this.conferenza = conferenza;
     }
 
-    public void setEditConferenceController(ModificaConferenza_Controller controller) {
-        this.controller = controller;
-    }
-
-    public void setsubscene(SubScene subScene) {
-        this.subscene = subScene;
-    }
-
     private void goToEditConferenceWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
         loader.setController(controller);
@@ -119,12 +112,6 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
         }
     }
 
-    private Optional<ButtonType> showDeleteDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler eliminare la seguente sponsorizzazione?");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
-    }
 
     @FXML
     void deleteOnAction(ActionEvent event) {
@@ -132,13 +119,11 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
             Sponsorizzazione sp = sponsorTable.getSelectionModel().getSelectedItem();
             if (sp == null)
                 throw new NullPointerException();
-            Optional<ButtonType> result = showDeleteDialog();
+            Optional<ButtonType> result = showConfirmationDialog("Sicuro di voler eliminare la seguente sponsorizzazione?");
             if (result.get() == ButtonType.OK)
                 conferenza.removeSponsorizzazione(sp);
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Nessuna sponsorizzazione selezionata");
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Nessuna sponsorizzazione selezionata");
         }
     }
 
@@ -154,18 +139,11 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
             Sponsorizzazione sponsorizzazione = new Sponsorizzazione(sponsorSelezionato, conferenza, contributo, valuta);
             conferenza.addSponsorizzazione(sponsorizzazione);
         } catch (SponsorizzazionPresenteException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Questo sponsor è già presente!");
-            alert.showAndWait();
+           showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Questo sponsor è già presente");
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Seleziona tutti i campi prima di procedere");
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Compilare tutti i campi per procedere");
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Errore in fase di salvataggio");
-            alert.setContentText(e.getSQLState() + ": " + e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 

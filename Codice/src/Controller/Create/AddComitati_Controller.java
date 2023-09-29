@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Exceptions.ExistingMemberException;
 import Model.DAO.ComitatoDao;
 import Model.DAO.OrganizzatoreDao;
@@ -22,7 +23,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddComitati_Controller implements Initializable {
+public class AddComitati_Controller extends AlertWindowController implements Initializable {
     private Conferenza conferenza;
     @FXML
     private ListView<Organizzatore> membriComitatoLocaleListView;
@@ -101,9 +102,7 @@ public class AddComitati_Controller implements Initializable {
             membriComitatoLocaleListView.setItems(conferenza.getComitato_l().getMembri());
             membriComitatoScientificoListView.setItems(conferenza.getComitato_s().getMembri());
         } catch (SQLException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 
@@ -111,19 +110,6 @@ public class AddComitati_Controller implements Initializable {
         ComitatoDao dao = new ComitatoDao();
         conferenza.setComitato_s(dao.retrieveComitatoScientificoByConferenza(conferenza));
         conferenza.setComitato_l(dao.retrieveComitatoLocaleByConferenza(conferenza));
-    }
-
-    private Optional<ButtonType> showDeleteDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler eliminare il seguente organizzatore?");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
-    }
-    private Optional<ButtonType> showNoSelectionDialog() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText("Non hai selezionato alcun organizzatore");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
     }
 
     @FXML
@@ -136,9 +122,7 @@ public class AddComitati_Controller implements Initializable {
         try {
             goToAddSponsorshipsWindow();
         } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore in fase di aggiunta dei comitati", e.getMessage());
         }
     }
 
@@ -149,13 +133,9 @@ public class AddComitati_Controller implements Initializable {
             conferenza.getComitato_s().addMembro(org);
             checkAlmenoUnMembro();
         } catch (ExistingMemberException e){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.toString());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione",e.getMessage());
         }catch (SQLException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 
@@ -165,13 +145,9 @@ public class AddComitati_Controller implements Initializable {
         try {
             conferenza.getComitato_l().addMembro(org);
         } catch (ExistingMemberException e){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.toString());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione",e.getMessage());
         }catch (SQLException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 
@@ -179,18 +155,16 @@ public class AddComitati_Controller implements Initializable {
     void rimuoviMembroComitatoScientificoButtonOnAction(ActionEvent event) {
         Organizzatore org = membriComitatoScientificoListView.getSelectionModel().getSelectedItem();
         if(org==null){
-            showNoSelectionDialog();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Non hai selezionato nessun membro");
         }
         else {
-            Optional<ButtonType> result = showDeleteDialog();
+            Optional<ButtonType> result = showConfirmationDialog("Sicuro di voler eliminare il seguente organizzatore?");
             if (result.get() == ButtonType.OK) {
                 try {
                     conferenza.getComitato_s().removeMembro(org);
                     checkAlmenoUnMembro();
                 } catch (SQLException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText(e.getMessage());
-                    alert.showAndWait();
+                    showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
                 }
             }
         }
@@ -200,17 +174,15 @@ public class AddComitati_Controller implements Initializable {
     void rimuoviMembroComitatoLocaleButtonOnAction(ActionEvent event) {
         Organizzatore org = membriComitatoLocaleListView.getSelectionModel().getSelectedItem();
         if(org==null){
-            showNoSelectionDialog();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Non hai selezionato nessun membro");
         }
         else {
-            Optional<ButtonType> result = showDeleteDialog();
+            Optional<ButtonType> result =showConfirmationDialog("Sicuro di voler eliminare il seguente organizzatore?");
             if (result.get() == ButtonType.OK) {
                 try {
                     conferenza.getComitato_l().removeMembro(org);
                 } catch (SQLException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText(e.getMessage());
-                    alert.showAndWait();
+                    showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
                 }
             }
         }

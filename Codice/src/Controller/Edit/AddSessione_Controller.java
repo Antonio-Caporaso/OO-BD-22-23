@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Controller.AlertWindowController;
 import Exceptions.BlankFieldException;
 import Exceptions.SediNonDisponibiliException;
 import Interfaces.FormChecker;
@@ -26,7 +27,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class AddSessione_Controller implements Initializable, FormChecker {
+public class AddSessione_Controller extends AlertWindowController implements Initializable, FormChecker {
     private Conferenza conferenza;
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
@@ -59,14 +60,6 @@ public class AddSessione_Controller implements Initializable, FormChecker {
                 || inizioDateTimePicker.getDateTimeValue() == null
                 || fineDateTimePicker.getDateTimeValue() == null)
             throw new BlankFieldException();
-    }
-
-    public ModificaSessioni_Controller getManageSessioniController() {
-        return modificaSessioniController;
-    }
-
-    public void setManageSessioniController(ModificaSessioni_Controller modificaSessioniController) {
-        this.modificaSessioniController = modificaSessioniController;
     }
 
     @Override
@@ -106,11 +99,6 @@ public class AddSessione_Controller implements Initializable, FormChecker {
         subscene.setRoot(root);
     }
 
-    private Programma retrieveProgramma(Sessione s) throws SQLException {
-        ProgrammaDao dao = new ProgrammaDao();
-        return dao.retrieveProgrammaBySessione(s);
-    }
-
     private void setCoordinatoreChoiceBox() throws SQLException {
         conferenza.getComitato_s().loadMembri();
         coordinatoreChoiceBox.setItems(conferenza.getComitato_s().getMembri());
@@ -134,13 +122,9 @@ public class AddSessione_Controller implements Initializable, FormChecker {
             Sessione s = setSessione();
             goToAddProgrammaWindow(s);
         } catch (BlankFieldException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Compilare prima tutti i campi");
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Compila tutti i campi");
         } catch (SQLException exception) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(exception.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",exception.getMessage());
         }
     }
 

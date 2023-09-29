@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.BlankFieldException;
 import Interfaces.FormChecker;
@@ -28,7 +29,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-public class AddIntervallo_Controller implements Initializable, FormChecker {
+public class AddIntervallo_Controller extends AlertWindowController implements Initializable, FormChecker {
     @FXML
     private Button cancelButton;
     @FXML
@@ -56,11 +57,6 @@ public class AddIntervallo_Controller implements Initializable, FormChecker {
         loadSpinners();
     }
 
-    private void loadExceptionWindow(String message) {
-       Alert alert = new Alert(Alert.AlertType.ERROR);
-       alert.setContentText(message);
-       alert.showAndWait();
-    }
 
     private void loadSpinners() {
         // Configurazione oreSpinner
@@ -100,10 +96,8 @@ public class AddIntervallo_Controller implements Initializable, FormChecker {
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        } catch (BlankFieldException eb) {
-            loadExceptionWindow(eb.getMessage());
-        } catch (SQLException e) {
-            loadExceptionWindow(e.getMessage());
+        } catch (BlankFieldException | SQLException eb) {
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",eb.getMessage());
         }
     }
 

@@ -42,14 +42,6 @@ public class EditKeynote_Controller implements Initializable {
     public void setProgramma(Programma programma) {
         this.programma = programma;
     }
-    public SubScene getSubScene() {
-        return subScene;
-    }
-
-    public void setSubScene(SubScene subScene) {
-        this.subScene = subScene;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setKeynoteTable();
@@ -100,5 +92,4 @@ public class EditKeynote_Controller implements Initializable {
         Parent root = loader.load();
         subScene.setRoot(root);
     }
-
 }

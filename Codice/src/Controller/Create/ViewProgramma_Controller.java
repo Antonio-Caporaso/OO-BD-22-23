@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Controller.Edit.ChooseKeynote_Controller;
 import Controller.View.ShowInfoEventoSociale_Controller;
 import Controller.View.ShowInfoIntervallo_Controller;
@@ -31,7 +32,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class ViewProgramma_Controller implements Initializable {
+public class ViewProgramma_Controller extends AlertWindowController implements Initializable {
     @FXML
     private TableColumn<ActivityModel, String> appuntamentoTableColumn;
     private Conferenza conferenza;
@@ -88,7 +89,6 @@ public class ViewProgramma_Controller implements Initializable {
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setTitle("Informazioni");
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);

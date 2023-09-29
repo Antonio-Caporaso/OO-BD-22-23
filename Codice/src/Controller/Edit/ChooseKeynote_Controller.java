@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Controller.AlertWindowController;
 import Model.DAO.ProgrammaDao;
 import Model.Entities.Intervento;
 import Model.Entities.Programma;
@@ -18,7 +19,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ChooseKeynote_Controller implements Initializable {
+public class ChooseKeynote_Controller extends AlertWindowController implements Initializable {
     @FXML
     private Button annullaButton;
     private Programma programma;
@@ -66,9 +67,7 @@ public class ChooseKeynote_Controller implements Initializable {
             Stage stage = (Stage) annullaButton.getScene().getWindow();
             stage.close();
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 

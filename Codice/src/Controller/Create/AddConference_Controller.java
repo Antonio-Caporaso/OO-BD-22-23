@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Controller.Landing_Controller;
 import Exceptions.BlankFieldException;
 import Exceptions.DateMismatchException;
@@ -31,7 +32,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class AddConference_Controller implements Initializable, FormChecker {
+public class AddConference_Controller extends AlertWindowController implements Initializable, FormChecker {
     @FXML
     private Button avantiButton;
     private Conferenze conference = new Conferenze();
@@ -74,18 +75,8 @@ public class AddConference_Controller implements Initializable, FormChecker {
             checkSedeDisponibile(conferenza);
             openAddedConferenceDialogWindow();
             loadAddEnti(conferenza);
-        } catch (BlankFieldException e) {
-            showAlert(e);
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        }catch (DateMismatchException e){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        }catch (SedeOccupataException e){
-            showAlert(e);
+        } catch (BlankFieldException | SQLException | SedeOccupataException | DateMismatchException e) {
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 
@@ -155,13 +146,6 @@ public class AddConference_Controller implements Initializable, FormChecker {
         }else {
             throw new DateMismatchException();
         }
-    }
-
-    private void showAlert(Exception e) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(e.getMessage());
-        alert.showAndWait();
     }
 
     @FXML

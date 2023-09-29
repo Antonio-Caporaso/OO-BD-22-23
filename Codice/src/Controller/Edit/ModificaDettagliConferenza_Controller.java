@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Controller.AlertWindowController;
 import Model.DAO.ConferenzaDao;
 import Model.Entities.Conferenza;
 import Model.Entities.Sede;
@@ -24,7 +25,7 @@ import java.util.Comparator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModificaDettagliConferenza_Controller implements Initializable {
+public class ModificaDettagliConferenza_Controller extends AlertWindowController implements Initializable {
     @FXML
     private ImageView alert_1;
     @FXML
@@ -155,9 +156,7 @@ public class ModificaDettagliConferenza_Controller implements Initializable {
                 updateConferenza();
                 goBackToEditConferenceMainWindow();
             } catch (SQLException exception) {
-                Alert alert1 = new Alert(Alert.AlertType.ERROR);
-                alert1.setContentText(exception.getMessage());
-                alert1.showAndWait();
+                showAlertWindow(Alert.AlertType.ERROR,"Errore", exception.getMessage());
             }
         }
     }

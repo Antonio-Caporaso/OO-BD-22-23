@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Controller.AlertWindowController;
 import Exceptions.EntePresenteException;
 import Model.Entities.Conferenza;
 import Model.Entities.Ente;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ModificaEntiOrganizzatori_Controller implements Initializable {
+public class ModificaEntiOrganizzatori_Controller extends AlertWindowController implements Initializable {
     private Conferenza conferenza;
     private ModificaConferenza_Controller editController;
     private Enti enti = new Enti();
@@ -64,10 +65,7 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
             conferenza.addEnte(e);
             entiTable.getItems().add(e);
         } catch (EntePresenteException exp) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("EntePresenteException");
-            alert.setContentText("Questo organizzatore è già presente!");
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore", exp.getMessage());
         }
     }
 

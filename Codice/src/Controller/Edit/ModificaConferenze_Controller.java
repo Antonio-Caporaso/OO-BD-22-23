@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Controller.AlertWindowController;
 import Model.Entities.Conferenza;
 import Model.Entities.Utente;
 import Model.Utilities.ConferenzeUtente;
@@ -20,7 +21,7 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModificaConferenze_Controller implements Initializable {
+public class ModificaConferenze_Controller extends AlertWindowController implements Initializable {
     private ConferenzeUtente conferenze = new ConferenzeUtente();
     @FXML
     private TableColumn<Conferenza, String> descrizioneColumn;
@@ -46,10 +47,7 @@ public class ModificaConferenze_Controller implements Initializable {
     public void deleteOnAction(ActionEvent event) {
         try {
             Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Eliminare conferenza");
-            alert.setHeaderText("Sicuro di voler eliminare la conferenza " + c.getTitolo() + "?");
-            Optional<ButtonType> result = alert.showAndWait();
+            Optional<ButtonType> result = showConfirmationDialog("Sicuro di voler eliminare la seguente conferenza?");
             if (result.get() == ButtonType.OK) {
                 try {
                     eliminaConferenza(c);
@@ -59,10 +57,7 @@ public class ModificaConferenze_Controller implements Initializable {
                 }
             }
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Nessuna conferenza selezionata");
-            alert.setContentText("Assicurati di aver selezionato una conferenza");
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Nessuna conferenza selezionata","Assicurati di aver selezionato una conferenza");
         }
     }
 
@@ -76,10 +71,7 @@ public class ModificaConferenze_Controller implements Initializable {
                     throw new NullPointerException();
                 goToEditConferenceWindow(c, loader);
             } catch (NullPointerException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Nessuna conferenza selezionata");
-                alert.setContentText("Assicurati di aver selezionato una conferenza");
-                alert.showAndWait();
+                showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Assicurati di aver selezionato una conferenza");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,10 +108,7 @@ public class ModificaConferenze_Controller implements Initializable {
     }
 
     public void showErrorAlert(SQLException e) {
-        Alert errorOnDelete = new Alert(Alert.AlertType.ERROR);
-        errorOnDelete.setTitle("Eliminazione conferenza");
-        errorOnDelete.setContentText(e.getMessage());
-        errorOnDelete.showAndWait();
+        showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
     }
 
     private void goToEditConferenceWindow(Conferenza c, FXMLLoader loader) throws IOException {
@@ -154,9 +143,6 @@ public class ModificaConferenze_Controller implements Initializable {
     }
 
     private void showInformationAlert() {
-        Alert noErrorOnDelete = new Alert(Alert.AlertType.INFORMATION);
-        noErrorOnDelete.setTitle("Eliminazione conferenza");
-        noErrorOnDelete.setHeaderText("Eliminazione effettuata correttamente");
-        noErrorOnDelete.showAndWait();
+        showAlertWindow(Alert.AlertType.INFORMATION,"Eliminazione confernza", "Eliminazione effettuata correttamente");
     }
 }

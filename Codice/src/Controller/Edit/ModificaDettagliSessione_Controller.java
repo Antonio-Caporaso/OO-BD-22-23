@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Controller.AlertWindowController;
 import Exceptions.BlankFieldException;
 import Interfaces.FormChecker;
 import Model.DAO.SessioneDao;
@@ -26,7 +27,7 @@ import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModificaDettagliSessione_Controller implements Initializable, FormChecker {
+public class ModificaDettagliSessione_Controller extends AlertWindowController implements Initializable, FormChecker {
     private Conferenza conferenza;
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
@@ -106,13 +107,6 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
         this.conferenza = conferenza;
     }
 
-    private Optional<ButtonType> confirmationAlert() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler modificare i dettagli della sessione " + sessione.getId_sessione() + "?");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
-    }
-
     private Sessione getDettagliSessione() {
         Sessione s = new Sessione();
         s.setId_sessione(sessione.getId_sessione());
@@ -156,10 +150,7 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
             dao.updateSessione(s);
             sessione = s;
         } catch (BlankFieldException exception) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setHeaderText("Attenzione! Ci sono dei campi non compilati");
-            alert.setContentText("Assicurati di aver compilato tutto prima di procedere");
-            alert.showAndWait();
+           showAlertWindow(Alert.AlertType.WARNING,"Attenzione",exception.getMessage());
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Errore in fase di aggiornamento");
@@ -178,7 +169,7 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
 
     @FXML
     void confermaOnAction(ActionEvent event) throws SQLException, IOException {
-        Optional<ButtonType> result = confirmationAlert();
+        Optional<ButtonType> result = showConfirmationDialog("Sicuro di voler aggiornare la seguente sessione?");
         if (result.get() == ButtonType.OK) {
             updateSessione();
         }
@@ -192,9 +183,7 @@ public class ModificaDettagliSessione_Controller implements Initializable, FormC
             sale.loadSaleDisponibili(Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue()), Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
             saleChoice.setItems(sale.getSale());
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 }

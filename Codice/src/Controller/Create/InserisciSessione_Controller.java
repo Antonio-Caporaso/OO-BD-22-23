@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Exceptions.BlankFieldException;
 import Exceptions.DateMismatchException;
 import Exceptions.SediNonDisponibiliException;
@@ -27,7 +28,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
-public class InserisciSessione_Controller implements Initializable, FormChecker {
+public class InserisciSessione_Controller extends AlertWindowController implements Initializable, FormChecker {
     private Conferenza conferenza;
     @FXML
     private ChoiceBox<Organizzatore> coordinatoreChoiceBox;
@@ -70,14 +71,6 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
         }
     }
 
-    public void openAddSessioneDialogWindow() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Successo!");
-        alert.setHeaderText("Sessione aggiunta correttamente");
-        alert.getButtonTypes().remove(ButtonType.CANCEL);
-        alert.showAndWait();
-    }
-
     private void loadCoordinatoreChoiceBox() throws SQLException {
         conferenza.getComitato_s().loadMembri();
         coordinatoreChoiceBox.setItems(conferenza.getComitato_s().getMembri());
@@ -117,27 +110,10 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
             checkFieldsAreBlank();
             Sessione s = setSessione();
             conferenza.addSessione(s);
-            openAddSessioneDialogWindow();
+            showAlertWindow(Alert.AlertType.INFORMATION,"Successo","Sessione inserita correttamente");
             loadViewSessioni(conferenza);
-        } catch (DateMismatchException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        } catch (BlankFieldException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(e.getMessage());
-            alert.showAndWait();
-        } catch (SessionePresenteException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(e.getMessage());
-            alert.showAndWait();
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Errore in fase di salvataggio");
-            alert.setContentText(e.getSQLState() + ": " + e.getMessage());
-            alert.showAndWait();
+        } catch (DateMismatchException | SQLException | SessionePresenteException | BlankFieldException e) {
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 
@@ -153,17 +129,11 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
             else
                 saleChoiceBox.setItems(sale.getSale());
         } catch (SediNonDisponibiliException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione",e.getMessage());
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Inserire delle date per visualizzare le sale libere");
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Inserire delle date per visualizzare le sale libere");
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Attenzione",e.getMessage());
         }
     }
 }

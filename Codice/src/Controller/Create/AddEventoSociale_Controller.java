@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.BlankFieldException;
 import Interfaces.FormChecker;
@@ -12,10 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -28,7 +26,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddEventoSociale_Controller implements Initializable, FormChecker {
+public class AddEventoSociale_Controller extends AlertWindowController implements Initializable, FormChecker {
     @FXML
     private Button cancelButton;
     @FXML
@@ -53,27 +51,6 @@ public class AddEventoSociale_Controller implements Initializable, FormChecker {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadSpinners();
-    }
-
-    private void loadExceptionWindow(String message) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
-            Parent root = loader.load();
-            ExceptionWindow_Controller controller = loader.getController();
-            controller.setErrorMessageLabel(message);
-            Stage stage = new Stage();
-            stage.setTitle("Errore");
-            Scene scene = new Scene(root, 400, 200);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setAlwaysOnTop(true);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void loadSpinners() {
@@ -104,10 +81,8 @@ public class AddEventoSociale_Controller implements Initializable, FormChecker {
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        } catch (BlankFieldException eb) {
-            loadExceptionWindow(eb.getMessage());
-        } catch (SQLException e) {
-            loadExceptionWindow(e.getMessage());
+        } catch (BlankFieldException | SQLException eb) {
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",eb.getMessage());
         }
     }
 

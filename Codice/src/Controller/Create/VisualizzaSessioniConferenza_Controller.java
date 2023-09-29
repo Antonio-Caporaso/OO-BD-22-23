@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Controller.Edit.ModificaConferenza_Controller;
 import Controller.Landing_Controller;
 import Model.DAO.ConferenzaDao;
@@ -26,7 +27,7 @@ import java.sql.Time;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class VisualizzaSessioniConferenza_Controller implements Initializable {
+public class VisualizzaSessioniConferenza_Controller extends AlertWindowController implements Initializable {
     private AddSponsor_Controller addSponsorController;
     @FXML
     private Button aggiungiProgrammaButton;
@@ -133,11 +134,8 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         }
     }
 
-    private void saveConference() throws SQLException {
-        Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-        alert1.setHeaderText("Conferenza aggiunta correttamente");
-        alert1.setContentText("Verrai reindirizzato alla schermata di modifica della conferenza");
-        alert1.showAndWait();
+    private void saveConference(){
+        showAlertWindow(Alert.AlertType.INFORMATION,"Conferenza aggiunta correttamente","Verrai reindirizzato alla schermata di modifica della conferenza");
     }
 
 
@@ -159,14 +157,6 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
-    private Optional<ButtonType> showDeleteDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Sicuro di voler eliminare la seguente sessione?");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
-    }
-
     @FXML
     void inserisciButtonOnAction(ActionEvent event) {
         loadInserisciSessione();
@@ -214,7 +204,7 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
             if (selected == null) {
                 throw new NullPointerException();
             }
-            Optional<ButtonType> result = showDeleteDialog();
+            Optional<ButtonType> result = showConfirmationDialog("Sicuro di voler rimuovere la seguente sessione?");
             if (result.get() == ButtonType.OK) {
                 conferenza.removeSessione(selected);
                 setSessioni();

@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Controller.Edit.ModificaConferenza_Controller;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.EntePresenteException;
@@ -25,7 +26,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddEnti_Controller implements Initializable {
+public class AddEnti_Controller extends AlertWindowController implements Initializable {
     private Conferenza conferenza;
     private Enti enti = new Enti();
     @FXML
@@ -78,27 +79,6 @@ public class AddEnti_Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
-    private void loadErrorWindow(String messaggio) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
-            Parent root = loader.load();
-            ExceptionWindow_Controller controller = loader.getController();
-            controller.setErrorMessageLabel(messaggio);
-            Stage stage = new Stage();
-            stage.setTitle("Errore");
-            Scene scene = new Scene(root, 400, 200);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void setOrganizzatoriChoiceBox() {
         try {
             enti.loadEnti();
@@ -116,14 +96,6 @@ public class AddEnti_Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
-    private Optional<ButtonType> showDeleteDialog() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler eliminare il seguente ente?");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
-    }
-
     @FXML
     void backButtonOnAction(ActionEvent event) {
         goBackToEditConferenza();
@@ -138,15 +110,9 @@ public class AddEnti_Controller implements Initializable {
             conferenza.addEnte(enteSelezionato);
             checkAlmenoUnEnte();
         } catch (EntePresenteException e) {
-            try {
-                loadErrorWindow(e.getMessage());
-            } catch (IOException ex) {
-                e.printStackTrace();
-            }
+           showAlertWindow(Alert.AlertType.WARNING,"Attenzione",e.getMessage());
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Nessun ente selezionato");
-            alert.showAndWait();
+           showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 
@@ -161,15 +127,13 @@ public class AddEnti_Controller implements Initializable {
         try {
             if (enteSelezionato == null)
                 throw new NullPointerException();
-            Optional<ButtonType> result = showDeleteDialog();
+            Optional<ButtonType> result = showConfirmationDialog("Sicuro di voler eliminare questo ente?");
             if (result.get() == ButtonType.OK) {
                 conferenza.removeEnte(enteSelezionato);
                 checkAlmenoUnEnte();
             }
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Nessun ente selezionato");
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
 }

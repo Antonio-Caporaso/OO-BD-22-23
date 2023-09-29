@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.BlankFieldException;
 import Interfaces.FormChecker;
@@ -27,7 +28,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddIntervento_Controller implements Initializable, FormChecker {
+public class AddIntervento_Controller extends AlertWindowController implements Initializable, FormChecker {
     @FXML
     private TextArea abstractTextArea;
     @FXML
@@ -94,27 +95,6 @@ public class AddIntervento_Controller implements Initializable, FormChecker {
         }
     }
 
-    private void loadExceptionWindow(String message) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
-            Parent root = loader.load();
-            ExceptionWindow_Controller controller = loader.getController();
-            controller.setErrorMessageLabel(message);
-            Stage stage = new Stage();
-            stage.setTitle("Errore");
-            Scene scene = new Scene(root, 400, 200);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setAlwaysOnTop(true);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void loadSpinners() {
         // Configurazione oreSpinner
         SpinnerValueFactory<Integer> oreValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24, 0);
@@ -130,9 +110,7 @@ public class AddIntervento_Controller implements Initializable, FormChecker {
             speakers.loadSpeakers();
             speakerChoiceBox.setItems(speakers.getSpeakers());
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione",e.getMessage());
         }
     }
 
@@ -151,10 +129,8 @@ public class AddIntervento_Controller implements Initializable, FormChecker {
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        } catch (BlankFieldException eb) {
-            loadExceptionWindow(eb.getMessage());
-        } catch (SQLException e) {
-            loadExceptionWindow(e.getMessage());
+        } catch (BlankFieldException | SQLException eb) {
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",eb.getMessage());
         }
     }
 

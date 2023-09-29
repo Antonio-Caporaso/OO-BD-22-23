@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Controller.AlertWindowController;
 import Model.DAO.ConferenzaDao;
 import Model.Entities.*;
 import javafx.event.ActionEvent;
@@ -18,7 +19,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModificaConferenza_Controller implements Initializable {
+public class ModificaConferenza_Controller extends AlertWindowController implements Initializable {
     private Conferenza conferenza;
     @FXML
     private TableColumn<Sponsorizzazione, Float> contributoColumn;
@@ -238,9 +239,7 @@ public class ModificaConferenza_Controller implements Initializable {
                 conferenzaDao.deleteConferenza(conferenza);
                 goBackToEditConferencesWindow();
             } catch (SQLException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText(e.getMessage());
-                alert.showAndWait();
+                showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
             } catch (IOException exception) {
                 exception.printStackTrace();
             }

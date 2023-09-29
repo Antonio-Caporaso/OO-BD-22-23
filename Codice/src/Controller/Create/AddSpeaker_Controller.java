@@ -1,5 +1,6 @@
 package Controller.Create;
 
+import Controller.AlertWindowController;
 import Controller.ExceptionWindow_Controller;
 import Exceptions.BlankFieldException;
 import Interfaces.FormChecker;
@@ -14,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -28,7 +30,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddSpeaker_Controller implements Initializable, FormChecker {
+public class AddSpeaker_Controller extends AlertWindowController implements Initializable, FormChecker {
 
     @FXML
     private Button cancelButton;
@@ -77,27 +79,6 @@ public class AddSpeaker_Controller implements Initializable, FormChecker {
         titoloChoiceBox.getItems().setAll(titoli);
     }
 
-    private void loadExceptionWindow(String message) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
-            Parent root = loader.load();
-            ExceptionWindow_Controller controller = loader.getController();
-            controller.setErrorMessageLabel(message);
-            Stage stage = new Stage();
-            stage.setTitle("Errore");
-            Scene scene = new Scene(root, 400, 200);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setAlwaysOnTop(true);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     void cancelButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -113,10 +94,8 @@ public class AddSpeaker_Controller implements Initializable, FormChecker {
             speakers.addSpeaker(speaker);
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        } catch (BlankFieldException eb) {
-            loadExceptionWindow(eb.getMessage());
-        } catch (SQLException e) {
-            loadExceptionWindow(e.getMessage());
+        } catch (BlankFieldException | SQLException eb) {
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",eb.getMessage());
         }
     }
 

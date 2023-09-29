@@ -1,5 +1,6 @@
 package Controller.Edit;
 
+import Controller.AlertWindowController;
 import Exceptions.SessioneNotSelectedException;
 import Model.Entities.Conferenza;
 import Model.Entities.Sessione;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModificaSessioni_Controller implements Initializable {
+public class ModificaSessioni_Controller extends AlertWindowController implements Initializable {
     private Conferenza conferenza;
     @FXML
     private TableColumn<Sessione, Date> fineSessioneColumn;
@@ -39,12 +40,6 @@ public class ModificaSessioni_Controller implements Initializable {
         this.conferenza = conferenza;
         this.subscene = subscene;
         this.modificaConferenzaController = modificaConferenzaController;
-    }
-
-    private static void showSessioneNotSelectedAlert(SessioneNotSelectedException e) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(e.getMessage());
-        alert.showAndWait();
     }
 
     @FXML
@@ -68,7 +63,7 @@ public class ModificaSessioni_Controller implements Initializable {
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (SessioneNotSelectedException e) {
-            showSessioneNotSelectedAlert(e);
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione",e.getMessage());
         }
     }
 
@@ -116,13 +111,6 @@ public class ModificaSessioni_Controller implements Initializable {
 
     }
 
-    private Optional<ButtonType> showConfirmationAlert(Sessione s) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText("Sicuro di voler rimuovere la sessione '" + s.getTitolo() + "'?");
-        Optional<ButtonType> result = alert.showAndWait();
-        return result;
-    }
-
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
@@ -140,12 +128,12 @@ public class ModificaSessioni_Controller implements Initializable {
             if (s == null) {
                 throw new SessioneNotSelectedException();
             }
-            Optional<ButtonType> result = showConfirmationAlert(s);
+            Optional<ButtonType> result = showConfirmationDialog("Sicuro di voler eliminare la sessione seguente?");
             if (result.get() == ButtonType.OK) {
                 conferenza.removeSessione(s);
             }
         } catch (SessioneNotSelectedException e) {
-            showSessioneNotSelectedAlert(e);
+            showAlertWindow(Alert.AlertType.WARNING,"Attenzione",e.getMessage());
         }
     }
 }
