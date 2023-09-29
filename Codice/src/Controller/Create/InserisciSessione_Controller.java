@@ -55,7 +55,7 @@ public class InserisciSessione_Controller implements Initializable, FormChecker 
     @Override
     public void checkFieldsAreBlank() throws BlankFieldException {
         if (titoloSessioneTextField.getText().isBlank() || inizioDateTimePicker.getValue() == null ||
-                fineDateTimePicker.getValue() == null || saleChoiceBox.getValue() == null)
+                fineDateTimePicker.getValue() == null || saleChoiceBox.getValue() == null || coordinatoreChoiceBox.getValue()==null)
             throw new BlankFieldException();
     }
 
