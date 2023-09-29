@@ -5,6 +5,7 @@ import Controller.Edit.ChooseKeynote_Controller;
 import Controller.View.ShowInfoEventoSociale_Controller;
 import Controller.View.ShowInfoIntervallo_Controller;
 import Controller.View.ShowInfoIntervento_Controller;
+import Model.DAO.ProgrammaDao;
 import Model.Entities.*;
 import Model.Entities.Speaker;
 import Model.Utilities.ActivityModel;
@@ -46,6 +47,8 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
     private Sessione sessione;
     @FXML
     private Label sessioneLabel;
+    @FXML
+    private Label keynoteLabel;
     @FXML
     private SubScene subscene;
     @FXML
@@ -189,6 +192,7 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             stage.setY(360);
             stage.setAlwaysOnTop(true);
             stage.showAndWait();
+            setKeynoteLabel();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -247,7 +251,10 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
         programma.removeActivity(activityModel);
         disableKeynote();
     }
-
+    private void setKeynoteLabel(){
+        if(!(programma.getKeynote().toString().isEmpty()))
+            keynoteLabel.setText("Keynote Speaker: "+programma.getKeynote().toString());
+    }
     private void setProgramma() {
         programma = new Programma(sessione);
     }
