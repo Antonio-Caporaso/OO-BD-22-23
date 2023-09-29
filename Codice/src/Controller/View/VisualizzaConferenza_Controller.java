@@ -239,6 +239,9 @@ public class VisualizzaConferenza_Controller implements Initializable {
     void viewSessione(MouseEvent event) {
         try {
             Sessione s = sessioniTable.getSelectionModel().getSelectedItem();
+            if(s==null){
+                throw new NullPointerException();
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/VisualizzaSessione.fxml"));
             VisualizzaSessione_Controller controller = new VisualizzaSessione_Controller(s, subScene, this);
             loader.setController(controller);
