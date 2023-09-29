@@ -408,7 +408,7 @@ $$
 language plpgsql;
 
 create or replace function 
-add_new_intervallo(tipologia text , programa_id int, durata interval)
+add_new_intervallo(tipologia text , programma_id int, durata interval)
 returns integer
 as $$
 declare
