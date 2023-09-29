@@ -119,25 +119,15 @@ public class AddSessione_Controller extends AlertWindowController implements Ini
         s.setFine(Timestamp.valueOf(fineDateTimePicker.getDateTimeValue()));
         return s;
     }
+
     private void salvaSessione(Sessione sessione){
         try {
             conferenza.addSessione(sessione);
-        } catch (DateMismatchException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        } catch (SessionePresenteException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(e.getMessage());
-            alert.showAndWait();
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Errore in fase di salvataggio");
-            alert.setContentText(e.getSQLState() + ": " + e.getMessage());
-            alert.showAndWait();
+        } catch (DateMismatchException | SQLException | SessionePresenteException e) {
+            showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
+
     private void retrieveProgrammaSessione(Sessione sessione) {
         ProgrammaDao programmaDao = new ProgrammaDao();
         try {
