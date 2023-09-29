@@ -63,10 +63,13 @@ public class ProgrammaDao {
         Programma programma = new Programma();
         SpeakerDao dao = new SpeakerDao();
         ResultSet rs = stm.executeQuery();
+        int id_speaker = 0;
         while (rs.next()) {
             programma.setProgrammaID(rs.getInt(1));
             programma.setSessione(sessione);
-            programma.setKeynote(dao.retrieveSpeakerByID(rs.getInt("id_keynote")));
+            id_speaker = rs.getInt("id_keynote");
+            if(id_speaker!=0)
+                programma.setKeynote(dao.retrieveSpeakerByID(id_speaker));
         }
         return programma;
     }

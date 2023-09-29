@@ -45,8 +45,7 @@ public class SpeakerDao {
     public Speaker retrieveSpeakerByID(int id) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        Speaker sp = new Speaker();
-        String query = "SELECT * FROM Speaker where id_speaker = ?";
+        String query = "SELECT * FROM speaker where id_speaker = ?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1, id);
         ResultSet rs = stm.executeQuery();

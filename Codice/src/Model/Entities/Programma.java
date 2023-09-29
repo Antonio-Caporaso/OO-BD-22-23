@@ -27,6 +27,7 @@ public class Programma {
         interventi = FXCollections.observableArrayList();
         intervalli = FXCollections.observableArrayList();
         eventi = FXCollections.observableArrayList();
+        keynote = new Speaker();
     }
 
     public Programma() {
@@ -34,6 +35,7 @@ public class Programma {
         interventi = FXCollections.observableArrayList();
         intervalli = FXCollections.observableArrayList();
         eventi = FXCollections.observableArrayList();
+        keynote = new Speaker();
     }
 
     public void addEvento(EventoSociale e, PGInterval durata) throws SQLException {

@@ -67,6 +67,6 @@ public class Speaker {
 
     @Override
     public String toString() {
-        return cognome + " " +nome + " ("+istituzione.getSigla()+")";
+        return cognome + " " + nome;
     }
 }
