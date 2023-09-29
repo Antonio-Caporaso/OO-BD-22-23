@@ -1,5 +1,6 @@
 package Controller.View;
 
+import Exceptions.DateMismatchException;
 import Exceptions.NoConferencesException;
 import Model.Entities.Conferenza;
 import Model.Entities.Sede;
@@ -111,16 +112,30 @@ public class VisualizzaConferenze_Controller implements Initializable {
             alert.showAndWait();
         }
     }
+    private boolean checkDate()throws DateMismatchException{
+        if(!dataFineDP.getValue().isBefore(dataInizioDP.getValue())){
+            return true;
+        }else{
+            throw new DateMismatchException();
+        }
+    }
 
     @FXML
     void findButtonOnAction(ActionEvent event) {
         tableConferenza.getItems().clear();
-        if (sedeChoice.isDisabled())
-            findByDate();
-        else
-            findByDateAndSede();
-    }
+        try{
+            checkDate();
+            if (sedeChoice.isDisabled())
+                findByDate();
+            else
+                findByDateAndSede();
+        }catch (DateMismatchException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
 
+    }
     @FXML
     void visualizzaConferenzaOnAction(MouseEvent event) throws IOException {
         Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();

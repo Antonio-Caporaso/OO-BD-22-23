@@ -2,6 +2,7 @@ package Controller.Create;
 
 import Controller.Landing_Controller;
 import Exceptions.BlankFieldException;
+import Exceptions.DateMismatchException;
 import Interfaces.FormChecker;
 import Model.DAO.ConferenzaDao;
 import Model.Entities.Conferenza;
@@ -25,6 +26,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AddConference_Controller implements Initializable, FormChecker {
@@ -72,6 +74,10 @@ public class AddConference_Controller implements Initializable, FormChecker {
         } catch (BlankFieldException e) {
             showAlert(e);
         } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }catch (DateMismatchException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
@@ -133,10 +139,14 @@ public class AddConference_Controller implements Initializable, FormChecker {
         return new Conferenza(nome, dataI, dataF, descrizione, sede, user);
     }
 
-    private void saveConferenza(Conferenza conferenza) throws SQLException {
+    private void saveConferenza(Conferenza conferenza) throws SQLException, DateMismatchException {
         ConferenzaDao d = new ConferenzaDao();
-        int id = d.saveConferenza(conferenza);
-        conferenza.setId_conferenza(id);
+        if (!(conferenza.getFine().before(conferenza.getInizio()))){
+            int id = d.saveConferenza(conferenza);
+            conferenza.setId_conferenza(id);
+        }else {
+            throw new DateMismatchException();
+        }
     }
 
     private void showAlert(Exception e) {

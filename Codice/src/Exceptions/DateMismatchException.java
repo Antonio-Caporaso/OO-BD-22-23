@@ -1,7 +1,7 @@
 package Exceptions;
 
 public class DateMismatchException extends Exception{
-    private String message = "Le date inserite non combaciano con quelle della conferenza";
+    private String message = "Verifica il corretto inserimento delle date";
 
     @Override
     public String getMessage() {
