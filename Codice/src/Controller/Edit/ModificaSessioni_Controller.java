@@ -4,7 +4,6 @@ import Controller.AlertWindowController;
 import Exceptions.SessioneNotSelectedException;
 import Model.Entities.Conferenza;
 import Model.Entities.Sessione;
-import Model.Entities.Utente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

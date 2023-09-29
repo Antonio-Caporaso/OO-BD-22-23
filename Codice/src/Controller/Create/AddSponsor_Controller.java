@@ -109,7 +109,6 @@ public class AddSponsor_Controller extends AlertWindowController implements Init
 
     protected void setSponsorizzazioniTable() {
         sponsorTable.setEditable(false);
-        //conferenza.loadSponsorizzazioni();
         sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
         sponsorColumn.setReorderable(false);
         contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));

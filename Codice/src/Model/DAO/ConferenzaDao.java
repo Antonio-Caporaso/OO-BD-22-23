@@ -4,7 +4,6 @@ import Model.DbConfig.DBConnection;
 import Model.Entities.Conferenza;
 import Model.Entities.Sede;
 import Model.Entities.Utente;
-import org.postgresql.util.PGInterval;
 
 import java.sql.*;
 import java.util.LinkedList;

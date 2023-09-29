@@ -3,7 +3,6 @@ package Controller.Edit;
 import Controller.AlertWindowController;
 import Exceptions.BlankFieldException;
 import Exceptions.DateMismatchException;
-import Exceptions.SediNonDisponibiliException;
 import Exceptions.SessionePresenteException;
 import Interfaces.FormChecker;
 import Model.DAO.ProgrammaDao;
@@ -20,7 +19,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;

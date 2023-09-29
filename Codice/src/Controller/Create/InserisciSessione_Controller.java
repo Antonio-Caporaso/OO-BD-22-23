@@ -3,7 +3,6 @@ package Controller.Create;
 import Controller.AlertWindowController;
 import Exceptions.BlankFieldException;
 import Exceptions.DateMismatchException;
-import Exceptions.SediNonDisponibiliException;
 import Exceptions.SessionePresenteException;
 import Interfaces.FormChecker;
 import Model.Entities.Conferenza;
@@ -20,7 +19,6 @@ import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import tornadofx.control.DateTimePicker;
 
 import java.net.URL;

@@ -5,7 +5,6 @@ import Controller.Edit.ChooseKeynote_Controller;
 import Controller.View.ShowInfoEventoSociale_Controller;
 import Controller.View.ShowInfoIntervallo_Controller;
 import Controller.View.ShowInfoIntervento_Controller;
-import Model.DAO.ProgrammaDao;
 import Model.Entities.*;
 import Model.Entities.Speaker;
 import Model.Utilities.ActivityModel;
@@ -61,7 +60,6 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
         this.sessione = sessione;
     }
 
-    //Overrides
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setProgramma();
@@ -104,8 +102,6 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             e.printStackTrace();
         }
     }
-
-    //Private Methods
     private void openAddEventoSocialeWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddEventoSociale.fxml"));
@@ -115,7 +111,6 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setTitle("Aggiunta evento");
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
@@ -139,7 +134,6 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setTitle("Aggiunta intervallo");
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
@@ -162,7 +156,6 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setTitle("Aggiunta intervento");
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
@@ -209,7 +202,6 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setTitle("Informazioni");
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
@@ -233,7 +225,6 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             Stage stage = new Stage();
             Scene scene = new Scene(root);
             stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setTitle("Informazioni");
             stage.initStyle(StageStyle.TRANSPARENT);
             scene.setFill(Color.TRANSPARENT);
             stage.setResizable(false);
@@ -289,7 +280,6 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
                 keynoteButton.setDisable(false);
     }
 
-    //Button Methods
     @FXML
     void addIntervalloOnAction(ActionEvent event) {
         openAddIntervalloWindow();
