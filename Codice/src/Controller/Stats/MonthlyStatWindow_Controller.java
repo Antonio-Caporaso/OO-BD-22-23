@@ -1,5 +1,6 @@
 package Controller.Stats;
 
+import Controller.AlertWindowController;
 import Model.DAO.InterventoDao;
 import Model.Utilities.Stats;
 import javafx.collections.FXCollections;
@@ -19,7 +20,7 @@ import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-public class MonthlyStatWindow_Controller implements Initializable {
+public class MonthlyStatWindow_Controller extends AlertWindowController implements Initializable {
         @FXML
         private Spinner<Integer> annoSpinner;
         @FXML
@@ -37,11 +38,6 @@ public class MonthlyStatWindow_Controller implements Initializable {
         meseSpinner.setValueFactory(mesiValueFactory);
         SpinnerValueFactory<Integer> anniValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2023,3000,1,1);
         annoSpinner.setValueFactory(anniValueFactory);
-    }
-    private static void showAlert(Alert.AlertType information, String s) {
-        Alert alert = new Alert(information);
-        alert.setContentText(s);
-        alert.showAndWait();
     }
     private void createBarChart(ObservableList<Stats> stats, BorderPane pane) {
         CategoryAxis xAxis = new CategoryAxis();
@@ -72,14 +68,14 @@ public class MonthlyStatWindow_Controller implements Initializable {
                 stats.clear();
                 stats.addAll(retrieveIstituzioniByMonth(mese, anno));
                 if (stats.isEmpty()) {
-                    showAlert(Alert.AlertType.INFORMATION, "Non risultano interventi nel mese cercato");
+                    showAlertWindow(Alert.AlertType.INFORMATION, "Attenzione","Non risultano interventi nel mese cercato");
                 } else {
                     createBarChart(stats, pieChartPane);
                 }
             } catch (InputMismatchException e) {
-                showAlert(Alert.AlertType.ERROR, "Inserire un input valido");
+                showAlertWindow(Alert.AlertType.ERROR, "Errore","Inserire un input valido");
             } catch (SQLException e) {
-                showAlert(Alert.AlertType.ERROR, e.getMessage());
+                showAlertWindow(Alert.AlertType.ERROR, "Errore",e.getMessage());
             }
         }
 }

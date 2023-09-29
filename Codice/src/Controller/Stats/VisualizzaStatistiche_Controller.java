@@ -50,12 +50,6 @@ public class VisualizzaStatistiche_Controller implements Initializable {
         }
     }
 
-    private static void showAlert(Alert.AlertType information, String s) {
-        Alert alert = new Alert(information);
-        alert.setContentText(s);
-        alert.showAndWait();
-    }
-
     @FXML
     void openStatisticheAnnualiButton(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Stats/StatisticheAnnuali.fxml"));
