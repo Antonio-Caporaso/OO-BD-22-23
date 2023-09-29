@@ -63,6 +63,7 @@ public class InserisciSessione_Controller extends AlertWindowController implemen
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            loadSale();
             loadCoordinatoreChoiceBox();
             Tooltip.install(inizioSessioneAboutImage, new Tooltip("L'inizio della conferenza è: " + conferenza.getInizio()));
             Tooltip.install(fineSessioneAboutImage, new Tooltip("La fine della conferenza è: " + conferenza.getFine()));
@@ -116,24 +117,12 @@ public class InserisciSessione_Controller extends AlertWindowController implemen
             showAlertWindow(Alert.AlertType.ERROR,"Errore",e.getMessage());
         }
     }
-
-    @FXML
-    void showSale(MouseEvent event) {
+    private void loadSale() {
         try {
-            sale = new Sale(conferenza.getSede());
-            Timestamp inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
-            Timestamp fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
-            sale.loadSaleDisponibili(inizio, fine);
-            if (sale.getSale().isEmpty())
-                throw new SediNonDisponibiliException();
-            else
-                saleChoiceBox.setItems(sale.getSale());
-        } catch (SediNonDisponibiliException e) {
-            showAlertWindow(Alert.AlertType.WARNING,"Attenzione",e.getMessage());
-        } catch (NullPointerException e) {
-            showAlertWindow(Alert.AlertType.WARNING,"Attenzione","Inserire delle date per visualizzare le sale libere");
-        } catch (SQLException e) {
-            showAlertWindow(Alert.AlertType.ERROR,"Attenzione",e.getMessage());
+            sale.loadSale();
+            saleChoiceBox.setItems(sale.getSale());
+        } catch (SQLException e){
+            e.printStackTrace();
         }
     }
 }
