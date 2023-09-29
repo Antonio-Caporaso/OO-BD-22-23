@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login.Register_Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Login.Register_Controller">
    <children>
       <VBox prefHeight="720.0" prefWidth="348.0" style="-fx-background-color: #232730; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);">
          <children>
@@ -23,7 +23,7 @@
                         <Font name="Times New Roman" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="titoloLabel" layoutX="63.0" layoutY="170.0" prefHeight="21.0" prefWidth="48.0" text="Titolo" textFill="#eceff4">
+                  <Label fx:id="titoloLabel" layoutX="63.0" layoutY="170.0" prefHeight="21.0" prefWidth="68.0" text="Titolo" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
@@ -64,7 +64,7 @@
                      </font>
                   </Label>
                   <PasswordField fx:id="passwordTextField" layoutX="17.0" layoutY="505.0" prefHeight="37.0" prefWidth="139.0" />
-                  <Label fx:id="confermaPasswordLabel" layoutX="170.0" layoutY="473.0" text="Conferma Password" textFill="#eceff4">
+                  <Label fx:id="confermaPasswordLabel" layoutX="170.0" layoutY="473.0" text="Conferma password" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
