@@ -50,6 +50,7 @@ public class AddSessione_Controller implements Initializable, FormChecker {
         this.conferenza = conferenza;
         this.subscene = subscene;
         this.modificaSessioniController = modificaSessioniController;
+        sale = new Sale(conferenza.getSede());
     }
 
     @Override
@@ -74,7 +75,17 @@ public class AddSessione_Controller implements Initializable, FormChecker {
             setCoordinatoreChoiceBox();
             Tooltip.install(inizioSessioneAboutImage, new Tooltip("L'inizio della conferenza è: " + conferenza.getInizio()));
             Tooltip.install(fineSessioneAboutImage, new Tooltip("La fine della conferenza è: " + conferenza.getFine()));
+            loadSale();
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadSale() {
+        try {
+            sale.loadSale();
+            saleChoice.setItems(sale.getSale());
+        } catch (SQLException e){
             e.printStackTrace();
         }
     }
@@ -133,30 +144,6 @@ public class AddSessione_Controller implements Initializable, FormChecker {
         }
     }
 
-    @FXML
-    void showSale(MouseEvent event) {
-        try {
-            Timestamp inizio = Timestamp.valueOf(inizioDateTimePicker.getDateTimeValue());
-            Timestamp fine = Timestamp.valueOf(fineDateTimePicker.getDateTimeValue());
-            sale.loadSaleDisponibili(inizio, fine);
-            if (sale.getSale().isEmpty())
-                throw new SediNonDisponibiliException();
-            else
-                saleChoice.setItems(sale.getSale());
-        } catch (SediNonDisponibiliException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Inserire delle date per visualizzare le sale libere");
-            alert.showAndWait();
-        } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        }
-    }
 
     @FXML
     void annullaOnAction(ActionEvent event) throws IOException {

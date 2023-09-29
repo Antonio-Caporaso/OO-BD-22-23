@@ -26,4 +26,10 @@ public class Sale {
         sale.clear();
         sale.addAll(dao.retrieveSaleLibere(sede, inizio, fine));
     }
+
+    public void loadSale() throws SQLException {
+        SalaDao dao = new SalaDao();
+        sale.clear();
+        sale.addAll(dao.retrieveSaleBySede(sede));
+    }
 }
