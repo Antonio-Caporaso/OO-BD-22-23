@@ -97,8 +97,11 @@ public class ModificaSponsorizzazioni_Controller implements Initializable, FormC
         try {
             conferenza.loadSponsorizzazioni();
             sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
+            sponsorColumn.setReorderable(false);
             contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
+            contributoColumn.setReorderable(false);
             valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
+            valutaColumn.setReorderable(false);
             sponsorTable.setItems(conferenza.getSponsorizzazioni());
         } catch (SQLException e) {
             throw new RuntimeException(e);

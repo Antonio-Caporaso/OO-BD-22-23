@@ -117,8 +117,11 @@ public class AddSponsor_Controller implements Initializable {
         sponsorTable.setEditable(false);
         //conferenza.loadSponsorizzazioni();
         sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
+        sponsorColumn.setReorderable(false);
         contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
+        contributoColumn.setReorderable(false);
         valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
+        valutaColumn.setReorderable(false);
         sponsorTable.setItems(conferenza.getSponsorizzazioni());
     }
 

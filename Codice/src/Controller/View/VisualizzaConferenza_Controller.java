@@ -131,7 +131,9 @@ public class VisualizzaConferenza_Controller implements Initializable {
             conferenza.loadEnti();
             entiTable.setEditable(false);
             nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            nomeEnte.setReorderable(false);
             siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
+            siglaEnte.setReorderable(false);
             entiTable.getItems().addAll(conferenza.getEnti());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,10 +150,15 @@ public class VisualizzaConferenza_Controller implements Initializable {
         try {
             comitato_L.loadMembri();
             nomeOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            nomeOrganizzatoreColumn1.setReorderable(false);
             cognomeOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+            cognomeOrganizzatoreColumn1.setReorderable(false);
             titoloOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+            titoloOrganizzatoreColumn1.setReorderable(false);
             emailOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("email"));
+            emailOrganizzatoreColumn1.setReorderable(false);
             istituzioneOrganizzatoreColumn1.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
+            istituzioneOrganizzatoreColumn1.setReorderable(false);
             comitatoLocaleTable.getItems().addAll(comitato_L.getMembri());
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -165,10 +172,15 @@ public class VisualizzaConferenza_Controller implements Initializable {
         try {
             comitato_S.loadMembri();
             nomeOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            nomeOrganizzatoreColumn2.setReorderable(false);
             cognomeOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+            cognomeOrganizzatoreColumn2.setReorderable(false);
             titoloOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+            titoloOrganizzatoreColumn2.setReorderable(false);
             emailOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("email"));
+            emailOrganizzatoreColumn2.setReorderable(false);
             istituzioneOrganizzatoreColumn2.setCellValueFactory(new PropertyValueFactory<>("istituzione"));
+            istituzioneOrganizzatoreColumn2.setReorderable(false);
             comitatoScientificoTable.getItems().addAll(comitato_S.getMembri());
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -186,9 +198,13 @@ public class VisualizzaConferenza_Controller implements Initializable {
         try {
             conferenza.loadSessioni();
             nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+            nomeSessioneColumn.setReorderable(false);
             inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            inizioSessioneColumn.setReorderable(false);
             fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            fineSessioneColumn.setReorderable(false);
             salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, String>("locazione"));
+            salaSessioneColumn.setReorderable(false);
             sessioniTable.getItems().addAll(conferenza.getSessioni());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -199,8 +215,11 @@ public class VisualizzaConferenza_Controller implements Initializable {
         try {
             conferenza.loadSponsorizzazioni();
             sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
+            sponsorColumn.setReorderable(false);
             contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
+            contributoColumn.setReorderable(false);
             valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
+            valutaColumn.setReorderable(false);
             sponsorTable.setItems(conferenza.getSponsorizzazioni());
         } catch (SQLException e) {
             throw new RuntimeException(e);

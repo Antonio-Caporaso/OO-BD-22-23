@@ -104,9 +104,13 @@ public class ModificaSessioni_Controller implements Initializable {
     private void setTable() {
         table.setEditable(false);
         nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, String>("titolo"));
+        nomeSessioneColumn.setReorderable(false);
         inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, Date>("inizio"));
+        inizioSessioneColumn.setReorderable(false);
         fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, Date>("fine"));
+        fineSessioneColumn.setReorderable(false);
         salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, String>("locazione"));
+        salaSessioneColumn.setReorderable(false);
         table.setItems(conferenza.getSessioni());
         nomeSessioneColumn.isSortable();
 

@@ -126,14 +126,19 @@ public class ModificaConferenza_Controller implements Initializable {
     public void setOrganizzatori() {
         entiTable.setEditable(false);
         nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        nomeEnte.setReorderable(false);
         siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
+        siglaEnte.setReorderable(false);
         entiTable.getItems().addAll(conferenza.getEnti());
     }
 
     public void setSponsorizzazioni() {
         sponsorColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("sponsor"));
+        sponsorColumn.setReorderable(false);
         contributoColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, Float>("contributo"));
+        contributoColumn.setReorderable(false);
         valutaColumn.setCellValueFactory(new PropertyValueFactory<Sponsorizzazione, String>("valuta"));
+        valutaColumn.setReorderable(false);
         sponsorTable.getItems().addAll(conferenza.getSponsorizzazioni());
     }
 
@@ -206,9 +211,13 @@ public class ModificaConferenza_Controller implements Initializable {
             e.printStackTrace();
         }
         nomeSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, String>("titolo"));
+        nomeSessioneColumn.setReorderable(false);
         inizioSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, Date>("inizio"));
+        inizioSessioneColumn.setReorderable(false);
         fineSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, Date>("fine"));
+        fineSessioneColumn.setReorderable(false);
         salaSessioneColumn.setCellValueFactory(new PropertyValueFactory<Sessione, String>("locazione"));
+        salaSessioneColumn.setReorderable(false);
         table.getItems().addAll(conferenza.getSessioni());
         nomeSessioneColumn.isSortable();
     }

@@ -51,7 +51,9 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
     private void setEntiTable() {
         entiTable.setEditable(false);
         nomeEnte.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        nomeEnte.setReorderable(false);
         siglaEnte.setCellValueFactory(new PropertyValueFactory<>("sigla"));
+        siglaEnte.setReorderable(false);
         entiTable.getItems().addAll(conferenza.getEnti());
     }
 

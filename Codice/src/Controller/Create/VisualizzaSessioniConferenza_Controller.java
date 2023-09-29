@@ -145,10 +145,15 @@ public class VisualizzaSessioniConferenza_Controller implements Initializable {
         try {
             conferenza.loadSessioni();
             titoloTableColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+            titoloTableColumn.setReorderable(false);
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            inizioTableColumn.setReorderable(false);
             fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            fineTableColumn.setReorderable(false);
             salaTableColumn.setCellValueFactory(new PropertyValueFactory<>("locazione"));
+            salaTableColumn.setReorderable(false);
             chairTableColumn.setCellValueFactory(new PropertyValueFactory<>("coordinatore"));
+            chairTableColumn.setReorderable(false);
             sessioniTableView.setItems(conferenza.getSessioni());
         } catch (SQLException e) {
             e.printStackTrace();

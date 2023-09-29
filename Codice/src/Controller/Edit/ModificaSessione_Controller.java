@@ -232,8 +232,11 @@ public class ModificaSessione_Controller implements Initializable {
         try {
             programma.loadProgramaSessione();
             appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            appuntamentoTableColumn.setReorderable(false);
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            inizioTableColumn.setReorderable(false);
             fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            fineTableColumn.setReorderable(false);
             programmaTableView.setItems(programma.getProgrammaSessione());
 
         } catch (SQLException e) {

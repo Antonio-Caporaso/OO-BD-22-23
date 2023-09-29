@@ -141,10 +141,15 @@ public class ModificaConferenze_Controller implements Initializable {
     private void setTableConferenze(ObservableList<Conferenza> c) throws SQLException {
         tableConferenza.setEditable(false);
         nomeConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+        nomeConferenzaColumn.setReorderable(false);
         inizioConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+        inizioConferenzaColumn.setReorderable(false);
         fineConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+        fineConferenzaColumn.setReorderable(false);
         descrizioneColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));
+        descrizioneColumn.setReorderable(false);
         sedeColumn.setCellValueFactory(new PropertyValueFactory<>("sede"));
+        sedeColumn.setReorderable(false);
         tableConferenza.setItems(c);
     }
 

@@ -33,42 +33,18 @@ import java.util.ResourceBundle;
 
 public class ViewProgramma_Controller implements Initializable {
     @FXML
-    private Button addEventoSocialeButton;
-    @FXML
-    private Button addIntervalloButton;
-    @FXML
-    private Button addInterventoButton;
-    @FXML
-    private Button addPuntoButton;
-    @FXML
     private TableColumn<ActivityModel, String> appuntamentoTableColumn;
-    @FXML
-    private Button backButton;
     private Conferenza conferenza;
-    @FXML
-    private TableColumn<ActivityModel, String> descrizioneTableColumn;
     @FXML
     private TableColumn<ActivityModel, Timestamp> fineTableColumn;
     @FXML
     private TableColumn<ActivityModel, Timestamp> inizioTableColumn;
-    @FXML
-    private URL location;
     private Programma programma;
     @FXML
     private TableView<ActivityModel> programmaTableView;
-    @FXML
-    private Button removePuntoButton;
-    @FXML
-    private ResourceBundle resources;
-    @FXML
-    private Button riepilogoButton;
-    @FXML
-    private Button rimuoviButton;
     private Sessione sessione;
     @FXML
     private Label sessioneLabel;
-    @FXML
-    private TableColumn<ActivityModel, Speaker> speakerTableColumn;
     @FXML
     private SubScene subscene;
     @FXML
@@ -280,8 +256,11 @@ public class ViewProgramma_Controller implements Initializable {
         try {
             programma.loadProgramaSessione();
             appuntamentoTableColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            appuntamentoTableColumn.setReorderable(false);
             inizioTableColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
+            inizioTableColumn.setReorderable(false);
             fineTableColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
+            fineTableColumn.setReorderable(false);
             programmaTableView.setItems(programma.getProgrammaSessione());
 
         } catch (SQLException e) {
