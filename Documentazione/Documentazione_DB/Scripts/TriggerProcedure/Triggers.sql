@@ -279,13 +279,14 @@ BEGIN
     )) THEN
     -- Controllo se la sede è occupata nelle date specificate
     IF EXISTS (
-      SELECT 1
+      SELECT id_conferenza
       FROM conferenza
-      WHERE (
-        (NEW.inizio >= inizio AND NEW.inizio <= fine) OR
-        (NEW.fine >= inizio AND NEW.fine <= fine)
-      )
-      AND NEW.id_sede = id_sede
+      WHERE
+        (NEW.inizio, NEW.fine) OVERLAPS (inizio, fine) AND NEW.id_sede = id_sede
+    ) AND NOT EXISTS (
+      SELECT id_conferenza
+      FROM conferenza
+      WHERE id_conferenza = NEW.id_conferenza
     ) THEN
       -- Se la sede è occupata, solleva un'eccezione
       RAISE EXCEPTION 'La sede è occupata nelle date specificate.';
@@ -295,6 +296,7 @@ BEGIN
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
 
 -- Creazione del trigger per controllare la sede libera prima dell'INSERT o dell'UPDATE
 CREATE TRIGGER check_sede_libera_before_insert_update
