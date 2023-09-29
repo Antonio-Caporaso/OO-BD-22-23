@@ -14,10 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -60,24 +57,9 @@ public class AddIntervallo_Controller implements Initializable, FormChecker {
     }
 
     private void loadExceptionWindow(String message) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/ExceptionWindow.fxml"));
-            Parent root = loader.load();
-            ExceptionWindow_Controller controller = loader.getController();
-            controller.setErrorMessageLabel(message);
-            Stage stage = new Stage();
-            stage.setTitle("Errore");
-            Scene scene = new Scene(root, 400, 200);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setAlwaysOnTop(true);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       Alert alert = new Alert(Alert.AlertType.ERROR);
+       alert.setContentText(message);
+       alert.showAndWait();
     }
 
     private void loadSpinners() {
@@ -108,13 +90,13 @@ public class AddIntervallo_Controller implements Initializable, FormChecker {
 
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
-        Intervallo intervallo = new Intervallo();
-        intervallo.setTipologia(tipologiaChoiceBox.getSelectionModel().getSelectedItem());
-        intervallo.setProgramma(programma);
         try {
             checkFieldsAreBlank();
+            Intervallo intervallo = new Intervallo();
+            intervallo.setTipologia(tipologiaChoiceBox.getSelectionModel().getSelectedItem());
+            intervallo.setProgramma(programma);
             PGInterval durata = new PGInterval(0, 0, 0, oreSpinner.getValue(), minutiSpinner.getValue(), 0);
-            programma.addNewIntervallo(intervallo, durata);
+            programma.addIntervallo(intervallo, durata);
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();

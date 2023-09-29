@@ -19,7 +19,7 @@ public class IntervalloDao {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
         int result = 0;
-        String query = "select * from save_intervallo(?,?,?)";
+        String query = "select * from add_new_intervallo(?,?,?)";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setString(1, intervallo.getTipologia());
         stm.setInt(2, intervallo.getProgramma().getProgrammaID());

@@ -59,12 +59,6 @@ public class Programma {
         interventi.add(intervento);
     }
 
-    public void addNewIntervallo(Intervallo intervallo, PGInterval durata) throws SQLException {
-        IntervalloDao dao = new IntervalloDao();
-        dao.createNewIntervallo(intervallo, durata);
-        intervalli.add(intervallo);
-    }
-
     public ObservableList<EventoSociale> getEventi() {
         return eventi;
     }

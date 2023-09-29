@@ -94,11 +94,11 @@ public class AddEventoSociale_Controller implements Initializable, FormChecker {
 
     @FXML
     void confirmButtonOnAction(ActionEvent event) {
-        EventoSociale eventoSociale = new EventoSociale();
-        eventoSociale.setTipologia(titoloTextField.getText());
-        eventoSociale.setProgramma(programma);
         try {
             checkFieldsAreBlank();
+            EventoSociale eventoSociale = new EventoSociale();
+            eventoSociale.setTipologia(titoloTextField.getText());
+            eventoSociale.setProgramma(programma);
             PGInterval durata = new PGInterval(0, 0, 0, oreSpinner.getValue(), minutiSpinner.getValue(), 0);
             programma.addEvento(eventoSociale, durata);
             programma.loadProgramaSessione();
