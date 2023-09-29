@@ -80,6 +80,7 @@ public class AddSessione_Controller extends AlertWindowController implements Ini
 
     private void loadSale() {
         try {
+            sale=new Sale(conferenza.getSede());
             sale.loadSale();
             saleChoice.setItems(sale.getSale());
         } catch (SQLException e){

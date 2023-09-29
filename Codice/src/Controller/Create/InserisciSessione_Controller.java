@@ -119,6 +119,7 @@ public class InserisciSessione_Controller extends AlertWindowController implemen
     }
     private void loadSale() {
         try {
+            sale=new Sale(conferenza.getSede());
             sale.loadSale();
             saleChoiceBox.setItems(sale.getSale());
         } catch (SQLException e){
