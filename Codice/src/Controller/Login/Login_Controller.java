@@ -1,7 +1,6 @@
 package Controller.Login;
 
 import Controller.Landing_Controller;
-import Controller.Navigation_Controller;
 import Exceptions.BlankFieldException;
 import Interfaces.FormChecker;
 import Model.DAO.UtenteDAO;
@@ -16,12 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -117,8 +112,12 @@ public class Login_Controller implements Initializable, FormChecker {
     @FXML
     void registratiButtonOnAction(ActionEvent event) {
         try {
-            Navigation_Controller.getInstance().setStage((Stage) loginButton.getScene().getWindow());
-            Navigation_Controller.getInstance().loadScene("/View/FXML/Login/Registrazione.fxml");
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Login/Registrazione.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
         } catch (Exception e) {
             e.printStackTrace();
         }

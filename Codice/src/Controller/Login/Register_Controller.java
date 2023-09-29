@@ -1,7 +1,6 @@
 package Controller.Login;
 
 import Interfaces.FormChecker;
-import Controller.Navigation_Controller;
 import Exceptions.BlankFieldException;
 import Exceptions.PasswordMismatchException;
 import Exceptions.UtentePresenteException;
@@ -11,14 +10,14 @@ import Model.Entities.Ente;
 import Model.Utilities.Enti;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 
-import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -76,8 +75,16 @@ public class Register_Controller implements Initializable, FormChecker {
     }
 
     private void goToLoginWindow() {
-        Navigation_Controller.getInstance().setStage((Stage) backButton.getScene().getWindow());
-        Navigation_Controller.getInstance().loadScene("/View/FXML/Login/Login.fxml");
+        try{
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Login/Login.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     private void passwordMatcher() throws PasswordMismatchException {
@@ -95,8 +102,12 @@ public class Register_Controller implements Initializable, FormChecker {
     @FXML
     void backButtonOnAction(ActionEvent event) {
         try {
-            Navigation_Controller.getInstance().setStage((Stage) backButton.getScene().getWindow());
-            Navigation_Controller.getInstance().loadScene("/View/FXML/Login/Login.fxml");
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Login/Login.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setResizable(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
