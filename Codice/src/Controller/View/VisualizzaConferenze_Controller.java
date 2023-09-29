@@ -63,6 +63,7 @@ public class VisualizzaConferenze_Controller implements Initializable {
     private void setTable(ObservableList<Conferenza> c) {
         tableConferenza.setEditable(false);
         nomeConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+
         inizioConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("inizio"));
         fineConferenzaColumn.setCellValueFactory(new PropertyValueFactory<>("fine"));
         descrizioneColumn.setCellValueFactory(new PropertyValueFactory<>("descrizione"));

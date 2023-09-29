@@ -26,11 +26,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModificaSponsorizzazioni_Controller implements Initializable, FormChecker {
-    @FXML
-    private Button annullaButton;
     private Conferenza conferenza;
-    @FXML
-    private Button confermaButton;
     @FXML
     private TableColumn<Sponsorizzazione, Float> contributoColumn;
     @FXML

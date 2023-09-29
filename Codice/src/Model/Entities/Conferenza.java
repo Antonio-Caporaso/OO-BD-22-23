@@ -85,9 +85,9 @@ public class Conferenza {
 
     public void addSponsorizzazione(Sponsorizzazione sponsorizzazione) throws SponsorizzazionPresenteException, SQLException {
         if (!(sponsorizzazioni.contains(sponsorizzazione))) {
-            sponsorizzazioni.add(sponsorizzazione);
             SponsorizzazioneDAO sponsorizzazioneDAO = new SponsorizzazioneDAO();
             sponsorizzazioneDAO.saveSponsorizzazione(sponsorizzazione);
+            sponsorizzazioni.add(sponsorizzazione);
         } else throw new SponsorizzazionPresenteException();
     }
 

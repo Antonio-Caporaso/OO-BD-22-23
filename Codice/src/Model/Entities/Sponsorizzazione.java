@@ -69,7 +69,18 @@ public class Sponsorizzazione {
     }
 
     public void setValuta(String valuta) {
-        this.valuta = valuta;
+        if(valuta.equals("USD"))
+            this.valuta="$";
+        else if(valuta.equals("EUR"))
+            this.valuta="€";
+        else if (valuta.equals("GBP"))
+            this.valuta="£";
+        else if (valuta.equals("JPY"))
+            this.valuta="¥";
+        else if(valuta.equals("CAD"))
+            this.valuta="CA$";
+        else
+            this.valuta=valuta;
     }
 
     @Override
