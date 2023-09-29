@@ -142,8 +142,12 @@ public class Programma {
         try {
             if (programmaSessione.contains(activityModel)) {
                 programmaSessione.remove(activityModel);
-                if (activityModel instanceof Intervento)
+                if (activityModel instanceof Intervento) {
+                    if(activityModel.getProgramma().getKeynote()==this.getKeynote()){
+                           removeKeynote();
+                    }
                     removeIntervento((Intervento) activityModel);
+                }
                 if (activityModel instanceof EventoSociale)
                     removeEvento((EventoSociale) activityModel);
                 else if (activityModel instanceof Intervallo)
@@ -172,6 +176,11 @@ public class Programma {
         interventi.remove(intervento);
     }
 
+    public void removeKeynote()throws SQLException{
+        ProgrammaDao programmaDao=new ProgrammaDao();
+        programmaDao.removeKeynoteFromProgramma(this);
+        this.keynote.setIdSpeaker(0);
+    }
     public void updateEvento(EventoSociale e) throws SQLException {
         if (eventi.contains(e)) {
             eventi.remove(e);

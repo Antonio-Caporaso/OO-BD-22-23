@@ -20,13 +20,6 @@
         </Label>
       <ButtonBar layoutX="716.0" layoutY="675.0" prefHeight="31.0" prefWidth="202.0">
         <buttons>
-          <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" stylesheets="@../../CSS/NewStyle.css" text="Back" textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets></Button>
             <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextOnAction" stylesheets="@../../CSS/NewStyle.css" text="Next" textFill="WHITE">
                <font>
                   <Font size="15.0" />
