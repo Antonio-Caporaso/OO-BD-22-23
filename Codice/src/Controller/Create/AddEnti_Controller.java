@@ -55,19 +55,6 @@ public class AddEnti_Controller extends AlertWindowController implements Initial
     private void checkAlmenoUnEnte() {
         nextButton.setDisable(entiListView.getItems().isEmpty());
     }
-
-    private void goBackToEditConferenza() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaConferenza.fxml"));
-            ModificaConferenza_Controller controller = new ModificaConferenza_Controller(conferenza, subscene, user);
-            loader.setController(controller);
-            Parent root = loader.load();
-            subscene.setRoot(root);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void goToAddComitatiWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddComitati.fxml"));
@@ -95,10 +82,6 @@ public class AddEnti_Controller extends AlertWindowController implements Initial
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    @FXML
-    void backButtonOnAction(ActionEvent event) {
-        goBackToEditConferenza();
     }
 
     @FXML
