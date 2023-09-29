@@ -3,6 +3,7 @@ package Controller.Create;
 import Controller.Landing_Controller;
 import Exceptions.BlankFieldException;
 import Exceptions.DateMismatchException;
+import Exceptions.SedeOccupataException;
 import Interfaces.FormChecker;
 import Model.DAO.ConferenzaDao;
 import Model.Entities.Conferenza;
@@ -19,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.postgresql.util.PSQLException;
 import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
@@ -69,6 +71,7 @@ public class AddConference_Controller implements Initializable, FormChecker {
             conferenza = costruisciConferenza();
             conference.addConferenza(conferenza);
             saveConferenza(conferenza);
+            checkSedeDisponibile(conferenza);
             openAddedConferenceDialogWindow();
             loadAddEnti(conferenza);
         } catch (BlankFieldException e) {
@@ -81,6 +84,8 @@ public class AddConference_Controller implements Initializable, FormChecker {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(e.getMessage());
             alert.showAndWait();
+        }catch (SedeOccupataException e){
+            showAlert(e);
         }
     }
 
@@ -101,7 +106,10 @@ public class AddConference_Controller implements Initializable, FormChecker {
         alert.setHeaderText("Conferenza aggiunta correttamente");
         alert.showAndWait();
     }
-
+    private void checkSedeDisponibile(Conferenza conferenza)throws SedeOccupataException{
+        if(conferenza.getId_conferenza()==0)
+            throw new SedeOccupataException();
+    }
     private void goToAddEntiWindow() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddEnti.fxml"));
         AddEnti_Controller controller = new AddEnti_Controller(subscene, conferenza, user);
