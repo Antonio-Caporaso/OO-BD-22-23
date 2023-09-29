@@ -250,10 +250,14 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
     private void removePuntoProgramma(ActivityModel activityModel) {
         programma.removeActivity(activityModel);
         disableKeynote();
+        setKeynoteLabel();
     }
     private void setKeynoteLabel(){
-        if(!(programma.getKeynote().toString().isEmpty()))
-            keynoteLabel.setText("Keynote Speaker: "+programma.getKeynote().toString());
+        Speaker keynote=programma.getKeynote();
+        if(!(keynote.getIdSpeaker()==0)){
+            keynoteLabel.setText("Keynote Speaker: " + programma.getKeynote().toString());
+        } else
+            keynoteLabel.setText("");
     }
     private void setProgramma() {
         programma = new Programma(sessione);

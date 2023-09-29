@@ -16,7 +16,7 @@ public class ProgrammaDao {
     public void removeKeynoteFromProgramma(Programma programma) throws SQLException {
         dbcon = DBConnection.getDBconnection();
         conn = dbcon.getConnection();
-        String query = "update programma set id_keynite=NULL where id_programma=?";
+        String query = "update programma set id_keynote=NULL where id_programma=?";
         PreparedStatement stm = conn.prepareStatement(query);
         stm.setInt(1, programma.getProgrammaID());
         stm.executeUpdate();
