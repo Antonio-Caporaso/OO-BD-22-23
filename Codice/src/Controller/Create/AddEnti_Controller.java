@@ -1,8 +1,6 @@
 package Controller.Create;
 
 import Controller.AlertWindowController;
-import Controller.Edit.ModificaConferenza_Controller;
-import Controller.ExceptionWindow_Controller;
 import Exceptions.EntePresenteException;
 import Model.Entities.Conferenza;
 import Model.Entities.Ente;
@@ -13,15 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;

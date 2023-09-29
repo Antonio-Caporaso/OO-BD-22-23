@@ -21,7 +21,6 @@ import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.postgresql.util.PSQLException;
 import tornadofx.control.DateTimePicker;
 
 import java.io.IOException;
@@ -29,7 +28,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AddConference_Controller extends AlertWindowController implements Initializable, FormChecker {
