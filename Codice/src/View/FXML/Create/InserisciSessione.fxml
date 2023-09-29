@@ -86,8 +86,8 @@
                </children>
             </Pane>
             <ChoiceBox fx:id="saleChoiceBox" prefHeight="35.0" prefWidth="326.0" stylesheets="@../../CSS/NewStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DateTimePicker fx:id="fineDateTimePicker" editable="false" prefHeight="35.0" prefWidth="326.0" promptText="Inserisci la data e l'orario di Fine" stylesheets="@../../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <DateTimePicker fx:id="inizioDateTimePicker" editable="false" prefHeight="35.0" prefWidth="326.0" promptText="Inserisci la data e l'orario di Inizio" stylesheets="@../../CSS/DatePicker.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DateTimePicker fx:id="fineDateTimePicker" editable="false" prefHeight="35.0" prefWidth="326.0" promptText="Inserisci la data e l'orario di Fine" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DateTimePicker fx:id="inizioDateTimePicker" editable="false" prefHeight="35.0" prefWidth="326.0" promptText="Inserisci la data e l'orario di Inizio" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
                   <Label layoutX="14.0" layoutY="41.0" text="Coordinatore:" textFill="WHITE">
