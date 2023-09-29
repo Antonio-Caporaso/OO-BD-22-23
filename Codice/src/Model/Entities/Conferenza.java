@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Conferenza {
     private Comitato comitato_l;
@@ -239,6 +240,19 @@ public class Conferenza {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Conferenza that = (Conferenza) o;
+        return Objects.equals(enti, that.enti) && Objects.equals(fine, that.fine) && Objects.equals(inizio, that.inizio) && Objects.equals(proprietario, that.proprietario) && Objects.equals(sede, that.sede) && Objects.equals(titolo, that.titolo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(enti, fine, inizio, proprietario, sede, titolo);
     }
 
     @Override

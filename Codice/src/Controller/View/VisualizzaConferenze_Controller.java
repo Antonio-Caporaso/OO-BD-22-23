@@ -144,7 +144,7 @@ public class VisualizzaConferenze_Controller implements Initializable {
     @FXML
     void visualizzaConferenzaOnAction(MouseEvent event) throws IOException {
         Conferenza c = tableConferenza.getSelectionModel().getSelectedItem();
-        if (c.equals(null)) {
+        if (c == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Selezionare una conferenza");
             alert.showAndWait();
