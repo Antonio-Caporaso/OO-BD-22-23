@@ -34,8 +34,8 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Spinner fx:id="oreSpinner" editable="true" layoutX="327.0" layoutY="224.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../../CSS/NewStyle.css" />
-      <Spinner fx:id="minutiSpinner" editable="true" layoutX="440.0" layoutY="224.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../../CSS/NewStyle.css" />
+      <Spinner fx:id="oreSpinner" layoutX="327.0" layoutY="224.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../../CSS/NewStyle.css" />
+      <Spinner fx:id="minutiSpinner" layoutX="440.0" layoutY="224.0" prefHeight="25.0" prefWidth="98.0" stylesheets="@../../CSS/NewStyle.css" />
       <Button fx:id="confirmaButton" layoutX="449.0" layoutY="331.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" prefHeight="31.0" prefWidth="120.0" stylesheets="@../../CSS/NewStyle.css" text="Confirm" />
       <Button fx:id="cancelButton" layoutX="48.0" layoutY="331.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="31.0" prefWidth="120.0" stylesheets="@../../CSS/NewStyle.css" text="Cancel" />
       <Label layoutX="354.0" layoutY="200.0" stylesheets="@../../CSS/NewStyle.css" text="Ore" textFill="WHITE">
