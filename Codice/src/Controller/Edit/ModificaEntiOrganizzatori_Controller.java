@@ -19,8 +19,6 @@ import java.util.ResourceBundle;
 
 public class ModificaEntiOrganizzatori_Controller implements Initializable {
     private Conferenza conferenza;
-    @FXML
-    private Button deleteButton;
     private ModificaConferenza_Controller editController;
     private Enti enti = new Enti();
     @FXML
@@ -75,6 +73,7 @@ public class ModificaEntiOrganizzatori_Controller implements Initializable {
     void deleteOnAction(ActionEvent event) {
         Ente e = entiTable.getSelectionModel().getSelectedItem();
         conferenza.removeEnte(e);
+        entiTable.getItems().remove(e);
     }
 
     @FXML
