@@ -229,7 +229,8 @@ public class VisualizzaConferenza_Controller implements Initializable {
     @FXML
     void confermaButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/View/VisualizzaConferenze.fxml"));
-        loader.setController(visualizzaConferenzeController);
+        VisualizzaConferenze_Controller controller = new VisualizzaConferenze_Controller(subScene);
+        loader.setController(controller);
         Parent root = loader.load();
         subScene.setRoot(root);
     }
