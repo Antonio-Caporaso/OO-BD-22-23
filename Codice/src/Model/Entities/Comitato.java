@@ -48,11 +48,6 @@ public class Comitato {
         return membri;
     }
 
-    public void setMembri(ObservableList<Organizzatore> membri) {
-        membri.clear();
-        this.membri = membri;
-    }
-
     @Override
     public int hashCode() {
         int result = id_comitato;

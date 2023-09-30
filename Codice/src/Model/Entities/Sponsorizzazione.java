@@ -60,12 +60,12 @@ public class Sponsorizzazione {
         return sponsor;
     }
 
-    public void setSponsor(Sponsor sponsor) {
-        this.sponsor = sponsor;
-    }
-
     public String getValuta() {
         return valuta;
+    }
+
+    public void setSponsor(Sponsor sponsor) {
+        this.sponsor = sponsor;
     }
 
     public void setValuta(String valuta) {

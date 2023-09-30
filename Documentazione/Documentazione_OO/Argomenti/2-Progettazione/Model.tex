@@ -1,25 +1,25 @@
+\newpage
 \section{Le CRC Cards}
 \subsection{Il package Model}
 \subsubsection{Model.Entities}
 \begin{table}[h!]
-
 	\begin{tabular}{|l|l|}
 		\hline
-		\textbf{Class name} & Conferenza \\ \hline
+		\textbf{Class name} & \texttt{Conferenza} \\ \hline
 		\textbf{Superclass} & Nessuna \\ \hline
 		\textbf{Subclasses} & Nessuna\\ \hline
 		\textbf{Responsabilities} & Riunione tematica di rappresentanti di vari enti \\ \hline
-		\multirow{5}{*}{\textbf{Collaborations}} & Sessione \\ 
-		& Comitato \\
-		& Utente \\
-		& Sede \\
-		& Ente \\ \hline
+		\multirow{5}{*}{\textbf{Collaborations}} & \texttt{Sessione} \\ 
+		& \texttt{Comitato }\\
+		& \texttt{Utente} \\
+		&\texttt{Sede} \\
+		& \texttt{Ente} \\ \hline
 	\end{tabular}
 \end{table}
 \begin{table}[h!]	
 		\begin{tabular}{|l|l|}
 	\hline
-	\textbf{Class name} & EventoSociale \\ \hline
+	\textbf{Class name} & \texttt{EventoSociale} \\ \hline
 	\textbf{Superclass} & ActivityModel \\ \hline
 	\textbf{Subclasses} & Nessuna\\ \hline
 	\textbf{Responsabilities} & Momento dedicato agli invitati della conferenza \\ \hline
@@ -30,7 +30,7 @@
 \begin{tabular}{|l|l|}
 		\hline
 		\textbf{Class name} & Intervento \\ \hline
-		\textbf{Superclass} & ActivityModel \\ \hline
+		\textbf{Superclass} & \texttt{ActivityModel} \\ \hline
 		\textbf{Subclasses} & Nessuna\\ \hline
 		\textbf{Responsabilities} & Momento in cui un partecipante prende la parola \\ \hline
 		\textbf{Collaborations} & Nessuna \\ \hline
@@ -39,21 +39,21 @@
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline
-		\textbf{Class name} & Programma \\ \hline
+		\textbf{Class name} & \texttt{Programma} \\ \hline
 		\textbf{Superclass} & Nessuna \\ \hline
 		\textbf{Subclasses} & Nessuna  \\ \hline
 		\textbf{Responsabilità} & Specifica i punti di una sessione \\ \hline
-		\multirow{4}{*}{\textbf{Collaborations}} & Sessione \\ 
-		& Intervento \\
-		& Intervallo \\
-		& EventoSociale \\ \hline
+		\multirow{4}{*}{\textbf{Collaborations}} & \texttt{Sessione} \\ 
+		& \texttt{Intervento }\\
+		& \texttt{Intervallo} \\
+		& \texttt{EventoSociale} \\ \hline
 	\end{tabular}
 \end{table}
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline
-		\textbf{Class name} & Intervallo \\ \hline
-		\textbf{Superclass} & ActivityModel \\ \hline
+		\textbf{Class name} & \texttt{Intervallo} \\ \hline
+		\textbf{Superclass} & \texttt{ActivityModel} \\ \hline
 		\textbf{Subclasses} & Nessuna  \\ \hline
 		\textbf{Responsabilità} & Breve pausa all'interno di una sessione \\ \hline
 		\textbf{Collaborazioni} & Nessuna \\ \hline
@@ -62,109 +62,107 @@
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline
-		\textbf{Class name} & Sede \\ \hline
+		\textbf{Class name} &\texttt{ Sede} \\ \hline
 		\textbf{Superclass} & Nessuna \\ \hline
 		\textbf{Subclasses} & Nessuna  \\ \hline
 		\textbf{Responsabilità} & Luogo in cui si svolge una conferenza\\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & Conferenza \\ 
-		& Sala \\ 
-		& Indirizzo \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & \texttt{Conferenza} \\ 
+		& \texttt{Sala} \\ 
+		& \texttt{Indirizzo} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[h!]
 \begin{tabular}{|l|l|}
 			\hline
-	\textbf{Class name} & Sala \\ \hline
+	\textbf{Class name} & \texttt{Sala} \\ \hline
 	\textbf{Superclass} & Nessuna \\ \hline
 	\textbf{Subclasses} & Nessuna  \\ \hline
 	\textbf{Responsabilità} & Luogo in cui si svolge una sessione \\ \hline
-	\multirow{2}{*}{\textbf{Collaborations}} & Sessione \\ 
-	& Sede \\ \hline
+	\multirow{2}{*}{\textbf{Collaborations}} & \texttt{Sessione} \\ 
+	& \texttt{Sede} \\ \hline
 \end{tabular}
-\end{table}
-\begin{table}[h!]
+\quad
 \begin{tabular}{|l|l|}
 			\hline
-	\textbf{Class name} & Sessione \\ \hline
+	\textbf{Class name} &\texttt{ Sessione }\\ \hline
 	\textbf{Superclass} & Nessuna \\ \hline
 	\textbf{Subclasses} & Nessuna  \\ \hline
 	\textbf{Responsabilità} & Parte di una conferenza \\ \hline
-	\multirow{4}{*}{\textbf{Collaborations}} & Conferenza \\ 
-	& Sala \\
-	& Programma \\
-	& Organizzatore \\ \hline
+	\multirow{4}{*}{\textbf{Collaborations}} & \texttt{Conferenza} \\ 
+	& \texttt{Sala} \\
+	& \texttt{Programma} \\
+	& \texttt{Organizzatore} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[h!]
 \begin{tabular}{|l|l|}
 	\hline
-	\textbf{Class name} & Comitato \\ \hline
+	\textbf{Class name} & \texttt{Comitato} \\ \hline
 	\textbf{Superclass} & Nessuna \\ \hline
 	\textbf{Subclasses} & Nessuna  \\ \hline
 	\textbf{Responsabilità} & Insieme di organizzatori che si occupa della logistica e dell'organizzazione \\ \hline
-	\multirow{2}{*}{\textbf{Collaborations}} & Conferenza \\ 
-	& Organizzatore \\ \hline
+	\multirow{2}{*}{\textbf{Collaborations}} & \texttt{Conferenza} \\ 
+	& \texttt{Organizzatore} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[h!]
 \begin{tabular}{|l|l|}
 		\hline
-		\textbf{Class name} & Ente \\ \hline
+		\textbf{Class name} & \texttt{Ente} \\ \hline
 		\textbf{Superclass} & Nessuna \\ \hline
 		\textbf{Subclasses} & Nessuna  \\ \hline
 		\textbf{Responsabilità} & Istituzione che organizza una conferenza \\ \hline
-		\multirow{4}{*}{\textbf{Collaborations}} & Conferenza \\ 
-		& Speaker \\
-		& Partecipante \\
-		& Organizzatore \\ \hline
+		\multirow{4}{*}{\textbf{Collaborations}} & \texttt{Conferenza} \\ 
+		& \texttt{Speaker} \\
+		& \texttt{Partecipante} \\
+		& \texttt{Organizzatore} \\ \hline
 \end{tabular}
-\end{table}
-
-\begin{table}[h!]
-\begin{tabular}{|l|l|}
-		\hline
-		\textbf{Class name} & Indirizzo \\ \hline
-		\textbf{Superclass} & Nessuna \\ \hline
-		\textbf{Subclasses} & Nessuna  \\ \hline
-		\textbf{Responsabilità} & Luogo dove è presente la conferenza \\ \hline
-		\multirow{1}{*}{\textbf{Collaborations}} & Sede \\ \hline
-	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
+	\hline
+	\textbf{Class name} & \texttt{Organizzatore} \\ \hline
+	\textbf{Superclass} & Nessuna \\ \hline
+	\textbf{Subclasses} & Nessuna  \\ \hline
+	\textbf{Responsabilità} & Membro di un ente \\ \hline
+	\multirow{3}{*}{\textbf{Collaborations}} & \texttt{Ente} \\ 
+	& \texttt{Sessione} \\ 
+	&\texttt{Comitato} \\ \hline
+\end{tabular}
+\quad
+\begin{tabular}{|l|l|}
 		\hline
-		\textbf{Class name} & Organizzatore \\ \hline
+		\textbf{Class name} & \texttt{Indirizzo} \\ \hline
 		\textbf{Superclass} & Nessuna \\ \hline
 		\textbf{Subclasses} & Nessuna  \\ \hline
-		\textbf{Responsabilità} & Membro di un ente \\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & Ente \\ 
-		& Sessione \\ 
-		& Comitato \\ \hline
+		\textbf{Responsabilità} & Luogo dove è presente la conferenza \\ \hline
+		\multirow{1}{*}{\textbf{Collaborations}} & \texttt{Sede }\\ \hline
 	\end{tabular}
 \end{table}
-\begin{table}
+
+\begin{table}[h!]
 \begin{tabular}{|l|l|}
 	\hline
-	\textbf{Class name} & Sponsor \\ \hline
+	\textbf{Class name} & \texttt{Sponsor }\\ \hline
 	\textbf{Superclass} & Nessuna \\ \hline
 	\textbf{Subclasses} & Nessuna  \\ \hline
 	\textbf{Responsabilità} & Azienda che sponsorizza una conferenza \\ \hline
-	\multirow{1}{*}{\textbf{Collaborations}} & Sponsorizzazione \\ \hline
+	\multirow{1}{*}{\textbf{Collaborations}} & \texttt{Sponsorizzazione} \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[h!]
 \begin{tabular}{|l|l|}
 	\hline
-	\textbf{Class name} & Sponsorizzazione \\ \hline
+	\textbf{Class name} & \texttt{Sponsorizzazione} \\ \hline
 	\textbf{Superclass} & Nessuna \\ \hline
 	\textbf{Subclasses} & Nessuna  \\ \hline
 	\textbf{Responsabilità} & Sponsorizzazione di uno sponsor \\ \hline
-	\multirow{2}{*}{\textbf{Collaborations}} & Conferenza \\ 
+	\multirow{2}{*}{\textbf{Collaborations}} & \texttt{Conferenza} \\ 
 	& Sponsor \\ \hline
 \end{tabular}
 \end{table}
@@ -172,29 +170,30 @@
 \begin{table}[h!]
 \begin{tabular}{|l|l|}
 	\hline
-	\textbf{Class name} & Speaker \\ \hline
+	\textbf{Class name} & \texttt{Speaker} \\ \hline
 	\textbf{Superclass} & Nessuna \\ \hline
 	\textbf{Subclasses} & Nessuna  \\ \hline
 	\textbf{Responsabilità} & Specifica i punti di una sessione \\ \hline
-	\multirow{1}{*}{\textbf{Collaborations}} & Intervento \\ \hline
+	\multirow{1}{*}{\textbf{Collaborations}} & \texttt{Intervento} \\ \hline
 \end{tabular}
 \end{table}
 
 Nella Figura \ref{uml:modellodominio} è presente il class diagram rappresentante il modello di dominio. 
-\subsubsection{Model.DAO}
-Nell'architettura dell'applicativo Symposium, le classi DAO (Data Access Object) svolgono un ruolo fondamentale nella gestione dell'accesso ai dati e nell'interazione con il sistema di archiviazione dei dati sottostante. Le classi DAO fungono da ponte tra il livello di business dell'applicativo e il database o qualsiasi altro meccanismo di persistenza utilizzato per memorizzare e recuperare i dati.
-\bigskip
 
-Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all'interno dell'applicativo Symposium:
+\clearpage
+\pagebreak
+
+\subsubsection{Model.DAO}
+Nell'architettura dell'applicativo Symposium, le classi DAO (Data Access Object) svolgono un ruolo fondamentale nella gestione dell'accesso ai dati e nell'interazione con il sistema di archiviazione dei dati sottostante. Le classi DAO fungono da ponte tra il livello di business dell'applicativo e il database o qualsiasi altro meccanismo di persistenza utilizzato per memorizzare e recuperare i dati. Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all'interno dell'applicativo Symposium:
 \begin{enumerate}
 	\item \textbf{Separazione delle responsabilità:} le classi DAO separano chiaramente la logica di accesso ai dati dalla logica di business dell'applicativo. 
 	\item \textbf{Astrazione dal dettaglio di archiviazione:} le classi DAO nascondono i dettagli tecnici legati al meccanismo di persistenza sottostante. Questo significa che le modifiche alla tecnologia di archiviazione dei dati, come il passaggio da un database SQL a un database NoSQL, possono essere gestite senza impattare significativamente il codice di business.
 \end{enumerate}
-\newpage
+
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & ComitatoDao
+		\textbf{Class name} & \texttt{ComitatoDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -203,10 +202,10 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative ai comitati.
 		\\ \hline
-		\multirow{4}{*}{\textbf{Collaborations}} & Comitato \\ 
-		& Utente \\
-		& EnteDao \\
-		& DbConnection \\
+		\multirow{4}{*}{\textbf{Collaborations}} & \texttt{Comitato} \\ 
+		& \texttt{Utente} \\
+		& \texttt{EnteDao} \\
+		& \texttt{DbConnection} \\
 	\hline
 	\end{tabular}
 \end{table}
@@ -214,7 +213,7 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & ConferenzaDao
+		\textbf{Class name} &\texttt{ ConferenzaDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -223,20 +222,20 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative alle conferenze.
 		\\ \hline
-		\multirow{7}{*}{\textbf{Collaborations}} & Conferenza \\ 
-		& Utente \\
-		& Sede \\
-		& UtenteDao\\
-		& SedeDao \\
-		& ComitatoDao \\
-		& DbConnection \\ \hline
+		\multirow{7}{*}{\textbf{Collaborations}} & \texttt{Conferenza} \\ 
+		& \texttt{Utente} \\
+		& \texttt{Sede} \\
+		& \texttt{UtenteDao}\\
+		& \texttt{SedeDao }\\
+		& \texttt{ComitatoDao }\\
+		&\texttt{ DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & EnteDao
+		\textbf{Class name} & \texttt{EnteDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -245,16 +244,16 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative all'Ente.
 		\\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & Conferenza \\ 
-		& Ente \\
-		& DbConnection \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & \texttt{Conferenza} \\ 
+		& \texttt{Ente} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & IndirizzoDao
+		\textbf{Class name} & \texttt{IndirizzoDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -263,18 +262,17 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative agli Indirizzi.
 		\\ \hline
-		\multirow{2}{*}{\textbf{Collaborations}} & Indirizzo \\ 
-		& DbConnection \\
+		\multirow{2}{*}{\textbf{Collaborations}} & \texttt{Indirizzo} \\ 
+		& \texttt{DbConnection} \\
 	\hline
 	\end{tabular}
 \end{table}	
 
-\newpage
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & IntervalloDao
+		\textbf{Class name} & \texttt{IntervalloDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -283,16 +281,16 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative agli Intervalli.
 		\\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & Intervallo \\ 
-		& Programma \\
-		& DbConnection \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & \texttt{Intervallo} \\ 
+		& \texttt{Programma} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & EventoSocialeDao
+		\textbf{Class name} & \texttt{EventoSocialeDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -301,16 +299,16 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative agli Eventi Sociali.
 		\\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & EventoSociale \\ 
-		& ProgrammaDao \\
-		& DbConnection \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & \texttt{EventoSociale }\\ 
+		& \texttt{ProgrammaDao} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & ProgrammaDao
+		\textbf{Class name} & \texttt{ProgrammaDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -319,17 +317,17 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative ai Programmi.
 		\\ \hline
-		\multirow{4}{*}{\textbf{Collaborations}} & Programma \\ 
-		& Sessione \\
-		& SpeakerDao \\
-		& DbConnection \\ \hline
+		\multirow{4}{*}{\textbf{Collaborations}} & \texttt{Programma} \\ 
+		& \texttt{Sessione} \\
+		& \texttt{SpeakerDao} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & InterventoDao
+		\textbf{Class name} & \texttt{InterventoDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -338,19 +336,18 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative agli Interventi.
 		\\ \hline
-		\multirow{5}{*}{\textbf{Collaborations}} & Intervento \\ 
-		& Programma \\
-		& Stats \\
-		& SpeakerDao \\
-		& DbConnection \\ \hline
+		\multirow{5}{*}{\textbf{Collaborations}} & \texttt{Intervento} \\ 
+		& \texttt{Programma} \\
+		& \texttt{Stats} \\
+		& \texttt{SpeakerDao} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
-\newpage
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & OrganizzatoreDao
+		\textbf{Class name} & \texttt{OrganizzatoreDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -359,16 +356,16 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative agli Organizzatori.
 		\\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & Organizzatore \\ 
-		& EnteDao \\
-		& DbConnection \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & \texttt{Organizzatore} \\ 
+		& \texttt{EnteDao} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & SalaDao
+		\textbf{Class name} & \texttt{SalaDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -377,16 +374,16 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative alle Sale.
 		\\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & Sala \\ 
-		& SedeDao \\
-		& DbConnection \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & \texttt{Sala} \\ 
+		& \texttt{SedeDao} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & SedeDao
+		\textbf{Class name} & \texttt{SedeDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -395,16 +392,16 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative alle Sedi.
 		\\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & Sede \\ 
-		& IndirizzoDao \\
-		& DbConnection \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & \texttt{Sede} \\ 
+		& \texttt{IndirizzoDao} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & SessioneDao
+		\textbf{Class name} & \texttt{SessioneDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -413,20 +410,19 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative alle Sessioni.
 		\\ \hline
-		\multirow{6}{*}{\textbf{Collaborations}} & Sessione \\ 
-		& ConferenzaDao \\
-		& OrganizzatoreDao \\
-		& SalaDao \\
-		& ProgrammaDao \\
-		& DbConnection \\ \hline
+		\multirow{6}{*}{\textbf{Collaborations}} &\texttt{ Sessione} \\ 
+		& \texttt{ConferenzaDao} \\
+		& \texttt{OrganizzatoreDao} \\
+		& \texttt{SalaDao} \\
+		& \texttt{ProgrammaDao} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
-\newpage
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & SpeakerDao
+		\textbf{Class name} & \texttt{SpeakerDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -435,16 +431,16 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative agli Speaker.
 		\\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & Speaker \\ 
-		& EnteDao \\
-		& DbConnection \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & \texttt{Speaker} \\ 
+		& \texttt{EnteDao} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & SponsorDao
+		\textbf{Class name} & \texttt{SponsorDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -453,15 +449,15 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative agli Sponsor.
 		\\ \hline
-		\multirow{2}{*}{\textbf{Collaborations}} & Sponsor \\ 
-		& DbConnection \\ \hline
+		\multirow{2}{*}{\textbf{Collaborations}} & \texttt{Sponsor} \\ 
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & SponsorizzazioneDao
+		\textbf{Class name} & \texttt{SponsorizzazioneDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -470,17 +466,17 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative alle Sponsorizzazioni.
 		\\ \hline
-		\multirow{4}{*}{\textbf{Collaborations}} & Sponsorizzazione \\ 
-		& Conferenza \\
-		& SponsorDao \\
-		& DbConnection \\ \hline
+		\multirow{4}{*}{\textbf{Collaborations}} & \texttt{Sponsorizzazione} \\ 
+		& \texttt{Conferenza} \\
+		& \texttt{SponsorDao} \\
+		&\texttt{ DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & UtenteDao
+		\textbf{Class name} &\texttt{ UtenteDao}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -489,17 +485,17 @@ Le classi DAO sono state introdotte per affrontare diverse esigenze critiche all
 		\\ \hline
 		\textbf{Responsability} & Comunicare le operazioni da eseguire al database relative agli Utenti.
 		\\ \hline
-		\multirow{3}{*}{\textbf{Collaborations}} & Utente \\ 
-		& UtenteDao \\
-		& DbConnection \\ \hline
+		\multirow{3}{*}{\textbf{Collaborations}} & \texttt{Utente} \\ 
+		& \texttt{UtenteDao} \\
+		& \texttt{DbConnection} \\ \hline
 	\end{tabular}
 \end{table}
 
-\subsubsection{Model.Utilities}
-Le classi del dominio in Symposium rappresentano oggetti significativi all'interno del nostro sistema, ad esempio le conferenze, gli utenti e altri elementi chiave. Tuttavia, per garantire una gestione efficiente delle liste di questi oggetti e monitorare i cambiamenti in tempo reale, abbiamo introdotto le classi utilities.
-\bigskip
+\clearpage
+\pagebreak
 
-Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
+\subsubsection{Model.Utilities}
+Le classi del dominio in Symposium rappresentano oggetti significativi all'interno del nostro sistema, ad esempio le conferenze, gli utenti e altri elementi chiave. Tuttavia, per garantire una gestione efficiente delle liste di questi oggetti e monitorare i cambiamenti in tempo reale, abbiamo introdotto le classi utilities. Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{enumerate}
 	\item \textbf{Monitoraggio delle modifiche:} attraverso queste classi abbiamo costruito liste dinamiche che possono essere osservate per rilevare automaticamente le modifiche apportate agli oggetti. Questo è particolarmente utile quando si gestiscono elenchi di oggetti che devono essere aggiornati in risposta a interazioni utente o modifiche nel sistema.
 	\item \textbf{Incapsulazione e modularità:} le classi utilities contribuiscono all'incapsulazione delle operazioni di gestione delle liste. Questo promuove una buona pratica di progettazione del software, consentendo di isolare la logica di gestione delle liste in classi dedicate, riducendo la complessità all'interno delle classi del dominio.
@@ -508,12 +504,12 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & ActivityModel
+		\textbf{Class name} & \texttt{ActivityModel}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
 		% Sostituire ad 1 il numero di classi figlie
-		\multirow{3}{*}{\textbf{Subclasses}} & Intervallo \\
+		\multirow{3}{*}{\textbf{Subclasses}} & \texttt{Intervallo} \\
 		& Intervento \\
 		& EventoSociale \\ \hline
 		\textbf{Responsability} & Classe astratta per la costruzione delle viste sul programma
@@ -526,12 +522,12 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & Conferenze
+		\textbf{Class name} & \texttt{Conferenze}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
 		% Sostituire ad 1 il numero di classi figlie
-		\multirow{1}{*}{\textbf{Subclasses}} & ConferenzeUtente \\ \hline
+		\multirow{1}{*}{\textbf{Subclasses}} & \texttt{ConferenzeUtente} \\ \hline
 		\textbf{Responsability} & Insieme delle conferenze presente nel sistema
 		\\ \hline
 		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
@@ -541,9 +537,9 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & ConferenzeUtente
+		\textbf{Class name} & \texttt{ConferenzeUtente}
 		\\ \hline
-		\textbf{Superclass} & Conferenze
+		\textbf{Superclass} & \texttt{Conferenze}
 		\\ \hline
 		% Sostituire ad 1 il numero di classi figlie
 		\multirow{1}{*}{\textbf{Subclasses}} & Nessuna
@@ -558,7 +554,7 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & Enti
+		\textbf{Class name} & \texttt{Enti}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -567,7 +563,7 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 		\\ \hline
 		\textbf{Responsability} & Insieme delle istituzioni presenti nel sistema
 		\\ \hline
-		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\multirow{1}{*}{\textbf{Collaborations}} & \texttt{Ente}
 		\\ \hline
 	\end{tabular}
 \end{table}
@@ -575,7 +571,7 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & Sale
+		\textbf{Class name} & \texttt{Sale}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -584,7 +580,7 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 		\\ \hline
 		\textbf{Responsability} & Insieme delle sale disponibili presenti in una sede
 		\\ \hline
-		\multirow{1}{*}{\textbf{Collaborations}} & Sede
+		\multirow{2}{*}{\textbf{Collaborations}} & \texttt{Sede} \\ & \texttt{Sala}
 		\\ \hline
 	\end{tabular}
 \end{table}
@@ -592,7 +588,7 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & Sedi
+		\textbf{Class name} &\texttt{ Sedi}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -601,7 +597,7 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 		\\ \hline
 		\textbf{Responsability} & Insieme delle sedi presenti nel sistema
 		\\ \hline
-		\multirow{1}{*}{\textbf{Collaborations}} & Nessuna
+		\multirow{1}{*}{\textbf{Collaborations}} & \texttt{Conferenza}
 		\\ \hline
 	\end{tabular}
 \end{table}
@@ -609,7 +605,7 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & Speakers
+		\textbf{Class name} & \texttt{Speakers}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -626,7 +622,7 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & Sponsors
+		\textbf{Class name} & \texttt{Sponsors}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline
@@ -643,7 +639,7 @@ Le classi utilities sono state introdotte per affrontare le seguenti esigenze:
 \begin{table}[h!]
 	\begin{tabular}{|l|l|}
 		\hline 
-		\textbf{Class name} & Stats
+		\textbf{Class name} & \texttt{Stats}
 		\\ \hline
 		\textbf{Superclass} & Nessuna
 		\\ \hline

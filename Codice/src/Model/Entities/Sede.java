@@ -23,10 +23,6 @@ public class Sede {
         this.indirizzo = indirizzo;
     }
 
-    public String getNomeSede() {
-        return nomeSede;
-    }
-
     public void setNomeSede(String nomeSede) {
         this.nomeSede = nomeSede;
     }

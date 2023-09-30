@@ -21,48 +21,24 @@ public class Indirizzo {
 
     }
 
-    public String getCap() {
-        return cap;
-    }
-
     public void setCap(String cap) {
         this.cap = cap;
-    }
-
-    public String getCity() {
-        return city;
     }
 
     public void setCity(String city) {
         this.city = city;
     }
 
-    public String getCivico() {
-        return civico;
-    }
-
     public void setCivico(String civico) {
         this.civico = civico;
-    }
-
-    public String getProvincia() {
-        return provincia;
     }
 
     public void setProvincia(String provincia) {
         this.provincia = provincia;
     }
 
-    public String getStato() {
-        return stato;
-    }
-
     public void setStato(String stato) {
         this.stato = stato;
-    }
-
-    public String getVia() {
-        return via;
     }
 
     public void setVia(String via) {

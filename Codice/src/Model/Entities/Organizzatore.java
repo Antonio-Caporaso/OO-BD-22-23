@@ -60,10 +60,6 @@ public class Organizzatore {
         this.id_organizzatore = id_organizzatore;
     }
 
-    public Ente getIstituzione() {
-        return istituzione;
-    }
-
     public void setIstituzione(Ente istituzione) {
         this.istituzione = istituzione;
     }
