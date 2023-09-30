@@ -75,6 +75,9 @@ public class Organizzatore {
     public String getTitolo() {
         return titolo;
     }
+    public Ente getIstituzione(){
+        return istituzione;
+    }
 
     public void setTitolo(String titolo) {
         this.titolo = titolo;
