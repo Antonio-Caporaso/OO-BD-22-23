@@ -80,7 +80,7 @@
                <children>
                   <Label fx:id="titoloLabel" layoutY="9.0" prefHeight="38.0" prefWidth="352.0" text="Titolo" textFill="WHITE" wrapText="true">
                      <font>
-                        <Font name="System Bold Italic" size="15.0" />
+                        <Font  size="15.0" />
                      </font>
                   </Label>
                </children>
@@ -89,7 +89,7 @@
                <children>
                   <Label fx:id="inizioLabel" layoutY="23.0" text="Inizio" textFill="WHITE">
                      <font>
-                        <Font name="System Bold Italic" size="15.0" />
+                        <Font  size="15.0" />
                      </font>
                   </Label>
                </children>
@@ -98,7 +98,7 @@
                <children>
                   <Label fx:id="fineLabel" layoutY="23.0" text="fine" textFill="WHITE">
                      <font>
-                        <Font name="System Bold Italic" size="15.0" />
+                        <Font size="15.0" />
                      </font>
                   </Label>
                </children>
@@ -107,7 +107,7 @@
                <children>
                   <Label fx:id="speakerLabel" layoutY="38.0" text="Speaker" textFill="WHITE">
                      <font>
-                        <Font name="System Bold Italic" size="15.0" />
+                        <Font size="15.0" />
                      </font>
                   </Label>
                </children>
@@ -125,7 +125,7 @@
                <children>
                   <TextArea fx:id="abstractTextArea" layoutX="-3.0" layoutY="-1.0" prefHeight="164.0" prefWidth="352.0" wrapText="true">
                      <font>
-                        <Font name="System Bold Italic" size="15.0" />
+                        <Font size="15.0" />
                      </font>
                   </TextArea>
                </children>
