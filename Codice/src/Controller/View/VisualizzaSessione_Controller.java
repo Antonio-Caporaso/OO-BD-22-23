@@ -74,7 +74,10 @@ public class VisualizzaSessione_Controller implements Initializable {
         fineLabel.setText(sessione.getFine().toString());
         salaLabel.setText(sessione.getLocazione().getNomeSala());
         coordinatoreLabel.setText(sessione.getCoordinatore().toString());
-        keynoteSpeakerLabel.setText(programma.getKeynote().toString());
+        if(!(programma.getKeynote().getIdSpeaker()==0)){
+            keynoteSpeakerLabel.setText(programma.getKeynote().toString());
+        } else
+            keynoteSpeakerLabel.setText("");
     }
 
     private void loadInfoEventoSociale(ActivityModel activityModel) {
