@@ -15,3 +15,4 @@ drop schema conference cascade;
 \i Popolamento/SpaceExpo.sql
 \i Popolamento/GlobalTechSummit.sql
 \i Popolamento/RoboticsSummit.sql
+\i Popolamento/AISummit.sql
