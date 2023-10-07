@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="popUpWindowAnchor" prefHeight="627.0" prefWidth="523.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="popUpWindowAnchor" prefHeight="627.0" prefWidth="523.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox fx:id="hBox" layoutX="6.0" layoutY="6.0" onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="84.0" prefWidth="511.0" stylesheets="@../../CSS/NewStyle.css">
          <children>
@@ -62,7 +62,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="abstractTextArea" layoutX="28.0" layoutY="357.0" prefHeight="126.0" prefWidth="469.0" stylesheets="@../../CSS/NewStyle.css" />
+      <TextArea fx:id="abstractTextArea" layoutX="28.0" layoutY="357.0" prefHeight="126.0" prefWidth="469.0" promptText="Una breve descrizione di cui si esporrà nell'intervento" stylesheets="@../../CSS/NewStyle.css" wrapText="true" />
       <Button fx:id="addSpeakerButton" layoutX="237.0" layoutY="264.0" mnemonicParsing="false" onAction="#addSpeakerButtonOnAction" prefHeight="25.0" prefWidth="33.0" stylesheets="@../../CSS/NewStyle.css" text="+" />
    </children>
 </AnchorPane>

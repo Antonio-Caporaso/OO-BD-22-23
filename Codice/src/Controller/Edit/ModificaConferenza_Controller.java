@@ -149,7 +149,7 @@ public class ModificaConferenza_Controller extends AlertWindowController impleme
 
     public void setTitleLabel() {
         if (conferenza != null)
-            titleLabel.setText("Modifica della conferenza: " + conferenza.getTitolo());
+            titleLabel.setText(conferenza.getTitolo());
     }
 
     public void setUser(Utente user) {

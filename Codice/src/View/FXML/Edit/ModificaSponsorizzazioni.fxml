@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="90.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label fx:id="titleLabel" layoutX="14.0" layoutY="27.0" text="Modifica sponsorizzazioni" textFill="#eceff4">
@@ -31,7 +31,7 @@
       <TextField fx:id="contributoTextField" layoutX="232.0" layoutY="156.0" prefHeight="31.0" prefWidth="118.0" />
       <Button fx:id="inserisciButton" layoutX="755.0" layoutY="118.0" mnemonicParsing="false" onAction="#inserisciSponsorOnAction" prefHeight="40.0" prefWidth="130.0" text="Inserisci" />
       <ChoiceBox fx:id="valutaChoice" layoutX="359.0" layoutY="156.0" prefHeight="37.0" prefWidth="45.0" />
-      <Button fx:id="deleteButton" layoutX="755.0" layoutY="201.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="40.0" prefWidth="130.0" text="Rimuovi" />
+      <Button fx:id="deleteButton" layoutX="755.0" layoutY="201.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: ef0000;" text="Rimuovi" />
       <Button fx:id="confermaButton" layoutX="722.0" layoutY="672.0" mnemonicParsing="false" onAction="#confermaButtonOnAction" prefHeight="24.0" prefWidth="196.0" text="Fine" />
       <TableView fx:id="sponsorTable" layoutX="14.0" layoutY="202.0" prefHeight="494.0" prefWidth="691.0">
         <columns>

@@ -73,14 +73,6 @@ public class ModificaSessione_Controller implements Initializable {
         this.conferenza = conferenza;
     }
 
-    public ModificaSessioni_Controller getManageSessioniController() {
-        return manageSessioniController;
-    }
-
-    public void setManageSessioniController(ModificaSessioni_Controller manageSessioniController) {
-        this.manageSessioniController = manageSessioniController;
-    }
-
     public Programma getProgramma() {
         return programma;
     }
@@ -95,14 +87,6 @@ public class ModificaSessione_Controller implements Initializable {
 
     public void setSessione(Sessione sessione) {
         this.sessione = sessione;
-    }
-
-    public SubScene getSubScene() {
-        return subScene;
-    }
-
-    public void setSubScene(SubScene subScene) {
-        this.subScene = subScene;
     }
 
     @Override

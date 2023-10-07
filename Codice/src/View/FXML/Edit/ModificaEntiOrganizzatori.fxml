@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="795.0" layoutY="614.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="90.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
@@ -19,7 +19,7 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Button fx:id="deleteButton" layoutX="787.0" layoutY="168.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="40.0" prefWidth="128.0" text="Rimuovi" />
+      <Button fx:id="deleteButton" layoutX="787.0" layoutY="168.0" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="40.0" prefWidth="128.0" style="-fx-background-color: ef0000;" text="Rimuovi" />
       <Button fx:id="okButton" layoutX="787.0" layoutY="664.0" maxHeight="24.0" maxWidth="128.0" mnemonicParsing="false" onAction="#okOnAction" prefHeight="24.0" prefWidth="128.0" text="Fine" />
       <TableView fx:id="entiTable" layoutX="14.0" layoutY="168.0" prefHeight="526.0" prefWidth="762.0">
          <columns>

@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="90.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
       <Label layoutX="14.0" layoutY="15.0" prefHeight="60.0" prefWidth="735.0" text="Modifica le tue conferenze" textFill="#eceff4">
@@ -21,7 +21,7 @@
       <VBox layoutX="712.0" layoutY="99.0" prefHeight="598.0" prefWidth="206.0">
          <children>
             <Button fx:id="modificaButton" mnemonicParsing="false" onAction="#editOnAction" prefHeight="40.0" prefWidth="206.0" text="Modifica conferenza" />
-            <Button fx:id="deleteConferenzaButton" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="40.0" prefWidth="206.0" text="Elimina conferenza">
+            <Button fx:id="deleteConferenzaButton" mnemonicParsing="false" onAction="#deleteOnAction" prefHeight="40.0" prefWidth="206.0" style="-fx-background-color: ef0000;" text="Elimina conferenza">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
