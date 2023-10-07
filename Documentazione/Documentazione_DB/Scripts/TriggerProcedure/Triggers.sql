@@ -85,7 +85,7 @@ begin
     where id_sessione = (select id_sessione from programma where id_programma = new.id_programma);
 
     if (new.inizio < inizio_sessione OR new.fine > fine_sessione) then
-        raise exception 'L''intervento non è compreso nella sessione';
+        raise exception 'Il punto non è compreso nella sessione';
     end if;
     return new;
 end;

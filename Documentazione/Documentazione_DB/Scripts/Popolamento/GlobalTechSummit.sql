@@ -75,7 +75,7 @@ begin
     call add_intervento(
         'Advancements in Natural Language Processing',
         'This talk will highlight the recent advancements in natural language processing (NLP) technologies, discussing their applications in areas such as chatbots, language translation, and sentiment analysis.',
-        348,
+        248,
         programma1_id,
         '30 minutes'
     );
@@ -88,7 +88,7 @@ begin
     call add_intervento(
         'Data Privacy in the Digital Age',
         'This talk will explore the challenges of data privacy in the digital age, discussing the importance of protecting personal information and the role of regulations such as GDPR.',
-        401,
+        131,
         programma2_id,
         '30 minutes'
     );
@@ -96,7 +96,7 @@ begin
     call add_intervento(
         'Cybersecurity Threats and Countermeasures',
         'This talk will provide an overview of cybersecurity threats faced by organizations and individuals, discussing common attack vectors and best practices for cybersecurity defense.',
-        503,
+        103,
         programma2_id,
         '30 minutes'
     );
@@ -106,7 +106,7 @@ begin
     call add_intervento(
         'The Future of Cybersecurity',
         'This talk will delve into the future of cybersecurity, discussing emerging technologies and trends that will shape the landscape of cybersecurity in the coming years.',
-        601,
+        1,
         programma2_id,
         '30 minutes'
     );
@@ -119,7 +119,7 @@ begin
     call add_intervento(
         'Blockchain Applications Beyond Cryptocurrency',
         'This talk will explore the potential applications of blockchain technology beyond cryptocurrency, discussing its impact on industries such as supply chain management, finance, and healthcare.',
-        734,
+        34,
         programma3_id,
         '30 minutes'
     );
@@ -127,7 +127,7 @@ begin
     call add_intervento(
         'Internet of Things: Connecting the Physical World',
         'This talk will provide an overview of the Internet of Things (IoT), discussing its role in enabling connectivity and automation across various domains, including smart homes, cities, and industries.',
-        812,
+        242,
         programma3_id,
         '30 minutes'
     );
@@ -137,7 +137,7 @@ begin
     call add_intervento(
         'Securing Blockchain and IoT Ecosystems',
         'This talk will address the security challenges associated with blockchain and IoT ecosystems, discussing strategies for ensuring data integrity, privacy, and resilience.',
-        912,
+        52,
         programma3_id,
         '30 minutes'
     );
@@ -175,7 +175,7 @@ call add_keynote_speaker(734,sessione3_id);
     -- Specifica programma sessione 5
     select id_programma from programma where id_sessione = sessione5_id into programma5_id;
 
-    call add_evento('Introduction to Tech Startups', programma5_id, '107 minutes');
+    call add_evento('Introduction to Tech Startups', programma5_id, '10 minutes');
 
     call add_intervento(
         'From Idea to Startup: Navigating the Entrepreneurial Journey',
@@ -188,17 +188,17 @@ call add_keynote_speaker(734,sessione3_id);
     call add_intervento(
         'Venture Capital and Startup Funding',
         'This talk will delve into the world of venture capital and startup funding, discussing the different stages of funding, investment strategies, and the role of investors in supporting startup growth.',
-        614,
+        114,
         programma5_id,
         '30 minutes'
     );
 
-    call add_intervallo('coffee break', programma5_id, '107 minutes');
+    call add_intervallo('coffee break', programma5_id, '10 minutes');
 
     call add_intervento(
         'Building a Culture of Innovation in Startups',
         'This talk will explore the importance of fostering a culture of innovation in startups, discussing strategies for promoting creativity, collaboration, and continuous learning within startup teams.',
-        715,
+        15,
         programma5_id,
         '30 minutes'
     );

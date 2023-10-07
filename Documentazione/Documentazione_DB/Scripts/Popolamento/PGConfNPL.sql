@@ -41,25 +41,30 @@ call add_membri_comitato('3,4',comitato_lc_id); -- Comitato locale
 -- Aggiunta sessioni
 sessione1_id = add_new_sessione('Best practice su PostgreSQL','2023-08-03 10:30','2023-08-03 12:30',13,conferenza_id,1);
 sessione2_id = add_new_sessione('PostgreSQL è il database del futuro','2023-08-03 14:30','2023-08-03 16:30',14,conferenza_id,2);
-sessione3_id = add_new_sessione('Performance di PostgreSQL','2023-08-04 10:30','2023-08-04 12:30',15,conferenza_id,1);
+sessione3_id = add_new_sessione('Performance di PostgreSQL','2023-08-04 10:30','2023-08-04 13:00',15,conferenza_id,1);
 sessione4_id = add_new_sessione('PostgreSQL e il mondo del lavoro','2023-08-04 14:30','2023-08-04 18:30',13,conferenza_id,2);
 sessione5_id = add_new_sessione('PostgreSQL e Kubernetes','2023-08-05 10:30','2023-08-05 12:30',14,conferenza_id,1);
 
 -- Specifica programma sessione 1
 select id_programma from programma where id_sessione = sessione1_id into programma1_id;
+
 call add_evento('Apertura sessione',programma1_id,'10 minutes');
+
 call add_intervento('Ottimizzazione delle query in PostgreSQL',
 ' Questo intervento illustrerà le migliori pratiche per ottimizzare le query in PostgreSQL, inclusi suggerimenti per la scrittura di query efficienti e l''utilizzo degli indici corretti.',
 1,
 programma1_id,
 '30 minutes');
+
 call add_intervento(
     'Gestione delle transazioni in PostgreSQL', --Titolo intervento
     'Questo intervento fornirà consigli e best practice per la gestione delle transazioni in PostgreSQL, comprese le strategie di commit e rollback, il controllo della concorrenza e l''utilizzo di blocchi di transazioni.', --Descrizione intervento
     2, --Id speaker
     programma1_id, --Id programma
     '30 minutes'); --Durata intervento
+
 call add_intervallo('coffee break', programma1_id, '20 minutes');
+
 call add_intervento('Monitoraggio e tuning delle prestazioni in PostgreSQL',
 'Questo intervento si concentrerà sul monitoraggio e tuning delle prestazioni in PostgreSQL, presentando strumenti e tecniche per l''identificazione e risoluzione dei problemi di performance.',
 3,
@@ -88,6 +93,7 @@ call add_intervento(
     6,
     programma2_id,
     '30 minutes');
+
 -- Specifica programma sessione 3
 select id_programma from programma where id_sessione = sessione3_id into programma3_id;
 call add_evento('Apertura sessione',programma3_id,'10 minutes');
@@ -111,6 +117,7 @@ call add_intervento(
     9,
     programma3_id,
     '30 minutes');
+
 -- Specifica programma sessione 4
 select id_programma from programma where id_sessione = sessione4_id into programma4_id;
 call add_evento('Apertura sessione',programma4_id,'10 minutes');
@@ -147,6 +154,7 @@ call add_intervento(
     14,
     programma4_id,
     '30 minutes');
+    
 -- Specifica programma sessione 5
 select id_programma from programma where id_sessione = sessione5_id into programma5_id;
 call add_evento('Apertura sessione',programma5_id,'10 minutes');

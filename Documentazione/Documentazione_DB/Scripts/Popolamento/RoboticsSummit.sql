@@ -57,7 +57,7 @@ begin
     call add_intervento(
         'Advancements in Industrial Robotics',
         'This talk will explore the latest advancements in industrial robotics, including collaborative robots, autonomous systems, and human-robot interaction in manufacturing environments.',
-        434,
+        234,
         programma1_id,
         '30 minutes'
     );
@@ -75,7 +75,7 @@ begin
     call add_intervento(
         'Safety Considerations in Industrial Robotics',
         'This talk will address the safety challenges and regulations associated with industrial robotics, highlighting the importance of risk assessment, protective measures, and human-machine collaboration.',
-        323,
+        32,
         programma1_id,
         '30 minutes'
     );
@@ -88,7 +88,7 @@ begin
     call add_intervento(
         'Surgical Robotics: Enhancing Precision and Minimally Invasive Procedures',
         'This talk will explore the applications of robotics in surgical procedures, discussing the advancements in surgical robotics, robotic-assisted surgeries, and their impact on patient outcomes.',
-        467,
+        61,
         programma2_id,
         '30 minutes'
     );
@@ -96,7 +96,7 @@ begin
     call add_intervento(
         'Robotics in Rehabilitation and Assistive Technologies',
         'This talk will highlight the role of robotics in rehabilitation therapies and assistive technologies for individuals with disabilities, showcasing examples of exoskeletons, prosthetics, and robotic therapy devices.',
-        532,
+        122,
         programma2_id,
         '30 minutes'
     );
@@ -106,7 +106,7 @@ begin
     call add_intervento(
         'Robotics for Elderly Care and Aging Population',
         'This talk will discuss the applications of robotics in elderly care, addressing the challenges and benefits of using robots in assisting the elderly with daily activities, healthcare monitoring, and social interaction.',
-        612,
+        112,
         programma2_id,
         '30 minutes'
     );
@@ -119,7 +119,7 @@ begin
     call add_intervento(
         'Exploring Planets with Robotic Probes',
         'This talk will highlight the role of robotics in space exploration, discussing the use of robotic probes, rovers, and landers to study and collect data from planets, moons, and asteroids.',
-        754,
+        234,
         programma3_id,
         '30 minutes'
     );
@@ -127,7 +127,7 @@ begin
     call add_intervento(
         'Future of Lunar and Martian Robotics',
         'This talk will provide insights into the future of lunar and Martian robotics, discussing planned missions, challenges of operating in extraterrestrial environments, and the potential for human-robot collaboration in space.',
-        814,
+        214,
         programma3_id,
         '30 minutes'
     );
@@ -137,7 +137,7 @@ begin
     call add_intervento(
         'Robotic Assembly and Maintenance in Space',
         'This talk will explore the advancements in robotic assembly and maintenance of space infrastructure, discussing concepts such as in-orbit servicing, space debris removal, and satellite repair missions.',
-        956,
+        156,
         programma3_id,
         '30 minutes'
     );
@@ -150,7 +150,7 @@ begin
     call add_intervento(
         'Cognitive Robotics: Integrating AI and Robotics',
         'This talk will explore the integration of artificial intelligence (AI) techniques with robotics, discussing cognitive capabilities, machine learning algorithms, and the future of intelligent robotic systems.',
-        134,
+        231,
         programma4_id,
         '30 minutes'
     );
@@ -158,7 +158,7 @@ begin
     call add_intervento(
         'Human-Robot Interaction: Challenges and Solutions',
         'This talk will address the challenges and solutions in human-robot interaction, discussing natural language processing, gesture recognition, and user-centered design for intuitive and collaborative robot interfaces.',
-        511,
+        241,
         programma4_id,
         '30 minutes'
     );
@@ -166,7 +166,7 @@ begin
     call add_intervento(
         'Robots in Industry 4.0: Smart Factories and Automation',
         'This talk will discuss the role of robotics in Industry 4.0, exploring concepts such as autonomous vehicles, smart factories, and the integration of robotics with Internet of Things (IoT) technologies.',
-        712,
+        212,
         programma4_id,
         '30 minutes'
     );
@@ -180,7 +180,7 @@ begin
     call add_intervento(
         'Robotics and Employment: Reshaping the Workforce',
         'This talk will explore the impact of robotics on employment and the workforce, discussing the potential benefits, challenges, and strategies for managing the transition towards a robotic-driven future.',
-        313,
+        143,
         programma5_id,
         '30 minutes'
     );
@@ -188,7 +188,7 @@ begin
     call add_intervento(
         'Ethical Considerations in Robotics Development',
         'This talk will address the ethical considerations in robotics development, including issues related to privacy, bias, autonomy, and the responsible use of robots in society.',
-        614,
+        114,
         programma5_id,
         '30 minutes'
     );
@@ -198,7 +198,7 @@ begin
     call add_intervento(
         'Robotics and Social Impact',
         'This talk will showcase the social impact of robotics in areas such as education, disaster response, and environmental conservation, discussing how robots can contribute to solving global challenges.',
-        915,
+        215,
         programma5_id,
         '30 minutes'
     );
