@@ -16,3 +16,4 @@ drop schema conference cascade;
 \i Popolamento/GlobalTechSummit.sql
 \i Popolamento/RoboticsSummit.sql
 \i Popolamento/AISummit.sql
+\i Popolamento/CIBE2023.sql
