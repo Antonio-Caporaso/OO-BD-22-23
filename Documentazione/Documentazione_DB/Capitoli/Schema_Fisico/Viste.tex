@@ -1,0 +1,61 @@
+
+
+\section{Definizione delle viste}
+\subsection{\texttt{SediView}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view SediView AS 
+	SELECT s.nome AS Sede, 
+	i.via ||', ' 
+	|| i.civico
+	|| ', ' 
+	||  i.cap 
+	||', ' 
+	|| i.city 
+	|| ' (' 
+	|| i.provincia 
+	||'), '
+	|| i.nazione AS Indirizzo
+	FROM sede s natural JOIN indirizzo i;
+\end{lstlisting}
+\subsection{\texttt{Conferenze\_Sede}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view conferenze_sede AS
+	SELECT s.nome AS Sede, count(id_conferenza) AS Numero_Conferenze
+	FROM sede s,conferenza c
+	WHERE s.id_sede = c.id_sede
+	group by s.nome;
+\end{lstlisting}
+\subsection{\texttt{Interventi\_Speaker}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view interventi_speaker AS
+	SELECT s.nome || ' ' || s.cognome AS Speaker, count(i.id_intervento)
+	FROM speaker s, intervento i 
+	WHERE s.id_speaker = i.id_speaker
+	group by s.nome,s.cognome;
+\end{lstlisting}
+\subsection{\texttt{Partecipanti\_Sessione}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view partecipanti_sessioni AS
+	SELECT s.titolo AS Sessione, 
+		count(p.id_partecipante) AS Numero_partecipanti
+	FROM sessione s, partecipazione p 
+	WHERE s.id_sessione = p.id_sessione
+	group by s.titolo;
+\end{lstlisting}
+\subsection{\texttt{Partecipanti\_Conferenze}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view partecipanti_conferenze AS
+	SELECT c.titolo AS Conferenza, 
+		count(p.id_partecipante) AS Numero_partecipanti
+	FROM conferenza c, sessione s, partecipazione p
+	WHERE c.id_conferenza = s.id_conferenza 
+	AND s.id_sessione = p.id_sessione
+	group by c.titolo;
+\end{lstlisting}
+\subsection{\texttt{Sessioni}}
+\begin{lstlisting}[language=SQL,style=mystyle]
+	create view sessioni AS
+	SELECT s.titolo AS Sessione,s.inizio,s.fine,c.titolo AS Conferenza,s1.nome FROM sessione s, conferenza c,sala s1
+	WHERE s.id_conferenza=c.id_conferenza AND s.id_sala=s1.id_sala
+	order by s.id_conferenza, s.inizio;
+\end{lstlisting}

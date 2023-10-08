@@ -1,9 +1,10 @@
-\documentclass[a4paper, oneside, 12pt]{book}
+\documentclass[a4paper, 10.5pt]{book}
 \usepackage{graphicx}
 \usepackage{float}
-\usepackage{adjustbox}
-\usepackage{listings}
+\usepackage{flafter}
 \usepackage{fullpage}
+\usepackage{setspace}
+\usepackage[labelfont={bf},textfont=it]{caption}
 \usepackage{booktabs}
 \usepackage{subfig}
 \usepackage{enumerate}
@@ -15,49 +16,71 @@
 \usepackage{inputenc}
 \usepackage{hyperref}
 \usepackage[italian]{babel}
-\usepackage{longtable}
-\usepackage{mathtools}
-\usepackage{amssymb,amsmath,amsthm}
-
+\usepackage{import}
 \begin{document}
 
 \begin{titlepage}
-\begin{center}
-
-\includegraphics[scale=0.6]{Immagini/logo_dieti.png}
-\vspace*{1cm}
-
-{\Huge{\textbf{Progettazione e sviluppo di un applicativo in Java per la gestione di conferenze scientifiche}}}
-
-\vspace{1cm}
-
-{\Large Progetto d'esame per il corso di Object Orientation}
-
-
+	\begin{center}
+		\setstretch{1.2}
+		\setlength{\parskip}{2ex}
+		
+		
+		\Large\textsc{Università degli Studi di Napoli Federico II}
+		
+		\includegraphics[width=3cm]{Immagini/logo-federico-II.pdf}
+		
+		\Large\textsc{Scuola Politecnica e delle Scienze di Base}
+		
+		\large\textsc{Dipartimento di Ingegneria Elettrica e Tecnologie dell'Informazione}
+		
+		\large\textsc{Corso di Laurea Triennale in Informatica}
+		
+		\textsc{Progetto d'esame di Object Orientation}
+		\vfill
+		\setstretch{2}
+		\huge\textsc{Progettazione e sviluppo di un applicativo in Java per la gestione di conferenze scientifiche}
+		\vfill
+		\setstretch{1}
+		\begin{minipage}[t]{.49\textwidth}
+			\large
+			
+			\textbf{Relatore}\par
+			Professore Sergio \textsc{Di Martino}
+		\end{minipage}\hfill
+	\begin{minipage}[t]{.45\textwidth}
+		\large
+		\hspace{3.3cm}\textbf{Candidati}\par
+		\hfill\begin{tabular}{l}
+			 Antonio \textsc{Caporaso} \\ 
+			 matr: \texttt{N86003458} \\
+			 Giorgio \textsc{Di Fusco} \\
+			  matr: \texttt{N86004389} \\
+		 \end{tabular}
+	\end{minipage}
 \vfill
-
-{\Large Caporaso Antonio} \qquad \Large{Di Fusco Giorgio}\\
-\texttt{N86003458} \qquad \texttt{N86004389}
-
-\vspace{1cm}
-Docente: Di Martino Sergio
-
-\vspace{1cm}
-
-\includegraphics[scale=0.6]{Immagini/LogoUnina.png}
-
-
-\begin{small}
-Corso di Laurea Triennale in Informatica \textsc{A.A 2022/2023}\\
-Dipartimento di Ingegneria Elettrica e delle tecnologie dell'Informazione\\
-Università degli Studi di Napoli Federico II\\
-\end{small}
-\end{center}
+		
+		\large Anno Accademico 2022-2023
+	\end{center}
 \end{titlepage}
+
 \newpage
 \textit{Questa pagina è stata lasciata intenzionalmente vuota.}
 \newpage
 \tableofcontents
-\listoffigures
-\listoftables
+
+
+\chapter{Introduzione}
+	\import{Argomenti/1-Introduzione}{Traccia.tex}
+	\import{Argomenti/1-Introduzione}{Descrizione.tex}
+\chapter{Progettazione del software: CRC card e class diagrams}
+	\import{Argomenti/2-Progettazione}{Entities.tex}
+	\import{Argomenti/2-Progettazione}{Packages.tex}
+	\import{Argomenti/2-Progettazione}{Model.tex}
+	\import{Argomenti/2-Progettazione}{Controllers.tex}
+	\import{Argomenti/2-Progettazione}{ClassDiagram.tex}
+\chapter{Sequence Diagram e Mockup}
+	\import{Argomenti/3-Diagrammi}{Sequence.tex}
+	\import{Argomenti/3-Diagrammi}{Mockup.tex}
+	
+	\listoffigures
 \end{document}

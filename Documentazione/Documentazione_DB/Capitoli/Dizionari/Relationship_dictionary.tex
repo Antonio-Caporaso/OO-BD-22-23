@@ -1,0 +1,63 @@
+\section{Dizionario delle associazioni}
+\begin{longtable}{|p{0.35\textwidth}|p{0.3\textwidth}|p{0.3\textwidth}|}
+	\hline
+	\textbf{Associazione} & \textbf{Descrizione} & \textbf{Classi coinvolte}\\
+	\hline
+	\endfirsthead
+	
+	%Intestazione normale
+	\multicolumn{3}{l}{\footnotesize\itshape Continua dalla pagina precedente}\\
+	\hline
+	\textbf{Associazione} & \textbf{Descrizione} & \textbf{Classi coinvolte}\\
+	\hline
+	\endhead
+	%piedenormale
+	\hline 
+	\multicolumn{3}{r}{{Continua nella pagina successiva}} \\
+	\endfoot
+	
+	\hline
+	\endlastfoot
+	\textbf{Appartiene\_A} & Rappresenta l'appartenenza di un organizzatore ad una precisa istituzione. & \textbf{Organizzatore [0..*]}: indica l'organizzatore che appartiene all'ente. \\
+	& & \textbf{Ente [0..1]} ruolo \textbf{in}: indica l'ente al quale appartiene un organizzatore. \\
+	\hline
+	\textbf{Appartiene\_A} & Rappresenta l'appartenenza di un partecipante ad una precisa istituzione. & \textbf{Organizzatore [0..*]}: indica il partecipante che appartiene ad un ente. \\
+	& & \textbf{Ente [0..1]} ruolo \textbf{istituzione}: indica l'ente al quale appartiene un partecipante. \\
+	\hline
+	\textbf{Appartiene\_A} & Rappresenta l'appartenenza di uno speaker ad una precisa istituzione. & \textbf{Organizzatore [0..*]}: indica lo speaker che appartiene all'ente. \\
+	& & \textbf{Ente [0..1]} ruolo \textbf{istituzione}: indica l'ente al quale appartiene uno speaker. \\
+	\hline
+	\textbf{Comitato\_Conferenza} & Ogni conferenza è legata ai comitati che ne gestiscono l'organizzazione. & \textbf{Comitati [2..2]}: indica i due comitati nominati per la conferenza. \\
+	& & \textbf{Conferenza [1..1]} ruolo \textbf{di}: ogni comitato appartiene ad una sola conferenza. \\
+	\hline
+	\textbf{Sponsorizzazione\_Conferenza} & Ogni conferenza ha varie sponsorizzazioni da parte degli Sponsor che contribuiscono alle spese generali. & \textbf{Sponsor [0..*]}: indica lo sponsor che ha fatto la sponsorizzazione\\
+	& & \textbf{Conferenza [0..*]}: conferenza beneficiaria della sponsorizzazione\\
+	\hline
+	\textbf{Svolta\_In} & Specifica l'ubicazione di una conferenza in una sede. & \textbf{Conferenza [0..*]} \\
+	& & \textbf{Sede [1..1]}: sede della conferenza \\
+	\hline
+	\textbf{Svolta\_In} & Specifica l'ubicazione di una sessione in una sala. & \textbf{Sessione [0..*]} \\
+	& & \textbf{Sala [1..1]}: sala della sessione\\
+	\hline
+	\textbf{Coordina} & Ogni sessione ha un coordinatore. & \textbf{Sessione [0..1]} \\
+	& & \textbf{Organizzatore [1..1]}: coordinatore della sessione \\
+	\hline
+	\textbf{Sessioni\_Conferenza} & Ogni conferenza è composta da una o più sessioni. & \textbf{Conferenza [1..1]} \\
+	& & \textbf{Sessioni [0..*]} \\ \hline
+	\textbf{Sale\_Sede} & Ogni sede è composta da una o più sedi. & \textbf{Sede [1..1]} \\
+	& & \textbf{Sala [1..*]} \\ \hline
+	\textbf{Programma\_Sessione} & Ogni sessione ha un programma & \textbf{Sessione[1..1]} \\
+	& & \textbf{Programma [1..1]} \\ \hline
+	\textbf{Programma\_Intervento} & Ogni programma è un composto di vari interventi & \textbf{Programma [1..1]} \\
+	& & \textbf{Intervento [0..*]} \\ \hline
+	\textbf{Programma\_Intervallo} & Ogni programma è un composto di vari intervalli & \textbf{Programma [1..1]} \\
+	& & \textbf{Intervallo [0..*]} \\ \hline
+	\textbf{Programma\_Evento} & Ogni programma è un composto di vari eventi sociali & \textbf{Programma [1..*]} \\
+	& & \textbf{Evento [0..*]} \\ \hline
+	\textbf{Partecipante\_Sessione} & Ogni sessione ha vari partecipanti che partecipano a varie sessioni & \textbf{Sessione [0..*]}\\
+	& & \textbf{Partecipante [0..*]} \\ \hline
+	\textbf{Speaker\_Intervento} & Ogni intervento ha un suo speaker che può effettuare vari interventi & \textbf{Intervento [0..*]}\\
+	& & \textbf{Speaker [1..1]} \\ \hline
+	\textbf{Membro\_Comitato} & Ogni comitato è composto da vari organizzatori che appartengono a vari comitati & \textbf{Organizzatore [0..*]} \\ & & \textbf{Comitato [0..*]} \\
+	\hline
+\end{longtable}

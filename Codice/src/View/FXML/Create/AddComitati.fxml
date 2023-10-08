@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#232730" height="75.0" layoutY="-5.0" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Label layoutX="14.0" layoutY="11.0" prefHeight="47.0" prefWidth="340.0" style="-fx-background-color: #232730;" stylesheets="@../../CSS/NewStyle.css" text="Aggiungi Membri Comitati" textAlignment="RIGHT" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <ButtonBar layoutX="716.0" layoutY="675.0" prefHeight="31.0" prefWidth="202.0">
+         <buttons>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonOnAction" stylesheets="@../../CSS/NewStyle.css" text="Back" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextOnAction" stylesheets="@../../CSS/NewStyle.css" text="Next" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+         </buttons>
+      </ButtonBar>
+      <Label layoutX="31.0" layoutY="102.0" stylesheets="@../../CSS/NewStyle.css" text="Seleziona i membri del comitato Scientifico" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <ListView fx:id="membriComitatoLocaleListView" layoutX="484.0" layoutY="192.0" prefHeight="418.0" prefWidth="409.0" stylesheets="@../../CSS/NewStyle.css" />
+      <Button fx:id="inserisciComitatoLocaleButton" layoutX="794.0" layoutY="141.0" mnemonicParsing="false" onAction="#inserisciMembroComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="rimuoviComitatoLocaleButton" layoutX="484.0" layoutY="621.0" mnemonicParsing="false" onAction="#rimuoviMembroComitatoLocaleButtonOnAction" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: ef0000;" stylesheets="@../../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="484.0" layoutY="102.0" stylesheets="@../../CSS/NewStyle.css" text="Seleziona i membri del comitato Locale" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <ListView fx:id="membriComitatoScientificoListView" layoutX="31.0" layoutY="192.0" prefHeight="418.0" prefWidth="409.0" stylesheets="@../../CSS/NewStyle.css" />
+      <Button fx:id="inserisciComitatoScientificoButton" layoutX="339.0" layoutY="141.0" mnemonicParsing="false" onAction="#inserisciMembroComitatoScientificoButtonOnAction" prefHeight="31.0" prefWidth="99.0" stylesheets="@../../CSS/NewStyle.css" text="Inserisci" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <ChoiceBox fx:id="membroComitatoScientificoChoiceBox" layoutX="31.0" layoutY="141.0" prefHeight="31.0" prefWidth="285.0" stylesheets="@../../CSS/NewStyle.css" />
+      <ChoiceBox fx:id="membroComitatoLocaleChoiceBox" layoutX="484.0" layoutY="141.0" prefHeight="31.0" prefWidth="285.0" stylesheets="@../../CSS/NewStyle.css" />
+      <Button fx:id="rimuoviComitatoScientificoButton" layoutX="31.0" layoutY="621.0" mnemonicParsing="false" onAction="#rimuoviMembroComitatoScientificoButtonOnAction" prefHeight="31.0" prefWidth="99.0" style="-fx-background-color: ef0000;" stylesheets="@../../CSS/NewStyle.css" text="Rimuovi" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

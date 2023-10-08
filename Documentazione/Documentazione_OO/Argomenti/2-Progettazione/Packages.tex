@@ -1,0 +1,41 @@
+\section{L'architettura}
+La realizzazione di Symposium ha richiesto un'approfondita considerazione dell'architettura software. Al fine di garantire una struttura modulare, manutenibile ed estensibile, è stato scelto di utilizzare JavaFX come framework di sviluppo per l'interfaccia utente e di suddividere la gestione delle funzionalità in varie singole classi controller. 
+\bigskip
+
+Per mantenere un codice ben strutturato e facilmente manutenibile, le varie classi di Symposium sono state suddivisi in package in base alle loro responsabilità. Questa organizzazione modulare permette di isolare le diverse funzionalità dell'applicativo, semplificando lo sviluppo parallelo e la manutenzione continua. 
+\bigskip
+
+I package dell'intero progetto sono stati progettati seguendo le linee guida della progettazione software quali il pattern MVC, la coesione e il principio di singola responsabilità. Ciò contribuisce a garantire una chiara separazione delle responsabilità all'interno dell'applicativo e facilita la comprensione del codice:
+\begin{enumerate}
+	\item \texttt{Model}
+	\begin{enumerate}
+		\item \texttt{DAO}
+		\item \texttt{DbConfig}
+		\item \texttt{Entities}
+		\item \texttt{Utilities}
+	\end{enumerate}
+	\item \texttt{View}
+	\begin{enumerate}
+		\item \texttt{FXML}
+		\begin{enumerate}
+			\item \texttt{Create}
+			\item \texttt{Edit}
+			\item \texttt{View}
+			\item \texttt{Stats}
+		\end{enumerate}
+		\item \texttt{CSS}
+	\end{enumerate}
+	\item \texttt{Controller}
+	\begin{enumerate}
+		\item \texttt{Create}
+		\item \texttt{Edit}
+		\item \texttt{View}
+		\item \texttt{Stats}
+	\end{enumerate}
+	\item \texttt{Exceptions}
+\end{enumerate}
+
+All'interno del package \texttt{View} sono presenti tutti i file \texttt{.fxml} che descrivono le interfacce grafiche dell'applicazione e i file \texttt{.css} utilizzati per la loro personalizzazione, mentre all'interno del package \texttt{Controller} sono presenti le classi che implementano i controller delle interfacce grafiche.
+\bigskip
+
+All'interno del package \texttt{Model} sono presenti vari packages che implementano il modello del nostro progetto come presentato nel Diagramma \ref{uml:modellodominio}. Nel sub-package \texttt{DAO} sono state inserite tutte le classi utilizzate per implementare il pattern DAO, mentre nel sub-package \texttt{DbConfig} è presente la classe per la configurazione del database. Infine,  nel sub-package \texttt{Utilities} sono presenti le classi che ci sono state necessarie per la gestione di molteplici istanze delle classi di dominio.

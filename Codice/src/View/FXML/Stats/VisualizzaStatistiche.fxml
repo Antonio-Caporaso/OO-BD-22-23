@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="932.0" stylesheets="@../../CSS/NewStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle fill="#232730" height="90.0" smooth="false" stroke="#232730" strokeType="INSIDE" strokeWidth="0.0" width="932.0" />
+      <Label layoutX="14.0" layoutY="27.0" text="Visualizza statistiche" textFill="#eceff4">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Rectangle fill="#232730" height="247.0" layoutX="42.0" layoutY="147.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Rectangle fill="#232730" height="247.0" layoutX="338.0" layoutY="147.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Rectangle fill="#232730" height="247.0" layoutX="631.0" layoutY="147.0" stroke="#a4a4a4" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Rectangle fill="#232730" height="247.0" layoutX="42.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Rectangle fill="#232730" height="247.0" layoutX="343.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Rectangle fill="#232730" height="247.0" layoutX="631.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
+      <Label layoutX="444.0" layoutY="190.0" />
+      <Label layoutX="444.0" layoutY="190.0" />
+      <Label fx:id="totalPartecipantiLabel" layoutX="420.0" layoutY="154.0" prefHeight="89.0" prefWidth="84.0" text="33" textAlignment="CENTER" textFill="#0fff1f">
+         <font>
+            <Font name="Cantarell Regular" size="70.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" />
+         </effect>
+      </Label>
+      <Label layoutX="388.0" layoutY="249.0" text="Nuovi partecipanti" textFill="#eceff4">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <ImageView fitHeight="112.0" fitWidth="138.0" layoutX="406.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Resources/man.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <Label fx:id="totalSponsorizzazioniLabel" layoutX="712.0" layoutY="154.0" prefHeight="89.0" prefWidth="90.0" text="55" textAlignment="CENTER" textFill="#ff750f">
+         <font>
+            <Font name="Cantarell Regular" size="70.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" offsetY="1.0" />
+         </effect>
+      </Label>
+      <Label layoutX="686.0" layoutY="242.0" text="Aziende coinvolte" textFill="#eceff4">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <ImageView fitHeight="100.0" fitWidth="138.0" layoutX="706.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Resources/office-building.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <Button layoutX="51.0" layoutY="535.0" mnemonicParsing="false" onAction="#openStatisticheMensiliWindow" prefHeight="58.0" prefWidth="226.0" text="Visualizza statistiche interventi per mese" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="643.0" layoutY="535.0" mnemonicParsing="false" onAction="#openStatisticheAnnualiButton" prefHeight="58.0" prefWidth="226.0" text="Visualizza statistiche interventi per anno" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="totalEntiCounter" layoutX="429.0" layoutY="455.0" text="24" textFill="#ff0ff0">
+         <font>
+            <Font name="Cantarell Regular" size="70.0" />
+         </font>
+         <effect>
+            <DropShadow offsetX="2.0" />
+         </effect>
+      </Label>
+      <Label layoutX="393.0" layoutY="535.0" text="Istituzioni coinvolte" textFill="#eceff4">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <ImageView fitHeight="100.0" fitWidth="155.0" layoutX="418.0" layoutY="564.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Resources/education.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <ImageView fitHeight="100.0" fitWidth="130.0" layoutX="114.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Resources/calendar.png" />
+         </image>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ImageView>
+      <Label layoutX="77.0" layoutY="250.0" text="Conferenze organizzate" textFill="#eceff4">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalConferenzeLabel" layoutX="121.0" layoutY="154.0" prefHeight="89.0" prefWidth="90.0" text="23" textAlignment="CENTER" textFill="#0dbaff">
+         <font>
+            <Font name="Cantarell Regular" size="70.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" offsetX="2.0" offsetY="1.0" />
+         </effect>
+      </Label>
+   </children>
+</AnchorPane>

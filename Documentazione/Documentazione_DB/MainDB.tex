@@ -46,7 +46,7 @@
     showstringspaces=false,
     showtabs=false,                  
     tabsize=2,
-    morekeywords={*, REFERENCES, enable, disable, ENABLED, DISABLED, IS, BEFORE, AFTER, INCREMENT, START, raice, notice, procedure, others, WITH, setof, QUERY, SEQUENCE, FOR, EACH, ROW, INSTEAD OF,serial,TYPE, ENUM, FOR EACH STATEMENT, FUNCTION, LANGUAGE, RETURNS, sqlerrm, RETURN, DECLARE, PLPGSQL, BEGIN, REPLACE, text, OPEN, LOOP, IF, CLOSE, FETCH, EXIT, RAISE}
+    morekeywords={*,call, REFERENCES, enable, disable, ENABLED, DISABLED, IS, BEFORE, AFTER, INCREMENT, START, raice, notice, procedure, others, WITH, setof, QUERY, SEQUENCE, FOR, EACH, ROW, INSTEAD OF,serial,TYPE, ENUM, FOR EACH STATEMENT, FUNCTION, LANGUAGE, RETURNS, sqlerrm, RETURN, DECLARE, PLPGSQL, BEGIN, REPLACE, text, OPEN, LOOP, IF, CLOSE, FETCH, EXIT, RAISE}
 }
 \lstset{
 style= mystyle
@@ -62,7 +62,7 @@ style= mystyle
 \def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
 \def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
 {\renewcommand{\arraystretch}{1.3}%
-
+	\setcounter{secnumdepth}{3}
 \begin{document}
 \pagestyle{empty}
 \begin{titlepage}
@@ -112,15 +112,20 @@ style= mystyle
 \listoffigures
 \listoftables
 \lstlistoflistings
-
-\import{Capitoli}{Traccia.tex}
-\import{Capitoli}{Progettazione_Concettuale}
-\import{Capitoli}{Schema_ristrutturato.tex}
-\import{Capitoli}{Schema_logico.tex}
-\import{Capitoli}{Schema_fisico}
-\appendix
-\chapter{Dizionari}
-\import{Capitoli}{Data_dictionary}
-\import{Capitoli}{Relationship_dictionary}
-\import{Capitoli}{Constraints_dictionary}
+\chapter{Traccia}\label{traccia}
+\import{Capitoli/Traccia}{Traccia.tex}
+\chapter{Progettazione}
+\import{Capitoli/Progettazione_Concettuale}{Progettazione_Concettuale.tex}
+\import{Capitoli/Schema_Ristrutturato}{Schema_ristrutturato.tex}
+\import{Capitoli/Schema_Logico}{Schema_logico.tex}
+\import{Capitoli/Dizionari}{Data_dictionary}
+\import{Capitoli/Dizionari}{Relationship_dictionary}
+\import{Capitoli/Dizionari}{Constraints_dictionary}
+\chapter{Implementazione fisica}
+\import{Capitoli/Schema_Fisico}{Tabelle.tex}
+\import{Capitoli/Schema_Fisico}{Trigger.tex}
+\import{Capitoli/Schema_Fisico}{Funzioni.tex}
+\import{Capitoli/Schema_Fisico}{Viste.tex}
+\chapter{Esempio d'uso}
+\import{Capitoli/Use_Cases}{PGConf.tex}
 \end{document}

@@ -1,0 +1,227 @@
+In questo capitolo presentiamo l'implementazione fisica della base di dati utilizzando Postgres come sistema di gestione di database. Postgres, o PostgreSQL, è un DBMS open-source con ampie funzionalità, stabilità e una comunità di sviluppatori attiva che offre il supporto completo del linguaggio SQL e fornisce strumenti avanzati per l'ottimizzazione delle query, l'indicizzazione dei dati e la gestione delle transazioni. 
+\bigskip
+
+Durante il capitolo, mostreremo il processo di traduzione dello schema logico a quello fisico, concentrandoci su elementi chiave come tabelle, la definizione dei trigger e delle varie procedure al fine di creare un database relazionale efficiente, affidabile e soprattutto attivo che soddisfi le esigenze di un applicativo che possa appoggiarsi su di essa quale piattaforma di gestione dei dati.
+\section{Definizione delle tabelle}
+\subsection{\textsc{Utente}}
+
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Utente}]
+create table utente(
+    id_utente serial primary key,
+    username text not null unique,
+    nome text not null,
+    cognome text not null,
+    titolo titolo_st,
+    email text not null unique,
+    password text not null,
+    id_ente integer references ente(id_ente) on delete cascade
+);
+\end{lstlisting}
+\subsection{\textsc{Ente}}
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Ente}]
+create table ente(
+id_ente serial primary key,
+nome text not null unique,
+sigla varchar(8) not null,
+unique (nome,sigla)
+);
+\end{lstlisting}
+\subsection{\textsc{Indirizzo}}
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Indirizzo}]
+create table indirizzo(
+    id_indirizzo serial primary key,
+    via text not null,
+    civico varchar(5) not null,
+    cap varchar(5) ,
+    city text not null,
+    provincia varchar(2) not null,
+    nazione text
+);
+\end{lstlisting}
+\subsection{\textsc{Sede}}
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella:  Sede}]
+CREATE TABLE sede(
+create table sede(
+    id_sede serial primary key,
+    nome text ,
+    id_indirizzo integer references indirizzo(id_indirizzo) on delete set null
+);
+\end{lstlisting}
+\subsection{\textsc{Sponsor}}
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Sponsor}]
+create table sponsor(
+    id_sponsor serial primary key,
+    nome text not null
+);
+\end{lstlisting}
+\subsection{\textsc{Comitato}}
+Ogni comitato ha una tipologia che varia tra i valori \textit{scientifico} e \textit{locale}. Definiamo quindi il tipo \texttt{comitato\_st} che useremo per specificare la tipologia del comitato:
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Comitato}]
+create type comitato_st as enum ('locale','scientifico');
+
+create table comitato(
+    id_comitato serial primary key,
+    tipologia comitato_st not null
+);
+\end{lstlisting}
+\subsection{\textsc{Organizzatore, Speaker, Partecipante}}
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Organizzatore}]
+create type titolo_st as enum ('Dottore','Dottoressa','Professore','Professoressa','Assistente','Ricercatore','Ricercatrice','Ingegnere');
+
+create table organizzatore(
+    id_organizzatore serial primary key,
+    nome text not null,
+    cognome text not null,
+    titolo titolo_st,
+    email text not null unique,
+    id_ente integer references ente(id_ente) on delete cascade
+);
+\end{lstlisting}
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Partecipante}]
+CREATE TABLE partecipante(
+id_partecipante SERIAL PRIMARY KEY,
+nome TEXT NOT NULL,
+cognome TEXT NOT NULL,
+titolo titolo_st,
+email TEXT NOT NULL UNIQUE, 
+id_ente INTEGER REFERENCES ente(id_ente) ON DELETE SET NULL
+);
+\end{lstlisting}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Speaker}]
+create table speaker(
+    id_speaker serial primary key,
+    nome text not null,
+    cognome text not null,
+    titolo titolo_st,
+    email text not null unique,
+    id_ente integer references ente(id_ente) on delete cascade NOT NULL
+);
+
+\end{lstlisting}
+\subsection{\textsc{Sala}}
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Sala}]
+create table sala(
+    id_sala serial primary key,
+    nome text not null,
+    capienza integer not null,
+    id_sede integer references sede(id_sede) on delete cascade
+);
+\end{lstlisting}
+\subsection{\textsc{Conferenza}}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Conferenza}]
+create table conferenza(
+    id_conferenza serial primary key,
+    titolo text not null,
+    descrizione text not null,
+    inizio timestamp not null,
+    fine timestamp not null,
+    id_sede integer references sede(id_sede) on delete set null,
+    comitato_s integer references comitato(id_comitato) on delete set null,
+    comitato_l integer references comitato(id_comitato) on delete set null,
+    id_utente integer references utente(id_utente) on delete cascade,
+    check (inizio <= fine),
+    unique (titolo,inizio,fine,id_sede)
+);
+\end{lstlisting}
+\subsection{\textsc{Sessione}}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Sessione}]
+create table sessione(
+    id_sessione serial primary key,
+    titolo text not null,
+    inizio timestamp not null,
+    fine timestamp not null,
+    id_coordinatore integer references organizzatore(id_organizzatore) on delete set null,
+    id_conferenza integer references conferenza(id_conferenza) on delete cascade,
+    id_sala integer references sala(id_sala) on delete set null,
+    check (inizio <= fine),
+    unique (titolo,inizio,fine,id_conferenza,id_sala)
+);
+\end{lstlisting}
+\subsection{\textsc{Partecipazione}}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Partecipazione}]
+create table partecipazione(
+    id_partecipante integer references partecipante(id_partecipante) on delete cascade,
+    id_sessione integer references sessione(id_sessione) on delete cascade,
+    unique (id_partecipante,id_sessione) 
+);
+\end{lstlisting}
+\subsection{\textsc{Ente\_Conferenza}}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Ente\_Conferenza}]
+create table ente_conferenza(
+    id_ente integer references ente(id_ente) on delete cascade,
+    id_conferenza integer references conferenza(id_conferenza) on delete cascade,
+    unique (id_ente,id_conferenza)
+);
+\end{lstlisting}
+\subsection{\textsc{Valuta}}
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Valuta}]
+create table valuta(
+    iso char(3) primary key,
+    nome text not null,
+    simbolo text not null
+);
+\end{lstlisting}
+\subsection{\textsc{Sponsor\_Conferenza}}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Sponsor\_Conferenza}]
+create table sponsor_conferenza(
+    id_sponsor integer references sponsor(id_sponsor) on delete cascade not null,
+    contributo numeric(1000,2) not null,
+    valuta char(3) references valuta(iso) not null,
+    id_conferenza integer references conferenza(id_conferenza) on delete cascade not null,
+    unique (id_sponsor,id_conferenza) 
+);
+\end{lstlisting}
+\subsection{\textsc{Programma}}
+\begin{lstlisting}[language=SQL,style=mystyle,caption={Tabella: Programma}]
+create table programma(
+    id_programma serial primary key,
+    id_sessione integer references sessione(id_sessione) on delete cascade not null,
+    id_keynote integer references speaker(id_speaker) on delete set null,
+    unique (id_programma, id_sessione)
+);
+\end{lstlisting}
+\subsection{\textsc{Intervento}}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Intervento}]
+create table intervento(
+    id_intervento serial primary key,
+    titolo text not null,
+    abstract text not null,
+    inizio timestamp not null,
+    fine timestamp not null,
+    id_speaker integer references speaker(id_speaker) on delete cascade,
+    id_programma integer references programma(id_programma) on delete cascade not null,
+    unique (id_speaker,titolo,id_programma), 
+    check (inizio <= fine) 
+);
+\end{lstlisting}
+\subsection{\textsc{Intervallo}}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Programma}]
+create type intervallo_st as enum ('pranzo','coffee break');
+create table intervallo(
+    id_intervallo serial primary key,
+    tipologia intervallo_st not null,
+    inizio timestamp not null,
+    fine timestamp not null,
+    check (inizio <= fine), 
+    id_programma integer references programma(id_programma) on delete cascade not null
+);
+\end{lstlisting}
+\subsection{\textsc{Evento}}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Evento}]
+create table evento(
+    id_evento serial primary key,
+    tipologia text not null,
+    inizio timestamp not null,
+    fine timestamp not null,
+    check (inizio <= fine), 
+    id_programma integer references programma(id_programma) on delete cascade not null
+);
+\end{lstlisting}
+\subsection{\textsc{Organizzatore\_Comitato}}
+\begin{lstlisting}[language=SQL,style=mystyle, caption={Tabella: Organizzatore\_Comitato}]
+create table organizzatore_comitato(
+    id_organizzatore integer references organizzatore(id_organizzatore) on delete cascade,
+    id_comitato integer references comitato(id_comitato) on delete cascade,
+    unique (id_organizzatore,id_comitato) 
+);
+\end{lstlisting}
