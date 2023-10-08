@@ -43,6 +43,7 @@ public class AddIntervento_Controller extends AlertWindowController implements I
     @FXML
     private TextField titoloTextField;
     private double x, y;
+    private int numberOfSpeakers;
 
     public AddIntervento_Controller(Programma programma) {
         this.programma = programma;
@@ -61,6 +62,7 @@ public class AddIntervento_Controller extends AlertWindowController implements I
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setSpeakerChoiceBox();
         loadSpinners();
+        numberOfSpeakers=speakers.getSpeakers().size();
     }
 
     private Intervento getIntervento() throws BlankFieldException {
@@ -112,6 +114,14 @@ public class AddIntervento_Controller extends AlertWindowController implements I
             showAlertWindow(Alert.AlertType.WARNING,"Attenzione",e.getMessage());
         }
     }
+    private void setLastSpeaker(){
+        if(!(numberOfSpeakers==speakers.getSpeakers().size())) {
+            int lastIndex = speakers.getSpeakers().size() - 1;
+            Speaker lastSpeaker = speakers.getSpeakers().get(lastIndex);
+            speakerChoiceBox.setValue(lastSpeaker);
+            numberOfSpeakers=speakers.getSpeakers().size();
+        }
+    }
 
     @FXML
     void cancelButtonOnAction(ActionEvent event) {
@@ -137,6 +147,7 @@ public class AddIntervento_Controller extends AlertWindowController implements I
     void addSpeakerButtonOnAction(ActionEvent event) {
         loadAddSpeaker();
         setSpeakerChoiceBox();
+        setLastSpeaker();
     }
 
     @FXML
