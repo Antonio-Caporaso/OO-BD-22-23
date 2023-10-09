@@ -202,7 +202,7 @@ begin
         programma5_id,
         '30 minutes'
     );
-    call add_keynote_speaker(915,sessione5_id);
+    call add_keynote_speaker(215,sessione5_id);
 
 exception
     when others then
