@@ -88,8 +88,8 @@ public class VisualizzaSessioniConferenza_Controller extends AlertWindowControll
     private void loadAggiungiSponsor() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/AddSponsor.fxml"));
-            loader.setController(addSponsorController);
-            addSponsorController.setSponsorizzazioniTable();
+            AddSponsor_Controller controller = new AddSponsor_Controller( subscene,conferenza, user);
+            loader.setController(controller);
             Parent root = loader.load();
             subscene.setRoot(root);
         } catch (Exception e) {
