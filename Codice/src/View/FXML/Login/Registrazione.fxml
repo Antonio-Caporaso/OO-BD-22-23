@@ -23,53 +23,53 @@
                         <Font name="Times New Roman" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="titoloLabel" layoutX="63.0" layoutY="170.0" prefHeight="21.0" prefWidth="68.0" text="Titolo" textFill="#eceff4">
+                  <Label fx:id="titoloLabel" layoutX="22.0" layoutY="170.0" prefHeight="21.0" prefWidth="68.0" text="Titolo" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="titoloChoiceBox" layoutX="17.0" layoutY="206.0" prefHeight="31.0" prefWidth="139.0" />
-                  <Label fx:id="istituzioneLabel" layoutX="227.0" layoutY="170.0" text="Istituzione" textFill="#eceff4">
+                  <ChoiceBox fx:id="titoloChoiceBox" layoutX="17.0" layoutY="206.0" prefHeight="37.0" prefWidth="139.0" />
+                  <Label fx:id="istituzioneLabel" layoutX="198.0" layoutY="170.0" text="Istituzione" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="istituzioneChoice" layoutX="198.0" layoutY="206.0" prefHeight="31.0" prefWidth="139.0" />
-                  <Label fx:id="nomeLabel" layoutX="62.0" layoutY="263.0" text="Nome" textFill="#eceff4">
+                  <ChoiceBox fx:id="istituzioneChoice" layoutX="198.0" layoutY="206.0" prefHeight="37.0" prefWidth="139.0" />
+                  <Label fx:id="nomeLabel" layoutX="19.0" layoutY="263.0" text="Nome" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="nomeTextField" layoutX="17.0" layoutY="300.0" prefHeight="37.0" prefWidth="139.0" />
-                  <Label fx:id="cognomeLabel" layoutX="228.0" layoutY="263.0" text="Cognome" textFill="#eceff4">
+                  <TextField fx:id="nomeTextField" layoutX="17.0" layoutY="300.0" maxWidth="170.0" prefHeight="37.0" prefWidth="139.0" />
+                  <Label fx:id="cognomeLabel" layoutX="198.0" layoutY="263.0" text="Cognome" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="emailLabel" layoutX="245.0" layoutY="357.0" text="Email" textFill="#eceff4">
+                  <Label fx:id="emailLabel" layoutX="198.0" layoutY="368.0" text="Email" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="emailTextField" layoutX="198.0" layoutY="400.0" prefHeight="37.0" prefWidth="139.0" />
-                  <Label fx:id="usernameLabel" layoutX="45.0" layoutY="357.0" text="Username" textFill="#eceff4">
+                  <TextField fx:id="emailTextField" layoutX="198.0" layoutY="400.0" maxWidth="170.0" prefHeight="37.0" prefWidth="139.0" />
+                  <Label fx:id="usernameLabel" layoutX="17.0" layoutY="368.0" text="Username" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
                   <TextField fx:id="usernameTextField" layoutX="17.0" layoutY="400.0" maxWidth="170.0" prefHeight="37.0" prefWidth="139.0" />
-                  <Label fx:id="passwordLabel" layoutX="46.0" layoutY="473.0" text="Password" textFill="#eceff4">
+                  <Label fx:id="passwordLabel" layoutX="20.0" layoutY="473.0" text="Password" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="passwordTextField" layoutX="17.0" layoutY="505.0" prefHeight="37.0" prefWidth="139.0" />
-                  <Label fx:id="confermaPasswordLabel" layoutX="170.0" layoutY="473.0" text="Conferma password" textFill="#eceff4">
+                  <PasswordField fx:id="passwordTextField" layoutX="17.0" layoutY="505.0" maxWidth="170.0" prefHeight="37.0" prefWidth="139.0" />
+                  <Label fx:id="confermaPasswordLabel" layoutX="200.0" layoutY="473.0" text="Conferma" textFill="#eceff4">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="confermaPasswordTextField" layoutX="198.0" layoutY="505.0" prefHeight="37.0" prefWidth="139.0" />
+                  <PasswordField fx:id="confermaPasswordTextField" layoutX="198.0" layoutY="505.0" maxWidth="170.0" prefHeight="37.0" prefWidth="139.0" />
                   <Button fx:id="backButton" layoutX="17.0" layoutY="612.0" mnemonicParsing="false" onAction="#backButtonOnAction" prefHeight="33.0" prefWidth="139.0" style="-fx-background-color: #33749D;" text="Back" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="18.0" />
