@@ -117,7 +117,7 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
-            stage.setAlwaysOnTop(true);
+            //stage.setAlwaysOnTop(true);
             stage.showAndWait();
 
         } catch (IOException e) {
@@ -140,7 +140,7 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
-            stage.setAlwaysOnTop(true);
+            //stage.setAlwaysOnTop(true);
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -162,7 +162,7 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
-            stage.setAlwaysOnTop(true);
+            //stage.setAlwaysOnTop(true);
             stage.showAndWait();
 
         } catch (IOException e) {
@@ -183,7 +183,7 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
             stage.setScene(scene);
             stage.setX(860);
             stage.setY(360);
-            stage.setAlwaysOnTop(true);
+            //stage.setAlwaysOnTop(true);
             stage.showAndWait();
             setKeynoteLabel();
 

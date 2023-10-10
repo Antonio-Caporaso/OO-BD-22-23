@@ -239,7 +239,7 @@ border width: 3
 .table-view .table-cell{
     -fx-border-color: transparent;
     -fx-padding: 2 0 2 10px;
-    -fx-alignment: center;
+    -fx-alignment: CENTER-LEFT;
     -fx-text-fill: #eceff4
 }
 .table-row-cell:filled:hover {
@@ -252,21 +252,21 @@ border width: 3
     -fx-text-fill: #eceff4;
     -fx-font-weight: bold;
     -fx-font-size: 12;
-    -fx-alignment: center;
+    -fx-alignment: CENTER-LEFT;
 }
 .table-row-cell:even {
     -fx-background-color: #2e3440;
     -fx-text-fill: #eceff4;
     -fx-font-weight: bold;
     -fx-font-size: 12;
-    -fx-alignment: center;
+    -fx-alignment: CENTER-LEFT;
 }
 .table-row-cell:selected{
     -fx-background-color: #5e81ac ;
     -fx-text-fill: #eceff4;
     -fx-font-weight: bold;
     -fx-font-size: 12;
-    -fx-alignment: center;
+    -fx-alignment: CENTER-LEFT;
 }
 
 .table-view .virtual-flow .scroll-bar:vertical,

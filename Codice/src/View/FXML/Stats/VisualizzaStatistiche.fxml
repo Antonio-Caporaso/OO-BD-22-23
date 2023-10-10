@@ -25,7 +25,7 @@
       <Rectangle fill="#232730" height="247.0" layoutX="631.0" layoutY="449.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="247.0" />
       <Label layoutX="444.0" layoutY="190.0" />
       <Label layoutX="444.0" layoutY="190.0" />
-      <Label fx:id="totalPartecipantiLabel" layoutX="420.0" layoutY="154.0" prefHeight="89.0" prefWidth="84.0" text="33" textAlignment="CENTER" textFill="#0fff1f">
+      <Label fx:id="totalPartecipantiLabel" layoutX="396.0" layoutY="162.0" prefHeight="89.0" prefWidth="141.0" text="33" textAlignment="CENTER" textFill="#0fff1f">
          <font>
             <Font name="Cantarell Regular" size="70.0" />
          </font>
@@ -45,7 +45,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <Label fx:id="totalSponsorizzazioniLabel" layoutX="712.0" layoutY="154.0" prefHeight="89.0" prefWidth="90.0" text="55" textAlignment="CENTER" textFill="#ff750f">
+      <Label fx:id="totalSponsorizzazioniLabel" layoutX="712.0" layoutY="162.0" prefHeight="89.0" prefWidth="90.0" text="55" textAlignment="CENTER" textFill="#ff750f">
          <font>
             <Font name="Cantarell Regular" size="70.0" />
          </font>
@@ -100,7 +100,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="totalConferenzeLabel" layoutX="121.0" layoutY="154.0" prefHeight="89.0" prefWidth="90.0" text="23" textAlignment="CENTER" textFill="#0dbaff">
+      <Label fx:id="totalConferenzeLabel" layoutX="123.0" layoutY="162.0" prefHeight="89.0" prefWidth="141.0" text="23" textAlignment="CENTER" textFill="#0dbaff">
          <font>
             <Font name="Cantarell Regular" size="70.0" />
          </font>
