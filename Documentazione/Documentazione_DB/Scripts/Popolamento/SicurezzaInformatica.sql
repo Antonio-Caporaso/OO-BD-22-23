@@ -36,7 +36,7 @@ select comitato_l from conferenza where id_conferenza=conferenza_id into comitat
 
 --Aggiungo membri comitato
 call add_membri_comitato('107,109',comitato_sc_id); -- Comitato scientifico
-call add_membri_comitato('309,144',comitato_lc_id); -- Comitato locale
+call add_membri_comitato('200,144',comitato_lc_id); -- Comitato locale
 
 -- Aggiunta sessioni
 sessione1_id = add_new_sessione('Introduzione alla Blockchain e Sicurezza Informatica','2023-10-10 10:30','2023-10-10 12:30',49,conferenza_id,107);
