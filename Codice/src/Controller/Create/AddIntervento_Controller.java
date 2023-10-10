@@ -138,8 +138,10 @@ public class AddIntervento_Controller extends AlertWindowController implements I
             programma.loadProgramaSessione();
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-        } catch (BlankFieldException | SQLException eb) {
+        } catch (BlankFieldException eb) {
             showAlertWindow(Alert.AlertType.ERROR,"Errore",eb.getMessage());
+        } catch (SQLException e){
+            showAlertWindow(Alert.AlertType.ERROR, "Impossibile aggiungere nuovo intervento","La durata non è compatibile con la sessione");
         }
     }
 
