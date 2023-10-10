@@ -19,7 +19,7 @@ select * from add_conferenza(
 'Blockchain e Sicurezza Informatica', --Titolo conferenza
 '2023-10-10 9:00', --Inizio
 '2023-10-13 12:30',--Fine
-1, --Sede
+14, --Sede
 'La conferenza "Blockchain e Sicurezza Informatica: Sfide e Opportunità" è un evento imperdibile per gli esperti e gli appassionati di sicurezza informatica, sviluppo blockchain e tecnologie emergenti. Questa conferenza mira a esplorare il ruolo cruciale della tecnologia blockchain nella creazione di un ambiente informatico più sicuro e affidabile.', --Descrizione
 'CNR,POLIMI', --Ente organizzatore
 2 --Utente che inserisce la conferenza 
@@ -35,15 +35,15 @@ select comitato_s from conferenza where id_conferenza=conferenza_id into comitat
 select comitato_l from conferenza where id_conferenza=conferenza_id into comitato_lc_id;
 
 --Aggiungo membri comitato
-call add_membri_comitato('107,109',comitato_sc_id); -- Comitato scientifico
-call add_membri_comitato('200,144',comitato_lc_id); -- Comitato locale
+call add_membri_comitato('107,109,113,125',comitato_sc_id); -- Comitato scientifico
+call add_membri_comitato('300,144',comitato_lc_id); -- Comitato locale
 
 -- Aggiunta sessioni
-sessione1_id = add_new_sessione('Introduzione alla Blockchain e Sicurezza Informatica','2023-10-10 10:30','2023-10-10 12:30',49,conferenza_id,107);
-sessione2_id = add_new_sessione('Applicazioni della Blockchain nella Sicurezza Informatica','2023-10-11 14:30','2023-10-11 16:30',50,conferenza_id,109);
-sessione3_id = add_new_sessione('Sicurezza dei Protocolli Blockchain','2023-10-12 10:30','2023-10-12 12:30',51,conferenza_id,109);
-sessione4_id = add_new_sessione('Contratti Intelligenti e Sicurezza','2023-10-12 14:30','2023-10-12 18:30',50,conferenza_id,107);
-sessione5_id = add_new_sessione('Panoramica delle Minacce Informatiche Attuali','2023-10-13 10:30','2023-10-13 12:30',34,conferenza_id,109);
+sessione1_id = add_new_sessione('Introduzione alla Blockchain e Sicurezza Informatica','2023-10-10 10:30','2023-10-10 12:30',40,conferenza_id,107);
+sessione2_id = add_new_sessione('Applicazioni della Blockchain nella Sicurezza Informatica','2023-10-11 14:30','2023-10-11 16:30',41,conferenza_id,109);
+sessione3_id = add_new_sessione('Sicurezza dei Protocolli Blockchain','2023-10-12 10:30','2023-10-12 12:30',42,conferenza_id,113);
+sessione4_id = add_new_sessione('Contratti Intelligenti e Sicurezza','2023-10-12 14:30','2023-10-12 18:30',40,conferenza_id,107);
+sessione5_id = add_new_sessione('Panoramica delle Minacce Informatiche Attuali','2023-10-13 10:30','2023-10-13 12:30',42,conferenza_id,109);
 
 -- Specifica programma sessione 1
 select id_programma from programma where id_sessione = sessione1_id into programma1_id;
