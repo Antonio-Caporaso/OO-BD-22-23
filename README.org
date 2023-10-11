@@ -56,4 +56,4 @@ delle statistiche e per la ricerca di tutte le conferenze in base alla sede e al
   - JFXtras 11
     
 ** Database
-Per installare il database, è necessario eseguire il file `Script.sql` presente nella cartella `./Documentazione/Documentazione_DB/Scripts` all'interno del proprio database PostgreSQL.
+Per installare il database, è necessario eseguire il file ~Script.sql~ presente nella cartella ~./Documentazione/Documentazione_DB/Scripts~ all'interno del proprio database PostgreSQL mediante il comando: ~\i Script.sql~.
