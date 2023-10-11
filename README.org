@@ -31,11 +31,11 @@
 #+BEGIN_HTML
 <p align="center" width="100%">
     <a href="https://github.com/Giordi9902">
-        <img width="10%" src="./.res/contributors/DiFusco.jpeg">
+        <img width="20%" src="./.res/contributors/DiFusco.jpeg">
     </a>
 
     <a href="https://github.com/Antonio-Caporaso">
-        <img width="10%" src="./.res/contributors/Caporaso.jpeg">
+        <img width="20%" src="./.res/contributors/Caporaso.jpeg">
     </a>
 </p>
 #+END_HTML
