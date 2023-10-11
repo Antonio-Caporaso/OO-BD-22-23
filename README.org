@@ -47,14 +47,13 @@ Il progetto consiste in un sistema di gestione di conferenze, dove gli utenti re
 delle statistiche e per la ricerca di tutte le conferenze presenti nel sistema, e per la ricerca di conferenze in base alla sede e alle date di inizio e fine della conferenza.
 
 * Installazione
-    ** Requisiti
 
-    - Java 19+
-    - Scene Builder 11
-    - PostgreSQL 13
-    - TornadoFX 1.7.20
-    - JFXtras 11
+** Requisiti
+  - Java 19+
+  - Scene Builder 11
+  - PostgreSQL 13
+  - TornadoFX 1.7.20
+  - JFXtras 11
     
-    ** Database
-
-    Per installare il database, è necessario eseguire il file `Script.sql` presente nella cartella `./Documentazione/Documentazione_DB/Scripts` all'interno del proprio database PostgreSQL.
+** Database
+Per installare il database, è necessario eseguire il file `Script.sql` presente nella cartella `./Documentazione/Documentazione_DB/Scripts` all'interno del proprio database PostgreSQL.
