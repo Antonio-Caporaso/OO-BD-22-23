@@ -44,7 +44,7 @@
 
 Symposium è un progetto universitario per il corso di Basi di Dati e di Object Orientation presenti nel Corso di Laurea in Informatica all'Università degli Studi di Napoli Federico II.
 Il progetto consiste in un sistema di gestione di conferenze, dove gli utenti registrati possano creare e modificare le proprie conferenze. Il sistema fornisce inoltre degli strumenti per il calcolo 
-delle statistiche e per la ricerca di tutte le conferenze presenti nel sistema, e per la ricerca di conferenze in base alla sede e alle date di inizio e fine della conferenza.
+delle statistiche e per la ricerca di tutte le conferenze in base alla sede e alle date di inizio e fine della conferenza.
 
 * Installazione
 
