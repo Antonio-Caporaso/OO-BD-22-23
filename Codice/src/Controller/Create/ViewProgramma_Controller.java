@@ -34,6 +34,10 @@ import java.util.ResourceBundle;
 
 public class ViewProgramma_Controller extends AlertWindowController implements Initializable {
     @FXML
+    private Label fineSessioneLabel;
+    @FXML
+    private Label inizioSessioneLabel;
+    @FXML
     private TableColumn<ActivityModel, String> appuntamentoTableColumn;
     private Conferenza conferenza;
     @FXML
@@ -66,8 +70,8 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
         setSessioneLabel();
         setProgrammaTableView();
         disableKeynote();
+        setOrarioSessioneLabel();
     }
-
     private void goBackToVisualizzaSessioniScene() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Create/VisualizzaSessioniConferenza.fxml"));
@@ -243,10 +247,14 @@ public class ViewProgramma_Controller extends AlertWindowController implements I
         disableKeynote();
         setKeynoteLabel();
     }
+    private void setOrarioSessioneLabel() {
+        inizioSessioneLabel.setText(sessione.getInizio().toString());
+        fineSessioneLabel.setText(sessione.getFine().toString());
+    }
     private void setKeynoteLabel(){
         Speaker keynote=programma.getKeynote();
         if(!(keynote.getIdSpeaker()==0)){
-            keynoteLabel.setText("Keynote Speaker: " + programma.getKeynote().toString());
+            keynoteLabel.setText(programma.getKeynote().toString());
         } else
             keynoteLabel.setText("");
     }

@@ -41,6 +41,33 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
+            <Label text="Inizio sessione:" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="inizioSessioneLabel" text="Label" textFill="WHITE" />
+            <Label text="Fine sessione:" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="fineSessioneLabel" text="Label" textFill="WHITE" />
+            <Label text="Keynote speaker:" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="keynoteLabel" text="Label" textFill="WHITE" />
          </children></VBox>
       <TableView fx:id="programmaTableView" layoutX="8.0" layoutY="100.0" onMouseClicked="#showInfoScreen" prefHeight="604.0" prefWidth="691.0">
          <columns>

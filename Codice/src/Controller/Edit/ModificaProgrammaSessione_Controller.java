@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,6 +39,12 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     private TableColumn<ActivityModel, Timestamp> fineTableColumn;
     @FXML
     private TableColumn<ActivityModel, Timestamp> inizioTableColumn;
+    @FXML
+    private Label fineSessioneLabel;
+    @FXML
+    private Label inizioSessioneLabel;
+    @FXML
+    private Label keynoteLabel;
     @FXML
     private Button keynoteButton;
     private ModificaSessioni_Controller manageSessioniController;
@@ -81,6 +88,13 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setProgrammaTableView();
         disableKeynote();
+        setOrarioSessioneLabel();
+        setKeynoteLabel();
+    }
+
+    private void setOrarioSessioneLabel() {
+        inizioSessioneLabel.setText(sessione.getInizio().toString());
+        fineSessioneLabel.setText(sessione.getFine().toString());
     }
 
     public void setManageSessioniController(ModificaSessioni_Controller manageSessioniController) {
@@ -93,7 +107,14 @@ public class ModificaProgrammaSessione_Controller implements Initializable {
             if (activityModel instanceof Intervento)
                 keynoteButton.setDisable(false);
     }
-
+    private void setKeynoteLabel(){
+        Speaker keynote=programma.getKeynote();
+        if(!(keynote.getIdSpeaker()==0)){
+            keynoteLabel.setText(programma.getKeynote().toString());
+        } else{
+            keynoteLabel.setText("");
+        }
+    }
     @FXML
     private void fineButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/FXML/Edit/ModificaSessioni.fxml"));
