@@ -1,0 +1,58 @@
+#+OPTIONS: date:nil title:nil toc:nil author:nil
+#+STARTUP: overview
+----------------------------------------------------------------
+#+BEGIN_HTML
+<div align="center">
+
+  <!-- License -->
+  <a href="https://github.com/luftmensch-luftmensch/notes/blob/master/LICENSE"
+          ><img
+              src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge&color=red"
+              alt="License"
+      /></a>
+   <!-- Work on my machine -->
+   <a href="https://img.shields.io/badge/WORKS%20ON-MY%20MACHINE-red?style=for-the-badge"
+             ><img
+               src="https://img.shields.io/badge/WORKS%20ON-MY%20MACHINE-red?style=for-the-badge"
+               alt="Work on my machine"
+        /></a>
+</div>
+<h1 align="center">Symposium</h1>
+#+END_HTML
+
+* Contenuti :toc:
+- [[#contributori][Contributori]]
+- [[#descrizione][Descrizione del progetto]]
+- [[#installazione][Installazione]]
+    - [[#requisiti][Requisiti]]
+    - [[#database][Database]]
+
+* Contributori
+#+BEGIN_HTML
+<p align="center" width="100%">
+    <a href="https://github.com/Giordi9902">
+        <img width="10%" src="./.res/contributors/DiFusco.jpeg">
+    </a>
+
+    <a href="https://github.com/Antonio-Caporaso">
+        <img width="10%" src="./.res/contributors/Caporaso.jpeg">
+    </a>
+</p>
+#+END_HTML
+
+* Descrizione del progetto
+
+Symposium è un progetto universitario per il corso di Basi di Dati e di Object Orientation presenti nel Corso di Laurea in Informatica all'Università degli Studi di Napoli Federico II.
+Il progetto consiste in un sistema di gestione di conferenze, dove gli utenti registrati possano creare e modificare le proprie conferenze. Il sistema fornisce inoltre degli strumenti per il calcolo 
+delle statistiche e per la ricerca di tutte le conferenze presenti nel sistema, e per la ricerca di conferenze in base alla sede e alle date di inizio e fine della conferenza.
+
+* Installazione
+    ** Requisiti
+    - Java 19+
+    - Scene Builder 11
+    - PostgreSQL 13
+    - TornadoFX 1.7.20
+    - JFXtras 11
+
+    ** Database
+    Per installare il database, è necessario eseguire il file `Script.sql` presente nella cartella `./Documentazione/Documentazione_DB/Scripts` all'interno del proprio database PostgreSQL.
